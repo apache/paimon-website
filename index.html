@@ -1,0 +1,309 @@
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="lib/bootstrap@5.1.3/bootstrap.min.css" rel="stylesheet">
+    <link href="lib/bootstrap-icons@1.8.1/bootstrap-icons.css" rel="stylesheet" >
+
+    <!-- Favicon of website  -->
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+
+    <title>Apache Paimon</title>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark px-4 py-2 sticky-top shadow-sm" style="background: #336699">
+      <a class="navbar-brand" href="#">Apache Paimon</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="navbarContent">
+        <ul class="navbar-nav">
+          <li class="nav-item active px-3">
+            <a class="nav-link" href="https://nightlies.apache.org/flink/flink-table-store-docs-master/">Document</a>
+          </li>
+          <li class="nav-item dropdown px-3">
+            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">ASF</a>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="https://www.apache.org/">Foundation</a>
+              <a class="dropdown-item" href="https://www.apache.org/licenses/">License</a>
+              <a class="dropdown-item" href="https://www.apache.org/events/current-event">Events</a>
+              <a class="dropdown-item" href="https://www.apache.org/security/">Security</a>
+              <a class="dropdown-item" href="https://www.apache.org/foundation/sponsorship.html">Sponsorship</a>
+              <a class="dropdown-item" href="https://www.apache.org/foundation/thanks.html">Thanks</a>
+            </div>
+          </li>
+          <li class="nav-item active px-3">
+            <a class="nav-link" href="https://github.com/apache/flink-table-store/">Github</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <section class="hero-banner position-relative d-flex align-items-center">
+      <div class="bg"></div>
+      <div class="container position-relative">
+        <div class="py-xs-2 py-sm-3 py-md-4 py-xxl-5">
+          <div class="row py-5">
+            <div class="col-xl-6 col-lg-8">
+              <h1 class="fw-bold lh-1 pb-5 hero-title" style="color: #ffffff;">Apache Paimon <sup><span class="badge rounded-pill bg-primary" style="font-size: .25em">Incubating</span></sup></h1>
+              <p class="lead pb-5 fs-4" style="color: #ffffff;">Streaming data lake platform with high-speed data ingestion, changelog tracking and efficient real-time analytics.</p>
+              <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+                <a role="button" class="btn btn-primary btn-lg dropdown-toggle px-5 m-1" href="#" role="button" id="getStartedLink" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Get Started
+                </a>
+                <div class="dropdown-menu dropdown-menu-dark" aria-labelledby="getStartedLink">
+                  <a class="dropdown-item" href="https://nightlies.apache.org/flink/flink-table-store-docs-master/docs/engines/flink/">Flink</a>
+                  <a class="dropdown-item" href="https://nightlies.apache.org/flink/flink-table-store-docs-master/docs/engines/flink3/">Spark</a>
+                  <a class="dropdown-item" href="https://nightlies.apache.org/flink/flink-table-store-docs-master/docs/engines/hive/">Hive</a>
+                  <a class="dropdown-item" href="https://github.com/JingsongLi/flink-table-store-trino/">Trino</a>
+                </div>
+                <a role="button" class="btn btn-dark btn-lg px-5 m-1" href="https://github.com/apache/flink-table-store/">Source Code</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="bg-white">
+      <div class="container py-5">
+        <div class="row py-3 m-1">
+          <div class="col-12 text-center pb-3"><h2>One Storage for All Your Data</h2></div>
+          <div class="col-md-12 col-lg-10 text-center mx-auto"><img src="assets/architecture.png" width="100%" style="filter: brightness(105%)" /></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="bg-light">
+      <div class="container py-5">
+        <div class="row py-3">
+          <div class="col-12 text-center"><h2>Key Features</h2></div>
+        </div>
+        <div class="row py-4 justify-content-center m-1">
+          <div class="card shadow col-md-10 col-lg-5 m-3">
+            <div class="card-body">
+              <div class="text-center text-primary">
+                <h2><i class="bi bi-shuffle"></i></h2>
+                <h5>Unified Batch & Streaming</h5>
+              </div>
+              <div class="py-3">Batch writes and reads, streaming updates, changelog producing, all supported.</div>
+            </div>
+          </div>
+          <div class="card shadow col-md-10 col-lg-5 m-3">
+            <div class="card-body">
+              <div class="text-center text-primary">
+                <h2><i class="bi bi-water"></i></h2>
+                <h5>Data Lake Capabilities</h5>
+              </div>
+              <div class="py-3">Low cost, high reliability, scalable metadata. Apache Paimon has every advantage as a data lake storage.</div>
+            </div>
+          </div>
+          <div class="card shadow col-md-10 col-lg-5 m-3">
+            <div class="card-body">
+              <div class="text-center text-primary">
+                <h2><i class="bi bi-calculator"></i></h2>
+                <h5>Various Merge Engines</h5>
+              </div>
+              <div class="py-3">Update records however you like. Preserve the last record, do a partial update, or aggregate records together, you decide.</div>
+            </div>
+          </div>
+          <div class="card shadow col-md-10 col-lg-5 m-3">
+            <div class="card-body">
+              <div class="text-center text-primary">
+                <h2><i class="bi bi-clipboard2-pulse"></i></h2>
+                <h5>Changelog Producing</h5>
+              </div>
+              <div class="py-3">Apache Paimon can produce correct and complete changelog from any data source, simplifying your streaming analytics.</div>
+            </div>
+          </div>
+          <div class="card shadow col-md-10 col-lg-5 m-3">
+            <div class="card-body">
+              <div class="text-center text-primary">
+                <h2><i class="bi bi-table"></i></h2>
+                <h5>Rich Table Types</h5>
+              </div>
+              <div class="py-3">Aside from primary-key tables, Apache Paimon also supports append-only table, providing orderly streaming reading to replace the message queue.</div>
+            </div>
+          </div>
+          <div class="card shadow col-md-10 col-lg-5 m-3">
+            <div class="card-body">
+              <div class="text-center text-primary">
+                <h2><i class="bi bi-grid-1x2"></i></h2>
+                <h5>Schema Evolution</h5>
+              </div>
+              <div class="py-3">Apache Paimon supports full schema evolution. You can rename and reorder columns.</div>
+            </div>
+          </div>
+        </div>
+        <div class="row pb-3"></div>
+      </div>
+    </section>
+
+    <section style="background-color: #ddeeff">
+      <div class="container py-5">
+        <div class="row py-3">
+          <div class="col-12 text-center"><h2>Join the Community</h2></div>
+        </div>
+        <div class="row py-4 justify-content-center m-1">
+          <div class="card border-primary col-md-10 col-xl-3 m-3" style="background-color: #ddeeff">
+            <a class="community-anchor" href="https://qr.dingtalk.com/action/joingroup?code=v1,k1,fJQRBU8+v01pdCtcy+G9YJ38RaCV5RVmrrOblhUlQP4=&_dt_no_comment=1&origin=11">
+              <div class="card-body">
+                <div class="row d-flex align-items-center">
+                  <div class="col-2 align-self-center text-center text-primary">
+                    <h1><i class="bi bi-chat"></i></h1>
+                  </div>
+                  <div class="col-10">
+                    <h4 class="card-title text-center text-primary">DingTalk Group</h4>
+                  </div>
+                </div>
+              </div>
+            </a>
+          </div>
+
+          <div class="card border-primary col-md-10 col-xl-3 m-3" style="background-color: #ddeeff">
+            <a class="community-anchor" href="https://flink.apache.org/community/#mailing-lists">
+              <div class="card-body">
+                <div class="row d-flex align-items-center">
+                  <div class="col-2 align-self-center text-center text-primary">
+                    <h1><i class="bi bi-envelope-open"></i></h1>
+                  </div>
+                  <div class="col-10">
+                    <h4 class="card-title text-center text-primary">Mailing List</h4>
+                  </div>
+                </div>
+              </div>
+            </a>
+          </div>
+
+          <div class="card border-primary col-md-10 col-xl-3 m-3" style="background-color: #ddeeff">
+            <a class="community-anchor" href="https://issues.apache.org/jira/browse/FLINK">
+              <div class="card-body">
+                <div class="row d-flex align-items-center">
+                  <div class="col-2 align-self-center text-center text-primary">
+                    <h1><i class="bi bi-clipboard-check"></i></h1>
+                  </div>
+                  <div class="col-10">
+                    <h4 class="card-title text-center text-primary">Issue Tracking</h4>
+                  </div>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Copyright -->
+    <section style="background-color: rgb(0, 1, 25);">
+      <div class="container pt-4">
+        <div class="row d-flex align-items-center m-1">
+          <div class="col-sm-12 col-lg-3 text-center"><a href="https://incubator.apache.org/"><img src="assets/apache-incubator.svg" style="max-width: 100%" /></a></div>
+          <div class="col-sm-12 col-lg-9 text-white">
+            <p>
+              Apache Paimon is an effort undergoing incubation at The Apache Software Foundation (ASF), sponsored by the Apache Incubator.
+              Incubation is required of all newly accepted projects until a further review indicates that the infrastructure, communications,
+              and decision making process have stabilized in a manner consistent with other successful ASF projects.
+              While incubation status is not necessarily a reflection of the completeness or stability of the code,
+              it does indicate that the project has yet to be fully endorsed by the ASF.
+            </p>
+          </div>
+        </div>
+        <hr class="bg-white" />
+        <div class="row mx-1">
+          <div class="col-12 text-center text-white">
+            <p>
+              Copyright &copy; 2023 The Apache Software Foundation. Apache Paimon, Paimon, and its feather logo are trademarks of The Apache Software Foundation.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Bootstrap JS -->
+    <script src="lib/bootstrap@5.1.3/bootstrap.bundle.min.js"></script>
+  </body>
+
+  <style>
+  .hero-banner {
+    height: 720px;
+    background-color: rgb(0, 1, 25);
+  }
+
+  .hero-banner > .bg {
+    background: no-repeat right center;
+    background-image: linear-gradient(to right, rgba(0, 1, 25, 1) 0%, rgba(0, 1, 25, 0) 10%), url(assets/hero.jpg);
+    background-size: 1000px 720px;
+    height: 720px;
+    top: 0;
+    position: absolute;
+    right: 0;
+    width: 100%;
+  }
+
+  @media (max-width: 575px) {
+    .hero-title {
+      font-size: 2.5em;
+    }
+
+    .hero-banner > .bg {
+      opacity: 0.3;
+      background-position-x: center;
+    }
+  }
+
+  @media (min-width: 576px) and (max-width: 991px) {
+    .hero-title {
+      font-size: 3em;
+    }
+
+    .hero-banner > .bg {
+      opacity: 0.3;
+      background-position-x: center;
+    }
+  }
+
+  @media (min-width: 992px) and (max-width: 1399px) {
+    .hero-title {
+      font-size: 3em;
+    }
+
+    .hero-banner > .bg {
+      opacity: 0.5;
+    }
+  }
+
+  @media (min-width: 1400px) {
+    .hero-title {
+      font-size: 4em;
+    }
+  }
+
+  .community-anchor {
+    text-decoration: inherit;
+    color: inherit;
+  }
+  </style>
+</html>
