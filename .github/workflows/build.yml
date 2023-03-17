@@ -1,0 +1,95 @@
+# Licensed to the Apache Software Foundation (ASF) under one or more
+# contributor license agreements.  See the NOTICE file distributed with
+# this work for additional information regarding copyright ownership.
+# The ASF licenses this file to You under the Apache License, Version 2.0
+# (the "License"); you may not use this file except in compliance with
+# the License.  You may obtain a copy of the License at
+#
+#    http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+name: "Build website and document"
+
+env:
+  versions: ("master" "0.3") # defines what versions of document should be updated
+  latest_version: "0.3" # defines what version docs/latest links to
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * *' # deploy every day
+
+jobs:
+  build-website:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Move out old docs directory
+        run: |
+          git fetch origin asf-site:asf-site
+          git checkout asf-site
+          if [[ -d docs ]]
+          then
+            cp -r docs /tmp/docs
+          else
+            mkdir /tmp/docs
+          fi
+
+      - name: Copy main site
+        run: |
+          git checkout master
+          git branch -D asf-site
+          git checkout --orphan asf-site
+
+      - name: Move back docs directory
+        run: |
+          mkdir docs
+          cp -r /tmp/docs/* docs
+
+      - name: Clone Paimon repo
+        run: git clone https://github.com/apache/incubator-paimon.git /tmp/paimon
+
+      - name: Build docs
+        run: |
+          declare -a versions=${{ env.versions }}
+          current_dir=$(pwd)
+          cp ./.github/workflows/docs.sh /tmp/paimon/docs.sh
+          for version in "${versions[@]}"
+          do
+            # delete old document
+            rm -rf docs/"$version"
+            mkdir docs/"$version"
+            # build new document
+            cd /tmp/paimon
+            git checkout master
+            if [ "$version" != "master" ]
+            then
+              git checkout release-"$version"
+            fi
+            docker run --rm --volume "$PWD:/root/paimon" chesnay/flink-ci:java_8_11 bash -c "cd /root/paimon && . ./docs.sh"
+            # copy document to target directory
+            cp -r docs/target/* "$current_dir"/docs/"$version"
+            # clean up
+            git reset --hard HEAD
+            cd "$current_dir"
+          done
+
+      - name: Copy latest version
+        run: |
+          latest_version=${{ env.latest_version }}
+          rm -rf docs/latest
+          cp -r docs/"$latest_version" docs/latest
+
+      - name: Push to github
+        run: |
+          git add -A
+          git config --global user.name 'GitHub Actions'
+          git config --global user.email 'actions@github.com'
+          git commit -m "Build website and document"
+          git push -f origin asf-site
