@@ -30,7 +30,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Move out old docs directory
+      - name: Copy out old docs directory
         run: |
           git fetch origin asf-site:asf-site
           git checkout asf-site
@@ -47,10 +47,8 @@ jobs:
           git branch -D asf-site
           git checkout --orphan asf-site
 
-      - name: Move back docs directory
-        run: |
-          mkdir docs
-          cp -r /tmp/docs/* docs
+      - name: Copy back docs directory
+        run: cp -r /tmp/docs docs
 
       - name: Clone Paimon repo
         run: git clone https://github.com/apache/incubator-paimon.git /tmp/paimon
