@@ -16,7 +16,7 @@
 name: "Build website and document"
 
 env:
-  versions: ("master" "0.3") # defines what versions of document should be updated
+  versions: ("master") # defines what versions of document should be updated
   latest_version: "0.3" # defines what version docs/latest links to
 
 on:
@@ -78,11 +78,11 @@ jobs:
             cd "$current_dir"
           done
 
-      - name: Copy latest version
-        run: |
-          latest_version=${{ env.latest_version }}
-          rm -rf docs/latest
-          cp -r docs/"$latest_version" docs/latest
+      # - name: Copy latest version
+      #   run: |
+      #     latest_version=${{ env.latest_version }}
+      #     rm -rf docs/latest
+      #     cp -r docs/"$latest_version" docs/latest
 
       - name: Push to github
         run: |
