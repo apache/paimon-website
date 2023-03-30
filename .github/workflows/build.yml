@@ -28,7 +28,13 @@ jobs:
   build-website:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up JDK 1.8
+        uses: actions/setup-java@v1
+        with:
+          java-version: 1.8
 
       - name: Copy out old docs directory
         run: |
@@ -70,7 +76,7 @@ jobs:
             then
               git checkout release-"$version"
             fi
-            docker run --rm --volume "$PWD:/root/paimon" chesnay/flink-ci:java_8_11 bash -c "cd /root/paimon && . ./docs.sh"
+            . ./docs.sh
             # copy document to target directory
             cp -r docs/target/* "$current_dir"/docs/"$version"
             # clean up
