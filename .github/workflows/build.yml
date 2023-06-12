@@ -47,7 +47,7 @@ jobs:
             mkdir /tmp/docs
           fi
 
-      - name: Copy main site
+      - name: Create asf-site branch
         run: |
           git checkout master
           git branch -D asf-site
@@ -55,6 +55,22 @@ jobs:
 
       - name: Copy back docs directory
         run: cp -r /tmp/docs docs
+      
+      - name: Build pages
+        run: |
+          current_dir=$(pwd)
+          git submodule update --init --recursive
+          mv pages /tmp/paimon-pages
+          cp ./.github/workflows/pages.sh /tmp/paimon-pages/pages.sh
+          cd /tmp/paimon-pages
+          . ./pages.sh
+          cp -r target/* "$current_dir"
+          cd "$current_dir"
+      
+      - name: Move out main site
+        run: |
+          mv main/* .
+          rm -rf main
 
       - name: Clone Paimon repo
         run: git clone https://github.com/apache/incubator-paimon.git /tmp/paimon
