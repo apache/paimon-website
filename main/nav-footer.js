@@ -27,6 +27,9 @@ const navHtml = `
             <a class="nav-link" href="https://paimon.apache.org/users.html">Who's Using</a>
         </li>
         <li class="nav-item active px-3">
+            <a class="nav-link" href="https://paimon.apache.org/releases/0.4.html">Releases</a>
+        </li>
+        <li class="nav-item active px-3">
             <a class="nav-link" href="https://paimon.apache.org/community/how-to-contribute.html">Community</a>
         </li>
         <li class="nav-item active px-3">

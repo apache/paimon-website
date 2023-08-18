@@ -2,7 +2,7 @@
 title: Community
 bold: true
 bookCollapseSection: true
-weight: 1
+weight: 2
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one
