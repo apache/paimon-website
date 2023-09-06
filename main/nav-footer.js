@@ -9,6 +9,25 @@ const navHtml = `
         <li class="nav-item active px-3">
             <a class="nav-link" href="https://paimon.apache.org/docs/master">Document</a>
         </li>
+        <li class="nav-item active px-3">
+            <a class="nav-link" href="https://github.com/apache/incubator-paimon/">Github</a>
+        </li>
+        <li class="nav-item active px-3">
+            <a class="nav-link" href="https://paimon.apache.org/users.html">Who's Using</a>
+        </li>
+        <li class="nav-item active px-3">
+            <a class="nav-link" href="https://paimon.apache.org/release-0.4.html">Releases</a>
+        </li>
+        <li class="nav-item dropdown px-3">
+            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Community</a>
+            <div class="dropdown-menu">
+                <a class="dropdown-item" href="https://paimon.apache.org/docs/master/project/contributing/">How to Contribute</a>
+                <a class="dropdown-item" href="https://paimon.apache.org/team.html">Team</a>
+            </div>
+        </li>
+        <li class="nav-item active px-3">
+            <a class="nav-link" href="https://paimon.apache.org/security.html">Security</a>
+        </li>
         <li class="nav-item dropdown px-3">
             <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">ASF</a>
             <div class="dropdown-menu">
@@ -19,21 +38,6 @@ const navHtml = `
                 <a class="dropdown-item" href="https://www.apache.org/foundation/sponsorship.html">Sponsorship</a>
                 <a class="dropdown-item" href="https://www.apache.org/foundation/thanks.html">Thanks</a>
             </div>
-        </li>
-        <li class="nav-item active px-3">
-            <a class="nav-link" href="https://github.com/apache/incubator-paimon/">Github</a>
-        </li>
-        <li class="nav-item active px-3">
-            <a class="nav-link" href="https://paimon.apache.org/users.html">Who's Using</a>
-        </li>
-        <li class="nav-item active px-3">
-            <a class="nav-link" href="https://paimon.apache.org/releases/0.4.html">Releases</a>
-        </li>
-        <li class="nav-item active px-3">
-            <a class="nav-link" href="https://paimon.apache.org/community/how-to-contribute.html">Community</a>
-        </li>
-        <li class="nav-item active px-3">
-            <a class="nav-link" href="https://paimon.apache.org/security.html">Security</a>
         </li>
     </ul>
     </div>
