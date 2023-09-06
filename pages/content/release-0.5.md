@@ -1,9 +1,9 @@
 ---
-title: "Release 0.4"
-weight: -10
+title: "Release 0.5"
+weight: -9
 type: docs
 aliases:
-- /release-0.4.html
+- /release-0.5.html
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one
