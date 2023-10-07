@@ -196,7 +196,7 @@ underwent very in-depth integration.
 
 ### Spark
 
-Spark is Paimon's second most in-depth computing engine, taking a big step forward at 0.5. Introduced a lot of writing features.
+Spark is another computing engine that Paimon has in-depth integration and has taken a big step forward at 0.5, including the following features:
 
 - [INSERT OVERWRITE](https://paimon.apache.org/docs/0.5/how-to/writing-tables/#overwriting-the-whole-table) insert ovewrite
   partition, Spark’s default overwrite mode is static partition overwrite, you can enable dynamic overwritten too.
