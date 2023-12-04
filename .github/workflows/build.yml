@@ -16,8 +16,8 @@
 name: "Build website and document"
 
 env:
-  versions: ("master" "0.5") # defines what versions of document should be updated
-  latest_version: "0.5" # defines what version docs/latest links to
+  versions: ("master" "0.6") # defines what versions of document should be updated
+  latest_version: "0.6" # defines what version docs/latest links to
 
 on:
   workflow_dispatch:
