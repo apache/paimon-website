@@ -35,48 +35,116 @@ under the License.
   </head>
   <body class="d-flex flex-column min-vh-100">
     <div class="container">
-      <div class="row">
-        <div class="col-12 text-center pt-5 pb-3">
-          <h2>Team</h2>
-          <br>
-          <h3 id="mentors">
-            Mentors
-          </h3>
-          <p>Becket Qin</p>
-          <p>Robert Metzger</p>
-          <p>Stephan Ewen</p>
-          <p>Yu Li</p>
-          <br>
-          <h3 id="ppmc">
-            PPMC
-          </h3>
-          <p>Jingsong Lee</p>
-          <p>Caizhi Weng</p>
-          <p>Feng Wang</p>
-          <p>Nicholas Jiang</p>
-          <p>Timo Walther</p>
-          <p>Fang Yong</p>
-          <br>
-          <h3 id="committers">
-            Committers
-          </h3>
-          <p>Jingsong Lee</p>
-          <p>Caizhi Weng</p>
-          <p>Feng Wang</p>
-          <p>Nicholas Jiang</p>
-          <p>Timo Walther</p>
-          <p>Fang Yong</p>
-          <p>Zelin Yu</p>
-          <p>Chong Zhuang</p>
-          <p>Ming Li</p>
+
+      <div class="row pt-5 pb-5">
+        <div class="col-12 text-center"><h2>Our Team</h2></div>
+      </div>
+
+      <div class="row justify-content-center pt-3 pb-3">
+        <div class="col-auto text-center">
+          <h3>Mentors</h3>
+          <table class="table table-bordered w-auto">
+            <tbody>
+              <tr>
+                <td class="github-profile ghid-5778611">Becket Qin</td>
+                <td class="github-profile ghid-89049">Robert Metzger</td>
+                <td class="github-profile ghid-1727146">Stephan Ewen</td>
+                <td class="github-profile ghid-6239804">Yu Li</td>
+              </tr>
+              <tr>
+                <td>Becket Qin</td>
+                <td>Robert Metzger</td>
+                <td>Stephan Ewen</td>
+                <td>Yu Li</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
-      <div id="user-imgs-row" class="row d-flex align-items-center pb-5">
+
+      <div class="row justify-content-center pt-3 pb-3">
+        <div class="col-auto text-center">
+          <h3>PPMCs</h3>
+          <table class="table table-bordered w-auto">
+            <tbody>
+              <tr>
+                <td class="github-profile ghid-9601882">Jingsong Lee</td>
+                <td class="github-profile ghid-19909549">Caizhi Weng</td>
+                <td class="github-profile ghid-99001603">Feng Wang</td>
+                <td class="github-profile ghid-10048174">Nicholas Jiang</td>
+                <td class="github-profile ghid-5746567">Timo Walther</td>
+                <td class="github-profile ghid-28703471">Fang Yong</td>
+              </tr>
+              <tr>
+                <td>Jingsong Lee</td>
+                <td>Caizhi Weng</td>
+                <td>Feng Wang</td>
+                <td>Nicholas Jiang</td>
+                <td>Timo Walther</td>
+                <td>Fang Yong</td>
+              </tr>
+              <tr>
+                <td class="github-profile ghid-33053040">Zelin Yu</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Zelin Yu</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
+
+      <div class="row justify-content-center pt-3 pb-5">
+        <div class="col-auto text-center">
+          <h3>Committers</h3>
+          <p>(Apart from PPMCs)</p>
+          <table class="table table-bordered w-auto">
+            <tbody>
+              <tr>
+                <td class="github-profile ghid-37063904">Chong Zhuang</td>
+                <td class="github-profile ghid-69444450">Ming Li</td>
+                <td class="github-profile ghid-41894543">Junhao Ye</td>
+                <td class="github-profile ghid-10036681">Bi Yan</td>
+                <td class="github-profile ghid-26704332">Guojun Li</td>
+              </tr>
+              <tr>
+                <td>Chong Zhuang</td>
+                <td>Ming Li</td>
+                <td>Junhao Ye</td>
+                <td>Bi Yan</td>
+                <td>Guojun Li</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
     </div>
 
     <script src="nav-footer.js"></script>
     <!-- Bootstrap JS -->
     <script src="lib/bootstrap@5.1.3/bootstrap.bundle.min.js"></script>
+    <script type="application/javascript">
+      let profiles = document.getElementsByClassName('github-profile');
+      for (let profile of profiles) {
+        for (let name of profile.classList) {
+          if (name.startsWith('ghid-')) {
+            let ghid = name.substring(5);
+            profile.innerHTML = `<img src="https://avatars.githubusercontent.com/u/${ghid}" width="150px" />`;
+            break;
+          }
+        }
+      }
+    </script>
   </body>
 </html>

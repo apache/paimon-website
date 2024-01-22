@@ -10,13 +10,16 @@ const navHtml = `
             <a class="nav-link" href="https://paimon.apache.org/docs/master">Document</a>
         </li>
         <li class="nav-item active px-3">
+            <a class="nav-link" href="https://paimon.apache.org/downloads.html">Downloads</a>
+        </li>
+        <li class="nav-item active px-3">
+            <a class="nav-link" href="https://paimon.apache.org/release-0.6.html">Releases</a>
+        </li>
+        <li class="nav-item active px-3">
             <a class="nav-link" href="https://github.com/apache/incubator-paimon/">Github</a>
         </li>
         <li class="nav-item active px-3">
             <a class="nav-link" href="https://paimon.apache.org/users.html">Who's Using</a>
-        </li>
-        <li class="nav-item active px-3">
-            <a class="nav-link" href="https://paimon.apache.org/release-0.6.html">Releases</a>
         </li>
         <li class="nav-item dropdown px-3">
             <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Community</a>
