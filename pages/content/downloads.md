@@ -30,11 +30,12 @@ Paimon is released as a source artifact, and also through Maven.
 
 ## Source Releases
 
-| RELEASE | DATE | COMMIT | DOWNLOAD |
-|---|---|---|---|
-| 0.6.0 | 2023-12-11 | [5a371a](https://github.com/apache/incubator-paimon/commit/5a371aa614b32081c873fdb76f53547fc1fb6e7a) | [tar](https://www.apache.org/dyn/closer.lua?filename=incubator/paimon/paimon-0.6.0-incubating/apache-paimon-0.6.0-incubating-src.tgz&action=download) ([digest](https://dlcdn.apache.org/incubator/paimon/paimon-0.6.0-incubating/apache-paimon-0.6.0-incubating-src.tgz.sha512), [pgp](https://dlcdn.apache.org/incubator/paimon/paimon-0.6.0-incubating/apache-paimon-0.6.0-incubating-src.tgz.asc)) |
-| 0.5.0 | 2023-09-06 | [79a47f](https://github.com/apache/incubator-paimon/commit/79a47f9eeb77f56fc1f11de2aeca165f2076e94b) | [tar](https://www.apache.org/dyn/closer.lua?filename=incubator/paimon/paimon-0.5.0-incubating/apache-paimon-0.5.0-incubating-src.tgz&action=download) ([digest](https://dlcdn.apache.org/incubator/paimon/paimon-0.5.0-incubating/apache-paimon-0.5.0-incubating-src.tgz.sha512), [pgp](https://dlcdn.apache.org/incubator/paimon/paimon-0.5.0-incubating/apache-paimon-0.5.0-incubating-src.tgz.asc)) |
-| 0.4.0 | 2023-06-10 | [40ac3c](https://github.com/apache/incubator-paimon/commit/40ac3c7d7602171d3c2d71f073c607a02cb9e364) | [tar](https://www.apache.org/dyn/closer.lua?filename=incubator/paimon/paimon-0.4.0-incubating/apache-paimon-0.4.0-incubating-src.tgz&action=download) ([digest](https://dlcdn.apache.org/incubator/paimon/paimon-0.4.0-incubating/apache-paimon-0.4.0-incubating-src.tgz.sha512), [pgp](https://dlcdn.apache.org/incubator/paimon/paimon-0.4.0-incubating/apache-paimon-0.4.0-incubating-src.tgz.asc)) |
+| RELEASE     | DATE       | COMMIT                                                                                                     | DOWNLOAD                                                                                                                                                                                                                                                                                                                                                                                                                                   |
+|-------------|------------|------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| shade-0.6.0 | 2024-01-23 | [24bbf2](https://github.com/apache/incubator-paimon-shade/commit/24bbf2b991cff2402f9c8d37f1b52830a7204174) | [tar](https://www.apache.org/dyn/closer.lua?filename=incubator/paimon/paimon-shade-0.6.0-incubating/apache-paimon-shade-0.6.0-incubating-src.tgz&action=download) ([digest](https://dlcdn.apache.org/incubator/paimon/paimon-shade-0.6.0-incubating/apache-paimon-shade-0.6.0-incubating-src.tgz.sha512), [pgp](https://dlcdn.apache.org/incubator/paimon/paimon-shade-0.6.0-incubating/apache-paimon-shade-0.6.0-incubating-src.tgz.asc)) |
+| 0.6.0       | 2023-12-11 | [5a371a](https://github.com/apache/incubator-paimon/commit/5a371aa614b32081c873fdb76f53547fc1fb6e7a)       | [tar](https://www.apache.org/dyn/closer.lua?filename=incubator/paimon/paimon-0.6.0-incubating/apache-paimon-0.6.0-incubating-src.tgz&action=download)             ([digest](https://dlcdn.apache.org/incubator/paimon/paimon-0.6.0-incubating/apache-paimon-0.6.0-incubating-src.tgz.sha512),             [pgp](https://dlcdn.apache.org/incubator/paimon/paimon-0.6.0-incubating/apache-paimon-0.6.0-incubating-src.tgz.asc))             |
+| 0.5.0       | 2023-09-06 | [79a47f](https://github.com/apache/incubator-paimon/commit/79a47f9eeb77f56fc1f11de2aeca165f2076e94b)       | [tar](https://www.apache.org/dyn/closer.lua?filename=incubator/paimon/paimon-0.5.0-incubating/apache-paimon-0.5.0-incubating-src.tgz&action=download)             ([digest](https://dlcdn.apache.org/incubator/paimon/paimon-0.5.0-incubating/apache-paimon-0.5.0-incubating-src.tgz.sha512),             [pgp](https://dlcdn.apache.org/incubator/paimon/paimon-0.5.0-incubating/apache-paimon-0.5.0-incubating-src.tgz.asc))             |
+| 0.4.0       | 2023-06-10 | [40ac3c](https://github.com/apache/incubator-paimon/commit/40ac3c7d7602171d3c2d71f073c607a02cb9e364)       | [tar](https://www.apache.org/dyn/closer.lua?filename=incubator/paimon/paimon-0.4.0-incubating/apache-paimon-0.4.0-incubating-src.tgz&action=download)             ([digest](https://dlcdn.apache.org/incubator/paimon/paimon-0.4.0-incubating/apache-paimon-0.4.0-incubating-src.tgz.sha512),             [pgp](https://dlcdn.apache.org/incubator/paimon/paimon-0.4.0-incubating/apache-paimon-0.4.0-incubating-src.tgz.asc))             |
 
 To download a source distribution for a particular release, click on the *tar* link.
 
@@ -108,6 +109,22 @@ Please replace `${spark.version}` in the following xml file to the version of Fl
     </dependency>
 </dependencies>
 ```
+{{< /tab >}}
+
+{{< tab "shade" >}}
+
+```xml
+<dependencies>
+    <dependency>
+        <groupId>org.apache.paimon</groupId>
+        <artifactId>paimon-shade-guava-30</artifactId>
+        <version>30.1.1-jre-0.6.0-incubating</version>
+    </dependency>
+</dependencies>
+```
+
+You can also use other shaded artifacts.
+
 {{< /tab >}}
 
 {{< /tabs >}}
