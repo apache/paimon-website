@@ -26,7 +26,7 @@ under the License.
 
 # Apache Paimon 0.7 Available
 
-February 27, 2024 - Paimon Community (dev@paimon.apache.org)
+February 29, 2024 - Paimon Community (dev@paimon.apache.org)
 
 Apache Paimon PPMC has officially released Apache Paimon 0.7.0-incubating version. A total of 34 people contributed to
 this version and completed over 300 Commits. Thank you to all contributors for their support!
@@ -56,7 +56,8 @@ will set checkpoint interval to 180 seconds.
 ## Spark
 
 1. Merge-into supports WHEN NOT MATCHED BY SOURCE semantics.
-2. Multiple optimization for improving query performance.
+2. Sort compact supports Hilbert Curve sorter.
+3. Multiple optimization for improving query performance.
 
 ## Hive
 
@@ -73,7 +74,7 @@ In 0.7, we mainly focus on improving compatibility with Hive.
 In this case, we introduce an option `snapshot.watermark-idle-timeout`. If the flink source idles over the specified 
 timeout duration, the job will force to create a snapshot and thus trigger tag creation.
 
-## New aggregation functions
+## New Aggregation Functions
 
 1. count: counts the values across multiple rows.
 2. product: computes product values across multiple rows.
@@ -87,7 +88,7 @@ define the primary keys of the nested table. If no keys defined, the rows will b
 1. Support Flink standard connector metric `currentEmitEventTimeLag`.
 2. Support `level0FileCount` to show the compaction progress.
 
-## Other improvements
+## Other Improvements
 
 Besides above, there are some useful improvements for existed features:
 
@@ -96,10 +97,9 @@ this time will be read. It is more convenient than `scan.timestamp-millis` and `
 on whether compaction occurs).
 2. For primary key table, now the row kind can be determined by field which is specified by option `rowkind.field`.
 3. Support ignoring delete records in deduplicate mode by option `deduplicate.ignore-delete`.
-4. Spark sort compact support Hilbert Curve sorter.
-5. Support ignoring consumer id when starting streaming reading job by option `consumer.ignore-progress`.
-6. Support new procedure `expire_snapshots` to manually trigger snapshot expiration.
-7. Support new system table `aggregation_fields` to show the aggregation fields information for aggregate or partial-update table.
+4. Support ignoring consumer id when starting streaming reading job by option `consumer.ignore-progress`.
+5. Support new procedure `expire_snapshots` to manually trigger snapshot expiration.
+6. Support new system table `aggregation_fields` to show the aggregation fields information for aggregate or partial-update table.
 
 
 
