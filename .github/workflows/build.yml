@@ -67,9 +67,12 @@ jobs:
           cp -r target/* "$current_dir"
           cd "$current_dir"
       
-      - name: Move out main site
+      - name: Build and move out main site
         run: |
-          mv main/* .
+          cd main
+          python build.py
+          cd ..
+          mv main/target/* .
           rm -rf main
 
       - name: Clone Paimon repo
