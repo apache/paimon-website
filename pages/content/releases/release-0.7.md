@@ -100,10 +100,3 @@ on whether compaction occurs).
 4. Support ignoring consumer id when starting streaming reading job by option `consumer.ignore-progress`.
 5. Support new procedure `expire_snapshots` to manually trigger snapshot expiration.
 6. Support new system table `aggregation_fields` to show the aggregation fields information for aggregate or partial-update table.
-
-
-
-
-
-
-
