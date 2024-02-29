@@ -36,12 +36,11 @@ refer to the following content below.
 
 ## Flink
 
-### Optimization for Lookup Join
+### Lookup Join
 
-In 0.7, lookup join can handle sequence field of dim table correctly. Besides, we have optimized the performance:
-
-1. Introduce bloom filter to speed up the local file lookup.
-2. Use parallel reading and bulk loading to speed up initial data loading of dim table.
+1. Fix bug that lookup join cannot handle sequence field of dim table.
+2. Introduced primary key partial lookup based on Paimon hash lookup for lookup join. 
+3. Use parallel reading and bulk loading to speed up initial data loading of dim table.
 
 ### Paimon CDC
 
@@ -100,3 +99,4 @@ on whether compaction occurs).
 4. Support ignoring consumer id when starting streaming reading job by option `consumer.ignore-progress`.
 5. Support new procedure `expire_snapshots` to manually trigger snapshot expiration.
 6. Support new system table `aggregation_fields` to show the aggregation fields information for aggregate or partial-update table.
+7. Introduce bloom filter to speed up the local file lookup, which can benefit both lookup changelog-producer and flink lookup join.
