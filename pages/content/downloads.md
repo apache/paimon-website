@@ -99,7 +99,7 @@ Please replace `${flink.version}` in the following xml file to the version of Fl
     <dependency>
         <groupId>org.apache.paimon</groupId>
         <artifactId>paimon-flink-${flink.version}</artifactId>
-        <version>0.6.0-incubating</version>
+        <version>0.7.0-incubating</version>
     </dependency>
 </dependencies>
 ```
@@ -117,26 +117,10 @@ Please replace `${spark.version}` in the following xml file to the version of Fl
     <dependency>
         <groupId>org.apache.paimon</groupId>
         <artifactId>paimon-spark-${spark.version}</artifactId>
-        <version>0.6.0-incubating</version>
+        <version>0.7.0-incubating</version>
     </dependency>
 </dependencies>
 ```
-{{< /tab >}}
-
-{{< tab "shade" >}}
-
-```xml
-<dependencies>
-    <dependency>
-        <groupId>org.apache.paimon</groupId>
-        <artifactId>paimon-shade-guava-30</artifactId>
-        <version>30.1.1-jre-0.6.0-incubating</version>
-    </dependency>
-</dependencies>
-```
-
-You can also use other shaded artifacts.
-
 {{< /tab >}}
 
 {{< /tabs >}}
