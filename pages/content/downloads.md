@@ -30,13 +30,10 @@ Paimon is released as a source artifact, and also through Maven.
 
 ## Source Releases
 
-| RELEASE     | DATE       | COMMIT                                                                                                     | DOWNLOAD                                                                                                                                                                                                                                                                                                                                                                                                                                   |
-|-------------|------------|------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| shade-0.6.0 | 2024-01-23 | [24bbf2](https://github.com/apache/incubator-paimon-shade/commit/24bbf2b991cff2402f9c8d37f1b52830a7204174) | [tar](https://www.apache.org/dyn/closer.lua?filename=incubator/paimon/paimon-shade-0.6.0-incubating/apache-paimon-shade-0.6.0-incubating-src.tgz&action=download) ([digest](https://dlcdn.apache.org/incubator/paimon/paimon-shade-0.6.0-incubating/apache-paimon-shade-0.6.0-incubating-src.tgz.sha512), [pgp](https://dlcdn.apache.org/incubator/paimon/paimon-shade-0.6.0-incubating/apache-paimon-shade-0.6.0-incubating-src.tgz.asc)) |
-| 0.7.0       | 2024-02-06 | [65aeaa](https://github.com/apache/incubator-paimon/commit/65aeaaf555e86f97e249e5d578a5a634cb27f401)       | [tar](https://www.apache.org/dyn/closer.lua?filename=incubator/paimon/paimon-0.7.0-incubating/apache-paimon-0.7.0-incubating-src.tgz&action=download)             ([digest](https://dlcdn.apache.org/incubator/paimon/paimon-0.7.0-incubating/apache-paimon-0.7.0-incubating-src.tgz.sha512),             [pgp](https://dlcdn.apache.org/incubator/paimon/paimon-0.7.0-incubating/apache-paimon-0.7.0-incubating-src.tgz.asc))             |                                                                                                                                                                                                                                                                                                                                                                                                                                            |
-| 0.6.0       | 2023-12-11 | [5a371a](https://github.com/apache/incubator-paimon/commit/5a371aa614b32081c873fdb76f53547fc1fb6e7a)       | [tar](https://www.apache.org/dyn/closer.lua?filename=incubator/paimon/paimon-0.6.0-incubating/apache-paimon-0.6.0-incubating-src.tgz&action=download)             ([digest](https://dlcdn.apache.org/incubator/paimon/paimon-0.6.0-incubating/apache-paimon-0.6.0-incubating-src.tgz.sha512),             [pgp](https://dlcdn.apache.org/incubator/paimon/paimon-0.6.0-incubating/apache-paimon-0.6.0-incubating-src.tgz.asc))             |
-| 0.5.0       | 2023-09-06 | [79a47f](https://github.com/apache/incubator-paimon/commit/79a47f9eeb77f56fc1f11de2aeca165f2076e94b)       | [tar](https://www.apache.org/dyn/closer.lua?filename=incubator/paimon/paimon-0.5.0-incubating/apache-paimon-0.5.0-incubating-src.tgz&action=download)             ([digest](https://dlcdn.apache.org/incubator/paimon/paimon-0.5.0-incubating/apache-paimon-0.5.0-incubating-src.tgz.sha512),             [pgp](https://dlcdn.apache.org/incubator/paimon/paimon-0.5.0-incubating/apache-paimon-0.5.0-incubating-src.tgz.asc))             |
-| 0.4.0       | 2023-06-10 | [40ac3c](https://github.com/apache/incubator-paimon/commit/40ac3c7d7602171d3c2d71f073c607a02cb9e364)       | [tar](https://www.apache.org/dyn/closer.lua?filename=incubator/paimon/paimon-0.4.0-incubating/apache-paimon-0.4.0-incubating-src.tgz&action=download)             ([digest](https://dlcdn.apache.org/incubator/paimon/paimon-0.4.0-incubating/apache-paimon-0.4.0-incubating-src.tgz.sha512),             [pgp](https://dlcdn.apache.org/incubator/paimon/paimon-0.4.0-incubating/apache-paimon-0.4.0-incubating-src.tgz.asc))             |
+| RELEASE                       | DATE       | DOWNLOAD                                                                                                                                                                                                                                                                                                                                                                                                                         |
+|-------------------------------|------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 0.7.0-incubating              | 2024-02-06 | [tar](https://downloads.apache.org/incubator/paimon/paimon-0.7.0-incubating/apache-paimon-0.7.0-incubating-src.tgz&action=download)             ([digest](https://downloads.apache.org/incubator/paimon/paimon-0.7.0-incubating/apache-paimon-0.7.0-incubating-src.tgz.sha512),             [pgp](https://downloads.apache.org/incubator/paimon/paimon-0.7.0-incubating/apache-paimon-0.7.0-incubating-src.tgz.asc))             |                                                                                                                                                                                                                                                                                                                                                                                                                                            |
+| 0.6.1-incubating (recommended)| 2024-02-06 | [tar](https://downloads.apache.org/incubator/paimon/paimon-0.6.1-incubating/apache-paimon-0.6.1-incubating-src.tgz&action=download)             ([digest](https://downloads.apache.org/incubator/paimon/paimon-0.6.1-incubating/apache-paimon-0.6.1-incubating-src.tgz.sha512),             [pgp](https://downloads.apache.org/incubator/paimon/paimon-0.6.1-incubating/apache-paimon-0.6.1-incubating-src.tgz.asc))             |
 
 To download a source distribution for a particular release, click on the *tar* link.
 
@@ -48,10 +45,24 @@ For security, hash and signature files are always hosted at [Apache](https://dow
 
 You must verify the integrity of the downloaded file using the PGP signature (.asc file) or a hash (.sha256; .md5 for older releases). For more information why this must be done, please read [Verifying Apache Software Foundation Releases](https://www.apache.org/info/verification.html).
 
+### Verify the hash digest
+
+We use SHA-512 to verify the hash digest of the file.
+
+To check a hash, you can first compute the SHA-512 checksum for the file you just downloaded, and then download the
+digest file for comparison, they should be equal.
+
+Compute the checksum of your file:
+- Windows: certUtil -hashfile file SHA512
+- Linux: sha512sum file
+- Mac: shasum -a 512 file
+
+### Verify the PGP signature
+
 To verify the signature using GPG or PGP, please do the following:
 
 1. Download the release artifact and the corresponding PGP signature from the table above.
-2. Download the [Apache Paimon KEYS file](https://dlcdn.apache.org/incubator/paimon/KEYS).
+2. Download the [Apache Paimon KEYS file](https://downloads.apache.org/incubator/paimon/KEYS).
 3. Import the KEYS file and verify the downloaded artifact using one of the following methods:
 
 ```bash
