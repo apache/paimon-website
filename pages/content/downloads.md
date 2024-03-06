@@ -37,9 +37,9 @@ Paimon is released as a source artifact, and also through Maven.
 
 To download a source distribution for a particular release, click on the *tar* link.
 
-The commit hash links to github, which contains the release’s version control history but does not contain the definitive source artifacts.
-
 For security, hash and signature files are always hosted at [Apache](https://downloads.apache.org/).
+
+All Paimon incubator releases are available via https://archive.apache.org/dist/incubator/paimon/ including checksums and signatures.
 
 ## Verify the Integrity of the Files
 
