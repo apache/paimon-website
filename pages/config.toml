@@ -23,9 +23,9 @@ pygmentsUseClasses = true
 
 [params]
   # The github repository for Apache Paimon
-  Repo = "//github.com/apache/incubator-paimon"
+  Repo = "//github.com/apache/paimon"
 
-  GithubRepo = "https://github.com/apache/incubator-paimon.git"
+  GithubRepo = "https://github.com/apache/paimon.git"
 
   ProjectHomepage = "//paimon.apache.org"
 
