@@ -32,14 +32,14 @@ Paimon is released as a source artifact, and also through Maven.
 
 | RELEASE                       | DATE       | DOWNLOAD                                                                                                                                                                                                                                                                                                                                                                                                                         |
 |-------------------------------|------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| 0.7.0-incubating              | 2024-02-06 | [tar](https://www.apache.org/dyn/closer.lua/incubator/paimon/paimon-0.7.0-incubating/apache-paimon-0.7.0-incubating-src.tgz)             ([digest](https://downloads.apache.org/incubator/paimon/paimon-0.7.0-incubating/apache-paimon-0.7.0-incubating-src.tgz.sha512),             [pgp](https://downloads.apache.org/incubator/paimon/paimon-0.7.0-incubating/apache-paimon-0.7.0-incubating-src.tgz.asc))             |                                                                                                                                                                                                                                                                                                                                                                                                                                            |
-| 0.6.1-incubating (recommended)| 2024-02-06 | [tar](https://www.apache.org/dyn/closer.lua/incubator/paimon/paimon-0.6.1-incubating/apache-paimon-0.6.1-incubating-src.tgz)             ([digest](https://downloads.apache.org/incubator/paimon/paimon-0.6.1-incubating/apache-paimon-0.6.1-incubating-src.tgz.sha512),             [pgp](https://downloads.apache.org/incubator/paimon/paimon-0.6.1-incubating/apache-paimon-0.6.1-incubating-src.tgz.asc))             |
+| 0.7.0-incubating              | 2024-02-06 | [tar](https://www.apache.org/dyn/closer.lua/paimon/paimon-0.7.0-incubating/apache-paimon-0.7.0-incubating-src.tgz)             ([digest](https://downloads.apache.org/paimon/paimon-0.7.0-incubating/apache-paimon-0.7.0-incubating-src.tgz.sha512),             [pgp](https://downloads.apache.org/paimon/paimon-0.7.0-incubating/apache-paimon-0.7.0-incubating-src.tgz.asc))             |                                                                                                                                                                                                                                                                                                                                                                                                                                            |
+| 0.6.1-incubating (recommended)| 2024-02-06 | [tar](https://www.apache.org/dyn/closer.lua/paimon/paimon-0.6.1-incubating/apache-paimon-0.6.1-incubating-src.tgz)             ([digest](https://downloads.apache.org/paimon/paimon-0.6.1-incubating/apache-paimon-0.6.1-incubating-src.tgz.sha512),             [pgp](https://downloads.apache.org/paimon/paimon-0.6.1-incubating/apache-paimon-0.6.1-incubating-src.tgz.asc))             |
 
 To download a source distribution for a particular release, click on the *tar* link.
 
 For security, hash and signature files are always hosted at [Apache](https://downloads.apache.org/).
 
-All Paimon incubator releases are available via https://archive.apache.org/dist/incubator/paimon/ including checksums and signatures.
+All Paimon releases are available via https://archive.apache.org/dist/paimon/ including checksums and signatures.
 
 ## Verify the Integrity of the Files
 
@@ -62,7 +62,7 @@ Compute the checksum of your file:
 To verify the signature using GPG or PGP, please do the following:
 
 1. Download the release artifact and the corresponding PGP signature from the table above.
-2. Download the [Apache Paimon KEYS file](https://downloads.apache.org/incubator/paimon/KEYS).
+2. Download the [Apache Paimon KEYS file](https://downloads.apache.org/paimon/KEYS).
 3. Import the KEYS file and verify the downloaded artifact using one of the following methods:
 
 ```bash

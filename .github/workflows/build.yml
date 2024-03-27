@@ -76,7 +76,7 @@ jobs:
           rm -rf main
 
       - name: Clone Paimon repo
-        run: git clone https://github.com/apache/incubator-paimon.git /tmp/paimon
+        run: git clone https://github.com/apache/paimon.git /tmp/paimon
 
       - name: Build docs
         run: |
