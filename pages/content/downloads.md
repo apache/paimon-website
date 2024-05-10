@@ -30,10 +30,10 @@ Paimon is released as a source artifact, and also through Maven.
 
 ## Source Releases
 
-| RELEASE                       | DATE       | DOWNLOAD                                                                                                                                                                                                                                                                                                                                                                                                                         |
-|-------------------------------|------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| 0.7.0-incubating              | 2024-02-06 | [tar](https://www.apache.org/dyn/closer.lua/paimon/paimon-0.7.0-incubating/apache-paimon-0.7.0-incubating-src.tgz)             ([digest](https://downloads.apache.org/paimon/paimon-0.7.0-incubating/apache-paimon-0.7.0-incubating-src.tgz.sha512),             [pgp](https://downloads.apache.org/paimon/paimon-0.7.0-incubating/apache-paimon-0.7.0-incubating-src.tgz.asc))             |                                                                                                                                                                                                                                                                                                                                                                                                                                            |
-| 0.6.1-incubating (recommended)| 2024-02-06 | [tar](https://www.apache.org/dyn/closer.lua/paimon/paimon-0.6.1-incubating/apache-paimon-0.6.1-incubating-src.tgz)             ([digest](https://downloads.apache.org/paimon/paimon-0.6.1-incubating/apache-paimon-0.6.1-incubating-src.tgz.sha512),             [pgp](https://downloads.apache.org/paimon/paimon-0.6.1-incubating/apache-paimon-0.6.1-incubating-src.tgz.asc))             |
+| RELEASE                        | DATE       | DOWNLOAD                                                                                                                                                                                                                                                                                                                                                                        |
+|--------------------------------|------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 0.8.0                          | 2024-05-10 | [tar](https://www.apache.org/dyn/closer.lua/paimon/paimon-0.8.0/apache-paimon-0.8.0-src.tgz)               ([digest](https://downloads.apache.org/paimon/paimon-0.8.0/apache-paimon-0.8.0-src.tgz.sha512),                [pgp](https://downloads.apache.org/paimon/paimon-0.8.0/apache-paimon-0.8.0-src.tgz.asc))                                                              |                                                                                                                                                                                                                                                                                                                                                                                                                                            |
+| 0.7.0-incubating               | 2024-02-06 | [tar](https://www.apache.org/dyn/closer.lua/paimon/paimon-0.7.0-incubating/apache-paimon-0.7.0-incubating-src.tgz)             ([digest](https://downloads.apache.org/paimon/paimon-0.7.0-incubating/apache-paimon-0.7.0-incubating-src.tgz.sha512),             [pgp](https://downloads.apache.org/paimon/paimon-0.7.0-incubating/apache-paimon-0.7.0-incubating-src.tgz.asc)) |                                                                                                                                                                                                                                                                                                                                                                                                                                            |
 
 To download a source distribution for a particular release, click on the *tar* link.
 
@@ -99,7 +99,7 @@ Please replace `${flink.version}` in the following xml file to the version of Fl
     <dependency>
         <groupId>org.apache.paimon</groupId>
         <artifactId>paimon-flink-${flink.version}</artifactId>
-        <version>0.7.0-incubating</version>
+        <version>0.8.0</version>
     </dependency>
 </dependencies>
 ```
@@ -117,7 +117,7 @@ Please replace `${spark.version}` in the following xml file to the version of Fl
     <dependency>
         <groupId>org.apache.paimon</groupId>
         <artifactId>paimon-spark-${spark.version}</artifactId>
-        <version>0.7.0-incubating</version>
+        <version>0.8.0</version>
     </dependency>
 </dependencies>
 ```
