@@ -60,7 +60,8 @@ This mode will do more work to generate deletion files at checkpoint, so it is r
 jobs have a larger 'execution.checkpointing.timeout' value to avoid checkpoint timeouts.
 
 With the latest 0.8.0 version of paimon-flink, paimon-spark, paimon-hive, and paimon-trino, you can enjoy the optimized
-query performance of this feature, and the Starrocks integration will be included in 3.2.8 & 3.3.2 versions.
+query performance of this feature, and the Starrocks integration will be included in 3.2.8 & 3.3.2 versions, Apache Doris
+integration will be included in 2.0.10 & 2.1.4 versions.
 
 It is recommended to enable this feature for most primary key tables.
 
