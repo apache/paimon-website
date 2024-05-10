@@ -1,6 +1,6 @@
 ---
 title: "Release 0.8"
-weight: 997
+weight: 996
 type: docs
 aliases:
 - /release-0.8.html
