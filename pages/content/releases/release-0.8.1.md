@@ -3,7 +3,7 @@ title: "Release 0.8.1"
 weight: 996
 type: docs
 aliases:
-- /release-0.8.html
+- /release-0.8.1.html
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one
