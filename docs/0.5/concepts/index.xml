@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Concepts on Apache Paimon</title>
+    <link>//paimon.apache.org/docs/0.5/concepts/</link>
+    <description>Recent content in Concepts on Apache Paimon</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language><atom:link href="//paimon.apache.org/docs/0.5/concepts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Overview</title>
+      <link>//paimon.apache.org/docs/0.5/concepts/overview/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/0.5/concepts/overview/</guid>
+      <description>Overview #  Apache Paimon(incubating) is a streaming data lake platform that supports high-speed data ingestion, change data tracking and efficient real-time analytics.
+Architecture #  As shown in the architecture above:
+Read/Write: Paimon supports a versatile way to read/write data and perform OLAP queries.
+ For reads, it supports consuming data  from historical snapshots (in batch mode), from the latest offset (in streaming mode), or reading incremental snapshots in a hybrid way.</description>
+    </item>
+    
+    <item>
+      <title>Basic Concepts</title>
+      <link>//paimon.apache.org/docs/0.5/concepts/basic-concepts/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/0.5/concepts/basic-concepts/</guid>
+      <description>Basic Concepts #  Snapshot #  A snapshot captures the state of a table at some point in time. Users can access the latest data of a table through the latest snapshot. By time traveling, users can also access the previous state of a table through an earlier snapshot.
+Partition #  Paimon adopts the same partitioning concept as Apache Hive to separate data.
+Partitioning is an optional way of dividing a table into related parts based on the values of particular columns like date, city, and department.</description>
+    </item>
+    
+    <item>
+      <title>File Layouts</title>
+      <link>//paimon.apache.org/docs/0.5/concepts/file-layouts/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/0.5/concepts/file-layouts/</guid>
+      <description>File Layouts #  All files of a table are stored under one base directory. Paimon files are organized in a layered style. The following image illustrates the file layout. Starting from a snapshot file, Paimon readers can recursively access all records from the table.
+Snapshot Files #  All snapshot files are stored in the snapshot directory.
+A snapshot file is a JSON file containing information about this snapshot, including</description>
+    </item>
+    
+    <item>
+      <title>File Operations</title>
+      <link>//paimon.apache.org/docs/0.5/concepts/file-operations/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/0.5/concepts/file-operations/</guid>
+      <description>File Operations #  This article is specifically designed to clarify the impact that various file operations have on files.
+This page provides concrete examples and practical tips for effectively managing them. Furthermore, through an in-depth exploration of operations such as commit and compact, we aim to offer insights into the creation and updates of files.
+Prerequisite #  Before delving further into this page, please ensure that you have read through the following sections:</description>
+    </item>
+    
+    <item>
+      <title>Primary Key Table</title>
+      <link>//paimon.apache.org/docs/0.5/concepts/primary-key-table/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/0.5/concepts/primary-key-table/</guid>
+      <description>Primary Key Table #  Changelog table is the default table type when creating a table. Users can insert, update or delete records in the table.
+Primary keys consist of a set of columns that contain unique values for each record. Paimon enforces data ordering by sorting the primary key within each bucket, allowing users to achieve high performance by applying filtering conditions on the primary key.
+By defining primary keys on a changelog table, users can access the following features.</description>
+    </item>
+    
+    <item>
+      <title>Append Only Table</title>
+      <link>//paimon.apache.org/docs/0.5/concepts/append-only-table/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/0.5/concepts/append-only-table/</guid>
+      <description>Append Only Table #  If a table does not have a primary key defined, it is an append-only table by default. Separated by the definition of bucket, we have two different append-only mode: &amp;ldquo;Append For Queue&amp;rdquo; and &amp;ldquo;Append For Scalable Table&amp;rdquo;.
+Append For Queue #  You can only insert a complete record into the table. No delete or update is supported, and you cannot define primary keys. This type of table is suitable for use cases that do not require updates (such as log data synchronization).</description>
+    </item>
+    
+    <item>
+      <title>External Log Systems</title>
+      <link>//paimon.apache.org/docs/0.5/concepts/external-log-systems/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/0.5/concepts/external-log-systems/</guid>
+      <description>External Log Systems #  Aside from underlying table files, changelog of Paimon can also be stored into or consumed from an external log system, such as Kafka. By specifying log.system table property, users can choose which external log system to use.
+If an external log system is used, all records written into table files will also be written into the log system. Changes produced by the streaming queries will thus come from the log system instead of table files.</description>
+    </item>
+    
+  </channel>
+</rss>

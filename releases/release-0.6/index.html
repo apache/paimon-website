@@ -1,0 +1,670 @@
+
+<!DOCTYPE html>
+<html lang="en" dir=>
+
+<head>
+  <meta name="generator" content="Hugo 0.80.0" />
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Apache Paimon 0.6 Available #  December 13, 2023 - Paimon Community (dev@paimon.apache.org)
+Apache Paimon PPMC has officially released Apache Paimon 0.6.0-incubating version. A total of 58 people contributed to this version and completed over 400 Commits. Thank you to all contributors for their support!
+Some outstanding developments are:
+ Flink Paimon CDC almost supports all mainstream data ingestion currently available. Flink 1.18 and Paimon supports CALL procedure, this will make table management easier.">
+<meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="Release 0.6" />
+<meta property="og:description" content="Apache Paimon 0.6 Available #  December 13, 2023 - Paimon Community (dev@paimon.apache.org)
+Apache Paimon PPMC has officially released Apache Paimon 0.6.0-incubating version. A total of 58 people contributed to this version and completed over 400 Commits. Thank you to all contributors for their support!
+Some outstanding developments are:
+ Flink Paimon CDC almost supports all mainstream data ingestion currently available. Flink 1.18 and Paimon supports CALL procedure, this will make table management easier." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="//paimon.apache.org/releases/release-0.6/" />
+
+<title>Release 0.6 | Apache Paimon</title>
+<link rel="manifest" href="/manifest.json">
+<link rel="icon" href="/favicon.png" type="image/x-icon">
+<link rel="stylesheet" href="/book.min.3bc4108a5b57c9a7e6fcae92ff69940435f8c46c4e1e4a311aedc9b2d8e06792.css" integrity="sha256-O8QQiltXyafm/K6S/2mUBDX4xGxOHkoxGu3JstjgZ5I=">
+<script defer src="/en.search.min.bc287a5e9654cdabf74a2257ecef43991ebba7ce0c34898bd77619e95225e1fa.js" integrity="sha256-vCh6XpZUzav3SiJX7O9DmR67p84MNImL13YZ6VIl4fo="></script>
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+  
+
+<link rel="stylesheet" type="text/css" href="//paimon.apache.org/font-awesome/css/font-awesome.min.css">
+<script src="//paimon.apache.org/js/anchor.min.js"></script>
+<script src="//paimon.apache.org/js/flink.js"></script>
+
+
+  
+  <script>
+    var _paq = window._paq = window._paq || [];
+     
+     
+    _paq.push(['disableCookies']);
+     
+    _paq.push(["setDomains", ["*.flink.apache.org","*.nightlies.apache.org/flink"]]);
+    _paq.push(['trackPageView']);
+    _paq.push(['enableLinkTracking']);
+    (function() {
+      var u="//matomo.privacy.apache.org/";
+      _paq.push(['setTrackerUrl', u+'matomo.php']);
+      _paq.push(['setSiteId', '1']);
+      var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+      g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+    })();
+  </script>
+  
+</head>
+
+<body dir=>
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      
+  
+
+<nav>
+
+
+<a id="logo" href="//paimon.apache.org">
+    <img width="100%" src="//paimon.apache.org/paimon_black.svg">
+</a>
+<p style="text-align:right"></p>
+
+<div class="book-search">
+  <input type="text" id="book-search-input" placeholder="Search" aria-label="Search" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/downloads/" class="">Downloads</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-23530e8a89b9ff74f008983e690a9935" class="toggle" checked />
+    <label for="section-23530e8a89b9ff74f008983e690a9935" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em">Releases</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/releases/release-0.8/" class="">Release 0.8</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/releases/release-0.8.1/" class="">Release 0.8.1</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/releases/release-0.7/" class="">Release 0.7</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/releases/release-0.6/" class=" active">Release 0.6</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/releases/release-0.5/" class="">Release 0.5</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/releases/release-0.4/" class="">Release 0.4</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var menu=document.querySelector("aside.book-menu nav");addEventListener("beforeunload",function(event){localStorage.setItem("menu.scrollTop",menu.scrollTop);});menu.scrollTop=localStorage.getItem("menu.scrollTop");})();</script>
+
+
+ 
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <strong>Release 0.6</strong>
+
+  <label for="toc-control">
+    
+    <img src="/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden clearfix">
+    
+  
+
+<nav id="TableOfContents"><h3>On This Page <button class="toc" onclick="collapseToc()"><i class="fa fa-compress" aria-hidden="true"></i></button></h3>
+  <ul>
+    <li><a href="#flink">Flink</a>
+      <ul>
+        <li><a href="#paimon-cdc">Paimon CDC</a></li>
+        <li><a href="#flink-batch-source">Flink Batch Source</a></li>
+        <li><a href="#flink-streaming-source">Flink Streaming Source</a></li>
+        <li><a href="#flink-time-travel">Flink Time Travel</a></li>
+        <li><a href="#flink-call-procedures">Flink Call Procedures</a></li>
+        <li><a href="#committer-improvement">Committer Improvement</a></li>
+      </ul>
+    </li>
+    <li><a href="#primary-key-table">Primary Key Table</a>
+      <ul>
+        <li><a href="#cross-partition-update">Cross Partition Update</a></li>
+        <li><a href="#read-optimized">Read Optimized</a></li>
+        <li><a href="#partial-update">Partial Update</a></li>
+        <li><a href="#compaction">Compaction</a></li>
+      </ul>
+    </li>
+    <li><a href="#append-table">Append Table</a></li>
+    <li><a href="#tag-management">Tag Management</a>
+      <ul>
+        <li><a href="#upsert-to-partitioned">Upsert To Partitioned</a></li>
+        <li><a href="#tag-with-flink-savepoint">Tag with Flink Savepoint</a></li>
+      </ul>
+    </li>
+    <li><a href="#formats">Formats</a></li>
+    <li><a href="#metrics-system">Metrics System</a></li>
+    <li><a href="#paimon-spark">Paimon Spark</a></li>
+    <li><a href="#paimon-trino">Paimon Trino</a></li>
+    <li><a href="#paimon-presto">Paimon Presto</a></li>
+    <li><a href="#whats-next">What&rsquo;s next?</a></li>
+  </ul>
+</nav>
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown"><!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<h1 id="apache-paimon-06-available">
+  Apache Paimon 0.6 Available
+  <a class="anchor" href="#apache-paimon-06-available">#</a>
+</h1>
+<p>December 13, 2023 - Paimon Community (<a href="mailto:dev@paimon.apache.org">dev@paimon.apache.org</a>)</p>
+<p>Apache Paimon PPMC has officially released Apache Paimon 0.6.0-incubating version. A total of 58 people contributed to
+this version and completed over 400 Commits. Thank you to all contributors for their support!</p>
+<p>Some outstanding developments are:</p>
+<ol>
+<li>Flink Paimon CDC almost supports all mainstream data ingestion currently available.</li>
+<li>Flink 1.18 and Paimon supports CALL procedure, this will make table management easier.</li>
+<li>Cross partition update is available for production!</li>
+<li>Read-optimized table is introduced to enhance query performance.</li>
+<li>Append scalable mode is available for production!</li>
+<li>Paimon Presto module is available for production!</li>
+<li>Metrics system is integrated to Flink Metrics.</li>
+<li>Spark Paimon has made tremendous progress.</li>
+</ol>
+<p>For details, please refer to the following text.</p>
+<h2 id="flink">
+  Flink
+  <a class="anchor" href="#flink">#</a>
+</h2>
+<h3 id="paimon-cdc">
+  Paimon CDC
+  <a class="anchor" href="#paimon-cdc">#</a>
+</h3>
+<p>Paimon CDC integrates Flink CDC, Kafka, Pulsar, etc., and provides comprehensive support in version 0.6:</p>
+<ol>
+<li>Kafka CDC supports formats: Canal Json, Debezium Json, Maxwell and OGG.</li>
+<li>Pulsar CDC is added, both Table Sync and Database Sync.</li>
+<li>Mongo CDC is available for production!</li>
+</ol>
+<h3 id="flink-batch-source">
+  Flink Batch Source
+  <a class="anchor" href="#flink-batch-source">#</a>
+</h3>
+<p>By default, the parallelism of batch reads is the same as the number of splits, while the parallelism of stream reads
+is the same as the number of buckets, but not greater than scan.infer-parallelism.max (Default is 1024).</p>
+<h3 id="flink-streaming-source">
+  Flink Streaming Source
+  <a class="anchor" href="#flink-streaming-source">#</a>
+</h3>
+<p>Consumer-id is available for production!</p>
+<p>You can specify the consumer-id when streaming read table record consuming snapshot id in Paimon, the newly started 
+job can continue to consume from the previous progress without resuming from the state. You can also set consumer.mode
+to at-least-once to get better checkpoint time.</p>
+<h3 id="flink-time-travel">
+  Flink Time Travel
+  <a class="anchor" href="#flink-time-travel">#</a>
+</h3>
+<p>Flink 1.18 SQL supports Time Travel Query (You can also use dynamic option):</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">t</span> <span class="k">FOR</span> <span class="n">SYSTEM_TIME</span> <span class="k">AS</span> <span class="k">OF</span> <span class="k">TIMESTAMP</span> <span class="s1">&#39;2023-01-01 00:00:00&#39;</span><span class="p">;</span>
+</code></pre></div><h3 id="flink-call-procedures">
+  Flink Call Procedures
+  <a class="anchor" href="#flink-call-procedures">#</a>
+</h3>
+<p>Flink 1.18 SQL supports Call Procedures:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Procedure Name</th>
+<th style="text-align:center">Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">compact</td>
+<td style="text-align:center">CALL sys.compact(&lsquo;default.T&rsquo;, &lsquo;p=0&rsquo;, &lsquo;zorder&rsquo;, &lsquo;a,b&rsquo;, &lsquo;sink.parallelism=4&rsquo;)</td>
+</tr>
+<tr>
+<td style="text-align:center">compact_database</td>
+<td style="text-align:center">CALL sys.compact_database(&lsquo;db1</td>
+</tr>
+<tr>
+<td style="text-align:center">create_tag</td>
+<td style="text-align:center">CALL sys.create_tag(&lsquo;default.T&rsquo;, &lsquo;my_tag&rsquo;, 10)</td>
+</tr>
+<tr>
+<td style="text-align:center">delete_tag</td>
+<td style="text-align:center">CALL sys.delete_tag(&lsquo;default.T&rsquo;, &lsquo;my_tag&rsquo;)</td>
+</tr>
+<tr>
+<td style="text-align:center">merge_into</td>
+<td style="text-align:center">CALL sys.merge_into(&lsquo;default.T&rsquo;, &lsquo;&rsquo;, &lsquo;&rsquo;, &lsquo;default.S&rsquo;, &lsquo;T.id=S.order_id&rsquo;, &lsquo;&rsquo;, &lsquo;price=T.price+20&rsquo;, &lsquo;&rsquo;, &lsquo;*')</td>
+</tr>
+<tr>
+<td style="text-align:center">remove_orphan_files</td>
+<td style="text-align:center">CALL remove_orphan_files(&lsquo;default.T&rsquo;, &lsquo;2023-10-31 12:00:00&rsquo;)</td>
+</tr>
+<tr>
+<td style="text-align:center">reset_consumer</td>
+<td style="text-align:center">CALL sys.reset_consumer(&lsquo;default.T&rsquo;, &lsquo;myid&rsquo;, 10)</td>
+</tr>
+<tr>
+<td style="text-align:center">rollback_to</td>
+<td style="text-align:center">CALL sys.rollback_to(&lsquo;default.T&rsquo;, 10)</td>
+</tr>
+</tbody>
+</table>
+<p>Flink 1.19 will support Named Arguments which will make it easier to use when there are multiple arguments.</p>
+<h3 id="committer-improvement">
+  Committer Improvement
+  <a class="anchor" href="#committer-improvement">#</a>
+</h3>
+<p>The Committee is responsible for submitting metadata, and sometimes it may have bottlenecks that can lead to 
+backpressure operations. In 0.6, we have the following optimizations:</p>
+<ol>
+<li>By default, paimon will delete expired snapshots synchronously. Users can use asynchronous expiration mode by 
+setting snapshot.expire.execution-mode to async to improve performance.</li>
+<li>You can use fine-grained-resource-management of Flink to increase committer heap memory and cpu only.</li>
+</ol>
+<h2 id="primary-key-table">
+  Primary Key Table
+  <a class="anchor" href="#primary-key-table">#</a>
+</h2>
+<h3 id="cross-partition-update">
+  Cross Partition Update
+  <a class="anchor" href="#cross-partition-update">#</a>
+</h3>
+<p>Cross partition update is available for production!</p>
+<p>Currently Flink batch &amp; streaming writes are supported and has been applied by enterprises to production environments!
+How to use Cross partition update:</p>
+<ol>
+<li>Primary keys not contain all partition fields.</li>
+<li>Use dynamic bucket mode, which means bucket is -1.</li>
+</ol>
+<p>This mode directly maintains the mapping of keys to partition and bucket, uses local disks, and initializes indexes by
+reading all existing keys in the table when starting write job. Although maintaining the index is necessary, this mode
+also maintains high throughput performance. Please try it out.</p>
+<h3 id="read-optimized">
+  Read Optimized
+  <a class="anchor" href="#read-optimized">#</a>
+</h3>
+<p>For Primary Key Table, it&rsquo;s a &lsquo;MergeOnRead&rsquo; technology. When reading data, multiple layers of LSM data are merged, and
+the number of parallelism will be limited by the number of buckets. If you want to query fast enough in certain scenarios,
+but can only find older data, you can query from read-optimized table: SELECT * FROM T$ro.</p>
+<p>But the freshness of the data cannot be guaranteed, you can configure &lsquo;full-compaction.delta-commits&rsquo; when writing data
+to ensure that data with a determined latency is read.</p>
+<p>StarRocks and other OLAP systems will release a version to greatly enhance query performance for read-optimized tables
+based on Paimon 0.6.</p>
+<h3 id="partial-update">
+  Partial Update
+  <a class="anchor" href="#partial-update">#</a>
+</h3>
+<p>In 0.6, you can define aggregation functions for the partial-update merge engine with sequence group. This allows you
+to perform special aggregations on certain fields under certain conditions, such as count, sum, etc.</p>
+<h3 id="compaction">
+  Compaction
+  <a class="anchor" href="#compaction">#</a>
+</h3>
+<p>We have introduced some asynchronous techniques to further improve the performance of Compaction! 20%+</p>
+<p>And 0.6 introduces the database compaction, you can run the following command to submit a compaction job for multiple
+database. If you submit a streaming job, the job will continuously monitor new changes to the table and perform
+compactions as needed.</p>
+<h2 id="append-table">
+  Append Table
+  <a class="anchor" href="#append-table">#</a>
+</h2>
+<p>Append scalable mode is available for production!</p>
+<p>By defining &lsquo;bucket&rsquo; = &lsquo;-1&rsquo; to non-primary table, you can assign an append scalable mode for the table. This type of
+table is an upgrade to Hive format. You can use it:</p>
+<ol>
+<li>Spark, Flink Batch Read &amp; Write, including INSERT OVERWRITE support.</li>
+<li>Flink, Spark Streaming Read &amp; Write, Flink will do small files compaction.</li>
+<li>You can sort (z-order) this table, which will greatly accelerate query performance, especially when there are filtering conditions related to sorting keys.</li>
+</ol>
+<p>You can set write-buffer-for-append option for append-only table, to apply situations where a large number of partitions
+are streaming written simultaneously.</p>
+<p>0.6 also introduce Hive Table Migration, Apache Hive supports ORC, Parquet file formats that could be migrated to Paimon.
+When migrating data to a paimon table, the origin table will be permanently disappeared. So please back up your data if
+you still need the original table. The migrated table will be append table. You can use Flink Spark CALL procedure to
+migrate Hive table.</p>
+<p>StarRocks and other OLAP systems will release a version to greatly enhance query performance for append tables based on Paimon 0.6.</p>
+<h2 id="tag-management">
+  Tag Management
+  <a class="anchor" href="#tag-management">#</a>
+</h2>
+<h3 id="upsert-to-partitioned">
+  Upsert To Partitioned
+  <a class="anchor" href="#upsert-to-partitioned">#</a>
+</h3>
+<p>The Tag will maintain the manifests and data files of the snapshot. Offline data warehouses require an immutable view
+every day to ensure the idempotence of calculations. So we created a Tag mechanism to output these views.</p>
+<p>However, the traditional use of Hive data warehouses is more accustomed to using partitions to specify the query&rsquo;s Tag,
+and is more accustomed to using Hive computing engines.</p>
+<p>So, we introduce metastore.tag-to-partition and metastore.tag-to-partition.preview to mapping a non-partitioned primary
+key table to the partition table in Hive metastore, and mapping the partition field to the name of the Tag to be fully
+compatible with Hive.</p>
+<h3 id="tag-with-flink-savepoint">
+  Tag with Flink Savepoint
+  <a class="anchor" href="#tag-with-flink-savepoint">#</a>
+</h3>
+<p>You cannot recover a write job from an old Flink savepoint, which may cause issues with the Paimon table. In 0.6, we
+avoided this situation where an exception is thrown when data anomalies occur, causing the job to fail to start.</p>
+<p>If you want to recover from the old savepoint, we recommend setting sink.savepoint.auto-tag to true to enable the
+feature of automatically creating tags for Flink savepoint.</p>
+<h2 id="formats">
+  Formats
+  <a class="anchor" href="#formats">#</a>
+</h2>
+<p>0.6 upgrates ORC version to 1.8.3, and Parquet version to 1.13.1. ORC natively supports ZSTD in this version, which
+is a compression algorithm with a higher compression rate. We recommend using it when high compression rates are needed.</p>
+<h2 id="metrics-system">
+  Metrics System
+  <a class="anchor" href="#metrics-system">#</a>
+</h2>
+<p>In 0.6, Paimon has built a metrics system to measure the behaviours of reading and writing, Paimon has supported
+built-in metrics to measure operations of commits, scans, writes and compactions, which can be bridged to computing
+engine like Flink. The most important for streaming read is currentFetchEventTimeLag.</p>
+<h2 id="paimon-spark">
+  Paimon Spark
+  <a class="anchor" href="#paimon-spark">#</a>
+</h2>
+<ol>
+<li>Support Spark 3.5</li>
+<li>Structured Streaming: Supports serving as a Streaming Source, supports source side traffic control through custom read triggers, and supports stream read changelog</li>
+<li>Row Level Operation: DELETE optimization, supporting UPDATE and MERGE INTO</li>
+<li>Call Procedure: Add compact and migrate_table, migrate_file, remove_orphan_files, create_tag, delete_tag, rollback</li>
+<li>Query optimization: Push down filter optimization, support for Push down limit, and runtime filter (DPP)</li>
+<li>Other: Truncate Table optimization, support for CTAS, support for Truncate Partition</li>
+</ol>
+<h2 id="paimon-trino">
+  Paimon Trino
+  <a class="anchor" href="#paimon-trino">#</a>
+</h2>
+<p>The Paimon Trino module mainly performs the following tasks to accelerate queries:</p>
+<ol>
+<li>Optimize the issue of converting pages to avoid memory overflow caused by large pages</li>
+<li>Implemented Limit Pushdown and can combine partition pruning</li>
+</ol>
+<h2 id="paimon-presto">
+  Paimon Presto
+  <a class="anchor" href="#paimon-presto">#</a>
+</h2>
+<p>The Paimon Presto module is available for production! The following capabilities have been added:</p>
+<ol>
+<li>Implement Filter Pushdown, which allows Paimon Presto to be available for production</li>
+<li>Use the Inject mode, which allows Paimon Catalog to reside in the process and improve query speed</li>
+</ol>
+<h2 id="whats-next">
+  What&rsquo;s next?
+  <a class="anchor" href="#whats-next">#</a>
+</h2>
+<p>Report your requirements!</p>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  
+
+
+
+
+<a href="//github.com/apache/paimon/edit//docs/content/releases/release-0.6.md" style="color:black"><i class="fa fa-edit fa-fw"></i>Edit This Page</a>
+
+
+ 
+        
+      </footer>
+
+      
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      
+  
+
+<nav id="TableOfContents"><h3>On This Page <button class="toc" onclick="collapseToc()"><i class="fa fa-compress" aria-hidden="true"></i></button></h3>
+  <ul>
+    <li><a href="#flink">Flink</a>
+      <ul>
+        <li><a href="#paimon-cdc">Paimon CDC</a></li>
+        <li><a href="#flink-batch-source">Flink Batch Source</a></li>
+        <li><a href="#flink-streaming-source">Flink Streaming Source</a></li>
+        <li><a href="#flink-time-travel">Flink Time Travel</a></li>
+        <li><a href="#flink-call-procedures">Flink Call Procedures</a></li>
+        <li><a href="#committer-improvement">Committer Improvement</a></li>
+      </ul>
+    </li>
+    <li><a href="#primary-key-table">Primary Key Table</a>
+      <ul>
+        <li><a href="#cross-partition-update">Cross Partition Update</a></li>
+        <li><a href="#read-optimized">Read Optimized</a></li>
+        <li><a href="#partial-update">Partial Update</a></li>
+        <li><a href="#compaction">Compaction</a></li>
+      </ul>
+    </li>
+    <li><a href="#append-table">Append Table</a></li>
+    <li><a href="#tag-management">Tag Management</a>
+      <ul>
+        <li><a href="#upsert-to-partitioned">Upsert To Partitioned</a></li>
+        <li><a href="#tag-with-flink-savepoint">Tag with Flink Savepoint</a></li>
+      </ul>
+    </li>
+    <li><a href="#formats">Formats</a></li>
+    <li><a href="#metrics-system">Metrics System</a></li>
+    <li><a href="#paimon-spark">Paimon Spark</a></li>
+    <li><a href="#paimon-trino">Paimon Trino</a></li>
+    <li><a href="#paimon-presto">Paimon Presto</a></li>
+    <li><a href="#whats-next">What&rsquo;s next?</a></li>
+  </ul>
+</nav>
+
+ 
+    </aside>
+    <aside class="expand-toc">
+      <button class="toc" onclick="expandToc()">
+        <i class="fa fa-expand" aria-hidden="true"></i>
+      </button>
+    </aside>
+    
+  </main>
+
+  
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

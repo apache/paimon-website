@@ -1,0 +1,2082 @@
+
+<!DOCTYPE html>
+<html lang="en" dir=>
+
+<head>
+  <meta name="generator" content="Hugo 0.80.0" />
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Writing Tables #  You can use the INSERT statement to inserts new rows into a table or overwrites the existing data in the table. The inserted rows can be specified by value expressions or result from a query.
+Syntax #  INSERT { INTO | OVERWRITE } table_identifier [ part_spec ] [ column_list ] { value_expr | query };   part_spec
+An optional parameter that specifies a comma-separated list of key and value pairs for partitions.">
+<meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="Writing Tables" />
+<meta property="og:description" content="Writing Tables #  You can use the INSERT statement to inserts new rows into a table or overwrites the existing data in the table. The inserted rows can be specified by value expressions or result from a query.
+Syntax #  INSERT { INTO | OVERWRITE } table_identifier [ part_spec ] [ column_list ] { value_expr | query };   part_spec
+An optional parameter that specifies a comma-separated list of key and value pairs for partitions." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="//paimon.apache.org/docs/0.7/how-to/writing-tables/" />
+
+<title>Writing Tables | Apache Paimon</title>
+<link rel="manifest" href="/docs/0.7/manifest.json">
+<link rel="icon" href="/docs/0.7/favicon.png" type="image/x-icon">
+<link rel="stylesheet" href="/docs/0.7/book.min.3bc4108a5b57c9a7e6fcae92ff69940435f8c46c4e1e4a311aedc9b2d8e06792.css" integrity="sha256-O8QQiltXyafm/K6S/2mUBDX4xGxOHkoxGu3JstjgZ5I=">
+<script defer src="/docs/0.7/en.search.min.1dff72878d0b6e149d9770f1bd08760e4e01831a2135a877f13f51e98c48a483.js" integrity="sha256-Hf9yh40LbhSdl3DxvQh2Dk4BgxohNah38T9R6YxIpIM="></script>
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+  
+
+<link rel="stylesheet" type="text/css" href="//paimon.apache.org/docs/0.7/font-awesome/css/font-awesome.min.css">
+<script src="//paimon.apache.org/docs/0.7/js/anchor.min.js"></script>
+<script src="//paimon.apache.org/docs/0.7/js/flink.js"></script>
+
+
+  
+  <script>
+    var _paq = window._paq = window._paq || [];
+     
+     
+    _paq.push(['disableCookies']);
+     
+    _paq.push(["setDomains", ["*.flink.apache.org","*.nightlies.apache.org/flink"]]);
+    _paq.push(['trackPageView']);
+    _paq.push(['enableLinkTracking']);
+    (function() {
+      var u="//matomo.privacy.apache.org/";
+      _paq.push(['setTrackerUrl', u+'matomo.php']);
+      _paq.push(['setSiteId', '1']);
+      var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+      g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+    })();
+  </script>
+  
+</head>
+
+<body dir=>
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      
+  
+
+<nav>
+
+
+<a id="logo" href="//paimon.apache.org/docs/0.7">
+    <img width="100%" src="//paimon.apache.org/docs/0.7/paimon_black.svg">
+</a>
+<p style="text-align:right">0.7.0-incubating</p>
+
+<div class="book-search">
+  <input type="text" id="book-search-input" placeholder="Search" aria-label="Search" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-dc8a1c63e6da60163016ce21cae1faa0" class="toggle"  />
+    <label for="section-dc8a1c63e6da60163016ce21cae1faa0" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-book title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Concepts</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.7/concepts/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.7/concepts/basic-concepts/" class="">Basic Concepts</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.7/concepts/file-layouts/" class="">File Layouts</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-1f49809630c045447838995d7f4eb783" class="toggle"  />
+    <label for="section-1f49809630c045447838995d7f4eb783" class="flex justify-between">Primary Key Table<span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.7/concepts/primary-key-table/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.7/concepts/primary-key-table/data-distribution/" class="">Data Distribution</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.7/concepts/primary-key-table/merge-engine/" class="">Merge Engine</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.7/concepts/primary-key-table/changelog-producer/" class="">Changelog Producer</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.7/concepts/primary-key-table/sequence-rowkind/" class="">Sequence & Rowkind</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-977deee10c9aba438b61b9c289c8ccdf" class="toggle"  />
+    <label for="section-977deee10c9aba438b61b9c289c8ccdf" class="flex justify-between">Append Table<span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.7/concepts/append-table/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.7/concepts/append-table/append-scalable-table/" class="">Append Scalable Table</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.7/concepts/append-table/append-queue-table/" class="">Append Queue Table</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-90f5541dc4fa46a212e954b9193ea0f9" class="toggle"  />
+    <label for="section-90f5541dc4fa46a212e954b9193ea0f9" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-gear title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Engines</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.7/engines/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.7/engines/flink/" class="">Flink</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.7/engines/spark/" class="">Spark</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.7/engines/hive/" class="">Hive</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.7/engines/presto/" class="">Presto</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.7/engines/trino/" class="">Trino</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-e2d76c106dab115385ef7f124cda2ba4" class="toggle"  />
+    <label for="section-e2d76c106dab115385ef7f124cda2ba4" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-folder title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Filesystems</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.7/filesystems/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.7/filesystems/hdfs/" class="">HDFS</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.7/filesystems/oss/" class="">OSS</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.7/filesystems/s3/" class="">S3</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-f6ca435e98b926845c0060f9e7f85362" class="toggle" checked />
+    <label for="section-f6ca435e98b926845c0060f9e7f85362" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-database title maindish" aria-hidden="true"></i>&nbsp;&nbsp;How to</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.7/how-to/creating-catalogs/" class="">Creating Catalogs</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.7/how-to/creating-tables/" class="">Creating Tables</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.7/how-to/altering-tables/" class="">Altering Tables</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.7/how-to/writing-tables/" class=" active">Writing Tables</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.7/how-to/querying-tables/" class="">Querying Tables</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.7/how-to/system-tables/" class="">System Tables</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.7/how-to/lookup-joins/" class="">Lookup Joins</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-582e435c19ca5fafbf9764337d648e63" class="toggle"  />
+    <label for="section-582e435c19ca5fafbf9764337d648e63" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-database title maindish" aria-hidden="true"></i>&nbsp;&nbsp;CDC Ingestion</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.7/cdc-ingestion/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.7/cdc-ingestion/mysql-cdc/" class="">Mysql CDC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.7/cdc-ingestion/postgres-cdc/" class="">Postgres CDC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.7/cdc-ingestion/kafka-cdc/" class="">Kafka CDC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.7/cdc-ingestion/mongo-cdc/" class="">Mongo CDC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.7/cdc-ingestion/pulsar-cdc/" class="">Pulsar CDC</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-697a4b6a0388d6cfa4f418aba3b4edfe" class="toggle"  />
+    <label for="section-697a4b6a0388d6cfa4f418aba3b4edfe" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-wrench title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Maintenance</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.7/maintenance/write-performance/" class="">Write Performance</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.7/maintenance/read-performance/" class="">Read Performance</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.7/maintenance/dedicated-compaction/" class="">Dedicated Compaction</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.7/maintenance/manage-snapshots/" class="">Manage Snapshots</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.7/maintenance/manage-partition/" class="">Manage Partition</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.7/maintenance/rescale-bucket/" class="">Rescale Bucket</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.7/maintenance/manage-tags/" class="">Manage Tags</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.7/maintenance/metrics/" class="">Metrics</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.7/maintenance/configurations/" class="">Configurations</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-049030059e0dc01edf74ba3d4d259dae" class="toggle"  />
+    <label for="section-049030059e0dc01edf74ba3d4d259dae" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-briefcase title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Program API</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.7/program-api/java-api/" class="">Java API</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.7/program-api/flink-api/" class="">Flink API</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-07c567e5a9f3ce62aea4ff0a1e2dc065" class="toggle"  />
+    <label for="section-07c567e5a9f3ce62aea4ff0a1e2dc065" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-briefcase title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Migration</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.7/migration/migration-from-hive/" class="">Migration From Hive</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.7/migration/upsert-to-partitioned/" class="">Upsert To Partitioned</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  	<br/>
+  
+  
+    <input type="checkbox" id="section-8c828bcf882f666cdd6821a70cc768ee" class="toggle"  />
+    <label for="section-8c828bcf882f666cdd6821a70cc768ee" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-sitemap title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Project</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.7/project/roadmap/" class="">Roadmap</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.7/project/download/" class="">Download</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.7/project/contributing/" class="">Contributing</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-392fc6f653ae23ff676811656a71ebbf" class="toggle"  />
+    <label for="section-392fc6f653ae23ff676811656a71ebbf" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-sitemap title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Learn Paimon</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.7/learn-paimon/understand-files/" class="">Understand Files</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br/>
+<hr class="menu-break">
+
+<a href="//paimon.apache.org" style="color:black;margin-bottom:0.5em"><i class="link fa fa-external-link title" aria-hidden="true"></i> Project Homepage</a>
+<br/>
+
+<a href="//paimon.apache.org/docs/master/api/java/" style="color:black;margin-bottom:0.5em"><i class="link fa fa-external-link title" aria-hidden="true"></i> JavaDocs</a>
+<br/>
+
+<hr class="menu-break">
+<li style="list-style-type: none">
+  <br>
+  <input type="checkbox" id="section-version-picker" class="toggle">
+  <label for="section-version-picker" class="flex justify-between">
+     <div style="font-weight:450;margin-bottom:0.5em">Pick Docs Version</div>
+     <span>▾</span>
+  </label>
+  <ul>
+    <a href="//paimon.apache.org/docs/0.7">
+      0.7 (✓)
+    </a>
+    <hr class="menu-break">
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/master">
+          master
+        </a>
+      </li>
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/0.7">
+          stable
+        </a>
+      </li>
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/0.6">
+          0.6
+        </a>
+      </li>
+    
+    <hr class="menu-break">
+    <li>
+      <a href="//paimon.apache.org/docs/0.7/versions">
+          All Versions
+      </a>
+    </li>
+  </ul>
+</li>
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var menu=document.querySelector("aside.book-menu nav");addEventListener("beforeunload",function(event){localStorage.setItem("menu.scrollTop",menu.scrollTop);});menu.scrollTop=localStorage.getItem("menu.scrollTop");})();</script>
+
+
+ 
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/docs/0.7/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <strong>Writing Tables</strong>
+
+  <label for="toc-control">
+    
+    <img src="/docs/0.7/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden clearfix">
+    
+  
+
+<nav id="TableOfContents"><h3>On This Page <button class="toc" onclick="collapseToc()"><i class="fa fa-compress" aria-hidden="true"></i></button></h3>
+  <ul>
+    <li><a href="#syntax">Syntax</a>
+      <ul>
+        <li><a href="#write-nullable-field-to-not-null-field">Write Nullable field to Not-null field</a></li>
+      </ul>
+    </li>
+    <li><a href="#applying-recordschanges-to-tables">Applying Records/Changes to Tables</a></li>
+    <li><a href="#overwriting">Overwriting</a>
+      <ul>
+        <li><a href="#overwriting-the-whole-table">Overwriting the Whole Table</a></li>
+        <li><a href="#overwriting-a-partition">Overwriting a Partition</a></li>
+        <li><a href="#dynamic-overwrite">Dynamic Overwrite</a></li>
+      </ul>
+    </li>
+    <li><a href="#truncate-tables">Truncate tables</a></li>
+    <li><a href="#purging-partitions">Purging Partitions</a></li>
+    <li><a href="#updating-tables">Updating tables</a></li>
+    <li><a href="#deleting-from-table">Deleting from table</a></li>
+    <li><a href="#merging-into-table">Merging into table</a></li>
+  </ul>
+</nav>
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+
+
+
+
+
+
+      
+  <article class="markdown"><!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<h1 id="writing-tables">
+  Writing Tables
+  <a class="anchor" href="#writing-tables">#</a>
+</h1>
+<p>You can use the <code>INSERT</code> statement to inserts new rows into a table
+or overwrites the existing data in the table. The inserted rows can
+be specified by value expressions or result from a query.</p>
+<h2 id="syntax">
+  Syntax
+  <a class="anchor" href="#syntax">#</a>
+</h2>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">INSERT</span> <span class="err">{</span> <span class="k">INTO</span> <span class="o">|</span> <span class="n">OVERWRITE</span> <span class="err">}</span> <span class="n">table_identifier</span> <span class="p">[</span> <span class="n">part_spec</span> <span class="p">]</span> <span class="p">[</span> <span class="n">column_list</span> <span class="p">]</span> <span class="err">{</span> <span class="n">value_expr</span> <span class="o">|</span> <span class="n">query</span> <span class="err">}</span><span class="p">;</span>
+</code></pre></div><ul>
+<li>
+<p>part_spec</p>
+<p>An optional parameter that specifies a comma-separated list of key and value pairs for partitions.
+Note that one can use a typed literal (e.g., date’2019-01-02’) in the partition spec.</p>
+<p>Syntax: PARTITION ( partition_col_name = partition_col_val [ , &hellip; ] )</p>
+</li>
+<li>
+<p>column_list</p>
+<p>An optional parameter that specifies a comma-separated list of columns belonging to the
+table_identifier table.</p>
+<p>Syntax: (col_name1 [, column_name2, &hellip;])</p>
+<blockquote class="book-hint info">
+  <pre><code>All specified columns should exist in the table and not be duplicated from each other.
+It includes all columns except the static partition columns.
+  
+The size of the column list should be exactly the size of the data from VALUES clause or query.
+</code></pre>
+
+</blockquote>
+
+</li>
+<li>
+<p>value_expr</p>
+<p>Specifies the values to be inserted. Either an explicitly specified value or a NULL can be
+inserted. A comma must be used to separate each value in the clause. More than one set of
+values can be specified to insert multiple rows.</p>
+<p>Syntax: VALUES ( { value | NULL } [ , … ] ) [ , ( … ) ]</p>
+<blockquote class="book-hint info">
+  <pre><code>Currently, Flink doesn't support use NULL directly, so the NULL should be cast to actual 
+data type by `CAST (NULL AS data_type)`.
+</code></pre>
+
+</blockquote>
+
+</li>
+</ul>
+<p>For more information, please check the syntax document:</p>
+<p><a href="https://nightlies.apache.org/flink/flink-docs-stable/docs/dev/table/sql/insert/">Flink INSERT Statement</a></p>
+<p><a href="https://spark.apache.org/docs/latest/sql-ref-syntax-dml-insert-table.html">Spark INSERT Statement</a></p>
+<h3 id="write-nullable-field-to-not-null-field">
+  Write Nullable field to Not-null field
+  <a class="anchor" href="#write-nullable-field-to-not-null-field">#</a>
+</h3>
+<p>We cannot insert into a non-null column of one table with a nullable column of another table. Assume that,
+we have a column key1 in table A which is primary key, primary key cannot be null. We have a column key2 in table B,
+which is nullable. If we run a sql like this:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">A</span> <span class="n">key1</span> <span class="k">SELECT</span> <span class="n">key2</span> <span class="k">FROM</span> <span class="n">B</span>
+</code></pre></div><p>We will catch an exception,</p>
+<ul>
+<li>In spark: &ldquo;Cannot write nullable values to non-null column &lsquo;key1&rsquo;.&rdquo;</li>
+<li>In flink: &ldquo;Column &lsquo;key1&rsquo; is NOT NULL, however, a null value is being written into it. &quot;</li>
+</ul>
+<p>Other engines will throw respective exception to announce this. We can use function &ldquo;NVL&rdquo; or &ldquo;COALESCE&rdquo; to work around,
+turn a nullable column into a non-null column to escape exception:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">A</span> <span class="n">key1</span> <span class="k">SELECT</span> <span class="n">COALESCE</span><span class="p">(</span><span class="n">key2</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">non</span><span class="o">-</span><span class="k">null</span> <span class="n">expression</span><span class="o">&gt;</span><span class="p">)</span> <span class="k">FROM</span> <span class="n">B</span><span class="p">;</span>
+</code></pre></div><h2 id="applying-recordschanges-to-tables">
+  Applying Records/Changes to Tables
+  <a class="anchor" href="#applying-recordschanges-to-tables">#</a>
+</h2>
+
+
+
+
+
+<div class="book-tabs"><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Flink"
+    name="tabs-insert-into-example"
+    id="tabs-insert-into-example-0"
+    checked="checked" 
+    onclick="onSwitch('Flink')"
+  />
+  <label for="tabs-insert-into-example-0">Flink</label>
+  <div class="book-tabs-content markdown-inner"><p>Use <code>INSERT INTO</code> to apply records and changes to tables.</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">MyTable</span> <span class="k">SELECT</span> <span class="p">...</span>
+</code></pre></div><p>Paimon supports shuffle data by partition and bucket in sink phase.</p>
+</div><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Spark3"
+    name="tabs-insert-into-example"
+    id="tabs-insert-into-example-1"
+     
+    onclick="onSwitch('Spark3')"
+  />
+  <label for="tabs-insert-into-example-1">Spark3</label>
+  <div class="book-tabs-content markdown-inner"><p>Use <code>INSERT INTO</code> to apply records and changes to tables.</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">MyTable</span> <span class="k">SELECT</span> <span class="p">...</span>
+</code></pre></div></div></div>
+
+<h2 id="overwriting">
+  Overwriting
+  <a class="anchor" href="#overwriting">#</a>
+</h2>
+<p>Note :If <code>spark.sql.sources.partitionOverwriteMode</code> is set to <code>dynamic</code> by default in Spark,
+in order to ensure that the insert overwrite function of the Paimon table can be used normally,
+<code>spark.sql.extensions</code> should be set to <code>org.apache.paimon.spark.extensions.PaimonSparkSessionExtensions</code>.</p>
+<h3 id="overwriting-the-whole-table">
+  Overwriting the Whole Table
+  <a class="anchor" href="#overwriting-the-whole-table">#</a>
+</h3>
+<p>For unpartitioned tables, Paimon supports overwriting the whole table.</p>
+<p>Use <code>INSERT OVERWRITE</code> to overwrite the whole unpartitioned table.</p>
+
+
+
+
+
+<div class="book-tabs"><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Flink"
+    name="tabs-insert-overwrite-unpartitioned-example"
+    id="tabs-insert-overwrite-unpartitioned-example-0"
+    checked="checked" 
+    onclick="onSwitch('Flink')"
+  />
+  <label for="tabs-insert-overwrite-unpartitioned-example-0">Flink</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">INSERT</span> <span class="n">OVERWRITE</span> <span class="n">MyTable</span> <span class="k">SELECT</span> <span class="p">...</span>
+</code></pre></div></div><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Spark"
+    name="tabs-insert-overwrite-unpartitioned-example"
+    id="tabs-insert-overwrite-unpartitioned-example-1"
+     
+    onclick="onSwitch('Spark')"
+  />
+  <label for="tabs-insert-overwrite-unpartitioned-example-1">Spark</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">INSERT</span> <span class="n">OVERWRITE</span> <span class="n">MyTable</span> <span class="k">SELECT</span> <span class="p">...</span>
+</code></pre></div></div></div>
+
+<h3 id="overwriting-a-partition">
+  Overwriting a Partition
+  <a class="anchor" href="#overwriting-a-partition">#</a>
+</h3>
+<p>For partitioned tables, Paimon supports overwriting a partition.</p>
+<p>Use <code>INSERT OVERWRITE</code> to overwrite a partition.</p>
+
+
+
+
+
+<div class="book-tabs"><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Flink"
+    name="tabs-insert-overwrite-partitioned-example"
+    id="tabs-insert-overwrite-partitioned-example-0"
+    checked="checked" 
+    onclick="onSwitch('Flink')"
+  />
+  <label for="tabs-insert-overwrite-partitioned-example-0">Flink</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">INSERT</span> <span class="n">OVERWRITE</span> <span class="n">MyTable</span> <span class="n">PARTITION</span> <span class="p">(</span><span class="n">key1</span> <span class="o">=</span> <span class="n">value1</span><span class="p">,</span> <span class="n">key2</span> <span class="o">=</span> <span class="n">value2</span><span class="p">,</span> <span class="p">...)</span> <span class="k">SELECT</span> <span class="p">...</span>
+</code></pre></div></div><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Spark"
+    name="tabs-insert-overwrite-partitioned-example"
+    id="tabs-insert-overwrite-partitioned-example-1"
+     
+    onclick="onSwitch('Spark')"
+  />
+  <label for="tabs-insert-overwrite-partitioned-example-1">Spark</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">INSERT</span> <span class="n">OVERWRITE</span> <span class="n">MyTable</span> <span class="n">PARTITION</span> <span class="p">(</span><span class="n">key1</span> <span class="o">=</span> <span class="n">value1</span><span class="p">,</span> <span class="n">key2</span> <span class="o">=</span> <span class="n">value2</span><span class="p">,</span> <span class="p">...)</span> <span class="k">SELECT</span> <span class="p">...</span>
+</code></pre></div></div></div>
+
+<h3 id="dynamic-overwrite">
+  Dynamic Overwrite
+  <a class="anchor" href="#dynamic-overwrite">#</a>
+</h3>
+
+
+
+
+
+<div class="book-tabs"><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Flink"
+    name="tabs-dynamic-overwrite"
+    id="tabs-dynamic-overwrite-0"
+    checked="checked" 
+    onclick="onSwitch('Flink')"
+  />
+  <label for="tabs-dynamic-overwrite-0">Flink</label>
+  <div class="book-tabs-content markdown-inner"><p>Flink&rsquo;s default overwrite mode is dynamic partition overwrite (that means Paimon only deletes the partitions
+appear in the overwritten data). You can configure <code>dynamic-partition-overwrite</code> to change it to static overwritten.</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="c1">-- MyTable is a Partitioned Table
+</span><span class="c1"></span>
+<span class="c1">-- Dynamic overwrite
+</span><span class="c1"></span><span class="k">INSERT</span> <span class="n">OVERWRITE</span> <span class="n">MyTable</span> <span class="k">SELECT</span> <span class="p">...</span>
+
+<span class="c1">-- Static overwrite (Overwrite whole table)
+</span><span class="c1"></span><span class="k">INSERT</span> <span class="n">OVERWRITE</span> <span class="n">MyTable</span> <span class="cm">/*+ OPTIONS(&#39;dynamic-partition-overwrite&#39; = &#39;false&#39;) */</span> <span class="k">SELECT</span> <span class="p">...</span>
+</code></pre></div></div><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Spark"
+    name="tabs-dynamic-overwrite"
+    id="tabs-dynamic-overwrite-1"
+     
+    onclick="onSwitch('Spark')"
+  />
+  <label for="tabs-dynamic-overwrite-1">Spark</label>
+  <div class="book-tabs-content markdown-inner"><p>Spark&rsquo;s default overwrite mode is static partition overwrite. To enable dynamic overwritten needs these configs below:</p>
+<div class="highlight"><pre class="chroma"><code class="language-text" data-lang="text">--conf spark.sql.extensions=org.apache.paimon.spark.extensions.PaimonSparkSessionExtensions
+</code></pre></div><div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="c1">-- MyTable is a Partitioned Table
+</span><span class="c1"></span>
+<span class="c1">-- Static overwrite (Overwrite whole table)
+</span><span class="c1"></span><span class="k">INSERT</span> <span class="n">OVERWRITE</span> <span class="n">MyTable</span> <span class="k">SELECT</span> <span class="p">...</span>
+
+<span class="c1">-- Dynamic overwrite
+</span><span class="c1"></span><span class="k">SET</span> <span class="n">spark</span><span class="p">.</span><span class="k">sql</span><span class="p">.</span><span class="n">sources</span><span class="p">.</span><span class="n">partitionOverwriteMode</span><span class="o">=</span><span class="k">dynamic</span><span class="p">;</span>
+<span class="k">INSERT</span> <span class="n">OVERWRITE</span> <span class="n">MyTable</span> <span class="k">SELECT</span> <span class="p">...</span>
+</code></pre></div></div></div>
+
+<h2 id="truncate-tables">
+  Truncate tables
+  <a class="anchor" href="#truncate-tables">#</a>
+</h2>
+
+
+
+
+
+<div class="book-tabs"><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Flink 1.17-"
+    name="tabs-truncate-tables-syntax"
+    id="tabs-truncate-tables-syntax-0"
+    checked="checked" 
+    onclick="onSwitch('Flink 1.17-')"
+  />
+  <label for="tabs-truncate-tables-syntax-0">Flink 1.17-</label>
+  <div class="book-tabs-content markdown-inner"><p>You can use <code>INSERT OVERWRITE</code> to purge tables by inserting empty value.</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">INSERT</span> <span class="n">OVERWRITE</span> <span class="n">MyTable</span> <span class="cm">/*+ OPTIONS(&#39;dynamic-partition-overwrite&#39;=&#39;false&#39;) */</span> <span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">MyTable</span> <span class="k">WHERE</span> <span class="k">false</span><span class="p">;</span>
+</code></pre></div></div><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Flink 1.18"
+    name="tabs-truncate-tables-syntax"
+    id="tabs-truncate-tables-syntax-1"
+     
+    onclick="onSwitch('Flink 1.18')"
+  />
+  <label for="tabs-truncate-tables-syntax-1">Flink 1.18</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">TRUNCATE</span> <span class="k">TABLE</span> <span class="n">MyTable</span><span class="p">;</span>
+</code></pre></div></div><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Spark"
+    name="tabs-truncate-tables-syntax"
+    id="tabs-truncate-tables-syntax-2"
+     
+    onclick="onSwitch('Spark')"
+  />
+  <label for="tabs-truncate-tables-syntax-2">Spark</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">TRUNCATE</span> <span class="k">TABLE</span> <span class="n">MyTable</span><span class="p">;</span>
+</code></pre></div></div></div>
+
+<h2 id="purging-partitions">
+  Purging Partitions
+  <a class="anchor" href="#purging-partitions">#</a>
+</h2>
+<p>Currently, Paimon supports two ways to purge partitions.</p>
+<ol>
+<li>
+<p>Like purging tables, you can use <code>INSERT OVERWRITE</code> to purge data of partitions by inserting empty value to them.</p>
+</li>
+<li>
+<p>Method #1 does not support to drop multiple partitions. In case that you need to drop multiple partitions, you can submit the drop_partition job through <code>flink run</code>.</p>
+</li>
+</ol>
+
+
+
+
+
+<div class="book-tabs"><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Flink"
+    name="tabs-purge-partitions-syntax"
+    id="tabs-purge-partitions-syntax-0"
+    checked="checked" 
+    onclick="onSwitch('Flink')"
+  />
+  <label for="tabs-purge-partitions-syntax-0">Flink</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="c1">-- Syntax
+</span><span class="c1"></span><span class="k">INSERT</span> <span class="n">OVERWRITE</span> <span class="n">MyTable</span> <span class="cm">/*+ OPTIONS(&#39;dynamic-partition-overwrite&#39;=&#39;false&#39;) */</span> 
+<span class="n">PARTITION</span> <span class="p">(</span><span class="n">key1</span> <span class="o">=</span> <span class="n">value1</span><span class="p">,</span> <span class="n">key2</span> <span class="o">=</span> <span class="n">value2</span><span class="p">,</span> <span class="p">...)</span> <span class="k">SELECT</span> <span class="n">selectSpec</span> <span class="k">FROM</span> <span class="n">MyTable</span> <span class="k">WHERE</span> <span class="k">false</span><span class="p">;</span>
+
+<span class="c1">-- The following SQL is an example:
+</span><span class="c1">-- table definition
+</span><span class="c1"></span><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">MyTable</span> <span class="p">(</span>
+    <span class="n">k0</span> <span class="nb">INT</span><span class="p">,</span>
+    <span class="n">k1</span> <span class="nb">INT</span><span class="p">,</span>
+    <span class="n">v</span> <span class="n">STRING</span>
+<span class="p">)</span> <span class="n">PARTITIONED</span> <span class="k">BY</span> <span class="p">(</span><span class="n">k0</span><span class="p">,</span> <span class="n">k1</span><span class="p">);</span>
+
+<span class="c1">-- you can use
+</span><span class="c1"></span><span class="k">INSERT</span> <span class="n">OVERWRITE</span> <span class="n">MyTable</span> <span class="cm">/*+ OPTIONS(&#39;dynamic-partition-overwrite&#39;=&#39;false&#39;) */</span> 
+<span class="n">PARTITION</span> <span class="p">(</span><span class="n">k0</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="k">SELECT</span> <span class="n">k1</span><span class="p">,</span> <span class="n">v</span> <span class="k">FROM</span> <span class="n">MyTable</span> <span class="k">WHERE</span> <span class="k">false</span><span class="p">;</span>
+
+<span class="c1">-- or
+</span><span class="c1"></span><span class="k">INSERT</span> <span class="n">OVERWRITE</span> <span class="n">MyTable</span> <span class="cm">/*+ OPTIONS(&#39;dynamic-partition-overwrite&#39;=&#39;false&#39;) */</span> 
+<span class="n">PARTITION</span> <span class="p">(</span><span class="n">k0</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">k1</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="k">SELECT</span> <span class="n">v</span> <span class="k">FROM</span> <span class="n">MyTable</span> <span class="k">WHERE</span> <span class="k">false</span><span class="p">;</span>
+</code></pre></div></div><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Flink Job"
+    name="tabs-purge-partitions-syntax"
+    id="tabs-purge-partitions-syntax-1"
+     
+    onclick="onSwitch('Flink Job')"
+  />
+  <label for="tabs-purge-partitions-syntax-1">Flink Job</label>
+  <div class="book-tabs-content markdown-inner"><p>Run the following command to submit a drop_partition job for the table.</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">&lt;FLINK_HOME&gt;/bin/flink run <span class="se">\
+</span><span class="se"></span>    /path/to/paimon-flink-action-0.7.0-incubating.jar <span class="se">\
+</span><span class="se"></span>    drop_partition <span class="se">\
+</span><span class="se"></span>    --warehouse &lt;warehouse-path&gt; <span class="se">\
+</span><span class="se"></span>    --database &lt;database-name&gt; <span class="se">\
+</span><span class="se"></span>    --table &lt;table-name&gt; <span class="se">\
+</span><span class="se"></span>    <span class="o">[</span>--partition &lt;partition_spec&gt; <span class="o">[</span>--partition &lt;partition_spec&gt; ...<span class="o">]]</span> <span class="se">\
+</span><span class="se"></span>    <span class="o">[</span>--catalog_conf &lt;paimon-catalog-conf&gt; <span class="o">[</span>--catalog_conf &lt;paimon-catalog-conf&gt; ...<span class="o">]]</span>
+
+partition_spec:
+<span class="nv">key1</span><span class="o">=</span>value1,key2<span class="o">=</span>value2...
+</code></pre></div><p>For more information of drop_partition, see</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">&lt;FLINK_HOME&gt;/bin/flink run <span class="se">\
+</span><span class="se"></span>    /path/to/paimon-flink-action-0.7.0-incubating.jar <span class="se">\
+</span><span class="se"></span>    drop_partition --help
+</code></pre></div></div></div>
+
+<h2 id="updating-tables">
+  Updating tables
+  <a class="anchor" href="#updating-tables">#</a>
+</h2>
+<blockquote class="book-hint info">
+  <p>Important table properties setting:</p>
+<ol>
+<li>Only <a href="//paimon.apache.org/docs/0.7/concepts/primary-key-table/">primary key table</a> supports this feature.</li>
+<li><a href="//paimon.apache.org/docs/0.7/concepts/primary-key-table/merge-engine/">MergeEngine</a> needs to be <a href="//paimon.apache.org/docs/0.7/concepts/primary-key-table/merge-engine/#deduplicate">deduplicate</a> or <a href="//paimon.apache.org/docs/0.7/concepts/primary-key-table/merge-engine/#partial-update">partial-update</a> to support this feature.</li>
+</ol>
+
+</blockquote>
+
+<blockquote class="book-hint warning">
+  Warning: we do not support updating primary keys.
+</blockquote>
+
+
+
+
+
+
+<div class="book-tabs"><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Flink"
+    name="tabs-update-table-syntax"
+    id="tabs-update-table-syntax-0"
+    checked="checked" 
+    onclick="onSwitch('Flink')"
+  />
+  <label for="tabs-update-table-syntax-0">Flink</label>
+  <div class="book-tabs-content markdown-inner"><p>Currently, Paimon supports updating records by using <code>UPDATE</code> in Flink 1.17 and later versions. You can perform <code>UPDATE</code> in Flink&rsquo;s <code>batch</code> mode.</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="c1">-- Syntax
+</span><span class="c1"></span><span class="k">UPDATE</span> <span class="n">table_identifier</span> <span class="k">SET</span> <span class="n">column1</span> <span class="o">=</span> <span class="n">value1</span><span class="p">,</span> <span class="n">column2</span> <span class="o">=</span> <span class="n">value2</span><span class="p">,</span> <span class="p">...</span> <span class="k">WHERE</span> <span class="n">condition</span><span class="p">;</span>
+
+<span class="c1">-- The following SQL is an example:
+</span><span class="c1">-- table definition
+</span><span class="c1"></span><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">MyTable</span> <span class="p">(</span>
+	<span class="n">a</span> <span class="n">STRING</span><span class="p">,</span>
+	<span class="n">b</span> <span class="nb">INT</span><span class="p">,</span>
+	<span class="k">c</span> <span class="nb">INT</span><span class="p">,</span>
+	<span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="k">NOT</span> <span class="n">ENFORCED</span>
+<span class="p">)</span> <span class="k">WITH</span> <span class="p">(</span> 
+	<span class="s1">&#39;merge-engine&#39;</span> <span class="o">=</span> <span class="s1">&#39;deduplicate&#39;</span> 
+<span class="p">);</span>
+
+<span class="c1">-- you can use
+</span><span class="c1"></span><span class="k">UPDATE</span> <span class="n">MyTable</span> <span class="k">SET</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="k">c</span> <span class="o">=</span> <span class="mi">2</span> <span class="k">WHERE</span> <span class="n">a</span> <span class="o">=</span> <span class="s1">&#39;myTable&#39;</span><span class="p">;</span>
+</code></pre></div></div><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Spark"
+    name="tabs-update-table-syntax"
+    id="tabs-update-table-syntax-1"
+     
+    onclick="onSwitch('Spark')"
+  />
+  <label for="tabs-update-table-syntax-1">Spark</label>
+  <div class="book-tabs-content markdown-inner"><p>To enable update needs these configs below:</p>
+<div class="highlight"><pre class="chroma"><code class="language-text" data-lang="text">--conf spark.sql.extensions=org.apache.paimon.spark.extensions.PaimonSparkSessionExtensions
+</code></pre></div><p>spark supports update PrimitiveType and StructType, for example:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="c1">-- Syntax
+</span><span class="c1"></span><span class="k">UPDATE</span> <span class="n">table_identifier</span> <span class="k">SET</span> <span class="n">column1</span> <span class="o">=</span> <span class="n">value1</span><span class="p">,</span> <span class="n">column2</span> <span class="o">=</span> <span class="n">value2</span><span class="p">,</span> <span class="p">...</span> <span class="k">WHERE</span> <span class="n">condition</span><span class="p">;</span>
+
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">T</span> <span class="p">(</span>
+  <span class="n">id</span> <span class="nb">INT</span><span class="p">,</span> 
+  <span class="n">s</span> <span class="n">STRUCT</span><span class="o">&lt;</span><span class="n">c1</span><span class="p">:</span> <span class="nb">INT</span><span class="p">,</span> <span class="n">c2</span><span class="p">:</span> <span class="n">STRING</span><span class="o">&gt;</span><span class="p">,</span> 
+  <span class="n">name</span> <span class="n">STRING</span><span class="p">)</span>
+<span class="n">TBLPROPERTIES</span> <span class="p">(</span>
+  <span class="s1">&#39;primary-key&#39;</span> <span class="o">=</span> <span class="s1">&#39;id&#39;</span><span class="p">,</span> 
+  <span class="s1">&#39;merge-engine&#39;</span> <span class="o">=</span> <span class="s1">&#39;deduplicate&#39;</span>
+<span class="p">);</span>
+
+<span class="c1">-- you can use
+</span><span class="c1"></span><span class="k">UPDATE</span> <span class="n">T</span> <span class="k">SET</span> <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;a_new&#39;</span> <span class="k">WHERE</span> <span class="n">id</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="k">UPDATE</span> <span class="n">T</span> <span class="k">SET</span> <span class="n">s</span><span class="p">.</span><span class="n">c2</span> <span class="o">=</span> <span class="s1">&#39;a_new&#39;</span> <span class="k">WHERE</span> <span class="n">s</span><span class="p">.</span><span class="n">c1</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+</code></pre></div></div></div>
+
+<h2 id="deleting-from-table">
+  Deleting from table
+  <a class="anchor" href="#deleting-from-table">#</a>
+</h2>
+
+
+
+
+
+<div class="book-tabs"><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Flink 1.16-"
+    name="tabs-delete-from-table"
+    id="tabs-delete-from-table-0"
+    checked="checked" 
+    onclick="onSwitch('Flink 1.16-')"
+  />
+  <label for="tabs-delete-from-table-0">Flink 1.16-</label>
+  <div class="book-tabs-content markdown-inner"><p>In Flink 1.16 and previous versions, Paimon only supports deleting records via submitting the &lsquo;delete&rsquo; job through <code>flink run</code>.</p>
+<p>Run the following command to submit a &lsquo;delete&rsquo; job for the table.</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">&lt;FLINK_HOME&gt;/bin/flink run <span class="se">\
+</span><span class="se"></span>    /path/to/paimon-flink-action-0.7.0-incubating.jar <span class="se">\
+</span><span class="se"></span>    delete <span class="se">\
+</span><span class="se"></span>    --warehouse &lt;warehouse-path&gt; <span class="se">\
+</span><span class="se"></span>    --database &lt;database-name&gt; <span class="se">\
+</span><span class="se"></span>    --table &lt;table-name&gt; <span class="se">\
+</span><span class="se"></span>    --where &lt;filter_spec&gt; <span class="se">\
+</span><span class="se"></span>    <span class="o">[</span>--catalog_conf &lt;paimon-catalog-conf&gt; <span class="o">[</span>--catalog_conf &lt;paimon-catalog-conf&gt; ...<span class="o">]]</span>
+    
+filter_spec is equal to the <span class="s1">&#39;WHERE&#39;</span> clause in SQL DELETE statement. Examples:
+    age &gt;<span class="o">=</span> <span class="m">18</span> AND age &lt;<span class="o">=</span> <span class="m">60</span>
+    animal &lt;&gt; <span class="s1">&#39;cat&#39;</span>
+    id &gt; <span class="o">(</span>SELECT count<span class="o">(</span>*<span class="o">)</span> FROM employee<span class="o">)</span>
+</code></pre></div><p>For more information of &lsquo;delete&rsquo;, see</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">&lt;FLINK_HOME&gt;/bin/flink run <span class="se">\
+</span><span class="se"></span>    /path/to/paimon-flink-action-0.7.0-incubating.jar <span class="se">\
+</span><span class="se"></span>    delete --help
+</code></pre></div></div><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Flink 1.17&#43;"
+    name="tabs-delete-from-table"
+    id="tabs-delete-from-table-1"
+     
+    onclick="onSwitch('Flink 1.17\u002b')"
+  />
+  <label for="tabs-delete-from-table-1">Flink 1.17&#43;</label>
+  <div class="book-tabs-content markdown-inner"><blockquote class="book-hint info">
+  <p>Important table properties setting:</p>
+<ol>
+<li>Only primary key tables support this feature.</li>
+<li>If the table has primary keys, <a href="//paimon.apache.org/docs/0.7/concepts/primary-key-table/merge-engine/">MergeEngine</a> needs to be <a href="//paimon.apache.org/docs/0.7/concepts/primary-key-table/merge-engine/#deduplicate">deduplicate</a> to support this feature.</li>
+</ol>
+</blockquote>
+<blockquote class="book-hint warning">
+  Warning: we do not support deleting from table in streaming mode.
+</blockquote>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="c1">-- Syntax
+</span><span class="c1"></span><span class="k">DELETE</span> <span class="k">FROM</span> <span class="n">table_identifier</span> <span class="k">WHERE</span> <span class="n">conditions</span><span class="p">;</span>
+
+<span class="c1">-- The following SQL is an example:
+</span><span class="c1">-- table definition
+</span><span class="c1"></span><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">MyTable</span> <span class="p">(</span>
+    <span class="n">id</span> <span class="nb">BIGINT</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
+    <span class="n">currency</span> <span class="n">STRING</span><span class="p">,</span>
+    <span class="n">rate</span> <span class="nb">BIGINT</span><span class="p">,</span>
+    <span class="n">dt</span> <span class="n">String</span><span class="p">,</span>
+    <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="p">(</span><span class="n">id</span><span class="p">,</span> <span class="n">dt</span><span class="p">)</span> <span class="k">NOT</span> <span class="n">ENFORCED</span>
+<span class="p">)</span> <span class="n">PARTITIONED</span> <span class="k">BY</span> <span class="p">(</span><span class="n">dt</span><span class="p">)</span> <span class="k">WITH</span> <span class="p">(</span> 
+    <span class="s1">&#39;merge-engine&#39;</span> <span class="o">=</span> <span class="s1">&#39;deduplicate&#39;</span> 
+<span class="p">);</span>
+
+<span class="c1">-- you can use
+</span><span class="c1"></span><span class="k">DELETE</span> <span class="k">FROM</span> <span class="n">MyTable</span> <span class="k">WHERE</span> <span class="n">currency</span> <span class="o">=</span> <span class="s1">&#39;UNKNOWN&#39;</span><span class="p">;</span>
+</code></pre></div></div><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Spark"
+    name="tabs-delete-from-table"
+    id="tabs-delete-from-table-2"
+     
+    onclick="onSwitch('Spark')"
+  />
+  <label for="tabs-delete-from-table-2">Spark</label>
+  <div class="book-tabs-content markdown-inner"><blockquote class="book-hint info">
+  <p>Important table properties setting:</p>
+<ol>
+<li>Only primary key tables support this feature.</li>
+<li>If the table has primary keys, <a href="//paimon.apache.org/docs/0.7/concepts/primary-key-table/#merge-engines">MergeEngine</a> needs to be <a href="//paimon.apache.org/docs/0.7/concepts/primary-key-table/#deduplicate">deduplicate</a> to support this feature.</li>
+</ol>
+</blockquote>
+<p>To enable delete needs these configs below:</p>
+<div class="highlight"><pre class="chroma"><code class="language-text" data-lang="text">--conf spark.sql.extensions=org.apache.paimon.spark.extensions.PaimonSparkSessionExtensions
+</code></pre></div><div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">DELETE</span> <span class="k">FROM</span> <span class="n">MyTable</span> <span class="k">WHERE</span> <span class="n">currency</span> <span class="o">=</span> <span class="s1">&#39;UNKNOWN&#39;</span><span class="p">;</span>
+</code></pre></div></div></div>
+
+<h2 id="merging-into-table">
+  Merging into table
+  <a class="anchor" href="#merging-into-table">#</a>
+</h2>
+<p>Paimon supports &ldquo;MERGE INTO&rdquo; via submitting the &lsquo;merge_into&rsquo; job through <code>flink run</code>.</p>
+<blockquote class="book-hint info">
+  <p>Important table properties setting:</p>
+<ol>
+<li>Only <a href="//paimon.apache.org/docs/0.7/concepts/primary-key-table/">primary key table</a> supports this feature.</li>
+<li>The action won&rsquo;t produce UPDATE_BEFORE, so it&rsquo;s not recommended to set &lsquo;changelog-producer&rsquo; = &lsquo;input&rsquo;.</li>
+</ol>
+
+</blockquote>
+
+<p>The design referenced such syntax:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="n">MERGE</span> <span class="k">INTO</span> <span class="n">target</span><span class="o">-</span><span class="k">table</span>
+  <span class="k">USING</span> <span class="n">source_table</span> <span class="o">|</span> <span class="k">source</span><span class="o">-</span><span class="n">expr</span> <span class="k">AS</span> <span class="k">source</span><span class="o">-</span><span class="k">alias</span>
+  <span class="k">ON</span> <span class="n">merge</span><span class="o">-</span><span class="n">condition</span>
+  <span class="k">WHEN</span> <span class="n">MATCHED</span> <span class="p">[</span><span class="k">AND</span> <span class="n">matched</span><span class="o">-</span><span class="n">condition</span><span class="p">]</span>
+    <span class="k">THEN</span> <span class="k">UPDATE</span> <span class="k">SET</span> <span class="n">xxx</span>
+  <span class="k">WHEN</span> <span class="n">MATCHED</span> <span class="p">[</span><span class="k">AND</span> <span class="n">matched</span><span class="o">-</span><span class="n">condition</span><span class="p">]</span>
+    <span class="k">THEN</span> <span class="k">DELETE</span>
+  <span class="k">WHEN</span> <span class="k">NOT</span> <span class="n">MATCHED</span> <span class="p">[</span><span class="k">AND</span> <span class="n">not_matched_condition</span><span class="p">]</span>
+    <span class="k">THEN</span> <span class="k">INSERT</span> <span class="k">VALUES</span> <span class="p">(</span><span class="n">xxx</span><span class="p">)</span>
+  <span class="k">WHEN</span> <span class="k">NOT</span> <span class="n">MATCHED</span> <span class="k">BY</span> <span class="k">SOURCE</span> <span class="p">[</span><span class="k">AND</span> <span class="k">not</span><span class="o">-</span><span class="n">matched</span><span class="o">-</span><span class="k">by</span><span class="o">-</span><span class="k">source</span><span class="o">-</span><span class="n">condition</span><span class="p">]</span>
+    <span class="k">THEN</span> <span class="k">UPDATE</span> <span class="k">SET</span> <span class="n">xxx</span>
+  <span class="k">WHEN</span> <span class="k">NOT</span> <span class="n">MATCHED</span> <span class="k">BY</span> <span class="k">SOURCE</span> <span class="p">[</span><span class="k">AND</span> <span class="k">not</span><span class="o">-</span><span class="n">matched</span><span class="o">-</span><span class="k">by</span><span class="o">-</span><span class="k">source</span><span class="o">-</span><span class="n">condition</span><span class="p">]</span>
+    <span class="k">THEN</span> <span class="k">DELETE</span>
+</code></pre></div><p>The merge_into action use &ldquo;upsert&rdquo; semantics instead of &ldquo;update&rdquo;, which means if the row exists,
+then do update, else do insert. For example, for non-primary-key table, you can update every column,
+but for primary key table, if you want to update primary keys, you have to insert a new row which has
+different primary keys from rows in the table. In this scenario, &ldquo;upsert&rdquo; is useful.</p>
+
+
+
+
+
+<div class="book-tabs"><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Flink Job"
+    name="tabs-merge_into"
+    id="tabs-merge_into-0"
+    checked="checked" 
+    onclick="onSwitch('Flink Job')"
+  />
+  <label for="tabs-merge_into-0">Flink Job</label>
+  <div class="book-tabs-content markdown-inner"><p>Run the following command to submit a &lsquo;merge_into&rsquo; job for the table.</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">&lt;FLINK_HOME&gt;/bin/flink run <span class="se">\
+</span><span class="se"></span>    /path/to/paimon-flink-action-0.7.0-incubating.jar <span class="se">\
+</span><span class="se"></span>    merge_into <span class="se">\
+</span><span class="se"></span>    --warehouse &lt;warehouse-path&gt; <span class="se">\
+</span><span class="se"></span>    --database &lt;database-name&gt; <span class="se">\
+</span><span class="se"></span>    --table &lt;target-table&gt; <span class="se">\
+</span><span class="se"></span>    <span class="o">[</span>--target_as &lt;target-table-alias&gt;<span class="o">]</span> <span class="se">\
+</span><span class="se"></span>    --source_table &lt;source_table-name&gt; <span class="se">\
+</span><span class="se"></span>    <span class="o">[</span>--source_sql &lt;sql&gt; ...<span class="o">]</span><span class="se">\
+</span><span class="se"></span>    --on &lt;merge-condition&gt; <span class="se">\
+</span><span class="se"></span>    --merge_actions &lt;matched-upsert,matched-delete,not-matched-insert,not-matched-by-source-upsert,not-matched-by-source-delete&gt; <span class="se">\
+</span><span class="se"></span>    --matched_upsert_condition &lt;matched-condition&gt; <span class="se">\
+</span><span class="se"></span>    --matched_upsert_set &lt;upsert-changes&gt; <span class="se">\
+</span><span class="se"></span>    --matched_delete_condition &lt;matched-condition&gt; <span class="se">\
+</span><span class="se"></span>    --not_matched_insert_condition &lt;not-matched-condition&gt; <span class="se">\
+</span><span class="se"></span>    --not_matched_insert_values &lt;insert-values&gt; <span class="se">\
+</span><span class="se"></span>    --not_matched_by_source_upsert_condition &lt;not-matched-by-source-condition&gt; <span class="se">\
+</span><span class="se"></span>    --not_matched_by_source_upsert_set &lt;not-matched-upsert-changes&gt; <span class="se">\
+</span><span class="se"></span>    --not_matched_by_source_delete_condition &lt;not-matched-by-source-condition&gt; <span class="se">\
+</span><span class="se"></span>    <span class="o">[</span>--catalog_conf &lt;paimon-catalog-conf&gt; <span class="o">[</span>--catalog_conf &lt;paimon-catalog-conf&gt; ...<span class="o">]]</span>
+    
+You can pass sqls by <span class="s1">&#39;--source_sql &lt;sql&gt; [, --source_sql &lt;sql&gt; ...]&#39;</span> to config environment and create <span class="nb">source</span> table at runtime.
+    
+-- Examples:
+-- Find all orders mentioned in the <span class="nb">source</span> table, <span class="k">then</span> mark as important <span class="k">if</span> the price is above <span class="m">100</span> 
+-- or delete <span class="k">if</span> the price is under 10.
+./flink run <span class="se">\
+</span><span class="se"></span>    /path/to/paimon-flink-action-0.7.0-incubating.jar <span class="se">\
+</span><span class="se"></span>    merge_into <span class="se">\
+</span><span class="se"></span>    --warehouse &lt;warehouse-path&gt; <span class="se">\
+</span><span class="se"></span>    --database &lt;database-name&gt; <span class="se">\
+</span><span class="se"></span>    --table T <span class="se">\
+</span><span class="se"></span>    --source_table S <span class="se">\
+</span><span class="se"></span>    --on <span class="s2">&#34;T.id = S.order_id&#34;</span> <span class="se">\
+</span><span class="se"></span>    --merge_actions <span class="se">\
+</span><span class="se"></span>    matched-upsert,matched-delete <span class="se">\
+</span><span class="se"></span>    --matched_upsert_condition <span class="s2">&#34;T.price &gt; 100&#34;</span> <span class="se">\
+</span><span class="se"></span>    --matched_upsert_set <span class="s2">&#34;mark = &#39;important&#39;&#34;</span> <span class="se">\
+</span><span class="se"></span>    --matched_delete_condition <span class="s2">&#34;T.price &lt; 10&#34;</span> 
+    
+-- For matched order rows, increase the price, and <span class="k">if</span> there is no match, insert the order from the 
+-- <span class="nb">source</span> table:
+./flink run <span class="se">\
+</span><span class="se"></span>    /path/to/paimon-flink-action-0.7.0-incubating.jar <span class="se">\
+</span><span class="se"></span>    merge_into <span class="se">\
+</span><span class="se"></span>    --warehouse &lt;warehouse-path&gt; <span class="se">\
+</span><span class="se"></span>    --database &lt;database-name&gt; <span class="se">\
+</span><span class="se"></span>    --table T <span class="se">\
+</span><span class="se"></span>    --source_table S <span class="se">\
+</span><span class="se"></span>    --on <span class="s2">&#34;T.id = S.order_id&#34;</span> <span class="se">\
+</span><span class="se"></span>    --merge_actions <span class="se">\
+</span><span class="se"></span>    matched-upsert,not-matched-insert <span class="se">\
+</span><span class="se"></span>    --matched_upsert_set <span class="s2">&#34;price = T.price + 20&#34;</span> <span class="se">\
+</span><span class="se"></span>    --not_matched_insert_values * 
+
+-- For not matched by <span class="nb">source</span> order rows <span class="o">(</span>which are in the target table and does not match any row in the
+-- <span class="nb">source</span> table based on the merge-condition<span class="o">)</span>, decrease the price or <span class="k">if</span> the mark is <span class="s1">&#39;trivial&#39;</span>, delete them:
+./flink run <span class="se">\
+</span><span class="se"></span>    /path/to/paimon-flink-action-0.7.0-incubating.jar <span class="se">\
+</span><span class="se"></span>    merge_into <span class="se">\
+</span><span class="se"></span>    --warehouse &lt;warehouse-path&gt; <span class="se">\
+</span><span class="se"></span>    --database &lt;database-name&gt; <span class="se">\
+</span><span class="se"></span>    --table T <span class="se">\
+</span><span class="se"></span>    --source_table S <span class="se">\
+</span><span class="se"></span>    --on <span class="s2">&#34;T.id = S.order_id&#34;</span> <span class="se">\
+</span><span class="se"></span>    --merge_actions <span class="se">\
+</span><span class="se"></span>    not-matched-by-source-upsert,not-matched-by-source-delete <span class="se">\
+</span><span class="se"></span>    --not_matched_by_source_upsert_condition <span class="s2">&#34;T.mark &lt;&gt; &#39;trivial&#39;&#34;</span> <span class="se">\
+</span><span class="se"></span>    --not_matched_by_source_upsert_set <span class="s2">&#34;price = T.price - 20&#34;</span> <span class="se">\
+</span><span class="se"></span>    --not_matched_by_source_delete_condition <span class="s2">&#34;T.mark = &#39;trivial&#39;&#34;</span>
+    
+-- A --source_sql example: 
+-- Create a temporary view S in new catalog and use it as <span class="nb">source</span> table
+./flink run <span class="se">\
+</span><span class="se"></span>    /path/to/paimon-flink-action-0.7.0-incubating.jar <span class="se">\
+</span><span class="se"></span>    merge_into <span class="se">\
+</span><span class="se"></span>    --warehouse &lt;warehouse-path&gt; <span class="se">\
+</span><span class="se"></span>    --database &lt;database-name&gt; <span class="se">\
+</span><span class="se"></span>    --table T <span class="se">\
+</span><span class="se"></span>    --source_sql <span class="s2">&#34;CREATE CATALOG test_cat WITH (...)&#34;</span> <span class="se">\
+</span><span class="se"></span>    --source_sql <span class="s2">&#34;CREATE TEMPORARY VIEW test_cat.`default`.S AS SELECT order_id, price, &#39;important&#39; FROM important_order&#34;</span> <span class="se">\
+</span><span class="se"></span>    --source_table test_cat.default.S <span class="se">\
+</span><span class="se"></span>    --on <span class="s2">&#34;T.id = S.order_id&#34;</span> <span class="se">\
+</span><span class="se"></span>    --merge_actions not-matched-insert<span class="se">\
+</span><span class="se"></span>    --not_matched_insert_values *
+</code></pre></div><p>The term &lsquo;matched&rsquo; explanation:</p>
+<ol>
+<li>matched: changed rows are from target table and each can match a source table row based on
+merge-condition and optional matched-condition (source ∩ target).</li>
+<li>not matched: changed rows are from source table and all rows cannot match any target table
+row based on merge-condition and optional not_matched_condition (source - target).</li>
+<li>not matched by source: changed rows are from target table and all row cannot match any source
+table row based on merge-condition and optional not-matched-by-source-condition (target - source).</li>
+</ol>
+<p>Parameters format:</p>
+<ol>
+<li>matched_upsert_changes:<br>
+col = &lt;source_table&gt;.col | expression [, &hellip;] (Means setting &lt;target_table&gt;.col with given value. Do not
+add &lsquo;&lt;target_table&gt;.&rsquo; before &lsquo;col&rsquo;.)<br>
+Especially, you can use &lsquo;*&rsquo; to set columns with all source columns (require target table&rsquo;s
+schema is equal to source&rsquo;s).</li>
+<li>not_matched_upsert_changes is similar to matched_upsert_changes, but you cannot reference
+source table&rsquo;s column or use &lsquo;*&rsquo;.</li>
+<li>insert_values:<br>
+col1, col2, &hellip;, col_end<br>
+Must specify values of all columns. For each column, you can reference &lt;source_table&gt;.col or
+use an expression.<br>
+Especially, you can use &lsquo;*&rsquo; to insert with all source columns (require target table&rsquo;s schema
+is equal to source&rsquo;s).</li>
+<li>not_matched_condition cannot use target table&rsquo;s columns to construct condition expression.</li>
+<li>not_matched_by_source_condition cannot use source table&rsquo;s columns to construct condition expression.</li>
+</ol>
+<blockquote class="book-hint warning">
+  <ol>
+<li>Target alias cannot be duplicated with existed table name.</li>
+<li>If the source table is not in the current catalog and current database, the source-table-name must be
+qualified (database.table or catalog.database.table if created a new catalog).
+For examples:<br>
+(1) If source table &lsquo;my_source&rsquo; is in &lsquo;my_db&rsquo;, qualify it:<br>
+--source_table &ldquo;my_db.my_source&rdquo;<br>
+(2) Example for sqls:<br>
+When sqls changed current catalog and database, it&rsquo;s OK to not qualify the source table name:<br>
+--source_sql &ldquo;CREATE CATALOG my_cat WITH (&hellip;)&quot;<br>
+--source_sql &ldquo;USE CATALOG my_cat&rdquo;<br>
+--source_sql &ldquo;CREATE DATABASE my_db&rdquo;<br>
+--source_sql &ldquo;USE my_db&rdquo;<br>
+--source_sql &ldquo;CREATE TABLE S &hellip;&quot;<br>
+--source_table S<br>
+but you must qualify it in the following case:<br>
+--source_sql &ldquo;CREATE CATALOG my_cat WITH (&hellip;)&quot;<br>
+--source_sql &ldquo;CREATE TABLE my_cat.`default`.S &hellip;&quot;<br>
+--source_table my_cat.default.S<br>
+You can use just &lsquo;S&rsquo; as source table name in following arguments.</li>
+<li>At least one merge action must be specified.</li>
+<li>If both matched-upsert and matched-delete actions are present, their conditions must both be present too
+(same to not-matched-by-source-upsert and not-matched-by-source-delete). Otherwise, all conditions are optional.</li>
+<li>All conditions, set changes and values should use Flink SQL syntax. To ensure the whole command runs normally
+in Shell, please quote them with &quot;&quot; to escape blank spaces and use &lsquo;\&rsquo; to escape special characters in statement.
+For example:<br>
+--source_sql &ldquo;CREATE TABLE T (k INT) WITH (&lsquo;special-key&rsquo; = &lsquo;123\!')&rdquo;</li>
+</ol>
+</blockquote>
+<p>For more information of &lsquo;merge_into&rsquo;, see</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">&lt;FLINK_HOME&gt;/bin/flink run <span class="se">\
+</span><span class="se"></span>    /path/to/paimon-flink-action-0.7.0-incubating.jar <span class="se">\
+</span><span class="se"></span>    merge_into --help
+</code></pre></div></div></div>
+
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  
+
+
+
+
+<a href="//github.com/apache/incubator-paimon/edit/0.7/docs/content/how-to/writing-tables.md" style="color:black"><i class="fa fa-edit fa-fw"></i>Edit This Page</a>
+
+
+ 
+        
+
+
+<hr style="margin-top: 20px; border: 1px solid #e5e5e5;" />
+
+<table style="border-spacing: 10px;">
+    <tbody>
+    <tr>
+        <td style="width: 30%;">
+            <img src="/docs/0.7/img/incubator_feather_egg_logo.png" style="all: unset; width: 100%;">
+        </td>
+        <td>
+            Apache Paimon is an effort undergoing incubation at The Apache Software Foundation (ASF), sponsored by the
+            Apache Incubator.
+            Incubation is required of all newly accepted projects until a further review indicates that the
+            infrastructure, communications,
+            and decision making process have stabilized in a manner consistent with other successful ASF projects.
+            While incubation status is not necessarily a reflection of the completeness or stability of the code,
+            it does indicate that the project has yet to be fully endorsed by the ASF.
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            Copyright &copy; 2023 The Apache Software Foundation. Apache Paimon, Paimon, and its feather logo are
+            trademarks of The Apache Software Foundation.
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+      </footer>
+
+      
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      
+  
+
+<nav id="TableOfContents"><h3>On This Page <button class="toc" onclick="collapseToc()"><i class="fa fa-compress" aria-hidden="true"></i></button></h3>
+  <ul>
+    <li><a href="#syntax">Syntax</a>
+      <ul>
+        <li><a href="#write-nullable-field-to-not-null-field">Write Nullable field to Not-null field</a></li>
+      </ul>
+    </li>
+    <li><a href="#applying-recordschanges-to-tables">Applying Records/Changes to Tables</a></li>
+    <li><a href="#overwriting">Overwriting</a>
+      <ul>
+        <li><a href="#overwriting-the-whole-table">Overwriting the Whole Table</a></li>
+        <li><a href="#overwriting-a-partition">Overwriting a Partition</a></li>
+        <li><a href="#dynamic-overwrite">Dynamic Overwrite</a></li>
+      </ul>
+    </li>
+    <li><a href="#truncate-tables">Truncate tables</a></li>
+    <li><a href="#purging-partitions">Purging Partitions</a></li>
+    <li><a href="#updating-tables">Updating tables</a></li>
+    <li><a href="#deleting-from-table">Deleting from table</a></li>
+    <li><a href="#merging-into-table">Merging into table</a></li>
+  </ul>
+</nav>
+
+ 
+    </aside>
+    <aside class="expand-toc">
+      <button class="toc" onclick="expandToc()">
+        <i class="fa fa-expand" aria-hidden="true"></i>
+      </button>
+    </aside>
+    
+  </main>
+
+  
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,2052 @@
+
+<!DOCTYPE html>
+<html lang="en" dir=>
+
+<head>
+  <meta name="generator" content="Hugo 0.80.0" />
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Altering Tables #  Changing/Adding Table Properties #  The following SQL sets write-buffer-size table property to 256 MB.
+Flink ALTER TABLE my_table SET ( &#39;write-buffer-size&#39; = &#39;256 MB&#39; ); Spark3 ALTER TABLE my_table SET TBLPROPERTIES ( &#39;write-buffer-size&#39; = &#39;256 MB&#39; ); Trino ALTER TABLE my_table SET PROPERTIES write_buffer_size = &#39;256 MB&#39;;  NOTE: Versions below Trino 368 do not support changing/adding table properties.
+  Rename Table Name #  The following SQL rename the table name to new name.">
+<meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="Altering Tables" />
+<meta property="og:description" content="Altering Tables #  Changing/Adding Table Properties #  The following SQL sets write-buffer-size table property to 256 MB.
+Flink ALTER TABLE my_table SET ( &#39;write-buffer-size&#39; = &#39;256 MB&#39; ); Spark3 ALTER TABLE my_table SET TBLPROPERTIES ( &#39;write-buffer-size&#39; = &#39;256 MB&#39; ); Trino ALTER TABLE my_table SET PROPERTIES write_buffer_size = &#39;256 MB&#39;;  NOTE: Versions below Trino 368 do not support changing/adding table properties.
+  Rename Table Name #  The following SQL rename the table name to new name." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="//paimon.apache.org/docs/0.5/how-to/altering-tables/" />
+
+<title>Altering Tables | Apache Paimon</title>
+<link rel="manifest" href="/docs/0.5/manifest.json">
+<link rel="icon" href="/docs/0.5/favicon.png" type="image/x-icon">
+<link rel="stylesheet" href="/docs/0.5/book.min.3bc4108a5b57c9a7e6fcae92ff69940435f8c46c4e1e4a311aedc9b2d8e06792.css" integrity="sha256-O8QQiltXyafm/K6S/2mUBDX4xGxOHkoxGu3JstjgZ5I=">
+<script defer src="/docs/0.5/en.search.min.45baff9c645deb8b39a64e9342f7813d73087e3394deb1161dbd9e10c97a3107.js" integrity="sha256-Rbr/nGRd64s5pk6TQveBPXMIfjOU3rEWHb2eEMl6MQc="></script>
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+  
+
+<link rel="stylesheet" type="text/css" href="//paimon.apache.org/docs/0.5/font-awesome/css/font-awesome.min.css">
+<script src="//paimon.apache.org/docs/0.5/js/anchor.min.js"></script>
+<script src="//paimon.apache.org/docs/0.5/js/flink.js"></script>
+
+
+  
+  <script>
+    var _paq = window._paq = window._paq || [];
+     
+     
+    _paq.push(['disableCookies']);
+     
+    _paq.push(["setDomains", ["*.flink.apache.org","*.nightlies.apache.org/flink"]]);
+    _paq.push(['trackPageView']);
+    _paq.push(['enableLinkTracking']);
+    (function() {
+      var u="//matomo.privacy.apache.org/";
+      _paq.push(['setTrackerUrl', u+'matomo.php']);
+      _paq.push(['setSiteId', '1']);
+      var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+      g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+    })();
+  </script>
+  
+</head>
+
+<body dir=>
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      
+  
+
+<nav>
+
+
+<a id="logo" href="//paimon.apache.org/docs/0.5">
+    <img width="100%" src="//paimon.apache.org/docs/0.5/paimon_black.svg">
+</a>
+<p style="text-align:right">0.5.0-incubating</p>
+
+<div class="book-search">
+  <input type="text" id="book-search-input" placeholder="Search" aria-label="Search" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-dc8a1c63e6da60163016ce21cae1faa0" class="toggle"  />
+    <label for="section-dc8a1c63e6da60163016ce21cae1faa0" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-book title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Concepts</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/concepts/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/concepts/basic-concepts/" class="">Basic Concepts</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/concepts/file-layouts/" class="">File Layouts</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/concepts/file-operations/" class="">File Operations</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/concepts/primary-key-table/" class="">Primary Key Table</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/concepts/append-only-table/" class="">Append Only Table</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/concepts/external-log-systems/" class="">External Log Systems</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-90f5541dc4fa46a212e954b9193ea0f9" class="toggle"  />
+    <label for="section-90f5541dc4fa46a212e954b9193ea0f9" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-gear title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Engines</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/engines/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/engines/flink/" class="">Flink</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/engines/spark3/" class="">Spark3</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/engines/spark2/" class="">Spark2</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/engines/hive/" class="">Hive</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/engines/presto/" class="">Presto</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/engines/trino/" class="">Trino</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-e2d76c106dab115385ef7f124cda2ba4" class="toggle"  />
+    <label for="section-e2d76c106dab115385ef7f124cda2ba4" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-folder title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Filesystems</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/filesystems/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/filesystems/hdfs/" class="">HDFS</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/filesystems/oss/" class="">OSS</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/filesystems/s3/" class="">S3</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-f6ca435e98b926845c0060f9e7f85362" class="toggle" checked />
+    <label for="section-f6ca435e98b926845c0060f9e7f85362" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-database title maindish" aria-hidden="true"></i>&nbsp;&nbsp;How to</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/how-to/creating-catalogs/" class="">Creating Catalogs</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/how-to/creating-tables/" class="">Creating Tables</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/how-to/altering-tables/" class=" active">Altering Tables</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/how-to/writing-tables/" class="">Writing Tables</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/how-to/querying-tables/" class="">Querying Tables</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/how-to/system-tables/" class="">System Tables</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/how-to/lookup-joins/" class="">Lookup Joins</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/how-to/cdc-ingestion/" class="">CDC Ingestion</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-697a4b6a0388d6cfa4f418aba3b4edfe" class="toggle"  />
+    <label for="section-697a4b6a0388d6cfa4f418aba3b4edfe" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-wrench title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Maintenance</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/maintenance/write-performance/" class="">Write Performance</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/maintenance/read-performance/" class="">Read Performance</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/maintenance/multiple-writers/" class="">Multiple Writers</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/maintenance/manage-snapshots/" class="">Manage Snapshots</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/maintenance/manage-partition/" class="">Manage Partition</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/maintenance/manage-files/" class="">Manage Files</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/maintenance/rescale-bucket/" class="">Rescale Bucket</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/maintenance/manage-tags/" class="">Manage Tags</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/maintenance/configurations/" class="">Configurations</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-1b3eda2e8317c0686a4d41cefa0a3453" class="toggle"  />
+    <label for="section-1b3eda2e8317c0686a4d41cefa0a3453" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-briefcase title maindish" aria-hidden="true"></i>&nbsp;&nbsp;API</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/api/java-api/" class="">Java API</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/api/flink-api/" class="">Flink API</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  	<br/>
+  
+  
+    <input type="checkbox" id="section-8c828bcf882f666cdd6821a70cc768ee" class="toggle"  />
+    <label for="section-8c828bcf882f666cdd6821a70cc768ee" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-sitemap title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Project</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/project/roadmap/" class="">Roadmap</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/project/download/" class="">Download</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/project/contributing/" class="">Contributing</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br/>
+<hr class="menu-break">
+
+<a href="//paimon.apache.org" style="color:black;margin-bottom:0.5em"><i class="link fa fa-external-link title" aria-hidden="true"></i> Project Homepage</a>
+<br/>
+
+<a href="//paimon.apache.org/docs/master/api/java/" style="color:black;margin-bottom:0.5em"><i class="link fa fa-external-link title" aria-hidden="true"></i> JavaDocs</a>
+<br/>
+
+<hr class="menu-break">
+<li style="list-style-type: none">
+  <br>
+  <input type="checkbox" id="section-version-picker" class="toggle">
+  <label for="section-version-picker" class="flex justify-between">
+     <div style="font-weight:450;margin-bottom:0.5em">Pick Docs Version</div>
+     <span>▾</span>
+  </label>
+  <ul>
+    <a href="//paimon.apache.org/docs/0.5">
+      0.5 (✓)
+    </a>
+    <hr class="menu-break">
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/master">
+          master
+        </a>
+      </li>
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/0.5">
+          stable
+        </a>
+      </li>
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/0.4">
+          0.4
+        </a>
+      </li>
+    
+    <hr class="menu-break">
+    <li>
+      <a href="//paimon.apache.org/docs/0.5/versions">
+          All Versions
+      </a>
+    </li>
+  </ul>
+</li>
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var menu=document.querySelector("aside.book-menu nav");addEventListener("beforeunload",function(event){localStorage.setItem("menu.scrollTop",menu.scrollTop);});menu.scrollTop=localStorage.getItem("menu.scrollTop");})();</script>
+
+
+ 
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/docs/0.5/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <strong>Altering Tables</strong>
+
+  <label for="toc-control">
+    
+    <img src="/docs/0.5/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden clearfix">
+    
+  
+
+<nav id="TableOfContents"><h3>On This Page <button class="toc" onclick="collapseToc()"><i class="fa fa-compress" aria-hidden="true"></i></button></h3>
+  <ul>
+    <li><a href="#changingadding-table-properties">Changing/Adding Table Properties</a></li>
+    <li><a href="#rename-table-name">Rename Table Name</a></li>
+    <li><a href="#removing-table-properties">Removing Table Properties</a></li>
+    <li><a href="#adding-new-columns">Adding New Columns</a></li>
+    <li><a href="#renaming-column-name">Renaming Column Name</a></li>
+    <li><a href="#dropping-columns">Dropping Columns</a></li>
+    <li><a href="#changing-column-nullability">Changing Column Nullability</a></li>
+    <li><a href="#changing-column-comment">Changing Column Comment</a></li>
+    <li><a href="#adding-column-position">Adding Column Position</a></li>
+    <li><a href="#changing-column-position">Changing Column Position</a></li>
+    <li><a href="#changing-column-type">Changing Column Type</a></li>
+    <li><a href="#adding-watermark">Adding watermark</a></li>
+    <li><a href="#dropping-watermark">Dropping watermark</a></li>
+    <li><a href="#changing-watermark">Changing watermark</a></li>
+  </ul>
+</nav>
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+
+
+
+
+
+
+      
+  <article class="markdown"><!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<h1 id="altering-tables">
+  Altering Tables
+  <a class="anchor" href="#altering-tables">#</a>
+</h1>
+<h2 id="changingadding-table-properties">
+  Changing/Adding Table Properties
+  <a class="anchor" href="#changingadding-table-properties">#</a>
+</h2>
+<p>The following SQL sets <code>write-buffer-size</code> table property to <code>256 MB</code>.</p>
+
+
+
+
+
+<div class="book-tabs"><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Flink"
+    name="tabs-set-properties-example"
+    id="tabs-set-properties-example-0"
+    checked="checked" 
+    onclick="onSwitch('Flink')"
+  />
+  <label for="tabs-set-properties-example-0">Flink</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">my_table</span> <span class="k">SET</span> <span class="p">(</span>
+    <span class="s1">&#39;write-buffer-size&#39;</span> <span class="o">=</span> <span class="s1">&#39;256 MB&#39;</span>
+<span class="p">);</span>
+</code></pre></div></div><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Spark3"
+    name="tabs-set-properties-example"
+    id="tabs-set-properties-example-1"
+     
+    onclick="onSwitch('Spark3')"
+  />
+  <label for="tabs-set-properties-example-1">Spark3</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">my_table</span> <span class="k">SET</span> <span class="n">TBLPROPERTIES</span> <span class="p">(</span>
+    <span class="s1">&#39;write-buffer-size&#39;</span> <span class="o">=</span> <span class="s1">&#39;256 MB&#39;</span>
+<span class="p">);</span>
+</code></pre></div></div><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Trino"
+    name="tabs-set-properties-example"
+    id="tabs-set-properties-example-2"
+     
+    onclick="onSwitch('Trino')"
+  />
+  <label for="tabs-set-properties-example-2">Trino</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">my_table</span> <span class="k">SET</span> <span class="n">PROPERTIES</span> <span class="n">write_buffer_size</span> <span class="o">=</span> <span class="s1">&#39;256 MB&#39;</span><span class="p">;</span>
+</code></pre></div><blockquote>
+<p>NOTE: Versions below Trino 368 do not support changing/adding table properties.</p>
+</blockquote>
+</div></div>
+
+<h2 id="rename-table-name">
+  Rename Table Name
+  <a class="anchor" href="#rename-table-name">#</a>
+</h2>
+<p>The following SQL rename the table name to new name.</p>
+
+
+
+
+
+<div class="book-tabs"><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Flink"
+    name="tabs-rename-table-name"
+    id="tabs-rename-table-name-0"
+    checked="checked" 
+    onclick="onSwitch('Flink')"
+  />
+  <label for="tabs-rename-table-name-0">Flink</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">my_table</span> <span class="k">RENAME</span> <span class="k">TO</span> <span class="n">my_table_new</span><span class="p">;</span>
+</code></pre></div></div><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Spark3"
+    name="tabs-rename-table-name"
+    id="tabs-rename-table-name-1"
+     
+    onclick="onSwitch('Spark3')"
+  />
+  <label for="tabs-rename-table-name-1">Spark3</label>
+  <div class="book-tabs-content markdown-inner"><p>The simplest sql to call is:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">my_table</span> <span class="k">RENAME</span> <span class="k">TO</span> <span class="n">my_table_new</span><span class="p">;</span>
+</code></pre></div><p>Note that: we can rename paimon table in spark this way:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">ALTER</span> <span class="k">TABLE</span> <span class="p">[</span><span class="k">catalog</span><span class="p">.[</span><span class="k">database</span><span class="p">.]]</span><span class="n">test1</span> <span class="k">RENAME</span> <span class="k">to</span> <span class="p">[</span><span class="k">database</span><span class="p">.]</span><span class="n">test2</span><span class="p">;</span>
+</code></pre></div><p>But we can&rsquo;t put catalog name before the renamed-to table, it will throw an error if we write sql like this:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">ALTER</span> <span class="k">TABLE</span> <span class="k">catalog</span><span class="p">.</span><span class="k">database</span><span class="p">.</span><span class="n">test1</span> <span class="k">RENAME</span> <span class="k">to</span> <span class="k">catalog</span><span class="p">.</span><span class="k">database</span><span class="p">.</span><span class="n">test2</span><span class="p">;</span>
+</code></pre></div></div><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Trino"
+    name="tabs-rename-table-name"
+    id="tabs-rename-table-name-2"
+     
+    onclick="onSwitch('Trino')"
+  />
+  <label for="tabs-rename-table-name-2">Trino</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">my_table</span> <span class="k">RENAME</span> <span class="k">TO</span> <span class="n">my_table_new</span><span class="p">;</span>
+</code></pre></div></div><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Presto"
+    name="tabs-rename-table-name"
+    id="tabs-rename-table-name-3"
+     
+    onclick="onSwitch('Presto')"
+  />
+  <label for="tabs-rename-table-name-3">Presto</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">my_table</span> <span class="k">RENAME</span> <span class="k">TO</span> <span class="n">my_table_new</span><span class="p">;</span>
+</code></pre></div></div></div>
+
+<blockquote class="book-hint info">
+  If you use object storage, such as S3 or OSS, please use this syntax carefully, because the renaming of object storage is not atomic, and only partial files may be moved in case of failure.
+</blockquote>
+
+<h2 id="removing-table-properties">
+  Removing Table Properties
+  <a class="anchor" href="#removing-table-properties">#</a>
+</h2>
+<p>The following SQL removes <code>write-buffer-size</code> table property.</p>
+
+
+
+
+
+<div class="book-tabs"><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Flink"
+    name="tabs-unset-properties-example"
+    id="tabs-unset-properties-example-0"
+    checked="checked" 
+    onclick="onSwitch('Flink')"
+  />
+  <label for="tabs-unset-properties-example-0">Flink</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">my_table</span> <span class="k">RESET</span> <span class="p">(</span><span class="s1">&#39;write-buffer-size&#39;</span><span class="p">);</span>
+</code></pre></div></div><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Spark3"
+    name="tabs-unset-properties-example"
+    id="tabs-unset-properties-example-1"
+     
+    onclick="onSwitch('Spark3')"
+  />
+  <label for="tabs-unset-properties-example-1">Spark3</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">my_table</span> <span class="n">UNSET</span> <span class="n">TBLPROPERTIES</span> <span class="p">(</span><span class="s1">&#39;write-buffer-size&#39;</span><span class="p">);</span>
+</code></pre></div></div></div>
+
+<h2 id="adding-new-columns">
+  Adding New Columns
+  <a class="anchor" href="#adding-new-columns">#</a>
+</h2>
+<p>The following SQL adds two columns <code>c1</code> and <code>c2</code> to table <code>my_table</code>.</p>
+
+
+
+
+
+<div class="book-tabs"><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Flink"
+    name="tabs-add-columns-example"
+    id="tabs-add-columns-example-0"
+    checked="checked" 
+    onclick="onSwitch('Flink')"
+  />
+  <label for="tabs-add-columns-example-0">Flink</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">my_table</span> <span class="k">ADD</span> <span class="p">(</span><span class="n">c1</span> <span class="nb">INT</span><span class="p">,</span> <span class="n">c2</span> <span class="n">STRING</span><span class="p">);</span>
+</code></pre></div></div><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Spark3"
+    name="tabs-add-columns-example"
+    id="tabs-add-columns-example-1"
+     
+    onclick="onSwitch('Spark3')"
+  />
+  <label for="tabs-add-columns-example-1">Spark3</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">my_table</span> <span class="k">ADD</span> <span class="n">COLUMNS</span> <span class="p">(</span>
+    <span class="n">c1</span> <span class="nb">INT</span><span class="p">,</span>
+    <span class="n">c2</span> <span class="n">STRING</span>
+<span class="p">);</span>
+</code></pre></div></div><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Trino"
+    name="tabs-add-columns-example"
+    id="tabs-add-columns-example-2"
+     
+    onclick="onSwitch('Trino')"
+  />
+  <label for="tabs-add-columns-example-2">Trino</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">my_table</span> <span class="k">ADD</span> <span class="k">COLUMN</span> <span class="n">c1</span> <span class="nb">VARCHAR</span><span class="p">;</span>
+</code></pre></div></div><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Presto"
+    name="tabs-add-columns-example"
+    id="tabs-add-columns-example-3"
+     
+    onclick="onSwitch('Presto')"
+  />
+  <label for="tabs-add-columns-example-3">Presto</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">my_table</span> <span class="k">ADD</span> <span class="k">COLUMN</span> <span class="n">c1</span> <span class="nb">VARCHAR</span><span class="p">;</span>
+</code></pre></div></div></div>
+
+<h2 id="renaming-column-name">
+  Renaming Column Name
+  <a class="anchor" href="#renaming-column-name">#</a>
+</h2>
+<p>The following SQL renames column <code>c0</code> in table <code>my_table</code> to <code>c1</code>.</p>
+
+
+
+
+
+<div class="book-tabs"><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Flink"
+    name="tabs-rename-column-name-example"
+    id="tabs-rename-column-name-example-0"
+    checked="checked" 
+    onclick="onSwitch('Flink')"
+  />
+  <label for="tabs-rename-column-name-example-0">Flink</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">my_table</span> <span class="k">RENAME</span> <span class="n">c0</span> <span class="k">TO</span> <span class="n">c1</span><span class="p">;</span>
+</code></pre></div></div><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Spark3"
+    name="tabs-rename-column-name-example"
+    id="tabs-rename-column-name-example-1"
+     
+    onclick="onSwitch('Spark3')"
+  />
+  <label for="tabs-rename-column-name-example-1">Spark3</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">my_table</span> <span class="k">RENAME</span> <span class="k">COLUMN</span> <span class="n">c0</span> <span class="k">TO</span> <span class="n">c1</span><span class="p">;</span>
+</code></pre></div></div><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Trino"
+    name="tabs-rename-column-name-example"
+    id="tabs-rename-column-name-example-2"
+     
+    onclick="onSwitch('Trino')"
+  />
+  <label for="tabs-rename-column-name-example-2">Trino</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">my_table</span> <span class="k">RENAME</span> <span class="k">COLUMN</span> <span class="n">c0</span> <span class="k">TO</span> <span class="n">c1</span><span class="p">;</span>
+</code></pre></div></div><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Presto"
+    name="tabs-rename-column-name-example"
+    id="tabs-rename-column-name-example-3"
+     
+    onclick="onSwitch('Presto')"
+  />
+  <label for="tabs-rename-column-name-example-3">Presto</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">my_table</span> <span class="k">RENAME</span> <span class="k">COLUMN</span> <span class="n">c0</span> <span class="k">TO</span> <span class="n">c1</span><span class="p">;</span>
+</code></pre></div></div></div>
+
+<h2 id="dropping-columns">
+  Dropping Columns
+  <a class="anchor" href="#dropping-columns">#</a>
+</h2>
+<p>The following SQL drops two columns <code>c1</code> and <code>c2</code> from table <code>my_table</code>. In hive catalog, you need to ensure disable <code>hive.metastore.disallow.incompatible.col.type.changes</code> in your hive server,
+otherwise this operation may fail, throws an exception like <code>The following columns have types incompatible with the existing columns in their respective positions</code>.</p>
+
+
+
+
+
+<div class="book-tabs"><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Flink"
+    name="tabs-drop-columns-example"
+    id="tabs-drop-columns-example-0"
+    checked="checked" 
+    onclick="onSwitch('Flink')"
+  />
+  <label for="tabs-drop-columns-example-0">Flink</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">my_table</span> <span class="k">DROP</span> <span class="p">(</span><span class="n">c1</span><span class="p">,</span> <span class="n">c2</span><span class="p">);</span>
+</code></pre></div></div><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Spark3"
+    name="tabs-drop-columns-example"
+    id="tabs-drop-columns-example-1"
+     
+    onclick="onSwitch('Spark3')"
+  />
+  <label for="tabs-drop-columns-example-1">Spark3</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">my_table</span> <span class="k">DROP</span> <span class="n">COLUMNS</span> <span class="p">(</span><span class="n">c1</span><span class="p">,</span> <span class="n">c2</span><span class="p">);</span>
+</code></pre></div></div><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Trino"
+    name="tabs-drop-columns-example"
+    id="tabs-drop-columns-example-2"
+     
+    onclick="onSwitch('Trino')"
+  />
+  <label for="tabs-drop-columns-example-2">Trino</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">my_table</span> <span class="k">DROP</span> <span class="k">COLUMN</span> <span class="n">c1</span><span class="p">;</span>
+</code></pre></div></div><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Presto"
+    name="tabs-drop-columns-example"
+    id="tabs-drop-columns-example-3"
+     
+    onclick="onSwitch('Presto')"
+  />
+  <label for="tabs-drop-columns-example-3">Presto</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">my_table</span> <span class="k">DROP</span> <span class="k">COLUMN</span> <span class="n">c1</span><span class="p">;</span>
+</code></pre></div></div></div>
+
+<h2 id="changing-column-nullability">
+  Changing Column Nullability
+  <a class="anchor" href="#changing-column-nullability">#</a>
+</h2>
+<p>The following SQL changes nullability of column <code>coupon_info</code>.</p>
+
+
+
+
+
+<div class="book-tabs"><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Flink"
+    name="tabs-change-nullability-example"
+    id="tabs-change-nullability-example-0"
+    checked="checked" 
+    onclick="onSwitch('Flink')"
+  />
+  <label for="tabs-change-nullability-example-0">Flink</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">my_table</span> <span class="p">(</span><span class="n">id</span> <span class="nb">INT</span> <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="k">NOT</span> <span class="n">ENFORCED</span><span class="p">,</span> <span class="n">coupon_info</span> <span class="nb">FLOAT</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">);</span>
+
+<span class="c1">-- Change column `coupon_info` from NOT NULL to nullable
+</span><span class="c1"></span><span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">my_table</span> <span class="k">MODIFY</span> <span class="n">coupon_info</span> <span class="nb">FLOAT</span><span class="p">;</span>
+
+<span class="c1">-- Change column `coupon_info` from nullable to NOT NULL
+</span><span class="c1">-- If there are NULL values already, set table option as below to drop those records silently before altering table.
+</span><span class="c1"></span><span class="k">SET</span> <span class="s1">&#39;table.exec.sink.not-null-enforcer&#39;</span> <span class="o">=</span> <span class="s1">&#39;DROP&#39;</span><span class="p">;</span>
+<span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">my_table</span> <span class="k">MODIFY</span> <span class="n">coupon_info</span> <span class="nb">FLOAT</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">;</span>
+</code></pre></div></div><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Spark3"
+    name="tabs-change-nullability-example"
+    id="tabs-change-nullability-example-1"
+     
+    onclick="onSwitch('Spark3')"
+  />
+  <label for="tabs-change-nullability-example-1">Spark3</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">my_table</span> <span class="k">ALTER</span> <span class="k">COLUMN</span> <span class="n">coupon_info</span> <span class="k">DROP</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">;</span>
+</code></pre></div></div></div>
+
+<blockquote class="book-hint info">
+  Changing nullable column to NOT NULL is only supported by Flink currently.
+</blockquote>
+
+<h2 id="changing-column-comment">
+  Changing Column Comment
+  <a class="anchor" href="#changing-column-comment">#</a>
+</h2>
+<p>The following SQL changes comment of column <code>buy_count</code> to <code>buy count</code>.</p>
+
+
+
+
+
+<div class="book-tabs"><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Flink"
+    name="tabs-change-comment-example"
+    id="tabs-change-comment-example-0"
+    checked="checked" 
+    onclick="onSwitch('Flink')"
+  />
+  <label for="tabs-change-comment-example-0">Flink</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">my_table</span> <span class="k">MODIFY</span> <span class="n">buy_count</span> <span class="nb">BIGINT</span> <span class="k">COMMENT</span> <span class="s1">&#39;buy count&#39;</span><span class="p">;</span>
+</code></pre></div></div><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Spark3"
+    name="tabs-change-comment-example"
+    id="tabs-change-comment-example-1"
+     
+    onclick="onSwitch('Spark3')"
+  />
+  <label for="tabs-change-comment-example-1">Spark3</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">my_table</span> <span class="k">ALTER</span> <span class="k">COLUMN</span> <span class="n">buy_count</span> <span class="k">COMMENT</span> <span class="s1">&#39;buy count&#39;</span><span class="p">;</span>
+</code></pre></div></div></div>
+
+<h2 id="adding-column-position">
+  Adding Column Position
+  <a class="anchor" href="#adding-column-position">#</a>
+</h2>
+<p>To add a new column with specified position, use FIRST or AFTER col_name.</p>
+
+
+
+
+
+<div class="book-tabs"><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Flink"
+    name="tabs-add-column-position"
+    id="tabs-add-column-position-0"
+    checked="checked" 
+    onclick="onSwitch('Flink')"
+  />
+  <label for="tabs-add-column-position-0">Flink</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">my_table</span> <span class="k">ADD</span> <span class="k">c</span> <span class="nb">INT</span> <span class="k">FIRST</span><span class="p">;</span>
+
+<span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">my_table</span> <span class="k">ADD</span> <span class="k">c</span> <span class="nb">INT</span> <span class="k">AFTER</span> <span class="n">b</span><span class="p">;</span>
+</code></pre></div></div><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Spark3"
+    name="tabs-add-column-position"
+    id="tabs-add-column-position-1"
+     
+    onclick="onSwitch('Spark3')"
+  />
+  <label for="tabs-add-column-position-1">Spark3</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">my_table</span> <span class="k">ADD</span> <span class="k">COLUMN</span> <span class="k">c</span> <span class="nb">INT</span> <span class="k">FIRST</span><span class="p">;</span>
+
+<span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">my_table</span> <span class="k">ADD</span> <span class="k">COLUMN</span> <span class="k">c</span> <span class="nb">INT</span> <span class="k">AFTER</span> <span class="n">b</span><span class="p">;</span>
+</code></pre></div></div></div>
+
+<h2 id="changing-column-position">
+  Changing Column Position
+  <a class="anchor" href="#changing-column-position">#</a>
+</h2>
+<p>To modify an existent column to a new position, use FIRST or AFTER col_name.</p>
+
+
+
+
+
+<div class="book-tabs"><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Flink"
+    name="tabs-change-column-position"
+    id="tabs-change-column-position-0"
+    checked="checked" 
+    onclick="onSwitch('Flink')"
+  />
+  <label for="tabs-change-column-position-0">Flink</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">my_table</span> <span class="k">MODIFY</span> <span class="n">col_a</span> <span class="n">DOUBLE</span> <span class="k">FIRST</span><span class="p">;</span>
+
+<span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">my_table</span> <span class="k">MODIFY</span> <span class="n">col_a</span> <span class="n">DOUBLE</span> <span class="k">AFTER</span> <span class="n">col_b</span><span class="p">;</span>
+</code></pre></div></div><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Spark3"
+    name="tabs-change-column-position"
+    id="tabs-change-column-position-1"
+     
+    onclick="onSwitch('Spark3')"
+  />
+  <label for="tabs-change-column-position-1">Spark3</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">my_table</span> <span class="k">ALTER</span> <span class="k">COLUMN</span> <span class="n">col_a</span> <span class="k">FIRST</span><span class="p">;</span>
+
+<span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">my_table</span> <span class="k">ALTER</span> <span class="k">COLUMN</span> <span class="n">col_a</span> <span class="k">AFTER</span> <span class="n">col_b</span><span class="p">;</span>
+</code></pre></div></div></div>
+
+<h2 id="changing-column-type">
+  Changing Column Type
+  <a class="anchor" href="#changing-column-type">#</a>
+</h2>
+<p>The following SQL changes type of column <code>col_a</code> to <code>DOUBLE</code>.</p>
+
+
+
+
+
+<div class="book-tabs"><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Flink"
+    name="tabs-change-column-type"
+    id="tabs-change-column-type-0"
+    checked="checked" 
+    onclick="onSwitch('Flink')"
+  />
+  <label for="tabs-change-column-type-0">Flink</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">my_table</span> <span class="k">MODIFY</span> <span class="n">col_a</span> <span class="n">DOUBLE</span><span class="p">;</span>
+</code></pre></div></div><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Spark3"
+    name="tabs-change-column-type"
+    id="tabs-change-column-type-1"
+     
+    onclick="onSwitch('Spark3')"
+  />
+  <label for="tabs-change-column-type-1">Spark3</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">my_table</span> <span class="k">ALTER</span> <span class="k">COLUMN</span> <span class="n">col_a</span> <span class="k">TYPE</span> <span class="n">DOUBLE</span><span class="p">;</span>
+</code></pre></div></div><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Trino"
+    name="tabs-change-column-type"
+    id="tabs-change-column-type-2"
+     
+    onclick="onSwitch('Trino')"
+  />
+  <label for="tabs-change-column-type-2">Trino</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">my_table</span> <span class="k">ALTER</span> <span class="k">COLUMN</span> <span class="n">col_a</span> <span class="k">SET</span> <span class="k">DATA</span> <span class="k">TYPE</span> <span class="n">DOUBLE</span><span class="p">;</span>
+</code></pre></div></div></div>
+
+<p>Supported Type Conversions.</p>
+
+<table class="configuration table table-bordered">
+    <thead>
+    <tr>
+        <th class="text-left" style="width: 15%">Input Type</th>
+        <th class="text-left" style="width: 15%">Target Type</th>
+    </tr>
+    </thead>
+    <tbody>
+
+    
+
+    <tr>
+        <td rowspan="9"><h5>TINYINT</h5></td>
+        <td><h5>SMALLINT</h5></td>
+    </tr>
+    <tr>
+        <td><h5>INT</h5></td>
+    </tr>
+    <tr>
+        <td><h5>BIGINT</h5></td>
+    </tr>
+    <tr>
+        <td><h5>FLOAT</h5></td>
+    </tr>
+    <tr>
+        <td><h5>DOUBLE</h5></td>
+    </tr>
+    <tr>
+        <td><h5>DECIMAL</h5></td>
+    </tr>
+    <tr>
+        <td><h5>BOOLEAN</h5></td>
+    </tr>
+    <tr>
+        <td><h5>CHAR</h5></td>
+    </tr>
+    <tr>
+        <td><h5>VARCHAR/STRING</h5></td>
+    </tr>
+
+    
+
+    <tr>
+        <td rowspan="9"><h5>SMALLINT</h5></td>
+        <td><h5>TINYINT</h5></td>
+    </tr>
+    <tr>
+        <td><h5>INT</h5></td>
+    </tr>
+    <tr>
+        <td><h5>BIGINT</h5></td>
+    </tr>
+    <tr>
+        <td><h5>FLOAT</h5></td>
+    </tr>
+    <tr>
+        <td><h5>DOUBLE</h5></td>
+    </tr>
+    <tr>
+        <td><h5>DECIMAL</h5></td>
+    </tr>
+    <tr>
+        <td><h5>BOOLEAN</h5></td>
+    </tr>
+    <tr>
+        <td><h5>CHAR</h5></td>
+    </tr>
+    <tr>
+        <td><h5>VARCHAR/STRING</h5></td>
+    </tr>
+
+    
+
+    <tr>
+        <td rowspan="9"><h5>INT</h5></td>
+        <td><h5>TINYINT</h5></td>
+    </tr>
+    <tr>
+        <td><h5>SMALLINT</h5></td>
+    </tr>
+    <tr>
+        <td><h5>BIGINT</h5></td>
+    </tr>
+    <tr>
+        <td><h5>FLOAT</h5></td>
+    </tr>
+    <tr>
+        <td><h5>DOUBLE</h5></td>
+    </tr>
+    <tr>
+        <td><h5>DECIMAL</h5></td>
+    </tr>
+    <tr>
+        <td><h5>BOOLEAN</h5></td>
+    </tr>
+    <tr>
+        <td><h5>CHAR</h5></td>
+    </tr>
+    <tr>
+        <td><h5>VARCHAR/STRING</h5></td>
+    </tr>
+
+    
+
+    <tr>
+        <td rowspan="9"><h5>BIGINT</h5></td>
+        <td><h5>TINYINT</h5></td>
+    </tr>
+    <tr>
+        <td><h5>SMALLINT</h5></td>
+    </tr>
+    <tr>
+        <td><h5>INT</h5></td>
+    </tr>
+    <tr>
+        <td><h5>FLOAT</h5></td>
+    </tr>
+    <tr>
+        <td><h5>DOUBLE</h5></td>
+    </tr>
+    <tr>
+        <td><h5>DECIMAL</h5></td>
+    </tr>
+    <tr>
+        <td><h5>BOOLEAN</h5></td>
+    </tr>
+    <tr>
+        <td><h5>CHAR</h5></td>
+    </tr>
+    <tr>
+        <td><h5>VARCHAR/STRING</h5></td>
+    </tr>
+
+    
+
+    <tr>
+        <td rowspan="8"><h5>FLOAT</h5></td>
+        <td><h5>TINYINT</h5></td>
+    </tr>
+    <tr>
+        <td><h5>SMALLINT</h5></td>
+    </tr>
+    <tr>
+        <td><h5>INT</h5></td>
+    </tr>
+    <tr>
+        <td><h5>BIGINT</h5></td>
+    </tr>
+    <tr>
+        <td><h5>DOUBLE</h5></td>
+    </tr>
+    <tr>
+        <td><h5>DECIMAL</h5></td>
+    </tr>
+    <tr>
+        <td><h5>CHAR</h5></td>
+    </tr>
+    <tr>
+        <td><h5>VARCHAR/STRING</h5></td>
+    </tr>
+
+    
+
+    <tr>
+        <td rowspan="8"><h5>DOUBLE</h5></td>
+        <td><h5>TINYINT</h5></td>
+    </tr>
+    <tr>
+        <td><h5>SMALLINT</h5></td>
+    </tr>
+    <tr>
+        <td><h5>INT</h5></td>
+    </tr>
+    <tr>
+        <td><h5>BIGINT</h5></td>
+    </tr>
+    <tr>
+        <td><h5>FLOAT</h5></td>
+    </tr>
+    <tr>
+        <td><h5>DECIMAL</h5></td>
+    </tr>
+    <tr>
+        <td><h5>CHAR</h5></td>
+    </tr>
+    <tr>
+        <td><h5>VARCHAR/STRING</h5></td>
+    </tr>
+
+    
+
+    <tr>
+        <td rowspan="9"><h5>DECIMAL</h5></td>
+        <td><h5>TINYINT</h5></td>
+    </tr>
+    <tr>
+        <td><h5>SMALLINT</h5></td>
+    </tr>
+    <tr>
+        <td><h5>INT</h5></td>
+    </tr>
+    <tr>
+        <td><h5>BIGINT</h5></td>
+    </tr>
+    <tr>
+        <td><h5>FLOAT</h5></td>
+    </tr>
+    <tr>
+        <td><h5>DOUBLE</h5></td>
+    </tr>
+    <tr>
+        <td><h5>DECIMAL</h5></td>
+    </tr>
+    <tr>
+        <td><h5>CHAR</h5></td>
+    </tr>
+    <tr>
+        <td><h5>VARCHAR/STRING</h5></td>
+    </tr>
+
+    
+
+    <tr>
+        <td rowspan="9"><h5>BOOLEAN</h5></td>
+        <td><h5>TINYINT</h5></td>
+    </tr>
+    <tr>
+        <td><h5>SMALLINT</h5></td>
+    </tr>
+    <tr>
+        <td><h5>INT</h5></td>
+    </tr>
+    <tr>
+        <td><h5>BIGINT</h5></td>
+    </tr>
+    <tr>
+        <td><h5>FLOAT</h5></td>
+    </tr>
+    <tr>
+        <td><h5>DOUBLE</h5></td>
+    </tr>
+    <tr>
+        <td><h5>DECIMAL</h5></td>
+    </tr>
+    <tr>
+        <td><h5>CHAR</h5></td>
+    </tr>
+    <tr>
+        <td><h5>VARCHAR/STRING</h5></td>
+    </tr>
+
+    
+
+    <tr>
+        <td rowspan="5"><h5>TIMESTAMP/TIMESTAMP WITH LOCAL TIME ZONE</h5></td>
+        <td><h5>TIMESTAMP</h5></td>
+    </tr>
+    <tr>
+        <td><h5>TIMESTAMP WITH LOCAL TIME ZONE</h5></td>
+    </tr>
+    <tr>
+        <td><h5>DATE</h5></td>
+    </tr>
+    <tr>
+        <td><h5>TIME</h5></td>
+    </tr>
+    <tr>
+        <td><h5>STRING</h5></td>
+    </tr>
+
+    
+
+    <tr>
+        <td rowspan="3"><h5>DATE</h5></td>
+        <td><h5>TIMESTAMP</h5></td>
+    </tr>
+    <tr>
+        <td><h5>TIMESTAMP WITH LOCAL TIME ZONE</h5></td>
+    </tr>
+    <tr>
+        <td><h5>STRING</h5></td>
+    </tr>
+
+    
+
+    <tr>
+        <td rowspan="3"><h5>TIME</h5></td>
+        <td><h5>TIMESTAMP</h5></td>
+    </tr>
+    <tr>
+        <td><h5>TIMESTAMP WITH LOCAL TIME ZONE</h5></td>
+    </tr>
+    <tr>
+        <td><h5>STRING</h5></td>
+    </tr>
+
+    
+
+    <tr>
+        <td rowspan="16"><h5>CHAR/VARCHAR/STRING</h5></td>
+        <td><h5>CHAR</h5></td>
+    </tr>
+    <tr>
+        <td><h5>VARCHAR/STRING</h5></td>
+    </tr>
+    <tr>
+        <td><h5>BOOLEAN</h5></td>
+    </tr>
+    <tr>
+        <td><h5>TINYINT</h5></td>
+    </tr>
+    <tr>
+        <td><h5>SMALLINT</h5></td>
+    </tr>
+    <tr>
+        <td><h5>INT</h5></td>
+    </tr>
+    <tr>
+        <td><h5>BIGINT</h5></td>
+    </tr>
+    <tr>
+        <td><h5>FLOAT</h5></td>
+    </tr>
+    <tr>
+        <td><h5>DOUBLE</h5></td>
+    </tr>
+    <tr>
+        <td><h5>DECIMAL</h5></td>
+    </tr>
+    <tr>
+        <td><h5>TIMESTAMP</h5></td>
+    </tr>
+    <tr>
+        <td><h5>TIMESTAMP WITH LOCAL TIME ZONE</h5></td>
+    </tr>
+    <tr>
+        <td><h5>DATE</h5></td>
+    </tr>
+    <tr>
+        <td><h5>TIME</h5></td>
+    </tr>
+    <tr>
+        <td><h5>BINARY</h5></td>
+    </tr>
+    <tr>
+        <td><h5>VARBINARY</h5></td>
+    </tr>
+
+    
+
+    <tr>
+        <td rowspan="2"><h5>BINARY</h5></td>
+        <td><h5>BINARY</h5></td>
+    </tr>
+    <tr>
+        <td><h5>VARBINARY</h5></td>
+    </tr>
+
+    
+
+    <tr>
+        <td rowspan="2"><h5>VARBINARY</h5></td>
+        <td><h5>BINARY</h5></td>
+    </tr>
+    <tr>
+        <td><h5>VARBINARY</h5></td>
+    </tr>
+
+    </tbody>
+</table>
+
+<h2 id="adding-watermark">
+  Adding watermark
+  <a class="anchor" href="#adding-watermark">#</a>
+</h2>
+<p>The following SQL adds a computed column <code>ts</code> from existing column <code>log_ts</code>, and a watermark with strategy <code>ts - INTERVAL '1' HOUR</code> on column <code>ts</code> which is marked as event time attribute of table <code>my_table</code>.</p>
+
+
+
+
+
+<div class="book-tabs"><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Flink"
+    name="tabs-add-watermark"
+    id="tabs-add-watermark-0"
+    checked="checked" 
+    onclick="onSwitch('Flink')"
+  />
+  <label for="tabs-add-watermark-0">Flink</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">my_table</span> <span class="k">ADD</span> <span class="p">(</span>
+    <span class="n">ts</span> <span class="k">AS</span> <span class="n">TO_TIMESTAMP</span><span class="p">(</span><span class="n">log_ts</span><span class="p">)</span> <span class="k">AFTER</span> <span class="n">log_ts</span><span class="p">,</span>
+    <span class="n">WATERMARK</span> <span class="k">FOR</span> <span class="n">ts</span> <span class="k">AS</span> <span class="n">ts</span> <span class="o">-</span> <span class="nb">INTERVAL</span> <span class="s1">&#39;1&#39;</span> <span class="n">HOUR</span>
+<span class="p">);</span>
+</code></pre></div></div></div>
+
+<h2 id="dropping-watermark">
+  Dropping watermark
+  <a class="anchor" href="#dropping-watermark">#</a>
+</h2>
+<p>The following SQL drops the watermark of table <code>my_table</code>.</p>
+
+
+
+
+
+<div class="book-tabs"><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Flink"
+    name="tabs-drop-watermark"
+    id="tabs-drop-watermark-0"
+    checked="checked" 
+    onclick="onSwitch('Flink')"
+  />
+  <label for="tabs-drop-watermark-0">Flink</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">my_table</span> <span class="k">DROP</span> <span class="n">WATERMARK</span><span class="p">;</span>
+</code></pre></div></div></div>
+
+<h2 id="changing-watermark">
+  Changing watermark
+  <a class="anchor" href="#changing-watermark">#</a>
+</h2>
+<p>The following SQL modifies the watermark strategy to <code>ts - INTERVAL '2' HOUR</code>.</p>
+
+
+
+
+
+<div class="book-tabs"><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Flink"
+    name="tabs-change-watermark"
+    id="tabs-change-watermark-0"
+    checked="checked" 
+    onclick="onSwitch('Flink')"
+  />
+  <label for="tabs-change-watermark-0">Flink</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">my_table</span> <span class="k">MODIFY</span> <span class="n">WATERMARK</span> <span class="k">FOR</span> <span class="n">ts</span> <span class="k">AS</span> <span class="n">ts</span> <span class="o">-</span> <span class="nb">INTERVAL</span> <span class="s1">&#39;2&#39;</span> <span class="n">HOUR</span>
+</code></pre></div></div></div>
+
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  
+
+
+
+
+<a href="//github.com/apache/incubator-paimon/edit/0.5/docs/content/how-to/altering-tables.md" style="color:black"><i class="fa fa-edit fa-fw"></i>Edit This Page</a>
+
+
+ 
+        
+      </footer>
+
+      
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      
+  
+
+<nav id="TableOfContents"><h3>On This Page <button class="toc" onclick="collapseToc()"><i class="fa fa-compress" aria-hidden="true"></i></button></h3>
+  <ul>
+    <li><a href="#changingadding-table-properties">Changing/Adding Table Properties</a></li>
+    <li><a href="#rename-table-name">Rename Table Name</a></li>
+    <li><a href="#removing-table-properties">Removing Table Properties</a></li>
+    <li><a href="#adding-new-columns">Adding New Columns</a></li>
+    <li><a href="#renaming-column-name">Renaming Column Name</a></li>
+    <li><a href="#dropping-columns">Dropping Columns</a></li>
+    <li><a href="#changing-column-nullability">Changing Column Nullability</a></li>
+    <li><a href="#changing-column-comment">Changing Column Comment</a></li>
+    <li><a href="#adding-column-position">Adding Column Position</a></li>
+    <li><a href="#changing-column-position">Changing Column Position</a></li>
+    <li><a href="#changing-column-type">Changing Column Type</a></li>
+    <li><a href="#adding-watermark">Adding watermark</a></li>
+    <li><a href="#dropping-watermark">Dropping watermark</a></li>
+    <li><a href="#changing-watermark">Changing watermark</a></li>
+  </ul>
+</nav>
+
+ 
+    </aside>
+    <aside class="expand-toc">
+      <button class="toc" onclick="expandToc()">
+        <i class="fa fa-expand" aria-hidden="true"></i>
+      </button>
+    </aside>
+    
+  </main>
+
+  
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

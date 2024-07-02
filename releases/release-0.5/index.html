@@ -1,0 +1,640 @@
+
+<!DOCTYPE html>
+<html lang="en" dir=>
+
+<head>
+  <meta name="generator" content="Hugo 0.80.0" />
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Apache Paimon 0.5 Available #  September 06, 2023 - Jingsong Lee (jingsonglee0@gmail.com)
+We are happy to announce the availability of Paimon 0.5.0-incubating.
+Nearly 100 contributors have come to contribute release-0.5, we created 500&#43; commits together, bringing many exciting new features and improvements to the community. Thank you all for your joint efforts!
+Highlight:
+ CDC Data Ingestion into Lake has reached maturity. Introduce Tags to provide immutable view to Offline data warehouse.">
+<meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="Release 0.5" />
+<meta property="og:description" content="Apache Paimon 0.5 Available #  September 06, 2023 - Jingsong Lee (jingsonglee0@gmail.com)
+We are happy to announce the availability of Paimon 0.5.0-incubating.
+Nearly 100 contributors have come to contribute release-0.5, we created 500&#43; commits together, bringing many exciting new features and improvements to the community. Thank you all for your joint efforts!
+Highlight:
+ CDC Data Ingestion into Lake has reached maturity. Introduce Tags to provide immutable view to Offline data warehouse." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="//paimon.apache.org/releases/release-0.5/" />
+
+<title>Release 0.5 | Apache Paimon</title>
+<link rel="manifest" href="/manifest.json">
+<link rel="icon" href="/favicon.png" type="image/x-icon">
+<link rel="stylesheet" href="/book.min.3bc4108a5b57c9a7e6fcae92ff69940435f8c46c4e1e4a311aedc9b2d8e06792.css" integrity="sha256-O8QQiltXyafm/K6S/2mUBDX4xGxOHkoxGu3JstjgZ5I=">
+<script defer src="/en.search.min.bc287a5e9654cdabf74a2257ecef43991ebba7ce0c34898bd77619e95225e1fa.js" integrity="sha256-vCh6XpZUzav3SiJX7O9DmR67p84MNImL13YZ6VIl4fo="></script>
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+  
+
+<link rel="stylesheet" type="text/css" href="//paimon.apache.org/font-awesome/css/font-awesome.min.css">
+<script src="//paimon.apache.org/js/anchor.min.js"></script>
+<script src="//paimon.apache.org/js/flink.js"></script>
+
+
+  
+  <script>
+    var _paq = window._paq = window._paq || [];
+     
+     
+    _paq.push(['disableCookies']);
+     
+    _paq.push(["setDomains", ["*.flink.apache.org","*.nightlies.apache.org/flink"]]);
+    _paq.push(['trackPageView']);
+    _paq.push(['enableLinkTracking']);
+    (function() {
+      var u="//matomo.privacy.apache.org/";
+      _paq.push(['setTrackerUrl', u+'matomo.php']);
+      _paq.push(['setSiteId', '1']);
+      var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+      g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+    })();
+  </script>
+  
+</head>
+
+<body dir=>
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      
+  
+
+<nav>
+
+
+<a id="logo" href="//paimon.apache.org">
+    <img width="100%" src="//paimon.apache.org/paimon_black.svg">
+</a>
+<p style="text-align:right"></p>
+
+<div class="book-search">
+  <input type="text" id="book-search-input" placeholder="Search" aria-label="Search" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/downloads/" class="">Downloads</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-23530e8a89b9ff74f008983e690a9935" class="toggle" checked />
+    <label for="section-23530e8a89b9ff74f008983e690a9935" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em">Releases</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/releases/release-0.8/" class="">Release 0.8</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/releases/release-0.8.1/" class="">Release 0.8.1</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/releases/release-0.7/" class="">Release 0.7</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/releases/release-0.6/" class="">Release 0.6</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/releases/release-0.5/" class=" active">Release 0.5</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/releases/release-0.4/" class="">Release 0.4</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var menu=document.querySelector("aside.book-menu nav");addEventListener("beforeunload",function(event){localStorage.setItem("menu.scrollTop",menu.scrollTop);});menu.scrollTop=localStorage.getItem("menu.scrollTop");})();</script>
+
+
+ 
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <strong>Release 0.5</strong>
+
+  <label for="toc-control">
+    
+    <img src="/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden clearfix">
+    
+  
+
+<nav id="TableOfContents"><h3>On This Page <button class="toc" onclick="collapseToc()"><i class="fa fa-compress" aria-hidden="true"></i></button></h3>
+  <ul>
+    <li><a href="#cdc-ingestion">CDC Ingestion</a></li>
+    <li><a href="#primary-key-table">Primary Key Table</a>
+      <ul>
+        <li><a href="#dynamic-bucket">Dynamic Bucket</a></li>
+        <li><a href="#partial-update-sequence-group">Partial-Update: Sequence Group</a></li>
+        <li><a href="#first-row-merge-engine">First Row Merge Engine</a></li>
+        <li><a href="#lookup-changelog-producer">Lookup Changelog-Producer</a></li>
+        <li><a href="#sequence-auto-padding">Sequence Auto Padding</a></li>
+        <li><a href="#asynchronous-compaction">Asynchronous Compaction</a></li>
+        <li><a href="#avro-file-format">Avro File Format</a></li>
+      </ul>
+    </li>
+    <li><a href="#append-only-table">Append Only Table</a>
+      <ul>
+        <li><a href="#append-only-scalable-table">Append Only Scalable Table</a></li>
+      </ul>
+    </li>
+    <li><a href="#manage-tags">Manage Tags</a></li>
+    <li><a href="#engines">Engines</a>
+      <ul>
+        <li><a href="#flink">Flink</a></li>
+        <li><a href="#spark">Spark</a></li>
+      </ul>
+    </li>
+    <li><a href="#download">Download</a></li>
+    <li><a href="#whats-next">What&rsquo;s next?</a></li>
+  </ul>
+</nav>
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown"><!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<h1 id="apache-paimon-05-available">
+  Apache Paimon 0.5 Available
+  <a class="anchor" href="#apache-paimon-05-available">#</a>
+</h1>
+<p>September 06, 2023 - Jingsong Lee (<a href="mailto:jingsonglee0@gmail.com">jingsonglee0@gmail.com</a>)</p>
+<p>We are happy to announce the availability of Paimon <a href="https://paimon.apache.org/docs/0.5/">0.5.0-incubating</a>.</p>
+<p>Nearly 100 contributors have come to contribute release-0.5, we created 500+ commits together, bringing many exciting
+new features and improvements to the community. Thank you all for your joint efforts!</p>
+<p>Highlight:</p>
+<ul>
+<li>CDC Data Ingestion into Lake has reached maturity.</li>
+<li>Introduce Tags to provide immutable view to Offline data warehouse.</li>
+<li>Dynamic Bucket mode for Primary Key Table is available in production.</li>
+<li>Introduce Append Only Scalable Table to replace Hive table.</li>
+</ul>
+<h2 id="cdc-ingestion">
+  CDC Ingestion
+  <a class="anchor" href="#cdc-ingestion">#</a>
+</h2>
+<p>Paimon supports a variety of ways to <a href="https://paimon.apache.org/docs/0.5/how-to/cdc-ingestion/">ingest data into Paimon</a>
+tables with schema evolution. In release 0.5, a large number of new features have been added:</p>
+<ul>
+<li>MySQL Synchronizing Table
+<ul>
+<li>support synchronizing shards into one Paimon table</li>
+<li>support type-mapping to make all fields to string</li>
+</ul>
+</li>
+<li>MySQL Synchronizing Database
+<ul>
+<li>support merge multiple shards from multiple database</li>
+<li>support <code>--mode combined</code> to a unified sink to sync all tables, and sync newly added tables without restarting job</li>
+</ul>
+</li>
+<li>Kafka Synchronizing Table
+<ul>
+<li>synchronize one Kafka topic’s table into one Paimon table.</li>
+<li>support Canal and OGG</li>
+</ul>
+</li>
+<li>Kafka Synchronizing Database
+<ul>
+<li>synchronize one Kafka topic containing multiple tables or multiple topics containing one table each into one Paimon database.</li>
+<li>support Canal and OGG</li>
+</ul>
+</li>
+<li>MongoDB Synchronizing Collection
+<ul>
+<li>synchronize one Collection from MongoDB into one Paimon table.</li>
+</ul>
+</li>
+<li>MongoDB Synchronizing Database
+<ul>
+<li>synchronize the whole MongoDB database into one Paimon database.</li>
+</ul>
+</li>
+</ul>
+<h2 id="primary-key-table">
+  Primary Key Table
+  <a class="anchor" href="#primary-key-table">#</a>
+</h2>
+<p>By specific Primary Key in creating table DDL, you can get a <a href="https://paimon.apache.org/docs/0.5/concepts/primary-key-table/">Primary Key Table</a>,
+it accepts insert, update or delete records.</p>
+<h3 id="dynamic-bucket">
+  Dynamic Bucket
+  <a class="anchor" href="#dynamic-bucket">#</a>
+</h3>
+<p>Configure <code>'bucket' = '-1'</code>, Paimon dynamically maintains the index, automatic expansion of the number of buckets.</p>
+<ul>
+<li>Option1: <code>'dynamic-bucket.target-row-num'</code>: controls the target row number for one bucket.</li>
+<li>Option2: <code>'dynamic-bucket.assigner-parallelism'</code>: Parallelism of assigner operator, controls the number of initialized bucket.</li>
+</ul>
+<p>Dynamic Bucket mode uses HASH index to maintain mapping from key to bucket, it requires more memory than fixed bucket mode.
+For performance:</p>
+<ol>
+<li>Generally speaking, there is no performance loss, but there will be some additional memory consumption, <strong>100 million</strong>
+entries in a partition takes up <strong>1 GB</strong> more memory, partitions that are no longer active do not take up memory.</li>
+<li>For tables with low update rates, this mode is recommended to significantly improve performance.</li>
+</ol>
+<h3 id="partial-update-sequence-group">
+  Partial-Update: Sequence Group
+  <a class="anchor" href="#partial-update-sequence-group">#</a>
+</h3>
+<p>A sequence-field may not solve the disorder problem of partial-update tables with multiple stream updates, because
+the sequence-field may be overwritten by the latest data of another stream during multi-stream update. So we introduce
+sequence group mechanism for partial-update tables. It can solve:</p>
+<ol>
+<li>Disorder during multi-stream update. Each stream defines its own sequence-groups.</li>
+<li>A true partial-update, not just a non-null update.</li>
+<li>Accept delete records to retract partial columns.</li>
+</ol>
+<h3 id="first-row-merge-engine">
+  First Row Merge Engine
+  <a class="anchor" href="#first-row-merge-engine">#</a>
+</h3>
+<p>By specifying <code>'merge-engine' = 'first-row'</code>, users can keep the first row of the same primary key. It differs from the
+<code>deduplicate</code> merge engine that in the <code>first-row</code> merge engine, it will generate insert only changelog.</p>
+<p>This is of great help in replacing log deduplication in streaming computation.</p>
+<h3 id="lookup-changelog-producer">
+  Lookup Changelog-Producer
+  <a class="anchor" href="#lookup-changelog-producer">#</a>
+</h3>
+<p>Lookup Changelog-Producer is available in production, this can greatly reduce the delay for tables that need to
+generate changelogs.</p>
+<p>(Note: Please increase <code>'execution.checkpointing.max-concurrent-checkpoints'</code> Flink configuration, this is very
+important for performance).</p>
+<h3 id="sequence-auto-padding">
+  Sequence Auto Padding
+  <a class="anchor" href="#sequence-auto-padding">#</a>
+</h3>
+<p>When the record is updated or deleted, the <code>sequence.field</code> must become larger and cannot remain unchanged.
+For -U and +U, their sequence-fields must be different. If you cannot meet this requirement, Paimon provides
+option to automatically pad the sequence field for you.</p>
+<p>Configure <code>'sequence.auto-padding' = 'row-kind-flag'</code>: If you are using same value for -U and +U, just like &ldquo;<code>op_ts</code>&rdquo;
+(the time that the change was made in the database) in Mysql Binlog. It is recommended to use the automatic
+padding for row kind flag, which will automatically distinguish between -U (-D) and +U (+I).</p>
+<h3 id="asynchronous-compaction">
+  Asynchronous Compaction
+  <a class="anchor" href="#asynchronous-compaction">#</a>
+</h3>
+<p>Compaction is inherently asynchronous, but if you want it to be completely asynchronous and not blocking writing,
+expect a mode to have maximum writing throughput, the compaction can be done slowly and not in a hurry.
+You can use the following strategies for your table:</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">num-sorted-run.stop-trigger <span class="o">=</span> <span class="m">2147483647</span>
+sort-spill-threshold <span class="o">=</span> <span class="m">10</span>
+</code></pre></div><p>This configuration will generate more files during peak write periods and gradually merge into optimal read
+performance during low write periods.</p>
+<h3 id="avro-file-format">
+  Avro File Format
+  <a class="anchor" href="#avro-file-format">#</a>
+</h3>
+<p>If you want to achieve ultimate compaction performance, you can consider using row storage file format AVRO.</p>
+<ul>
+<li>The advantage is that you can achieve high write throughput and compaction performance.</li>
+<li>The disadvantage is that your analysis queries will be slow, and the biggest problem with row storage is that it
+does not have the query projection. For example, if the table have 100 columns but only query a few columns, the
+IO of row storage cannot be ignored. Additionally, compression efficiency will decrease and storage costs will
+increase.</li>
+</ul>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">file.format <span class="o">=</span> avro
+metadata.stats-mode <span class="o">=</span> none
+</code></pre></div><p>If you don&rsquo;t want to modify all files to Avro format, at least you can consider modifying the files in the previous
+layers to Avro format. You can use <code>'file.format.per.level' = '0:avro,1:avro'</code> to specify the files in the first two
+layers to be in Avro format.</p>
+<h2 id="append-only-table">
+  Append Only Table
+  <a class="anchor" href="#append-only-table">#</a>
+</h2>
+<h3 id="append-only-scalable-table">
+  Append Only Scalable Table
+  <a class="anchor" href="#append-only-scalable-table">#</a>
+</h3>
+<p>By defining <code>'bucket' = '-1'</code> to a non-pk table, you can assign an <a href="https://paimon.apache.org/docs/0.5/concepts/append-only-table/#append-for-scalable-table">Append Only Scalable Table</a>.
+In this mode, the table doesn&rsquo;t have the concept of bucket anymore, read and write are concurrent. We regard this table
+as a batch off-line table(although we can stream read and write still).</p>
+<p>Using this mode, you can replace your Hive table to lake table.</p>
+<p>We have auto small file compaction for this mode by default. And you can use <code>Sort Compact</code> action to sort whole partition,
+using zorder sorter, this can greatly speed up data skipping when querying.</p>
+<h2 id="manage-tags">
+  Manage Tags
+  <a class="anchor" href="#manage-tags">#</a>
+</h2>
+<p>Paimon&rsquo;s snapshots can provide an easy way to query historical data. But in most scenarios, a job will generate too many
+snapshots and table will expire old snapshots according to table configuration. Snapshot expiration will also delete old
+data files, and the historical data of expired snapshots cannot be queried anymore.</p>
+<p>To solve this problem, you can create a <a href="https://paimon.apache.org/docs/0.5/maintenance/manage-tags/">Tag</a> based on a
+snapshot. The tag will maintain the manifests and data files of the snapshot. A typical usage is creating tags daily,
+then you can maintain the historical data of each day for batch reading.</p>
+<p>Paimon supports automatic creation of tags in writing job. You can use <code>'tag.automatic-creation'</code>to create tags automatically.</p>
+<p>And you can query the incremental data of Tags (or snapshots) too, both Flink and Spark support incremental queries.</p>
+<h2 id="engines">
+  Engines
+  <a class="anchor" href="#engines">#</a>
+</h2>
+<h3 id="flink">
+  Flink
+  <a class="anchor" href="#flink">#</a>
+</h3>
+<p>After Flink released <a href="https://flink.apache.org/2023/03/23/announcing-the-release-of-apache-flink-1.17/">1.17</a>, Paimon
+underwent very in-depth integration.</p>
+<ul>
+<li><a href="https://paimon.apache.org/docs/0.5/how-to/altering-tables/">ALTER TABLE</a> syntax is enhanced by including the
+ability to ADD/MODIFY/DROP columns, making it easier for users to maintain their table schema.</li>
+<li><a href="https://paimon.apache.org/docs/0.5/engines/flink/#quick-start">FlinkGenericCatalog</a>, you need to use Hive metastore. 
+Then, you can use all the tables from Paimon, Hive, and Flink Generic Tables (Kafka and other tables)!</li>
+<li><a href="https://paimon.apache.org/docs/0.5/how-to/writing-tables/#dynamic-overwrite">Dynamic Partition Overwrite</a> Flink’s
+default overwrite mode is dynamic partition overwrite (that means Paimon only deletes the partitions appear in the
+overwritten data). You can configure dynamic-partition-overwrite to change it to static overwritten.</li>
+<li><a href="https://paimon.apache.org/docs/0.5/how-to/creating-catalogs/#synchronizing-partitions-into-hive-metastore">Sync Partitions into Hive Metastore</a>
+By default, Paimon does not synchronize newly created partitions into Hive metastore. If you want to see a partitioned
+table in Hive and also synchronize newly created partitions into Hive metastore, please set the table property <code>metastore.partitioned-table</code> to true.</li>
+<li><a href="https://paimon.apache.org/docs/0.5/how-to/lookup-joins/">Retry Lookup Join</a> support Retry Lookup and Async Retry Lookup.</li>
+</ul>
+<h3 id="spark">
+  Spark
+  <a class="anchor" href="#spark">#</a>
+</h3>
+<p>Spark is another computing engine that Paimon has in-depth integration and has taken a big step forward at 0.5, including the following features:</p>
+<ul>
+<li><a href="https://paimon.apache.org/docs/0.5/how-to/writing-tables/#overwriting-the-whole-table">INSERT OVERWRITE</a> insert ovewrite
+partition, Spark’s default overwrite mode is static partition overwrite, you can enable dynamic overwritten too.</li>
+<li>Partition Management: Support <code>DROP PARTITION</code>, <code>SHOW PARTITIONS</code>.</li>
+<li>Supports saving a DataFrame to a paimon location.</li>
+<li>Schema merging write: You can set <code>write.merge-schema</code> to true to write with schema merging.</li>
+<li>Streaming sink: You can use Spark streaming <code>foreachBatch</code> API to streaming sink to Paimon.</li>
+</ul>
+<h2 id="download">
+  Download
+  <a class="anchor" href="#download">#</a>
+</h2>
+<p>Download the release <a href="https://paimon.apache.org/docs/0.5/project/download/">here</a>.</p>
+<h2 id="whats-next">
+  What&rsquo;s next?
+  <a class="anchor" href="#whats-next">#</a>
+</h2>
+<p>Paimon will be committed to solving the following scenarios for a long time:</p>
+<ol>
+<li>Acceleration of CDC data into the lake: real-time writing, real-time query, and offline immutable partition view by using Tags.</li>
+<li>Enrich Merge Engines to improve streaming computation: Partial-Update table, Aggregation table, First Row table.</li>
+<li>Changelog Streaming read, build incremental stream processing based on lake storage.</li>
+<li>Append mode accelerates Hive offline tables, writes in real time and brings query acceleration after sorting.</li>
+<li>Append mode replaces some message queue scenarios, stream reads in input order, and without data TTL.</li>
+</ol>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  
+
+
+
+
+<a href="//github.com/apache/paimon/edit//docs/content/releases/release-0.5.md" style="color:black"><i class="fa fa-edit fa-fw"></i>Edit This Page</a>
+
+
+ 
+        
+      </footer>
+
+      
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      
+  
+
+<nav id="TableOfContents"><h3>On This Page <button class="toc" onclick="collapseToc()"><i class="fa fa-compress" aria-hidden="true"></i></button></h3>
+  <ul>
+    <li><a href="#cdc-ingestion">CDC Ingestion</a></li>
+    <li><a href="#primary-key-table">Primary Key Table</a>
+      <ul>
+        <li><a href="#dynamic-bucket">Dynamic Bucket</a></li>
+        <li><a href="#partial-update-sequence-group">Partial-Update: Sequence Group</a></li>
+        <li><a href="#first-row-merge-engine">First Row Merge Engine</a></li>
+        <li><a href="#lookup-changelog-producer">Lookup Changelog-Producer</a></li>
+        <li><a href="#sequence-auto-padding">Sequence Auto Padding</a></li>
+        <li><a href="#asynchronous-compaction">Asynchronous Compaction</a></li>
+        <li><a href="#avro-file-format">Avro File Format</a></li>
+      </ul>
+    </li>
+    <li><a href="#append-only-table">Append Only Table</a>
+      <ul>
+        <li><a href="#append-only-scalable-table">Append Only Scalable Table</a></li>
+      </ul>
+    </li>
+    <li><a href="#manage-tags">Manage Tags</a></li>
+    <li><a href="#engines">Engines</a>
+      <ul>
+        <li><a href="#flink">Flink</a></li>
+        <li><a href="#spark">Spark</a></li>
+      </ul>
+    </li>
+    <li><a href="#download">Download</a></li>
+    <li><a href="#whats-next">What&rsquo;s next?</a></li>
+  </ul>
+</nav>
+
+ 
+    </aside>
+    <aside class="expand-toc">
+      <button class="toc" onclick="expandToc()">
+        <i class="fa fa-expand" aria-hidden="true"></i>
+      </button>
+    </aside>
+    
+  </main>
+
+  
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

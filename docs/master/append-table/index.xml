@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Table w/o PK on Apache Paimon</title>
+    <link>//paimon.apache.org/docs/master/append-table/</link>
+    <description>Recent content in Table w/o PK on Apache Paimon</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language><atom:link href="//paimon.apache.org/docs/master/append-table/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Append Table</title>
+      <link>//paimon.apache.org/docs/master/append-table/append-table/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/append-table/append-table/</guid>
+      <description>Append Table #  If a table does not have a primary key defined, it is an append table by default.
+You can only insert a complete record into the table in streaming. This type of table is suitable for use cases that do not require streaming updates (such as log data synchronization).
+Flink CREATE TABLE my_table ( product_id BIGINT, price DOUBLE, sales BIGINT ) WITH ( &amp;#39;file.compression.zstd-level&amp;#39; = &amp;#39;3&amp;#39; );  Automatic small file merging #  In streaming writing job, without bucket definition, there is no compaction in writer, instead, will use Compact Coordinator to scan the small files and pass compaction task to Compact Worker.</description>
+    </item>
+    
+    <item>
+      <title>Bucketed Append</title>
+      <link>//paimon.apache.org/docs/master/append-table/bucketed-append/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/append-table/bucketed-append/</guid>
+      <description>Bucketed Append #  Definition #  An ordinary Append table has no strict ordering guarantees for its streaming writes and reads, but there are some cases where you need to define a key similar to Kafka&amp;rsquo;s.
+You can define the bucket and bucket-key to get a bucketed append table. Every record in the same bucket is ordered strictly, streaming read will transfer the record to down-stream exactly in the order of writing.</description>
+    </item>
+    
+    <item>
+      <title>File Index</title>
+      <link>//paimon.apache.org/docs/master/append-table/file-index/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/append-table/file-index/</guid>
+      <description>Data File Index #  Define file-index.bloom-filter.columns, Paimon will create its corresponding index file for each file. If the index file is too small, it will be stored directly in the manifest, or in the directory of the data file. Each data file corresponds to an index file, which has a separate file definition and can contain different types of indexes with multiple columns.
+Concept #  Data file index is an external index file corresponding to a certain data file.</description>
+    </item>
+    
+    <item>
+      <title>Deletion Vectors</title>
+      <link>//paimon.apache.org/docs/master/append-table/deletion-vectors/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/append-table/deletion-vectors/</guid>
+      <description>Deletion Vectors #  Currently only Spark SQL supports DELETE, UPDATE for append table.  Consider SQL:
+DELETE FROM my_table WHERE currency = &amp;#39;UNKNOWN&amp;#39;; By default, it will search for the hit files and then rewrite each file to remove the data that needs to be deleted from the files. This operation is costly.
+Deletion vectors mode only marks certain records of the corresponding file for deletion and writes the deletion file, without rewriting the entire file.</description>
+    </item>
+    
+  </channel>
+</rss>

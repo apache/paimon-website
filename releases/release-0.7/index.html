@@ -1,0 +1,486 @@
+
+<!DOCTYPE html>
+<html lang="en" dir=>
+
+<head>
+  <meta name="generator" content="Hugo 0.80.0" />
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Apache Paimon 0.7 Available #  February 29, 2024 - Paimon Community (dev@paimon.apache.org)
+Apache Paimon PPMC has officially released Apache Paimon 0.7.0-incubating version. A total of 34 people contributed to this version and completed over 300 Commits. Thank you to all contributors for their support!
+In this version, we mainly focus on enhancement and optimization for the existing features. For more details, please refer to the following content below.
+Flink #  Lookup Join #   Fix bug that lookup join cannot handle sequence field of dim table.">
+<meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="Release 0.7" />
+<meta property="og:description" content="Apache Paimon 0.7 Available #  February 29, 2024 - Paimon Community (dev@paimon.apache.org)
+Apache Paimon PPMC has officially released Apache Paimon 0.7.0-incubating version. A total of 34 people contributed to this version and completed over 300 Commits. Thank you to all contributors for their support!
+In this version, we mainly focus on enhancement and optimization for the existing features. For more details, please refer to the following content below.
+Flink #  Lookup Join #   Fix bug that lookup join cannot handle sequence field of dim table." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="//paimon.apache.org/releases/release-0.7/" />
+
+<title>Release 0.7 | Apache Paimon</title>
+<link rel="manifest" href="/manifest.json">
+<link rel="icon" href="/favicon.png" type="image/x-icon">
+<link rel="stylesheet" href="/book.min.3bc4108a5b57c9a7e6fcae92ff69940435f8c46c4e1e4a311aedc9b2d8e06792.css" integrity="sha256-O8QQiltXyafm/K6S/2mUBDX4xGxOHkoxGu3JstjgZ5I=">
+<script defer src="/en.search.min.bc287a5e9654cdabf74a2257ecef43991ebba7ce0c34898bd77619e95225e1fa.js" integrity="sha256-vCh6XpZUzav3SiJX7O9DmR67p84MNImL13YZ6VIl4fo="></script>
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+  
+
+<link rel="stylesheet" type="text/css" href="//paimon.apache.org/font-awesome/css/font-awesome.min.css">
+<script src="//paimon.apache.org/js/anchor.min.js"></script>
+<script src="//paimon.apache.org/js/flink.js"></script>
+
+
+  
+  <script>
+    var _paq = window._paq = window._paq || [];
+     
+     
+    _paq.push(['disableCookies']);
+     
+    _paq.push(["setDomains", ["*.flink.apache.org","*.nightlies.apache.org/flink"]]);
+    _paq.push(['trackPageView']);
+    _paq.push(['enableLinkTracking']);
+    (function() {
+      var u="//matomo.privacy.apache.org/";
+      _paq.push(['setTrackerUrl', u+'matomo.php']);
+      _paq.push(['setSiteId', '1']);
+      var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+      g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+    })();
+  </script>
+  
+</head>
+
+<body dir=>
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      
+  
+
+<nav>
+
+
+<a id="logo" href="//paimon.apache.org">
+    <img width="100%" src="//paimon.apache.org/paimon_black.svg">
+</a>
+<p style="text-align:right"></p>
+
+<div class="book-search">
+  <input type="text" id="book-search-input" placeholder="Search" aria-label="Search" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/downloads/" class="">Downloads</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-23530e8a89b9ff74f008983e690a9935" class="toggle" checked />
+    <label for="section-23530e8a89b9ff74f008983e690a9935" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em">Releases</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/releases/release-0.8/" class="">Release 0.8</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/releases/release-0.8.1/" class="">Release 0.8.1</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/releases/release-0.7/" class=" active">Release 0.7</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/releases/release-0.6/" class="">Release 0.6</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/releases/release-0.5/" class="">Release 0.5</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/releases/release-0.4/" class="">Release 0.4</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var menu=document.querySelector("aside.book-menu nav");addEventListener("beforeunload",function(event){localStorage.setItem("menu.scrollTop",menu.scrollTop);});menu.scrollTop=localStorage.getItem("menu.scrollTop");})();</script>
+
+
+ 
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <strong>Release 0.7</strong>
+
+  <label for="toc-control">
+    
+    <img src="/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden clearfix">
+    
+  
+
+<nav id="TableOfContents"><h3>On This Page <button class="toc" onclick="collapseToc()"><i class="fa fa-compress" aria-hidden="true"></i></button></h3>
+  <ul>
+    <li><a href="#flink">Flink</a>
+      <ul>
+        <li><a href="#lookup-join">Lookup Join</a></li>
+        <li><a href="#paimon-cdc">Paimon CDC</a></li>
+      </ul>
+    </li>
+    <li><a href="#spark">Spark</a></li>
+    <li><a href="#hive">Hive</a></li>
+    <li><a href="#tag-management">Tag Management</a></li>
+    <li><a href="#new-aggregation-functions">New Aggregation Functions</a></li>
+    <li><a href="#new-metrics">New Metrics</a></li>
+    <li><a href="#other-improvements">Other Improvements</a></li>
+  </ul>
+</nav>
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown"><!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<h1 id="apache-paimon-07-available">
+  Apache Paimon 0.7 Available
+  <a class="anchor" href="#apache-paimon-07-available">#</a>
+</h1>
+<p>February 29, 2024 - Paimon Community (<a href="mailto:dev@paimon.apache.org">dev@paimon.apache.org</a>)</p>
+<p>Apache Paimon PPMC has officially released Apache Paimon 0.7.0-incubating version. A total of 34 people contributed to
+this version and completed over 300 Commits. Thank you to all contributors for their support!</p>
+<p>In this version, we mainly focus on enhancement and optimization for the existing features. For more details, please
+refer to the following content below.</p>
+<h2 id="flink">
+  Flink
+  <a class="anchor" href="#flink">#</a>
+</h2>
+<h3 id="lookup-join">
+  Lookup Join
+  <a class="anchor" href="#lookup-join">#</a>
+</h3>
+<ol>
+<li>Fix bug that lookup join cannot handle sequence field of dim table.</li>
+<li>Introduced primary key partial lookup based on Paimon hash lookup for lookup join.</li>
+<li>Use parallel reading and bulk loading to speed up initial data loading of dim table.</li>
+</ol>
+<h3 id="paimon-cdc">
+  Paimon CDC
+  <a class="anchor" href="#paimon-cdc">#</a>
+</h3>
+<p>In 0.7, we continued to improve the Paimon CDC:</p>
+<ol>
+<li>Support Postgres table synchronization.</li>
+<li>Paimon data commit relies on checkpoint but many users forget to enable it when submitting CDC job. In this case, the job
+will set checkpoint interval to 180 seconds.</li>
+<li>Support UNAWARE Bucket mode table as CDC sink.</li>
+<li>Support extract time attribute from CDC input as watermark. Now, you can set <code>tag.automatic-creation</code> to <code>watermark</code> in CDC jobs.</li>
+</ol>
+<h2 id="spark">
+  Spark
+  <a class="anchor" href="#spark">#</a>
+</h2>
+<ol>
+<li>Merge-into supports WHEN NOT MATCHED BY SOURCE semantics.</li>
+<li>Sort compact supports Hilbert Curve sorter.</li>
+<li>Multiple optimization for improving query performance.</li>
+</ol>
+<h2 id="hive">
+  Hive
+  <a class="anchor" href="#hive">#</a>
+</h2>
+<p>In 0.7, we mainly focus on improving compatibility with Hive.</p>
+<ol>
+<li>Support timestamp with local time zone type.</li>
+<li>Support create database with location, comment and properties of HiveSQL.</li>
+<li>Support table comment.</li>
+</ol>
+<h2 id="tag-management">
+  Tag Management
+  <a class="anchor" href="#tag-management">#</a>
+</h2>
+<ol>
+<li>Support a new <code>tag.automatic-creation</code> mode <code>batch</code>. In this mode, a tag will be created after a batch job completed.</li>
+<li>The tag auto creation relies on commit, so if no commit when it is time to auto-create tag,  the tag won&rsquo;t be created.
+In this case, we introduce an option <code>snapshot.watermark-idle-timeout</code>. If the flink source idles over the specified
+timeout duration, the job will force to create a snapshot and thus trigger tag creation.</li>
+</ol>
+<h2 id="new-aggregation-functions">
+  New Aggregation Functions
+  <a class="anchor" href="#new-aggregation-functions">#</a>
+</h2>
+<ol>
+<li>count: counts the values across multiple rows.</li>
+<li>product: computes product values across multiple rows.</li>
+<li>nested-update: collects multiple rows into one ARRAY<ROW> (so-called &lsquo;nested table&rsquo;). You can use <code>fields.&lt;field-name&gt;.nested-key=pk0,pk1,...</code> to
+define the primary keys of the nested table. If no keys defined, the rows will be appended to the array.</li>
+<li>collect: collects elements into an ARRAY. You can set <code>fields.&lt;field-name&gt;.distinct=true</code> to deduplicate elements.</li>
+<li>merge_map: merges input maps into single map.</li>
+</ol>
+<h2 id="new-metrics">
+  New Metrics
+  <a class="anchor" href="#new-metrics">#</a>
+</h2>
+<ol>
+<li>Support Flink standard connector metric <code>currentEmitEventTimeLag</code>.</li>
+<li>Support <code>level0FileCount</code> to show the compaction progress.</li>
+</ol>
+<h2 id="other-improvements">
+  Other Improvements
+  <a class="anchor" href="#other-improvements">#</a>
+</h2>
+<p>Besides above, there are some useful improvements for existed features:</p>
+<ol>
+<li>New time travel option <code>scan.file-creation-time-millis</code>: By specifying this option, only the data files created after
+this time will be read. It is more convenient than <code>scan.timestamp-millis</code> and <code>scan.tag-name</code>, but is imprecise (depending
+on whether compaction occurs).</li>
+<li>For primary key table, now the row kind can be determined by field which is specified by option <code>rowkind.field</code>.</li>
+<li>Support ignoring delete records in deduplicate mode by option <code>deduplicate.ignore-delete</code>.</li>
+<li>Support ignoring consumer id when starting streaming reading job by option <code>consumer.ignore-progress</code>.</li>
+<li>Support new procedure <code>expire_snapshots</code> to manually trigger snapshot expiration.</li>
+<li>Support new system table <code>aggregation_fields</code> to show the aggregation fields information for aggregate or partial-update table.</li>
+<li>Introduce bloom filter to speed up the local file lookup, which can benefit both lookup changelog-producer and flink lookup join.</li>
+</ol>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  
+
+
+
+
+<a href="//github.com/apache/paimon/edit//docs/content/releases/release-0.7.md" style="color:black"><i class="fa fa-edit fa-fw"></i>Edit This Page</a>
+
+
+ 
+        
+      </footer>
+
+      
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      
+  
+
+<nav id="TableOfContents"><h3>On This Page <button class="toc" onclick="collapseToc()"><i class="fa fa-compress" aria-hidden="true"></i></button></h3>
+  <ul>
+    <li><a href="#flink">Flink</a>
+      <ul>
+        <li><a href="#lookup-join">Lookup Join</a></li>
+        <li><a href="#paimon-cdc">Paimon CDC</a></li>
+      </ul>
+    </li>
+    <li><a href="#spark">Spark</a></li>
+    <li><a href="#hive">Hive</a></li>
+    <li><a href="#tag-management">Tag Management</a></li>
+    <li><a href="#new-aggregation-functions">New Aggregation Functions</a></li>
+    <li><a href="#new-metrics">New Metrics</a></li>
+    <li><a href="#other-improvements">Other Improvements</a></li>
+  </ul>
+</nav>
+
+ 
+    </aside>
+    <aside class="expand-toc">
+      <button class="toc" onclick="expandToc()">
+        <i class="fa fa-expand" aria-hidden="true"></i>
+      </button>
+    </aside>
+    
+  </main>
+
+  
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

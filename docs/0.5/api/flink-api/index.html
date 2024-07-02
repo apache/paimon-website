@@ -1,0 +1,1219 @@
+
+<!DOCTYPE html>
+<html lang="en" dir=>
+
+<head>
+  <meta name="generator" content="Hugo 0.80.0" />
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Flink API #  Dependency #  Maven dependency:
+&lt;dependency&gt; &lt;groupId&gt;org.apache.paimon&lt;/groupId&gt; &lt;artifactId&gt;paimon-flink-1.17&lt;/artifactId&gt; &lt;version&gt;0.5.0-incubating&lt;/version&gt; &lt;/dependency&gt; &lt;dependency&gt; &lt;groupId&gt;org.apache.flink&lt;/groupId&gt; &lt;artifactId&gt;flink-table-api-java-bridge&lt;/artifactId&gt; &lt;version&gt;1.17.0&lt;/version&gt; &lt;scope&gt;provided&lt;/scope&gt; &lt;/dependency&gt; Or download the jar file: Paimon Flink. Please choose your Flink version.
+Paimon relies on Hadoop environment, you should add hadoop classpath or bundled jar.
+Paimon does not provide a DataStream API, but you can read or write to Paimon tables by the conversion between DataStream and Table in Flink. See DataStream API Integration.">
+<meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="Flink API" />
+<meta property="og:description" content="Flink API #  Dependency #  Maven dependency:
+&lt;dependency&gt; &lt;groupId&gt;org.apache.paimon&lt;/groupId&gt; &lt;artifactId&gt;paimon-flink-1.17&lt;/artifactId&gt; &lt;version&gt;0.5.0-incubating&lt;/version&gt; &lt;/dependency&gt; &lt;dependency&gt; &lt;groupId&gt;org.apache.flink&lt;/groupId&gt; &lt;artifactId&gt;flink-table-api-java-bridge&lt;/artifactId&gt; &lt;version&gt;1.17.0&lt;/version&gt; &lt;scope&gt;provided&lt;/scope&gt; &lt;/dependency&gt; Or download the jar file: Paimon Flink. Please choose your Flink version.
+Paimon relies on Hadoop environment, you should add hadoop classpath or bundled jar.
+Paimon does not provide a DataStream API, but you can read or write to Paimon tables by the conversion between DataStream and Table in Flink. See DataStream API Integration." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="//paimon.apache.org/docs/0.5/api/flink-api/" />
+
+<title>Flink API | Apache Paimon</title>
+<link rel="manifest" href="/docs/0.5/manifest.json">
+<link rel="icon" href="/docs/0.5/favicon.png" type="image/x-icon">
+<link rel="stylesheet" href="/docs/0.5/book.min.3bc4108a5b57c9a7e6fcae92ff69940435f8c46c4e1e4a311aedc9b2d8e06792.css" integrity="sha256-O8QQiltXyafm/K6S/2mUBDX4xGxOHkoxGu3JstjgZ5I=">
+<script defer src="/docs/0.5/en.search.min.45baff9c645deb8b39a64e9342f7813d73087e3394deb1161dbd9e10c97a3107.js" integrity="sha256-Rbr/nGRd64s5pk6TQveBPXMIfjOU3rEWHb2eEMl6MQc="></script>
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+  
+
+<link rel="stylesheet" type="text/css" href="//paimon.apache.org/docs/0.5/font-awesome/css/font-awesome.min.css">
+<script src="//paimon.apache.org/docs/0.5/js/anchor.min.js"></script>
+<script src="//paimon.apache.org/docs/0.5/js/flink.js"></script>
+
+
+  
+  <script>
+    var _paq = window._paq = window._paq || [];
+     
+     
+    _paq.push(['disableCookies']);
+     
+    _paq.push(["setDomains", ["*.flink.apache.org","*.nightlies.apache.org/flink"]]);
+    _paq.push(['trackPageView']);
+    _paq.push(['enableLinkTracking']);
+    (function() {
+      var u="//matomo.privacy.apache.org/";
+      _paq.push(['setTrackerUrl', u+'matomo.php']);
+      _paq.push(['setSiteId', '1']);
+      var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+      g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+    })();
+  </script>
+  
+</head>
+
+<body dir=>
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      
+  
+
+<nav>
+
+
+<a id="logo" href="//paimon.apache.org/docs/0.5">
+    <img width="100%" src="//paimon.apache.org/docs/0.5/paimon_black.svg">
+</a>
+<p style="text-align:right">0.5.0-incubating</p>
+
+<div class="book-search">
+  <input type="text" id="book-search-input" placeholder="Search" aria-label="Search" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-dc8a1c63e6da60163016ce21cae1faa0" class="toggle"  />
+    <label for="section-dc8a1c63e6da60163016ce21cae1faa0" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-book title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Concepts</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/concepts/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/concepts/basic-concepts/" class="">Basic Concepts</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/concepts/file-layouts/" class="">File Layouts</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/concepts/file-operations/" class="">File Operations</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/concepts/primary-key-table/" class="">Primary Key Table</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/concepts/append-only-table/" class="">Append Only Table</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/concepts/external-log-systems/" class="">External Log Systems</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-90f5541dc4fa46a212e954b9193ea0f9" class="toggle"  />
+    <label for="section-90f5541dc4fa46a212e954b9193ea0f9" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-gear title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Engines</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/engines/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/engines/flink/" class="">Flink</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/engines/spark3/" class="">Spark3</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/engines/spark2/" class="">Spark2</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/engines/hive/" class="">Hive</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/engines/presto/" class="">Presto</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/engines/trino/" class="">Trino</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-e2d76c106dab115385ef7f124cda2ba4" class="toggle"  />
+    <label for="section-e2d76c106dab115385ef7f124cda2ba4" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-folder title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Filesystems</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/filesystems/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/filesystems/hdfs/" class="">HDFS</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/filesystems/oss/" class="">OSS</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/filesystems/s3/" class="">S3</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-f6ca435e98b926845c0060f9e7f85362" class="toggle"  />
+    <label for="section-f6ca435e98b926845c0060f9e7f85362" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-database title maindish" aria-hidden="true"></i>&nbsp;&nbsp;How to</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/how-to/creating-catalogs/" class="">Creating Catalogs</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/how-to/creating-tables/" class="">Creating Tables</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/how-to/altering-tables/" class="">Altering Tables</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/how-to/writing-tables/" class="">Writing Tables</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/how-to/querying-tables/" class="">Querying Tables</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/how-to/system-tables/" class="">System Tables</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/how-to/lookup-joins/" class="">Lookup Joins</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/how-to/cdc-ingestion/" class="">CDC Ingestion</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-697a4b6a0388d6cfa4f418aba3b4edfe" class="toggle"  />
+    <label for="section-697a4b6a0388d6cfa4f418aba3b4edfe" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-wrench title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Maintenance</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/maintenance/write-performance/" class="">Write Performance</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/maintenance/read-performance/" class="">Read Performance</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/maintenance/multiple-writers/" class="">Multiple Writers</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/maintenance/manage-snapshots/" class="">Manage Snapshots</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/maintenance/manage-partition/" class="">Manage Partition</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/maintenance/manage-files/" class="">Manage Files</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/maintenance/rescale-bucket/" class="">Rescale Bucket</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/maintenance/manage-tags/" class="">Manage Tags</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/maintenance/configurations/" class="">Configurations</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-1b3eda2e8317c0686a4d41cefa0a3453" class="toggle" checked />
+    <label for="section-1b3eda2e8317c0686a4d41cefa0a3453" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-briefcase title maindish" aria-hidden="true"></i>&nbsp;&nbsp;API</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/api/java-api/" class="">Java API</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/api/flink-api/" class=" active">Flink API</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  	<br/>
+  
+  
+    <input type="checkbox" id="section-8c828bcf882f666cdd6821a70cc768ee" class="toggle"  />
+    <label for="section-8c828bcf882f666cdd6821a70cc768ee" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-sitemap title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Project</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/project/roadmap/" class="">Roadmap</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/project/download/" class="">Download</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/project/contributing/" class="">Contributing</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br/>
+<hr class="menu-break">
+
+<a href="//paimon.apache.org" style="color:black;margin-bottom:0.5em"><i class="link fa fa-external-link title" aria-hidden="true"></i> Project Homepage</a>
+<br/>
+
+<a href="//paimon.apache.org/docs/master/api/java/" style="color:black;margin-bottom:0.5em"><i class="link fa fa-external-link title" aria-hidden="true"></i> JavaDocs</a>
+<br/>
+
+<hr class="menu-break">
+<li style="list-style-type: none">
+  <br>
+  <input type="checkbox" id="section-version-picker" class="toggle">
+  <label for="section-version-picker" class="flex justify-between">
+     <div style="font-weight:450;margin-bottom:0.5em">Pick Docs Version</div>
+     <span>▾</span>
+  </label>
+  <ul>
+    <a href="//paimon.apache.org/docs/0.5">
+      0.5 (✓)
+    </a>
+    <hr class="menu-break">
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/master">
+          master
+        </a>
+      </li>
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/0.5">
+          stable
+        </a>
+      </li>
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/0.4">
+          0.4
+        </a>
+      </li>
+    
+    <hr class="menu-break">
+    <li>
+      <a href="//paimon.apache.org/docs/0.5/versions">
+          All Versions
+      </a>
+    </li>
+  </ul>
+</li>
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var menu=document.querySelector("aside.book-menu nav");addEventListener("beforeunload",function(event){localStorage.setItem("menu.scrollTop",menu.scrollTop);});menu.scrollTop=localStorage.getItem("menu.scrollTop");})();</script>
+
+
+ 
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/docs/0.5/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <strong>Flink API</strong>
+
+  <label for="toc-control">
+    
+    <img src="/docs/0.5/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden clearfix">
+    
+  
+
+<nav id="TableOfContents"><h3>On This Page <button class="toc" onclick="collapseToc()"><i class="fa fa-compress" aria-hidden="true"></i></button></h3>
+  <ul>
+    <li><a href="#dependency">Dependency</a></li>
+    <li><a href="#write-to-table">Write to Table</a></li>
+    <li><a href="#read-from-table">Read from Table</a></li>
+    <li><a href="#cdc-ingestion-table">Cdc ingestion Table</a></li>
+  </ul>
+</nav>
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+
+
+
+
+
+
+      
+  <article class="markdown"><!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<h1 id="flink-api">
+  Flink API
+  <a class="anchor" href="#flink-api">#</a>
+</h1>
+<h2 id="dependency">
+  Dependency
+  <a class="anchor" href="#dependency">#</a>
+</h2>
+<p>Maven dependency:</p>
+<div class="highlight"><pre class="chroma"><code class="language-xml" data-lang="xml"><span class="nt">&lt;dependency&gt;</span>
+  <span class="nt">&lt;groupId&gt;</span>org.apache.paimon<span class="nt">&lt;/groupId&gt;</span>
+  <span class="nt">&lt;artifactId&gt;</span>paimon-flink-1.17<span class="nt">&lt;/artifactId&gt;</span>
+  <span class="nt">&lt;version&gt;</span>0.5.0-incubating<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+
+<span class="nt">&lt;dependency&gt;</span>
+  <span class="nt">&lt;groupId&gt;</span>org.apache.flink<span class="nt">&lt;/groupId&gt;</span>
+  <span class="nt">&lt;artifactId&gt;</span>flink-table-api-java-bridge<span class="nt">&lt;/artifactId&gt;</span>
+  <span class="nt">&lt;version&gt;</span>1.17.0<span class="nt">&lt;/version&gt;</span>
+  <span class="nt">&lt;scope&gt;</span>provided<span class="nt">&lt;/scope&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+</code></pre></div><p>Or download the jar file:
+<a href="https://repo.maven.apache.org/maven2/org/apache/paimon/paimon-flink-1.17/0.5.0-incubating/paimon-flink-1.17-0.5.0-incubating.jar">Paimon Flink</a>.
+
+
+</p>
+<p>Please choose your Flink version.</p>
+<p>Paimon relies on Hadoop environment, you should add hadoop classpath or bundled jar.</p>
+<p>Paimon does not provide a DataStream API, but you can read or write to Paimon tables by the conversion between DataStream and Table in Flink.
+See <a href="https://nightlies.apache.org/flink/flink-docs-stable/docs/dev/table/data_stream_api/">DataStream API Integration</a>.</p>
+<h2 id="write-to-table">
+  Write to Table
+  <a class="anchor" href="#write-to-table">#</a>
+</h2>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="kn">import</span> <span class="nn">org.apache.flink.streaming.api.datastream.DataStream</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.flink.streaming.api.environment.StreamExecutionEnvironment</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.flink.table.api.DataTypes</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.flink.table.api.Schema</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.flink.table.api.Table</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.flink.table.api.bridge.java.StreamTableEnvironment</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.flink.types.Row</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.flink.types.RowKind</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">WriteToTable</span> <span class="o">{</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">writeTo</span><span class="o">()</span> <span class="o">{</span>
+        <span class="c1">// create environments of both APIs
+</span><span class="c1"></span>        <span class="n">StreamExecutionEnvironment</span> <span class="n">env</span> <span class="o">=</span> <span class="n">StreamExecutionEnvironment</span><span class="o">.</span><span class="na">getExecutionEnvironment</span><span class="o">();</span>
+        <span class="n">StreamTableEnvironment</span> <span class="n">tableEnv</span> <span class="o">=</span> <span class="n">StreamTableEnvironment</span><span class="o">.</span><span class="na">create</span><span class="o">(</span><span class="n">env</span><span class="o">);</span>
+
+        <span class="c1">// create a changelog DataStream
+</span><span class="c1"></span>        <span class="n">DataStream</span><span class="o">&lt;</span><span class="n">Row</span><span class="o">&gt;</span> <span class="n">dataStream</span> <span class="o">=</span>
+                <span class="n">env</span><span class="o">.</span><span class="na">fromElements</span><span class="o">(</span>
+                        <span class="n">Row</span><span class="o">.</span><span class="na">ofKind</span><span class="o">(</span><span class="n">RowKind</span><span class="o">.</span><span class="na">INSERT</span><span class="o">,</span> <span class="s">&#34;Alice&#34;</span><span class="o">,</span> <span class="n">12</span><span class="o">),</span>
+                        <span class="n">Row</span><span class="o">.</span><span class="na">ofKind</span><span class="o">(</span><span class="n">RowKind</span><span class="o">.</span><span class="na">INSERT</span><span class="o">,</span> <span class="s">&#34;Bob&#34;</span><span class="o">,</span> <span class="n">5</span><span class="o">),</span>
+                        <span class="n">Row</span><span class="o">.</span><span class="na">ofKind</span><span class="o">(</span><span class="n">RowKind</span><span class="o">.</span><span class="na">UPDATE_BEFORE</span><span class="o">,</span> <span class="s">&#34;Alice&#34;</span><span class="o">,</span> <span class="n">12</span><span class="o">),</span>
+                        <span class="n">Row</span><span class="o">.</span><span class="na">ofKind</span><span class="o">(</span><span class="n">RowKind</span><span class="o">.</span><span class="na">UPDATE_AFTER</span><span class="o">,</span> <span class="s">&#34;Alice&#34;</span><span class="o">,</span> <span class="n">100</span><span class="o">))</span>
+                        <span class="o">.</span><span class="na">returns</span><span class="o">(</span>
+                                <span class="n">Types</span><span class="o">.</span><span class="na">ROW_NAMED</span><span class="o">(</span>
+                                        <span class="k">new</span> <span class="n">String</span><span class="o">[]</span> <span class="o">{</span><span class="s">&#34;name&#34;</span><span class="o">,</span> <span class="s">&#34;age&#34;</span><span class="o">},</span>
+                                        <span class="n">Types</span><span class="o">.</span><span class="na">STRING</span><span class="o">,</span> <span class="n">Types</span><span class="o">.</span><span class="na">INT</span><span class="o">));</span>
+
+        <span class="c1">// interpret the DataStream as a Table
+</span><span class="c1"></span>        <span class="n">Schema</span> <span class="n">schema</span> <span class="o">=</span> <span class="n">Schema</span><span class="o">.</span><span class="na">newBuilder</span><span class="o">()</span>
+                <span class="o">.</span><span class="na">column</span><span class="o">(</span><span class="s">&#34;name&#34;</span><span class="o">,</span> <span class="n">DataTypes</span><span class="o">.</span><span class="na">STRING</span><span class="o">())</span>
+                <span class="o">.</span><span class="na">column</span><span class="o">(</span><span class="s">&#34;age&#34;</span><span class="o">,</span> <span class="n">DataTypes</span><span class="o">.</span><span class="na">INT</span><span class="o">())</span>
+                <span class="o">.</span><span class="na">build</span><span class="o">();</span>
+        <span class="n">Table</span> <span class="n">table</span> <span class="o">=</span> <span class="n">tableEnv</span><span class="o">.</span><span class="na">fromChangelogStream</span><span class="o">(</span><span class="n">dataStream</span><span class="o">,</span> <span class="n">schema</span><span class="o">);</span>
+
+        <span class="c1">// create paimon catalog
+</span><span class="c1"></span>        <span class="n">tableEnv</span><span class="o">.</span><span class="na">executeSql</span><span class="o">(</span><span class="s">&#34;CREATE CATALOG paimon WITH (&#39;type&#39; = &#39;paimon&#39;, &#39;warehouse&#39;=&#39;...&#39;)&#34;</span><span class="o">);</span>
+        <span class="n">tableEnv</span><span class="o">.</span><span class="na">executeSql</span><span class="o">(</span><span class="s">&#34;USE CATALOG paimon&#34;</span><span class="o">);</span>
+
+        <span class="c1">// register the table under a name and perform an aggregation
+</span><span class="c1"></span>        <span class="n">tableEnv</span><span class="o">.</span><span class="na">createTemporaryView</span><span class="o">(</span><span class="s">&#34;InputTable&#34;</span><span class="o">,</span> <span class="n">table</span><span class="o">);</span>
+
+        <span class="c1">// insert into paimon table from your data stream table
+</span><span class="c1"></span>        <span class="n">tableEnv</span><span class="o">.</span><span class="na">executeSql</span><span class="o">(</span><span class="s">&#34;INSERT INTO sink_paimon_table SELECT * FROM InputTable&#34;</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div><h2 id="read-from-table">
+  Read from Table
+  <a class="anchor" href="#read-from-table">#</a>
+</h2>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="kn">import</span> <span class="nn">org.apache.flink.streaming.api.datastream.DataStream</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.flink.streaming.api.environment.StreamExecutionEnvironment</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.flink.table.api.Table</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.flink.table.api.bridge.java.StreamTableEnvironment</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.flink.types.Row</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">ReadFromTable</span> <span class="o">{</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">readFrom</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+        <span class="c1">// create environments of both APIs
+</span><span class="c1"></span>        <span class="n">StreamExecutionEnvironment</span> <span class="n">env</span> <span class="o">=</span> <span class="n">StreamExecutionEnvironment</span><span class="o">.</span><span class="na">getExecutionEnvironment</span><span class="o">();</span>
+        <span class="n">StreamTableEnvironment</span> <span class="n">tableEnv</span> <span class="o">=</span> <span class="n">StreamTableEnvironment</span><span class="o">.</span><span class="na">create</span><span class="o">(</span><span class="n">env</span><span class="o">);</span>
+
+        <span class="c1">// create paimon catalog
+</span><span class="c1"></span>        <span class="n">tableEnv</span><span class="o">.</span><span class="na">executeSql</span><span class="o">(</span><span class="s">&#34;CREATE CATALOG paimon WITH (&#39;type&#39; = &#39;paimon&#39;, &#39;warehouse&#39;=&#39;...&#39;)&#34;</span><span class="o">);</span>
+        <span class="n">tableEnv</span><span class="o">.</span><span class="na">executeSql</span><span class="o">(</span><span class="s">&#34;USE CATALOG paimon&#34;</span><span class="o">);</span>
+
+        <span class="c1">// convert to DataStream
+</span><span class="c1"></span>        <span class="n">Table</span> <span class="n">table</span> <span class="o">=</span> <span class="n">tableEnv</span><span class="o">.</span><span class="na">sqlQuery</span><span class="o">(</span><span class="s">&#34;SELECT * FROM my_paimon_table&#34;</span><span class="o">);</span>
+        <span class="n">DataStream</span><span class="o">&lt;</span><span class="n">Row</span><span class="o">&gt;</span> <span class="n">dataStream</span> <span class="o">=</span> <span class="n">tableEnv</span><span class="o">.</span><span class="na">toChangelogStream</span><span class="o">(</span><span class="n">table</span><span class="o">);</span>
+
+        <span class="c1">// use this datastream
+</span><span class="c1"></span>        <span class="n">dataStream</span><span class="o">.</span><span class="na">executeAndCollect</span><span class="o">().</span><span class="na">forEachRemaining</span><span class="o">(</span><span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">::</span><span class="n">println</span><span class="o">);</span>
+
+        <span class="c1">// prints:
+</span><span class="c1"></span>        <span class="c1">// +I[Bob, 12]
+</span><span class="c1"></span>        <span class="c1">// +I[Alice, 12]
+</span><span class="c1"></span>        <span class="c1">// -U[Alice, 12]
+</span><span class="c1"></span>        <span class="c1">// +U[Alice, 14]
+</span><span class="c1"></span>    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div><h2 id="cdc-ingestion-table">
+  Cdc ingestion Table
+  <a class="anchor" href="#cdc-ingestion-table">#</a>
+</h2>
+<p>Paimon supports ingest data into Paimon tables with schema evolution.</p>
+<ul>
+<li>You can use Java API to write cdc records into Paimon Tables.</li>
+<li>You can write records to Paimon&rsquo;s partial-update table with adding columns dynamically.</li>
+</ul>
+<p>Here is an example to use <code>RichCdcSinkBuilder</code> API:</p>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="kn">import</span> <span class="nn">org.apache.paimon.catalog.Catalog</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.paimon.catalog.CatalogContext</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.paimon.catalog.CatalogFactory</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.paimon.catalog.Identifier</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.paimon.flink.sink.cdc.RichCdcRecord</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.paimon.flink.sink.cdc.RichCdcSinkBuilder</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.paimon.fs.Path</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.paimon.options.Options</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.paimon.schema.Schema</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.paimon.table.Table</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.paimon.types.DataTypes</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">org.apache.flink.streaming.api.datastream.DataStream</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.flink.streaming.api.environment.StreamExecutionEnvironment</span><span class="o">;</span>
+
+<span class="kn">import static</span> <span class="nn">org.apache.paimon.types.RowKind.INSERT</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">WriteCdcToTable</span> <span class="o">{</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">writeTo</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+        <span class="n">StreamExecutionEnvironment</span> <span class="n">env</span> <span class="o">=</span> <span class="n">StreamExecutionEnvironment</span><span class="o">.</span><span class="na">getExecutionEnvironment</span><span class="o">();</span>
+
+        <span class="n">DataStream</span><span class="o">&lt;</span><span class="n">RichCdcRecord</span><span class="o">&gt;</span> <span class="n">dataStream</span> <span class="o">=</span>
+                <span class="n">env</span><span class="o">.</span><span class="na">fromElements</span><span class="o">(</span>
+                        <span class="n">RichCdcRecord</span><span class="o">.</span><span class="na">builder</span><span class="o">(</span><span class="n">INSERT</span><span class="o">)</span>
+                                <span class="o">.</span><span class="na">field</span><span class="o">(</span><span class="s">&#34;order_id&#34;</span><span class="o">,</span> <span class="n">DataTypes</span><span class="o">.</span><span class="na">BIGINT</span><span class="o">(),</span> <span class="s">&#34;123&#34;</span><span class="o">)</span>
+                                <span class="o">.</span><span class="na">field</span><span class="o">(</span><span class="s">&#34;price&#34;</span><span class="o">,</span> <span class="n">DataTypes</span><span class="o">.</span><span class="na">DOUBLE</span><span class="o">(),</span> <span class="s">&#34;62.2&#34;</span><span class="o">)</span>
+                                <span class="o">.</span><span class="na">build</span><span class="o">(),</span>
+                        <span class="c1">// dt field will be added with schema evolution
+</span><span class="c1"></span>                        <span class="n">RichCdcRecord</span><span class="o">.</span><span class="na">builder</span><span class="o">(</span><span class="n">INSERT</span><span class="o">)</span>
+                                <span class="o">.</span><span class="na">field</span><span class="o">(</span><span class="s">&#34;order_id&#34;</span><span class="o">,</span> <span class="n">DataTypes</span><span class="o">.</span><span class="na">BIGINT</span><span class="o">(),</span> <span class="s">&#34;245&#34;</span><span class="o">)</span>
+                                <span class="o">.</span><span class="na">field</span><span class="o">(</span><span class="s">&#34;price&#34;</span><span class="o">,</span> <span class="n">DataTypes</span><span class="o">.</span><span class="na">DOUBLE</span><span class="o">(),</span> <span class="s">&#34;82.1&#34;</span><span class="o">)</span>
+                                <span class="o">.</span><span class="na">field</span><span class="o">(</span><span class="s">&#34;dt&#34;</span><span class="o">,</span> <span class="n">DataTypes</span><span class="o">.</span><span class="na">TIMESTAMP</span><span class="o">(),</span> <span class="s">&#34;2023-06-12 20:21:12&#34;</span><span class="o">)</span>
+                                <span class="o">.</span><span class="na">build</span><span class="o">());</span>
+
+        <span class="n">Identifier</span> <span class="n">identifier</span> <span class="o">=</span> <span class="n">Identifier</span><span class="o">.</span><span class="na">create</span><span class="o">(</span><span class="s">&#34;my_db&#34;</span><span class="o">,</span> <span class="s">&#34;T&#34;</span><span class="o">);</span>
+        <span class="n">Options</span> <span class="n">catalogOptions</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Options</span><span class="o">();</span>
+        <span class="n">catalogOptions</span><span class="o">.</span><span class="na">set</span><span class="o">(</span><span class="s">&#34;warehouse&#34;</span><span class="o">,</span> <span class="s">&#34;/path/to/warehouse&#34;</span><span class="o">);</span>
+        <span class="n">Catalog</span><span class="o">.</span><span class="na">Loader</span> <span class="n">catalogLoader</span> <span class="o">=</span> 
+                <span class="o">()</span> <span class="o">-&gt;</span> <span class="n">FlinkCatalogFactory</span><span class="o">.</span><span class="na">createPaimonCatalog</span><span class="o">(</span><span class="n">catalogOptions</span><span class="o">);</span>
+        
+        <span class="k">new</span> <span class="n">RichCdcSinkBuilder</span><span class="o">()</span>
+                <span class="o">.</span><span class="na">withInput</span><span class="o">(</span><span class="n">dataStream</span><span class="o">)</span>
+                <span class="o">.</span><span class="na">withTable</span><span class="o">(</span><span class="n">createTableIfNotExists</span><span class="o">(</span><span class="n">identifier</span><span class="o">))</span>
+                <span class="o">.</span><span class="na">withIdentifier</span><span class="o">(</span><span class="n">identifier</span><span class="o">)</span>
+                <span class="o">.</span><span class="na">withCatalogLoader</span><span class="o">(</span><span class="n">catalogLoader</span><span class="o">)</span>
+                <span class="o">.</span><span class="na">build</span><span class="o">();</span>
+
+        <span class="n">env</span><span class="o">.</span><span class="na">execute</span><span class="o">();</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kd">static</span> <span class="n">Table</span> <span class="nf">createTableIfNotExists</span><span class="o">(</span><span class="n">Identifier</span> <span class="n">identifier</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+        <span class="n">CatalogContext</span> <span class="n">context</span> <span class="o">=</span> <span class="n">CatalogContext</span><span class="o">.</span><span class="na">create</span><span class="o">(</span><span class="k">new</span> <span class="n">Path</span><span class="o">(</span><span class="s">&#34;...&#34;</span><span class="o">));</span>
+        <span class="n">Catalog</span> <span class="n">catalog</span> <span class="o">=</span> <span class="n">CatalogFactory</span><span class="o">.</span><span class="na">createCatalog</span><span class="o">(</span><span class="n">context</span><span class="o">);</span>
+
+        <span class="n">Schema</span><span class="o">.</span><span class="na">Builder</span> <span class="n">schemaBuilder</span> <span class="o">=</span> <span class="n">Schema</span><span class="o">.</span><span class="na">newBuilder</span><span class="o">();</span>
+        <span class="n">schemaBuilder</span><span class="o">.</span><span class="na">primaryKey</span><span class="o">(</span><span class="s">&#34;order_id&#34;</span><span class="o">);</span>
+        <span class="n">schemaBuilder</span><span class="o">.</span><span class="na">column</span><span class="o">(</span><span class="s">&#34;order_id&#34;</span><span class="o">,</span> <span class="n">DataTypes</span><span class="o">.</span><span class="na">BIGINT</span><span class="o">());</span>
+        <span class="n">schemaBuilder</span><span class="o">.</span><span class="na">column</span><span class="o">(</span><span class="s">&#34;price&#34;</span><span class="o">,</span> <span class="n">DataTypes</span><span class="o">.</span><span class="na">DOUBLE</span><span class="o">());</span>
+        <span class="n">Schema</span> <span class="n">schema</span> <span class="o">=</span> <span class="n">schemaBuilder</span><span class="o">.</span><span class="na">build</span><span class="o">();</span>
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="n">catalog</span><span class="o">.</span><span class="na">createTable</span><span class="o">(</span><span class="n">identifier</span><span class="o">,</span> <span class="n">schema</span><span class="o">,</span> <span class="kc">false</span><span class="o">);</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">Catalog</span><span class="o">.</span><span class="na">TableAlreadyExistException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="c1">// do something
+</span><span class="c1"></span>        <span class="o">}</span>
+        <span class="k">return</span> <span class="n">catalog</span><span class="o">.</span><span class="na">getTable</span><span class="o">(</span><span class="n">identifier</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  
+
+
+
+
+<a href="//github.com/apache/incubator-paimon/edit/0.5/docs/content/api/flink-api.md" style="color:black"><i class="fa fa-edit fa-fw"></i>Edit This Page</a>
+
+
+ 
+        
+      </footer>
+
+      
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      
+  
+
+<nav id="TableOfContents"><h3>On This Page <button class="toc" onclick="collapseToc()"><i class="fa fa-compress" aria-hidden="true"></i></button></h3>
+  <ul>
+    <li><a href="#dependency">Dependency</a></li>
+    <li><a href="#write-to-table">Write to Table</a></li>
+    <li><a href="#read-from-table">Read from Table</a></li>
+    <li><a href="#cdc-ingestion-table">Cdc ingestion Table</a></li>
+  </ul>
+</nav>
+
+ 
+    </aside>
+    <aside class="expand-toc">
+      <button class="toc" onclick="expandToc()">
+        <i class="fa fa-expand" aria-hidden="true"></i>
+      </button>
+    </aside>
+    
+  </main>
+
+  
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

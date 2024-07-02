@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Releases on Apache Paimon</title>
+    <link>//paimon.apache.org/releases/</link>
+    <description>Recent content in Releases on Apache Paimon</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language><atom:link href="//paimon.apache.org/releases/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Release 0.8</title>
+      <link>//paimon.apache.org/releases/release-0.8/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/releases/release-0.8/</guid>
+      <description>Apache Paimon 0.8 Available #  May 9, 2024 - Jingsong Lee (jingsonglee0@gmail.com)
+Apache Paimon PMC has officially released Apache Paimon 0.8.0 version. A total of 47 people contributed to this version and completed over 350 Commits. Thank you to all contributors for their support!
+This version is the first release by Paimon after graduating and becoming a top-level project on Apache. It includes a large number of new features and is also the longest release by Paimon.</description>
+    </item>
+    
+    <item>
+      <title>Release 0.8.1</title>
+      <link>//paimon.apache.org/releases/release-0.8.1/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/releases/release-0.8.1/</guid>
+      <description>Apache Paimon 0.8.1 Available #  June 11, 2024 - Jingsong Lee (jingsonglee0@gmail.com)
+Apache Paimon PMC has officially released Apache Paimon 0.8.1 version. This is the bug fix version of release 0.8.
+Thank you to all contributors for their support!
+Version Overview #  This release includes 58 commits. Including:
+ 30+ bugfix commits. 20+ document improvements.  The notable bugs include:
+ Paimon #3476: Make Flink Sink be compatible with Paimon 0.</description>
+    </item>
+    
+    <item>
+      <title>Release 0.7</title>
+      <link>//paimon.apache.org/releases/release-0.7/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/releases/release-0.7/</guid>
+      <description>Apache Paimon 0.7 Available #  February 29, 2024 - Paimon Community (dev@paimon.apache.org)
+Apache Paimon PPMC has officially released Apache Paimon 0.7.0-incubating version. A total of 34 people contributed to this version and completed over 300 Commits. Thank you to all contributors for their support!
+In this version, we mainly focus on enhancement and optimization for the existing features. For more details, please refer to the following content below.
+Flink #  Lookup Join #   Fix bug that lookup join cannot handle sequence field of dim table.</description>
+    </item>
+    
+    <item>
+      <title>Release 0.6</title>
+      <link>//paimon.apache.org/releases/release-0.6/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/releases/release-0.6/</guid>
+      <description>Apache Paimon 0.6 Available #  December 13, 2023 - Paimon Community (dev@paimon.apache.org)
+Apache Paimon PPMC has officially released Apache Paimon 0.6.0-incubating version. A total of 58 people contributed to this version and completed over 400 Commits. Thank you to all contributors for their support!
+Some outstanding developments are:
+ Flink Paimon CDC almost supports all mainstream data ingestion currently available. Flink 1.18 and Paimon supports CALL procedure, this will make table management easier.</description>
+    </item>
+    
+    <item>
+      <title>Release 0.5</title>
+      <link>//paimon.apache.org/releases/release-0.5/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/releases/release-0.5/</guid>
+      <description>Apache Paimon 0.5 Available #  September 06, 2023 - Jingsong Lee (jingsonglee0@gmail.com)
+We are happy to announce the availability of Paimon 0.5.0-incubating.
+Nearly 100 contributors have come to contribute release-0.5, we created 500+ commits together, bringing many exciting new features and improvements to the community. Thank you all for your joint efforts!
+Highlight:
+ CDC Data Ingestion into Lake has reached maturity. Introduce Tags to provide immutable view to Offline data warehouse.</description>
+    </item>
+    
+    <item>
+      <title>Release 0.4</title>
+      <link>//paimon.apache.org/releases/release-0.4/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/releases/release-0.4/</guid>
+      <description>Apache Paimon 0.4 Available #  June 07, 2023
+We are happy to announce the availability of Paimon 0.4. This is the first release of the system inside the Apache Incubator and under the name Paimon. Releases up to 0.3 were under the name Flink Table Store, a sub-project of Flink where Paimon originates from.
+What is Paimon? #  Apache Paimon(incubating) is a streaming data lake platform that supports high-speed data ingestion, change data tracking and efficient real-time analytics.</description>
+    </item>
+    
+  </channel>
+</rss>

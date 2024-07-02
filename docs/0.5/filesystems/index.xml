@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Filesystems on Apache Paimon</title>
+    <link>//paimon.apache.org/docs/0.5/filesystems/</link>
+    <description>Recent content in Filesystems on Apache Paimon</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language><atom:link href="//paimon.apache.org/docs/0.5/filesystems/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Overview</title>
+      <link>//paimon.apache.org/docs/0.5/filesystems/overview/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/0.5/filesystems/overview/</guid>
+      <description>Overview #  Apache Paimon utilizes the same pluggable file systems as Apache Flink. Users can follow the standard plugin mechanism to configure the plugin structure if using Flink as compute engine. However, for other engines like Spark or Hive, the provided opt jars (by Flink) may get conflicts and cannot be used directly. It is not convenient for users to fix class conflicts, thus Paimon provides the self-contained and engine-unified FileSystem pluggable jars for user to query tables from Spark/Hive side.</description>
+    </item>
+    
+    <item>
+      <title>HDFS</title>
+      <link>//paimon.apache.org/docs/0.5/filesystems/hdfs/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/0.5/filesystems/hdfs/</guid>
+      <description>HDFS #  You don&amp;rsquo;t need any additional dependencies to access HDFS because you have already taken care of the Hadoop dependencies.
+HDFS Configuration #  For HDFS, the most important thing is to be able to read your HDFS configuration.
+Flink/Trino/JavaAPI You may not have to do anything, if you are in a hadoop environment. Otherwise pick one of the following ways to configure your HDFS:
+ Set environment variable HADOOP_HOME or HADOOP_CONF_DIR.</description>
+    </item>
+    
+    <item>
+      <title>OSS</title>
+      <link>//paimon.apache.org/docs/0.5/filesystems/oss/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/0.5/filesystems/oss/</guid>
+      <description>OSS #  Download paimon-oss-0.5.0-incubating.jar. Flink If you have already configured oss access through Flink (Via Flink FileSystem), here you can skip the following configuration.  Put paimon-oss-0.5.0-incubating.jar into lib directory of your Flink home, and create catalog:
+CREATE CATALOG my_catalog WITH ( &amp;#39;type&amp;#39; = &amp;#39;paimon&amp;#39;, &amp;#39;warehouse&amp;#39; = &amp;#39;oss://&amp;lt;bucket&amp;gt;/&amp;lt;path&amp;gt;&amp;#39;, &amp;#39;fs.oss.endpoint&amp;#39; = &amp;#39;oss-cn-hangzhou.aliyuncs.com&amp;#39;, &amp;#39;fs.oss.accessKeyId&amp;#39; = &amp;#39;xxx&amp;#39;, &amp;#39;fs.oss.accessKeySecret&amp;#39; = &amp;#39;yyy&amp;#39; ); Spark If you have already configured oss access through Spark (Via Hadoop FileSystem), here you can skip the following configuration.</description>
+    </item>
+    
+    <item>
+      <title>S3</title>
+      <link>//paimon.apache.org/docs/0.5/filesystems/s3/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/0.5/filesystems/s3/</guid>
+      <description>S3 #  Download paimon-s3-0.5.0-incubating.jar. Flink If you have already configured s3 access through Flink (Via Flink FileSystem), here you can skip the following configuration.  Put paimon-s3-0.5.0-incubating.jar into lib directory of your Flink home, and create catalog:
+CREATE CATALOG my_catalog WITH ( &amp;#39;type&amp;#39; = &amp;#39;paimon&amp;#39;, &amp;#39;warehouse&amp;#39; = &amp;#39;s3://&amp;lt;bucket&amp;gt;/&amp;lt;path&amp;gt;&amp;#39;, &amp;#39;s3.endpoint&amp;#39; = &amp;#39;your-endpoint-hostname&amp;#39;, &amp;#39;s3.access-key&amp;#39; = &amp;#39;xxx&amp;#39;, &amp;#39;s3.secret-key&amp;#39; = &amp;#39;yyy&amp;#39; ); Spark If you have already configured s3 access through Spark (Via Hadoop FileSystem), here you can skip the following configuration.</description>
+    </item>
+    
+  </channel>
+</rss>

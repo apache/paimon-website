@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Migration on Apache Paimon</title>
+    <link>//paimon.apache.org/docs/master/migration/</link>
+    <description>Recent content in Migration on Apache Paimon</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language><atom:link href="//paimon.apache.org/docs/master/migration/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Migration From Hive</title>
+      <link>//paimon.apache.org/docs/master/migration/migration-from-hive/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/migration/migration-from-hive/</guid>
+      <description>Hive Table Migration #  Apache Hive supports ORC, Parquet file formats that could be migrated to Paimon. When migrating data to a paimon table, the origin table will be permanently disappeared. So please back up your data if you still need the original table. The migrated table will be unaware-bucket append-only table.
+Now, we can use paimon hive catalog with Migrate Table Procedure and Migrate File Procedure to totally migrate a table from hive to paimon.</description>
+    </item>
+    
+    <item>
+      <title>Upsert To Partitioned</title>
+      <link>//paimon.apache.org/docs/master/migration/upsert-to-partitioned/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/migration/upsert-to-partitioned/</guid>
+      <description>Upsert To Partitioned #  The Tag Management will maintain the manifests and data files of the snapshot. A typical usage is creating tags daily, then you can maintain the historical data of each day for batch reading.
+When using primary key tables, a non-partitioned approach is often used to maintain updates, in order to mirror and synchronize tables from upstream database tables. This allows users to query the latest data.</description>
+    </item>
+    
+  </channel>
+</rss>

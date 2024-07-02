@@ -1,0 +1,1619 @@
+
+<!DOCTYPE html>
+<html lang="en" dir=>
+
+<head>
+  <meta name="generator" content="Hugo 0.80.0" />
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Flink #  This documentation is a guide for using Paimon in Flink.
+Preparing Paimon Jar File #  Paimon currently supports Flink 1.17, 1.16, 1.15 and 1.14. We recommend the latest Flink version for a better experience.
+Download the jar file with corresponding version.
+ Currently, paimon provides two types jar: one of which(the bundled jar) is used for read/write data, and the other(action jar) for operations such as manually compaction,    Version Type Jar     Flink 1.">
+<meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="Flink" />
+<meta property="og:description" content="Flink #  This documentation is a guide for using Paimon in Flink.
+Preparing Paimon Jar File #  Paimon currently supports Flink 1.17, 1.16, 1.15 and 1.14. We recommend the latest Flink version for a better experience.
+Download the jar file with corresponding version.
+ Currently, paimon provides two types jar: one of which(the bundled jar) is used for read/write data, and the other(action jar) for operations such as manually compaction,    Version Type Jar     Flink 1." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="//paimon.apache.org/docs/0.6/engines/flink/" />
+
+<title>Flink | Apache Paimon</title>
+<link rel="manifest" href="/docs/0.6/manifest.json">
+<link rel="icon" href="/docs/0.6/favicon.png" type="image/x-icon">
+<link rel="stylesheet" href="/docs/0.6/book.min.3bc4108a5b57c9a7e6fcae92ff69940435f8c46c4e1e4a311aedc9b2d8e06792.css" integrity="sha256-O8QQiltXyafm/K6S/2mUBDX4xGxOHkoxGu3JstjgZ5I=">
+<script defer src="/docs/0.6/en.search.min.bdbb2261b557a7c02c04a5095c8a17bb87853c6bb8544247aaf1506cb12c096e.js" integrity="sha256-vbsiYbVXp8AsBKUJXIoXu4eFPGu4VEJHqvFQbLEsCW4="></script>
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+  
+
+<link rel="stylesheet" type="text/css" href="//paimon.apache.org/docs/0.6/font-awesome/css/font-awesome.min.css">
+<script src="//paimon.apache.org/docs/0.6/js/anchor.min.js"></script>
+<script src="//paimon.apache.org/docs/0.6/js/flink.js"></script>
+
+
+  
+  <script>
+    var _paq = window._paq = window._paq || [];
+     
+     
+    _paq.push(['disableCookies']);
+     
+    _paq.push(["setDomains", ["*.flink.apache.org","*.nightlies.apache.org/flink"]]);
+    _paq.push(['trackPageView']);
+    _paq.push(['enableLinkTracking']);
+    (function() {
+      var u="//matomo.privacy.apache.org/";
+      _paq.push(['setTrackerUrl', u+'matomo.php']);
+      _paq.push(['setSiteId', '1']);
+      var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+      g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+    })();
+  </script>
+  
+</head>
+
+<body dir=>
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      
+  
+
+<nav>
+
+
+<a id="logo" href="//paimon.apache.org/docs/0.6">
+    <img width="100%" src="//paimon.apache.org/docs/0.6/paimon_black.svg">
+</a>
+<p style="text-align:right">0.6.0-incubating</p>
+
+<div class="book-search">
+  <input type="text" id="book-search-input" placeholder="Search" aria-label="Search" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-dc8a1c63e6da60163016ce21cae1faa0" class="toggle"  />
+    <label for="section-dc8a1c63e6da60163016ce21cae1faa0" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-book title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Concepts</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/concepts/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/concepts/basic-concepts/" class="">Basic Concepts</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/concepts/file-layouts/" class="">File Layouts</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/concepts/primary-key-table/" class="">Primary Key Table</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/concepts/append-only-table/" class="">Append Only Table</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-90f5541dc4fa46a212e954b9193ea0f9" class="toggle" checked />
+    <label for="section-90f5541dc4fa46a212e954b9193ea0f9" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-gear title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Engines</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/engines/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/engines/flink/" class=" active">Flink</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/engines/spark/" class="">Spark</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/engines/hive/" class="">Hive</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/engines/presto/" class="">Presto</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/engines/trino/" class="">Trino</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-e2d76c106dab115385ef7f124cda2ba4" class="toggle"  />
+    <label for="section-e2d76c106dab115385ef7f124cda2ba4" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-folder title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Filesystems</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/filesystems/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/filesystems/hdfs/" class="">HDFS</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/filesystems/oss/" class="">OSS</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/filesystems/s3/" class="">S3</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-f6ca435e98b926845c0060f9e7f85362" class="toggle"  />
+    <label for="section-f6ca435e98b926845c0060f9e7f85362" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-database title maindish" aria-hidden="true"></i>&nbsp;&nbsp;How to</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/how-to/creating-catalogs/" class="">Creating Catalogs</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/how-to/creating-tables/" class="">Creating Tables</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/how-to/altering-tables/" class="">Altering Tables</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/how-to/writing-tables/" class="">Writing Tables</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/how-to/querying-tables/" class="">Querying Tables</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/how-to/system-tables/" class="">System Tables</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/how-to/lookup-joins/" class="">Lookup Joins</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-582e435c19ca5fafbf9764337d648e63" class="toggle"  />
+    <label for="section-582e435c19ca5fafbf9764337d648e63" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-database title maindish" aria-hidden="true"></i>&nbsp;&nbsp;CDC Ingestion</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/cdc-ingestion/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/cdc-ingestion/mysql-cdc/" class="">Mysql CDC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/cdc-ingestion/kafka-cdc/" class="">Kafka CDC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/cdc-ingestion/mongo-cdc/" class="">Mongo CDC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/cdc-ingestion/pulsar-cdc/" class="">Pulsar CDC</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-697a4b6a0388d6cfa4f418aba3b4edfe" class="toggle"  />
+    <label for="section-697a4b6a0388d6cfa4f418aba3b4edfe" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-wrench title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Maintenance</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/maintenance/write-performance/" class="">Write Performance</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/maintenance/read-performance/" class="">Read Performance</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/maintenance/dedicated-compaction/" class="">Dedicated Compaction</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/maintenance/manage-snapshots/" class="">Manage Snapshots</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/maintenance/manage-partition/" class="">Manage Partition</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/maintenance/rescale-bucket/" class="">Rescale Bucket</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/maintenance/manage-tags/" class="">Manage Tags</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/maintenance/metrics/" class="">Metrics</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/maintenance/configurations/" class="">Configurations</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-1b3eda2e8317c0686a4d41cefa0a3453" class="toggle"  />
+    <label for="section-1b3eda2e8317c0686a4d41cefa0a3453" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-briefcase title maindish" aria-hidden="true"></i>&nbsp;&nbsp;API</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/api/java-api/" class="">Java API</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/api/flink-api/" class="">Flink API</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-07c567e5a9f3ce62aea4ff0a1e2dc065" class="toggle"  />
+    <label for="section-07c567e5a9f3ce62aea4ff0a1e2dc065" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-briefcase title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Migration</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/migration/migration-from-hive/" class="">Migration From Hive</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/migration/upsert-to-partitioned/" class="">Upsert To Partitioned</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  	<br/>
+  
+  
+    <input type="checkbox" id="section-8c828bcf882f666cdd6821a70cc768ee" class="toggle"  />
+    <label for="section-8c828bcf882f666cdd6821a70cc768ee" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-sitemap title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Project</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/project/roadmap/" class="">Roadmap</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/project/download/" class="">Download</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/project/contributing/" class="">Contributing</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-392fc6f653ae23ff676811656a71ebbf" class="toggle"  />
+    <label for="section-392fc6f653ae23ff676811656a71ebbf" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-sitemap title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Learn Paimon</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/learn-paimon/understand-files/" class="">Understand Files</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br/>
+<hr class="menu-break">
+
+<a href="//paimon.apache.org" style="color:black;margin-bottom:0.5em"><i class="link fa fa-external-link title" aria-hidden="true"></i> Project Homepage</a>
+<br/>
+
+<a href="//paimon.apache.org/docs/master/api/java/" style="color:black;margin-bottom:0.5em"><i class="link fa fa-external-link title" aria-hidden="true"></i> JavaDocs</a>
+<br/>
+
+<hr class="menu-break">
+<li style="list-style-type: none">
+  <br>
+  <input type="checkbox" id="section-version-picker" class="toggle">
+  <label for="section-version-picker" class="flex justify-between">
+     <div style="font-weight:450;margin-bottom:0.5em">Pick Docs Version</div>
+     <span>▾</span>
+  </label>
+  <ul>
+    <a href="//paimon.apache.org/docs/0.6">
+      0.6 (✓)
+    </a>
+    <hr class="menu-break">
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/master">
+          master
+        </a>
+      </li>
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/0.6">
+          stable
+        </a>
+      </li>
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/0.5">
+          0.5
+        </a>
+      </li>
+    
+    <hr class="menu-break">
+    <li>
+      <a href="//paimon.apache.org/docs/0.6/versions">
+          All Versions
+      </a>
+    </li>
+  </ul>
+</li>
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var menu=document.querySelector("aside.book-menu nav");addEventListener("beforeunload",function(event){localStorage.setItem("menu.scrollTop",menu.scrollTop);});menu.scrollTop=localStorage.getItem("menu.scrollTop");})();</script>
+
+
+ 
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/docs/0.6/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <strong>Flink</strong>
+
+  <label for="toc-control">
+    
+    <img src="/docs/0.6/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden clearfix">
+    
+  
+
+<nav id="TableOfContents"><h3>On This Page <button class="toc" onclick="collapseToc()"><i class="fa fa-compress" aria-hidden="true"></i></button></h3>
+  <ul>
+    <li><a href="#preparing-paimon-jar-file">Preparing Paimon Jar File</a></li>
+    <li><a href="#quick-start">Quick Start</a></li>
+    <li><a href="#savepoint-and-recover">Savepoint and recover</a></li>
+    <li><a href="#using-action-jar">Using Action Jar</a></li>
+    <li><a href="#supported-flink-data-type">Supported Flink Data Type</a></li>
+    <li><a href="#use-flink-managed-memory">Use Flink Managed Memory</a></li>
+    <li><a href="#setting-dynamic-options">Setting dynamic options</a></li>
+    <li><a href="#procedures">Procedures</a></li>
+  </ul>
+</nav>
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+
+
+
+
+
+
+      
+  <article class="markdown"><!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<h1 id="flink">
+  Flink
+  <a class="anchor" href="#flink">#</a>
+</h1>
+<p>This documentation is a guide for using Paimon in Flink.</p>
+<h2 id="preparing-paimon-jar-file">
+  Preparing Paimon Jar File
+  <a class="anchor" href="#preparing-paimon-jar-file">#</a>
+</h2>
+<p>Paimon currently supports Flink 1.17, 1.16, 1.15 and 1.14. We recommend the latest Flink version for a better experience.</p>
+<p>Download the jar file with corresponding version.</p>
+<blockquote>
+<p>Currently, paimon provides two types jar: one of which(the bundled jar) is used for read/write data, and the other(action jar) for operations such as manually compaction,
+<table>
+<thead>
+<tr>
+<th>Version</th>
+<th>Type</th>
+<th>Jar</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Flink 1.18</td>
+<td>Bundled Jar</td>
+<td><a href="https://repo.maven.apache.org/maven2/org/apache/paimon/paimon-flink-1.18/0.6.0-incubating/paimon-flink-1.18-0.6.0-incubating.jar">paimon-flink-1.18-0.6.0-incubating.jar</a></td>
+</tr>
+<tr>
+<td>Flink 1.17</td>
+<td>Bundled Jar</td>
+<td><a href="https://repo.maven.apache.org/maven2/org/apache/paimon/paimon-flink-1.17/0.6.0-incubating/paimon-flink-1.17-0.6.0-incubating.jar">paimon-flink-1.17-0.6.0-incubating.jar</a></td>
+</tr>
+<tr>
+<td>Flink 1.16</td>
+<td>Bundled Jar</td>
+<td><a href="https://repo.maven.apache.org/maven2/org/apache/paimon/paimon-flink-1.16/0.6.0-incubating/paimon-flink-1.16-0.6.0-incubating.jar">paimon-flink-1.16-0.6.0-incubating.jar</a></td>
+</tr>
+<tr>
+<td>Flink 1.15</td>
+<td>Bundled Jar</td>
+<td><a href="https://repo.maven.apache.org/maven2/org/apache/paimon/paimon-flink-1.15/0.6.0-incubating/paimon-flink-1.15-0.6.0-incubating.jar">paimon-flink-1.15-0.6.0-incubating.jar</a></td>
+</tr>
+<tr>
+<td>Flink 1.14</td>
+<td>Bundled Jar</td>
+<td><a href="https://repo.maven.apache.org/maven2/org/apache/paimon/paimon-flink-1.14/0.6.0-incubating/paimon-flink-1.14-0.6.0-incubating.jar">paimon-flink-1.14-0.6.0-incubating.jar</a></td>
+</tr>
+<tr>
+<td>Flink Action</td>
+<td>Action Jar</td>
+<td><a href="https://repo.maven.apache.org/maven2/org/apache/paimon/paimon-flink-action/0.6.0-incubating/paimon-flink-action-0.6.0-incubating.jar">paimon-flink-action-0.6.0-incubating.jar</a></td>
+</tr>
+</tbody>
+</table>
+
+</p>
+</blockquote>
+
+
+<p>You can also manually build bundled jar from the source code.</p>
+<p>To build from source code, <a href="https://github.com/apache/incubator-paimon.git">clone the git repository</a>.</p>
+<p>Build bundled jar with the following command.</p>
+<ul>
+<li><code>mvn clean install -DskipTests</code></li>
+</ul>
+<p>You can find the bundled jar in <code>./paimon-flink/paimon-flink-&lt;flink-version&gt;/target/paimon-flink-&lt;flink-version&gt;-0.6.0-incubating.jar</code>, and the action jar in <code>./paimon-flink/paimon-flink-action/target/paimon-flink-action-0.6.0-incubating.jar</code>.</p>
+<h2 id="quick-start">
+  Quick Start
+  <a class="anchor" href="#quick-start">#</a>
+</h2>
+<p><strong>Step 1: Download Flink</strong></p>
+<p>If you haven&rsquo;t downloaded Flink, you can <a href="https://flink.apache.org/downloads.html">download Flink</a>, then extract the archive with the following command.</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">tar -xzf flink-*.tgz
+</code></pre></div><p><strong>Step 2: Copy Paimon Bundled Jar</strong></p>
+<p>Copy paimon bundled jar to the <code>lib</code> directory of your Flink home.</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">cp paimon-flink-*.jar &lt;FLINK_HOME&gt;/lib/
+</code></pre></div><p><strong>Step 3: Copy Hadoop Bundled Jar</strong></p>
+<blockquote class="book-hint info">
+  If the machine is in a hadoop environment, please ensure the value of the environment variable <code>HADOOP_CLASSPATH</code> include path to the common Hadoop libraries, you do not need to use the following pre-bundled Hadoop jar.
+</blockquote>
+
+<p><a href="https://flink.apache.org/downloads.html">Download</a> Pre-bundled Hadoop jar and copy the jar file to the <code>lib</code> directory of your Flink home.</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">cp flink-shaded-hadoop-2-uber-*.jar &lt;FLINK_HOME&gt;/lib/
+</code></pre></div><p><strong>Step 4: Start a Flink Local Cluster</strong></p>
+<p>In order to run multiple Flink jobs at the same time, you need to modify the cluster configuration in <code>&lt;FLINK_HOME&gt;/conf/flink-conf.yaml</code>.</p>
+<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nt">taskmanager.numberOfTaskSlots</span><span class="p">:</span><span class="w"> </span><span class="m">2</span><span class="w">
+</span></code></pre></div><p>To start a local cluster, run the bash script that comes with Flink:</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">&lt;FLINK_HOME&gt;/bin/start-cluster.sh
+</code></pre></div><p>You should be able to navigate to the web UI at <a href="http://localhost:8081">localhost:8081</a> to view
+the Flink dashboard and see that the cluster is up and running.</p>
+<p>You can now start Flink SQL client to execute SQL scripts.</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">&lt;FLINK_HOME&gt;/bin/sql-client.sh
+</code></pre></div><p><strong>Step 5: Create a Catalog and a Table</strong></p>
+
+
+
+
+
+<div class="book-tabs"><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Catalog"
+    name="tabs-Create Flink Catalog"
+    id="tabs-Create Flink Catalog-0"
+    checked="checked" 
+    onclick="onSwitch('Catalog')"
+  />
+  <label for="tabs-Create Flink Catalog-0">Catalog</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="c1">-- if you&#39;re trying out Paimon in a distributed environment,
+</span><span class="c1">-- the warehouse path should be set to a shared file system, such as HDFS or OSS
+</span><span class="c1"></span><span class="k">CREATE</span> <span class="k">CATALOG</span> <span class="n">my_catalog</span> <span class="k">WITH</span> <span class="p">(</span>
+    <span class="s1">&#39;type&#39;</span><span class="o">=</span><span class="s1">&#39;paimon&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;warehouse&#39;</span><span class="o">=</span><span class="s1">&#39;file:/tmp/paimon&#39;</span>
+<span class="p">);</span>
+
+<span class="n">USE</span> <span class="k">CATALOG</span> <span class="n">my_catalog</span><span class="p">;</span>
+
+<span class="c1">-- create a word count table
+</span><span class="c1"></span><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">word_count</span> <span class="p">(</span>
+    <span class="n">word</span> <span class="n">STRING</span> <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="k">NOT</span> <span class="n">ENFORCED</span><span class="p">,</span>
+    <span class="n">cnt</span> <span class="nb">BIGINT</span>
+<span class="p">);</span>
+</code></pre></div></div><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Generic-Catalog"
+    name="tabs-Create Flink Catalog"
+    id="tabs-Create Flink Catalog-1"
+     
+    onclick="onSwitch('Generic-Catalog')"
+  />
+  <label for="tabs-Create Flink Catalog-1">Generic-Catalog</label>
+  <div class="book-tabs-content markdown-inner"><p>Using FlinkGenericCatalog, you need to use Hive metastore. Then, you can use all the tables from Paimon, Hive, and
+Flink Generic Tables (Kafka and other tables)!</p>
+<p>In this mode, you should use &lsquo;connector&rsquo; option for creating tables.</p>
+<blockquote class="book-hint info">
+  Paimon will use <code>hive.metastore.warehouse.dir</code> in your <code>hive-site.xml</code>, please use path with scheme.
+For example, <code>hdfs://...</code>. Otherwise, Paimon will use the local path.
+</blockquote>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">CREATE</span> <span class="k">CATALOG</span> <span class="n">my_catalog</span> <span class="k">WITH</span> <span class="p">(</span>
+    <span class="s1">&#39;type&#39;</span><span class="o">=</span><span class="s1">&#39;paimon-generic&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;hive-conf-dir&#39;</span><span class="o">=</span><span class="s1">&#39;...&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;hadoop-conf-dir&#39;</span><span class="o">=</span><span class="s1">&#39;...&#39;</span>
+<span class="p">);</span>
+
+<span class="n">USE</span> <span class="k">CATALOG</span> <span class="n">my_catalog</span><span class="p">;</span>
+
+<span class="c1">-- create a word count table
+</span><span class="c1"></span><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">word_count</span> <span class="p">(</span>
+    <span class="n">word</span> <span class="n">STRING</span> <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="k">NOT</span> <span class="n">ENFORCED</span><span class="p">,</span>
+    <span class="n">cnt</span> <span class="nb">BIGINT</span>
+<span class="p">)</span> <span class="k">WITH</span> <span class="p">(</span>
+    <span class="s1">&#39;connector&#39;</span><span class="o">=</span><span class="s1">&#39;paimon&#39;</span>
+<span class="p">);</span>
+</code></pre></div></div></div>
+
+<p><strong>Step 6: Write Data</strong></p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="c1">-- create a word data generator table
+</span><span class="c1"></span><span class="k">CREATE</span> <span class="k">TEMPORARY</span> <span class="k">TABLE</span> <span class="n">word_table</span> <span class="p">(</span>
+    <span class="n">word</span> <span class="n">STRING</span>
+<span class="p">)</span> <span class="k">WITH</span> <span class="p">(</span>
+    <span class="s1">&#39;connector&#39;</span> <span class="o">=</span> <span class="s1">&#39;datagen&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;fields.word.length&#39;</span> <span class="o">=</span> <span class="s1">&#39;1&#39;</span>
+<span class="p">);</span>
+
+<span class="c1">-- paimon requires checkpoint interval in streaming mode
+</span><span class="c1"></span><span class="k">SET</span> <span class="s1">&#39;execution.checkpointing.interval&#39;</span> <span class="o">=</span> <span class="s1">&#39;10 s&#39;</span><span class="p">;</span>
+
+<span class="c1">-- write streaming data to dynamic table
+</span><span class="c1"></span><span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">word_count</span> <span class="k">SELECT</span> <span class="n">word</span><span class="p">,</span> <span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="k">FROM</span> <span class="n">word_table</span> <span class="k">GROUP</span> <span class="k">BY</span> <span class="n">word</span><span class="p">;</span>
+</code></pre></div><p><strong>Step 7: OLAP Query</strong></p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="c1">-- use tableau result mode
+</span><span class="c1"></span><span class="k">SET</span> <span class="s1">&#39;sql-client.execution.result-mode&#39;</span> <span class="o">=</span> <span class="s1">&#39;tableau&#39;</span><span class="p">;</span>
+
+<span class="c1">-- switch to batch mode
+</span><span class="c1"></span><span class="k">RESET</span> <span class="s1">&#39;execution.checkpointing.interval&#39;</span><span class="p">;</span>
+<span class="k">SET</span> <span class="s1">&#39;execution.runtime-mode&#39;</span> <span class="o">=</span> <span class="s1">&#39;batch&#39;</span><span class="p">;</span>
+
+<span class="c1">-- olap query the table
+</span><span class="c1"></span><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">word_count</span><span class="p">;</span>
+</code></pre></div><p>You can execute the query multiple times and observe the changes in the results.</p>
+<p><strong>Step 8: Streaming Query</strong></p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="c1">-- switch to streaming mode
+</span><span class="c1"></span><span class="k">SET</span> <span class="s1">&#39;execution.runtime-mode&#39;</span> <span class="o">=</span> <span class="s1">&#39;streaming&#39;</span><span class="p">;</span>
+
+<span class="c1">-- track the changes of table and calculate the count interval statistics
+</span><span class="c1"></span><span class="k">SELECT</span> <span class="o">`</span><span class="nb">interval</span><span class="o">`</span><span class="p">,</span> <span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="k">AS</span> <span class="n">interval_cnt</span> <span class="k">FROM</span>
+    <span class="p">(</span><span class="k">SELECT</span> <span class="n">cnt</span> <span class="o">/</span> <span class="mi">10000</span> <span class="k">AS</span> <span class="o">`</span><span class="nb">interval</span><span class="o">`</span> <span class="k">FROM</span> <span class="n">word_count</span><span class="p">)</span> <span class="k">GROUP</span> <span class="k">BY</span> <span class="o">`</span><span class="nb">interval</span><span class="o">`</span><span class="p">;</span>
+</code></pre></div><p><strong>Step 9: Exit</strong></p>
+<p>Cancel streaming job in <a href="http://localhost:8081">localhost:8081</a>, then execute the following SQL script to exit Flink SQL client.</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="c1">-- uncomment the following line if you want to drop the dynamic table and clear the files
+</span><span class="c1">-- DROP TABLE word_count;
+</span><span class="c1"></span>
+<span class="c1">-- exit sql-client
+</span><span class="c1"></span><span class="n">EXIT</span><span class="p">;</span>
+</code></pre></div><p>Stop the Flink local cluster.</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">./bin/stop-cluster.sh
+</code></pre></div><h2 id="savepoint-and-recover">
+  Savepoint and recover
+  <a class="anchor" href="#savepoint-and-recover">#</a>
+</h2>
+<p>Because Paimon has its own snapshot management, this may conflict with Flink&rsquo;s checkpoint management, causing
+exceptions when restoring from savepoint (don&rsquo;t worry, it will not cause the storage to be damaged).</p>
+<p>It is recommended that you use the following methods to savepoint:</p>
+<ol>
+<li>Use <a href="https://nightlies.apache.org/flink/flink-docs-stable/docs/ops/state/savepoints/#stopping-a-job-with-savepoint">Stop with savepoint</a>.</li>
+<li>Use <a href="//paimon.apache.org/docs/0.6/maintenance/manage-tags/#work-with-flink-savepoint">Tag with savepoint</a>, and rollback-to-tag
+before restoring from savepoint.</li>
+</ol>
+<h2 id="using-action-jar">
+  Using Action Jar
+  <a class="anchor" href="#using-action-jar">#</a>
+</h2>
+<p>After the Flink Local Cluster has been started, you can execute the action jar by using the following command</p>
+<pre><code>&lt;FLINK_HOME&gt;/bin/flink run \
+ /path/to/paimon-flink-action-0.6.0-incubating.jar \
+ &lt;action&gt;
+ &lt;args&gt;
+</code></pre><p>The following command will used to compact a table</p>
+
+<span class="label">Batch</span>
+
+<pre><code>&lt;FLINK_HOME&gt;/bin/flink run \
+ /path/to/paimon-flink-action-0.6.0-incubating.jar \
+ compact \
+ --path &lt;TABLE_PATH&gt;
+</code></pre><h2 id="supported-flink-data-type">
+  Supported Flink Data Type
+  <a class="anchor" href="#supported-flink-data-type">#</a>
+</h2>
+<p>See <a href="https://nightlies.apache.org/flink/flink-docs-stable/docs/dev/table/types/">Flink Data Types</a>.</p>
+<p>All Flink data types are supported, except that</p>
+<ul>
+<li><code>MULTISET</code> is not supported.</li>
+<li><code>MAP</code> is not supported as primary keys.</li>
+</ul>
+<h2 id="use-flink-managed-memory">
+  Use Flink Managed Memory
+  <a class="anchor" href="#use-flink-managed-memory">#</a>
+</h2>
+<p>Paimon tasks can create memory pools based on executor memory which will be managed by Flink executor, such as managed memory in Flink task manager. It will improve the stability and performance of sinks by managing writer buffers for multiple tasks through executor.</p>
+<p>The following properties can be set if using Flink managed memory:</p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>sink.use-managed-memory-allocator</td>
+<td>false</td>
+<td>If true, flink sink will use managed memory for merge tree; otherwise, it will create an independent memory allocator, which means each task allocates and manages its own memory pool (heap memory), if there are too many tasks in one Executor, it may cause performance issues and even OOM.</td>
+</tr>
+<tr>
+<td>sink.managed.writer-buffer-memory</td>
+<td>256M</td>
+<td>Weight of writer buffer in managed memory, Flink will compute the memory size, for writer according to the weight, the actual memory used depends on the running environment. Now the memory size defined in this property are equals to the exact memory allocated to write buffer in runtime.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Use In SQL</strong>
+Users can set memory weight in SQL for Flink Managed Memory, then Flink sink operator will get the memory pool size and create allocator for Paimon writer.</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">paimon_table</span> <span class="cm">/*+ OPTIONS(&#39;sink.use-managed-memory-allocator&#39;=&#39;true&#39;, &#39;sink.managed.writer-buffer-memory&#39;=&#39;256M&#39;) */</span>
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="p">....;</span>
+</code></pre></div><h2 id="setting-dynamic-options">
+  Setting dynamic options
+  <a class="anchor" href="#setting-dynamic-options">#</a>
+</h2>
+<p>When interacting with the Paimon table, table options can be tuned without changing the options in the catalog. Paimon will extract job-level dynamic options and take effect in the current session.
+The dynamic option&rsquo;s key format is <code>paimon.${catalogName}.${dbName}.${tableName}.${config_key}</code>. The catalogName/dbName/tableName can be <code>*</code>, which means matching all the specific parts.</p>
+<p>For example:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="c1">-- set scan.timestamp-millis=1697018249000 for the table mycatalog.default.T
+</span><span class="c1"></span><span class="k">SET</span> <span class="s1">&#39;paimon.mycatalog.default.T.scan.timestamp-millis&#39;</span> <span class="o">=</span> <span class="s1">&#39;1697018249000&#39;</span><span class="p">;</span>
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">T</span><span class="p">;</span>
+
+<span class="c1">-- set scan.timestamp-millis=1697018249000 for the table default.T in any catalog
+</span><span class="c1"></span><span class="k">SET</span> <span class="s1">&#39;paimon.*.default.T.scan.timestamp-millis&#39;</span> <span class="o">=</span> <span class="s1">&#39;1697018249000&#39;</span><span class="p">;</span>
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">T</span><span class="p">;</span>
+</code></pre></div><h2 id="procedures">
+  Procedures
+  <a class="anchor" href="#procedures">#</a>
+</h2>
+<p>Flink 1.18 and later versions support <a href="https://nightlies.apache.org/flink/flink-docs-master/docs/dev/table/sql/call/">Call Statements</a>,
+which make it easier to manipulate data and metadata of Paimon table by writing SQLs instead of submitting Flink jobs.
+All available procedures are listed below. Note that when you call a procedure, you must pass all parameters in order,
+and if you don&rsquo;t want to pass some parameters, you must use <code>''</code> as placeholder. For example, if you want to compact
+table <code>default.t</code> with parallelism 4, but you don&rsquo;t want to specify partitions and sort strategy, the call statement
+should be<br>
+<code>CALL sys.compact('default.t', '', '', '', 'sink.parallelism=4')</code>.</p>
+<p>Specify partitions: we use string to represent partition filter. &ldquo;,&rdquo; means &ldquo;AND&rdquo; and &ldquo;;&rdquo; means &ldquo;OR&rdquo;. For example, if you want
+to specify two partitions date=01 and date=02, you need to write &lsquo;date=01;date=02&rsquo;; If you want to specify one partition
+with date=01 and day=01, you need to write &lsquo;date=01,day=01&rsquo;.</p>
+<p>table options syntax: we use string to represent table options. The format is &lsquo;key1=value1,key2=value2&hellip;&rsquo;.</p>
+<table class="table table-bordered">
+   <thead>
+   <tr>
+      <th class="text-left" style="width: 4%">Procedure Name</th>
+      <th class="text-left" style="width: 4%">Usage</th>
+      <th class="text-left" style="width: 20%">Explaination</th>
+      <th class="text-left" style="width: 4%">Example</th>
+   </tr>
+   </thead>
+   <tbody style="font-size: 11px; ">
+   <tr>
+      <td>compact</td>
+      <td>
+         CALL [catalog.]sys.compact('identifier') <br/><br/>
+         CALL [catalog.]sys.compact('identifier', 'partitions') <br/><br/>
+         CALL [catalog.]sys.compact('identifier', 'partitions', 'order_strategy', 'order_columns', 'table_options')
+      </td>
+      <td>
+         TO compact a table. Arguments:
+            <li>identifier: the target table identifier. Cannot be empty.</li>
+            <li>partitions: partition filter.</li>
+            <li>order_strategy: 'order' or 'zorder' or 'none'. Left empty for 'none'.</li>
+            <li>order_columns: the columns need to be sort. Left empty if 'order_strategy' is 'none'.</li>
+            <li>table_options: additional dynamic options of the table.</li>
+      </td>
+      <td>
+         CALL sys.compact('default.T', 'p=0', 'zorder', 'a,b', 'sink.parallelism=4')
+      </td>
+   </tr>
+   <tr>
+      <td>compact_database</td>
+      <td>
+         CALL [catalog.]sys.compact_database() <br/><br/>
+         CALL [catalog.]sys.compact_database('includingDatabases') <br/><br/> 
+         CALL [catalog.]sys.compact_database('includingDatabases', 'mode') <br/><br/> 
+         CALL [catalog.]sys.compact_database('includingDatabases', 'mode', 'includingTables') <br/><br/> 
+         CALL [catalog.]sys.compact_database('includingDatabases', 'mode', 'includingTables', 'excludingTables') <br/><br/>
+         CALL [catalog.]sys.compact_database('includingDatabases', 'mode', 'includingTables', 'excludingTables', 'tableOptions')
+      </td>
+      <td>
+         To compact databases. Arguments:
+            <li>includingDatabases: to specify databases. You can use regular expression.</li>
+            <li>mode: compact mode. "divided": start a sink for each table, detecting the new table requires restarting the job;
+               "combined" (default): start a single combined sink for all tables, the new table will be automatically detected.
+            </li>
+            <li>includingTables: to specify tables. You can use regular expression.</li>
+            <li>excludingTables: to specify tables that are not compacted. You can use regular expression.</li>
+            <li>tableOptions: additional dynamic options of the table.</li>
+      </td>
+      <td>
+         CALL sys.compact_database('db1|db2', 'combined', 'table_.*', 'ignore', 'sink.parallelism=4')
+      </td>
+   </tr>
+   <tr>
+      <td>create_tag</td>
+      <td>
+         CALL [catalog.]sys.create_tag('identifier', 'tagName', snapshotId)
+      </td>
+      <td>
+         To create a tag based on given snapshot. Arguments:
+            <li>identifier: the target table identifier. Cannot be empty.</li>
+            <li>tagName: name of the new tag.</li>
+            <li>snapshotId (Long): id of the snapshot which the new tag is based on.</li>
+      </td>
+      <td>
+         CALL sys.create_tag('default.T', 'my_tag', 10)
+      </td>
+   </tr>
+   <tr>
+      <td>delete_tag</td>
+      <td>
+         CALL [catalog.]sys.delete_tag('identifier', 'tagName')
+      </td>
+      <td>
+         To delete a tag. Arguments:
+            <li>identifier: the target table identifier. Cannot be empty.</li>
+            <li>tagName: name of the tag to be deleted.</li>
+      </td>
+      <td>
+         CALL sys.delete_tag('default.T', 'my_tag')
+      </td>
+   </tr>
+   <tr>
+      <td>merge_into</td>
+      <td>
+         -- when matched then upsert<br/>
+         CALL [catalog.]sys.merge_into('identifier','targetAlias',<br/>
+            'sourceSqls','sourceTable','mergeCondition',<br/>
+            'matchedUpsertCondition','matchedUpsertSetting')<br/><br/>
+         -- when matched then upsert; when not matched then insert<br/>
+         CALL [catalog.]sys.merge_into('identifier','targetAlias',<br/>
+            'sourceSqls','sourceTable','mergeCondition',<br/>
+            'matchedUpsertCondition','matchedUpsertSetting',<br/>
+            'notMatchedInsertCondition','notMatchedInsertValues')<br/><br/>
+         -- when matched then delete<br/>
+         CALL [catalog].sys.merge_into('identifier','targetAlias',<br/>
+            'sourceSqls','sourceTable','mergeCondition',<br/>
+            'matchedDeleteCondition')<br/><br/>
+         -- when matched then upsert + delete;<br/> 
+         -- when not matched then insert<br/>
+         CALL [catalog].sys.merge_into('identifier','targetAlias',<br/>
+            'sourceSqls','sourceTable','mergeCondition',<br/>
+            'matchedUpsertCondition','matchedUpsertSetting',<br/>
+            'notMatchedInsertCondition','notMatchedInsertValues',<br/>
+            'matchedDeleteCondition')<br/><br/>
+      </td>
+      <td>
+         To perform "MERGE INTO" syntax. See <a href="/how-to/writing-tables#merging-into-table">merge_into action</a> for
+         details of arguments.
+      </td>
+      <td>
+         -- for matched order rows,<br/>
+         -- increase the price,<br/>
+         -- and if there is no match,<br/> 
+         -- insert the order from<br/>
+         -- the source table<br/>
+         CALL sys.merge_into('default.T', '', '', 'default.S', 'T.id=S.order_id', '', 'price=T.price+20', '', '*')
+      </td>
+   </tr>
+   <tr>
+      <td>remove_orphan_files</td>
+      <td>
+         CALL [catalog.]sys.remove_orphan_files('identifier')<br/><br/>
+         CALL [catalog.]sys.remove_orphan_files('identifier', 'olderThan')
+      </td>
+      <td>
+         To remove the orphan data files and metadata files. Arguments:
+            <li>identifier: the target table identifier. Cannot be empty.</li>
+            <li>olderThan: to avoid deleting newly written files, this procedure only 
+               deletes orphan files older than 1 day by default. This argument can modify the interval.
+            </li>
+      </td>
+      <td>CALL remove_orphan_files('default.T', '2023-10-31 12:00:00')</td>
+   </tr>
+   <tr>
+      <td>reset_consumer</td>
+      <td>
+         -- reset the new next snapshot id in the consumer<br/>
+         CALL [catalog.]sys.reset_consumer('identifier', 'consumerId', nextSnapshotId)<br/><br/>
+         -- delete consumer<br/>
+         CALL [catalog.]sys.reset_consumer('identifier', 'consumerId')
+      </td>
+      <td>
+         To reset or delete consumer. Arguments:
+            <li>identifier: the target table identifier. Cannot be empty.</li>
+            <li>consumerId: consumer to be reset or deleted.</li>
+            <li>nextSnapshotId (Long): the new next snapshot id of the consumer.</li>
+      </td>
+      <td>CALL sys.reset_consumer('default.T', 'myid', 10)</td>
+   </tr>
+   <tr>
+      <td>rollback_to</td>
+      <td>
+         -- rollback to a snapshot<br/>
+         CALL sys.rollback_to('identifier', snapshotId)<br/><br/>
+         -- rollback to a tag<br/>
+         CALL sys.rollback_to('identifier', 'tagName')
+      </td>
+      <td>
+         To rollback to a specific version of target table. Argument:
+            <li>identifier: the target table identifier. Cannot be empty.</li>
+            <li>snapshotId (Long): id of the snapshot that will roll back to.</li>
+            <li>tagName: name of the tag that will roll back to.</li>
+      </td>
+      <td>CALL sys.rollback_to('default.T', 10)</td>
+   </tr>
+   </tbody>
+</table>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  
+
+
+
+
+<a href="//github.com/apache/incubator-paimon/edit/0.6/docs/content/engines/flink.md" style="color:black"><i class="fa fa-edit fa-fw"></i>Edit This Page</a>
+
+
+ 
+        
+      </footer>
+
+      
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      
+  
+
+<nav id="TableOfContents"><h3>On This Page <button class="toc" onclick="collapseToc()"><i class="fa fa-compress" aria-hidden="true"></i></button></h3>
+  <ul>
+    <li><a href="#preparing-paimon-jar-file">Preparing Paimon Jar File</a></li>
+    <li><a href="#quick-start">Quick Start</a></li>
+    <li><a href="#savepoint-and-recover">Savepoint and recover</a></li>
+    <li><a href="#using-action-jar">Using Action Jar</a></li>
+    <li><a href="#supported-flink-data-type">Supported Flink Data Type</a></li>
+    <li><a href="#use-flink-managed-memory">Use Flink Managed Memory</a></li>
+    <li><a href="#setting-dynamic-options">Setting dynamic options</a></li>
+    <li><a href="#procedures">Procedures</a></li>
+  </ul>
+</nav>
+
+ 
+    </aside>
+    <aside class="expand-toc">
+      <button class="toc" onclick="expandToc()">
+        <i class="fa fa-expand" aria-hidden="true"></i>
+      </button>
+    </aside>
+    
+  </main>
+
+  
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

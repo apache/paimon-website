@@ -1,0 +1,1711 @@
+
+<!DOCTYPE html>
+<html lang="en" dir=>
+
+<head>
+  <meta name="generator" content="Hugo 0.80.0" />
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Understand Files #  This article is specifically designed to clarify the impact that various file operations have on files.
+This page provides concrete examples and practical tips for effectively managing them. Furthermore, through an in-depth exploration of operations such as commit and compact, we aim to offer insights into the creation and updates of files.
+Prerequisite #  Before delving further into this page, please ensure that you have read through the following sections:">
+<meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="Understand Files" />
+<meta property="og:description" content="Understand Files #  This article is specifically designed to clarify the impact that various file operations have on files.
+This page provides concrete examples and practical tips for effectively managing them. Furthermore, through an in-depth exploration of operations such as commit and compact, we aim to offer insights into the creation and updates of files.
+Prerequisite #  Before delving further into this page, please ensure that you have read through the following sections:" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="//paimon.apache.org/docs/master/maintenance/understand-files/" />
+
+<title>Understand Files | Apache Paimon</title>
+<link rel="manifest" href="/docs/master/manifest.json">
+<link rel="icon" href="/docs/master/favicon.png" type="image/x-icon">
+<link rel="stylesheet" href="/docs/master/book.min.3bc4108a5b57c9a7e6fcae92ff69940435f8c46c4e1e4a311aedc9b2d8e06792.css" integrity="sha256-O8QQiltXyafm/K6S/2mUBDX4xGxOHkoxGu3JstjgZ5I=">
+<script defer src="/docs/master/en.search.min.8c0134138122f353c4d6db8ba8971229f3b32665c6118bda15f1e578f6f7c59c.js" integrity="sha256-jAE0E4Ei81PE1tuLqJcSKfOzJmXGEYvaFfHlePb3xZw="></script>
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+  
+
+<link rel="stylesheet" type="text/css" href="//paimon.apache.org/docs/master/font-awesome/css/font-awesome.min.css">
+<script src="//paimon.apache.org/docs/master/js/anchor.min.js"></script>
+<script src="//paimon.apache.org/docs/master/js/flink.js"></script>
+
+
+  
+  <script>
+    var _paq = window._paq = window._paq || [];
+     
+     
+    _paq.push(['disableCookies']);
+     
+    _paq.push(["setDomains", ["*.flink.apache.org","*.nightlies.apache.org/flink"]]);
+    _paq.push(['trackPageView']);
+    _paq.push(['enableLinkTracking']);
+    (function() {
+      var u="//matomo.privacy.apache.org/";
+      _paq.push(['setTrackerUrl', u+'matomo.php']);
+      _paq.push(['setSiteId', '1']);
+      var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+      g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+    })();
+  </script>
+  
+</head>
+
+<body dir=>
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      
+  
+
+<nav>
+
+
+<a id="logo" href="//paimon.apache.org/docs/master">
+    <img width="100%" src="//paimon.apache.org/docs/master/paimon_black.svg">
+</a>
+<p style="text-align:right">0.7-SNAPSHOT</p>
+
+<div class="book-search">
+  <input type="text" id="book-search-input" placeholder="Search" aria-label="Search" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-dc8a1c63e6da60163016ce21cae1faa0" class="toggle"  />
+    <label for="section-dc8a1c63e6da60163016ce21cae1faa0" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-book title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Concepts</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/basic-concepts/" class="">Basic Concepts</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/file-layouts/" class="">File Layouts</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/primary-key-table/" class="">Primary Key Table</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/append-only-table/" class="">Append Only Table</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-90f5541dc4fa46a212e954b9193ea0f9" class="toggle"  />
+    <label for="section-90f5541dc4fa46a212e954b9193ea0f9" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-gear title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Engines</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/engines/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/engines/flink/" class="">Flink</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/engines/spark3/" class="">Spark3</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/engines/spark2/" class="">Spark2</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/engines/hive/" class="">Hive</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/engines/presto/" class="">Presto</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/engines/trino/" class="">Trino</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-e2d76c106dab115385ef7f124cda2ba4" class="toggle"  />
+    <label for="section-e2d76c106dab115385ef7f124cda2ba4" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-folder title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Filesystems</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/filesystems/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/filesystems/hdfs/" class="">HDFS</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/filesystems/oss/" class="">OSS</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/filesystems/s3/" class="">S3</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-f6ca435e98b926845c0060f9e7f85362" class="toggle"  />
+    <label for="section-f6ca435e98b926845c0060f9e7f85362" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-database title maindish" aria-hidden="true"></i>&nbsp;&nbsp;How to</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/how-to/creating-catalogs/" class="">Creating Catalogs</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/how-to/creating-tables/" class="">Creating Tables</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/how-to/altering-tables/" class="">Altering Tables</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/how-to/writing-tables/" class="">Writing Tables</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/how-to/querying-tables/" class="">Querying Tables</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/how-to/system-tables/" class="">System Tables</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/how-to/lookup-joins/" class="">Lookup Joins</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-582e435c19ca5fafbf9764337d648e63" class="toggle"  />
+    <label for="section-582e435c19ca5fafbf9764337d648e63" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-database title maindish" aria-hidden="true"></i>&nbsp;&nbsp;CDC Ingestion</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/cdc-ingestion/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/cdc-ingestion/mysql-cdc/" class="">Mysql CDC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/cdc-ingestion/kafka-cdc/" class="">Kafka CDC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/cdc-ingestion/mongo-cdc/" class="">Mongo CDC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/cdc-ingestion/pulsar-cdc/" class="">Pulsar CDC</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-697a4b6a0388d6cfa4f418aba3b4edfe" class="toggle" checked />
+    <label for="section-697a4b6a0388d6cfa4f418aba3b4edfe" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-wrench title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Maintenance</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/maintenance/write-performance/" class="">Write Performance</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/maintenance/read-performance/" class="">Read Performance</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/maintenance/dedicated-compaction/" class="">Dedicated Compaction</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/maintenance/manage-snapshots/" class="">Manage Snapshots</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/maintenance/manage-partition/" class="">Manage Partition</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/maintenance/rescale-bucket/" class="">Rescale Bucket</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/maintenance/manage-tags/" class="">Manage Tags</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/maintenance/metrics/" class="">Metrics</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/maintenance/understand-files/" class=" active">Understand Files</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/maintenance/configurations/" class="">Configurations</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-1b3eda2e8317c0686a4d41cefa0a3453" class="toggle"  />
+    <label for="section-1b3eda2e8317c0686a4d41cefa0a3453" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-briefcase title maindish" aria-hidden="true"></i>&nbsp;&nbsp;API</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/api/java-api/" class="">Java API</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/api/flink-api/" class="">Flink API</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-07c567e5a9f3ce62aea4ff0a1e2dc065" class="toggle"  />
+    <label for="section-07c567e5a9f3ce62aea4ff0a1e2dc065" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-briefcase title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Migration</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/migration/migration-from-hive/" class="">Migration From Hive</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/migration/upsert-to-partitioned/" class="">Upsert To Partitioned</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  	<br/>
+  
+  
+    <input type="checkbox" id="section-8c828bcf882f666cdd6821a70cc768ee" class="toggle"  />
+    <label for="section-8c828bcf882f666cdd6821a70cc768ee" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-sitemap title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Project</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/project/roadmap/" class="">Roadmap</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/project/download/" class="">Download</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/project/contributing/" class="">Contributing</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br/>
+<hr class="menu-break">
+
+<a href="//paimon.apache.org" style="color:black;margin-bottom:0.5em"><i class="link fa fa-external-link title" aria-hidden="true"></i> Project Homepage</a>
+<br/>
+
+<a href="//paimon.apache.org/docs/master/api/java/" style="color:black;margin-bottom:0.5em"><i class="link fa fa-external-link title" aria-hidden="true"></i> JavaDocs</a>
+<br/>
+
+<hr class="menu-break">
+<li style="list-style-type: none">
+  <br>
+  <input type="checkbox" id="section-version-picker" class="toggle">
+  <label for="section-version-picker" class="flex justify-between">
+     <div style="font-weight:450;margin-bottom:0.5em">Pick Docs Version</div>
+     <span>▾</span>
+  </label>
+  <ul>
+    <a href="//paimon.apache.org/docs/master">
+      0.7-SNAPSHOT (✓)
+    </a>
+    <hr class="menu-break">
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/master">
+          master
+        </a>
+      </li>
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/0.5">
+          stable
+        </a>
+      </li>
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/0.5">
+          0.5
+        </a>
+      </li>
+    
+    <hr class="menu-break">
+    <li>
+      <a href="//paimon.apache.org/docs/master/versions">
+          All Versions
+      </a>
+    </li>
+  </ul>
+</li>
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var menu=document.querySelector("aside.book-menu nav");addEventListener("beforeunload",function(event){localStorage.setItem("menu.scrollTop",menu.scrollTop);});menu.scrollTop=localStorage.getItem("menu.scrollTop");})();</script>
+
+
+ 
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/docs/master/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <strong>Understand Files</strong>
+
+  <label for="toc-control">
+    
+    <img src="/docs/master/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden clearfix">
+    
+  
+
+<nav id="TableOfContents"><h3>On This Page <button class="toc" onclick="collapseToc()"><i class="fa fa-compress" aria-hidden="true"></i></button></h3>
+  <ul>
+    <li><a href="#prerequisite">Prerequisite</a></li>
+    <li><a href="#understand-file-operations">Understand File Operations</a>
+      <ul>
+        <li><a href="#create-catalog">Create Catalog</a></li>
+        <li><a href="#create-table">Create Table</a></li>
+        <li><a href="#insert-records-into-table">Insert Records Into Table</a></li>
+        <li><a href="#delete-records-from-table">Delete Records From Table</a></li>
+        <li><a href="#compact-table">Compact Table</a></li>
+        <li><a href="#alter-table">Alter Table</a></li>
+        <li><a href="#expire-snapshots">Expire Snapshots</a></li>
+        <li><a href="#remove-orphan-files">Remove Orphan Files</a></li>
+        <li><a href="#flink-stream-write">Flink Stream Write</a></li>
+      </ul>
+    </li>
+    <li><a href="#understand-small-files">Understand Small Files</a>
+      <ul>
+        <li><a href="#understand-checkpoints">Understand Checkpoints</a></li>
+        <li><a href="#understand-snapshots">Understand Snapshots</a></li>
+        <li><a href="#understand-partitions-and-buckets">Understand Partitions and Buckets</a></li>
+        <li><a href="#understand-lsm-for-primary-table">Understand LSM for Primary Table</a></li>
+        <li><a href="#understand-files-for-append-only-table">Understand Files for Append-Only Table</a></li>
+        <li><a href="#understand-full-compaction">Understand Full-Compaction</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+
+
+
+
+<article class="markdown">
+    <blockquote style="border-color:#f66">
+        This documentation is for an unreleased version of Apache Paimon. We recommend you use the latest <a href="https://paimon.apache.org/docs/0.5">stable version</a>.
+    </blockquote>
+</article>
+
+
+
+      
+  <article class="markdown"><!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<h1 id="understand-files">
+  Understand Files
+  <a class="anchor" href="#understand-files">#</a>
+</h1>
+<p>This article is specifically designed to clarify
+the impact that various file operations have on files.</p>
+<p>This page provides concrete examples and practical tips for
+effectively managing them. Furthermore, through an in-depth
+exploration of operations such as commit and compact,
+we aim to offer insights into the creation and updates of files.</p>
+<h2 id="prerequisite">
+  Prerequisite
+  <a class="anchor" href="#prerequisite">#</a>
+</h2>
+<p>Before delving further into this page, please ensure that you have read through the
+following sections:</p>
+<ol>
+<li><a href="//paimon.apache.org/docs/master/concepts/basic-concepts/">Basic Concepts</a>,</li>
+<li><a href="//paimon.apache.org/docs/master/concepts/file-layouts/">File Layouts</a> and</li>
+<li>How to use Paimon in <a href="//paimon.apache.org/docs/master/engines/flink/">Flink</a>.</li>
+</ol>
+<h2 id="understand-file-operations">
+  Understand File Operations
+  <a class="anchor" href="#understand-file-operations">#</a>
+</h2>
+<h3 id="create-catalog">
+  Create Catalog
+  <a class="anchor" href="#create-catalog">#</a>
+</h3>
+<p>Start Flink SQL client via <code>./sql-client.sh</code> and execute the following
+statements one by one to create a Paimon catalog.</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">CREATE</span> <span class="k">CATALOG</span> <span class="n">paimon</span> <span class="k">WITH</span> <span class="p">(</span>
+<span class="s1">&#39;type&#39;</span> <span class="o">=</span> <span class="s1">&#39;paimon&#39;</span><span class="p">,</span>
+<span class="s1">&#39;warehouse&#39;</span> <span class="o">=</span> <span class="s1">&#39;file:///tmp/paimon&#39;</span>
+<span class="p">);</span>
+
+<span class="n">USE</span> <span class="k">CATALOG</span> <span class="n">paimon</span><span class="p">;</span>
+</code></pre></div><p>This will only create a directory at given path <code>file:///tmp/paimon</code>.</p>
+<h3 id="create-table">
+  Create Table
+  <a class="anchor" href="#create-table">#</a>
+</h3>
+<p>Execute the following create table statement will create a Paimon table with 3 fields:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">T</span> <span class="p">(</span>
+  <span class="n">id</span> <span class="nb">BIGINT</span><span class="p">,</span>
+  <span class="n">a</span> <span class="nb">INT</span><span class="p">,</span>
+  <span class="n">b</span> <span class="n">STRING</span><span class="p">,</span>
+  <span class="n">dt</span> <span class="n">STRING</span> <span class="k">COMMENT</span> <span class="s1">&#39;timestamp string in format yyyyMMdd&#39;</span><span class="p">,</span>
+  <span class="k">PRIMARY</span> <span class="k">KEY</span><span class="p">(</span><span class="n">id</span><span class="p">,</span> <span class="n">dt</span><span class="p">)</span> <span class="k">NOT</span> <span class="n">ENFORCED</span>
+<span class="p">)</span> <span class="n">PARTITIONED</span> <span class="k">BY</span> <span class="p">(</span><span class="n">dt</span><span class="p">);</span>
+</code></pre></div><p>This will create Paimon table <code>T</code> under the path <code>/tmp/paimon/default.db/T</code>,
+with its schema stored in <code>/tmp/paimon/default.db/T/schema/schema-0</code></p>
+<h3 id="insert-records-into-table">
+  Insert Records Into Table
+  <a class="anchor" href="#insert-records-into-table">#</a>
+</h3>
+<p>Run the following insert statement in Flink SQL:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">T</span> <span class="k">VALUES</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10001</span><span class="p">,</span> <span class="s1">&#39;varchar00001&#39;</span><span class="p">,</span> <span class="s1">&#39;20230501&#39;</span><span class="p">);</span>
+</code></pre></div><p>Once the Flink job is completed, the records are written to the Paimon table through a successful <code>commit</code>.
+Users can verify the visibility of these records by executing the query <code>SELECT * FROM T</code> which will return a single row.
+The commit process creates a snapshot located at the path <code>/tmp/paimon/default.db/T/snapshot/snapshot-1</code>.
+The resulting file layout at snapshot-1 is as described below:</p>
+
+<img 
+  src="//paimon.apache.org/docs/master/img/file-operations-0.png"
+  alt=""
+  width=""
+  style="display:block;margin-left:auto;margin-right:auto"
+>
+
+<p>The content of snapshot-1 contains metadata of the snapshot, such as manifest list and schema id:</p>
+<div class="highlight"><pre class="chroma"><code class="language-json" data-lang="json"><span class="p">{</span>
+  <span class="nt">&#34;version&#34;</span> <span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+  <span class="nt">&#34;id&#34;</span> <span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+  <span class="nt">&#34;schemaId&#34;</span> <span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+  <span class="nt">&#34;baseManifestList&#34;</span> <span class="p">:</span> <span class="s2">&#34;manifest-list-4ccc-c07f-4090-958c-cfe3ce3889e5-0&#34;</span><span class="p">,</span>
+  <span class="nt">&#34;deltaManifestList&#34;</span> <span class="p">:</span> <span class="s2">&#34;manifest-list-4ccc-c07f-4090-958c-cfe3ce3889e5-1&#34;</span><span class="p">,</span>
+  <span class="nt">&#34;changelogManifestList&#34;</span> <span class="p">:</span> <span class="kc">null</span><span class="p">,</span>
+  <span class="nt">&#34;commitUser&#34;</span> <span class="p">:</span> <span class="s2">&#34;7d758485-981d-4b1a-a0c6-d34c3eb254bf&#34;</span><span class="p">,</span>
+  <span class="nt">&#34;commitIdentifier&#34;</span> <span class="p">:</span> <span class="mi">9223372036854775807</span><span class="p">,</span>
+  <span class="nt">&#34;commitKind&#34;</span> <span class="p">:</span> <span class="s2">&#34;APPEND&#34;</span><span class="p">,</span>
+  <span class="nt">&#34;timeMillis&#34;</span> <span class="p">:</span> <span class="mi">1684155393354</span><span class="p">,</span>
+  <span class="nt">&#34;logOffsets&#34;</span> <span class="p">:</span> <span class="p">{</span> <span class="p">},</span>
+  <span class="nt">&#34;totalRecordCount&#34;</span> <span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+  <span class="nt">&#34;deltaRecordCount&#34;</span> <span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+  <span class="nt">&#34;changelogRecordCount&#34;</span> <span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+  <span class="nt">&#34;watermark&#34;</span> <span class="p">:</span> <span class="mi">-9223372036854775808</span>
+<span class="p">}</span>
+</code></pre></div><p>Remind that a manifest list contains all changes of the snapshot, <code>baseManifestList</code> is the base
+file upon which the changes in <code>deltaManifestList</code> is applied.
+The first commit will result in 1 manifest file, and 2 manifest lists are
+created (the file names might differ from those in your experiment):</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">./T/manifest:
+manifest-list-4ccc-c07f-4090-958c-cfe3ce3889e5-1	
+manifest-list-4ccc-c07f-4090-958c-cfe3ce3889e5-0
+manifest-2b833ea4-d7dc-4de0-ae0d-ad76eced75cc-0
+</code></pre></div><p><code>manifest-2b833ea4-d7dc-4de0-ae0d-ad76eced75cc-0</code> is the manifest
+file (manifest-1-0 in the above graph), which stores the information about the data files in the snapshot.</p>
+<p><code>manifest-list-4ccc-c07f-4090-958c-cfe3ce3889e5-0</code> is the
+baseManifestList (manifest-list-1-base in the above graph), which is effectively empty.</p>
+<p><code>manifest-list-4ccc-c07f-4090-958c-cfe3ce3889e5-1</code> is the
+deltaManifestList (manifest-list-1-delta in the above graph), which
+contains a list of manifest entries that perform operations on data
+files, which, in this case, is <code>manifest-1-0</code>.</p>
+<p>Now let&rsquo;s insert a batch of records across different partitions and
+see what happens. In Flink SQL, execute the following statement:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">T</span> <span class="k">VALUES</span> 
+<span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">10002</span><span class="p">,</span> <span class="s1">&#39;varchar00002&#39;</span><span class="p">,</span> <span class="s1">&#39;20230502&#39;</span><span class="p">),</span>
+<span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">10003</span><span class="p">,</span> <span class="s1">&#39;varchar00003&#39;</span><span class="p">,</span> <span class="s1">&#39;20230503&#39;</span><span class="p">),</span>
+<span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">10004</span><span class="p">,</span> <span class="s1">&#39;varchar00004&#39;</span><span class="p">,</span> <span class="s1">&#39;20230504&#39;</span><span class="p">),</span>
+<span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10005</span><span class="p">,</span> <span class="s1">&#39;varchar00005&#39;</span><span class="p">,</span> <span class="s1">&#39;20230505&#39;</span><span class="p">),</span>
+<span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">10006</span><span class="p">,</span> <span class="s1">&#39;varchar00006&#39;</span><span class="p">,</span> <span class="s1">&#39;20230506&#39;</span><span class="p">),</span>
+<span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">10007</span><span class="p">,</span> <span class="s1">&#39;varchar00007&#39;</span><span class="p">,</span> <span class="s1">&#39;20230507&#39;</span><span class="p">),</span>
+<span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">10008</span><span class="p">,</span> <span class="s1">&#39;varchar00008&#39;</span><span class="p">,</span> <span class="s1">&#39;20230508&#39;</span><span class="p">),</span>
+<span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">10009</span><span class="p">,</span> <span class="s1">&#39;varchar00009&#39;</span><span class="p">,</span> <span class="s1">&#39;20230509&#39;</span><span class="p">),</span>
+<span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10010</span><span class="p">,</span> <span class="s1">&#39;varchar00010&#39;</span><span class="p">,</span> <span class="s1">&#39;20230510&#39;</span><span class="p">);</span>
+</code></pre></div><p>The second <code>commit</code> takes place and executing <code>SELECT * FROM T</code> will return
+10 rows. A new snapshot, namely <code>snapshot-2</code>, is created and gives us the
+following physical file layout:</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"> % ls -1tR . 
+./T:
+<span class="nv">dt</span><span class="o">=</span><span class="m">20230501</span>
+<span class="nv">dt</span><span class="o">=</span>20230502	
+<span class="nv">dt</span><span class="o">=</span>20230503	
+<span class="nv">dt</span><span class="o">=</span>20230504	
+<span class="nv">dt</span><span class="o">=</span>20230505	
+<span class="nv">dt</span><span class="o">=</span>20230506	
+<span class="nv">dt</span><span class="o">=</span>20230507	
+<span class="nv">dt</span><span class="o">=</span>20230508	
+<span class="nv">dt</span><span class="o">=</span>20230509	
+<span class="nv">dt</span><span class="o">=</span>20230510	
+snapshot
+schema
+manifest
+
+./T/snapshot:
+LATEST
+snapshot-2
+EARLIEST
+snapshot-1
+
+./T/manifest:
+manifest-list-9ac2-5e79-4978-a3bc-86c25f1a303f-1 <span class="c1"># delta manifest list for snapshot-2</span>
+manifest-list-9ac2-5e79-4978-a3bc-86c25f1a303f-0 <span class="c1"># base manifest list for snapshot-2	</span>
+manifest-f1267033-e246-4470-a54c-5c27fdbdd074-0	 <span class="c1"># manifest file for snapshot-2</span>
+
+manifest-list-4ccc-c07f-4090-958c-cfe3ce3889e5-1 <span class="c1"># delta manifest list for snapshot-1 </span>
+manifest-list-4ccc-c07f-4090-958c-cfe3ce3889e5-0 <span class="c1"># base manifest list for snapshot-1</span>
+manifest-2b833ea4-d7dc-4de0-ae0d-ad76eced75cc-0  <span class="c1"># manifest file for snapshot-1</span>
+
+./T/dt<span class="o">=</span>20230501/bucket-0:
+data-b75b7381-7c8b-430f-b7e5-a204cb65843c-0.orc
+
+...
+<span class="c1"># each partition has the data written to bucket-0</span>
+...
+
+./T/schema:
+schema-0
+</code></pre></div><p>The new file layout as of snapshot-2 looks like
+
+<img 
+  src="//paimon.apache.org/docs/master/img/file-operations-1.png"
+  alt=""
+  width=""
+  style="display:block;margin-left:auto;margin-right:auto"
+>
+</p>
+<h3 id="delete-records-from-table">
+  Delete Records From Table
+  <a class="anchor" href="#delete-records-from-table">#</a>
+</h3>
+<p>Now let&rsquo;s delete records that meet the condition <code>dt&gt;=20230503</code>.
+In Flink SQL, execute the following statement:</p>
+
+<span class="label">Batch</span>
+
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">DELETE</span> <span class="k">FROM</span> <span class="n">T</span> <span class="k">WHERE</span> <span class="n">dt</span> <span class="o">&gt;=</span> <span class="s1">&#39;20230503&#39;</span><span class="p">;</span>
+</code></pre></div><p>The third <code>commit</code> takes place and it gives us <code>snapshot-3</code>. Now, listing the files
+under the table and your will find out no partition is dropped. Instead, a new data
+file is created for partition <code>20230503</code> to <code>20230510</code>:</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">./T/dt<span class="o">=</span>20230510/bucket-0:
+data-b93f468c-b56f-4a93-adc4-b250b3aa3462-0.orc <span class="c1"># newer data file created by the delete statement </span>
+data-0fcacc70-a0cb-4976-8c88-73e92769a762-0.orc <span class="c1"># older data file created by the insert statement</span>
+</code></pre></div><p>This make sense since we insert a record in the second commit (represented by
+<code>+I[10, 10010, 'varchar00010', '20230510']</code>) and then delete
+the record in the third commit. Executing <code>SELECT * FROM T</code> will return 2 rows, namely:</p>
+<pre><code>+I[1, 10001, 'varchar00001', '20230501']
++I[2, 10002, 'varchar00002', '20230502']
+</code></pre><p>The new file layout as of snapshot-3 looks like
+
+<img 
+  src="//paimon.apache.org/docs/master/img/file-operations-2.png"
+  alt=""
+  width=""
+  style="display:block;margin-left:auto;margin-right:auto"
+>
+</p>
+<p>Note that <code>manifest-3-0</code> contains 8 manifest entries of <code>ADD</code> operation type,
+corresponding to 8 newly written data files.</p>
+<h3 id="compact-table">
+  Compact Table
+  <a class="anchor" href="#compact-table">#</a>
+</h3>
+<p>As you may have noticed, the number of small files will augment over successive
+snapshots, which may lead to decreased read performance. Therefore, a full-compaction
+is needed in order to reduce the number of small files.</p>
+<p>Let&rsquo;s trigger the full-compaction now, and run a dedicated compaction job through <code>flink run</code>:</p>
+
+<span class="label">Batch</span>
+
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">&lt;FLINK_HOME&gt;/bin/flink run <span class="se">\
+</span><span class="se"></span>    -D execution.runtime-mode<span class="o">=</span>batch <span class="se">\
+</span><span class="se"></span>    /path/to/paimon-flink-action-0.7-SNAPSHOT.jar <span class="se">\
+</span><span class="se"></span>    compact <span class="se">\
+</span><span class="se"></span>    --warehouse &lt;warehouse-path&gt; <span class="se">\
+</span><span class="se"></span>    --database &lt;database-name&gt; <span class="se">\ </span>
+    --table &lt;table-name&gt; <span class="se">\
+</span><span class="se"></span>    <span class="o">[</span>--partition &lt;partition-name&gt;<span class="o">]</span> <span class="se">\
+</span><span class="se"></span>    <span class="o">[</span>--catalog_conf &lt;paimon-catalog-conf&gt; <span class="o">[</span>--catalog_conf &lt;paimon-catalog-conf&gt; ...<span class="o">]]</span> <span class="se">\
+</span><span class="se"></span>    <span class="o">[</span>--table_conf &lt;paimon-table-dynamic-conf&gt; <span class="o">[</span>--table_conf &lt;paimon-table-dynamic-conf&gt;<span class="o">]</span> ...<span class="o">]</span>
+</code></pre></div><p>an example would be (suppose you&rsquo;re already in Flink home)</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">./bin/flink run <span class="se">\
+</span><span class="se"></span>    ./lib/paimon-flink-action-0.7-SNAPSHOT.jar <span class="se">\
+</span><span class="se"></span>    compact <span class="se">\
+</span><span class="se"></span>    --path file:///tmp/paimon/default.db/T
+</code></pre></div><p>All current table files will be compacted and a new snapshot, namely <code>snapshot-4</code>, is
+made and contains the following information:</p>
+<div class="highlight"><pre class="chroma"><code class="language-json" data-lang="json"><span class="p">{</span>
+  <span class="nt">&#34;version&#34;</span> <span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+  <span class="nt">&#34;id&#34;</span> <span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+  <span class="nt">&#34;schemaId&#34;</span> <span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+  <span class="nt">&#34;baseManifestList&#34;</span> <span class="p">:</span> <span class="s2">&#34;manifest-list-9be16-82e7-4941-8b0a-7ce1c1d0fa6d-0&#34;</span><span class="p">,</span>
+  <span class="nt">&#34;deltaManifestList&#34;</span> <span class="p">:</span> <span class="s2">&#34;manifest-list-9be16-82e7-4941-8b0a-7ce1c1d0fa6d-1&#34;</span><span class="p">,</span>
+  <span class="nt">&#34;changelogManifestList&#34;</span> <span class="p">:</span> <span class="kc">null</span><span class="p">,</span>
+  <span class="nt">&#34;commitUser&#34;</span> <span class="p">:</span> <span class="s2">&#34;a3d951d5-aa0e-4071-a5d4-4c72a4233d48&#34;</span><span class="p">,</span>
+  <span class="nt">&#34;commitIdentifier&#34;</span> <span class="p">:</span> <span class="mi">9223372036854775807</span><span class="p">,</span>
+  <span class="nt">&#34;commitKind&#34;</span> <span class="p">:</span> <span class="s2">&#34;COMPACT&#34;</span><span class="p">,</span>
+  <span class="nt">&#34;timeMillis&#34;</span> <span class="p">:</span> <span class="mi">1684163217960</span><span class="p">,</span>
+  <span class="nt">&#34;logOffsets&#34;</span> <span class="p">:</span> <span class="p">{</span> <span class="p">},</span>
+  <span class="nt">&#34;totalRecordCount&#34;</span> <span class="p">:</span> <span class="mi">38</span><span class="p">,</span>
+  <span class="nt">&#34;deltaRecordCount&#34;</span> <span class="p">:</span> <span class="mi">20</span><span class="p">,</span>
+  <span class="nt">&#34;changelogRecordCount&#34;</span> <span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+  <span class="nt">&#34;watermark&#34;</span> <span class="p">:</span> <span class="mi">-9223372036854775808</span>
+<span class="p">}</span>
+</code></pre></div><p>The new file layout as of snapshot-4 looks like
+
+<img 
+  src="//paimon.apache.org/docs/master/img/file-operations-3.png"
+  alt=""
+  width=""
+  style="display:block;margin-left:auto;margin-right:auto"
+>
+</p>
+<p>Note that <code>manifest-4-0</code> contains 20 manifest entries (18 <code>DELETE</code> operations and 2 <code>ADD</code> operations)</p>
+<ol>
+<li>For partition <code>20230503</code> to <code>20230510</code>, two <code>DELETE</code> operations for two data files</li>
+<li>For partition <code>20230501</code> to <code>20230502</code>, one <code>DELETE</code> operation and one <code>ADD</code> operation
+for the same data file.</li>
+</ol>
+<h3 id="alter-table">
+  Alter Table
+  <a class="anchor" href="#alter-table">#</a>
+</h3>
+<p>Execute the following statement to configure full-compaction:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">T</span> <span class="k">SET</span> <span class="p">(</span><span class="s1">&#39;full-compaction.delta-commits&#39;</span> <span class="o">=</span> <span class="s1">&#39;1&#39;</span><span class="p">);</span>
+</code></pre></div><p>It will create a new schema for Paimon table, namely <code>schema-1</code>, but no snapshot
+has actually used this schema yet until the next commit.</p>
+<h3 id="expire-snapshots">
+  Expire Snapshots
+  <a class="anchor" href="#expire-snapshots">#</a>
+</h3>
+<p>Remind that the marked data files are not truly deleted until the snapshot expires and
+no consumer depends on the snapshot. For more information, see <a href="//paimon.apache.org/docs/master/maintenance/manage-snapshots/#expiring-snapshots">Expiring Snapshots</a>.</p>
+<p>During the process of snapshot expiration, the range of snapshots is initially determined, and then data files within these snapshots are marked for deletion.
+A data file is <code>marked</code> for deletion only when there is a manifest entry of kind <code>DELETE</code> that references that specific data file.
+This marking ensures that the file will not be utilized by subsequent snapshots and can be safely removed.</p>
+<p>Let&rsquo;s say all 4 snapshots in the above diagram are about to expire. The expire process is as follows:</p>
+<ol>
+<li>
+<p>It first deletes all marked data files, and records any changed buckets.</p>
+</li>
+<li>
+<p>It then deletes any changelog files and associated manifests.</p>
+</li>
+<li>
+<p>Finally, it deletes the snapshots themselves and writes the earliest hint file.</p>
+</li>
+</ol>
+<p>If any directories are left empty after the deletion process, they will be deleted as well.</p>
+<p>Let&rsquo;s say another snapshot, <code>snapshot-5</code> is created and snapshot expiration is triggered. <code>snapshot-1</code> to <code>snapshot-4</code> are<br>
+to be deleted. For simplicity, we will only focus on files from previous snapshots, the final layout after snapshot
+expiration looks like:</p>
+
+<img 
+  src="//paimon.apache.org/docs/master/img/file-operations-4.png"
+  alt=""
+  width=""
+  style="display:block;margin-left:auto;margin-right:auto"
+>
+
+<p>As a result, partition <code>20230503</code> to <code>20230510</code> are physically deleted.</p>
+<h3 id="remove-orphan-files">
+  Remove Orphan Files
+  <a class="anchor" href="#remove-orphan-files">#</a>
+</h3>
+<p>Paimon files are deleted physically only when expiring snapshots. However, it is possible that some unexpected errors occurred
+when deleting files, so that there may exist files that are not used by Paimon table (so-called &ldquo;orphan files&rdquo;). You can
+submit a <code>remove-orphan-files</code> job to clean them:</p>
+
+
+
+
+
+<div class="book-tabs"><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Flink"
+    name="tabs-remove-orphan-files"
+    id="tabs-remove-orphan-files-0"
+    checked="checked" 
+    onclick="onSwitch('Flink')"
+  />
+  <label for="tabs-remove-orphan-files-0">Flink</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">&lt;FLINK_HOME&gt;/bin/flink run <span class="se">\
+</span><span class="se"></span>    /path/to/paimon-flink-action-0.7-SNAPSHOT.jar <span class="se">\
+</span><span class="se"></span>    remove-orphan-files <span class="se">\
+</span><span class="se"></span>    --warehouse &lt;warehouse-path&gt; <span class="se">\
+</span><span class="se"></span>    --database &lt;database-name&gt; <span class="se">\ </span>
+    --table &lt;table-name&gt; <span class="se">\
+</span><span class="se"></span>    <span class="o">[</span>--older_than &lt;timestamp&gt;<span class="o">]</span> 
+</code></pre></div><p>To avoid deleting files that are newly added by other writing jobs, this action only deletes orphan files older than
+1 day by default. The interval can be modified by <code>--older_than</code>. For example:</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">&lt;FLINK_HOME&gt;/bin/flink run <span class="se">\
+</span><span class="se"></span>    /path/to/paimon-flink-action-0.7-SNAPSHOT.jar <span class="se">\
+</span><span class="se"></span>    remove-orphan-files <span class="se">\
+</span><span class="se"></span>    --warehouse &lt;warehouse-path&gt; <span class="se">\
+</span><span class="se"></span>    --database &lt;database-name&gt; <span class="se">\ </span>
+    --table T <span class="se">\
+</span><span class="se"></span>    --older_than <span class="s1">&#39;2023-10-31 12:00:00&#39;</span>
+</code></pre></div></div><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Spark"
+    name="tabs-remove-orphan-files"
+    id="tabs-remove-orphan-files-1"
+     
+    onclick="onSwitch('Spark')"
+  />
+  <label for="tabs-remove-orphan-files-1">Spark</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">CALL</span> <span class="n">sys</span><span class="p">.</span><span class="n">remove_orphan_files</span><span class="p">(</span><span class="k">table</span> <span class="o">=&gt;</span> <span class="s2">&#34;tableId&#34;</span><span class="p">,</span> <span class="p">[</span><span class="n">older_then</span> <span class="o">=&gt;</span> <span class="s2">&#34;2023-10-31 12:00:00&#34;</span><span class="p">])</span>
+</code></pre></div></div></div>
+
+<h3 id="flink-stream-write">
+  Flink Stream Write
+  <a class="anchor" href="#flink-stream-write">#</a>
+</h3>
+<p>Finally, we will examine Flink Stream Write by utilizing the example
+of CDC ingestion. This section will address the capturing and writing of
+change data into Paimon, as well as the mechanisms behind asynchronous compact
+and snapshot commit and expiration.</p>
+<p>To begin, let&rsquo;s take a closer look at the CDC ingestion workflow and
+the unique roles played by each component involved.</p>
+
+<img 
+  src="//paimon.apache.org/docs/master/img/cdc-ingestion-topology.png"
+  alt=""
+  width=""
+  style="display:block;margin-left:auto;margin-right:auto"
+>
+
+<ol>
+<li><code>MySQL CDC Source</code> uniformly reads snapshot and incremental data, with <code>SnapshotReader</code> reading snapshot data
+and <code>BinlogReader</code> reading incremental data, respectively.</li>
+<li><code>Paimon Sink</code> writes data into Paimon table in bucket level. The <code>CompactManager</code> within it will trigger compaction
+asynchronously.</li>
+<li><code>Committer Operator</code> is a singleton responsible for committing and expiring snapshots.</li>
+</ol>
+<p>Next, we will go over end-to-end data flow.</p>
+
+<img 
+  src="//paimon.apache.org/docs/master/img/cdc-ingestion-source.png"
+  alt=""
+  width=""
+  style="display:block;margin-left:auto;margin-right:auto"
+>
+
+<p><code>MySQL Cdc Source</code> read snapshot and incremental data and emit them to downstream after normalization.</p>
+
+<img 
+  src="//paimon.apache.org/docs/master/img/cdc-ingestion-write.png"
+  alt=""
+  width=""
+  style="display:block;margin-left:auto;margin-right:auto"
+>
+
+<p><code>Paimon Sink</code> first buffers new records in a heap-based LSM tree, and flushes them to disk when
+the memory buffer is full. Note that each data file written is a sorted run. At this point, no manifest file and snapshot
+is created. Right before Flink checkpoint takes places, <code>Paimon Sink</code> will flush all buffered records and send committable message
+to downstream, which is read and committed by <code>Committer Operator</code> during checkpoint.</p>
+
+<img 
+  src="//paimon.apache.org/docs/master/img/cdc-ingestion-commit.png"
+  alt=""
+  width=""
+  style="display:block;margin-left:auto;margin-right:auto"
+>
+
+<p>During checkpoint, <code>Committer Operator</code> will create a new snapshot and associate it with manifest lists so that the snapshot<br>
+contains information about all data files in the table.</p>
+
+<img 
+  src="//paimon.apache.org/docs/master/img/cdc-ingestion-compact.png"
+  alt=""
+  width=""
+  style="display:block;margin-left:auto;margin-right:auto"
+>
+
+<p>At later point asynchronous compaction might take place, and the committable produced by <code>CompactManager</code> contains information
+about previous files and merged files so that <code>Committer Operator</code> can construct corresponding manifest entries. In this case
+<code>Committer Operator</code> might produce two snapshot during Flink checkpoint, one for data written (snapshot of kind <code>Append</code>) and the
+other for compact (snapshot of kind <code>Compact</code>). If no data file is written during checkpoint interval, only snapshot of kind <code>Compact</code>
+will be created. <code>Committer Operator</code> will check against snapshot expiration and perform
+physical deletion of marked data files.</p>
+<h2 id="understand-small-files">
+  Understand Small Files
+  <a class="anchor" href="#understand-small-files">#</a>
+</h2>
+<p>Many users are concerned about small files, which can lead to:</p>
+<ol>
+<li>Stability issue: Too many small files in HDFS, NameNode will be overstressed.</li>
+<li>Cost issue: A small file in HDFS will temporarily use the size of a minimum of one Block, for example 128 MB.</li>
+<li>Query efficiency: The efficiency of querying too many small files will be affected.</li>
+</ol>
+<h3 id="understand-checkpoints">
+  Understand Checkpoints
+  <a class="anchor" href="#understand-checkpoints">#</a>
+</h3>
+<p>Assuming you are using Flink Writer, each checkpoint generates 1-2 snapshots, and the checkpoint forces the files to be
+generated on DFS, so the smaller the checkpoint interval the more small files will be generated.</p>
+<ol>
+<li>So first thing is increase checkpoint interval.</li>
+</ol>
+<p>By default, not only checkpoint will cause the file to be generated, but writer&rsquo;s memory (write-buffer-size) exhaustion
+will also flush data to DFS and generate the corresponding file. You can enable <code>write-buffer-spillable</code> to generate
+spilled files in writer to generate bigger files in DFS.</p>
+<ol start="2">
+<li>So second thing is increase <code>write-buffer-size</code> or enable <code>write-buffer-spillable</code>.</li>
+</ol>
+<h3 id="understand-snapshots">
+  Understand Snapshots
+  <a class="anchor" href="#understand-snapshots">#</a>
+</h3>
+<p>Before delving further into this section, please ensure that you have read <a href="//paimon.apache.org/docs/master/concepts/file-layouts/">File Layouts</a>.</p>
+
+<img 
+  src="//paimon.apache.org/docs/master/img/file-operations-3.png"
+  alt=""
+  width=""
+  style="display:block;margin-left:auto;margin-right:auto"
+>
+
+<p>Paimon maintains multiple versions of files, compaction and deletion of files are logical and do not actually
+delete files. Files are only really deleted when Snapshot is expired, so the first way to reduce files is to
+reduce the time it takes for snapshot to be expired. Flink writer will automatically expire snapshots.</p>
+<p>See <a href="//paimon.apache.org/docs/master/maintenance/manage-snapshots/#expire-snapshots">Expire Snapshots</a>.</p>
+<h3 id="understand-partitions-and-buckets">
+  Understand Partitions and Buckets
+  <a class="anchor" href="#understand-partitions-and-buckets">#</a>
+</h3>
+<p>Paimon files are organized in a layered style. The following image illustrates the file layout. Starting
+from a snapshot file, Paimon readers can recursively access all records from the table.</p>
+
+<img 
+  src="//paimon.apache.org/docs/master/img/file-layout.png"
+  alt=""
+  width=""
+  style="display:block;margin-left:auto;margin-right:auto"
+>
+
+<p>For example, the following table:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">MyTable</span> <span class="p">(</span>
+    <span class="n">user_id</span> <span class="nb">BIGINT</span><span class="p">,</span>
+    <span class="n">item_id</span> <span class="nb">BIGINT</span><span class="p">,</span>
+    <span class="n">behavior</span> <span class="n">STRING</span><span class="p">,</span>
+    <span class="n">dt</span> <span class="n">STRING</span><span class="p">,</span>
+    <span class="n">hh</span> <span class="n">STRING</span><span class="p">,</span>
+    <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="p">(</span><span class="n">dt</span><span class="p">,</span> <span class="n">hh</span><span class="p">,</span> <span class="n">user_id</span><span class="p">)</span> <span class="k">NOT</span> <span class="n">ENFORCED</span>
+<span class="p">)</span> <span class="n">PARTITIONED</span> <span class="k">BY</span> <span class="p">(</span><span class="n">dt</span><span class="p">,</span> <span class="n">hh</span><span class="p">)</span> <span class="k">WITH</span> <span class="p">(</span>
+    <span class="s1">&#39;bucket&#39;</span> <span class="o">=</span> <span class="s1">&#39;10&#39;</span>
+<span class="p">);</span>
+</code></pre></div><p>The table data will be physically sliced into different partitions, and different buckets inside, so if the overall
+data volume is too small, there is at least one file in a single bucket, I suggest you configure a smaller number
+of buckets, otherwise there will be quite a few small files as well.</p>
+<h3 id="understand-lsm-for-primary-table">
+  Understand LSM for Primary Table
+  <a class="anchor" href="#understand-lsm-for-primary-table">#</a>
+</h3>
+<p>LSM tree organizes files into several sorted runs. A sorted run consists of one or multiple
+<a href="//paimon.apache.org/docs/master/concepts/file-layouts/#data-files">data files</a> and each data file belongs to exactly one sorted run.</p>
+
+<img 
+  src="//paimon.apache.org/docs/master/img/sorted-runs.png"
+  alt=""
+  width=""
+  style="display:block;margin-left:auto;margin-right:auto"
+>
+
+<p>By default, sorted runs number depends on <code>num-sorted-run.compaction-trigger</code>, see <a href="//paimon.apache.org/docs/master/maintenance/write-performance/#compaction">Compaction for Primary Key Table</a>,
+this means that there are at least 5 files in a bucket. If you want to reduce this number, you can keep fewer files, but write performance may suffer.</p>
+<h3 id="understand-files-for-append-only-table">
+  Understand Files for Append-Only Table
+  <a class="anchor" href="#understand-files-for-append-only-table">#</a>
+</h3>
+<p>By default, Append-Only also does automatic compaction to reduce the number of small files.</p>
+<p>However, for Bucket&rsquo;s Append-only table, it will only compact the files within the Bucket for sequential
+purposes, which may keep more small files. See <a href="//paimon.apache.org/docs/master/concepts/append-only-table/#compaction">Compaction for Append-Only Table</a>.</p>
+<h3 id="understand-full-compaction">
+  Understand Full-Compaction
+  <a class="anchor" href="#understand-full-compaction">#</a>
+</h3>
+<p>Maybe you think the 5 files for the primary key table are actually okay, but the Append-Only table (bucket)
+may have 50 small files in a single bucket, which is very difficult to accept. Worse still, partitions that
+are no longer active also keep so many small files.</p>
+<p>It is recommended that you configure <a href="//paimon.apache.org/docs/master/maintenance/read-performance/#full-compaction">Full-Compaction</a>,
+configure ‘full-compaction.delta-commits’ perform full-compaction periodically in Flink writing. And it can ensure
+that partitions are full compacted before writing ends.</p>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  
+
+
+
+
+<a href="//github.com/apache/incubator-paimon/edit/master/docs/content/maintenance/understand-files.md" style="color:black"><i class="fa fa-edit fa-fw"></i>Edit This Page</a>
+
+
+ 
+        
+      </footer>
+
+      
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      
+  
+
+<nav id="TableOfContents"><h3>On This Page <button class="toc" onclick="collapseToc()"><i class="fa fa-compress" aria-hidden="true"></i></button></h3>
+  <ul>
+    <li><a href="#prerequisite">Prerequisite</a></li>
+    <li><a href="#understand-file-operations">Understand File Operations</a>
+      <ul>
+        <li><a href="#create-catalog">Create Catalog</a></li>
+        <li><a href="#create-table">Create Table</a></li>
+        <li><a href="#insert-records-into-table">Insert Records Into Table</a></li>
+        <li><a href="#delete-records-from-table">Delete Records From Table</a></li>
+        <li><a href="#compact-table">Compact Table</a></li>
+        <li><a href="#alter-table">Alter Table</a></li>
+        <li><a href="#expire-snapshots">Expire Snapshots</a></li>
+        <li><a href="#remove-orphan-files">Remove Orphan Files</a></li>
+        <li><a href="#flink-stream-write">Flink Stream Write</a></li>
+      </ul>
+    </li>
+    <li><a href="#understand-small-files">Understand Small Files</a>
+      <ul>
+        <li><a href="#understand-checkpoints">Understand Checkpoints</a></li>
+        <li><a href="#understand-snapshots">Understand Snapshots</a></li>
+        <li><a href="#understand-partitions-and-buckets">Understand Partitions and Buckets</a></li>
+        <li><a href="#understand-lsm-for-primary-table">Understand LSM for Primary Table</a></li>
+        <li><a href="#understand-files-for-append-only-table">Understand Files for Append-Only Table</a></li>
+        <li><a href="#understand-full-compaction">Understand Full-Compaction</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+ 
+    </aside>
+    <aside class="expand-toc">
+      <button class="toc" onclick="expandToc()">
+        <i class="fa fa-expand" aria-hidden="true"></i>
+      </button>
+    </aside>
+    
+  </main>
+
+  
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

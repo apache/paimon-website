@@ -1,0 +1,1627 @@
+
+<!DOCTYPE html>
+<html lang="en" dir=>
+
+<head>
+  <meta name="generator" content="Hugo 0.80.0" />
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Mongo CDC #  Prepare MongoDB Bundled Jar #  flink-sql-connector-mongodb-cdc-*.jar only cdc 2.4&#43; is supported
+Synchronizing Tables #  By using MongoDBSyncTableAction in a Flink DataStream job or directly through flink run, users can synchronize one collection from MongoDB into one Paimon table.
+To use this feature through flink run, run the following shell command.
+&lt;FLINK_HOME&gt;/bin/flink run \  /path/to/paimon-flink-action-0.6.0-incubating.jar \  mongodb_sync_table --warehouse &lt;warehouse-path&gt; \  --database &lt;database-name&gt; \  --table &lt;table-name&gt; \  [--partition_keys &lt;partition_keys&gt;] \  [--computed_column &lt;&#39;column-name=expr-name(args[, .">
+<meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="Mongo CDC" />
+<meta property="og:description" content="Mongo CDC #  Prepare MongoDB Bundled Jar #  flink-sql-connector-mongodb-cdc-*.jar only cdc 2.4&#43; is supported
+Synchronizing Tables #  By using MongoDBSyncTableAction in a Flink DataStream job or directly through flink run, users can synchronize one collection from MongoDB into one Paimon table.
+To use this feature through flink run, run the following shell command.
+&lt;FLINK_HOME&gt;/bin/flink run \  /path/to/paimon-flink-action-0.6.0-incubating.jar \  mongodb_sync_table --warehouse &lt;warehouse-path&gt; \  --database &lt;database-name&gt; \  --table &lt;table-name&gt; \  [--partition_keys &lt;partition_keys&gt;] \  [--computed_column &lt;&#39;column-name=expr-name(args[, ." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="//paimon.apache.org/docs/0.6/cdc-ingestion/mongo-cdc/" />
+
+<title>Mongo CDC | Apache Paimon</title>
+<link rel="manifest" href="/docs/0.6/manifest.json">
+<link rel="icon" href="/docs/0.6/favicon.png" type="image/x-icon">
+<link rel="stylesheet" href="/docs/0.6/book.min.3bc4108a5b57c9a7e6fcae92ff69940435f8c46c4e1e4a311aedc9b2d8e06792.css" integrity="sha256-O8QQiltXyafm/K6S/2mUBDX4xGxOHkoxGu3JstjgZ5I=">
+<script defer src="/docs/0.6/en.search.min.bdbb2261b557a7c02c04a5095c8a17bb87853c6bb8544247aaf1506cb12c096e.js" integrity="sha256-vbsiYbVXp8AsBKUJXIoXu4eFPGu4VEJHqvFQbLEsCW4="></script>
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+  
+
+<link rel="stylesheet" type="text/css" href="//paimon.apache.org/docs/0.6/font-awesome/css/font-awesome.min.css">
+<script src="//paimon.apache.org/docs/0.6/js/anchor.min.js"></script>
+<script src="//paimon.apache.org/docs/0.6/js/flink.js"></script>
+
+
+  
+  <script>
+    var _paq = window._paq = window._paq || [];
+     
+     
+    _paq.push(['disableCookies']);
+     
+    _paq.push(["setDomains", ["*.flink.apache.org","*.nightlies.apache.org/flink"]]);
+    _paq.push(['trackPageView']);
+    _paq.push(['enableLinkTracking']);
+    (function() {
+      var u="//matomo.privacy.apache.org/";
+      _paq.push(['setTrackerUrl', u+'matomo.php']);
+      _paq.push(['setSiteId', '1']);
+      var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+      g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+    })();
+  </script>
+  
+</head>
+
+<body dir=>
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      
+  
+
+<nav>
+
+
+<a id="logo" href="//paimon.apache.org/docs/0.6">
+    <img width="100%" src="//paimon.apache.org/docs/0.6/paimon_black.svg">
+</a>
+<p style="text-align:right">0.6.0-incubating</p>
+
+<div class="book-search">
+  <input type="text" id="book-search-input" placeholder="Search" aria-label="Search" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-dc8a1c63e6da60163016ce21cae1faa0" class="toggle"  />
+    <label for="section-dc8a1c63e6da60163016ce21cae1faa0" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-book title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Concepts</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/concepts/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/concepts/basic-concepts/" class="">Basic Concepts</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/concepts/file-layouts/" class="">File Layouts</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/concepts/primary-key-table/" class="">Primary Key Table</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/concepts/append-only-table/" class="">Append Only Table</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-90f5541dc4fa46a212e954b9193ea0f9" class="toggle"  />
+    <label for="section-90f5541dc4fa46a212e954b9193ea0f9" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-gear title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Engines</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/engines/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/engines/flink/" class="">Flink</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/engines/spark/" class="">Spark</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/engines/hive/" class="">Hive</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/engines/presto/" class="">Presto</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/engines/trino/" class="">Trino</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-e2d76c106dab115385ef7f124cda2ba4" class="toggle"  />
+    <label for="section-e2d76c106dab115385ef7f124cda2ba4" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-folder title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Filesystems</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/filesystems/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/filesystems/hdfs/" class="">HDFS</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/filesystems/oss/" class="">OSS</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/filesystems/s3/" class="">S3</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-f6ca435e98b926845c0060f9e7f85362" class="toggle"  />
+    <label for="section-f6ca435e98b926845c0060f9e7f85362" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-database title maindish" aria-hidden="true"></i>&nbsp;&nbsp;How to</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/how-to/creating-catalogs/" class="">Creating Catalogs</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/how-to/creating-tables/" class="">Creating Tables</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/how-to/altering-tables/" class="">Altering Tables</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/how-to/writing-tables/" class="">Writing Tables</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/how-to/querying-tables/" class="">Querying Tables</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/how-to/system-tables/" class="">System Tables</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/how-to/lookup-joins/" class="">Lookup Joins</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-582e435c19ca5fafbf9764337d648e63" class="toggle" checked />
+    <label for="section-582e435c19ca5fafbf9764337d648e63" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-database title maindish" aria-hidden="true"></i>&nbsp;&nbsp;CDC Ingestion</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/cdc-ingestion/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/cdc-ingestion/mysql-cdc/" class="">Mysql CDC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/cdc-ingestion/kafka-cdc/" class="">Kafka CDC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/cdc-ingestion/mongo-cdc/" class=" active">Mongo CDC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/cdc-ingestion/pulsar-cdc/" class="">Pulsar CDC</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-697a4b6a0388d6cfa4f418aba3b4edfe" class="toggle"  />
+    <label for="section-697a4b6a0388d6cfa4f418aba3b4edfe" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-wrench title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Maintenance</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/maintenance/write-performance/" class="">Write Performance</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/maintenance/read-performance/" class="">Read Performance</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/maintenance/dedicated-compaction/" class="">Dedicated Compaction</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/maintenance/manage-snapshots/" class="">Manage Snapshots</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/maintenance/manage-partition/" class="">Manage Partition</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/maintenance/rescale-bucket/" class="">Rescale Bucket</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/maintenance/manage-tags/" class="">Manage Tags</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/maintenance/metrics/" class="">Metrics</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/maintenance/configurations/" class="">Configurations</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-1b3eda2e8317c0686a4d41cefa0a3453" class="toggle"  />
+    <label for="section-1b3eda2e8317c0686a4d41cefa0a3453" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-briefcase title maindish" aria-hidden="true"></i>&nbsp;&nbsp;API</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/api/java-api/" class="">Java API</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/api/flink-api/" class="">Flink API</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-07c567e5a9f3ce62aea4ff0a1e2dc065" class="toggle"  />
+    <label for="section-07c567e5a9f3ce62aea4ff0a1e2dc065" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-briefcase title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Migration</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/migration/migration-from-hive/" class="">Migration From Hive</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/migration/upsert-to-partitioned/" class="">Upsert To Partitioned</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  	<br/>
+  
+  
+    <input type="checkbox" id="section-8c828bcf882f666cdd6821a70cc768ee" class="toggle"  />
+    <label for="section-8c828bcf882f666cdd6821a70cc768ee" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-sitemap title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Project</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/project/roadmap/" class="">Roadmap</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/project/download/" class="">Download</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/project/contributing/" class="">Contributing</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-392fc6f653ae23ff676811656a71ebbf" class="toggle"  />
+    <label for="section-392fc6f653ae23ff676811656a71ebbf" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-sitemap title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Learn Paimon</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/learn-paimon/understand-files/" class="">Understand Files</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br/>
+<hr class="menu-break">
+
+<a href="//paimon.apache.org" style="color:black;margin-bottom:0.5em"><i class="link fa fa-external-link title" aria-hidden="true"></i> Project Homepage</a>
+<br/>
+
+<a href="//paimon.apache.org/docs/master/api/java/" style="color:black;margin-bottom:0.5em"><i class="link fa fa-external-link title" aria-hidden="true"></i> JavaDocs</a>
+<br/>
+
+<hr class="menu-break">
+<li style="list-style-type: none">
+  <br>
+  <input type="checkbox" id="section-version-picker" class="toggle">
+  <label for="section-version-picker" class="flex justify-between">
+     <div style="font-weight:450;margin-bottom:0.5em">Pick Docs Version</div>
+     <span>▾</span>
+  </label>
+  <ul>
+    <a href="//paimon.apache.org/docs/0.6">
+      0.6 (✓)
+    </a>
+    <hr class="menu-break">
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/master">
+          master
+        </a>
+      </li>
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/0.6">
+          stable
+        </a>
+      </li>
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/0.5">
+          0.5
+        </a>
+      </li>
+    
+    <hr class="menu-break">
+    <li>
+      <a href="//paimon.apache.org/docs/0.6/versions">
+          All Versions
+      </a>
+    </li>
+  </ul>
+</li>
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var menu=document.querySelector("aside.book-menu nav");addEventListener("beforeunload",function(event){localStorage.setItem("menu.scrollTop",menu.scrollTop);});menu.scrollTop=localStorage.getItem("menu.scrollTop");})();</script>
+
+
+ 
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/docs/0.6/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <strong>Mongo CDC</strong>
+
+  <label for="toc-control">
+    
+    <img src="/docs/0.6/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden clearfix">
+    
+  
+
+<nav id="TableOfContents"><h3>On This Page <button class="toc" onclick="collapseToc()"><i class="fa fa-compress" aria-hidden="true"></i></button></h3>
+  <ul>
+    <li><a href="#prepare-mongodb-bundled-jar">Prepare MongoDB Bundled Jar</a></li>
+    <li><a href="#synchronizing-tables">Synchronizing Tables</a></li>
+    <li><a href="#synchronizing-databases">Synchronizing Databases</a></li>
+  </ul>
+</nav>
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+
+
+
+
+
+
+      
+  <article class="markdown"><!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<h1 id="mongo-cdc">
+  Mongo CDC
+  <a class="anchor" href="#mongo-cdc">#</a>
+</h1>
+<h2 id="prepare-mongodb-bundled-jar">
+  Prepare MongoDB Bundled Jar
+  <a class="anchor" href="#prepare-mongodb-bundled-jar">#</a>
+</h2>
+<pre><code>flink-sql-connector-mongodb-cdc-*.jar
+</code></pre><p>only cdc 2.4+ is supported</p>
+<h2 id="synchronizing-tables">
+  Synchronizing Tables
+  <a class="anchor" href="#synchronizing-tables">#</a>
+</h2>
+<p>By using <a href="/docs/0.6/api/java/org/apache/paimon/flink/action/cdc/mongodb/MongoDBSyncTableAction">MongoDBSyncTableAction</a> in a Flink DataStream job or directly through <code>flink run</code>, users can synchronize one collection from MongoDB into one Paimon table.</p>
+<p>To use this feature through <code>flink run</code>, run the following shell command.</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">&lt;FLINK_HOME&gt;/bin/flink run <span class="se">\
+</span><span class="se"></span>    /path/to/paimon-flink-action-0.6.0-incubating.jar <span class="se">\
+</span><span class="se"></span>    mongodb_sync_table
+    --warehouse &lt;warehouse-path&gt; <span class="se">\
+</span><span class="se"></span>    --database &lt;database-name&gt; <span class="se">\
+</span><span class="se"></span>    --table &lt;table-name&gt; <span class="se">\
+</span><span class="se"></span>    <span class="o">[</span>--partition_keys &lt;partition_keys&gt;<span class="o">]</span> <span class="se">\
+</span><span class="se"></span>    <span class="o">[</span>--computed_column &lt;<span class="s1">&#39;column-name=expr-name(args[, ...])&#39;</span>&gt; <span class="o">[</span>--computed_column ...<span class="o">]]</span> <span class="se">\
+</span><span class="se"></span>    <span class="o">[</span>--mongodb_conf &lt;mongodb-cdc-source-conf&gt; <span class="o">[</span>--mongodb_conf &lt;mongodb-cdc-source-conf&gt; ...<span class="o">]]</span> <span class="se">\
+</span><span class="se"></span>    <span class="o">[</span>--catalog_conf &lt;paimon-catalog-conf&gt; <span class="o">[</span>--catalog_conf &lt;paimon-catalog-conf&gt; ...<span class="o">]]</span> <span class="se">\
+</span><span class="se"></span>    <span class="o">[</span>--table_conf &lt;paimon-table-sink-conf&gt; <span class="o">[</span>--table_conf &lt;paimon-table-sink-conf&gt; ...<span class="o">]]</span>
+</code></pre></div>
+
+<table class="configuration table table-bordered">
+    <thead>
+    <tr>
+        <th class="text-left" style="width: 15%">Configuration</th>
+        <th class="text-left" style="width: 85%">Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td><h5>--warehouse</h5></td>
+        <td>The path to Paimon warehouse.</td>
+    </tr>
+    <tr>
+        <td><h5>--database</h5></td>
+        <td>The database name in Paimon catalog.</td>
+    </tr>
+    <tr>
+        <td><h5>--table</h5></td>
+        <td>The Paimon table name.</td>
+    </tr>
+    <tr>
+        <td><h5>--partition_keys</h5></td>
+        <td>The partition keys for Paimon table. If there are multiple partition keys, connect them with comma, for example "dt,hh,mm".</td>
+    </tr>
+    <tr>
+        <td><h5>--computed_column</h5></td>
+        <td>The definitions of computed columns. The argument field is from MongoDB collection field name. See <a href="../overview/#computed-functions">here</a> for a complete list of configurations. </td>
+    </tr>
+    <tr>
+        <td><h5>--mongodb_conf</h5></td>
+        <td>The configuration for Flink CDC MongoDB sources. Each configuration should be specified in the format "key=value". hosts, username, password, database and collection are required configurations, others are optional. See its <a href="https://ververica.github.io/flink-cdc-connectors/master/content/connectors/mongodb-cdc.html#connector-options">document</a> for a complete list of configurations.</td>
+    </tr>
+    <tr>
+        <td><h5>--catalog_conf</h5></td>
+        <td>The configuration for Paimon catalog. Each configuration should be specified in the format "key=value". See <a href="//paimon.apache.org/docs/0.6/maintenance/configurations/">here</a> for a complete list of catalog configurations.</td>
+    </tr>
+    <tr>
+        <td><h5>--table_conf</h5></td>
+        <td>The configuration for Paimon table sink. Each configuration should be specified in the format "key=value". See <a href="//paimon.apache.org/docs/0.6/maintenance/configurations/">here</a> for a complete list of table configurations.</td>
+    </tr>
+    </tbody>
+</table>
+<p>Here are a few points to take note of:</p>
+<ol>
+<li>The <code>mongodb_conf</code> introduces the <code>schema.start.mode</code> parameter on top of the MongoDB CDC source configuration.<code>schema.start.mode</code> provides two modes: <code>dynamic</code> (default) and <code>specified</code>.
+In <code>dynamic</code> mode, MongoDB schema information is parsed at one level, which forms the basis for schema change evolution.
+In <code>specified</code> mode, synchronization takes place according to specified criteria.
+This can be done by configuring <code>field.name</code> to specify the synchronization fields and <code>parser.path</code> to specify the JSON parsing path for those fields.
+The difference between the two is that the <code>specify</code> mode requires the user to explicitly identify the fields to be used and create a mapping table based on those fields.
+Dynamic mode, on the other hand, ensures that Paimon and MongoDB always keep the top-level fields consistent, eliminating the need to focus on specific fields.
+Further processing of the data table is required when using values from nested fields.</li>
+<li>The <code>mongodb_conf</code> introduces the <code>default.id.generation</code> parameter as an enhancement to the MongoDB CDC source configuration. The <code>default.id.generation</code> setting offers two distinct behaviors: when set to true and when set to false.
+When <code>default.id.generation</code> is set to true, the MongoDB CDC source adheres to the default <code>_id</code> generation strategy, which involves stripping the outer $oid nesting to provide a more straightforward identifier. This mode simplifies the <code>_id</code> representation, making it more direct and user-friendly.
+On the contrary, when <code>default.id.generation</code> is set to false, the MongoDB CDC source retains the original <code>_id</code> structure, without any additional processing. This mode offers users the flexibility to work with the raw <code>_id</code> format as provided by MongoDB, preserving any nested elements like <code>$oid</code>.
+The choice between the two hinges on the user&rsquo;s preference: the former for a cleaner, simplified <code>_id</code> and the latter for a direct representation of MongoDB&rsquo;s <code>_id</code> structure.</li>
+</ol>
+
+
+<table class="configuration table table-bordered">
+    <thead>
+    <tr>
+        <th class="text-left" style="width: 20%">Operator</th>
+        <th class="text-left" style="width: 80%">Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td><h5>$</h5></td>
+        <td>The root element to query. This starts all path expressions.</td>
+    </tr>
+    <tr>
+        <td><h5>@</h5></td>
+        <td>The current node being processed by a filter predicate.</td>
+    </tr>
+    <tr>
+        <td><h5>*</h5></td>
+        <td>Wildcard. Available anywhere a name or numeric are required.</td>
+    </tr>
+    <tr>
+        <td><h5>..</h5></td>
+        <td>Deep scan. Available anywhere a name is required.</td>
+    </tr>
+    <tr>
+        <td><h5>.</h5></td>
+        <td>Dot-notated child.</td>
+    </tr>
+    <tr>
+        <td><h5>['{name}' (, '{name}')]</h5></td>
+        <td>Bracket-notated child or children.</td>
+    </tr>
+    <tr>
+        <td><h5>[{number} (, {number})]</h5></td>
+        <td>Bracket-notated child or children.</td>
+    </tr>
+    <tr>
+        <td><h5>[start:end]</h5></td>
+        <td>Array index or indexes.</td>
+    </tr>
+    <tr>
+        <td><h5>[?({expression})]</h5></td>
+        <td>Filter expression. Expression must evaluate to a boolean value.</td>
+    </tr>
+    </tbody>
+</table>
+<p>Functions can be invoked at the tail end of a path - the input to a function is the output of the path expression. The function output is dictated by the function itself.</p>
+
+
+<table class="configuration table table-bordered">
+    <thead>
+    <tr>
+        <th class="text-left" style="width: 15%">Function</th>
+        <th class="text-left" style="width: 70%">Description</th>
+        <th class="text-left" style="width: 15%">Output type</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td><h5>min()</h5></td>
+        <td>Provides the min value of an array of numbers.</td>
+        <td>Double</td>
+    </tr>
+    <tr>
+        <td><h5>max()</h5></td>
+        <td>Provides the max value of an array of numbers.</td>
+        <td>Double</td>
+    </tr>
+    <tr>
+        <td><h5>avg()</h5></td>
+        <td>Provides the average value of an array of numbers.</td>
+        <td>Double</td>
+    </tr>
+    <tr>
+        <td><h5>stddev()</h5></td>
+        <td>Provides the standard deviation value of an array of numbers</td>
+        <td>Double</td>
+    </tr>
+    <tr>
+        <td><h5>length()</h5></td>
+        <td>Provides the length of an array</td>
+        <td>Integer</td>
+    </tr>
+    <tr>
+        <td><h5>sum()</h5></td>
+        <td>Provides the sum value of an array of numbers.</td>
+        <td>Double</td>
+    </tr>
+    <tr>
+        <td><h5>keys()</h5></td>
+        <td>Provides the property keys (An alternative for terminal tilde ~)</td>
+        <td>Set</td>
+    </tr>
+    <tr>
+        <td><h5>concat(X)</h5></td>
+        <td>Provides a concatinated version of the path output with a new item.</td>
+        <td>like input</td>
+    </tr>
+    <tr>
+        <td><h5>append(X)</h5></td>
+        <td>add an item to the json path output array</td>
+        <td>like input</td>
+    </tr>
+    <tr>
+        <td><h5>append(X)</h5></td>
+        <td>add an item to the json path output array</td>
+        <td>like input</td>
+    </tr>
+    <tr>
+        <td><h5>first()</h5></td>
+        <td>Provides the first item of an array</td>
+        <td>Depends on the array</td>
+    </tr>
+    <tr>
+        <td><h5>last()</h5></td>
+        <td>Provides the last item of an array</td>
+        <td>Depends on the array</td>
+    </tr>
+    <tr>
+        <td><h5>index(X)</h5></td>
+        <td>Provides the item of an array of index: X, if the X is negative, take from backwards</td>
+        <td>Depends on the array</td>
+    </tr>
+    </tbody>
+</table>
+<p>Path Examples</p>
+<div class="highlight"><pre class="chroma"><code class="language-json" data-lang="json"><span class="p">{</span>
+    <span class="nt">&#34;store&#34;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&#34;book&#34;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="p">{</span>
+                <span class="nt">&#34;category&#34;</span><span class="p">:</span> <span class="s2">&#34;reference&#34;</span><span class="p">,</span>
+                <span class="nt">&#34;author&#34;</span><span class="p">:</span> <span class="s2">&#34;Nigel Rees&#34;</span><span class="p">,</span>
+                <span class="nt">&#34;title&#34;</span><span class="p">:</span> <span class="s2">&#34;Sayings of the Century&#34;</span><span class="p">,</span>
+                <span class="nt">&#34;price&#34;</span><span class="p">:</span> <span class="mf">8.95</span>
+            <span class="p">},</span>
+            <span class="p">{</span>
+                <span class="nt">&#34;category&#34;</span><span class="p">:</span> <span class="s2">&#34;fiction&#34;</span><span class="p">,</span>
+                <span class="nt">&#34;author&#34;</span><span class="p">:</span> <span class="s2">&#34;Evelyn Waugh&#34;</span><span class="p">,</span>
+                <span class="nt">&#34;title&#34;</span><span class="p">:</span> <span class="s2">&#34;Sword of Honour&#34;</span><span class="p">,</span>
+                <span class="nt">&#34;price&#34;</span><span class="p">:</span> <span class="mf">12.99</span>
+            <span class="p">},</span>
+            <span class="p">{</span>
+                <span class="nt">&#34;category&#34;</span><span class="p">:</span> <span class="s2">&#34;fiction&#34;</span><span class="p">,</span>
+                <span class="nt">&#34;author&#34;</span><span class="p">:</span> <span class="s2">&#34;Herman Melville&#34;</span><span class="p">,</span>
+                <span class="nt">&#34;title&#34;</span><span class="p">:</span> <span class="s2">&#34;Moby Dick&#34;</span><span class="p">,</span>
+                <span class="nt">&#34;isbn&#34;</span><span class="p">:</span> <span class="s2">&#34;0-553-21311-3&#34;</span><span class="p">,</span>
+                <span class="nt">&#34;price&#34;</span><span class="p">:</span> <span class="mf">8.99</span>
+            <span class="p">},</span>
+            <span class="p">{</span>
+                <span class="nt">&#34;category&#34;</span><span class="p">:</span> <span class="s2">&#34;fiction&#34;</span><span class="p">,</span>
+                <span class="nt">&#34;author&#34;</span><span class="p">:</span> <span class="s2">&#34;J. R. R. Tolkien&#34;</span><span class="p">,</span>
+                <span class="nt">&#34;title&#34;</span><span class="p">:</span> <span class="s2">&#34;The Lord of the Rings&#34;</span><span class="p">,</span>
+                <span class="nt">&#34;isbn&#34;</span><span class="p">:</span> <span class="s2">&#34;0-395-19395-8&#34;</span><span class="p">,</span>
+                <span class="nt">&#34;price&#34;</span><span class="p">:</span> <span class="mf">22.99</span>
+            <span class="p">}</span>
+        <span class="p">],</span>
+        <span class="nt">&#34;bicycle&#34;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&#34;color&#34;</span><span class="p">:</span> <span class="s2">&#34;red&#34;</span><span class="p">,</span>
+            <span class="nt">&#34;price&#34;</span><span class="p">:</span> <span class="mf">19.95</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="nt">&#34;expensive&#34;</span><span class="p">:</span> <span class="mi">10</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<table class="configuration table table-bordered">
+    <thead>
+    <tr>
+        <th class="text-left" style="width: 45%">JsonPath</th>
+        <th class="text-left" style="width: 55%">Result</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td><h5>$.store.book[*].author</h5></td>
+        <td>Provides the min value of an array of numbers.</td>
+    </tr>
+    <tr>
+        <td><h5>$..author</h5></td>
+        <td>All authors.</td>
+    </tr>
+    <tr>
+        <td><h5>$.store.*</h5></td>
+        <td>All things, both books and bicycles.</td>
+    </tr>
+    <tr>
+        <td><h5>$.store..price</h5></td>
+        <td>Provides the standard deviation value of an array of numbers.</td>
+    </tr>
+    <tr>
+        <td><h5>$..book[2]</h5></td>
+        <td>The third book.</td>
+    </tr>
+    <tr>
+        <td><h5>$..book[-2]</h5></td>
+        <td>The second to last book.</td>
+    </tr>
+    <tr>
+        <td><h5>$..book[0,1]</h5></td>
+        <td>The first two books.</td>
+    </tr>
+    <tr>
+        <td><h5>$..book[:2]</h5></td>
+        <td>All books from index 0 (inclusive) until index 2 (exclusive).</td>
+    </tr>
+    <tr>
+        <td><h5>$..book[1:2]</h5></td>
+        <td>All books from index 1 (inclusive) until index 2 (exclusive)</td>
+    </tr>
+    <tr>
+        <td><h5>$..book[-2:]</h5></td>
+        <td>Last two books</td>
+    </tr>
+    <tr>
+        <td><h5>$..book[2:]</h5></td>
+        <td>All books from index 2 (inclusive) to last</td>
+    </tr>
+    <tr>
+        <td><h5>$..book[?(@.isbn)]</h5></td>
+        <td>All books with an ISBN number</td>
+    </tr>
+    <tr>
+        <td><h5>$.store.book[?(@.price &lt; 10)]</h5></td>
+        <td>All books in store cheaper than 10</td>
+    </tr>
+    <tr>
+        <td><h5>$..book[?(@.price &lt;= $['expensive'])]</h5></td>
+        <td>All books in store that are not "expensive"</td>
+    </tr>
+    <tr>
+        <td><h5>$..book[?(@.author =~ /.*REES/i)]</h5></td>
+        <td>All books matching regex (ignore case)</td>
+    </tr>
+    <tr>
+        <td><h5>$..*</h5></td>
+        <td>Give me every thing</td>
+    </tr>
+    <tr>
+        <td><h5>$..book.length()</h5></td>
+        <td>The number of books</td>
+    </tr>
+    </tbody>
+</table>
+<ol start="2">
+<li>
+<p>The synchronized table is required to have its primary key set as <code>_id</code>.
+This is because MongoDB&rsquo;s change events are recorded before updates in messages.
+Consequently, we can only convert them into Flink&rsquo;s UPSERT change log stream.
+The upstart stream demands a unique key, which is why we must declare <code>_id</code> as the primary key.
+Declaring other columns as primary keys is not feasible, as delete operations only encompass the _id and sharding key, excluding other keys and values.</p>
+</li>
+<li>
+<p>MongoDB Change Streams are designed to return simple JSON documents without any data type definitions. This is because MongoDB is a document-oriented database, and one of its core features is the dynamic schema, where documents can contain different fields, and the data types of fields can be flexible. Therefore, the absence of data type definitions in Change Streams is to maintain this flexibility and extensibility.
+For this reason, we have set all field data types for synchronizing MongoDB to Paimon as String to address the issue of not being able to obtain data types.</p>
+</li>
+</ol>
+<p>If the Paimon table you specify does not exist, this action will automatically create the table. Its schema will be derived from MongoDB collection.</p>
+<p>Example 1: synchronize collection into one Paimon table</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">&lt;FLINK_HOME&gt;/bin/flink run <span class="se">\
+</span><span class="se"></span>    /path/to/paimon-flink-action-0.6.0-incubating.jar <span class="se">\
+</span><span class="se"></span>    mongodb_sync_table <span class="se">\
+</span><span class="se"></span>    --warehouse hdfs:///path/to/warehouse <span class="se">\
+</span><span class="se"></span>    --database test_db <span class="se">\
+</span><span class="se"></span>    --table test_table <span class="se">\
+</span><span class="se"></span>    --partition_keys pt <span class="se">\
+</span><span class="se"></span>    --computed_column <span class="s1">&#39;_year=year(age)&#39;</span> <span class="se">\
+</span><span class="se"></span>    --mongodb_conf <span class="nv">hosts</span><span class="o">=</span>127.0.0.1:27017 <span class="se">\
+</span><span class="se"></span>    --mongodb_conf <span class="nv">username</span><span class="o">=</span>root <span class="se">\
+</span><span class="se"></span>    --mongodb_conf <span class="nv">password</span><span class="o">=</span><span class="m">123456</span> <span class="se">\
+</span><span class="se"></span>    --mongodb_conf <span class="nv">database</span><span class="o">=</span>source_db <span class="se">\
+</span><span class="se"></span>    --mongodb_conf <span class="nv">collection</span><span class="o">=</span>source_table1 <span class="se">\
+</span><span class="se"></span>    --catalog_conf <span class="nv">metastore</span><span class="o">=</span>hive <span class="se">\
+</span><span class="se"></span>    --catalog_conf <span class="nv">uri</span><span class="o">=</span>thrift://hive-metastore:9083 <span class="se">\
+</span><span class="se"></span>    --table_conf <span class="nv">bucket</span><span class="o">=</span><span class="m">4</span> <span class="se">\
+</span><span class="se"></span>    --table_conf changelog-producer<span class="o">=</span>input <span class="se">\
+</span><span class="se"></span>    --table_conf sink.parallelism<span class="o">=</span><span class="m">4</span>
+</code></pre></div><p>Example 2: Synchronize collection into a Paimon table according to the specified field mapping.</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">&lt;FLINK_HOME&gt;/bin/flink run <span class="se">\
+</span><span class="se"></span>    /path/to/paimon-flink-action-0.6.0-incubating.jar <span class="se">\
+</span><span class="se"></span>    mongodb_sync_table <span class="se">\
+</span><span class="se"></span>    --warehouse hdfs:///path/to/warehouse <span class="se">\
+</span><span class="se"></span>    --database test_db <span class="se">\
+</span><span class="se"></span>    --table test_table <span class="se">\
+</span><span class="se"></span>    --partition_keys pt <span class="se">\
+</span><span class="se"></span>    --mongodb_conf <span class="nv">hosts</span><span class="o">=</span>127.0.0.1:27017 <span class="se">\
+</span><span class="se"></span>    --mongodb_conf <span class="nv">username</span><span class="o">=</span>root <span class="se">\
+</span><span class="se"></span>    --mongodb_conf <span class="nv">password</span><span class="o">=</span><span class="m">123456</span> <span class="se">\
+</span><span class="se"></span>    --mongodb_conf <span class="nv">database</span><span class="o">=</span>source_db <span class="se">\
+</span><span class="se"></span>    --mongodb_conf <span class="nv">collection</span><span class="o">=</span>source_table1 <span class="se">\
+</span><span class="se"></span>    --mongodb_conf schema.start.mode<span class="o">=</span>specified <span class="se">\
+</span><span class="se"></span>    --mongodb_conf field.name<span class="o">=</span>_id,name,description <span class="se">\
+</span><span class="se"></span>    --mongodb_conf parser.path<span class="o">=</span>$._id,$.name,$.description <span class="se">\
+</span><span class="se"></span>    --catalog_conf <span class="nv">metastore</span><span class="o">=</span>hive <span class="se">\
+</span><span class="se"></span>    --catalog_conf <span class="nv">uri</span><span class="o">=</span>thrift://hive-metastore:9083 <span class="se">\
+</span><span class="se"></span>    --table_conf <span class="nv">bucket</span><span class="o">=</span><span class="m">4</span> <span class="se">\
+</span><span class="se"></span>    --table_conf changelog-producer<span class="o">=</span>input <span class="se">\
+</span><span class="se"></span>    --table_conf sink.parallelism<span class="o">=</span><span class="m">4</span>
+</code></pre></div><h2 id="synchronizing-databases">
+  Synchronizing Databases
+  <a class="anchor" href="#synchronizing-databases">#</a>
+</h2>
+<p>By using <a href="/docs/0.6/api/java/org/apache/paimon/flink/action/cdc/mongodb/MongoDBSyncDatabaseAction">MongoDBSyncDatabaseAction</a> in a Flink DataStream job or directly through <code>flink run</code>, users can synchronize the whole MongoDB database into one Paimon database.</p>
+<p>To use this feature through <code>flink run</code>, run the following shell command.</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">&lt;FLINK_HOME&gt;/bin/flink run <span class="se">\
+</span><span class="se"></span>    /path/to/paimon-flink-action-0.6.0-incubating.jar <span class="se">\
+</span><span class="se"></span>    mongodb_sync_database
+    --warehouse &lt;warehouse-path&gt; <span class="se">\
+</span><span class="se"></span>    --database &lt;database-name&gt; <span class="se">\
+</span><span class="se"></span>    <span class="o">[</span>--table_prefix &lt;paimon-table-prefix&gt;<span class="o">]</span> <span class="se">\
+</span><span class="se"></span>    <span class="o">[</span>--table_suffix &lt;paimon-table-suffix&gt;<span class="o">]</span> <span class="se">\
+</span><span class="se"></span>    <span class="o">[</span>--including_tables &lt;mongodb-table-name<span class="p">|</span>name-regular-expr&gt;<span class="o">]</span> <span class="se">\
+</span><span class="se"></span>    <span class="o">[</span>--excluding_tables &lt;mongodb-table-name<span class="p">|</span>name-regular-expr&gt;<span class="o">]</span> <span class="se">\
+</span><span class="se"></span>    <span class="o">[</span>--mongodb_conf &lt;mongodb-cdc-source-conf&gt; <span class="o">[</span>--mongodb_conf &lt;mongodb-cdc-source-conf&gt; ...<span class="o">]]</span> <span class="se">\
+</span><span class="se"></span>    <span class="o">[</span>--catalog_conf &lt;paimon-catalog-conf&gt; <span class="o">[</span>--catalog_conf &lt;paimon-catalog-conf&gt; ...<span class="o">]]</span> <span class="se">\
+</span><span class="se"></span>    <span class="o">[</span>--table_conf &lt;paimon-table-sink-conf&gt; <span class="o">[</span>--table_conf &lt;paimon-table-sink-conf&gt; ...<span class="o">]]</span>
+</code></pre></div>
+
+<table class="configuration table table-bordered">
+    <thead>
+    <tr>
+        <th class="text-left" style="width: 15%">Configuration</th>
+        <th class="text-left" style="width: 85%">Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td><h5>--warehouse</h5></td>
+        <td>The path to Paimon warehouse.</td>
+    </tr>
+    <tr>
+        <td><h5>--database</h5></td>
+        <td>The database name in Paimon catalog.</td>
+    </tr>
+    <tr>
+        <td><h5>--table_prefix</h5></td>
+        <td>The prefix of all Paimon tables to be synchronized. For example, if you want all synchronized tables to have "ods_" as prefix, you can specify "--table_prefix ods_".</td>
+    </tr>
+    <tr>
+        <td><h5>--table_suffix</h5></td>
+        <td>The suffix of all Paimon tables to be synchronized. The usage is same as "--table_prefix".</td>
+    </tr>
+    <tr>
+        <td><h5>--including_tables</h5></td>
+        <td>It is used to specify which source tables are to be synchronized. You must use '|' to separate multiple tables.Because '|' is a special character, a comma is required, for example: 'a|b|c'.Regular expression is supported, for example, specifying "--including_tables test|paimon.*" means to synchronize table 'test' and all tables start with 'paimon'.</td>
+    </tr>
+    <tr>
+        <td><h5>--excluding_tables</h5></td>
+        <td>It is used to specify which source tables are not to be synchronized. The usage is same as "--including_tables". "--excluding_tables" has higher priority than "--including_tables" if you specified both.</td>
+    </tr>
+    <tr>
+        <td><h5>--mongodb_conf</h5></td>
+        <td>The configuration for Flink CDC MongoDB sources. Each configuration should be specified in the format "key=value". hosts, username, password, database are required configurations, others are optional. See its <a href="https://ververica.github.io/flink-cdc-connectors/master/content/connectors/mongodb-cdc.html#connector-options">document</a> for a complete list of configurations.</td>
+    </tr>
+    <tr>
+        <td><h5>--catalog_conf</h5></td>
+        <td>The configuration for Paimon catalog. Each configuration should be specified in the format "key=value". See <a href="//paimon.apache.org/docs/0.6/maintenance/configurations/">here</a> for a complete list of catalog configurations.</td>
+    </tr>
+    <tr>
+        <td><h5>--table_conf</h5></td>
+        <td>The configuration for Paimon table sink. Each configuration should be specified in the format "key=value". See <a href="//paimon.apache.org/docs/0.6/maintenance/configurations/">here</a> for a complete list of table configurations.</td>
+    </tr>
+    </tbody>
+</table>
+<p>All collections to be synchronized need to set _id as the primary key.
+For each MongoDB collection to be synchronized, if the corresponding Paimon table does not exist, this action will automatically create the table.
+Its schema will be derived from all specified MongoDB collection. If the Paimon table already exists, its schema will be compared against the schema of all specified MongoDB collection.
+Any MongoDB tables created after the commencement of the task will automatically be included.</p>
+<p>Example 1: synchronize entire database</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">&lt;FLINK_HOME&gt;/bin/flink run <span class="se">\
+</span><span class="se"></span>    /path/to/paimon-flink-action-0.6.0-incubating.jar <span class="se">\
+</span><span class="se"></span>    mongodb_sync_database <span class="se">\
+</span><span class="se"></span>    --warehouse hdfs:///path/to/warehouse <span class="se">\
+</span><span class="se"></span>    --database test_db <span class="se">\
+</span><span class="se"></span>    --mongodb_conf <span class="nv">hosts</span><span class="o">=</span>127.0.0.1:27017 <span class="se">\
+</span><span class="se"></span>    --mongodb_conf <span class="nv">username</span><span class="o">=</span>root <span class="se">\
+</span><span class="se"></span>    --mongodb_conf <span class="nv">password</span><span class="o">=</span><span class="m">123456</span> <span class="se">\
+</span><span class="se"></span>    --mongodb_conf <span class="nv">database</span><span class="o">=</span>source_db <span class="se">\
+</span><span class="se"></span>    --catalog_conf <span class="nv">metastore</span><span class="o">=</span>hive <span class="se">\
+</span><span class="se"></span>    --catalog_conf <span class="nv">uri</span><span class="o">=</span>thrift://hive-metastore:9083 <span class="se">\
+</span><span class="se"></span>    --table_conf <span class="nv">bucket</span><span class="o">=</span><span class="m">4</span> <span class="se">\
+</span><span class="se"></span>    --table_conf changelog-producer<span class="o">=</span>input <span class="se">\
+</span><span class="se"></span>    --table_conf sink.parallelism<span class="o">=</span><span class="m">4</span>
+</code></pre></div><p>Example 2: Synchronize the specified table.</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">&lt;FLINK_HOME&gt;/bin/flink run <span class="se">\
+</span><span class="se"></span>--fromSavepoint savepointPath <span class="se">\
+</span><span class="se"></span>/path/to/paimon-flink-action-0.6.0-incubating.jar <span class="se">\
+</span><span class="se"></span>mongodb_sync_database <span class="se">\
+</span><span class="se"></span>--warehouse hdfs:///path/to/warehouse <span class="se">\
+</span><span class="se"></span>--database test_db <span class="se">\
+</span><span class="se"></span>--mongodb_conf <span class="nv">hosts</span><span class="o">=</span>127.0.0.1:27017 <span class="se">\
+</span><span class="se"></span>--mongodb_conf <span class="nv">username</span><span class="o">=</span>root <span class="se">\
+</span><span class="se"></span>--mongodb_conf <span class="nv">password</span><span class="o">=</span><span class="m">123456</span> <span class="se">\
+</span><span class="se"></span>--mongodb_conf <span class="nv">database</span><span class="o">=</span>source_db <span class="se">\
+</span><span class="se"></span>--catalog_conf <span class="nv">metastore</span><span class="o">=</span>hive <span class="se">\
+</span><span class="se"></span>--catalog_conf <span class="nv">uri</span><span class="o">=</span>thrift://hive-metastore:9083 <span class="se">\
+</span><span class="se"></span>--table_conf <span class="nv">bucket</span><span class="o">=</span><span class="m">4</span> <span class="se">\
+</span><span class="se"></span>--including_tables <span class="s1">&#39;product|user|address|order|custom&#39;</span>
+</code></pre></div></article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  
+
+
+
+
+<a href="//github.com/apache/incubator-paimon/edit/0.6/docs/content/cdc-ingestion/mongo-cdc.md" style="color:black"><i class="fa fa-edit fa-fw"></i>Edit This Page</a>
+
+
+ 
+        
+      </footer>
+
+      
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      
+  
+
+<nav id="TableOfContents"><h3>On This Page <button class="toc" onclick="collapseToc()"><i class="fa fa-compress" aria-hidden="true"></i></button></h3>
+  <ul>
+    <li><a href="#prepare-mongodb-bundled-jar">Prepare MongoDB Bundled Jar</a></li>
+    <li><a href="#synchronizing-tables">Synchronizing Tables</a></li>
+    <li><a href="#synchronizing-databases">Synchronizing Databases</a></li>
+  </ul>
+</nav>
+
+ 
+    </aside>
+    <aside class="expand-toc">
+      <button class="toc" onclick="expandToc()">
+        <i class="fa fa-expand" aria-hidden="true"></i>
+      </button>
+    </aside>
+    
+  </main>
+
+  
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

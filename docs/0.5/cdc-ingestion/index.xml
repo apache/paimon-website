@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>CDC Ingestion on Apache Paimon</title>
+    <link>//paimon.apache.org/docs/master/cdc-ingestion/</link>
+    <description>Recent content in CDC Ingestion on Apache Paimon</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language><atom:link href="//paimon.apache.org/docs/master/cdc-ingestion/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Overview</title>
+      <link>//paimon.apache.org/docs/master/cdc-ingestion/overview/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/cdc-ingestion/overview/</guid>
+      <description>Overview #  Paimon supports a variety of ways to ingest data into Paimon tables with schema evolution. This means that the added columns are synchronized to the Paimon table in real time and the synchronization job will not be restarted for this purpose.
+We currently support the following sync ways:
+ MySQL Synchronizing Table: synchronize one or multiple tables from MySQL into one Paimon table. MySQL Synchronizing Database: synchronize the whole MySQL database into one Paimon database.</description>
+    </item>
+    
+    <item>
+      <title>Mysql CDC</title>
+      <link>//paimon.apache.org/docs/master/cdc-ingestion/mysql-cdc/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/cdc-ingestion/mysql-cdc/</guid>
+      <description>MySQL CDC #  Paimon supports synchronizing changes from different databases using change data capture (CDC). This feature requires Flink and its CDC connectors.
+Prepare CDC Bundled Jar #  flink-sql-connector-mysql-cdc-*.jar Synchronizing Tables #  By using MySqlSyncTableAction in a Flink DataStream job or directly through flink run, users can synchronize one or multiple tables from MySQL into one Paimon table.
+To use this feature through flink run, run the following shell command.</description>
+    </item>
+    
+    <item>
+      <title>Kafka CDC</title>
+      <link>//paimon.apache.org/docs/master/cdc-ingestion/kafka-cdc/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/cdc-ingestion/kafka-cdc/</guid>
+      <description>Kafka CDC #  Prepare Kafka Bundled Jar #  flink-sql-connector-kafka-*.jar Supported Formats #  Flink provides several Kafka CDC formats: Canal, Debezium, Ogg and Maxwell JSON. If a message in a Kafka topic is a change event captured from another database using the Change Data Capture (CDC) tool, then you can use the Paimon Kafka CDC. Write the INSERT, UPDATE, DELETE messages parsed into the paimon table.
+  Formats Supported     Canal CDC True   Debezium CDC True   }}&#34;</description>
+    </item>
+    
+    <item>
+      <title>Mongo CDC</title>
+      <link>//paimon.apache.org/docs/master/cdc-ingestion/mongo-cdc/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/cdc-ingestion/mongo-cdc/</guid>
+      <description>Mongo CDC #  Prepare MongoDB Bundled Jar #  flink-sql-connector-mongodb-cdc-*.jar only cdc 2.4+ is supported
+Synchronizing Tables #  By using MongoDBSyncTableAction in a Flink DataStream job or directly through flink run, users can synchronize one collection from MongoDB into one Paimon table.
+To use this feature through flink run, run the following shell command.
+&amp;lt;FLINK_HOME&amp;gt;/bin/flink run \  /path/to/paimon-flink-action-0.7-SNAPSHOT.jar \  mongodb_sync_table --warehouse &amp;lt;warehouse-path&amp;gt; \  --database &amp;lt;database-name&amp;gt; \  --table &amp;lt;table-name&amp;gt; \  [--partition_keys &amp;lt;partition_keys&amp;gt;] \  [--computed_column &amp;lt;&amp;#39;column-name=expr-name(args[, .</description>
+    </item>
+    
+    <item>
+      <title>Pulsar CDC</title>
+      <link>//paimon.apache.org/docs/master/cdc-ingestion/pulsar-cdc/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/cdc-ingestion/pulsar-cdc/</guid>
+      <description>Pulsar CDC #  Prepare Pulsar Bundled Jar #  flink-connector-pulsar-*.jar Supported Formats #  Flink provides several Pulsar CDC formats: Canal, Debezium, Ogg and Maxwell JSON. If a message in a pulsar topic is a change event captured from another database using the Change Data Capture (CDC) tool, then you can use the Paimon Pulsar CDC. Write the INSERT, UPDATE, DELETE messages parsed into the paimon table.
+  Formats Supported     Canal CDC True   Debezium CDC True   }}&#34;</description>
+    </item>
+    
+  </channel>
+</rss>
