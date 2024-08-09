@@ -1,0 +1,2217 @@
+
+<!DOCTYPE html>
+<html lang="en" dir=>
+
+<head>
+  <meta name="generator" content="Hugo 0.80.0" />
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Configuration #  CoreOptions #  Core options for paimon.
+  Key Default Type Description     auto-create false Boolean Whether to create underlying storage when reading and writing the table.   bucket 1 Integer Bucket number for file store.   bucket-key (none) String Specify the paimon distribution policy. Data is assigned to each bucket according to the hash value of bucket-key.
+If you specify multiple fields, delimiter is &#39;,&#39;.">
+<meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="Configurations" />
+<meta property="og:description" content="Configuration #  CoreOptions #  Core options for paimon.
+  Key Default Type Description     auto-create false Boolean Whether to create underlying storage when reading and writing the table.   bucket 1 Integer Bucket number for file store.   bucket-key (none) String Specify the paimon distribution policy. Data is assigned to each bucket according to the hash value of bucket-key.
+If you specify multiple fields, delimiter is &#39;,&#39;." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="//paimon.apache.org/docs/0.6/maintenance/configurations/" />
+
+<title>Configurations | Apache Paimon</title>
+<link rel="manifest" href="/docs/0.6/manifest.json">
+<link rel="icon" href="/docs/0.6/favicon.png" type="image/x-icon">
+<link rel="stylesheet" href="/docs/0.6/book.min.3bc4108a5b57c9a7e6fcae92ff69940435f8c46c4e1e4a311aedc9b2d8e06792.css" integrity="sha256-O8QQiltXyafm/K6S/2mUBDX4xGxOHkoxGu3JstjgZ5I=">
+<script defer src="/docs/0.6/en.search.min.bdbb2261b557a7c02c04a5095c8a17bb87853c6bb8544247aaf1506cb12c096e.js" integrity="sha256-vbsiYbVXp8AsBKUJXIoXu4eFPGu4VEJHqvFQbLEsCW4="></script>
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+  
+
+<link rel="stylesheet" type="text/css" href="//paimon.apache.org/docs/0.6/font-awesome/css/font-awesome.min.css">
+<script src="//paimon.apache.org/docs/0.6/js/anchor.min.js"></script>
+<script src="//paimon.apache.org/docs/0.6/js/flink.js"></script>
+
+
+  
+  <script>
+    var _paq = window._paq = window._paq || [];
+     
+     
+    _paq.push(['disableCookies']);
+     
+    _paq.push(["setDomains", ["*.flink.apache.org","*.nightlies.apache.org/flink"]]);
+    _paq.push(['trackPageView']);
+    _paq.push(['enableLinkTracking']);
+    (function() {
+      var u="//matomo.privacy.apache.org/";
+      _paq.push(['setTrackerUrl', u+'matomo.php']);
+      _paq.push(['setSiteId', '1']);
+      var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+      g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+    })();
+  </script>
+  
+</head>
+
+<body dir=>
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      
+  
+
+<nav>
+
+
+<a id="logo" href="//paimon.apache.org/docs/0.6">
+    <img width="100%" src="//paimon.apache.org/docs/0.6/paimon_black.svg">
+</a>
+<p style="text-align:right">0.6.0-incubating</p>
+
+<div class="book-search">
+  <input type="text" id="book-search-input" placeholder="Search" aria-label="Search" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-dc8a1c63e6da60163016ce21cae1faa0" class="toggle"  />
+    <label for="section-dc8a1c63e6da60163016ce21cae1faa0" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-book title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Concepts</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/concepts/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/concepts/basic-concepts/" class="">Basic Concepts</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/concepts/file-layouts/" class="">File Layouts</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/concepts/primary-key-table/" class="">Primary Key Table</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/concepts/append-only-table/" class="">Append Only Table</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-90f5541dc4fa46a212e954b9193ea0f9" class="toggle"  />
+    <label for="section-90f5541dc4fa46a212e954b9193ea0f9" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-gear title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Engines</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/engines/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/engines/flink/" class="">Flink</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/engines/spark/" class="">Spark</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/engines/hive/" class="">Hive</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/engines/presto/" class="">Presto</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/engines/trino/" class="">Trino</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-e2d76c106dab115385ef7f124cda2ba4" class="toggle"  />
+    <label for="section-e2d76c106dab115385ef7f124cda2ba4" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-folder title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Filesystems</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/filesystems/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/filesystems/hdfs/" class="">HDFS</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/filesystems/oss/" class="">OSS</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/filesystems/s3/" class="">S3</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-f6ca435e98b926845c0060f9e7f85362" class="toggle"  />
+    <label for="section-f6ca435e98b926845c0060f9e7f85362" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-database title maindish" aria-hidden="true"></i>&nbsp;&nbsp;How to</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/how-to/creating-catalogs/" class="">Creating Catalogs</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/how-to/creating-tables/" class="">Creating Tables</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/how-to/altering-tables/" class="">Altering Tables</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/how-to/writing-tables/" class="">Writing Tables</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/how-to/querying-tables/" class="">Querying Tables</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/how-to/system-tables/" class="">System Tables</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/how-to/lookup-joins/" class="">Lookup Joins</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-582e435c19ca5fafbf9764337d648e63" class="toggle"  />
+    <label for="section-582e435c19ca5fafbf9764337d648e63" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-database title maindish" aria-hidden="true"></i>&nbsp;&nbsp;CDC Ingestion</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/cdc-ingestion/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/cdc-ingestion/mysql-cdc/" class="">Mysql CDC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/cdc-ingestion/kafka-cdc/" class="">Kafka CDC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/cdc-ingestion/mongo-cdc/" class="">Mongo CDC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/cdc-ingestion/pulsar-cdc/" class="">Pulsar CDC</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-697a4b6a0388d6cfa4f418aba3b4edfe" class="toggle" checked />
+    <label for="section-697a4b6a0388d6cfa4f418aba3b4edfe" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-wrench title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Maintenance</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/maintenance/write-performance/" class="">Write Performance</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/maintenance/read-performance/" class="">Read Performance</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/maintenance/dedicated-compaction/" class="">Dedicated Compaction</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/maintenance/manage-snapshots/" class="">Manage Snapshots</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/maintenance/manage-partition/" class="">Manage Partition</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/maintenance/rescale-bucket/" class="">Rescale Bucket</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/maintenance/manage-tags/" class="">Manage Tags</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/maintenance/metrics/" class="">Metrics</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/maintenance/configurations/" class=" active">Configurations</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-1b3eda2e8317c0686a4d41cefa0a3453" class="toggle"  />
+    <label for="section-1b3eda2e8317c0686a4d41cefa0a3453" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-briefcase title maindish" aria-hidden="true"></i>&nbsp;&nbsp;API</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/api/java-api/" class="">Java API</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/api/flink-api/" class="">Flink API</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-07c567e5a9f3ce62aea4ff0a1e2dc065" class="toggle"  />
+    <label for="section-07c567e5a9f3ce62aea4ff0a1e2dc065" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-briefcase title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Migration</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/migration/migration-from-hive/" class="">Migration From Hive</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/migration/upsert-to-partitioned/" class="">Upsert To Partitioned</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  	<br/>
+  
+  
+    <input type="checkbox" id="section-8c828bcf882f666cdd6821a70cc768ee" class="toggle"  />
+    <label for="section-8c828bcf882f666cdd6821a70cc768ee" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-sitemap title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Project</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/project/roadmap/" class="">Roadmap</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/project/download/" class="">Download</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/project/contributing/" class="">Contributing</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-392fc6f653ae23ff676811656a71ebbf" class="toggle"  />
+    <label for="section-392fc6f653ae23ff676811656a71ebbf" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-sitemap title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Learn Paimon</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/learn-paimon/understand-files/" class="">Understand Files</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br/>
+<hr class="menu-break">
+
+<a href="//paimon.apache.org" style="color:black;margin-bottom:0.5em"><i class="link fa fa-external-link title" aria-hidden="true"></i> Project Homepage</a>
+<br/>
+
+<a href="//paimon.apache.org/docs/master/api/java/" style="color:black;margin-bottom:0.5em"><i class="link fa fa-external-link title" aria-hidden="true"></i> JavaDocs</a>
+<br/>
+
+<hr class="menu-break">
+<li style="list-style-type: none">
+  <br>
+  <input type="checkbox" id="section-version-picker" class="toggle">
+  <label for="section-version-picker" class="flex justify-between">
+     <div style="font-weight:450;margin-bottom:0.5em">Pick Docs Version</div>
+     <span>▾</span>
+  </label>
+  <ul>
+    <a href="//paimon.apache.org/docs/0.6">
+      0.6 (✓)
+    </a>
+    <hr class="menu-break">
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/master">
+          master
+        </a>
+      </li>
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/0.6">
+          stable
+        </a>
+      </li>
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/0.5">
+          0.5
+        </a>
+      </li>
+    
+    <hr class="menu-break">
+    <li>
+      <a href="//paimon.apache.org/docs/0.6/versions">
+          All Versions
+      </a>
+    </li>
+  </ul>
+</li>
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var menu=document.querySelector("aside.book-menu nav");addEventListener("beforeunload",function(event){localStorage.setItem("menu.scrollTop",menu.scrollTop);});menu.scrollTop=localStorage.getItem("menu.scrollTop");})();</script>
+
+
+ 
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/docs/0.6/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <strong>Configurations</strong>
+
+  <label for="toc-control">
+    
+    <img src="/docs/0.6/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden clearfix">
+    
+  
+
+<nav id="TableOfContents"><h3>On This Page <button class="toc" onclick="collapseToc()"><i class="fa fa-compress" aria-hidden="true"></i></button></h3>
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#coreoptions">CoreOptions</a></li>
+        <li><a href="#catalogoptions">CatalogOptions</a></li>
+        <li><a href="#filesystemcatalogoptions">FilesystemCatalogOptions</a></li>
+        <li><a href="#hivecatalogoptions">HiveCatalogOptions</a></li>
+        <li><a href="#flinkcatalogoptions">FlinkCatalogOptions</a></li>
+        <li><a href="#flinkconnectoroptions">FlinkConnectorOptions</a></li>
+        <li><a href="#sparkconnectoroptions">SparkConnectorOptions</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+
+
+
+
+
+
+      
+  <article class="markdown"><!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<h1 id="configuration">
+  Configuration
+  <a class="anchor" href="#configuration">#</a>
+</h1>
+<h3 id="coreoptions">
+  CoreOptions
+  <a class="anchor" href="#coreoptions">#</a>
+</h3>
+<p>Core options for paimon.</p>
+
+<table class="configuration table table-bordered">
+    <thead>
+        <tr>
+            <th class="text-left" style="width: 20%">Key</th>
+            <th class="text-left" style="width: 15%">Default</th>
+            <th class="text-left" style="width: 10%">Type</th>
+            <th class="text-left" style="width: 55%">Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><h5>auto-create</h5></td>
+            <td style="word-wrap: break-word;">false</td>
+            <td>Boolean</td>
+            <td>Whether to create underlying storage when reading and writing the table.</td>
+        </tr>
+        <tr>
+            <td><h5>bucket</h5></td>
+            <td style="word-wrap: break-word;">1</td>
+            <td>Integer</td>
+            <td>Bucket number for file store.</td>
+        </tr>
+        <tr>
+            <td><h5>bucket-key</h5></td>
+            <td style="word-wrap: break-word;">(none)</td>
+            <td>String</td>
+            <td>Specify the paimon distribution policy. Data is assigned to each bucket according to the hash value of bucket-key.<br />If you specify multiple fields, delimiter is ','.<br />If not specified, the primary key will be used; if there is no primary key, the full row will be used.</td>
+        </tr>
+        <tr>
+            <td><h5>changelog-producer</h5></td>
+            <td style="word-wrap: break-word;">none</td>
+            <td><p>Enum</p></td>
+            <td>Whether to double write to a changelog file. This changelog file keeps the details of data changes, it can be read directly during stream reads. This can be applied to tables with primary keys. <br /><br />Possible values:<ul><li>"none": No changelog file.</li><li>"input": Double write to a changelog file when flushing memory table, the changelog is from input.</li><li>"full-compaction": Generate changelog files with each full compaction.</li><li>"lookup": Generate changelog files through 'lookup' before committing the data writing.</li></ul></td>
+        </tr>
+        <tr>
+            <td><h5>changelog-producer.row-deduplicate</h5></td>
+            <td style="word-wrap: break-word;">false</td>
+            <td>Boolean</td>
+            <td>Whether to generate -U, +U changelog for the same record. This configuration is only valid for the changelog-producer is lookup or full-compaction.</td>
+        </tr>
+        <tr>
+            <td><h5>commit.callback.#.param</h5></td>
+            <td style="word-wrap: break-word;">(none)</td>
+            <td>String</td>
+            <td>Parameter string for the constructor of class #. Callback class should parse the parameter by itself.</td>
+        </tr>
+        <tr>
+            <td><h5>commit.callbacks</h5></td>
+            <td style="word-wrap: break-word;">(none)</td>
+            <td>String</td>
+            <td>A list of commit callback classes to be called after a successful commit. Class names are connected with comma (example: com.test.CallbackA,com.sample.CallbackB).</td>
+        </tr>
+        <tr>
+            <td><h5>commit.force-compact</h5></td>
+            <td style="word-wrap: break-word;">false</td>
+            <td>Boolean</td>
+            <td>Whether to force a compaction before commit.</td>
+        </tr>
+        <tr>
+            <td><h5>compaction.max-size-amplification-percent</h5></td>
+            <td style="word-wrap: break-word;">200</td>
+            <td>Integer</td>
+            <td>The size amplification is defined as the amount (in percentage) of additional storage needed to store a single byte of data in the merge tree for changelog mode table.</td>
+        </tr>
+        <tr>
+            <td><h5>compaction.max.file-num</h5></td>
+            <td style="word-wrap: break-word;">50</td>
+            <td>Integer</td>
+            <td>For file set [f_0,...,f_N], the maximum file number to trigger a compaction for append-only table, even if sum(size(f_i)) &lt; targetFileSize. This value avoids pending too much small files, which slows down the performance.</td>
+        </tr>
+        <tr>
+            <td><h5>compaction.min.file-num</h5></td>
+            <td style="word-wrap: break-word;">5</td>
+            <td>Integer</td>
+            <td>For file set [f_0,...,f_N], the minimum file number which satisfies sum(size(f_i)) &gt;= targetFileSize to trigger a compaction for append-only table. This value avoids almost-full-file to be compacted, which is not cost-effective.</td>
+        </tr>
+        <tr>
+            <td><h5>compaction.size-ratio</h5></td>
+            <td style="word-wrap: break-word;">1</td>
+            <td>Integer</td>
+            <td>Percentage flexibility while comparing sorted run size for changelog mode table. If the candidate sorted run(s) size is 1% smaller than the next sorted run's size, then include next sorted run into this candidate set.</td>
+        </tr>
+        <tr>
+            <td><h5>consumer-id</h5></td>
+            <td style="word-wrap: break-word;">(none)</td>
+            <td>String</td>
+            <td>Consumer id for recording the offset of consumption in the storage.</td>
+        </tr>
+        <tr>
+            <td><h5>consumer.expiration-time</h5></td>
+            <td style="word-wrap: break-word;">(none)</td>
+            <td>Duration</td>
+            <td>The expiration interval of consumer files. A consumer file will be expired if it's lifetime after last modification is over this value.</td>
+        </tr>
+        <tr>
+            <td><h5>consumer.mode</h5></td>
+            <td style="word-wrap: break-word;">exactly-once</td>
+            <td><p>Enum</p></td>
+            <td>Specify the consumer consistency mode for table.<br /><br />Possible values:<ul><li>"exactly-once": Readers consume data at snapshot granularity, and strictly ensure that the snapshot-id recorded in the consumer is the snapshot-id + 1 that all readers have exactly consumed.</li><li>"at-least-once": Each reader consumes snapshots at a different rate, and the snapshot with the slowest consumption progress among all readers will be recorded in the consumer.</li></ul></td>
+        </tr>
+        <tr>
+            <td><h5>continuous.discovery-interval</h5></td>
+            <td style="word-wrap: break-word;">10 s</td>
+            <td>Duration</td>
+            <td>The discovery interval of continuous reading.</td>
+        </tr>
+        <tr>
+            <td><h5>cross-partition-upsert.bootstrap-parallelism</h5></td>
+            <td style="word-wrap: break-word;">10</td>
+            <td>Integer</td>
+            <td>The parallelism for bootstrap in a single task for cross partition upsert.</td>
+        </tr>
+        <tr>
+            <td><h5>cross-partition-upsert.index-ttl</h5></td>
+            <td style="word-wrap: break-word;">(none)</td>
+            <td>Duration</td>
+            <td>The TTL in rocksdb index for cross partition upsert (primary keys not contain all partition fields), this can avoid maintaining too many indexes and lead to worse and worse performance, but please note that this may also cause data duplication.</td>
+        </tr>
+        <tr>
+            <td><h5>dynamic-bucket.assigner-parallelism</h5></td>
+            <td style="word-wrap: break-word;">(none)</td>
+            <td>Integer</td>
+            <td>Parallelism of assigner operator for dynamic bucket mode, it is related to the number of initialized bucket, too small will lead to insufficient processing speed of assigner.</td>
+        </tr>
+        <tr>
+            <td><h5>dynamic-bucket.target-row-num</h5></td>
+            <td style="word-wrap: break-word;">2000000</td>
+            <td>Long</td>
+            <td>If the bucket is -1, for primary key table, is dynamic bucket mode, this option controls the target row number for one bucket.</td>
+        </tr>
+        <tr>
+            <td><h5>dynamic-partition-overwrite</h5></td>
+            <td style="word-wrap: break-word;">true</td>
+            <td>Boolean</td>
+            <td>Whether only overwrite dynamic partition when overwriting a partitioned table with dynamic partition columns. Works only when the table has partition keys.</td>
+        </tr>
+        <tr>
+            <td><h5>file-reader-async-threshold</h5></td>
+            <td style="word-wrap: break-word;">10 mb</td>
+            <td>MemorySize</td>
+            <td>The threshold for read file async.</td>
+        </tr>
+        <tr>
+            <td><h5>file.compression</h5></td>
+            <td style="word-wrap: break-word;">(none)</td>
+            <td>String</td>
+            <td>Default file compression format, orc is lz4 and parquet is snappy. It can be overridden by file.compression.per.level</td>
+        </tr>
+        <tr>
+            <td><h5>file.compression.per.level</h5></td>
+            <td style="word-wrap: break-word;"></td>
+            <td>Map</td>
+            <td>Define different compression policies for different level, you can add the conf like this: 'file.compression.per.level' = '0:lz4,1:zstd'.</td>
+        </tr>
+        <tr>
+            <td><h5>file.format</h5></td>
+            <td style="word-wrap: break-word;">orc</td>
+            <td><p>Enum</p></td>
+            <td>Specify the message format of data files, currently orc, parquet and avro are supported.<br /><br />Possible values:<ul><li>"orc": ORC file format.</li><li>"parquet": Parquet file format.</li><li>"avro": Avro file format.</li></ul></td>
+        </tr>
+        <tr>
+            <td><h5>file.format.per.level</h5></td>
+            <td style="word-wrap: break-word;"></td>
+            <td>Map</td>
+            <td>Define different file format for different level, you can add the conf like this: 'file.format.per.level' = '0:avro,3:parquet', if the file format for level is not provided, the default format which set by `file.format` will be used.</td>
+        </tr>
+        <tr>
+            <td><h5>first-row.ignore-delete</h5></td>
+            <td style="word-wrap: break-word;">false</td>
+            <td>Boolean</td>
+            <td>Whether to ignore delete records in first-row mode.</td>
+        </tr>
+        <tr>
+            <td><h5>full-compaction.delta-commits</h5></td>
+            <td style="word-wrap: break-word;">(none)</td>
+            <td>Integer</td>
+            <td>Full compaction will be constantly triggered after delta commits.</td>
+        </tr>
+        <tr>
+            <td><h5>incremental-between</h5></td>
+            <td style="word-wrap: break-word;">(none)</td>
+            <td>String</td>
+            <td>Read incremental changes between start snapshot (exclusive) and end snapshot, for example, '5,10' means changes between snapshot 5 and snapshot 10.</td>
+        </tr>
+        <tr>
+            <td><h5>incremental-between-scan-mode</h5></td>
+            <td style="word-wrap: break-word;">delta</td>
+            <td><p>Enum</p></td>
+            <td>Scan kind when Read incremental changes between start snapshot (exclusive) and end snapshot, 'delta' for scan newly changed files between snapshots, 'changelog' scan changelog files between snapshots.<br /><br />Possible values:<ul><li>"delta": Scan newly changed files between snapshots.</li><li>"changelog": Scan changelog files between snapshots.</li></ul></td>
+        </tr>
+        <tr>
+            <td><h5>incremental-between-timestamp</h5></td>
+            <td style="word-wrap: break-word;">(none)</td>
+            <td>String</td>
+            <td>Read incremental changes between start timestamp (exclusive) and end timestamp, for example, 't1,t2' means changes between timestamp t1 and timestamp t2.</td>
+        </tr>
+        <tr>
+            <td><h5>local-merge-buffer-size</h5></td>
+            <td style="word-wrap: break-word;">(none)</td>
+            <td>MemorySize</td>
+            <td>Local merge will buffer and merge input records before they're shuffled by bucket and written into sink. The buffer will be flushed when it is full.
+Mainly to resolve data skew on primary keys. We recommend starting with 64 mb when trying out this feature.</td>
+        </tr>
+        <tr>
+            <td><h5>local-sort.max-num-file-handles</h5></td>
+            <td style="word-wrap: break-word;">128</td>
+            <td>Integer</td>
+            <td>The maximal fan-in for external merge sort. It limits the number of file handles. If it is too small, may cause intermediate merging. But if it is too large, it will cause too many files opened at the same time, consume memory and lead to random reading.</td>
+        </tr>
+        <tr>
+            <td><h5>lookup.cache-file-retention</h5></td>
+            <td style="word-wrap: break-word;">1 h</td>
+            <td>Duration</td>
+            <td>The cached files retention time for lookup. After the file expires, if there is a need for access, it will be re-read from the DFS to build an index on the local disk.</td>
+        </tr>
+        <tr>
+            <td><h5>lookup.cache-max-disk-size</h5></td>
+            <td style="word-wrap: break-word;">9223372036854775807 bytes</td>
+            <td>MemorySize</td>
+            <td>Max disk size for lookup cache, you can use this option to limit the use of local disks.</td>
+        </tr>
+        <tr>
+            <td><h5>lookup.cache-max-memory-size</h5></td>
+            <td style="word-wrap: break-word;">256 mb</td>
+            <td>MemorySize</td>
+            <td>Max memory size for lookup cache.</td>
+        </tr>
+        <tr>
+            <td><h5>lookup.hash-load-factor</h5></td>
+            <td style="word-wrap: break-word;">0.75</td>
+            <td>Float</td>
+            <td>The index load factor for lookup.</td>
+        </tr>
+        <tr>
+            <td><h5>manifest.format</h5></td>
+            <td style="word-wrap: break-word;">avro</td>
+            <td><p>Enum</p></td>
+            <td>Specify the message format of manifest files.<br /><br />Possible values:<ul><li>"orc": ORC file format.</li><li>"parquet": Parquet file format.</li><li>"avro": Avro file format.</li></ul></td>
+        </tr>
+        <tr>
+            <td><h5>manifest.full-compaction-threshold-size</h5></td>
+            <td style="word-wrap: break-word;">16 mb</td>
+            <td>MemorySize</td>
+            <td>The size threshold for triggering full compaction of manifest.</td>
+        </tr>
+        <tr>
+            <td><h5>manifest.merge-min-count</h5></td>
+            <td style="word-wrap: break-word;">30</td>
+            <td>Integer</td>
+            <td>To avoid frequent manifest merges, this parameter specifies the minimum number of ManifestFileMeta to merge.</td>
+        </tr>
+        <tr>
+            <td><h5>manifest.target-file-size</h5></td>
+            <td style="word-wrap: break-word;">8 mb</td>
+            <td>MemorySize</td>
+            <td>Suggested file size of a manifest file.</td>
+        </tr>
+        <tr>
+            <td><h5>merge-engine</h5></td>
+            <td style="word-wrap: break-word;">deduplicate</td>
+            <td><p>Enum</p></td>
+            <td>Specify the merge engine for table with primary key.<br /><br />Possible values:<ul><li>"deduplicate": De-duplicate and keep the last row.</li><li>"partial-update": Partial update non-null fields.</li><li>"aggregation": Aggregate fields with same primary key.</li><li>"first-row": De-duplicate and keep the first row.</li></ul></td>
+        </tr>
+        <tr>
+            <td><h5>metadata.stats-mode</h5></td>
+            <td style="word-wrap: break-word;">"truncate(16)"</td>
+            <td>String</td>
+            <td>The mode of metadata stats collection. none, counts, truncate(16), full is available.<br /><ul><li>"none": means disable the metadata stats collection.</li></ul><ul><li>"counts" means only collect the null count.</li></ul><ul><li>"full": means collect the null count, min/max value.</li></ul><ul><li>"truncate(16)": means collect the null count, min/max value with truncated length of 16.</li></ul><ul><li>Field level stats mode can be specified by fields.{field_name}.stats-mode</li></ul></td>
+        </tr>
+        <tr>
+            <td><h5>metastore.partitioned-table</h5></td>
+            <td style="word-wrap: break-word;">false</td>
+            <td>Boolean</td>
+            <td>Whether to create this table as a partitioned table in metastore.
+For example, if you want to list all partitions of a Paimon table in Hive, you need to create this table as a partitioned table in Hive metastore.
+This config option does not affect the default filesystem metastore.</td>
+        </tr>
+        <tr>
+            <td><h5>metastore.tag-to-partition</h5></td>
+            <td style="word-wrap: break-word;">(none)</td>
+            <td>String</td>
+            <td>Whether to create this table as a partitioned table for mapping non-partitioned table tags in metastore. This allows the Hive engine to view this table in a partitioned table view and use partitioning field to read specific partitions (specific tags).</td>
+        </tr>
+        <tr>
+            <td><h5>metastore.tag-to-partition.preview</h5></td>
+            <td style="word-wrap: break-word;">none</td>
+            <td><p>Enum</p></td>
+            <td>Whether to preview tag of generated snapshots in metastore. This allows the Hive engine to query specific tag before creation.<br /><br />Possible values:<ul><li>"none": No automatically created tags.</li><li>"process-time": Based on the time of the machine, create TAG once the processing time passes period time plus delay.</li><li>"watermark": Based on the watermark of the input, create TAG once the watermark passes period time plus delay.</li><li>"batch": In the batch processing scenario, the tag corresponding to the current snapshot is generated after the task is completed.</li></ul></td>
+        </tr>
+        <tr>
+            <td><h5>num-levels</h5></td>
+            <td style="word-wrap: break-word;">(none)</td>
+            <td>Integer</td>
+            <td>Total level number, for example, there are 3 levels, including 0,1,2 levels.</td>
+        </tr>
+        <tr>
+            <td><h5>num-sorted-run.compaction-trigger</h5></td>
+            <td style="word-wrap: break-word;">5</td>
+            <td>Integer</td>
+            <td>The sorted run number to trigger compaction. Includes level0 files (one file one sorted run) and high-level runs (one level one sorted run).</td>
+        </tr>
+        <tr>
+            <td><h5>num-sorted-run.stop-trigger</h5></td>
+            <td style="word-wrap: break-word;">(none)</td>
+            <td>Integer</td>
+            <td>The number of sorted runs that trigger the stopping of writes, the default value is 'num-sorted-run.compaction-trigger' + 1.</td>
+        </tr>
+        <tr>
+            <td><h5>orc.bloom.filter.columns</h5></td>
+            <td style="word-wrap: break-word;">(none)</td>
+            <td>String</td>
+            <td>A comma-separated list of columns for which to create a bloom filter when writing.</td>
+        </tr>
+        <tr>
+            <td><h5>orc.bloom.filter.fpp</h5></td>
+            <td style="word-wrap: break-word;">0.05</td>
+            <td>Double</td>
+            <td>Define the default false positive probability for bloom filters.</td>
+        </tr>
+        <tr>
+            <td><h5>orc.column.encoding.direct</h5></td>
+            <td style="word-wrap: break-word;">(none)</td>
+            <td>Integer</td>
+            <td>Comma-separated list of fields for which dictionary encoding is to be skipped in orc.</td>
+        </tr>
+        <tr>
+            <td><h5>orc.dictionary.key.threshold</h5></td>
+            <td style="word-wrap: break-word;">(none)</td>
+            <td>Integer</td>
+            <td>If the number of distinct keys in a dictionary is greater than this fraction of the total number of non-null rows, turn off dictionary encoding in orc.  Use 1 to always use dictionary encoding.</td>
+        </tr>
+        <tr>
+            <td><h5>orc.write.batch-size</h5></td>
+            <td style="word-wrap: break-word;">1024</td>
+            <td>Integer</td>
+            <td>write batch size for orc.</td>
+        </tr>
+        <tr>
+            <td><h5>page-size</h5></td>
+            <td style="word-wrap: break-word;">64 kb</td>
+            <td>MemorySize</td>
+            <td>Memory page size.</td>
+        </tr>
+        <tr>
+            <td><h5>parquet.enable.dictionary</h5></td>
+            <td style="word-wrap: break-word;">(none)</td>
+            <td>Integer</td>
+            <td>Turn off the dictionary encoding for all fields in parquet.</td>
+        </tr>
+        <tr>
+            <td><h5>partial-update.ignore-delete</h5></td>
+            <td style="word-wrap: break-word;">false</td>
+            <td>Boolean</td>
+            <td>Whether to ignore delete records in partial-update mode.</td>
+        </tr>
+        <tr>
+            <td><h5>partition</h5></td>
+            <td style="word-wrap: break-word;">(none)</td>
+            <td>String</td>
+            <td>Define partition by table options, cannot define partition on DDL and table options at the same time.</td>
+        </tr>
+        <tr>
+            <td><h5>partition.default-name</h5></td>
+            <td style="word-wrap: break-word;">"__DEFAULT_PARTITION__"</td>
+            <td>String</td>
+            <td>The default partition name in case the dynamic partition column value is null/empty string.</td>
+        </tr>
+        <tr>
+            <td><h5>partition.expiration-check-interval</h5></td>
+            <td style="word-wrap: break-word;">1 h</td>
+            <td>Duration</td>
+            <td>The check interval of partition expiration.</td>
+        </tr>
+        <tr>
+            <td><h5>partition.expiration-time</h5></td>
+            <td style="word-wrap: break-word;">(none)</td>
+            <td>Duration</td>
+            <td>The expiration interval of a partition. A partition will be expired if it‘s lifetime is over this value. Partition time is extracted from the partition value.</td>
+        </tr>
+        <tr>
+            <td><h5>partition.timestamp-formatter</h5></td>
+            <td style="word-wrap: break-word;">(none)</td>
+            <td>String</td>
+            <td>The formatter to format timestamp from string. It can be used with 'partition.timestamp-pattern' to create a formatter using the specified value.<ul><li>Default formatter is 'yyyy-MM-dd HH:mm:ss' and 'yyyy-MM-dd'.</li><li>Supports multiple partition fields like '$year-$month-$day $hour:00:00'.</li><li>The timestamp-formatter is compatible with Java's DateTimeFormatter.</li></ul></td>
+        </tr>
+        <tr>
+            <td><h5>partition.timestamp-pattern</h5></td>
+            <td style="word-wrap: break-word;">(none)</td>
+            <td>String</td>
+            <td>You can specify a pattern to get a timestamp from partitions. The formatter pattern is defined by 'partition.timestamp-formatter'.<ul><li>By default, read from the first field.</li><li>If the timestamp in the partition is a single field called 'dt', you can use '$dt'.</li><li>If it is spread across multiple fields for year, month, day, and hour, you can use '$year-$month-$day $hour:00:00'.</li><li>If the timestamp is in fields dt and hour, you can use '$dt $hour:00:00'.</li></ul></td>
+        </tr>
+        <tr>
+            <td><h5>primary-key</h5></td>
+            <td style="word-wrap: break-word;">(none)</td>
+            <td>String</td>
+            <td>Define primary key by table options, cannot define primary key on DDL and table options at the same time.</td>
+        </tr>
+        <tr>
+            <td><h5>read.batch-size</h5></td>
+            <td style="word-wrap: break-word;">1024</td>
+            <td>Integer</td>
+            <td>Read batch size for orc and parquet.</td>
+        </tr>
+        <tr>
+            <td><h5>rowkind.field</h5></td>
+            <td style="word-wrap: break-word;">(none)</td>
+            <td>String</td>
+            <td>The field that generates the row kind for primary key table, the row kind determines which data is '+I', '-U', '+U' or '-D'.</td>
+        </tr>
+        <tr>
+            <td><h5>scan.bounded.watermark</h5></td>
+            <td style="word-wrap: break-word;">(none)</td>
+            <td>Long</td>
+            <td>End condition "watermark" for bounded streaming mode. Stream reading will end when a larger watermark snapshot is encountered.</td>
+        </tr>
+        <tr>
+            <td><h5>scan.file-creation-time-millis</h5></td>
+            <td style="word-wrap: break-word;">(none)</td>
+            <td>Long</td>
+            <td>After configuring this time, only the data files created after this time will be read. It is independent of snapshots, but it is imprecise filtering (depending on whether or not compaction occurs).</td>
+        </tr>
+        <tr>
+            <td><h5>scan.manifest.parallelism</h5></td>
+            <td style="word-wrap: break-word;">(none)</td>
+            <td>Integer</td>
+            <td>The parallelism of scanning manifest files, default value is the size of cpu processor. Note: Scale-up this parameter will increase memory usage while scanning manifest files. We can consider downsize it when we encounter an out of memory exception while scanning</td>
+        </tr>
+        <tr>
+            <td><h5>scan.max-splits-per-task</h5></td>
+            <td style="word-wrap: break-word;">10</td>
+            <td>Integer</td>
+            <td>Max split size should be cached for one task while scanning. If splits size cached in enumerator are greater than tasks size multiply by this value, scanner will pause scanning.</td>
+        </tr>
+        <tr>
+            <td><h5>scan.mode</h5></td>
+            <td style="word-wrap: break-word;">default</td>
+            <td><p>Enum</p></td>
+            <td>Specify the scanning behavior of the source.<br /><br />Possible values:<ul><li>"default": Determines actual startup mode according to other table properties. If "scan.timestamp-millis" is set the actual startup mode will be "from-timestamp", and if "scan.snapshot-id" or "scan.tag-name" is set the actual startup mode will be "from-snapshot". Otherwise the actual startup mode will be "latest-full".</li><li>"latest-full": For streaming sources, produces the latest snapshot on the table upon first startup, and continue to read the latest changes. For batch sources, just produce the latest snapshot but does not read new changes.</li><li>"full": Deprecated. Same as "latest-full".</li><li>"latest": For streaming sources, continuously reads latest changes without producing a snapshot at the beginning. For batch sources, behaves the same as the "latest-full" startup mode.</li><li>"compacted-full": For streaming sources, produces a snapshot after the latest compaction on the table upon first startup, and continue to read the latest changes. For batch sources, just produce a snapshot after the latest compaction but does not read new changes. Snapshots of full compaction are picked when scheduled full-compaction is enabled.</li><li>"from-timestamp": For streaming sources, continuously reads changes starting from timestamp specified by "scan.timestamp-millis", without producing a snapshot at the beginning. For batch sources, produces a snapshot at timestamp specified by "scan.timestamp-millis" but does not read new changes.</li><li>"from-file-creation-time": For streaming and batch sources, produces a snapshot and filters the data files by creation time. For streaming sources, upon first startup, and continue to read the latest changes.</li><li>"from-snapshot": For streaming sources, continuously reads changes starting from snapshot specified by "scan.snapshot-id", without producing a snapshot at the beginning. For batch sources, produces a snapshot specified by "scan.snapshot-id" or "scan.tag-name" but does not read new changes.</li><li>"from-snapshot-full": For streaming sources, produces from snapshot specified by "scan.snapshot-id" on the table upon first startup, and continuously reads changes. For batch sources, produces a snapshot specified by "scan.snapshot-id" but does not read new changes.</li><li>"incremental": Read incremental changes between start and end snapshot or timestamp.</li></ul></td>
+        </tr>
+        <tr>
+            <td><h5>scan.plan-sort-partition</h5></td>
+            <td style="word-wrap: break-word;">false</td>
+            <td>Boolean</td>
+            <td>Whether to sort plan files by partition fields, this allows you to read according to the partition order, even if your partition writes are out of order.<br />It is recommended that you use this for streaming read of the 'append-only' table. By default, streaming read will read the full snapshot first. In order to avoid the disorder reading for partitions, you can open this option.</td>
+        </tr>
+        <tr>
+            <td><h5>scan.snapshot-id</h5></td>
+            <td style="word-wrap: break-word;">(none)</td>
+            <td>Long</td>
+            <td>Optional snapshot id used in case of "from-snapshot" or "from-snapshot-full" scan mode</td>
+        </tr>
+        <tr>
+            <td><h5>scan.tag-name</h5></td>
+            <td style="word-wrap: break-word;">(none)</td>
+            <td>String</td>
+            <td>Optional tag name used in case of "from-snapshot" scan mode.</td>
+        </tr>
+        <tr>
+            <td><h5>scan.timestamp-millis</h5></td>
+            <td style="word-wrap: break-word;">(none)</td>
+            <td>Long</td>
+            <td>Optional timestamp used in case of "from-timestamp" scan mode. If there is no snapshot earlier than this time, the earliest snapshot will be chosen.</td>
+        </tr>
+        <tr>
+            <td><h5>sequence.auto-padding</h5></td>
+            <td style="word-wrap: break-word;">(none)</td>
+            <td>String</td>
+            <td>Specify the way of padding precision, if the provided sequence field is used to indicate "time" but doesn't meet the precise.<ul><li>You can specific:</li><li>1. "row-kind-flag": Pads a bit flag to indicate whether it is retract (0) or add (1) message.</li><li>2. "second-to-micro": Pads the sequence field that indicates time with precision of seconds to micro-second.</li><li>3. "millis-to-micro": Pads the sequence field that indicates time with precision of milli-second to micro-second.</li><li>4. Composite pattern: for example, "second-to-micro,row-kind-flag".</li></ul></td>
+        </tr>
+        <tr>
+            <td><h5>sequence.field</h5></td>
+            <td style="word-wrap: break-word;">(none)</td>
+            <td>String</td>
+            <td>The field that generates the sequence number for primary key table, the sequence number determines which data is the most recent.</td>
+        </tr>
+        <tr>
+            <td><h5>sink.watermark-time-zone</h5></td>
+            <td style="word-wrap: break-word;">"UTC"</td>
+            <td>String</td>
+            <td>The time zone to parse the long watermark value to TIMESTAMP value. The default value is 'UTC', which means the watermark is defined on TIMESTAMP column or not defined. If the watermark is defined on TIMESTAMP_LTZ column, the time zone of watermark is user configured time zone, the value should be the user configured local time zone. The option value is either a full name such as 'America/Los_Angeles', or a custom timezone id such as 'GMT-08:00'.</td>
+        </tr>
+        <tr>
+            <td><h5>snapshot.expire.clean-empty-directories</h5></td>
+            <td style="word-wrap: break-word;">true</td>
+            <td>Boolean</td>
+            <td>Whether to try to clean empty directories when expiring snapshots. Note that trying to clean directories might throw exceptions in filesystem, but in most cases it won't cause problems.</td>
+        </tr>
+        <tr>
+            <td><h5>snapshot.expire.execution-mode</h5></td>
+            <td style="word-wrap: break-word;">sync</td>
+            <td><p>Enum</p></td>
+            <td>Specifies the execution mode of expire.<br /><br />Possible values:<ul><li>"sync": Execute expire synchronously. If there are too many files, it may take a long time and block stream processing.</li><li>"async": Execute expire asynchronously. If the generation of snapshots is greater than the deletion, there will be a backlog of files.</li></ul></td>
+        </tr>
+        <tr>
+            <td><h5>snapshot.expire.limit</h5></td>
+            <td style="word-wrap: break-word;">10</td>
+            <td>Integer</td>
+            <td>The maximum number of snapshots allowed to expire at a time.</td>
+        </tr>
+        <tr>
+            <td><h5>snapshot.num-retained.max</h5></td>
+            <td style="word-wrap: break-word;">2147483647</td>
+            <td>Integer</td>
+            <td>The maximum number of completed snapshots to retain. Should be greater than or equal to the minimum number.</td>
+        </tr>
+        <tr>
+            <td><h5>snapshot.num-retained.min</h5></td>
+            <td style="word-wrap: break-word;">10</td>
+            <td>Integer</td>
+            <td>The minimum number of completed snapshots to retain. Should be greater than or equal to 1.</td>
+        </tr>
+        <tr>
+            <td><h5>snapshot.time-retained</h5></td>
+            <td style="word-wrap: break-word;">1 h</td>
+            <td>Duration</td>
+            <td>The maximum time of completed snapshots to retain.</td>
+        </tr>
+        <tr>
+            <td><h5>sort-engine</h5></td>
+            <td style="word-wrap: break-word;">loser-tree</td>
+            <td><p>Enum</p></td>
+            <td>Specify the sort engine for table with primary key.<br /><br />Possible values:<ul><li>"min-heap": Use min-heap for multiway sorting.</li><li>"loser-tree": Use loser-tree for multiway sorting. Compared with heapsort, loser-tree has fewer comparisons and is more efficient.</li></ul></td>
+        </tr>
+        <tr>
+            <td><h5>sort-spill-buffer-size</h5></td>
+            <td style="word-wrap: break-word;">64 mb</td>
+            <td>MemorySize</td>
+            <td>Amount of data to spill records to disk in spilled sort.</td>
+        </tr>
+        <tr>
+            <td><h5>sort-spill-threshold</h5></td>
+            <td style="word-wrap: break-word;">(none)</td>
+            <td>Integer</td>
+            <td>If the maximum number of sort readers exceeds this value, a spill will be attempted. This prevents too many readers from consuming too much memory and causing OOM.</td>
+        </tr>
+        <tr>
+            <td><h5>source.split.open-file-cost</h5></td>
+            <td style="word-wrap: break-word;">4 mb</td>
+            <td>MemorySize</td>
+            <td>Open file cost of a source file. It is used to avoid reading too many files with a source split, which can be very slow.</td>
+        </tr>
+        <tr>
+            <td><h5>source.split.target-size</h5></td>
+            <td style="word-wrap: break-word;">128 mb</td>
+            <td>MemorySize</td>
+            <td>Target size of a source split when scanning a bucket.</td>
+        </tr>
+        <tr>
+            <td><h5>streaming-read-mode</h5></td>
+            <td style="word-wrap: break-word;">(none)</td>
+            <td><p>Enum</p></td>
+            <td>The mode of streaming read that specifies to read the data of table file or log<br /><br />Possible values:<br /><ul><li>file: Reads from the data of table file store.</li></ul><ul><li>log: Read from the data of table log store.</li></ul><br /><br />Possible values:<ul><li>"log": Reads from the log store.</li><li>"file": Reads from the file store.</li></ul></td>
+        </tr>
+        <tr>
+            <td><h5>streaming-read-overwrite</h5></td>
+            <td style="word-wrap: break-word;">false</td>
+            <td>Boolean</td>
+            <td>Whether to read the changes from overwrite in streaming mode. Cannot be set to true when changelog producer is full-compaction or lookup because it will read duplicated changes.</td>
+        </tr>
+        <tr>
+            <td><h5>tag.automatic-creation</h5></td>
+            <td style="word-wrap: break-word;">none</td>
+            <td><p>Enum</p></td>
+            <td>Whether to create tag automatically. And how to generate tags.<br /><br />Possible values:<ul><li>"none": No automatically created tags.</li><li>"process-time": Based on the time of the machine, create TAG once the processing time passes period time plus delay.</li><li>"watermark": Based on the watermark of the input, create TAG once the watermark passes period time plus delay.</li><li>"batch": In the batch processing scenario, the tag corresponding to the current snapshot is generated after the task is completed.</li></ul></td>
+        </tr>
+        <tr>
+            <td><h5>tag.callback.#.param</h5></td>
+            <td style="word-wrap: break-word;">(none)</td>
+            <td>String</td>
+            <td>Parameter string for the constructor of class #. Callback class should parse the parameter by itself.</td>
+        </tr>
+        <tr>
+            <td><h5>tag.callbacks</h5></td>
+            <td style="word-wrap: break-word;">(none)</td>
+            <td>String</td>
+            <td>A list of commit callback classes to be called after a successful tag. Class names are connected with comma (example: com.test.CallbackA,com.sample.CallbackB).</td>
+        </tr>
+        <tr>
+            <td><h5>tag.creation-delay</h5></td>
+            <td style="word-wrap: break-word;">0 ms</td>
+            <td>Duration</td>
+            <td>How long is the delay after the period ends before creating a tag. This can allow some late data to enter the Tag.</td>
+        </tr>
+        <tr>
+            <td><h5>tag.creation-period</h5></td>
+            <td style="word-wrap: break-word;">daily</td>
+            <td><p>Enum</p></td>
+            <td>What frequency is used to generate tags.<br /><br />Possible values:<ul><li>"daily": Generate a tag every day.</li><li>"hourly": Generate a tag every hour.</li><li>"two-hours": Generate a tag every two hours.</li></ul></td>
+        </tr>
+        <tr>
+            <td><h5>tag.num-retained-max</h5></td>
+            <td style="word-wrap: break-word;">(none)</td>
+            <td>Integer</td>
+            <td>The maximum number of tags to retain.</td>
+        </tr>
+        <tr>
+            <td><h5>target-file-size</h5></td>
+            <td style="word-wrap: break-word;">128 mb</td>
+            <td>MemorySize</td>
+            <td>Target size of a file.</td>
+        </tr>
+        <tr>
+            <td><h5>write-buffer-for-append</h5></td>
+            <td style="word-wrap: break-word;">false</td>
+            <td>Boolean</td>
+            <td>This option only works for append-only table. Whether the write use write buffer to avoid out-of-memory error.</td>
+        </tr>
+        <tr>
+            <td><h5>write-buffer-size</h5></td>
+            <td style="word-wrap: break-word;">256 mb</td>
+            <td>MemorySize</td>
+            <td>Amount of data to build up in memory before converting to a sorted on-disk file.</td>
+        </tr>
+        <tr>
+            <td><h5>write-buffer-spillable</h5></td>
+            <td style="word-wrap: break-word;">(none)</td>
+            <td>Boolean</td>
+            <td>Whether the write buffer can be spillable. Enabled by default when using object storage.</td>
+        </tr>
+        <tr>
+            <td><h5>write-manifest-cache</h5></td>
+            <td style="word-wrap: break-word;">0 bytes</td>
+            <td>MemorySize</td>
+            <td>Cache size for reading manifest files for write initialization.</td>
+        </tr>
+        <tr>
+            <td><h5>write-only</h5></td>
+            <td style="word-wrap: break-word;">false</td>
+            <td>Boolean</td>
+            <td>If set to true, compactions and snapshot expiration will be skipped. This option is used along with dedicated compact jobs.</td>
+        </tr>
+        <tr>
+            <td><h5>zorder.var-length-contribution</h5></td>
+            <td style="word-wrap: break-word;">8</td>
+            <td>Integer</td>
+            <td>The bytes of types (CHAR, VARCHAR, BINARY, VARBINARY) devote to the zorder sort.</td>
+        </tr>
+    </tbody>
+</table>
+
+<h3 id="catalogoptions">
+  CatalogOptions
+  <a class="anchor" href="#catalogoptions">#</a>
+</h3>
+<p>Options for paimon catalog.</p>
+
+<table class="configuration table table-bordered">
+    <thead>
+        <tr>
+            <th class="text-left" style="width: 20%">Key</th>
+            <th class="text-left" style="width: 15%">Default</th>
+            <th class="text-left" style="width: 10%">Type</th>
+            <th class="text-left" style="width: 55%">Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><h5>fs.allow-hadoop-fallback</h5></td>
+            <td style="word-wrap: break-word;">true</td>
+            <td>Boolean</td>
+            <td>Allow to fallback to hadoop File IO when no file io found for the scheme.</td>
+        </tr>
+        <tr>
+            <td><h5>lineage-meta</h5></td>
+            <td style="word-wrap: break-word;">(none)</td>
+            <td>String</td>
+            <td>The lineage meta to store table and data lineage information.<br /><br />Possible values:<br /><ul><li>"jdbc": Use standard jdbc to store table and data lineage information.</li></ul><ul><li>"custom": You can implement LineageMetaFactory and LineageMeta to store lineage information in customized storage.</li></ul></td>
+        </tr>
+        <tr>
+            <td><h5>lock-acquire-timeout</h5></td>
+            <td style="word-wrap: break-word;">8 min</td>
+            <td>Duration</td>
+            <td>The maximum time to wait for acquiring the lock.</td>
+        </tr>
+        <tr>
+            <td><h5>lock-check-max-sleep</h5></td>
+            <td style="word-wrap: break-word;">8 s</td>
+            <td>Duration</td>
+            <td>The maximum sleep time when retrying to check the lock.</td>
+        </tr>
+        <tr>
+            <td><h5>lock.enabled</h5></td>
+            <td style="word-wrap: break-word;">false</td>
+            <td>Boolean</td>
+            <td>Enable Catalog Lock.</td>
+        </tr>
+        <tr>
+            <td><h5>metastore</h5></td>
+            <td style="word-wrap: break-word;">"filesystem"</td>
+            <td>String</td>
+            <td>Metastore of paimon catalog, supports filesystem and hive.</td>
+        </tr>
+        <tr>
+            <td><h5>table.type</h5></td>
+            <td style="word-wrap: break-word;">managed</td>
+            <td><p>Enum</p></td>
+            <td>Type of table.<br /><br />Possible values:<ul><li>"managed": Paimon owned table where the entire lifecycle of the table data is managed.</li><li>"external": The table where Paimon has loose coupling with the data stored in external locations.</li></ul></td>
+        </tr>
+        <tr>
+            <td><h5>uri</h5></td>
+            <td style="word-wrap: break-word;">(none)</td>
+            <td>String</td>
+            <td>Uri of metastore server.</td>
+        </tr>
+        <tr>
+            <td><h5>warehouse</h5></td>
+            <td style="word-wrap: break-word;">(none)</td>
+            <td>String</td>
+            <td>The warehouse root path of catalog.</td>
+        </tr>
+    </tbody>
+</table>
+
+<h3 id="filesystemcatalogoptions">
+  FilesystemCatalogOptions
+  <a class="anchor" href="#filesystemcatalogoptions">#</a>
+</h3>
+<p>Options for Filesystem catalog.</p>
+
+<table class="configuration table table-bordered">
+    <thead>
+        <tr>
+            <th class="text-left" style="width: 20%">Key</th>
+            <th class="text-left" style="width: 15%">Default</th>
+            <th class="text-left" style="width: 10%">Type</th>
+            <th class="text-left" style="width: 55%">Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><h5>case-sensitive</h5></td>
+            <td style="word-wrap: break-word;">true</td>
+            <td>Boolean</td>
+            <td>Is case sensitive. If case insensitive, you need to set this option to false, and the table name and fields be converted to lowercase.</td>
+        </tr>
+    </tbody>
+</table>
+
+<h3 id="hivecatalogoptions">
+  HiveCatalogOptions
+  <a class="anchor" href="#hivecatalogoptions">#</a>
+</h3>
+<p>Options for Hive catalog.</p>
+
+<table class="configuration table table-bordered">
+    <thead>
+        <tr>
+            <th class="text-left" style="width: 20%">Key</th>
+            <th class="text-left" style="width: 15%">Default</th>
+            <th class="text-left" style="width: 10%">Type</th>
+            <th class="text-left" style="width: 55%">Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><h5>hadoop-conf-dir</h5></td>
+            <td style="word-wrap: break-word;">(none)</td>
+            <td>String</td>
+            <td>File directory of the core-site.xml、hdfs-site.xml、yarn-site.xml、mapred-site.xml. Currently, only local file system paths are supported.
+If not configured, try to load from 'HADOOP_CONF_DIR' or 'HADOOP_HOME' system environment.
+Configure Priority: 1.from 'hadoop-conf-dir' 2.from HADOOP_CONF_DIR  3.from HADOOP_HOME/conf 4.HADOOP_HOME/etc/hadoop.
+</td>
+        </tr>
+        <tr>
+            <td><h5>hive-conf-dir</h5></td>
+            <td style="word-wrap: break-word;">(none)</td>
+            <td>String</td>
+            <td>File directory of the hive-site.xml , used to create HiveMetastoreClient and security authentication, such as Kerberos, LDAP, Ranger and so on.
+If not configured, try to load from 'HIVE_CONF_DIR' env.
+</td>
+        </tr>
+        <tr>
+            <td><h5>location-in-properties</h5></td>
+            <td style="word-wrap: break-word;">false</td>
+            <td>Boolean</td>
+            <td>Setting the location in properties of hive table/database.
+If you don't want to access the location by the filesystem of hive when using a object storage such as s3,oss
+you can set this option to true.
+</td>
+        </tr>
+    </tbody>
+</table>
+
+<h3 id="flinkcatalogoptions">
+  FlinkCatalogOptions
+  <a class="anchor" href="#flinkcatalogoptions">#</a>
+</h3>
+<p>Flink catalog options for paimon.</p>
+
+<table class="configuration table table-bordered">
+    <thead>
+        <tr>
+            <th class="text-left" style="width: 20%">Key</th>
+            <th class="text-left" style="width: 15%">Default</th>
+            <th class="text-left" style="width: 10%">Type</th>
+            <th class="text-left" style="width: 55%">Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><h5>default-database</h5></td>
+            <td style="word-wrap: break-word;">"default"</td>
+            <td>String</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td><h5>disable-create-table-in-default-db</h5></td>
+            <td style="word-wrap: break-word;">false</td>
+            <td>Boolean</td>
+            <td>If true, creating table in default database is not allowed. Default is false.</td>
+        </tr>
+    </tbody>
+</table>
+
+<h3 id="flinkconnectoroptions">
+  FlinkConnectorOptions
+  <a class="anchor" href="#flinkconnectoroptions">#</a>
+</h3>
+<p>Flink connector options for paimon.</p>
+
+<table class="configuration table table-bordered">
+    <thead>
+        <tr>
+            <th class="text-left" style="width: 20%">Key</th>
+            <th class="text-left" style="width: 15%">Default</th>
+            <th class="text-left" style="width: 10%">Type</th>
+            <th class="text-left" style="width: 55%">Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><h5>changelog-producer.lookup-wait</h5></td>
+            <td style="word-wrap: break-word;">true</td>
+            <td>Boolean</td>
+            <td>When changelog-producer is set to LOOKUP, commit will wait for changelog generation by lookup.</td>
+        </tr>
+        <tr>
+            <td><h5>lookup.async</h5></td>
+            <td style="word-wrap: break-word;">false</td>
+            <td>Boolean</td>
+            <td>Whether to enable async lookup join.</td>
+        </tr>
+        <tr>
+            <td><h5>lookup.async-thread-number</h5></td>
+            <td style="word-wrap: break-word;">16</td>
+            <td>Integer</td>
+            <td>The thread number for lookup async.</td>
+        </tr>
+        <tr>
+            <td><h5>scan.infer-parallelism</h5></td>
+            <td style="word-wrap: break-word;">true</td>
+            <td>Boolean</td>
+            <td>If it is false, parallelism of source are set by global parallelism. Otherwise, source parallelism is inferred from splits number (batch mode) or bucket number(streaming mode).</td>
+        </tr>
+        <tr>
+            <td><h5>scan.infer-parallelism.max</h5></td>
+            <td style="word-wrap: break-word;">1024</td>
+            <td>Integer</td>
+            <td>If scan.infer-parallelism is true, limit the parallelism of source through this option.</td>
+        </tr>
+        <tr>
+            <td><h5>scan.parallelism</h5></td>
+            <td style="word-wrap: break-word;">(none)</td>
+            <td>Integer</td>
+            <td>Define a custom parallelism for the scan source. By default, if this option is not defined, the planner will derive the parallelism for each statement individually by also considering the global configuration. If user enable the scan.infer-parallelism, the planner will derive the parallelism by inferred parallelism.</td>
+        </tr>
+        <tr>
+            <td><h5>scan.push-down</h5></td>
+            <td style="word-wrap: break-word;">true</td>
+            <td>Boolean</td>
+            <td>If true, flink will push down projection, filters, limit to the source. The cost is that it is difficult to reuse the source in a job. With flink 1.18 or higher version, it is possible to reuse the source even with projection push down.</td>
+        </tr>
+        <tr>
+            <td><h5>scan.remove-normalize</h5></td>
+            <td style="word-wrap: break-word;">false</td>
+            <td>Boolean</td>
+            <td>Whether to force the removal of the normalize node when streaming read. Note: This is dangerous and is likely to cause data errors if downstream is used to calculate aggregation and the input is not complete changelog.</td>
+        </tr>
+        <tr>
+            <td><h5>scan.split-enumerator.batch-size</h5></td>
+            <td style="word-wrap: break-word;">10</td>
+            <td>Integer</td>
+            <td>How many splits should assign to subtask per batch in StaticFileStoreSplitEnumerator to avoid exceed `akka.framesize` limit.</td>
+        </tr>
+        <tr>
+            <td><h5>scan.split-enumerator.mode</h5></td>
+            <td style="word-wrap: break-word;">fair</td>
+            <td><p>Enum</p></td>
+            <td>The mode used by StaticFileStoreSplitEnumerator to assign splits.<br /><br />Possible values:<ul><li>"fair": Distribute splits evenly when batch reading to prevent a few tasks from reading all.</li><li>"preemptive": Distribute splits preemptively according to the consumption speed of the task.</li></ul></td>
+        </tr>
+        <tr>
+            <td><h5>scan.watermark.alignment.group</h5></td>
+            <td style="word-wrap: break-word;">(none)</td>
+            <td>String</td>
+            <td>A group of sources to align watermarks.</td>
+        </tr>
+        <tr>
+            <td><h5>scan.watermark.alignment.max-drift</h5></td>
+            <td style="word-wrap: break-word;">(none)</td>
+            <td>Duration</td>
+            <td>Maximal drift to align watermarks, before we pause consuming from the source/task/partition.</td>
+        </tr>
+        <tr>
+            <td><h5>scan.watermark.alignment.update-interval</h5></td>
+            <td style="word-wrap: break-word;">1 s</td>
+            <td>Duration</td>
+            <td>How often tasks should notify coordinator about the current watermark and how often the coordinator should announce the maximal aligned watermark.</td>
+        </tr>
+        <tr>
+            <td><h5>scan.watermark.emit.strategy</h5></td>
+            <td style="word-wrap: break-word;">on-event</td>
+            <td><p>Enum</p></td>
+            <td>Emit strategy for watermark generation.<br /><br />Possible values:<ul><li>"on-periodic": Emit watermark periodically, interval is controlled by Flink 'pipeline.auto-watermark-interval'.</li><li>"on-event": Emit watermark per record.</li></ul></td>
+        </tr>
+        <tr>
+            <td><h5>scan.watermark.idle-timeout</h5></td>
+            <td style="word-wrap: break-word;">(none)</td>
+            <td>Duration</td>
+            <td>If no records flow in a partition of a stream for that amount of time, then that partition is considered "idle" and will not hold back the progress of watermarks in downstream operators.</td>
+        </tr>
+        <tr>
+            <td><h5>sink.committer-cpu</h5></td>
+            <td style="word-wrap: break-word;">1.0</td>
+            <td>Double</td>
+            <td>Sink committer cpu to control cpu cores of global committer.</td>
+        </tr>
+        <tr>
+            <td><h5>sink.committer-memory</h5></td>
+            <td style="word-wrap: break-word;">(none)</td>
+            <td>MemorySize</td>
+            <td>Sink committer memory to control heap memory of global committer.</td>
+        </tr>
+        <tr>
+            <td><h5>sink.cross-partition.managed-memory</h5></td>
+            <td style="word-wrap: break-word;">256 mb</td>
+            <td>MemorySize</td>
+            <td>Weight of managed memory for RocksDB in cross-partition update, Flink will compute the memory size according to the weight, the actual memory used depends on the running environment.</td>
+        </tr>
+        <tr>
+            <td><h5>sink.managed.writer-buffer-memory</h5></td>
+            <td style="word-wrap: break-word;">256 mb</td>
+            <td>MemorySize</td>
+            <td>Weight of writer buffer in managed memory, Flink will compute the memory size for writer according to the weight, the actual memory used depends on the running environment.</td>
+        </tr>
+        <tr>
+            <td><h5>sink.parallelism</h5></td>
+            <td style="word-wrap: break-word;">(none)</td>
+            <td>Integer</td>
+            <td>Defines a custom parallelism for the sink. By default, if this option is not defined, the planner will derive the parallelism for each statement individually by also considering the global configuration.</td>
+        </tr>
+        <tr>
+            <td><h5>sink.savepoint.auto-tag</h5></td>
+            <td style="word-wrap: break-word;">false</td>
+            <td>Boolean</td>
+            <td>If true, a tag will be automatically created for the snapshot created by flink savepoint.</td>
+        </tr>
+        <tr>
+            <td><h5>sink.use-managed-memory-allocator</h5></td>
+            <td style="word-wrap: break-word;">false</td>
+            <td>Boolean</td>
+            <td>If true, flink sink will use managed memory for merge tree; otherwise, it will create an independent memory allocator.</td>
+        </tr>
+        <tr>
+            <td><h5>source.checkpoint-align.enabled</h5></td>
+            <td style="word-wrap: break-word;">false</td>
+            <td>Boolean</td>
+            <td>Whether to align the flink checkpoint with the snapshot of the paimon table, If true, a checkpoint will only be made if a snapshot is consumed.</td>
+        </tr>
+        <tr>
+            <td><h5>source.checkpoint-align.timeout</h5></td>
+            <td style="word-wrap: break-word;">30 s</td>
+            <td>Duration</td>
+            <td>If the new snapshot has not been generated when the checkpoint starts to trigger, the enumerator will block the checkpoint and wait for the new snapshot. Set the maximum waiting time to avoid infinite waiting, if timeout, the checkpoint will fail. Note that it should be set smaller than the checkpoint timeout.</td>
+        </tr>
+        <tr>
+            <td><h5>unaware-bucket.compaction.parallelism</h5></td>
+            <td style="word-wrap: break-word;">(none)</td>
+            <td>Integer</td>
+            <td>Defines a custom parallelism for the unaware-bucket table compaction job. By default, if this option is not defined, the planner will derive the parallelism for each statement individually by also considering the global configuration.</td>
+        </tr>
+    </tbody>
+</table>
+
+<h3 id="sparkconnectoroptions">
+  SparkConnectorOptions
+  <a class="anchor" href="#sparkconnectoroptions">#</a>
+</h3>
+<p>Spark connector options for paimon.</p>
+
+<table class="configuration table table-bordered">
+    <thead>
+        <tr>
+            <th class="text-left" style="width: 20%">Key</th>
+            <th class="text-left" style="width: 15%">Default</th>
+            <th class="text-left" style="width: 10%">Type</th>
+            <th class="text-left" style="width: 55%">Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><h5>read.changelog</h5></td>
+            <td style="word-wrap: break-word;">false</td>
+            <td>Boolean</td>
+            <td>Whether to read row in the form of changelog (add rowkind column in row to represent its change type).</td>
+        </tr>
+        <tr>
+            <td><h5>read.stream.maxBytesPerTrigger</h5></td>
+            <td style="word-wrap: break-word;">(none)</td>
+            <td>Long</td>
+            <td>The maximum number of bytes returned in a single batch.</td>
+        </tr>
+        <tr>
+            <td><h5>read.stream.maxFilesPerTrigger</h5></td>
+            <td style="word-wrap: break-word;">(none)</td>
+            <td>Integer</td>
+            <td>The maximum number of files returned in a single batch.</td>
+        </tr>
+        <tr>
+            <td><h5>read.stream.maxRowsPerTrigger</h5></td>
+            <td style="word-wrap: break-word;">(none)</td>
+            <td>Long</td>
+            <td>The maximum number of rows returned in a single batch.</td>
+        </tr>
+        <tr>
+            <td><h5>read.stream.maxTriggerDelayMs</h5></td>
+            <td style="word-wrap: break-word;">(none)</td>
+            <td>Long</td>
+            <td>The maximum delay between two adjacent batches, which used to create MinRowsReadLimit with read.stream.minRowsPerTrigger together.</td>
+        </tr>
+        <tr>
+            <td><h5>read.stream.minRowsPerTrigger</h5></td>
+            <td style="word-wrap: break-word;">(none)</td>
+            <td>Long</td>
+            <td>The minimum number of rows returned in a single batch, which used to create MinRowsReadLimit with read.stream.maxTriggerDelayMs together.</td>
+        </tr>
+        <tr>
+            <td><h5>write.merge-schema</h5></td>
+            <td style="word-wrap: break-word;">false</td>
+            <td>Boolean</td>
+            <td>If true, merge the data schema and the table schema automatically before write data.</td>
+        </tr>
+        <tr>
+            <td><h5>write.merge-schema.explicit-cast</h5></td>
+            <td style="word-wrap: break-word;">false</td>
+            <td>Boolean</td>
+            <td>If true, allow to merge data types if the two types meet the rules for explicit casting.</td>
+        </tr>
+    </tbody>
+</table>
+
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  
+
+
+
+
+<a href="//github.com/apache/incubator-paimon/edit/0.6/docs/content/maintenance/configurations.md" style="color:black"><i class="fa fa-edit fa-fw"></i>Edit This Page</a>
+
+
+ 
+        
+      </footer>
+
+      
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      
+  
+
+<nav id="TableOfContents"><h3>On This Page <button class="toc" onclick="collapseToc()"><i class="fa fa-compress" aria-hidden="true"></i></button></h3>
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#coreoptions">CoreOptions</a></li>
+        <li><a href="#catalogoptions">CatalogOptions</a></li>
+        <li><a href="#filesystemcatalogoptions">FilesystemCatalogOptions</a></li>
+        <li><a href="#hivecatalogoptions">HiveCatalogOptions</a></li>
+        <li><a href="#flinkcatalogoptions">FlinkCatalogOptions</a></li>
+        <li><a href="#flinkconnectoroptions">FlinkConnectorOptions</a></li>
+        <li><a href="#sparkconnectoroptions">SparkConnectorOptions</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+ 
+    </aside>
+    <aside class="expand-toc">
+      <button class="toc" onclick="expandToc()">
+        <i class="fa fa-expand" aria-hidden="true"></i>
+      </button>
+    </aside>
+    
+  </main>
+
+  
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

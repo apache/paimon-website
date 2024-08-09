@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Program API on Apache Paimon</title>
+    <link>//paimon.apache.org/docs/master/program-api/</link>
+    <description>Recent content in Program API on Apache Paimon</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language><atom:link href="//paimon.apache.org/docs/master/program-api/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Java API</title>
+      <link>//paimon.apache.org/docs/master/program-api/java-api/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/program-api/java-api/</guid>
+      <description>Java API #  We do not recommend using the Paimon API naked, unless you are a professional downstream ecosystem developer, and even if you do, there will be significant difficulties.
+If you are only using Paimon, we strongly recommend using computing engines such as Flink SQL or Spark SQL.
+The following documents are not detailed and are for reference only.
+ Dependency #  Maven dependency:
+&amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.apache.paimon&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;paimon-bundle&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;0.</description>
+    </item>
+    
+    <item>
+      <title>Flink API</title>
+      <link>//paimon.apache.org/docs/master/program-api/flink-api/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/program-api/flink-api/</guid>
+      <description>Flink API #  We do not recommend using programming API. Paimon is designed for SQL first, unless you are a professional Flink developer, even if you do, it can be very difficult.
+We strongly recommend that you use Flink SQL or Spark SQL, or simply use SQL APIs in programs.
+The following documents are not detailed and are for reference only.
+ Dependency #  Maven dependency:
+&amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.apache.paimon&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;paimon-flink-1.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  
+  <url>
+    <loc>//paimon.apache.org/docs/0.7/concepts/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/0.7/how-to/creating-catalogs/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/0.7/program-api/java-api/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/0.7/migration/migration-from-hive/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/0.7/cdc-ingestion/overview/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/0.7/concepts/append-table/overview/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/0.7/concepts/overview/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/0.7/concepts/primary-key-table/overview/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/0.7/engines/overview/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/0.7/filesystems/overview/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/0.7/project/roadmap/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/0.7/learn-paimon/understand-files/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/0.7/migration/upsert-to-partitioned/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/0.7/maintenance/write-performance/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/0.7/concepts/append-table/append-scalable-table/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/0.7/concepts/basic-concepts/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/0.7/how-to/creating-tables/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/0.7/concepts/primary-key-table/data-distribution/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/0.7/project/download/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/0.7/engines/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/0.7/engines/flink/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/0.7/program-api/flink-api/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/0.7/filesystems/hdfs/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/0.7/cdc-ingestion/mysql-cdc/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/0.7/cdc-ingestion/postgres-cdc/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/0.7/maintenance/read-performance/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/0.7/how-to/altering-tables/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/0.7/concepts/append-table/append-queue-table/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/0.7/project/contributing/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/0.7/maintenance/dedicated-compaction/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/0.7/concepts/file-layouts/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/0.7/filesystems/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/0.7/cdc-ingestion/kafka-cdc/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/0.7/concepts/primary-key-table/merge-engine/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/0.7/filesystems/oss/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/0.7/engines/spark/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/0.7/concepts/primary-key-table/changelog-producer/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/0.7/how-to/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/0.7/maintenance/manage-snapshots/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/0.7/cdc-ingestion/mongo-cdc/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/0.7/filesystems/s3/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/0.7/how-to/writing-tables/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/0.7/cdc-ingestion/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/0.7/engines/hive/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/0.7/maintenance/manage-partition/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/0.7/engines/presto/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/0.7/cdc-ingestion/pulsar-cdc/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/0.7/how-to/querying-tables/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/0.7/concepts/primary-key-table/sequence-rowkind/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/0.7/maintenance/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/0.7/concepts/primary-key-table/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/0.7/how-to/system-tables/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/0.7/engines/trino/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/0.7/concepts/append-table/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/0.7/how-to/lookup-joins/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/0.7/program-api/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/0.7/maintenance/rescale-bucket/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/0.7/maintenance/manage-tags/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/0.7/migration/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/0.7/maintenance/metrics/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/0.7/project/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/0.7/learn-paimon/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/0.7/maintenance/configurations/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/0.7/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/0.7/categories/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/0.7/tags/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/0.7/versions/</loc>
+  </url>
+  
+</urlset>

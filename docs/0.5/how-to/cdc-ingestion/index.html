@@ -1,0 +1,1877 @@
+
+<!DOCTYPE html>
+<html lang="en" dir=>
+
+<head>
+  <meta name="generator" content="Hugo 0.80.0" />
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="CDC Ingestion #  Paimon supports a variety of ways to ingest data into Paimon tables with schema evolution. This means that the added columns are synchronized to the Paimon table in real time and the synchronization job will not be restarted for this purpose.
+We currently support the following sync ways:
+ MySQL Synchronizing Table: synchronize one or multiple tables from MySQL into one Paimon table. MySQL Synchronizing Database: synchronize the whole MySQL database into one Paimon database.">
+<meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="CDC Ingestion" />
+<meta property="og:description" content="CDC Ingestion #  Paimon supports a variety of ways to ingest data into Paimon tables with schema evolution. This means that the added columns are synchronized to the Paimon table in real time and the synchronization job will not be restarted for this purpose.
+We currently support the following sync ways:
+ MySQL Synchronizing Table: synchronize one or multiple tables from MySQL into one Paimon table. MySQL Synchronizing Database: synchronize the whole MySQL database into one Paimon database." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="//paimon.apache.org/docs/0.5/how-to/cdc-ingestion/" />
+
+<title>CDC Ingestion | Apache Paimon</title>
+<link rel="manifest" href="/docs/0.5/manifest.json">
+<link rel="icon" href="/docs/0.5/favicon.png" type="image/x-icon">
+<link rel="stylesheet" href="/docs/0.5/book.min.3bc4108a5b57c9a7e6fcae92ff69940435f8c46c4e1e4a311aedc9b2d8e06792.css" integrity="sha256-O8QQiltXyafm/K6S/2mUBDX4xGxOHkoxGu3JstjgZ5I=">
+<script defer src="/docs/0.5/en.search.min.45baff9c645deb8b39a64e9342f7813d73087e3394deb1161dbd9e10c97a3107.js" integrity="sha256-Rbr/nGRd64s5pk6TQveBPXMIfjOU3rEWHb2eEMl6MQc="></script>
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+  
+
+<link rel="stylesheet" type="text/css" href="//paimon.apache.org/docs/0.5/font-awesome/css/font-awesome.min.css">
+<script src="//paimon.apache.org/docs/0.5/js/anchor.min.js"></script>
+<script src="//paimon.apache.org/docs/0.5/js/flink.js"></script>
+
+
+  
+  <script>
+    var _paq = window._paq = window._paq || [];
+     
+     
+    _paq.push(['disableCookies']);
+     
+    _paq.push(["setDomains", ["*.flink.apache.org","*.nightlies.apache.org/flink"]]);
+    _paq.push(['trackPageView']);
+    _paq.push(['enableLinkTracking']);
+    (function() {
+      var u="//matomo.privacy.apache.org/";
+      _paq.push(['setTrackerUrl', u+'matomo.php']);
+      _paq.push(['setSiteId', '1']);
+      var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+      g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+    })();
+  </script>
+  
+</head>
+
+<body dir=>
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      
+  
+
+<nav>
+
+
+<a id="logo" href="//paimon.apache.org/docs/0.5">
+    <img width="100%" src="//paimon.apache.org/docs/0.5/paimon_black.svg">
+</a>
+<p style="text-align:right">0.5.0-incubating</p>
+
+<div class="book-search">
+  <input type="text" id="book-search-input" placeholder="Search" aria-label="Search" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-dc8a1c63e6da60163016ce21cae1faa0" class="toggle"  />
+    <label for="section-dc8a1c63e6da60163016ce21cae1faa0" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-book title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Concepts</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/concepts/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/concepts/basic-concepts/" class="">Basic Concepts</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/concepts/file-layouts/" class="">File Layouts</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/concepts/file-operations/" class="">File Operations</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/concepts/primary-key-table/" class="">Primary Key Table</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/concepts/append-only-table/" class="">Append Only Table</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/concepts/external-log-systems/" class="">External Log Systems</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-90f5541dc4fa46a212e954b9193ea0f9" class="toggle"  />
+    <label for="section-90f5541dc4fa46a212e954b9193ea0f9" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-gear title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Engines</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/engines/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/engines/flink/" class="">Flink</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/engines/spark3/" class="">Spark3</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/engines/spark2/" class="">Spark2</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/engines/hive/" class="">Hive</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/engines/presto/" class="">Presto</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/engines/trino/" class="">Trino</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-e2d76c106dab115385ef7f124cda2ba4" class="toggle"  />
+    <label for="section-e2d76c106dab115385ef7f124cda2ba4" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-folder title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Filesystems</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/filesystems/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/filesystems/hdfs/" class="">HDFS</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/filesystems/oss/" class="">OSS</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/filesystems/s3/" class="">S3</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-f6ca435e98b926845c0060f9e7f85362" class="toggle" checked />
+    <label for="section-f6ca435e98b926845c0060f9e7f85362" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-database title maindish" aria-hidden="true"></i>&nbsp;&nbsp;How to</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/how-to/creating-catalogs/" class="">Creating Catalogs</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/how-to/creating-tables/" class="">Creating Tables</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/how-to/altering-tables/" class="">Altering Tables</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/how-to/writing-tables/" class="">Writing Tables</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/how-to/querying-tables/" class="">Querying Tables</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/how-to/system-tables/" class="">System Tables</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/how-to/lookup-joins/" class="">Lookup Joins</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/how-to/cdc-ingestion/" class=" active">CDC Ingestion</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-697a4b6a0388d6cfa4f418aba3b4edfe" class="toggle"  />
+    <label for="section-697a4b6a0388d6cfa4f418aba3b4edfe" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-wrench title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Maintenance</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/maintenance/write-performance/" class="">Write Performance</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/maintenance/read-performance/" class="">Read Performance</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/maintenance/multiple-writers/" class="">Multiple Writers</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/maintenance/manage-snapshots/" class="">Manage Snapshots</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/maintenance/manage-partition/" class="">Manage Partition</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/maintenance/manage-files/" class="">Manage Files</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/maintenance/rescale-bucket/" class="">Rescale Bucket</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/maintenance/manage-tags/" class="">Manage Tags</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/maintenance/configurations/" class="">Configurations</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-1b3eda2e8317c0686a4d41cefa0a3453" class="toggle"  />
+    <label for="section-1b3eda2e8317c0686a4d41cefa0a3453" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-briefcase title maindish" aria-hidden="true"></i>&nbsp;&nbsp;API</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/api/java-api/" class="">Java API</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/api/flink-api/" class="">Flink API</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  	<br/>
+  
+  
+    <input type="checkbox" id="section-8c828bcf882f666cdd6821a70cc768ee" class="toggle"  />
+    <label for="section-8c828bcf882f666cdd6821a70cc768ee" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-sitemap title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Project</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/project/roadmap/" class="">Roadmap</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/project/download/" class="">Download</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/project/contributing/" class="">Contributing</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br/>
+<hr class="menu-break">
+
+<a href="//paimon.apache.org" style="color:black;margin-bottom:0.5em"><i class="link fa fa-external-link title" aria-hidden="true"></i> Project Homepage</a>
+<br/>
+
+<a href="//paimon.apache.org/docs/master/api/java/" style="color:black;margin-bottom:0.5em"><i class="link fa fa-external-link title" aria-hidden="true"></i> JavaDocs</a>
+<br/>
+
+<hr class="menu-break">
+<li style="list-style-type: none">
+  <br>
+  <input type="checkbox" id="section-version-picker" class="toggle">
+  <label for="section-version-picker" class="flex justify-between">
+     <div style="font-weight:450;margin-bottom:0.5em">Pick Docs Version</div>
+     <span>▾</span>
+  </label>
+  <ul>
+    <a href="//paimon.apache.org/docs/0.5">
+      0.5 (✓)
+    </a>
+    <hr class="menu-break">
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/master">
+          master
+        </a>
+      </li>
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/0.5">
+          stable
+        </a>
+      </li>
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/0.4">
+          0.4
+        </a>
+      </li>
+    
+    <hr class="menu-break">
+    <li>
+      <a href="//paimon.apache.org/docs/0.5/versions">
+          All Versions
+      </a>
+    </li>
+  </ul>
+</li>
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var menu=document.querySelector("aside.book-menu nav");addEventListener("beforeunload",function(event){localStorage.setItem("menu.scrollTop",menu.scrollTop);});menu.scrollTop=localStorage.getItem("menu.scrollTop");})();</script>
+
+
+ 
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/docs/0.5/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <strong>CDC Ingestion</strong>
+
+  <label for="toc-control">
+    
+    <img src="/docs/0.5/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden clearfix">
+    
+  
+
+<nav id="TableOfContents"><h3>On This Page <button class="toc" onclick="collapseToc()"><i class="fa fa-compress" aria-hidden="true"></i></button></h3>
+  <ul>
+    <li><a href="#mysql">MySQL</a>
+      <ul>
+        <li><a href="#prepare-cdc-bundled-jar">Prepare CDC Bundled Jar</a></li>
+        <li><a href="#synchronizing-tables">Synchronizing Tables</a></li>
+        <li><a href="#synchronizing-databases">Synchronizing Databases</a></li>
+      </ul>
+    </li>
+    <li><a href="#kafka">Kafka</a>
+      <ul>
+        <li><a href="#prepare-kafka-bundled-jar">Prepare Kafka Bundled Jar</a></li>
+        <li><a href="#supported-formats">Supported Formats</a></li>
+        <li><a href="#synchronizing-tables-1">Synchronizing Tables</a></li>
+        <li><a href="#synchronizing-databases-1">Synchronizing Databases</a></li>
+      </ul>
+    </li>
+    <li><a href="#mongodb">MongoDB</a>
+      <ul>
+        <li><a href="#prepare-mongodb-bundled-jar">Prepare MongoDB Bundled Jar</a></li>
+        <li><a href="#synchronizing-tables-2">Synchronizing Tables</a></li>
+        <li><a href="#synchronizing-databases-2">Synchronizing Databases</a></li>
+      </ul>
+    </li>
+    <li><a href="#schema-change-evolution">Schema Change Evolution</a></li>
+    <li><a href="#computed-functions">Computed Functions</a></li>
+    <li><a href="#special-data-type-mapping">Special Data Type Mapping</a></li>
+    <li><a href="#faq">FAQ</a></li>
+  </ul>
+</nav>
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+
+
+
+
+
+
+      
+  <article class="markdown"><!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<h1 id="cdc-ingestion">
+  CDC Ingestion
+  <a class="anchor" href="#cdc-ingestion">#</a>
+</h1>
+<p>Paimon supports a variety of ways to ingest data into Paimon tables with schema evolution. This means that the added
+columns are synchronized to the Paimon table in real time and the synchronization job will not be restarted for this purpose.</p>
+<p>We currently support the following sync ways:</p>
+<ol>
+<li>MySQL Synchronizing Table: synchronize one or multiple tables from MySQL into one Paimon table.</li>
+<li>MySQL Synchronizing Database: synchronize the whole MySQL database into one Paimon database.</li>
+<li><a href="//paimon.apache.org/docs/0.5/api/flink-api/#cdc-ingestion-table">API Synchronizing Table</a>: synchronize your custom DataStream input into one Paimon table.</li>
+<li>Kafka Synchronizing Table: synchronize one Kafka topic&rsquo;s table into one Paimon table.</li>
+<li>Kafka Synchronizing Database: synchronize one Kafka topic containing multiple tables or multiple topics containing one table each into one Paimon database.</li>
+<li>MongoDB Synchronizing Collection: synchronize one Collection from MongoDB into one Paimon table.</li>
+<li>MongoDB Synchronizing Database: synchronize the whole MongoDB database into one Paimon database.</li>
+</ol>
+<h2 id="mysql">
+  MySQL
+  <a class="anchor" href="#mysql">#</a>
+</h2>
+<p>Paimon supports synchronizing changes from different databases using change data capture (CDC). This feature requires Flink and its <a href="https://ververica.github.io/flink-cdc-connectors/">CDC connectors</a>.</p>
+<h3 id="prepare-cdc-bundled-jar">
+  Prepare CDC Bundled Jar
+  <a class="anchor" href="#prepare-cdc-bundled-jar">#</a>
+</h3>
+<pre><code>flink-sql-connector-mysql-cdc-*.jar
+</code></pre><h3 id="synchronizing-tables">
+  Synchronizing Tables
+  <a class="anchor" href="#synchronizing-tables">#</a>
+</h3>
+<p>By using <a href="/docs/0.5/api/java/org/apache/paimon/flink/action/cdc/mysql/MySqlSyncTableAction">MySqlSyncTableAction</a> in a Flink DataStream job or directly through <code>flink run</code>, users can synchronize one or multiple tables from MySQL into one Paimon table.</p>
+<p>To use this feature through <code>flink run</code>, run the following shell command.</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">&lt;FLINK_HOME&gt;/bin/flink run <span class="se">\
+</span><span class="se"></span>    /path/to/paimon-flink-action-0.5.0-incubating.jar <span class="se">\
+</span><span class="se"></span>    mysql-sync-table
+    --warehouse &lt;warehouse-path&gt; <span class="se">\
+</span><span class="se"></span>    --database &lt;database-name&gt; <span class="se">\
+</span><span class="se"></span>    --table &lt;table-name&gt; <span class="se">\
+</span><span class="se"></span>    <span class="o">[</span>--partition-keys &lt;partition-keys&gt;<span class="o">]</span> <span class="se">\
+</span><span class="se"></span>    <span class="o">[</span>--primary-keys &lt;primary-keys&gt;<span class="o">]</span> <span class="se">\
+</span><span class="se"></span>    <span class="o">[</span>--type-mapping &lt;option1,option2...&gt;<span class="o">]</span> <span class="se">\
+</span><span class="se"></span>    <span class="o">[</span>--computed-column &lt;<span class="s1">&#39;column-name=expr-name(args[, ...])&#39;</span>&gt; <span class="o">[</span>--computed-column ...<span class="o">]]</span> <span class="se">\
+</span><span class="se"></span>    <span class="o">[</span>--mysql-conf &lt;mysql-cdc-source-conf&gt; <span class="o">[</span>--mysql-conf &lt;mysql-cdc-source-conf&gt; ...<span class="o">]]</span> <span class="se">\
+</span><span class="se"></span>    <span class="o">[</span>--catalog-conf &lt;paimon-catalog-conf&gt; <span class="o">[</span>--catalog-conf &lt;paimon-catalog-conf&gt; ...<span class="o">]]</span> <span class="se">\
+</span><span class="se"></span>    <span class="o">[</span>--table-conf &lt;paimon-table-sink-conf&gt; <span class="o">[</span>--table-conf &lt;paimon-table-sink-conf&gt; ...<span class="o">]]</span>
+</code></pre></div>
+
+<table class="configuration table table-bordered">
+    <thead>
+    <tr>
+        <th class="text-left" style="width: 15%">Configuration</th>
+        <th class="text-left" style="width: 85%">Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td><h5>--warehouse</h5></td>
+        <td>The path to Paimon warehouse.</td>
+    </tr>
+    <tr>
+        <td><h5>--database</h5></td>
+        <td>The database name in Paimon catalog.</td>
+    </tr>
+    <tr>
+        <td><h5>--table</h5></td>
+        <td>The Paimon table name.</td>
+    </tr>
+    <tr>
+        <td><h5>--partition-keys</h5></td>
+        <td>The partition keys for Paimon table. If there are multiple partition keys, connect them with comma, for example "dt,hh,mm".</td>
+    </tr>
+    <tr>
+        <td><h5>--primary-keys</h5></td>
+        <td>The primary keys for Paimon table. If there are multiple primary keys, connect them with comma, for example "buyer_id,seller_id".</td>
+    </tr>
+    <tr>
+        <td><h5>--type-mapping</h5></td>
+        <td>It is used to specify how to map MySQL data type to Paimon type.<br />
+            Supported options:
+            <ul>
+                <li>"tinyint1-not-bool": maps MySQL TINYINT(1) to TINYINT instead of BOOLEAN.</li>
+                <li>"to-nullable": ignores all NOT NULL constraints (except for primary keys).
+                    This is used to solve the problem that Flink cannot accept the MySQL 'ALTER TABLE ADD COLUMN column type NOT NULL DEFAULT x' operation.
+                </li>
+                <li>"to-string": maps all MySQL types to STRING.</li>
+            </ul>
+        </td>
+    </tr>
+    <tr>
+        <td><h5>--computed-column</h5></td>
+        <td>The definitions of computed columns. The argument field is from MySQL table field name. See <a href="#computed-functions">here</a> for a complete list of configurations. </td>
+    </tr>
+    <tr>
+        <td><h5>--mysql-conf</h5></td>
+        <td>The configuration for Flink CDC MySQL sources. Each configuration should be specified in the format "key=value". hostname, username, password, database-name and table-name are required configurations, others are optional. See its <a href="https://ververica.github.io/flink-cdc-connectors/master/content/connectors/mysql-cdc.html#connector-options">document</a> for a complete list of configurations.</td>
+    </tr>
+    <tr>
+        <td><h5>--catalog-conf</h5></td>
+        <td>The configuration for Paimon catalog. Each configuration should be specified in the format "key=value". See <a href="//paimon.apache.org/docs/0.5/maintenance/configurations/">here</a> for a complete list of catalog configurations.</td>
+    </tr>
+    <tr>
+        <td><h5>--table-conf</h5></td>
+        <td>The configuration for Paimon table sink. Each configuration should be specified in the format "key=value". See <a href="//paimon.apache.org/docs/0.5/maintenance/configurations/">here</a> for a complete list of table configurations.</td>
+    </tr>
+    </tbody>
+</table>
+<p>If the Paimon table you specify does not exist, this action will automatically create the table. Its schema will be derived from all specified MySQL tables. If the Paimon table already exists, its schema will be compared against the schema of all specified MySQL tables.</p>
+<p>Example 1: synchronize tables into one Paimon table</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">&lt;FLINK_HOME&gt;/bin/flink run <span class="se">\
+</span><span class="se"></span>    /path/to/paimon-flink-action-0.5.0-incubating.jar <span class="se">\
+</span><span class="se"></span>    mysql-sync-table <span class="se">\
+</span><span class="se"></span>    --warehouse hdfs:///path/to/warehouse <span class="se">\
+</span><span class="se"></span>    --database test_db <span class="se">\
+</span><span class="se"></span>    --table test_table <span class="se">\
+</span><span class="se"></span>    --partition-keys pt <span class="se">\
+</span><span class="se"></span>    --primary-keys pt,uid <span class="se">\
+</span><span class="se"></span>    --computed-column <span class="s1">&#39;_year=year(age)&#39;</span> <span class="se">\
+</span><span class="se"></span>    --mysql-conf <span class="nv">hostname</span><span class="o">=</span>127.0.0.1 <span class="se">\
+</span><span class="se"></span>    --mysql-conf <span class="nv">username</span><span class="o">=</span>root <span class="se">\
+</span><span class="se"></span>    --mysql-conf <span class="nv">password</span><span class="o">=</span><span class="m">123456</span> <span class="se">\
+</span><span class="se"></span>    --mysql-conf database-name<span class="o">=</span><span class="s1">&#39;source_db&#39;</span> <span class="se">\
+</span><span class="se"></span>    --mysql-conf table-name<span class="o">=</span><span class="s1">&#39;source_table1|source_table2&#39;</span> <span class="se">\
+</span><span class="se"></span>    --catalog-conf <span class="nv">metastore</span><span class="o">=</span>hive <span class="se">\
+</span><span class="se"></span>    --catalog-conf <span class="nv">uri</span><span class="o">=</span>thrift://hive-metastore:9083 <span class="se">\
+</span><span class="se"></span>    --table-conf <span class="nv">bucket</span><span class="o">=</span><span class="m">4</span> <span class="se">\
+</span><span class="se"></span>    --table-conf changelog-producer<span class="o">=</span>input <span class="se">\
+</span><span class="se"></span>    --table-conf sink.parallelism<span class="o">=</span><span class="m">4</span>
+</code></pre></div><p>As example shows, the mysql-conf&rsquo;s table-name supports regular expressions to monitor multiple tables that satisfy
+the regular expressions. The schemas of all the tables will be merged into one Paimon table schema.</p>
+<p>Example 2: synchronize shards into one Paimon table</p>
+<p>You can also set &lsquo;database-name&rsquo; with a regular expression to capture multiple databases. A typical scenario is that a
+table &lsquo;source_table&rsquo; is split into database &lsquo;source_db1&rsquo;, &lsquo;source_db2&rsquo; &hellip;, then you can synchronize data of all the
+&lsquo;source_table&rsquo;s into one Paimon table.</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">&lt;FLINK_HOME&gt;/bin/flink run <span class="se">\
+</span><span class="se"></span>    /path/to/paimon-flink-action-0.5.0-incubating.jar <span class="se">\
+</span><span class="se"></span>    mysql-sync-table <span class="se">\
+</span><span class="se"></span>    --warehouse hdfs:///path/to/warehouse <span class="se">\
+</span><span class="se"></span>    --database test_db <span class="se">\
+</span><span class="se"></span>    --table test_table <span class="se">\
+</span><span class="se"></span>    --partition-keys pt <span class="se">\
+</span><span class="se"></span>    --primary-keys pt,uid <span class="se">\
+</span><span class="se"></span>    --computed-column <span class="s1">&#39;_year=year(age)&#39;</span> <span class="se">\
+</span><span class="se"></span>    --mysql-conf <span class="nv">hostname</span><span class="o">=</span>127.0.0.1 <span class="se">\
+</span><span class="se"></span>    --mysql-conf <span class="nv">username</span><span class="o">=</span>root <span class="se">\
+</span><span class="se"></span>    --mysql-conf <span class="nv">password</span><span class="o">=</span><span class="m">123456</span> <span class="se">\
+</span><span class="se"></span>    --mysql-conf database-name<span class="o">=</span><span class="s1">&#39;source_db.+&#39;</span> <span class="se">\
+</span><span class="se"></span>    --mysql-conf table-name<span class="o">=</span><span class="s1">&#39;source_table&#39;</span> <span class="se">\
+</span><span class="se"></span>    --catalog-conf <span class="nv">metastore</span><span class="o">=</span>hive <span class="se">\
+</span><span class="se"></span>    --catalog-conf <span class="nv">uri</span><span class="o">=</span>thrift://hive-metastore:9083 <span class="se">\
+</span><span class="se"></span>    --table-conf <span class="nv">bucket</span><span class="o">=</span><span class="m">4</span> <span class="se">\
+</span><span class="se"></span>    --table-conf changelog-producer<span class="o">=</span>input <span class="se">\
+</span><span class="se"></span>    --table-conf sink.parallelism<span class="o">=</span><span class="m">4</span>
+</code></pre></div><h3 id="synchronizing-databases">
+  Synchronizing Databases
+  <a class="anchor" href="#synchronizing-databases">#</a>
+</h3>
+<p>By using <a href="/docs/0.5/api/java/org/apache/paimon/flink/action/cdc/mysql/MySqlSyncDatabaseAction">MySqlSyncDatabaseAction</a> in a Flink DataStream job or directly through <code>flink run</code>, users can synchronize the whole MySQL database into one Paimon database.</p>
+<p>To use this feature through <code>flink run</code>, run the following shell command.</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">&lt;FLINK_HOME&gt;/bin/flink run <span class="se">\
+</span><span class="se"></span>    /path/to/paimon-flink-action-0.5.0-incubating.jar <span class="se">\
+</span><span class="se"></span>    mysql-sync-database
+    --warehouse &lt;warehouse-path&gt; <span class="se">\
+</span><span class="se"></span>    --database &lt;database-name&gt; <span class="se">\
+</span><span class="se"></span>    <span class="o">[</span>--ignore-incompatible &lt;true/false&gt;<span class="o">]</span> <span class="se">\
+</span><span class="se"></span>    <span class="o">[</span>--merge-shards &lt;true/false&gt;<span class="o">]</span> <span class="se">\
+</span><span class="se"></span>    <span class="o">[</span>--table-prefix &lt;paimon-table-prefix&gt;<span class="o">]</span> <span class="se">\
+</span><span class="se"></span>    <span class="o">[</span>--table-suffix &lt;paimon-table-suffix&gt;<span class="o">]</span> <span class="se">\
+</span><span class="se"></span>    <span class="o">[</span>--including-tables &lt;mysql-table-name<span class="p">|</span>name-regular-expr&gt;<span class="o">]</span> <span class="se">\
+</span><span class="se"></span>    <span class="o">[</span>--excluding-tables &lt;mysql-table-name<span class="p">|</span>name-regular-expr&gt;<span class="o">]</span> <span class="se">\
+</span><span class="se"></span>    <span class="o">[</span>--mode &lt;sync-mode&gt;<span class="o">]</span> <span class="se">\
+</span><span class="se"></span>    <span class="o">[</span>--type-mapping &lt;option1,option2...&gt;<span class="o">]</span> <span class="se">\
+</span><span class="se"></span>    <span class="o">[</span>--mysql-conf &lt;mysql-cdc-source-conf&gt; <span class="o">[</span>--mysql-conf &lt;mysql-cdc-source-conf&gt; ...<span class="o">]]</span> <span class="se">\
+</span><span class="se"></span>    <span class="o">[</span>--catalog-conf &lt;paimon-catalog-conf&gt; <span class="o">[</span>--catalog-conf &lt;paimon-catalog-conf&gt; ...<span class="o">]]</span> <span class="se">\
+</span><span class="se"></span>    <span class="o">[</span>--table-conf &lt;paimon-table-sink-conf&gt; <span class="o">[</span>--table-conf &lt;paimon-table-sink-conf&gt; ...<span class="o">]]</span>
+</code></pre></div>
+
+<table class="configuration table table-bordered">
+    <thead>
+    <tr>
+        <th class="text-left" style="width: 15%">Configuration</th>
+        <th class="text-left" style="width: 85%">Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td><h5>--warehouse</h5></td>
+        <td>The path to Paimon warehouse.</td>
+    </tr>
+    <tr>
+        <td><h5>--database</h5></td>
+        <td>The database name in Paimon catalog.</td>
+    </tr>
+    <tr>
+        <td><h5>--ignore-incompatible</h5></td>
+        <td>It is default false, in this case, if MySQL table name exists in Paimon and their schema is incompatible,an exception will be thrown. You can specify it to true explicitly to ignore the incompatible tables and exception.</td>
+    </tr>
+    <tr>
+        <td><h5>--merge-shards</h5></td>
+        <td>It is default true, in this case, if some tables in different databases have the same name, their schemas will be merged and their records will be synchronized into one Paimon table. Otherwise, each table's records will be synchronized to a corresponding Paimon table, and the Paimon table will be named to 'databaseName_tableName' to avoid potential name conflict.</td>
+    </tr>
+    <tr>
+        <td><h5>--table-prefix</h5></td>
+        <td>The prefix of all Paimon tables to be synchronized. For example, if you want all synchronized tables to have "ods_" as prefix, you can specify "--table-prefix ods_".</td>
+    </tr>
+    <tr>
+        <td><h5>--table-suffix</h5></td>
+        <td>The suffix of all Paimon tables to be synchronized. The usage is same as "--table-prefix".</td>
+    </tr>
+    <tr>
+        <td><h5>--including-tables</h5></td>
+        <td>It is used to specify which source tables are to be synchronized. You must use '|' to separate multiple tables.Because '|' is a special character, a comma is required, for example: 'a|b|c'.Regular expression is supported, for example, specifying "--including-tables test|paimon.*" means to synchronize table 'test' and all tables start with 'paimon'.</td>
+    </tr>
+    <tr>
+        <td><h5>--excluding-tables</h5></td>
+        <td>It is used to specify which source tables are not to be synchronized. The usage is same as "--including-tables". "--excluding-tables" has higher priority than "--including-tables" if you specified both.</td>
+    </tr>
+    <tr>
+        <td><h5>--mode</h5></td>
+        <td>It is used to specify synchronization mode.<br />Possible values:<ul><li>"divided" (the default mode if you haven't specified one): start a sink for each table, the synchronization of the new table requires restarting the job.</li><li>"combined": start a single combined sink for all tables, the new table will be automatically synchronized.</li></ul></td>
+    </tr>
+    <tr>
+        <td><h5>--type-mapping</h5></td>
+        <td>It is used to specify how to map MySQL data type to Paimon type.<br />
+            Supported options:
+                <ul>
+                    <li>"tinyint1-not-bool": maps MySQL TINYINT(1) to TINYINT instead of BOOLEAN.</li>
+                    <li>"to-nullable": ignores all NOT NULL constraints (except for primary keys).
+                        This is used to solve the problem that Flink cannot accept the MySQL 'ALTER TABLE ADD COLUMN column type NOT NULL DEFAULT x' operation.
+                    </li>
+                    <li>"to-string": maps all MySQL types to STRING.</li>
+                </ul>
+        </td>
+    </tr>
+    <tr>
+        <td><h5>--mysql-conf</h5></td>
+        <td>The configuration for Flink CDC MySQL sources. Each configuration should be specified in the format "key=value". hostname, username, password, database-name and table-name are required configurations, others are optional. See its <a href="https://ververica.github.io/flink-cdc-connectors/master/content/connectors/mysql-cdc.html#connector-options">document</a> for a complete list of configurations.</td>
+    </tr>
+    <tr>
+        <td><h5>--catalog-conf</h5></td>
+        <td>The configuration for Paimon catalog. Each configuration should be specified in the format "key=value". See <a href="//paimon.apache.org/docs/0.5/maintenance/configurations/">here</a> for a complete list of catalog configurations.</td>
+    </tr>
+    <tr>
+        <td><h5>--table-conf</h5></td>
+        <td>The configuration for Paimon table sink. Each configuration should be specified in the format "key=value". See <a href="//paimon.apache.org/docs/0.5/maintenance/configurations/">here</a> for a complete list of table configurations.</td>
+    </tr>
+    </tbody>
+</table>
+<p>Only tables with primary keys will be synchronized.</p>
+<p>For each MySQL table to be synchronized, if the corresponding Paimon table does not exist, this action will automatically create the table. Its schema will be derived from all specified MySQL tables. If the Paimon table already exists, its schema will be compared against the schema of all specified MySQL tables.</p>
+<p>Example 1: synchronize entire database</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">&lt;FLINK_HOME&gt;/bin/flink run <span class="se">\
+</span><span class="se"></span>    /path/to/paimon-flink-action-0.5.0-incubating.jar <span class="se">\
+</span><span class="se"></span>    mysql-sync-database <span class="se">\
+</span><span class="se"></span>    --warehouse hdfs:///path/to/warehouse <span class="se">\
+</span><span class="se"></span>    --database test_db <span class="se">\
+</span><span class="se"></span>    --mysql-conf <span class="nv">hostname</span><span class="o">=</span>127.0.0.1 <span class="se">\
+</span><span class="se"></span>    --mysql-conf <span class="nv">username</span><span class="o">=</span>root <span class="se">\
+</span><span class="se"></span>    --mysql-conf <span class="nv">password</span><span class="o">=</span><span class="m">123456</span> <span class="se">\
+</span><span class="se"></span>    --mysql-conf database-name<span class="o">=</span>source_db <span class="se">\
+</span><span class="se"></span>    --catalog-conf <span class="nv">metastore</span><span class="o">=</span>hive <span class="se">\
+</span><span class="se"></span>    --catalog-conf <span class="nv">uri</span><span class="o">=</span>thrift://hive-metastore:9083 <span class="se">\
+</span><span class="se"></span>    --table-conf <span class="nv">bucket</span><span class="o">=</span><span class="m">4</span> <span class="se">\
+</span><span class="se"></span>    --table-conf changelog-producer<span class="o">=</span>input <span class="se">\
+</span><span class="se"></span>    --table-conf sink.parallelism<span class="o">=</span><span class="m">4</span>
+</code></pre></div><p>Example 2: synchronize newly added tables under database</p>
+<p>Let&rsquo;s say at first a Flink job is synchronizing tables [product, user, address]
+under database <code>source_db</code>. The command to submit the job looks like:</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">&lt;FLINK_HOME&gt;/bin/flink run <span class="se">\
+</span><span class="se"></span>    /path/to/paimon-flink-action-0.5.0-incubating.jar <span class="se">\
+</span><span class="se"></span>    mysql-sync-database <span class="se">\
+</span><span class="se"></span>    --warehouse hdfs:///path/to/warehouse <span class="se">\
+</span><span class="se"></span>    --database test_db <span class="se">\
+</span><span class="se"></span>    --mysql-conf <span class="nv">hostname</span><span class="o">=</span>127.0.0.1 <span class="se">\
+</span><span class="se"></span>    --mysql-conf <span class="nv">username</span><span class="o">=</span>root <span class="se">\
+</span><span class="se"></span>    --mysql-conf <span class="nv">password</span><span class="o">=</span><span class="m">123456</span> <span class="se">\
+</span><span class="se"></span>    --mysql-conf database-name<span class="o">=</span>source_db <span class="se">\
+</span><span class="se"></span>    --catalog-conf <span class="nv">metastore</span><span class="o">=</span>hive <span class="se">\
+</span><span class="se"></span>    --catalog-conf <span class="nv">uri</span><span class="o">=</span>thrift://hive-metastore:9083 <span class="se">\
+</span><span class="se"></span>    --table-conf <span class="nv">bucket</span><span class="o">=</span><span class="m">4</span> <span class="se">\
+</span><span class="se"></span>    --table-conf changelog-producer<span class="o">=</span>input <span class="se">\
+</span><span class="se"></span>    --table-conf sink.parallelism<span class="o">=</span><span class="m">4</span> <span class="se">\
+</span><span class="se"></span>    --including-tables <span class="s1">&#39;product|user|address&#39;</span>
+</code></pre></div><p>At a later point we would like the job to also synchronize tables [order, custom],
+which contains history data. We can achieve this by recovering from the previous
+snapshot of the job and thus reusing existing state of the job. The recovered job will
+first snapshot newly added tables, and then continue reading changelog from previous
+position automatically.</p>
+<p>The command to recover from previous snapshot and add new tables to synchronize looks like:</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">&lt;FLINK_HOME&gt;/bin/flink run <span class="se">\
+</span><span class="se"></span>    --fromSavepoint savepointPath <span class="se">\
+</span><span class="se"></span>    /path/to/paimon-flink-action-0.5.0-incubating.jar <span class="se">\
+</span><span class="se"></span>    mysql-sync-database <span class="se">\
+</span><span class="se"></span>    --warehouse hdfs:///path/to/warehouse <span class="se">\
+</span><span class="se"></span>    --database test_db <span class="se">\
+</span><span class="se"></span>    --mysql-conf <span class="nv">hostname</span><span class="o">=</span>127.0.0.1 <span class="se">\
+</span><span class="se"></span>    --mysql-conf <span class="nv">username</span><span class="o">=</span>root <span class="se">\
+</span><span class="se"></span>    --mysql-conf <span class="nv">password</span><span class="o">=</span><span class="m">123456</span> <span class="se">\
+</span><span class="se"></span>    --mysql-conf database-name<span class="o">=</span>source_db <span class="se">\
+</span><span class="se"></span>    --catalog-conf <span class="nv">metastore</span><span class="o">=</span>hive <span class="se">\
+</span><span class="se"></span>    --catalog-conf <span class="nv">uri</span><span class="o">=</span>thrift://hive-metastore:9083 <span class="se">\
+</span><span class="se"></span>    --table-conf <span class="nv">bucket</span><span class="o">=</span><span class="m">4</span> <span class="se">\
+</span><span class="se"></span>    --including-tables <span class="s1">&#39;product|user|address|order|custom&#39;</span>
+</code></pre></div><blockquote class="book-hint info">
+  You can set <code>--mode combined</code> to enable synchronizing newly added tables without restarting job.
+</blockquote>
+
+<p>Example 3: synchronize and merge multiple shards</p>
+<p>Let&rsquo;s say you have multiple database shards <code>db1</code>, <code>db2</code>, &hellip; and each database has tables <code>tbl1</code>, <code>tbl2</code>, &hellip;. You can
+synchronize all the <code>db.+.tbl.+</code> into tables <code>test_db.tbl1</code>, <code>test_db.tbl2</code> &hellip; by following command:</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">&lt;FLINK_HOME&gt;/bin/flink run <span class="se">\
+</span><span class="se"></span>    /path/to/paimon-flink-action-0.5.0-incubating.jar <span class="se">\
+</span><span class="se"></span>    mysql-sync-database <span class="se">\
+</span><span class="se"></span>    --warehouse hdfs:///path/to/warehouse <span class="se">\
+</span><span class="se"></span>    --database test_db <span class="se">\
+</span><span class="se"></span>    --mysql-conf <span class="nv">hostname</span><span class="o">=</span>127.0.0.1 <span class="se">\
+</span><span class="se"></span>    --mysql-conf <span class="nv">username</span><span class="o">=</span>root <span class="se">\
+</span><span class="se"></span>    --mysql-conf <span class="nv">password</span><span class="o">=</span><span class="m">123456</span> <span class="se">\
+</span><span class="se"></span>    --mysql-conf database-name<span class="o">=</span><span class="s1">&#39;db.+&#39;</span> <span class="se">\
+</span><span class="se"></span>    --catalog-conf <span class="nv">metastore</span><span class="o">=</span>hive <span class="se">\
+</span><span class="se"></span>    --catalog-conf <span class="nv">uri</span><span class="o">=</span>thrift://hive-metastore:9083 <span class="se">\
+</span><span class="se"></span>    --table-conf <span class="nv">bucket</span><span class="o">=</span><span class="m">4</span> <span class="se">\
+</span><span class="se"></span>    --table-conf changelog-producer<span class="o">=</span>input <span class="se">\
+</span><span class="se"></span>    --table-conf sink.parallelism<span class="o">=</span><span class="m">4</span> <span class="se">\
+</span><span class="se"></span>    --including-tables <span class="s1">&#39;tbl.+&#39;</span>
+</code></pre></div><p>By setting database-name to a regular expression, the synchronization job will capture all tables under matched databases
+and merge tables of the same name into one table.</p>
+<blockquote class="book-hint info">
+  You can set <code>--merge-shards false</code> to prevent merging shards. The synchronized tables will be named to &lsquo;databaseName_tableName&rsquo;
+to avoid potential name conflict.
+</blockquote>
+
+<h2 id="kafka">
+  Kafka
+  <a class="anchor" href="#kafka">#</a>
+</h2>
+<h3 id="prepare-kafka-bundled-jar">
+  Prepare Kafka Bundled Jar
+  <a class="anchor" href="#prepare-kafka-bundled-jar">#</a>
+</h3>
+<pre><code>flink-sql-connector-kafka-*.jar
+</code></pre><h3 id="supported-formats">
+  Supported Formats
+  <a class="anchor" href="#supported-formats">#</a>
+</h3>
+<p>Flink provides several Kafka CDC formats: Canal, Debezium, Ogg and Maxwell JSON.
+If a message in a Kafka topic is a change event captured from another database using the Change Data Capture (CDC) tool, then you can use the Paimon Kafka CDC. Write the INSERT, UPDATE, DELETE messages parsed into the paimon table.</p>
+<table class="table table-bordered">
+    <thead>
+      <tr>
+        <th class="text-left">Formats</th>
+        <th class="text-left">Supported</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+         <td><a href="https://nightlies.apache.org/flink/flink-docs-stable/docs/connectors/table/formats/canal/">Canal CDC</a></td>
+          <td>True</td>
+        </tr>
+        <tr>
+         <td><a href="https://nightlies.apache.org/flink/flink-docs-stable/docs/connectors/table/formats/debezium/">Debezium CDC</a></td>
+         <td>False</td>
+        </tr>
+        <tr>
+         <td><a href="https://nightlies.apache.org/flink/flink-docs-stable/docs/connectors/table/formats/maxwell/ >}}">Maxwell CDC</a></td>
+        <td>False</td>
+        </tr>
+        <tr>
+         <td><a href="https://nightlies.apache.org/flink/flink-docs-stable/docs/connectors/table/formats/ogg/">OGG CDC</a></td>
+        <td>True</td>
+        </tr>
+    </tbody>
+</table>
+<blockquote class="book-hint info">
+  In Oracle GoldenGate, the data format synchronized to Kafka does not include field data type information. As a result, Paimon sets the data type for all fields to &ldquo;String&rdquo; by default.
+</blockquote>
+
+<h3 id="synchronizing-tables-1">
+  Synchronizing Tables
+  <a class="anchor" href="#synchronizing-tables-1">#</a>
+</h3>
+<p>By using <a href="/docs/0.5/api/java/org/apache/paimon/flink/action/cdc/kafka/KafkaSyncTableAction">KafkaSyncTableAction</a> in a Flink DataStream job or directly through <code>flink run</code>, users can synchronize one or multiple tables from Kafka&rsquo;s one topic into one Paimon table.</p>
+<p>To use this feature through <code>flink run</code>, run the following shell command.</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">&lt;FLINK_HOME&gt;/bin/flink run <span class="se">\
+</span><span class="se"></span>    /path/to/paimon-flink-action-0.5.0-incubating.jar <span class="se">\
+</span><span class="se"></span>    kafka-sync-table
+    --warehouse &lt;warehouse-path&gt; <span class="se">\
+</span><span class="se"></span>    --database &lt;database-name&gt; <span class="se">\
+</span><span class="se"></span>    --table &lt;table-name&gt; <span class="se">\
+</span><span class="se"></span>    <span class="o">[</span>--partition-keys &lt;partition-keys&gt;<span class="o">]</span> <span class="se">\
+</span><span class="se"></span>    <span class="o">[</span>--primary-keys &lt;primary-keys&gt;<span class="o">]</span> <span class="se">\
+</span><span class="se"></span>    <span class="o">[</span>--computed-column &lt;<span class="s1">&#39;column-name=expr-name(args[, ...])&#39;</span>&gt; <span class="o">[</span>--computed-column ...<span class="o">]]</span> <span class="se">\
+</span><span class="se"></span>    <span class="o">[</span>--kafka-conf &lt;kafka-source-conf&gt; <span class="o">[</span>--kafka-conf &lt;kafka-source-conf&gt; ...<span class="o">]]</span> <span class="se">\
+</span><span class="se"></span>    <span class="o">[</span>--catalog-conf &lt;paimon-catalog-conf&gt; <span class="o">[</span>--catalog-conf &lt;paimon-catalog-conf&gt; ...<span class="o">]]</span> <span class="se">\
+</span><span class="se"></span>    <span class="o">[</span>--table-conf &lt;paimon-table-sink-conf&gt; <span class="o">[</span>--table-conf &lt;paimon-table-sink-conf&gt; ...<span class="o">]]</span>
+</code></pre></div>
+
+<table class="configuration table table-bordered">
+    <thead>
+    <tr>
+        <th class="text-left" style="width: 15%">Configuration</th>
+        <th class="text-left" style="width: 85%">Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td><h5>--warehouse</h5></td>
+        <td>The path to Paimon warehouse.</td>
+    </tr>
+    <tr>
+        <td><h5>--database</h5></td>
+        <td>The database name in Paimon catalog.</td>
+    </tr>
+    <tr>
+        <td><h5>--table</h5></td>
+        <td>The Paimon table name.</td>
+    </tr>
+    <tr>
+        <td><h5>--partition-keys</h5></td>
+        <td>The partition keys for Paimon table. If there are multiple partition keys, connect them with comma, for example "dt,hh,mm".</td>
+    </tr>
+    <tr>
+        <td><h5>--primary-keys</h5></td>
+        <td>The primary keys for Paimon table. If there are multiple primary keys, connect them with comma, for example "buyer_id,seller_id".</td>
+    </tr>
+    <tr>
+        <td><h5>--computed-column</h5></td>
+        <td>The definitions of computed columns. The argument field is from Kafka topic's table field name. See <a href="#computed-functions">here</a> for a complete list of configurations. </td>
+    </tr>
+    <tr>
+        <td><h5>--kafka-conf</h5></td>
+        <td>The configuration for Flink Kafka sources. Each configuration should be specified in the format `key=value`. `properties.bootstrap.servers`, `topic`, `properties.group.id`,  and `value.format` are required configurations, others are optional.See its <a href="https://nightlies.apache.org/flink/flink-docs-stable/docs/connectors/table/kafka/#connector-options">document</a> for a complete list of configurations.</td>
+    </tr>
+    <tr>
+        <td><h5>--catalog-conf</h5></td>
+        <td>The configuration for Paimon catalog. Each configuration should be specified in the format "key=value". See <a href="//paimon.apache.org/docs/0.5/maintenance/configurations/">here</a> for a complete list of catalog configurations.</td>
+    </tr>
+    <tr>
+        <td><h5>--table-conf</h5></td>
+        <td>The configuration for Paimon table sink. Each configuration should be specified in the format "key=value". See <a href="//paimon.apache.org/docs/0.5/maintenance/configurations/">here</a> for a complete list of table configurations.</td>
+    </tr>
+    </tbody>
+</table>
+<p>If the Paimon table you specify does not exist, this action will automatically create the table. Its schema will be derived from all specified Kafka topic&rsquo;s tables,it gets the earliest non-DDL data parsing schema from topic. If the Paimon table already exists, its schema will be compared against the schema of all specified Kafka topic&rsquo;s tables.</p>
+<p>Example</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">&lt;FLINK_HOME&gt;/bin/flink run <span class="se">\
+</span><span class="se"></span>    /path/to/paimon-flink-action-0.5.0-incubating.jar <span class="se">\
+</span><span class="se"></span>    kafka-sync-table <span class="se">\
+</span><span class="se"></span>    --warehouse hdfs:///path/to/warehouse <span class="se">\
+</span><span class="se"></span>    --database test_db <span class="se">\
+</span><span class="se"></span>    --table test_table <span class="se">\
+</span><span class="se"></span>    --partition-keys pt <span class="se">\
+</span><span class="se"></span>    --primary-keys pt,uid <span class="se">\
+</span><span class="se"></span>    --computed-column <span class="s1">&#39;_year=year(age)&#39;</span> <span class="se">\
+</span><span class="se"></span>    --kafka-conf properties.bootstrap.servers<span class="o">=</span>127.0.0.1:9020 <span class="se">\
+</span><span class="se"></span>    --kafka-conf <span class="nv">topic</span><span class="o">=</span>order <span class="se">\
+</span><span class="se"></span>    --kafka-conf properties.group.id<span class="o">=</span><span class="m">123456</span> <span class="se">\
+</span><span class="se"></span>    --kafka-conf value.format<span class="o">=</span>canal-json <span class="se">\
+</span><span class="se"></span>    --catalog-conf <span class="nv">metastore</span><span class="o">=</span>hive <span class="se">\
+</span><span class="se"></span>    --catalog-conf <span class="nv">uri</span><span class="o">=</span>thrift://hive-metastore:9083 <span class="se">\
+</span><span class="se"></span>    --table-conf <span class="nv">bucket</span><span class="o">=</span><span class="m">4</span> <span class="se">\
+</span><span class="se"></span>    --table-conf changelog-producer<span class="o">=</span>input <span class="se">\
+</span><span class="se"></span>    --table-conf sink.parallelism<span class="o">=</span><span class="m">4</span>
+</code></pre></div><h3 id="synchronizing-databases-1">
+  Synchronizing Databases
+  <a class="anchor" href="#synchronizing-databases-1">#</a>
+</h3>
+<p>By using <a href="/docs/0.5/api/java/org/apache/paimon/flink/action/cdc/kafka/KafkaSyncDatabaseAction">KafkaSyncDatabaseAction</a> in a Flink DataStream job or directly through <code>flink run</code>, users can synchronize the multi topic or one topic into one Paimon database.</p>
+<p>To use this feature through <code>flink run</code>, run the following shell command.</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">&lt;FLINK_HOME&gt;/bin/flink run <span class="se">\
+</span><span class="se"></span>    /path/to/paimon-flink-action-0.5.0-incubating.jar <span class="se">\
+</span><span class="se"></span>    kafka-sync-database
+    --warehouse &lt;warehouse-path&gt; <span class="se">\
+</span><span class="se"></span>    --database &lt;database-name&gt; <span class="se">\
+</span><span class="se"></span>    <span class="o">[</span>--table-prefix &lt;paimon-table-prefix&gt;<span class="o">]</span> <span class="se">\
+</span><span class="se"></span>    <span class="o">[</span>--table-suffix &lt;paimon-table-suffix&gt;<span class="o">]</span> <span class="se">\
+</span><span class="se"></span>    <span class="o">[</span>--including-tables &lt;table-name<span class="p">|</span>name-regular-expr&gt;<span class="o">]</span> <span class="se">\
+</span><span class="se"></span>    <span class="o">[</span>--excluding-tables &lt;table-name<span class="p">|</span>name-regular-expr&gt;<span class="o">]</span> <span class="se">\
+</span><span class="se"></span>    <span class="o">[</span>--kafka-conf &lt;kafka-source-conf&gt; <span class="o">[</span>--kafka-conf &lt;kafka-source-conf&gt; ...<span class="o">]]</span> <span class="se">\
+</span><span class="se"></span>    <span class="o">[</span>--catalog-conf &lt;paimon-catalog-conf&gt; <span class="o">[</span>--catalog-conf &lt;paimon-catalog-conf&gt; ...<span class="o">]]</span> <span class="se">\
+</span><span class="se"></span>    <span class="o">[</span>--table-conf &lt;paimon-table-sink-conf&gt; <span class="o">[</span>--table-conf &lt;paimon-table-sink-conf&gt; ...<span class="o">]]</span>
+</code></pre></div>
+
+<table class="configuration table table-bordered">
+    <thead>
+    <tr>
+        <th class="text-left" style="width: 15%">Configuration</th>
+        <th class="text-left" style="width: 85%">Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td><h5>--warehouse</h5></td>
+        <td>The path to Paimon warehouse.</td>
+    </tr>
+    <tr>
+        <td><h5>--database</h5></td>
+        <td>The database name in Paimon catalog.</td>
+    </tr>
+    <tr>
+        <td><h5>--schema-init-max-read</h5></td>
+        <td>If your tables are all from a topic, you can set this parameter to initialize the number of tables to be synchronized. The default value is 1000.</td>
+    </tr>
+    <tr>
+        <td><h5>--ignore-incompatible</h5></td>
+        <td>It is default false, in this case, if MySQL table name exists in Paimon and their schema is incompatible,an exception will be thrown. You can specify it to true explicitly to ignore the incompatible tables and exception.</td>
+    </tr>
+    <tr>
+        <td><h5>--table-prefix</h5></td>
+        <td>The prefix of all Paimon tables to be synchronized. For example, if you want all synchronized tables to have "ods_" as prefix, you can specify "--table-prefix ods_".</td>
+    </tr>
+    <tr>
+        <td><h5>--table-suffix</h5></td>
+        <td>The suffix of all Paimon tables to be synchronized. The usage is same as "--table-prefix".</td>
+    </tr>
+    <tr>
+        <td><h5>--including-tables</h5></td>
+        <td>It is used to specify which source tables are to be synchronized. You must use '|' to separate multiple tables.Because '|' is a special character, a comma is required, for example: 'a|b|c'.Regular expression is supported, for example, specifying "--including-tables test|paimon.*" means to synchronize table 'test' and all tables start with 'paimon'.</td>
+    </tr>
+    <tr>
+        <td><h5>--excluding-tables</h5></td>
+        <td>It is used to specify which source tables are not to be synchronized. The usage is same as "--including-tables". "--excluding-tables" has higher priority than "--including-tables" if you specified both.</td>
+    </tr>
+    <tr>
+        <td><h5>--kafka-conf</h5></td>
+        <td>The configuration for Flink Kafka sources. Each configuration should be specified in the format `key=value`. `properties.bootstrap.servers`, `topic`, `properties.group.id`,  and `value.format` are required configurations, others are optional.See its <a href="https://nightlies.apache.org/flink/flink-docs-stable/docs/connectors/table/kafka/#connector-options">document</a> for a complete list of configurations.</td>
+    </tr>
+    <tr>
+        <td><h5>--catalog-conf</h5></td>
+        <td>The configuration for Paimon catalog. Each configuration should be specified in the format "key=value". See <a href="//paimon.apache.org/docs/0.5/maintenance/configurations/">here</a> for a complete list of catalog configurations.</td>
+    </tr>
+    <tr>
+        <td><h5>--table-conf</h5></td>
+        <td>The configuration for Paimon table sink. Each configuration should be specified in the format "key=value". See <a href="//paimon.apache.org/docs/0.5/maintenance/configurations/">here</a> for a complete list of table configurations.</td>
+    </tr>
+    </tbody>
+</table>
+<p>Only tables with primary keys will be synchronized.</p>
+<p>This action will build a single combined sink for all tables. For each Kafka topic&rsquo;s table to be synchronized, if the
+corresponding Paimon table does not exist, this action will automatically create the table, and its schema will be derived
+from all specified Kafka topic&rsquo;s tables. If the Paimon table already exists and its schema is different from that parsed
+from Kafka record, this action will try to preform schema evolution.</p>
+<p>Example</p>
+<p>Synchronization from one Kafka topic to Paimon database.</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">&lt;FLINK_HOME&gt;/bin/flink run <span class="se">\
+</span><span class="se"></span>    /path/to/paimon-flink-action-0.5.0-incubating.jar <span class="se">\
+</span><span class="se"></span>    kafka-sync-database <span class="se">\
+</span><span class="se"></span>    --warehouse hdfs:///path/to/warehouse <span class="se">\
+</span><span class="se"></span>    --database test_db <span class="se">\
+</span><span class="se"></span>    --kafka-conf properties.bootstrap.servers<span class="o">=</span>127.0.0.1:9020 <span class="se">\
+</span><span class="se"></span>    --kafka-conf <span class="nv">topic</span><span class="o">=</span>order <span class="se">\
+</span><span class="se"></span>    --kafka-conf properties.group.id<span class="o">=</span><span class="m">123456</span> <span class="se">\
+</span><span class="se"></span>    --kafka-conf value.format<span class="o">=</span>canal-json <span class="se">\
+</span><span class="se"></span>    --catalog-conf <span class="nv">metastore</span><span class="o">=</span>hive <span class="se">\
+</span><span class="se"></span>    --catalog-conf <span class="nv">uri</span><span class="o">=</span>thrift://hive-metastore:9083 <span class="se">\
+</span><span class="se"></span>    --table-conf <span class="nv">bucket</span><span class="o">=</span><span class="m">4</span> <span class="se">\
+</span><span class="se"></span>    --table-conf changelog-producer<span class="o">=</span>input <span class="se">\
+</span><span class="se"></span>    --table-conf sink.parallelism<span class="o">=</span><span class="m">4</span>
+</code></pre></div><p>Synchronization from multiple Kafka topics to Paimon database.</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">&lt;FLINK_HOME&gt;/bin/flink run <span class="se">\
+</span><span class="se"></span>    /path/to/paimon-flink-action-0.5.0-incubating.jar <span class="se">\
+</span><span class="se"></span>    kafka-sync-database <span class="se">\
+</span><span class="se"></span>    --warehouse hdfs:///path/to/warehouse <span class="se">\
+</span><span class="se"></span>    --database test_db <span class="se">\
+</span><span class="se"></span>    --kafka-conf properties.bootstrap.servers<span class="o">=</span>127.0.0.1:9020 <span class="se">\
+</span><span class="se"></span>    --kafka-conf <span class="nv">topic</span><span class="o">=</span>order<span class="se">\;</span>logistic_order<span class="se">\;</span>user <span class="se">\
+</span><span class="se"></span>    --kafka-conf properties.group.id<span class="o">=</span><span class="m">123456</span> <span class="se">\
+</span><span class="se"></span>    --kafka-conf value.format<span class="o">=</span>canal-json <span class="se">\
+</span><span class="se"></span>    --catalog-conf <span class="nv">metastore</span><span class="o">=</span>hive <span class="se">\
+</span><span class="se"></span>    --catalog-conf <span class="nv">uri</span><span class="o">=</span>thrift://hive-metastore:9083 <span class="se">\
+</span><span class="se"></span>    --table-conf <span class="nv">bucket</span><span class="o">=</span><span class="m">4</span> <span class="se">\
+</span><span class="se"></span>    --table-conf changelog-producer<span class="o">=</span>input <span class="se">\
+</span><span class="se"></span>    --table-conf sink.parallelism<span class="o">=</span><span class="m">4</span>
+</code></pre></div><h2 id="mongodb">
+  MongoDB
+  <a class="anchor" href="#mongodb">#</a>
+</h2>
+<h3 id="prepare-mongodb-bundled-jar">
+  Prepare MongoDB Bundled Jar
+  <a class="anchor" href="#prepare-mongodb-bundled-jar">#</a>
+</h3>
+<pre><code>flink-sql-connector-mongodb-*.jar
+</code></pre><h3 id="synchronizing-tables-2">
+  Synchronizing Tables
+  <a class="anchor" href="#synchronizing-tables-2">#</a>
+</h3>
+<p>By using <a href="/docs/0.5/api/java/org/apache/paimon/flink/action/cdc/mongodb/MongoDBSyncTableAction">MongoDBSyncTableAction</a> in a Flink DataStream job or directly through <code>flink run</code>, users can synchronize one collection from MongoDB into one Paimon table.</p>
+<p>To use this feature through <code>flink run</code>, run the following shell command.</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">&lt;FLINK_HOME&gt;/bin/flink run <span class="se">\
+</span><span class="se"></span>    /path/to/paimon-flink-action-0.5.0-incubating.jar <span class="se">\
+</span><span class="se"></span>    mongodb-sync-table
+    --warehouse &lt;warehouse-path&gt; <span class="se">\
+</span><span class="se"></span>    --database &lt;database-name&gt; <span class="se">\
+</span><span class="se"></span>    --table &lt;table-name&gt; <span class="se">\
+</span><span class="se"></span>    <span class="o">[</span>--partition-keys &lt;partition-keys&gt;<span class="o">]</span> <span class="se">\
+</span><span class="se"></span>    <span class="o">[</span>--mongodb-conf &lt;mongodb-cdc-source-conf&gt; <span class="o">[</span>--mongodb-conf &lt;mongodb-cdc-source-conf&gt; ...<span class="o">]]</span> <span class="se">\
+</span><span class="se"></span>    <span class="o">[</span>--catalog-conf &lt;paimon-catalog-conf&gt; <span class="o">[</span>--catalog-conf &lt;paimon-catalog-conf&gt; ...<span class="o">]]</span> <span class="se">\
+</span><span class="se"></span>    <span class="o">[</span>--table-conf &lt;paimon-table-sink-conf&gt; <span class="o">[</span>--table-conf &lt;paimon-table-sink-conf&gt; ...<span class="o">]]</span>
+</code></pre></div><p>Here are a few points to take note of:</p>
+<ol>
+<li>
+<p>The &ldquo;mongodb-conf&rdquo; introduces the &ldquo;schema.start.mode&rdquo; parameter on top of the MongoDB CDC source configuration.&ldquo;schema.start.mode&rdquo; provides two modes: &ldquo;dynamic&rdquo; (default) and &ldquo;specified&rdquo;.
+In &ldquo;dynamic&rdquo; mode, MongoDB schema information is parsed at one level, which forms the basis for schema change evolution.
+In &ldquo;specified&rdquo; mode, synchronization takes place according to specified criteria.
+This can be done by configuring &ldquo;field.name&rdquo; to specify the synchronization fields and &ldquo;parser.path&rdquo; to specify the JSON parsing path for those fields.
+The difference between the two is that the &ldquo;specify&rdquo; mode requires the user to explicitly identify the fields to be used and create a mapping table based on those fields.
+Dynamic mode, on the other hand, ensures that Paimon and MongoDB always keep the top-level fields consistent, eliminating the need to focus on specific fields.
+Further processing of the data table is required when using values from nested fields.</p>
+</li>
+<li>
+<p>The synchronized table is required to have its primary key set as <code>_id</code>.
+This is because MongoDB&rsquo;s change events are recorded before updates in messages.
+Consequently, we can only convert them into Flink&rsquo;s UPSERT change log stream.
+The upstart stream demands a unique key, which is why we must declare <code>_id</code> as the primary key.
+Declaring other columns as primary keys is not feasible, as delete operations only encompass the _id and sharding key, excluding other keys and values.</p>
+</li>
+<li>
+<p>MongoDB Change Streams are designed to return simple JSON documents without any data type definitions. This is because MongoDB is a document-oriented database, and one of its core features is the dynamic schema, where documents can contain different fields, and the data types of fields can be flexible. Therefore, the absence of data type definitions in Change Streams is to maintain this flexibility and extensibility.
+For this reason, we have set all field data types for synchronizing MongoDB to Paimon as String to address the issue of not being able to obtain data types.</p>
+</li>
+</ol>
+<p>If the Paimon table you specify does not exist, this action will automatically create the table. Its schema will be derived from MongoDB collection.</p>
+<p>Example 1: synchronize collection into one Paimon table</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">&lt;FLINK_HOME&gt;/bin/flink run <span class="se">\
+</span><span class="se"></span>    /path/to/paimon-flink-action-0.5.0-incubating.jar <span class="se">\
+</span><span class="se"></span>    mongodb-sync-table <span class="se">\
+</span><span class="se"></span>    --warehouse hdfs:///path/to/warehouse <span class="se">\
+</span><span class="se"></span>    --database test_db <span class="se">\
+</span><span class="se"></span>    --table test_table <span class="se">\
+</span><span class="se"></span>    --partition-keys pt <span class="se">\
+</span><span class="se"></span>    --mongodb-conf <span class="nv">hosts</span><span class="o">=</span>127.0.0.1:27017 <span class="se">\
+</span><span class="se"></span>    --mongodb-conf <span class="nv">username</span><span class="o">=</span>root <span class="se">\
+</span><span class="se"></span>    --mongodb-conf <span class="nv">password</span><span class="o">=</span><span class="m">123456</span> <span class="se">\
+</span><span class="se"></span>    --mongodb-conf <span class="nv">database</span><span class="o">=</span>source_db <span class="se">\
+</span><span class="se"></span>    --mongodb-conf <span class="nv">collection</span><span class="o">=</span>source_table1 <span class="se">\
+</span><span class="se"></span>    --catalog-conf <span class="nv">metastore</span><span class="o">=</span>hive <span class="se">\
+</span><span class="se"></span>    --catalog-conf <span class="nv">uri</span><span class="o">=</span>thrift://hive-metastore:9083 <span class="se">\
+</span><span class="se"></span>    --table-conf <span class="nv">bucket</span><span class="o">=</span><span class="m">4</span> <span class="se">\
+</span><span class="se"></span>    --table-conf changelog-producer<span class="o">=</span>input <span class="se">\
+</span><span class="se"></span>    --table-conf sink.parallelism<span class="o">=</span><span class="m">4</span>
+</code></pre></div><p>Example 2: Synchronize collection into a Paimon table according to the specified field mapping.</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">&lt;FLINK_HOME&gt;/bin/flink run <span class="se">\
+</span><span class="se"></span>    /path/to/paimon-flink-action-0.5.0-incubating.jar <span class="se">\
+</span><span class="se"></span>    mongodb-sync-table <span class="se">\
+</span><span class="se"></span>    --warehouse hdfs:///path/to/warehouse <span class="se">\
+</span><span class="se"></span>    --database test_db <span class="se">\
+</span><span class="se"></span>    --table test_table <span class="se">\
+</span><span class="se"></span>    --partition-keys pt <span class="se">\
+</span><span class="se"></span>    --mongodb-conf <span class="nv">hosts</span><span class="o">=</span>127.0.0.1:27017 <span class="se">\
+</span><span class="se"></span>    --mongodb-conf <span class="nv">username</span><span class="o">=</span>root <span class="se">\
+</span><span class="se"></span>    --mongodb-conf <span class="nv">password</span><span class="o">=</span><span class="m">123456</span> <span class="se">\
+</span><span class="se"></span>    --mongodb-conf <span class="nv">database</span><span class="o">=</span>source_db <span class="se">\
+</span><span class="se"></span>    --mongodb-conf <span class="nv">collection</span><span class="o">=</span>source_table1 <span class="se">\
+</span><span class="se"></span>    --mongodb-conf schema.start.mode<span class="o">=</span>specified <span class="se">\
+</span><span class="se"></span>    --mongodb-conf field.name<span class="o">=</span>_id,name,description <span class="se">\
+</span><span class="se"></span>    --mongodb-conf parser.path<span class="o">=</span>_id,name,description <span class="se">\
+</span><span class="se"></span>    --catalog-conf <span class="nv">metastore</span><span class="o">=</span>hive <span class="se">\
+</span><span class="se"></span>    --catalog-conf <span class="nv">uri</span><span class="o">=</span>thrift://hive-metastore:9083 <span class="se">\
+</span><span class="se"></span>    --table-conf <span class="nv">bucket</span><span class="o">=</span><span class="m">4</span> <span class="se">\
+</span><span class="se"></span>    --table-conf changelog-producer<span class="o">=</span>input <span class="se">\
+</span><span class="se"></span>    --table-conf sink.parallelism<span class="o">=</span><span class="m">4</span>
+</code></pre></div><h3 id="synchronizing-databases-2">
+  Synchronizing Databases
+  <a class="anchor" href="#synchronizing-databases-2">#</a>
+</h3>
+<p>By using <a href="/docs/0.5/api/java/org/apache/paimon/flink/action/cdc/mongodb/MongoDBSyncDatabaseAction">MongoDBSyncDatabaseAction</a> in a Flink DataStream job or directly through <code>flink run</code>, users can synchronize the whole MongoDB database into one Paimon database.</p>
+<p>To use this feature through <code>flink run</code>, run the following shell command.</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">&lt;FLINK_HOME&gt;/bin/flink run <span class="se">\
+</span><span class="se"></span>    /path/to/paimon-flink-action-0.5.0-incubating.jar <span class="se">\
+</span><span class="se"></span>    mongodb-sync-database
+    --warehouse &lt;warehouse-path&gt; <span class="se">\
+</span><span class="se"></span>    --database &lt;database-name&gt; <span class="se">\
+</span><span class="se"></span>    <span class="o">[</span>--table-prefix &lt;paimon-table-prefix&gt;<span class="o">]</span> <span class="se">\
+</span><span class="se"></span>    <span class="o">[</span>--table-suffix &lt;paimon-table-suffix&gt;<span class="o">]</span> <span class="se">\
+</span><span class="se"></span>    <span class="o">[</span>--including-tables &lt;mongodb-table-name<span class="p">|</span>name-regular-expr&gt;<span class="o">]</span> <span class="se">\
+</span><span class="se"></span>    <span class="o">[</span>--excluding-tables &lt;mongodb-table-name<span class="p">|</span>name-regular-expr&gt;<span class="o">]</span> <span class="se">\
+</span><span class="se"></span>    <span class="o">[</span>--mongodb-conf &lt;mongodb-cdc-source-conf&gt; <span class="o">[</span>--mongodb-conf &lt;mongodb-cdc-source-conf&gt; ...<span class="o">]]</span> <span class="se">\
+</span><span class="se"></span>    <span class="o">[</span>--catalog-conf &lt;paimon-catalog-conf&gt; <span class="o">[</span>--catalog-conf &lt;paimon-catalog-conf&gt; ...<span class="o">]]</span> <span class="se">\
+</span><span class="se"></span>    <span class="o">[</span>--table-conf &lt;paimon-table-sink-conf&gt; <span class="o">[</span>--table-conf &lt;paimon-table-sink-conf&gt; ...<span class="o">]]</span>
+</code></pre></div><p>All collections to be synchronized need to set _id as the primary key.
+For each MongoDB collection to be synchronized, if the corresponding Paimon table does not exist, this action will automatically create the table.
+Its schema will be derived from all specified MongoDB collection. If the Paimon table already exists, its schema will be compared against the schema of all specified MongoDB collection.
+Any MongoDB tables created after the commencement of the task will automatically be included.</p>
+<p>Example 1: synchronize entire database</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">&lt;FLINK_HOME&gt;/bin/flink run <span class="se">\
+</span><span class="se"></span>    /path/to/paimon-flink-action-0.5.0-incubating.jar <span class="se">\
+</span><span class="se"></span>    mongodb-sync-database <span class="se">\
+</span><span class="se"></span>    --warehouse hdfs:///path/to/warehouse <span class="se">\
+</span><span class="se"></span>    --database test_db <span class="se">\
+</span><span class="se"></span>    --mongodb-conf <span class="nv">hosts</span><span class="o">=</span>127.0.0.1:27017 <span class="se">\
+</span><span class="se"></span>    --mongodb-conf <span class="nv">username</span><span class="o">=</span>root <span class="se">\
+</span><span class="se"></span>    --mongodb-conf <span class="nv">password</span><span class="o">=</span><span class="m">123456</span> <span class="se">\
+</span><span class="se"></span>    --mongodb-conf <span class="nv">database</span><span class="o">=</span>source_db <span class="se">\
+</span><span class="se"></span>    --catalog-conf <span class="nv">metastore</span><span class="o">=</span>hive <span class="se">\
+</span><span class="se"></span>    --catalog-conf <span class="nv">uri</span><span class="o">=</span>thrift://hive-metastore:9083 <span class="se">\
+</span><span class="se"></span>    --table-conf <span class="nv">bucket</span><span class="o">=</span><span class="m">4</span> <span class="se">\
+</span><span class="se"></span>    --table-conf changelog-producer<span class="o">=</span>input <span class="se">\
+</span><span class="se"></span>    --table-conf sink.parallelism<span class="o">=</span><span class="m">4</span>
+</code></pre></div><p>Example 2: Synchronize the specified table.</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">&lt;FLINK_HOME&gt;/bin/flink run <span class="se">\
+</span><span class="se"></span>--fromSavepoint savepointPath <span class="se">\
+</span><span class="se"></span>/path/to/paimon-flink-action-0.5.0-incubating.jar <span class="se">\
+</span><span class="se"></span>mongodb-sync-database <span class="se">\
+</span><span class="se"></span>--warehouse hdfs:///path/to/warehouse <span class="se">\
+</span><span class="se"></span>--database test_db <span class="se">\
+</span><span class="se"></span>--mongodb-conf <span class="nv">hosts</span><span class="o">=</span>127.0.0.1:27017 <span class="se">\
+</span><span class="se"></span>--mongodb-conf <span class="nv">username</span><span class="o">=</span>root <span class="se">\
+</span><span class="se"></span>--mongodb-conf <span class="nv">password</span><span class="o">=</span><span class="m">123456</span> <span class="se">\
+</span><span class="se"></span>--mongodb-conf <span class="nv">database</span><span class="o">=</span>source_db <span class="se">\
+</span><span class="se"></span>--catalog-conf <span class="nv">metastore</span><span class="o">=</span>hive <span class="se">\
+</span><span class="se"></span>--catalog-conf <span class="nv">uri</span><span class="o">=</span>thrift://hive-metastore:9083 <span class="se">\
+</span><span class="se"></span>--table-conf <span class="nv">bucket</span><span class="o">=</span><span class="m">4</span> <span class="se">\
+</span><span class="se"></span>--including-tables <span class="s1">&#39;product|user|address|order|custom&#39;</span>
+</code></pre></div><h2 id="schema-change-evolution">
+  Schema Change Evolution
+  <a class="anchor" href="#schema-change-evolution">#</a>
+</h2>
+<p>Cdc Ingestion supports a limited number of schema changes. Currently, the framework can not rename table, drop columns, so the
+behaviors of <code>RENAME TABLE</code> and <code>DROP COLUMN</code> will be ignored, <code>RENAME COLUMN</code> will add a new column. Currently supported schema changes includes:</p>
+<ul>
+<li>
+<p>Adding columns.</p>
+</li>
+<li>
+<p>Altering column types. More specifically,</p>
+<ul>
+<li>altering from a string type (char, varchar, text) to another string type with longer length,</li>
+<li>altering from a binary type (binary, varbinary, blob) to another binary type with longer length,</li>
+<li>altering from an integer type (tinyint, smallint, int, bigint) to another integer type with wider range,</li>
+<li>altering from a floating-point type (float, double) to another floating-point type with wider range,</li>
+</ul>
+<p>are supported.</p>
+</li>
+</ul>
+<h2 id="computed-functions">
+  Computed Functions
+  <a class="anchor" href="#computed-functions">#</a>
+</h2>
+<p><code>--computed-column</code> are the definitions of computed columns. The argument field is from Kafka topic&rsquo;s table field name. Supported expressions are:</p>
+
+
+<table class="configuration table table-bordered">
+    <thead>
+    <tr>
+        <th class="text-left" style="width: 15%">Function</th>
+        <th class="text-left" style="width: 85%">Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td><h5>year(date-column)</h5></td>
+        <td>Extract year from a DATE, DATETIME or TIMESTAMP. Output is an INT value represent the year.</td>
+    </tr>
+    <tr>
+        <td><h5>month(date-column)</h5></td>
+        <td>Extract month of year from a DATE, DATETIME or TIMESTAMP. Output is an INT value represent the month of year.</td>
+    </tr>
+    <tr>
+        <td><h5>day(date-column)</h5></td>
+        <td>Extract day of month from a DATE, DATETIME or TIMESTAMP. Output is an INT value represent the day of month.</td>
+    </tr>
+    <tr>
+        <td><h5>hour(date-column)</h5></td>
+        <td>Extract hour from a DATE, DATETIME or TIMESTAMP. Output is an INT value represent the hour.</td>
+    </tr>
+    <tr>
+        <td><h5>date_format(date-column)</h5></td>
+        <td>Convert date format from a DATE, DATETIME or TIMESTAMP. Output is a string value in converted date format.</td>
+    </tr>
+    <tr>
+        <td><h5>substring(column,beginInclusive)</h5></td>
+        <td>Get column.substring(beginInclusive). Output is a STRING.</td>
+    </tr>
+    <tr>
+        <td><h5>substring(column,beginInclusive,endExclusive)</h5></td>
+        <td>Get column.substring(beginInclusive,endExclusive). Output is a STRING.</td>
+    </tr>
+    <tr>
+        <td><h5>truncate(column,width)</h5></td>
+        <td>truncate column by width. Output type is same with column.If the column is a STRING, truncate(column,width) will truncate the string to width characters, namely `value.substring(0, width)`.
+             If the column is an INT or LONG, truncate(column,width) will truncate the number with the algorithm `v - (((v % W) + W) % W)`. The `redundant` compute part is to keep the result always positive.
+             If the column is a DECIMAL, truncate(column,width) will truncate the decimal with the algorithm: let `scaled_W = decimal(W, scale(v))`, then return `v - (v % scaled_W)`.</td>
+    </tr>
+    </tbody>
+</table>
+<h2 id="special-data-type-mapping">
+  Special Data Type Mapping
+  <a class="anchor" href="#special-data-type-mapping">#</a>
+</h2>
+<ol>
+<li>MySQL TINYINT(1) type will be mapped to Boolean by default. If you want to store number (-128~127) in it like MySQL,
+you can specify type mapping option <code>tinyint1-not-bool</code> (Use <code>--type-mapping</code>), then the column will be mapped to TINYINT in Paimon table.</li>
+<li>You can use type mapping option <code>to-nullable</code> (Use <code>--type-mapping</code>) to ignore all NOT NULL constraints (except primary keys).</li>
+<li>You can use type mapping option <code>to-string</code> (Use <code>--type-mapping</code>) to map all MySQL data type to STRING.</li>
+<li>MySQL BIT(1) type will be mapped to Boolean.</li>
+<li>When using Hive catalog, MySQL TIME type will be mapped to STRING.</li>
+<li>MySQL BINARY will be mapped to Paimon VARBINARY. This is because the binary value is passed as bytes in binlog, so it
+should be mapped to byte type (BYTES or VARBINARY). We choose VARBINARY because it can retain the length information.</li>
+</ol>
+<h2 id="faq">
+  FAQ
+  <a class="anchor" href="#faq">#</a>
+</h2>
+<ol>
+<li>Chinese characters in records ingested from MySQL are garbled.</li>
+</ol>
+<ul>
+<li>Try to set <code>env.java.opts: -Dfile.encoding=UTF-8</code> in <code>flink-conf.yaml</code>
+(the option is changed to <code>env.java.opts.all</code> since Flink-1.17).</li>
+</ul>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  
+
+
+
+
+<a href="//github.com/apache/incubator-paimon/edit/0.5/docs/content/how-to/cdc-ingestion.md" style="color:black"><i class="fa fa-edit fa-fw"></i>Edit This Page</a>
+
+
+ 
+        
+      </footer>
+
+      
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      
+  
+
+<nav id="TableOfContents"><h3>On This Page <button class="toc" onclick="collapseToc()"><i class="fa fa-compress" aria-hidden="true"></i></button></h3>
+  <ul>
+    <li><a href="#mysql">MySQL</a>
+      <ul>
+        <li><a href="#prepare-cdc-bundled-jar">Prepare CDC Bundled Jar</a></li>
+        <li><a href="#synchronizing-tables">Synchronizing Tables</a></li>
+        <li><a href="#synchronizing-databases">Synchronizing Databases</a></li>
+      </ul>
+    </li>
+    <li><a href="#kafka">Kafka</a>
+      <ul>
+        <li><a href="#prepare-kafka-bundled-jar">Prepare Kafka Bundled Jar</a></li>
+        <li><a href="#supported-formats">Supported Formats</a></li>
+        <li><a href="#synchronizing-tables-1">Synchronizing Tables</a></li>
+        <li><a href="#synchronizing-databases-1">Synchronizing Databases</a></li>
+      </ul>
+    </li>
+    <li><a href="#mongodb">MongoDB</a>
+      <ul>
+        <li><a href="#prepare-mongodb-bundled-jar">Prepare MongoDB Bundled Jar</a></li>
+        <li><a href="#synchronizing-tables-2">Synchronizing Tables</a></li>
+        <li><a href="#synchronizing-databases-2">Synchronizing Databases</a></li>
+      </ul>
+    </li>
+    <li><a href="#schema-change-evolution">Schema Change Evolution</a></li>
+    <li><a href="#computed-functions">Computed Functions</a></li>
+    <li><a href="#special-data-type-mapping">Special Data Type Mapping</a></li>
+    <li><a href="#faq">FAQ</a></li>
+  </ul>
+</nav>
+
+ 
+    </aside>
+    <aside class="expand-toc">
+      <button class="toc" onclick="expandToc()">
+        <i class="fa fa-expand" aria-hidden="true"></i>
+      </button>
+    </aside>
+    
+  </main>
+
+  
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

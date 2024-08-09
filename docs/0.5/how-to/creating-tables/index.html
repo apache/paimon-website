@@ -1,0 +1,1824 @@
+
+<!DOCTYPE html>
+<html lang="en" dir=>
+
+<head>
+  <meta name="generator" content="Hugo 0.80.0" />
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Creating Tables #  Creating Catalog Managed Tables #  Tables created in Paimon catalogs are managed by the catalog. When the table is dropped from catalog, its table files will also be deleted.
+The following SQL assumes that you have registered and are using a Paimon catalog. It creates a managed table named MyTable with five columns in the catalog&rsquo;s default database, where dt, hh and user_id are the primary keys.">
+<meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="Creating Tables" />
+<meta property="og:description" content="Creating Tables #  Creating Catalog Managed Tables #  Tables created in Paimon catalogs are managed by the catalog. When the table is dropped from catalog, its table files will also be deleted.
+The following SQL assumes that you have registered and are using a Paimon catalog. It creates a managed table named MyTable with five columns in the catalog&rsquo;s default database, where dt, hh and user_id are the primary keys." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="//paimon.apache.org/docs/0.5/how-to/creating-tables/" />
+
+<title>Creating Tables | Apache Paimon</title>
+<link rel="manifest" href="/docs/0.5/manifest.json">
+<link rel="icon" href="/docs/0.5/favicon.png" type="image/x-icon">
+<link rel="stylesheet" href="/docs/0.5/book.min.3bc4108a5b57c9a7e6fcae92ff69940435f8c46c4e1e4a311aedc9b2d8e06792.css" integrity="sha256-O8QQiltXyafm/K6S/2mUBDX4xGxOHkoxGu3JstjgZ5I=">
+<script defer src="/docs/0.5/en.search.min.45baff9c645deb8b39a64e9342f7813d73087e3394deb1161dbd9e10c97a3107.js" integrity="sha256-Rbr/nGRd64s5pk6TQveBPXMIfjOU3rEWHb2eEMl6MQc="></script>
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+  
+
+<link rel="stylesheet" type="text/css" href="//paimon.apache.org/docs/0.5/font-awesome/css/font-awesome.min.css">
+<script src="//paimon.apache.org/docs/0.5/js/anchor.min.js"></script>
+<script src="//paimon.apache.org/docs/0.5/js/flink.js"></script>
+
+
+  
+  <script>
+    var _paq = window._paq = window._paq || [];
+     
+     
+    _paq.push(['disableCookies']);
+     
+    _paq.push(["setDomains", ["*.flink.apache.org","*.nightlies.apache.org/flink"]]);
+    _paq.push(['trackPageView']);
+    _paq.push(['enableLinkTracking']);
+    (function() {
+      var u="//matomo.privacy.apache.org/";
+      _paq.push(['setTrackerUrl', u+'matomo.php']);
+      _paq.push(['setSiteId', '1']);
+      var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+      g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+    })();
+  </script>
+  
+</head>
+
+<body dir=>
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      
+  
+
+<nav>
+
+
+<a id="logo" href="//paimon.apache.org/docs/0.5">
+    <img width="100%" src="//paimon.apache.org/docs/0.5/paimon_black.svg">
+</a>
+<p style="text-align:right">0.5.0-incubating</p>
+
+<div class="book-search">
+  <input type="text" id="book-search-input" placeholder="Search" aria-label="Search" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-dc8a1c63e6da60163016ce21cae1faa0" class="toggle"  />
+    <label for="section-dc8a1c63e6da60163016ce21cae1faa0" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-book title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Concepts</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/concepts/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/concepts/basic-concepts/" class="">Basic Concepts</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/concepts/file-layouts/" class="">File Layouts</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/concepts/file-operations/" class="">File Operations</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/concepts/primary-key-table/" class="">Primary Key Table</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/concepts/append-only-table/" class="">Append Only Table</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/concepts/external-log-systems/" class="">External Log Systems</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-90f5541dc4fa46a212e954b9193ea0f9" class="toggle"  />
+    <label for="section-90f5541dc4fa46a212e954b9193ea0f9" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-gear title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Engines</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/engines/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/engines/flink/" class="">Flink</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/engines/spark3/" class="">Spark3</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/engines/spark2/" class="">Spark2</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/engines/hive/" class="">Hive</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/engines/presto/" class="">Presto</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/engines/trino/" class="">Trino</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-e2d76c106dab115385ef7f124cda2ba4" class="toggle"  />
+    <label for="section-e2d76c106dab115385ef7f124cda2ba4" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-folder title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Filesystems</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/filesystems/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/filesystems/hdfs/" class="">HDFS</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/filesystems/oss/" class="">OSS</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/filesystems/s3/" class="">S3</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-f6ca435e98b926845c0060f9e7f85362" class="toggle" checked />
+    <label for="section-f6ca435e98b926845c0060f9e7f85362" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-database title maindish" aria-hidden="true"></i>&nbsp;&nbsp;How to</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/how-to/creating-catalogs/" class="">Creating Catalogs</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/how-to/creating-tables/" class=" active">Creating Tables</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/how-to/altering-tables/" class="">Altering Tables</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/how-to/writing-tables/" class="">Writing Tables</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/how-to/querying-tables/" class="">Querying Tables</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/how-to/system-tables/" class="">System Tables</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/how-to/lookup-joins/" class="">Lookup Joins</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/how-to/cdc-ingestion/" class="">CDC Ingestion</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-697a4b6a0388d6cfa4f418aba3b4edfe" class="toggle"  />
+    <label for="section-697a4b6a0388d6cfa4f418aba3b4edfe" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-wrench title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Maintenance</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/maintenance/write-performance/" class="">Write Performance</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/maintenance/read-performance/" class="">Read Performance</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/maintenance/multiple-writers/" class="">Multiple Writers</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/maintenance/manage-snapshots/" class="">Manage Snapshots</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/maintenance/manage-partition/" class="">Manage Partition</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/maintenance/manage-files/" class="">Manage Files</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/maintenance/rescale-bucket/" class="">Rescale Bucket</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/maintenance/manage-tags/" class="">Manage Tags</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/maintenance/configurations/" class="">Configurations</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-1b3eda2e8317c0686a4d41cefa0a3453" class="toggle"  />
+    <label for="section-1b3eda2e8317c0686a4d41cefa0a3453" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-briefcase title maindish" aria-hidden="true"></i>&nbsp;&nbsp;API</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/api/java-api/" class="">Java API</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/api/flink-api/" class="">Flink API</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  	<br/>
+  
+  
+    <input type="checkbox" id="section-8c828bcf882f666cdd6821a70cc768ee" class="toggle"  />
+    <label for="section-8c828bcf882f666cdd6821a70cc768ee" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-sitemap title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Project</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/project/roadmap/" class="">Roadmap</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/project/download/" class="">Download</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/project/contributing/" class="">Contributing</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br/>
+<hr class="menu-break">
+
+<a href="//paimon.apache.org" style="color:black;margin-bottom:0.5em"><i class="link fa fa-external-link title" aria-hidden="true"></i> Project Homepage</a>
+<br/>
+
+<a href="//paimon.apache.org/docs/master/api/java/" style="color:black;margin-bottom:0.5em"><i class="link fa fa-external-link title" aria-hidden="true"></i> JavaDocs</a>
+<br/>
+
+<hr class="menu-break">
+<li style="list-style-type: none">
+  <br>
+  <input type="checkbox" id="section-version-picker" class="toggle">
+  <label for="section-version-picker" class="flex justify-between">
+     <div style="font-weight:450;margin-bottom:0.5em">Pick Docs Version</div>
+     <span>▾</span>
+  </label>
+  <ul>
+    <a href="//paimon.apache.org/docs/0.5">
+      0.5 (✓)
+    </a>
+    <hr class="menu-break">
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/master">
+          master
+        </a>
+      </li>
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/0.5">
+          stable
+        </a>
+      </li>
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/0.4">
+          0.4
+        </a>
+      </li>
+    
+    <hr class="menu-break">
+    <li>
+      <a href="//paimon.apache.org/docs/0.5/versions">
+          All Versions
+      </a>
+    </li>
+  </ul>
+</li>
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var menu=document.querySelector("aside.book-menu nav");addEventListener("beforeunload",function(event){localStorage.setItem("menu.scrollTop",menu.scrollTop);});menu.scrollTop=localStorage.getItem("menu.scrollTop");})();</script>
+
+
+ 
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/docs/0.5/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <strong>Creating Tables</strong>
+
+  <label for="toc-control">
+    
+    <img src="/docs/0.5/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden clearfix">
+    
+  
+
+<nav id="TableOfContents"><h3>On This Page <button class="toc" onclick="collapseToc()"><i class="fa fa-compress" aria-hidden="true"></i></button></h3>
+  <ul>
+    <li><a href="#creating-catalog-managed-tables">Creating Catalog Managed Tables</a>
+      <ul>
+        <li><a href="#partitioned-tables">Partitioned Tables</a></li>
+        <li><a href="#specify-statistics-mode">Specify Statistics Mode</a></li>
+        <li><a href="#field-default-value">Field Default Value</a></li>
+      </ul>
+    </li>
+    <li><a href="#create-table-as">Create Table As</a>
+      <ul>
+        <li><a href="#create-table-like">Create Table Like</a></li>
+        <li><a href="#table-properties">Table Properties</a></li>
+      </ul>
+    </li>
+    <li><a href="#creating-external-tables">Creating External Tables</a></li>
+    <li><a href="#creating-temporary-tables">Creating Temporary Tables</a></li>
+  </ul>
+</nav>
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+
+
+
+
+
+
+      
+  <article class="markdown"><!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<h1 id="creating-tables">
+  Creating Tables
+  <a class="anchor" href="#creating-tables">#</a>
+</h1>
+<h2 id="creating-catalog-managed-tables">
+  Creating Catalog Managed Tables
+  <a class="anchor" href="#creating-catalog-managed-tables">#</a>
+</h2>
+<p>Tables created in Paimon <a href="//paimon.apache.org/docs/0.5/how-to/creating-catalogs/">catalogs</a> are managed by the catalog. When the table is dropped from catalog, its table files will also be deleted.</p>
+<p>The following SQL assumes that you have registered and are using a Paimon catalog. It creates a managed table named <code>MyTable</code> with five columns in the catalog&rsquo;s <code>default</code> database, where <code>dt</code>, <code>hh</code> and <code>user_id</code> are the primary keys.</p>
+
+
+
+
+
+<div class="book-tabs"><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Flink"
+    name="tabs-primary-keys-example"
+    id="tabs-primary-keys-example-0"
+    checked="checked" 
+    onclick="onSwitch('Flink')"
+  />
+  <label for="tabs-primary-keys-example-0">Flink</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">MyTable</span> <span class="p">(</span>
+    <span class="n">user_id</span> <span class="nb">BIGINT</span><span class="p">,</span>
+    <span class="n">item_id</span> <span class="nb">BIGINT</span><span class="p">,</span>
+    <span class="n">behavior</span> <span class="n">STRING</span><span class="p">,</span>
+    <span class="n">dt</span> <span class="n">STRING</span><span class="p">,</span>
+    <span class="n">hh</span> <span class="n">STRING</span><span class="p">,</span>
+    <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="p">(</span><span class="n">dt</span><span class="p">,</span> <span class="n">hh</span><span class="p">,</span> <span class="n">user_id</span><span class="p">)</span> <span class="k">NOT</span> <span class="n">ENFORCED</span>
+<span class="p">);</span>
+</code></pre></div></div><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Spark3"
+    name="tabs-primary-keys-example"
+    id="tabs-primary-keys-example-1"
+     
+    onclick="onSwitch('Spark3')"
+  />
+  <label for="tabs-primary-keys-example-1">Spark3</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">MyTable</span> <span class="p">(</span>
+    <span class="n">user_id</span> <span class="nb">BIGINT</span><span class="p">,</span>
+    <span class="n">item_id</span> <span class="nb">BIGINT</span><span class="p">,</span>
+    <span class="n">behavior</span> <span class="n">STRING</span><span class="p">,</span>
+    <span class="n">dt</span> <span class="n">STRING</span><span class="p">,</span>
+    <span class="n">hh</span> <span class="n">STRING</span>
+<span class="p">)</span> <span class="n">TBLPROPERTIES</span> <span class="p">(</span>
+    <span class="s1">&#39;primary-key&#39;</span> <span class="o">=</span> <span class="s1">&#39;dt,hh,user_id&#39;</span>
+<span class="p">);</span>
+</code></pre></div></div><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Hive"
+    name="tabs-primary-keys-example"
+    id="tabs-primary-keys-example-2"
+     
+    onclick="onSwitch('Hive')"
+  />
+  <label for="tabs-primary-keys-example-2">Hive</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SET</span> <span class="n">hive</span><span class="p">.</span><span class="n">metastore</span><span class="p">.</span><span class="n">warehouse</span><span class="p">.</span><span class="n">dir</span><span class="o">=</span><span class="n">warehouse_path</span><span class="p">;</span>
+
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">MyTable</span> <span class="p">(</span>
+    <span class="n">user_id</span> <span class="nb">BIGINT</span><span class="p">,</span>
+    <span class="n">item_id</span> <span class="nb">BIGINT</span><span class="p">,</span>
+    <span class="n">behavior</span> <span class="n">STRING</span><span class="p">,</span>
+    <span class="n">dt</span> <span class="n">STRING</span><span class="p">,</span>
+    <span class="n">hh</span> <span class="n">STRING</span>
+<span class="p">)</span>
+<span class="n">STORED</span> <span class="k">BY</span> <span class="s1">&#39;org.apache.paimon.hive.PaimonStorageHandler&#39;</span>
+<span class="n">TBLPROPERTIES</span> <span class="p">(</span>
+    <span class="s1">&#39;primary-key&#39;</span> <span class="o">=</span> <span class="s1">&#39;dt,hh,user_id&#39;</span>
+<span class="p">);</span>
+</code></pre></div></div><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Trino"
+    name="tabs-primary-keys-example"
+    id="tabs-primary-keys-example-3"
+     
+    onclick="onSwitch('Trino')"
+  />
+  <label for="tabs-primary-keys-example-3">Trino</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">MyTable</span> <span class="p">(</span>
+    <span class="n">user_id</span> <span class="nb">BIGINT</span><span class="p">,</span>
+    <span class="n">item_id</span> <span class="nb">BIGINT</span><span class="p">,</span>
+    <span class="n">behavior</span> <span class="nb">VARCHAR</span><span class="p">,</span>
+    <span class="n">dt</span> <span class="nb">VARCHAR</span><span class="p">,</span>
+    <span class="n">hh</span> <span class="nb">VARCHAR</span>
+<span class="p">)</span> <span class="k">WITH</span> <span class="p">(</span>
+    <span class="n">primary_key</span> <span class="o">=</span> <span class="nb">ARRAY</span><span class="p">[</span><span class="s1">&#39;dt&#39;</span><span class="p">,</span> <span class="s1">&#39;hh&#39;</span><span class="p">,</span> <span class="s1">&#39;user_id&#39;</span><span class="p">]</span>
+<span class="p">);</span>
+</code></pre></div></div><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Presto"
+    name="tabs-primary-keys-example"
+    id="tabs-primary-keys-example-4"
+     
+    onclick="onSwitch('Presto')"
+  />
+  <label for="tabs-primary-keys-example-4">Presto</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">MyTable</span> <span class="p">(</span>
+    <span class="n">user_id</span> <span class="nb">BIGINT</span><span class="p">,</span>
+    <span class="n">item_id</span> <span class="nb">BIGINT</span><span class="p">,</span>
+    <span class="n">behavior</span> <span class="nb">VARCHAR</span><span class="p">,</span>
+    <span class="n">dt</span> <span class="nb">VARCHAR</span><span class="p">,</span>
+    <span class="n">hh</span> <span class="nb">VARCHAR</span>
+<span class="p">)</span> <span class="k">WITH</span> <span class="p">(</span>
+    <span class="n">primary_key</span> <span class="o">=</span> <span class="nb">ARRAY</span><span class="p">[</span><span class="s1">&#39;dt&#39;</span><span class="p">,</span> <span class="s1">&#39;hh&#39;</span><span class="p">,</span> <span class="s1">&#39;user_id&#39;</span><span class="p">]</span>
+<span class="p">);</span>
+</code></pre></div></div></div>
+
+<blockquote class="book-hint info">
+  Inserting jobs on the table should be stopped prior to dropping tables, or table files couldn&rsquo;t be deleted completely.
+</blockquote>
+
+<h3 id="partitioned-tables">
+  Partitioned Tables
+  <a class="anchor" href="#partitioned-tables">#</a>
+</h3>
+<p>The following SQL creates a table named <code>MyTable</code> with five columns partitioned by <code>dt</code> and <code>hh</code>, where <code>dt</code>, <code>hh</code> and <code>user_id</code> are the primary keys.</p>
+
+
+
+
+
+<div class="book-tabs"><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Flink"
+    name="tabs-partitions-example"
+    id="tabs-partitions-example-0"
+    checked="checked" 
+    onclick="onSwitch('Flink')"
+  />
+  <label for="tabs-partitions-example-0">Flink</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">MyTable</span> <span class="p">(</span>
+    <span class="n">user_id</span> <span class="nb">BIGINT</span><span class="p">,</span>
+    <span class="n">item_id</span> <span class="nb">BIGINT</span><span class="p">,</span>
+    <span class="n">behavior</span> <span class="n">STRING</span><span class="p">,</span>
+    <span class="n">dt</span> <span class="n">STRING</span><span class="p">,</span>
+    <span class="n">hh</span> <span class="n">STRING</span><span class="p">,</span>
+    <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="p">(</span><span class="n">dt</span><span class="p">,</span> <span class="n">hh</span><span class="p">,</span> <span class="n">user_id</span><span class="p">)</span> <span class="k">NOT</span> <span class="n">ENFORCED</span>
+<span class="p">)</span> <span class="n">PARTITIONED</span> <span class="k">BY</span> <span class="p">(</span><span class="n">dt</span><span class="p">,</span> <span class="n">hh</span><span class="p">);</span>
+</code></pre></div></div><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Spark3"
+    name="tabs-partitions-example"
+    id="tabs-partitions-example-1"
+     
+    onclick="onSwitch('Spark3')"
+  />
+  <label for="tabs-partitions-example-1">Spark3</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">MyTable</span> <span class="p">(</span>
+    <span class="n">user_id</span> <span class="nb">BIGINT</span><span class="p">,</span>
+    <span class="n">item_id</span> <span class="nb">BIGINT</span><span class="p">,</span>
+    <span class="n">behavior</span> <span class="n">STRING</span><span class="p">,</span>
+    <span class="n">dt</span> <span class="n">STRING</span><span class="p">,</span>
+    <span class="n">hh</span> <span class="n">STRING</span>
+<span class="p">)</span> <span class="n">PARTITIONED</span> <span class="k">BY</span> <span class="p">(</span><span class="n">dt</span><span class="p">,</span> <span class="n">hh</span><span class="p">)</span> <span class="n">TBLPROPERTIES</span> <span class="p">(</span>
+    <span class="s1">&#39;primary-key&#39;</span> <span class="o">=</span> <span class="s1">&#39;dt,hh,user_id&#39;</span>
+<span class="p">);</span>
+</code></pre></div></div><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Hive"
+    name="tabs-partitions-example"
+    id="tabs-partitions-example-2"
+     
+    onclick="onSwitch('Hive')"
+  />
+  <label for="tabs-partitions-example-2">Hive</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SET</span> <span class="n">hive</span><span class="p">.</span><span class="n">metastore</span><span class="p">.</span><span class="n">warehouse</span><span class="p">.</span><span class="n">dir</span><span class="o">=</span><span class="n">warehouse_path</span><span class="p">;</span>
+
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">MyTable</span> <span class="p">(</span>
+    <span class="n">user_id</span> <span class="nb">BIGINT</span><span class="p">,</span>
+    <span class="n">item_id</span> <span class="nb">BIGINT</span><span class="p">,</span>
+    <span class="n">behavior</span> <span class="n">STRING</span>
+<span class="p">)</span> <span class="n">PARTITIONED</span> <span class="k">BY</span> <span class="p">(</span> 
+    <span class="n">dt</span> <span class="n">STRING</span><span class="p">,</span>
+    <span class="n">hh</span> <span class="n">STRING</span>
+<span class="p">)</span>
+<span class="n">STORED</span> <span class="k">BY</span> <span class="s1">&#39;org.apache.paimon.hive.PaimonStorageHandler&#39;</span>
+<span class="n">TBLPROPERTIES</span> <span class="p">(</span>
+    <span class="s1">&#39;primary-key&#39;</span> <span class="o">=</span> <span class="s1">&#39;dt,hh,user_id&#39;</span>
+<span class="p">);</span>
+</code></pre></div></div><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Trino"
+    name="tabs-partitions-example"
+    id="tabs-partitions-example-3"
+     
+    onclick="onSwitch('Trino')"
+  />
+  <label for="tabs-partitions-example-3">Trino</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">MyTable</span> <span class="p">(</span>
+    <span class="n">user_id</span> <span class="nb">BIGINT</span><span class="p">,</span>
+    <span class="n">item_id</span> <span class="nb">BIGINT</span><span class="p">,</span>
+    <span class="n">behavior</span> <span class="nb">VARCHAR</span><span class="p">,</span>
+    <span class="n">dt</span> <span class="nb">VARCHAR</span><span class="p">,</span>
+    <span class="n">hh</span> <span class="nb">VARCHAR</span>
+<span class="p">)</span> <span class="k">WITH</span> <span class="p">(</span>
+    <span class="n">primary_key</span> <span class="o">=</span> <span class="nb">ARRAY</span><span class="p">[</span><span class="s1">&#39;dt&#39;</span><span class="p">,</span> <span class="s1">&#39;hh&#39;</span><span class="p">,</span> <span class="s1">&#39;user_id&#39;</span><span class="p">],</span>
+    <span class="n">partitioned_by</span> <span class="o">=</span> <span class="nb">ARRAY</span><span class="p">[</span><span class="s1">&#39;dt&#39;</span><span class="p">,</span> <span class="s1">&#39;hh&#39;</span><span class="p">]</span>
+<span class="p">);</span>
+</code></pre></div></div><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Presto"
+    name="tabs-partitions-example"
+    id="tabs-partitions-example-4"
+     
+    onclick="onSwitch('Presto')"
+  />
+  <label for="tabs-partitions-example-4">Presto</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">MyTable</span> <span class="p">(</span>
+    <span class="n">user_id</span> <span class="nb">BIGINT</span><span class="p">,</span>
+    <span class="n">item_id</span> <span class="nb">BIGINT</span><span class="p">,</span>
+    <span class="n">behavior</span> <span class="nb">VARCHAR</span><span class="p">,</span>
+    <span class="n">dt</span> <span class="nb">VARCHAR</span><span class="p">,</span>
+    <span class="n">hh</span> <span class="nb">VARCHAR</span>
+<span class="p">)</span> <span class="k">WITH</span> <span class="p">(</span>
+    <span class="n">primary_key</span> <span class="o">=</span> <span class="nb">ARRAY</span><span class="p">[</span><span class="s1">&#39;dt&#39;</span><span class="p">,</span> <span class="s1">&#39;hh&#39;</span><span class="p">,</span> <span class="s1">&#39;user_id&#39;</span><span class="p">],</span>
+    <span class="n">partitioned_by</span> <span class="o">=</span> <span class="nb">ARRAY</span><span class="p">[</span><span class="s1">&#39;dt&#39;</span><span class="p">,</span> <span class="s1">&#39;hh&#39;</span><span class="p">]</span>
+<span class="p">);</span>
+</code></pre></div></div></div>
+
+<blockquote class="book-hint info">
+  By configuring <a href="//paimon.apache.org/docs/0.5/maintenance/manage-partition/">partition.expiration-time</a>, expired partitions can be automatically deleted.
+</blockquote>
+
+<h4 id="pick-partition-fields">
+  Pick Partition Fields
+  <a class="anchor" href="#pick-partition-fields">#</a>
+</h4>
+<blockquote class="book-hint info">
+  Partition fields must be a subset of primary keys if primary keys are defined.
+</blockquote>
+
+<p>The following three types of fields may be defined as partition fields in the warehouse:</p>
+<ul>
+<li>Creation Time (Recommended): The creation time is generally immutable, so you can confidently treat it as a partition field
+and add it to the primary key.</li>
+<li>Event Time: Event time is a field in the original table. For CDC data, such as tables synchronized from MySQL
+CDC or Changelogs generated by Paimon, they are all complete CDC data, including <code>UPDATE_BEFORE</code> records, even
+if you declare the primary key containing partition field, you can achieve the unique effect (require <code>'changelog-producer'='input'</code>).</li>
+<li>CDC op_ts: It cannot be defined as a partition field, unable to know previous record timestamp.</li>
+</ul>
+<h3 id="specify-statistics-mode">
+  Specify Statistics Mode
+  <a class="anchor" href="#specify-statistics-mode">#</a>
+</h3>
+<p>Paimon will automatically collect the statistics of the data file for speeding up the query process. There are four modes supported:</p>
+<ul>
+<li><code>full</code>: collect the full metrics: <code>null_count, min, max</code> .</li>
+<li><code>truncate(length)</code>: length can be any positive number, the default mode is <code>truncate(16)</code>, which means collect the null count, min/max value with truncated length of 16.
+This is mainly to avoid too big column which will enlarge the manifest file.</li>
+<li><code>counts</code>: only collect the null count.</li>
+<li><code>none</code>: disable the metadata stats collection.</li>
+</ul>
+<p>The statistics collector mode can be configured by <code>'metadata.stats-mode'</code>, by default is <code>'truncate(16)'</code>.
+You can configure the field level by setting <code>'fields.{field_name}.stats-mode'</code>.</p>
+<h3 id="field-default-value">
+  Field Default Value
+  <a class="anchor" href="#field-default-value">#</a>
+</h3>
+<p>Paimon table currently supports setting default values for fields in table properties,
+note that partition fields and primary key fields can not be specified.
+
+
+
+
+
+<div class="book-tabs"><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Flink"
+    name="tabs-default-value-example"
+    id="tabs-default-value-example-0"
+    checked="checked" 
+    onclick="onSwitch('Flink')"
+  />
+  <label for="tabs-default-value-example-0">Flink</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">MyTable</span> <span class="p">(</span>
+    <span class="n">user_id</span> <span class="nb">BIGINT</span><span class="p">,</span>
+    <span class="n">item_id</span> <span class="nb">BIGINT</span><span class="p">,</span>
+    <span class="n">behavior</span> <span class="n">STRING</span><span class="p">,</span>
+    <span class="n">dt</span> <span class="n">STRING</span><span class="p">,</span>
+    <span class="n">hh</span> <span class="n">STRING</span><span class="p">,</span>
+    <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="p">(</span><span class="n">dt</span><span class="p">,</span> <span class="n">hh</span><span class="p">,</span> <span class="n">user_id</span><span class="p">)</span> <span class="k">NOT</span> <span class="n">ENFORCED</span>
+<span class="p">)</span> <span class="n">PARTITIONED</span> <span class="k">BY</span> <span class="p">(</span><span class="n">dt</span><span class="p">,</span> <span class="n">hh</span><span class="p">)</span>
+<span class="k">with</span><span class="p">(</span>
+    <span class="s1">&#39;fields.item_id.default-value&#39;</span><span class="o">=</span><span class="s1">&#39;0&#39;</span>
+<span class="p">);</span>
+</code></pre></div></div><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Spark3"
+    name="tabs-default-value-example"
+    id="tabs-default-value-example-1"
+     
+    onclick="onSwitch('Spark3')"
+  />
+  <label for="tabs-default-value-example-1">Spark3</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">MyTable</span> <span class="p">(</span>
+    <span class="n">user_id</span> <span class="nb">BIGINT</span><span class="p">,</span>
+    <span class="n">item_id</span> <span class="nb">BIGINT</span><span class="p">,</span>
+    <span class="n">behavior</span> <span class="n">STRING</span><span class="p">,</span>
+    <span class="n">dt</span> <span class="n">STRING</span><span class="p">,</span>
+    <span class="n">hh</span> <span class="n">STRING</span>
+<span class="p">)</span> <span class="n">PARTITIONED</span> <span class="k">BY</span> <span class="p">(</span><span class="n">dt</span><span class="p">,</span> <span class="n">hh</span><span class="p">)</span> <span class="n">TBLPROPERTIES</span> <span class="p">(</span>
+    <span class="s1">&#39;primary-key&#39;</span> <span class="o">=</span> <span class="s1">&#39;dt,hh,user_id&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;fields.item_id.default-value&#39;</span><span class="o">=</span><span class="s1">&#39;0&#39;</span>
+<span class="p">);</span>
+</code></pre></div></div><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Hive"
+    name="tabs-default-value-example"
+    id="tabs-default-value-example-2"
+     
+    onclick="onSwitch('Hive')"
+  />
+  <label for="tabs-default-value-example-2">Hive</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SET</span> <span class="n">hive</span><span class="p">.</span><span class="n">metastore</span><span class="p">.</span><span class="n">warehouse</span><span class="p">.</span><span class="n">dir</span><span class="o">=</span><span class="n">warehouse_path</span><span class="p">;</span>
+
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">MyTable</span> <span class="p">(</span>
+    <span class="n">user_id</span> <span class="nb">BIGINT</span><span class="p">,</span>
+    <span class="n">item_id</span> <span class="nb">BIGINT</span><span class="p">,</span>
+    <span class="n">behavior</span> <span class="n">STRING</span><span class="p">,</span>
+    <span class="n">dt</span> <span class="n">STRING</span><span class="p">,</span>
+    <span class="n">hh</span> <span class="n">STRING</span>
+<span class="p">)</span>
+<span class="n">STORED</span> <span class="k">BY</span> <span class="s1">&#39;org.apache.paimon.hive.PaimonStorageHandler&#39;</span>
+<span class="n">TBLPROPERTIES</span> <span class="p">(</span>
+    <span class="s1">&#39;primary-key&#39;</span> <span class="o">=</span> <span class="s1">&#39;dt,hh,user_id&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;partition&#39;</span><span class="o">=</span><span class="s1">&#39;dt,hh&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;fields.item_id.default-value&#39;</span><span class="o">=</span><span class="s1">&#39;0&#39;</span>
+<span class="p">);</span>
+</code></pre></div></div></div>
+</p>
+<h2 id="create-table-as">
+  Create Table As
+  <a class="anchor" href="#create-table-as">#</a>
+</h2>
+<p>Table can be created and populated by the results of a query, for example, we have a sql like this: <code>CREATE TABLE table_b AS SELECT id, name FORM table_a</code>,
+The resulting table <code>table_b</code> will be equivalent to create the table and insert the data with the following statement:
+<code>CREATE TABLE table_b (id INT, name STRING); INSERT INTO table_b SELECT id, name FROM table_a;</code></p>
+<p>We can specify the primary key or partition when use <code>CREATE TABLE AS SELECT</code>, for syntax, please refer to the following sql.</p>
+
+
+
+
+
+<div class="book-tabs"><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Flink"
+    name="tabs-create-table-as"
+    id="tabs-create-table-as-0"
+    checked="checked" 
+    onclick="onSwitch('Flink')"
+  />
+  <label for="tabs-create-table-as-0">Flink</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql">
+<span class="cm">/* For streaming mode, you need to enable the checkpoint. */</span>
+
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">MyTable</span> <span class="p">(</span>
+    <span class="n">user_id</span> <span class="nb">BIGINT</span><span class="p">,</span>
+    <span class="n">item_id</span> <span class="nb">BIGINT</span>
+<span class="p">);</span>
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">MyTableAs</span> <span class="k">AS</span> <span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">MyTable</span><span class="p">;</span>
+
+<span class="cm">/* partitioned table */</span>
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">MyTablePartition</span> <span class="p">(</span>
+     <span class="n">user_id</span> <span class="nb">BIGINT</span><span class="p">,</span>
+     <span class="n">item_id</span> <span class="nb">BIGINT</span><span class="p">,</span>
+     <span class="n">behavior</span> <span class="n">STRING</span><span class="p">,</span>
+     <span class="n">dt</span> <span class="n">STRING</span><span class="p">,</span>
+     <span class="n">hh</span> <span class="n">STRING</span>
+<span class="p">)</span> <span class="n">PARTITIONED</span> <span class="k">BY</span> <span class="p">(</span><span class="n">dt</span><span class="p">,</span> <span class="n">hh</span><span class="p">);</span>
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">MyTablePartitionAs</span> <span class="k">WITH</span> <span class="p">(</span><span class="s1">&#39;partition&#39;</span> <span class="o">=</span> <span class="s1">&#39;dt&#39;</span><span class="p">)</span> <span class="k">AS</span> <span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">MyTablePartition</span><span class="p">;</span>
+    
+<span class="cm">/* change options */</span>
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">MyTableOptions</span> <span class="p">(</span>
+       <span class="n">user_id</span> <span class="nb">BIGINT</span><span class="p">,</span>
+       <span class="n">item_id</span> <span class="nb">BIGINT</span>
+<span class="p">)</span> <span class="k">WITH</span> <span class="p">(</span><span class="s1">&#39;file.format&#39;</span> <span class="o">=</span> <span class="s1">&#39;orc&#39;</span><span class="p">);</span>
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">MyTableOptionsAs</span> <span class="k">WITH</span> <span class="p">(</span><span class="s1">&#39;file.format&#39;</span> <span class="o">=</span> <span class="s1">&#39;parquet&#39;</span><span class="p">)</span> <span class="k">AS</span> <span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">MyTableOptions</span><span class="p">;</span>
+
+<span class="cm">/* primary key */</span>
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">MyTablePk</span> <span class="p">(</span>
+      <span class="n">user_id</span> <span class="nb">BIGINT</span><span class="p">,</span>
+      <span class="n">item_id</span> <span class="nb">BIGINT</span><span class="p">,</span>
+      <span class="n">behavior</span> <span class="n">STRING</span><span class="p">,</span>
+      <span class="n">dt</span> <span class="n">STRING</span><span class="p">,</span>
+      <span class="n">hh</span> <span class="n">STRING</span><span class="p">,</span>
+      <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="p">(</span><span class="n">dt</span><span class="p">,</span> <span class="n">hh</span><span class="p">,</span> <span class="n">user_id</span><span class="p">)</span> <span class="k">NOT</span> <span class="n">ENFORCED</span>
+<span class="p">);</span>
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">MyTablePkAs</span> <span class="k">WITH</span> <span class="p">(</span><span class="s1">&#39;primary-key&#39;</span> <span class="o">=</span> <span class="s1">&#39;dt,hh&#39;</span><span class="p">)</span> <span class="k">AS</span> <span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">MyTablePk</span><span class="p">;</span>
+
+
+<span class="cm">/* primary key + partition */</span>
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">MyTableAll</span> <span class="p">(</span>
+      <span class="n">user_id</span> <span class="nb">BIGINT</span><span class="p">,</span>
+      <span class="n">item_id</span> <span class="nb">BIGINT</span><span class="p">,</span>
+      <span class="n">behavior</span> <span class="n">STRING</span><span class="p">,</span>
+      <span class="n">dt</span> <span class="n">STRING</span><span class="p">,</span>
+      <span class="n">hh</span> <span class="n">STRING</span><span class="p">,</span>
+      <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="p">(</span><span class="n">dt</span><span class="p">,</span> <span class="n">hh</span><span class="p">,</span> <span class="n">user_id</span><span class="p">)</span> <span class="k">NOT</span> <span class="n">ENFORCED</span> 
+<span class="p">)</span> <span class="n">PARTITIONED</span> <span class="k">BY</span> <span class="p">(</span><span class="n">dt</span><span class="p">,</span> <span class="n">hh</span><span class="p">);</span>
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">MyTableAllAs</span> <span class="k">WITH</span> <span class="p">(</span><span class="s1">&#39;primary-key&#39;</span> <span class="o">=</span> <span class="s1">&#39;dt,hh&#39;</span><span class="p">,</span> <span class="s1">&#39;partition&#39;</span> <span class="o">=</span> <span class="s1">&#39;dt&#39;</span><span class="p">)</span> <span class="k">AS</span> <span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">MyTableAll</span><span class="p">;</span>
+</code></pre></div></div><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Spark3"
+    name="tabs-create-table-as"
+    id="tabs-create-table-as-1"
+     
+    onclick="onSwitch('Spark3')"
+  />
+  <label for="tabs-create-table-as-1">Spark3</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">MyTable</span> <span class="p">(</span>
+     <span class="n">user_id</span> <span class="nb">BIGINT</span><span class="p">,</span>
+     <span class="n">item_id</span> <span class="nb">BIGINT</span>
+<span class="p">);</span>
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">MyTableAs</span> <span class="k">AS</span> <span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">MyTable</span><span class="p">;</span>
+
+<span class="cm">/* partitioned table*/</span>
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">MyTablePartition</span> <span class="p">(</span>
+      <span class="n">user_id</span> <span class="nb">BIGINT</span><span class="p">,</span>
+      <span class="n">item_id</span> <span class="nb">BIGINT</span><span class="p">,</span>
+      <span class="n">behavior</span> <span class="n">STRING</span><span class="p">,</span>
+      <span class="n">dt</span> <span class="n">STRING</span><span class="p">,</span>
+      <span class="n">hh</span> <span class="n">STRING</span>
+<span class="p">)</span> <span class="n">PARTITIONED</span> <span class="k">BY</span> <span class="p">(</span><span class="n">dt</span><span class="p">,</span> <span class="n">hh</span><span class="p">);</span>
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">MyTablePartitionAs</span> <span class="n">PARTITIONED</span> <span class="k">BY</span> <span class="p">(</span><span class="n">dt</span><span class="p">)</span> <span class="k">AS</span> <span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">MyTablePartition</span><span class="p">;</span>
+
+<span class="cm">/* change TBLPROPERTIES */</span>
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">MyTableOptions</span> <span class="p">(</span>
+       <span class="n">user_id</span> <span class="nb">BIGINT</span><span class="p">,</span>
+       <span class="n">item_id</span> <span class="nb">BIGINT</span>
+<span class="p">)</span> <span class="n">TBLPROPERTIES</span> <span class="p">(</span><span class="s1">&#39;file.format&#39;</span> <span class="o">=</span> <span class="s1">&#39;orc&#39;</span><span class="p">);</span>
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">MyTableOptionsAs</span> <span class="n">TBLPROPERTIES</span> <span class="p">(</span><span class="s1">&#39;file.format&#39;</span> <span class="o">=</span> <span class="s1">&#39;parquet&#39;</span><span class="p">)</span> <span class="k">AS</span> <span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">MyTableOptions</span><span class="p">;</span>
+
+
+<span class="cm">/* primary key */</span>
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">MyTablePk</span> <span class="p">(</span>
+     <span class="n">user_id</span> <span class="nb">BIGINT</span><span class="p">,</span>
+     <span class="n">item_id</span> <span class="nb">BIGINT</span><span class="p">,</span>
+     <span class="n">behavior</span> <span class="n">STRING</span><span class="p">,</span>
+     <span class="n">dt</span> <span class="n">STRING</span><span class="p">,</span>
+     <span class="n">hh</span> <span class="n">STRING</span>
+<span class="p">)</span> <span class="n">TBLPROPERTIES</span> <span class="p">(</span>
+    <span class="s1">&#39;primary-key&#39;</span> <span class="o">=</span> <span class="s1">&#39;dt,hh,user_id&#39;</span>
+<span class="p">);</span>
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">MyTablePkAs</span> <span class="n">TBLPROPERTIES</span> <span class="p">(</span><span class="s1">&#39;primary-key&#39;</span> <span class="o">=</span> <span class="s1">&#39;dt&#39;</span><span class="p">)</span> <span class="k">AS</span> <span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">MyTablePk</span><span class="p">;</span>
+
+<span class="cm">/* primary key + partition */</span>
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">MyTableAll</span> <span class="p">(</span>
+    <span class="n">user_id</span> <span class="nb">BIGINT</span><span class="p">,</span>
+    <span class="n">item_id</span> <span class="nb">BIGINT</span><span class="p">,</span>
+    <span class="n">behavior</span> <span class="n">STRING</span><span class="p">,</span>
+    <span class="n">dt</span> <span class="n">STRING</span><span class="p">,</span>
+    <span class="n">hh</span> <span class="n">STRING</span>
+<span class="p">)</span> <span class="n">PARTITIONED</span> <span class="k">BY</span> <span class="p">(</span><span class="n">dt</span><span class="p">,</span> <span class="n">hh</span><span class="p">)</span> <span class="n">TBLPROPERTIES</span> <span class="p">(</span>
+    <span class="s1">&#39;primary-key&#39;</span> <span class="o">=</span> <span class="s1">&#39;dt,hh,user_id&#39;</span>
+<span class="p">);</span>
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">MyTableAllAs</span> <span class="n">PARTITIONED</span> <span class="k">BY</span> <span class="p">(</span><span class="n">dt</span><span class="p">)</span> <span class="n">TBLPROPERTIES</span> <span class="p">(</span><span class="s1">&#39;primary-key&#39;</span> <span class="o">=</span> <span class="s1">&#39;dt,hh&#39;</span><span class="p">)</span> <span class="k">AS</span> <span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">MyTableAll</span><span class="p">;</span>
+</code></pre></div></div></div>
+
+<h3 id="create-table-like">
+  Create Table Like
+  <a class="anchor" href="#create-table-like">#</a>
+</h3>
+
+
+
+
+
+<div class="book-tabs"><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Flink"
+    name="tabs-create-table-like"
+    id="tabs-create-table-like-0"
+    checked="checked" 
+    onclick="onSwitch('Flink')"
+  />
+  <label for="tabs-create-table-like-0">Flink</label>
+  <div class="book-tabs-content markdown-inner"><p>To create a table with the same schema, partition, and table properties as another table, use CREATE TABLE LIKE.</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">MyTable</span> <span class="p">(</span>
+    <span class="n">user_id</span> <span class="nb">BIGINT</span><span class="p">,</span>
+    <span class="n">item_id</span> <span class="nb">BIGINT</span><span class="p">,</span>
+    <span class="n">behavior</span> <span class="n">STRING</span><span class="p">,</span>
+    <span class="n">dt</span> <span class="n">STRING</span><span class="p">,</span>
+    <span class="n">hh</span> <span class="n">STRING</span><span class="p">,</span>
+    <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="p">(</span><span class="n">dt</span><span class="p">,</span> <span class="n">hh</span><span class="p">,</span> <span class="n">user_id</span><span class="p">)</span> <span class="k">NOT</span> <span class="n">ENFORCED</span>
+<span class="p">);</span>
+
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">MyTableLike</span> <span class="k">LIKE</span> <span class="n">MyTable</span><span class="p">;</span>
+</code></pre></div></div></div>
+
+<h3 id="table-properties">
+  Table Properties
+  <a class="anchor" href="#table-properties">#</a>
+</h3>
+<p>Users can specify table properties to enable features or improve performance of Paimon. For a complete list of such properties, see <a href="//paimon.apache.org/docs/0.5/maintenance/configurations/">configurations</a>.</p>
+<p>The following SQL creates a table named <code>MyTable</code> with five columns partitioned by <code>dt</code> and <code>hh</code>, where <code>dt</code>, <code>hh</code> and <code>user_id</code> are the primary keys. This table has two properties: <code>'bucket' = '2'</code> and <code>'bucket-key' = 'user_id'</code>.</p>
+
+
+
+
+
+<div class="book-tabs"><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Flink"
+    name="tabs-table-properties-example"
+    id="tabs-table-properties-example-0"
+    checked="checked" 
+    onclick="onSwitch('Flink')"
+  />
+  <label for="tabs-table-properties-example-0">Flink</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">MyTable</span> <span class="p">(</span>
+    <span class="n">user_id</span> <span class="nb">BIGINT</span><span class="p">,</span>
+    <span class="n">item_id</span> <span class="nb">BIGINT</span><span class="p">,</span>
+    <span class="n">behavior</span> <span class="n">STRING</span><span class="p">,</span>
+    <span class="n">dt</span> <span class="n">STRING</span><span class="p">,</span>
+    <span class="n">hh</span> <span class="n">STRING</span><span class="p">,</span>
+    <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="p">(</span><span class="n">dt</span><span class="p">,</span> <span class="n">hh</span><span class="p">,</span> <span class="n">user_id</span><span class="p">)</span> <span class="k">NOT</span> <span class="n">ENFORCED</span>
+<span class="p">)</span> <span class="n">PARTITIONED</span> <span class="k">BY</span> <span class="p">(</span><span class="n">dt</span><span class="p">,</span> <span class="n">hh</span><span class="p">)</span> <span class="k">WITH</span> <span class="p">(</span>
+    <span class="s1">&#39;bucket&#39;</span> <span class="o">=</span> <span class="s1">&#39;2&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;bucket-key&#39;</span> <span class="o">=</span> <span class="s1">&#39;user_id&#39;</span>
+<span class="p">);</span>
+</code></pre></div></div><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Spark3"
+    name="tabs-table-properties-example"
+    id="tabs-table-properties-example-1"
+     
+    onclick="onSwitch('Spark3')"
+  />
+  <label for="tabs-table-properties-example-1">Spark3</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">MyTable</span> <span class="p">(</span>
+    <span class="n">user_id</span> <span class="nb">BIGINT</span><span class="p">,</span>
+    <span class="n">item_id</span> <span class="nb">BIGINT</span><span class="p">,</span>
+    <span class="n">behavior</span> <span class="n">STRING</span><span class="p">,</span>
+    <span class="n">dt</span> <span class="n">STRING</span><span class="p">,</span>
+    <span class="n">hh</span> <span class="n">STRING</span>
+<span class="p">)</span> <span class="n">PARTITIONED</span> <span class="k">BY</span> <span class="p">(</span><span class="n">dt</span><span class="p">,</span> <span class="n">hh</span><span class="p">)</span> <span class="n">TBLPROPERTIES</span> <span class="p">(</span>
+    <span class="s1">&#39;primary-key&#39;</span> <span class="o">=</span> <span class="s1">&#39;dt,hh,user_id&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;bucket&#39;</span> <span class="o">=</span> <span class="s1">&#39;2&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;bucket-key&#39;</span> <span class="o">=</span> <span class="s1">&#39;user_id&#39;</span>
+<span class="p">);</span>
+</code></pre></div></div><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Hive"
+    name="tabs-table-properties-example"
+    id="tabs-table-properties-example-2"
+     
+    onclick="onSwitch('Hive')"
+  />
+  <label for="tabs-table-properties-example-2">Hive</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">MyTable</span> <span class="p">(</span>
+    <span class="n">user_id</span> <span class="nb">BIGINT</span><span class="p">,</span>
+    <span class="n">item_id</span> <span class="nb">BIGINT</span><span class="p">,</span>
+    <span class="n">behavior</span> <span class="n">STRING</span><span class="p">,</span>
+    <span class="n">dt</span> <span class="n">STRING</span><span class="p">,</span>
+    <span class="n">hh</span> <span class="n">STRING</span>
+<span class="p">)</span>
+<span class="n">STORED</span> <span class="k">BY</span> <span class="s1">&#39;org.apache.paimon.hive.PaimonStorageHandler&#39;</span>
+<span class="n">TBLPROPERTIES</span> <span class="p">(</span>
+    <span class="s1">&#39;primary-key&#39;</span> <span class="o">=</span> <span class="s1">&#39;dt,hh,user_id&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;partition&#39;</span><span class="o">=</span><span class="s1">&#39;dt,hh&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;bucket&#39;</span> <span class="o">=</span> <span class="s1">&#39;2&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;bucket-key&#39;</span> <span class="o">=</span> <span class="s1">&#39;user_id&#39;</span>
+<span class="p">);</span>
+</code></pre></div></div><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Trino"
+    name="tabs-table-properties-example"
+    id="tabs-table-properties-example-3"
+     
+    onclick="onSwitch('Trino')"
+  />
+  <label for="tabs-table-properties-example-3">Trino</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">MyTable</span> <span class="p">(</span>
+    <span class="n">user_id</span> <span class="nb">BIGINT</span><span class="p">,</span>
+    <span class="n">item_id</span> <span class="nb">BIGINT</span><span class="p">,</span>
+    <span class="n">behavior</span> <span class="nb">VARCHAR</span><span class="p">,</span>
+    <span class="n">dt</span> <span class="nb">VARCHAR</span><span class="p">,</span>
+    <span class="n">hh</span> <span class="nb">VARCHAR</span>
+<span class="p">)</span> <span class="k">WITH</span> <span class="p">(</span>
+    <span class="n">primary_key</span> <span class="o">=</span> <span class="nb">ARRAY</span><span class="p">[</span><span class="s1">&#39;dt&#39;</span><span class="p">,</span> <span class="s1">&#39;hh&#39;</span><span class="p">,</span> <span class="s1">&#39;user_id&#39;</span><span class="p">],</span>
+    <span class="n">partitioned_by</span> <span class="o">=</span> <span class="nb">ARRAY</span><span class="p">[</span><span class="s1">&#39;dt&#39;</span><span class="p">,</span> <span class="s1">&#39;hh&#39;</span><span class="p">],</span>
+    <span class="n">bucket</span> <span class="o">=</span> <span class="s1">&#39;2&#39;</span><span class="p">,</span>
+    <span class="n">bucket_key</span> <span class="o">=</span> <span class="s1">&#39;user_id&#39;</span>
+<span class="p">);</span>
+</code></pre></div></div><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Presto"
+    name="tabs-table-properties-example"
+    id="tabs-table-properties-example-4"
+     
+    onclick="onSwitch('Presto')"
+  />
+  <label for="tabs-table-properties-example-4">Presto</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">MyTable</span> <span class="p">(</span>
+    <span class="n">user_id</span> <span class="nb">BIGINT</span><span class="p">,</span>
+    <span class="n">item_id</span> <span class="nb">BIGINT</span><span class="p">,</span>
+    <span class="n">behavior</span> <span class="nb">VARCHAR</span><span class="p">,</span>
+    <span class="n">dt</span> <span class="nb">VARCHAR</span><span class="p">,</span>
+    <span class="n">hh</span> <span class="nb">VARCHAR</span>
+<span class="p">)</span> <span class="k">WITH</span> <span class="p">(</span>
+    <span class="n">primary_key</span> <span class="o">=</span> <span class="nb">ARRAY</span><span class="p">[</span><span class="s1">&#39;dt&#39;</span><span class="p">,</span> <span class="s1">&#39;hh&#39;</span><span class="p">,</span> <span class="s1">&#39;user_id&#39;</span><span class="p">],</span>
+    <span class="n">partitioned_by</span> <span class="o">=</span> <span class="nb">ARRAY</span><span class="p">[</span><span class="s1">&#39;dt&#39;</span><span class="p">,</span> <span class="s1">&#39;hh&#39;</span><span class="p">],</span>
+    <span class="n">bucket</span> <span class="o">=</span> <span class="s1">&#39;2&#39;</span><span class="p">,</span>
+    <span class="n">bucket_key</span> <span class="o">=</span> <span class="s1">&#39;user_id&#39;</span>
+<span class="p">);</span>
+</code></pre></div></div></div>
+
+<h2 id="creating-external-tables">
+  Creating External Tables
+  <a class="anchor" href="#creating-external-tables">#</a>
+</h2>
+<blockquote class="book-hint info">
+  If the table already exists, options will not be updated into the table&rsquo;s metadata, just as dynamic options.
+</blockquote>
+
+<p>External tables are recorded but not managed by catalogs. If an external table is dropped, its table files will not be deleted.</p>
+<p>Paimon external tables can be used in any catalog. If you do not want to create a Paimon catalog and just want to read / write a table, you can consider external tables.</p>
+
+
+
+
+
+<div class="book-tabs"><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Flink"
+    name="tabs-external-table-example"
+    id="tabs-external-table-example-0"
+    checked="checked" 
+    onclick="onSwitch('Flink')"
+  />
+  <label for="tabs-external-table-example-0">Flink</label>
+  <div class="book-tabs-content markdown-inner"><p>Flink SQL supports reading and writing an external table. External Paimon tables are created by specifying the <code>connector</code> and <code>path</code> table properties. The following SQL creates an external table named <code>MyTable</code> with five columns, where the base path of table files is <code>hdfs:///path/to/table</code>.</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">MyTable</span> <span class="p">(</span>
+    <span class="n">user_id</span> <span class="nb">BIGINT</span><span class="p">,</span>
+    <span class="n">item_id</span> <span class="nb">BIGINT</span><span class="p">,</span>
+    <span class="n">behavior</span> <span class="n">STRING</span><span class="p">,</span>
+    <span class="n">dt</span> <span class="n">STRING</span><span class="p">,</span>
+    <span class="n">hh</span> <span class="n">STRING</span><span class="p">,</span>
+    <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="p">(</span><span class="n">dt</span><span class="p">,</span> <span class="n">hh</span><span class="p">,</span> <span class="n">user_id</span><span class="p">)</span> <span class="k">NOT</span> <span class="n">ENFORCED</span>
+<span class="p">)</span> <span class="k">WITH</span> <span class="p">(</span>
+    <span class="s1">&#39;connector&#39;</span> <span class="o">=</span> <span class="s1">&#39;paimon&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;path&#39;</span> <span class="o">=</span> <span class="s1">&#39;hdfs:///path/to/table&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;auto-create&#39;</span> <span class="o">=</span> <span class="s1">&#39;true&#39;</span> <span class="c1">-- this table property creates table files for an empty table if table path does not exist
+</span><span class="c1"></span>                           <span class="c1">-- currently only supported by Flink
+</span><span class="c1"></span><span class="p">);</span>
+</code></pre></div></div><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Spark3"
+    name="tabs-external-table-example"
+    id="tabs-external-table-example-1"
+     
+    onclick="onSwitch('Spark3')"
+  />
+  <label for="tabs-external-table-example-1">Spark3</label>
+  <div class="book-tabs-content markdown-inner"><p>Spark3 only supports creating external tables through Scala API. The following Scala code loads the table located at <code>hdfs:///path/to/table</code> into a <code>DataSet</code>.</p>
+<div class="highlight"><pre class="chroma"><code class="language-scala" data-lang="scala"><span class="k">val</span> <span class="n">dataset</span> <span class="k">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">format</span><span class="o">(</span><span class="s">&#34;paimon&#34;</span><span class="o">).</span><span class="n">load</span><span class="o">(</span><span class="s">&#34;hdfs:///path/to/table&#34;</span><span class="o">)</span>
+</code></pre></div></div><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Spark2"
+    name="tabs-external-table-example"
+    id="tabs-external-table-example-2"
+     
+    onclick="onSwitch('Spark2')"
+  />
+  <label for="tabs-external-table-example-2">Spark2</label>
+  <div class="book-tabs-content markdown-inner"><p>Spark2 only supports creating external tables through Scala API. The following Scala code loads the table located at <code>hdfs:///path/to/table</code> into a <code>DataSet</code>.</p>
+<div class="highlight"><pre class="chroma"><code class="language-scala" data-lang="scala"><span class="k">val</span> <span class="n">dataset</span> <span class="k">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">format</span><span class="o">(</span><span class="s">&#34;paimon&#34;</span><span class="o">).</span><span class="n">load</span><span class="o">(</span><span class="s">&#34;hdfs:///path/to/table&#34;</span><span class="o">)</span>
+</code></pre></div></div><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Hive"
+    name="tabs-external-table-example"
+    id="tabs-external-table-example-3"
+     
+    onclick="onSwitch('Hive')"
+  />
+  <label for="tabs-external-table-example-3">Hive</label>
+  <div class="book-tabs-content markdown-inner"><p>To access existing paimon table, you can also register them as external tables in Hive. The following SQL creates an
+external table named <code>my_table</code>, where the base path of table files is <code>hdfs:///path/to/table</code>. As schemas are stored
+in table files, users do not need to write column definitions.</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">CREATE</span> <span class="k">EXTERNAL</span> <span class="k">TABLE</span> <span class="n">my_table</span>
+<span class="n">STORED</span> <span class="k">BY</span> <span class="s1">&#39;org.apache.paimon.hive.PaimonStorageHandler&#39;</span>
+<span class="k">LOCATION</span> <span class="s1">&#39;hdfs:///path/to/table&#39;</span><span class="p">;</span>
+</code></pre></div></div></div>
+
+<h2 id="creating-temporary-tables">
+  Creating Temporary Tables
+  <a class="anchor" href="#creating-temporary-tables">#</a>
+</h2>
+
+
+
+
+
+<div class="book-tabs"><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Flink"
+    name="tabs-temporary-table-example"
+    id="tabs-temporary-table-example-0"
+    checked="checked" 
+    onclick="onSwitch('Flink')"
+  />
+  <label for="tabs-temporary-table-example-0">Flink</label>
+  <div class="book-tabs-content markdown-inner"><p>Temporary tables are only supported by Flink. Like external tables, temporary tables are just recorded but not managed by the current Flink SQL session. If the temporary table is dropped, its resources will not be deleted. Temporary tables are also dropped when Flink SQL session is closed.</p>
+<p>If you want to use Paimon catalog along with other tables but do not want to store them in other catalogs, you can create a temporary table. The following Flink SQL creates a Paimon catalog and a temporary table and also illustrates how to use both tables together.</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">CREATE</span> <span class="k">CATALOG</span> <span class="n">my_catalog</span> <span class="k">WITH</span> <span class="p">(</span>
+    <span class="s1">&#39;type&#39;</span> <span class="o">=</span> <span class="s1">&#39;paimon&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;warehouse&#39;</span> <span class="o">=</span> <span class="s1">&#39;hdfs:///path/to/warehouse&#39;</span>
+<span class="p">);</span>
+
+<span class="n">USE</span> <span class="k">CATALOG</span> <span class="n">my_catalog</span><span class="p">;</span>
+
+<span class="c1">-- Assume that there is already a table named my_table in my_catalog
+</span><span class="c1"></span>
+<span class="k">CREATE</span> <span class="k">TEMPORARY</span> <span class="k">TABLE</span> <span class="n">temp_table</span> <span class="p">(</span>
+    <span class="n">k</span> <span class="nb">INT</span><span class="p">,</span>
+    <span class="n">v</span> <span class="n">STRING</span>
+<span class="p">)</span> <span class="k">WITH</span> <span class="p">(</span>
+    <span class="s1">&#39;connector&#39;</span> <span class="o">=</span> <span class="s1">&#39;filesystem&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;path&#39;</span> <span class="o">=</span> <span class="s1">&#39;hdfs:///path/to/temp_table.csv&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;format&#39;</span> <span class="o">=</span> <span class="s1">&#39;csv&#39;</span>
+<span class="p">);</span>
+
+<span class="k">SELECT</span> <span class="n">my_table</span><span class="p">.</span><span class="n">k</span><span class="p">,</span> <span class="n">my_table</span><span class="p">.</span><span class="n">v</span><span class="p">,</span> <span class="n">temp_table</span><span class="p">.</span><span class="n">v</span> <span class="k">FROM</span> <span class="n">my_table</span> <span class="k">JOIN</span> <span class="n">temp_table</span> <span class="k">ON</span> <span class="n">my_table</span><span class="p">.</span><span class="n">k</span> <span class="o">=</span> <span class="n">temp_table</span><span class="p">.</span><span class="n">k</span><span class="p">;</span>
+</code></pre></div></div></div>
+
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  
+
+
+
+
+<a href="//github.com/apache/incubator-paimon/edit/0.5/docs/content/how-to/creating-tables.md" style="color:black"><i class="fa fa-edit fa-fw"></i>Edit This Page</a>
+
+
+ 
+        
+      </footer>
+
+      
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      
+  
+
+<nav id="TableOfContents"><h3>On This Page <button class="toc" onclick="collapseToc()"><i class="fa fa-compress" aria-hidden="true"></i></button></h3>
+  <ul>
+    <li><a href="#creating-catalog-managed-tables">Creating Catalog Managed Tables</a>
+      <ul>
+        <li><a href="#partitioned-tables">Partitioned Tables</a></li>
+        <li><a href="#specify-statistics-mode">Specify Statistics Mode</a></li>
+        <li><a href="#field-default-value">Field Default Value</a></li>
+      </ul>
+    </li>
+    <li><a href="#create-table-as">Create Table As</a>
+      <ul>
+        <li><a href="#create-table-like">Create Table Like</a></li>
+        <li><a href="#table-properties">Table Properties</a></li>
+      </ul>
+    </li>
+    <li><a href="#creating-external-tables">Creating External Tables</a></li>
+    <li><a href="#creating-temporary-tables">Creating Temporary Tables</a></li>
+  </ul>
+</nav>
+
+ 
+    </aside>
+    <aside class="expand-toc">
+      <button class="toc" onclick="expandToc()">
+        <i class="fa fa-expand" aria-hidden="true"></i>
+      </button>
+    </aside>
+    
+  </main>
+
+  
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

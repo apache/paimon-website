@@ -1,0 +1,1309 @@
+
+<!DOCTYPE html>
+<html lang="en" dir=>
+
+<head>
+  <meta name="generator" content="Hugo 0.80.0" />
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Trino #  This documentation is a guide for using Paimon in Trino.
+Version #  Paimon currently supports Trino 358 and above.
+Preparing Paimon Jar File #  Download the jar file with corresponding version.
+   Version Jar     [358, 368) paimon-trino-358-0.5-SNAPSHOT.jar   [368, 369) paimon-trino-368-0.5-SNAPSHOT.jar   [369, 370) paimon-trino-369-0.5-SNAPSHOT.jar   [370, 388) paimon-trino-370-0.5-SNAPSHOT.jar   [388, 393) paimon-trino-388-0.5-SNAPSHOT.jar   [393, 422] paimon-trino-393-0.">
+<meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="Trino" />
+<meta property="og:description" content="Trino #  This documentation is a guide for using Paimon in Trino.
+Version #  Paimon currently supports Trino 358 and above.
+Preparing Paimon Jar File #  Download the jar file with corresponding version.
+   Version Jar     [358, 368) paimon-trino-358-0.5-SNAPSHOT.jar   [368, 369) paimon-trino-368-0.5-SNAPSHOT.jar   [369, 370) paimon-trino-369-0.5-SNAPSHOT.jar   [370, 388) paimon-trino-370-0.5-SNAPSHOT.jar   [388, 393) paimon-trino-388-0.5-SNAPSHOT.jar   [393, 422] paimon-trino-393-0." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="//paimon.apache.org/docs/0.5/engines/trino/" />
+
+<title>Trino | Apache Paimon</title>
+<link rel="manifest" href="/docs/0.5/manifest.json">
+<link rel="icon" href="/docs/0.5/favicon.png" type="image/x-icon">
+<link rel="stylesheet" href="/docs/0.5/book.min.3bc4108a5b57c9a7e6fcae92ff69940435f8c46c4e1e4a311aedc9b2d8e06792.css" integrity="sha256-O8QQiltXyafm/K6S/2mUBDX4xGxOHkoxGu3JstjgZ5I=">
+<script defer src="/docs/0.5/en.search.min.45baff9c645deb8b39a64e9342f7813d73087e3394deb1161dbd9e10c97a3107.js" integrity="sha256-Rbr/nGRd64s5pk6TQveBPXMIfjOU3rEWHb2eEMl6MQc="></script>
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+  
+
+<link rel="stylesheet" type="text/css" href="//paimon.apache.org/docs/0.5/font-awesome/css/font-awesome.min.css">
+<script src="//paimon.apache.org/docs/0.5/js/anchor.min.js"></script>
+<script src="//paimon.apache.org/docs/0.5/js/flink.js"></script>
+
+
+  
+  <script>
+    var _paq = window._paq = window._paq || [];
+     
+     
+    _paq.push(['disableCookies']);
+     
+    _paq.push(["setDomains", ["*.flink.apache.org","*.nightlies.apache.org/flink"]]);
+    _paq.push(['trackPageView']);
+    _paq.push(['enableLinkTracking']);
+    (function() {
+      var u="//matomo.privacy.apache.org/";
+      _paq.push(['setTrackerUrl', u+'matomo.php']);
+      _paq.push(['setSiteId', '1']);
+      var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+      g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+    })();
+  </script>
+  
+</head>
+
+<body dir=>
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      
+  
+
+<nav>
+
+
+<a id="logo" href="//paimon.apache.org/docs/0.5">
+    <img width="100%" src="//paimon.apache.org/docs/0.5/paimon_black.svg">
+</a>
+<p style="text-align:right">0.5.0-incubating</p>
+
+<div class="book-search">
+  <input type="text" id="book-search-input" placeholder="Search" aria-label="Search" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-dc8a1c63e6da60163016ce21cae1faa0" class="toggle"  />
+    <label for="section-dc8a1c63e6da60163016ce21cae1faa0" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-book title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Concepts</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/concepts/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/concepts/basic-concepts/" class="">Basic Concepts</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/concepts/file-layouts/" class="">File Layouts</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/concepts/file-operations/" class="">File Operations</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/concepts/primary-key-table/" class="">Primary Key Table</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/concepts/append-only-table/" class="">Append Only Table</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/concepts/external-log-systems/" class="">External Log Systems</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-90f5541dc4fa46a212e954b9193ea0f9" class="toggle" checked />
+    <label for="section-90f5541dc4fa46a212e954b9193ea0f9" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-gear title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Engines</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/engines/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/engines/flink/" class="">Flink</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/engines/spark3/" class="">Spark3</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/engines/spark2/" class="">Spark2</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/engines/hive/" class="">Hive</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/engines/presto/" class="">Presto</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/engines/trino/" class=" active">Trino</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-e2d76c106dab115385ef7f124cda2ba4" class="toggle"  />
+    <label for="section-e2d76c106dab115385ef7f124cda2ba4" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-folder title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Filesystems</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/filesystems/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/filesystems/hdfs/" class="">HDFS</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/filesystems/oss/" class="">OSS</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/filesystems/s3/" class="">S3</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-f6ca435e98b926845c0060f9e7f85362" class="toggle"  />
+    <label for="section-f6ca435e98b926845c0060f9e7f85362" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-database title maindish" aria-hidden="true"></i>&nbsp;&nbsp;How to</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/how-to/creating-catalogs/" class="">Creating Catalogs</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/how-to/creating-tables/" class="">Creating Tables</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/how-to/altering-tables/" class="">Altering Tables</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/how-to/writing-tables/" class="">Writing Tables</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/how-to/querying-tables/" class="">Querying Tables</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/how-to/system-tables/" class="">System Tables</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/how-to/lookup-joins/" class="">Lookup Joins</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/how-to/cdc-ingestion/" class="">CDC Ingestion</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-697a4b6a0388d6cfa4f418aba3b4edfe" class="toggle"  />
+    <label for="section-697a4b6a0388d6cfa4f418aba3b4edfe" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-wrench title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Maintenance</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/maintenance/write-performance/" class="">Write Performance</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/maintenance/read-performance/" class="">Read Performance</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/maintenance/multiple-writers/" class="">Multiple Writers</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/maintenance/manage-snapshots/" class="">Manage Snapshots</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/maintenance/manage-partition/" class="">Manage Partition</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/maintenance/manage-files/" class="">Manage Files</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/maintenance/rescale-bucket/" class="">Rescale Bucket</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/maintenance/manage-tags/" class="">Manage Tags</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/maintenance/configurations/" class="">Configurations</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-1b3eda2e8317c0686a4d41cefa0a3453" class="toggle"  />
+    <label for="section-1b3eda2e8317c0686a4d41cefa0a3453" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-briefcase title maindish" aria-hidden="true"></i>&nbsp;&nbsp;API</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/api/java-api/" class="">Java API</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/api/flink-api/" class="">Flink API</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  	<br/>
+  
+  
+    <input type="checkbox" id="section-8c828bcf882f666cdd6821a70cc768ee" class="toggle"  />
+    <label for="section-8c828bcf882f666cdd6821a70cc768ee" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-sitemap title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Project</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/project/roadmap/" class="">Roadmap</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/project/download/" class="">Download</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.5/project/contributing/" class="">Contributing</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br/>
+<hr class="menu-break">
+
+<a href="//paimon.apache.org" style="color:black;margin-bottom:0.5em"><i class="link fa fa-external-link title" aria-hidden="true"></i> Project Homepage</a>
+<br/>
+
+<a href="//paimon.apache.org/docs/master/api/java/" style="color:black;margin-bottom:0.5em"><i class="link fa fa-external-link title" aria-hidden="true"></i> JavaDocs</a>
+<br/>
+
+<hr class="menu-break">
+<li style="list-style-type: none">
+  <br>
+  <input type="checkbox" id="section-version-picker" class="toggle">
+  <label for="section-version-picker" class="flex justify-between">
+     <div style="font-weight:450;margin-bottom:0.5em">Pick Docs Version</div>
+     <span>▾</span>
+  </label>
+  <ul>
+    <a href="//paimon.apache.org/docs/0.5">
+      0.5 (✓)
+    </a>
+    <hr class="menu-break">
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/master">
+          master
+        </a>
+      </li>
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/0.5">
+          stable
+        </a>
+      </li>
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/0.4">
+          0.4
+        </a>
+      </li>
+    
+    <hr class="menu-break">
+    <li>
+      <a href="//paimon.apache.org/docs/0.5/versions">
+          All Versions
+      </a>
+    </li>
+  </ul>
+</li>
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var menu=document.querySelector("aside.book-menu nav");addEventListener("beforeunload",function(event){localStorage.setItem("menu.scrollTop",menu.scrollTop);});menu.scrollTop=localStorage.getItem("menu.scrollTop");})();</script>
+
+
+ 
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/docs/0.5/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <strong>Trino</strong>
+
+  <label for="toc-control">
+    
+    <img src="/docs/0.5/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden clearfix">
+    
+  
+
+<nav id="TableOfContents"><h3>On This Page <button class="toc" onclick="collapseToc()"><i class="fa fa-compress" aria-hidden="true"></i></button></h3>
+  <ul>
+    <li><a href="#version">Version</a></li>
+    <li><a href="#preparing-paimon-jar-file">Preparing Paimon Jar File</a></li>
+    <li><a href="#tmp-dir">Tmp Dir</a></li>
+    <li><a href="#configure-paimon-catalog">Configure Paimon Catalog</a></li>
+    <li><a href="#kerberos">Kerberos</a></li>
+    <li><a href="#create-schema">Create Schema</a></li>
+    <li><a href="#create-table">Create Table</a></li>
+    <li><a href="#add-column">Add Column</a></li>
+    <li><a href="#query">Query</a></li>
+    <li><a href="#query-with-time-traveling">Query with Time Traveling</a></li>
+    <li><a href="#trino-to-paimon-type-mapping">Trino to Paimon type mapping</a></li>
+  </ul>
+</nav>
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+
+
+
+
+
+
+      
+  <article class="markdown"><!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<h1 id="trino">
+  Trino
+  <a class="anchor" href="#trino">#</a>
+</h1>
+<p>This documentation is a guide for using Paimon in Trino.</p>
+<h2 id="version">
+  Version
+  <a class="anchor" href="#version">#</a>
+</h2>
+<p>Paimon currently supports Trino 358 and above.</p>
+<h2 id="preparing-paimon-jar-file">
+  Preparing Paimon Jar File
+  <a class="anchor" href="#preparing-paimon-jar-file">#</a>
+</h2>
+<p>Download the jar file with corresponding version.</p>
+<table>
+<thead>
+<tr>
+<th>Version</th>
+<th>Jar</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>[358, 368)</td>
+<td><a href="https://repository.apache.org/snapshots/org/apache/paimon/paimon-trino-358/0.5-SNAPSHOT/">paimon-trino-358-0.5-SNAPSHOT.jar</a></td>
+</tr>
+<tr>
+<td>[368, 369)</td>
+<td><a href="https://repository.apache.org/snapshots/org/apache/paimon/paimon-trino-368/0.5-SNAPSHOT/">paimon-trino-368-0.5-SNAPSHOT.jar</a></td>
+</tr>
+<tr>
+<td>[369, 370)</td>
+<td><a href="https://repository.apache.org/snapshots/org/apache/paimon/paimon-trino-369/0.5-SNAPSHOT/">paimon-trino-369-0.5-SNAPSHOT.jar</a></td>
+</tr>
+<tr>
+<td>[370, 388)</td>
+<td><a href="https://repository.apache.org/snapshots/org/apache/paimon/paimon-trino-370/0.5-SNAPSHOT/">paimon-trino-370-0.5-SNAPSHOT.jar</a></td>
+</tr>
+<tr>
+<td>[388, 393)</td>
+<td><a href="https://repository.apache.org/snapshots/org/apache/paimon/paimon-trino-388/0.5-SNAPSHOT/">paimon-trino-388-0.5-SNAPSHOT.jar</a></td>
+</tr>
+<tr>
+<td>[393, 422]</td>
+<td><a href="https://repository.apache.org/snapshots/org/apache/paimon/paimon-trino-393/0.5-SNAPSHOT/">paimon-trino-393-0.5-SNAPSHOT.jar</a></td>
+</tr>
+<tr>
+<td>[422, latest]</td>
+<td><a href="https://repository.apache.org/snapshots/org/apache/paimon/paimon-trino-422/0.5-SNAPSHOT/">paimon-trino-422-0.5-SNAPSHOT.jar</a></td>
+</tr>
+</tbody>
+</table>
+<p>You can also manually build a bundled jar from the source code. However, there are a few preliminary steps that need to be taken before compiling:</p>
+<ul>
+<li>To build from the source code, <a href="https://github.com/apache/incubator-paimon-trino.git">clone the git repository</a>.</li>
+<li>Install JDK11 and JDK17 locally, and configure JDK11 as a global environment variable;</li>
+<li>Configure the toolchains.xml file in ${{ MAVEN_HOME }}, the content is as follows.</li>
+</ul>
+<pre><code> &lt;toolchains&gt;
+    &lt;toolchain&gt;
+        &lt;type&gt;jdk&lt;/type&gt;
+        &lt;provides&gt;
+            &lt;version&gt;17&lt;/version&gt;
+            &lt;vendor&gt;adopt&lt;/vendor&gt;
+        &lt;/provides&gt;
+        &lt;configuration&gt;
+            &lt;jdkHome&gt;${{ JAVA_HOME }}&lt;/jdkHome&gt;
+        &lt;/configuration&gt;
+    &lt;/toolchain&gt;
+ &lt;/toolchains&gt;          
+</code></pre><p>Then,you can build bundled jar with the following command:</p>
+<pre><code>mvn clean install -DskipTests
+</code></pre><p>You can find Trino connector jar in <code>./paimon-trino-&lt;trino-version&gt;/target/paimon-trino-*.jar</code>.</p>
+<p>Then, copy <code>paimon-trino-*.jar and flink-shaded-hadoop-*-uber-*.jar</code> to plugin/paimon.</p>
+<blockquote>
+<p>NOTE: For JDK 17, when Deploying Trino, should add jvm options: <code>--add-opens=java.base/sun.nio.ch=ALL-UNNAMED --add-opens=java.base/java.nio=ALL-UNNAMED</code></p>
+</blockquote>
+<h2 id="tmp-dir">
+  Tmp Dir
+  <a class="anchor" href="#tmp-dir">#</a>
+</h2>
+<p>Paimon will unzip some jars to the tmp directory for codegen. By default, Trino will use <code>'/tmp'</code> as the temporary
+directory, but <code>'/tmp'</code> may be periodically deleted.</p>
+<p>You can configure this environment variable when Trino starts:</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">-Djava.io.tmpdir<span class="o">=</span>/path/to/other/tmpdir
+</code></pre></div><p>Let Paimon use a secure temporary directory.</p>
+<h2 id="configure-paimon-catalog">
+  Configure Paimon Catalog
+  <a class="anchor" href="#configure-paimon-catalog">#</a>
+</h2>
+<p>Catalogs are registered by creating a catalog properties file in the etc/catalog directory. For example, create etc/catalog/paimon.properties with the following contents to mount the paimon connector as the paimon catalog:</p>
+<pre><code>connector.name=paimon
+warehouse=file:/tmp/warehouse
+</code></pre><p>If you are using HDFS, choose one of the following ways to configure your HDFS:</p>
+<ul>
+<li>set environment variable HADOOP_HOME.</li>
+<li>set environment variable HADOOP_CONF_DIR.</li>
+<li>configure fs.hdfs.hadoopconf in the properties.</li>
+</ul>
+<h2 id="kerberos">
+  Kerberos
+  <a class="anchor" href="#kerberos">#</a>
+</h2>
+<p>You can configure kerberos keytab file when using KERBEROS authentication in the properties.</p>
+<pre><code>security.kerberos.login.principal=hadoop-user
+security.kerberos.login.keytab=/etc/trino/hdfs.keytab
+</code></pre><p>Keytab files must be distributed to every node in the cluster that runs Trino.</p>
+<h2 id="create-schema">
+  Create Schema
+  <a class="anchor" href="#create-schema">#</a>
+</h2>
+<pre><code>CREATE SCHEMA paimon.test_db;
+</code></pre><h2 id="create-table">
+  Create Table
+  <a class="anchor" href="#create-table">#</a>
+</h2>
+<pre><code>CREATE TABLE paimon.test_db.orders (
+    order_key bigint,
+    orders_tatus varchar,
+    total_price decimal(18,4),
+    order_date date
+)
+WITH (
+    file_format = 'ORC',
+    primary_key = ARRAY['order_key','order_date'],
+    partitioned_by = ARRAY['order_date'],
+    bucket = '2',
+    bucket_key = 'order_key',
+    changelog_producer = 'input'
+)
+</code></pre><h2 id="add-column">
+  Add Column
+  <a class="anchor" href="#add-column">#</a>
+</h2>
+<pre><code>CREATE TABLE paimon.test_db.orders (
+    order_key bigint,
+    orders_tatus varchar,
+    total_price decimal(18,4),
+    order_date date
+)
+WITH (
+    file_format = 'ORC',
+    primary_key = ARRAY['order_key','order_date'],
+    partitioned_by = ARRAY['order_date'],
+    bucket = '2',
+    bucket_key = 'order_key',
+    changelog_producer = 'input'
+)
+
+ALTER TABLE paimon.test_db.orders ADD COLUMN shipping_address varchar;
+</code></pre><h2 id="query">
+  Query
+  <a class="anchor" href="#query">#</a>
+</h2>
+<pre><code>SELECT * FROM paimon.test_db.orders
+</code></pre><h2 id="query-with-time-traveling">
+  Query with Time Traveling
+  <a class="anchor" href="#query-with-time-traveling">#</a>
+</h2>
+<pre><code>SET SESSION paimon.scan_timestamp_millis=1679486589444;
+SELECT * FROM paimon.test_db.orders;
+</code></pre><h2 id="trino-to-paimon-type-mapping">
+  Trino to Paimon type mapping
+  <a class="anchor" href="#trino-to-paimon-type-mapping">#</a>
+</h2>
+<p>This section lists all supported type conversion between Trino and Paimon.
+All Trino&rsquo;s data types are available in package <code>io.trino.spi.type</code>.</p>
+<table class="table table-bordered">
+    <thead>
+    <tr>
+      <th class="text-left" style="width: 10%">Trino Data Type</th>
+      <th class="text-left" style="width: 10%">Paimon Data Type</th>
+      <th class="text-left" style="width: 5%">Atomic Type</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td><code>RowType</code></td>
+      <td><code>RowType</code></td>
+      <td>false</td>
+    </tr>
+    <tr>
+      <td><code>MapType</code></td>
+      <td><code>MapType</code></td>
+      <td>false</td>
+    </tr>
+    <tr>
+      <td><code>ArrayType</code></td>
+      <td><code>ArrayType</code></td>
+      <td>false</td>
+    </tr>
+    <tr>
+      <td><code>BooleanType</code></td>
+      <td><code>BooleanType</code></td>
+      <td>true</td>
+    </tr>
+    <tr>
+      <td><code>TinyintType</code></td>
+      <td><code>TinyIntType</code></td>
+      <td>true</td>
+    </tr>
+    <tr>
+      <td><code>SmallintType</code></td>
+      <td><code>SmallIntType</code></td>
+      <td>true</td>
+    </tr>
+    <tr>
+      <td><code>IntegerType</code></td>
+      <td><code>IntType</code></td>
+      <td>true</td>
+    </tr>
+    <tr>
+      <td><code>BigintType</code></td>
+      <td><code>BigIntType</code></td>
+      <td>true</td>
+    </tr>
+    <tr>
+      <td><code>RealType</code></td>
+      <td><code>FloatType</code></td>
+      <td>true</td>
+    </tr>
+    <tr>
+      <td><code>DoubleType</code></td>
+      <td><code>DoubleType</code></td>
+      <td>true</td>
+    </tr>
+    <tr>
+      <td><code>CharType(length)</code></td>
+      <td><code>CharType(length)</code></td>
+      <td>true</td>
+    </tr>
+    <tr>
+      <td><code>VarCharType(VarCharType.MAX_LENGTH)</code></td>
+      <td><code>VarCharType(VarCharType.MAX_LENGTH)</code></td>
+      <td>true</td>
+    </tr>
+    <tr>
+      <td><code>VarCharType(length)</code></td>
+      <td><code>VarCharType(length), length is less than VarCharType.MAX_LENGTH</code></td>
+      <td>true</td>
+    </tr>
+    <tr>
+      <td><code>DateType</code></td>
+      <td><code>DateType</code></td>
+      <td>true</td>
+    </tr>
+    <tr>
+      <td><code>TimestampType</code></td>
+      <td><code>TimestampType</code></td>
+      <td>true</td>
+    </tr>
+    <tr>
+      <td><code>DecimalType(precision, scale)</code></td>
+      <td><code>DecimalType(precision, scale)</code></td>
+      <td>true</td>
+    </tr>
+    <tr>
+      <td><code>VarBinaryType(length)</code></td>
+      <td><code>VarBinaryType(length)</code></td>
+      <td>true</td>
+    </tr>
+    <tr>
+      <td><code>TimestampWithTimeZoneType</code></td>
+      <td><code>LocalZonedTimestampType</code></td>
+      <td>true</td>
+    </tr>
+    </tbody>
+</table>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  
+
+
+
+
+<a href="//github.com/apache/incubator-paimon/edit/0.5/docs/content/engines/trino.md" style="color:black"><i class="fa fa-edit fa-fw"></i>Edit This Page</a>
+
+
+ 
+        
+      </footer>
+
+      
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      
+  
+
+<nav id="TableOfContents"><h3>On This Page <button class="toc" onclick="collapseToc()"><i class="fa fa-compress" aria-hidden="true"></i></button></h3>
+  <ul>
+    <li><a href="#version">Version</a></li>
+    <li><a href="#preparing-paimon-jar-file">Preparing Paimon Jar File</a></li>
+    <li><a href="#tmp-dir">Tmp Dir</a></li>
+    <li><a href="#configure-paimon-catalog">Configure Paimon Catalog</a></li>
+    <li><a href="#kerberos">Kerberos</a></li>
+    <li><a href="#create-schema">Create Schema</a></li>
+    <li><a href="#create-table">Create Table</a></li>
+    <li><a href="#add-column">Add Column</a></li>
+    <li><a href="#query">Query</a></li>
+    <li><a href="#query-with-time-traveling">Query with Time Traveling</a></li>
+    <li><a href="#trino-to-paimon-type-mapping">Trino to Paimon type mapping</a></li>
+  </ul>
+</nav>
+
+ 
+    </aside>
+    <aside class="expand-toc">
+      <button class="toc" onclick="expandToc()">
+        <i class="fa fa-expand" aria-hidden="true"></i>
+      </button>
+    </aside>
+    
+  </main>
+
+  
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

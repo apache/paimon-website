@@ -1,0 +1,1997 @@
+
+<!DOCTYPE html>
+<html lang="en" dir=>
+
+<head>
+  <meta name="generator" content="Hugo 0.80.0" />
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Spark3 #  This documentation is a guide for using Paimon in Spark3.
+Preparation #  Paimon currently supports Spark 3.5, 3.4, 3.3, 3.2 and 3.1. We recommend the latest Spark version for a better experience.
+Download the jar file with corresponding version.
+   Version Jar     Spark 3.5 paimon-spark-3.5-0.7.0-incubating.jar   Spark 3.4 paimon-spark-3.4-0.7.0-incubating.jar   Spark 3.3 paimon-spark-3.3-0.7.0-incubating.jar   Spark 3.2 paimon-spark-3.2-0.7.0-incubating.jar   Spark 3.">
+<meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="Spark" />
+<meta property="og:description" content="Spark3 #  This documentation is a guide for using Paimon in Spark3.
+Preparation #  Paimon currently supports Spark 3.5, 3.4, 3.3, 3.2 and 3.1. We recommend the latest Spark version for a better experience.
+Download the jar file with corresponding version.
+   Version Jar     Spark 3.5 paimon-spark-3.5-0.7.0-incubating.jar   Spark 3.4 paimon-spark-3.4-0.7.0-incubating.jar   Spark 3.3 paimon-spark-3.3-0.7.0-incubating.jar   Spark 3.2 paimon-spark-3.2-0.7.0-incubating.jar   Spark 3." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="//paimon.apache.org/docs/0.7/engines/spark/" />
+
+<title>Spark | Apache Paimon</title>
+<link rel="manifest" href="/docs/0.7/manifest.json">
+<link rel="icon" href="/docs/0.7/favicon.png" type="image/x-icon">
+<link rel="stylesheet" href="/docs/0.7/book.min.3bc4108a5b57c9a7e6fcae92ff69940435f8c46c4e1e4a311aedc9b2d8e06792.css" integrity="sha256-O8QQiltXyafm/K6S/2mUBDX4xGxOHkoxGu3JstjgZ5I=">
+<script defer src="/docs/0.7/en.search.min.1dff72878d0b6e149d9770f1bd08760e4e01831a2135a877f13f51e98c48a483.js" integrity="sha256-Hf9yh40LbhSdl3DxvQh2Dk4BgxohNah38T9R6YxIpIM="></script>
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+  
+
+<link rel="stylesheet" type="text/css" href="//paimon.apache.org/docs/0.7/font-awesome/css/font-awesome.min.css">
+<script src="//paimon.apache.org/docs/0.7/js/anchor.min.js"></script>
+<script src="//paimon.apache.org/docs/0.7/js/flink.js"></script>
+
+
+  
+  <script>
+    var _paq = window._paq = window._paq || [];
+     
+     
+    _paq.push(['disableCookies']);
+     
+    _paq.push(["setDomains", ["*.flink.apache.org","*.nightlies.apache.org/flink"]]);
+    _paq.push(['trackPageView']);
+    _paq.push(['enableLinkTracking']);
+    (function() {
+      var u="//matomo.privacy.apache.org/";
+      _paq.push(['setTrackerUrl', u+'matomo.php']);
+      _paq.push(['setSiteId', '1']);
+      var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+      g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+    })();
+  </script>
+  
+</head>
+
+<body dir=>
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      
+  
+
+<nav>
+
+
+<a id="logo" href="//paimon.apache.org/docs/0.7">
+    <img width="100%" src="//paimon.apache.org/docs/0.7/paimon_black.svg">
+</a>
+<p style="text-align:right">0.7.0-incubating</p>
+
+<div class="book-search">
+  <input type="text" id="book-search-input" placeholder="Search" aria-label="Search" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-dc8a1c63e6da60163016ce21cae1faa0" class="toggle"  />
+    <label for="section-dc8a1c63e6da60163016ce21cae1faa0" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-book title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Concepts</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.7/concepts/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.7/concepts/basic-concepts/" class="">Basic Concepts</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.7/concepts/file-layouts/" class="">File Layouts</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-1f49809630c045447838995d7f4eb783" class="toggle"  />
+    <label for="section-1f49809630c045447838995d7f4eb783" class="flex justify-between">Primary Key Table<span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.7/concepts/primary-key-table/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.7/concepts/primary-key-table/data-distribution/" class="">Data Distribution</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.7/concepts/primary-key-table/merge-engine/" class="">Merge Engine</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.7/concepts/primary-key-table/changelog-producer/" class="">Changelog Producer</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.7/concepts/primary-key-table/sequence-rowkind/" class="">Sequence & Rowkind</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-977deee10c9aba438b61b9c289c8ccdf" class="toggle"  />
+    <label for="section-977deee10c9aba438b61b9c289c8ccdf" class="flex justify-between">Append Table<span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.7/concepts/append-table/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.7/concepts/append-table/append-scalable-table/" class="">Append Scalable Table</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.7/concepts/append-table/append-queue-table/" class="">Append Queue Table</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-90f5541dc4fa46a212e954b9193ea0f9" class="toggle" checked />
+    <label for="section-90f5541dc4fa46a212e954b9193ea0f9" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-gear title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Engines</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.7/engines/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.7/engines/flink/" class="">Flink</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.7/engines/spark/" class=" active">Spark</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.7/engines/hive/" class="">Hive</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.7/engines/presto/" class="">Presto</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.7/engines/trino/" class="">Trino</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-e2d76c106dab115385ef7f124cda2ba4" class="toggle"  />
+    <label for="section-e2d76c106dab115385ef7f124cda2ba4" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-folder title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Filesystems</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.7/filesystems/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.7/filesystems/hdfs/" class="">HDFS</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.7/filesystems/oss/" class="">OSS</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.7/filesystems/s3/" class="">S3</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-f6ca435e98b926845c0060f9e7f85362" class="toggle"  />
+    <label for="section-f6ca435e98b926845c0060f9e7f85362" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-database title maindish" aria-hidden="true"></i>&nbsp;&nbsp;How to</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.7/how-to/creating-catalogs/" class="">Creating Catalogs</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.7/how-to/creating-tables/" class="">Creating Tables</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.7/how-to/altering-tables/" class="">Altering Tables</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.7/how-to/writing-tables/" class="">Writing Tables</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.7/how-to/querying-tables/" class="">Querying Tables</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.7/how-to/system-tables/" class="">System Tables</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.7/how-to/lookup-joins/" class="">Lookup Joins</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-582e435c19ca5fafbf9764337d648e63" class="toggle"  />
+    <label for="section-582e435c19ca5fafbf9764337d648e63" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-database title maindish" aria-hidden="true"></i>&nbsp;&nbsp;CDC Ingestion</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.7/cdc-ingestion/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.7/cdc-ingestion/mysql-cdc/" class="">Mysql CDC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.7/cdc-ingestion/postgres-cdc/" class="">Postgres CDC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.7/cdc-ingestion/kafka-cdc/" class="">Kafka CDC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.7/cdc-ingestion/mongo-cdc/" class="">Mongo CDC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.7/cdc-ingestion/pulsar-cdc/" class="">Pulsar CDC</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-697a4b6a0388d6cfa4f418aba3b4edfe" class="toggle"  />
+    <label for="section-697a4b6a0388d6cfa4f418aba3b4edfe" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-wrench title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Maintenance</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.7/maintenance/write-performance/" class="">Write Performance</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.7/maintenance/read-performance/" class="">Read Performance</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.7/maintenance/dedicated-compaction/" class="">Dedicated Compaction</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.7/maintenance/manage-snapshots/" class="">Manage Snapshots</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.7/maintenance/manage-partition/" class="">Manage Partition</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.7/maintenance/rescale-bucket/" class="">Rescale Bucket</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.7/maintenance/manage-tags/" class="">Manage Tags</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.7/maintenance/metrics/" class="">Metrics</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.7/maintenance/configurations/" class="">Configurations</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-049030059e0dc01edf74ba3d4d259dae" class="toggle"  />
+    <label for="section-049030059e0dc01edf74ba3d4d259dae" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-briefcase title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Program API</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.7/program-api/java-api/" class="">Java API</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.7/program-api/flink-api/" class="">Flink API</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-07c567e5a9f3ce62aea4ff0a1e2dc065" class="toggle"  />
+    <label for="section-07c567e5a9f3ce62aea4ff0a1e2dc065" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-briefcase title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Migration</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.7/migration/migration-from-hive/" class="">Migration From Hive</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.7/migration/upsert-to-partitioned/" class="">Upsert To Partitioned</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  	<br/>
+  
+  
+    <input type="checkbox" id="section-8c828bcf882f666cdd6821a70cc768ee" class="toggle"  />
+    <label for="section-8c828bcf882f666cdd6821a70cc768ee" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-sitemap title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Project</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.7/project/roadmap/" class="">Roadmap</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.7/project/download/" class="">Download</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.7/project/contributing/" class="">Contributing</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-392fc6f653ae23ff676811656a71ebbf" class="toggle"  />
+    <label for="section-392fc6f653ae23ff676811656a71ebbf" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-sitemap title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Learn Paimon</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.7/learn-paimon/understand-files/" class="">Understand Files</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br/>
+<hr class="menu-break">
+
+<a href="//paimon.apache.org" style="color:black;margin-bottom:0.5em"><i class="link fa fa-external-link title" aria-hidden="true"></i> Project Homepage</a>
+<br/>
+
+<a href="//paimon.apache.org/docs/master/api/java/" style="color:black;margin-bottom:0.5em"><i class="link fa fa-external-link title" aria-hidden="true"></i> JavaDocs</a>
+<br/>
+
+<hr class="menu-break">
+<li style="list-style-type: none">
+  <br>
+  <input type="checkbox" id="section-version-picker" class="toggle">
+  <label for="section-version-picker" class="flex justify-between">
+     <div style="font-weight:450;margin-bottom:0.5em">Pick Docs Version</div>
+     <span>▾</span>
+  </label>
+  <ul>
+    <a href="//paimon.apache.org/docs/0.7">
+      0.7 (✓)
+    </a>
+    <hr class="menu-break">
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/master">
+          master
+        </a>
+      </li>
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/0.7">
+          stable
+        </a>
+      </li>
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/0.6">
+          0.6
+        </a>
+      </li>
+    
+    <hr class="menu-break">
+    <li>
+      <a href="//paimon.apache.org/docs/0.7/versions">
+          All Versions
+      </a>
+    </li>
+  </ul>
+</li>
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var menu=document.querySelector("aside.book-menu nav");addEventListener("beforeunload",function(event){localStorage.setItem("menu.scrollTop",menu.scrollTop);});menu.scrollTop=localStorage.getItem("menu.scrollTop");})();</script>
+
+
+ 
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/docs/0.7/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <strong>Spark</strong>
+
+  <label for="toc-control">
+    
+    <img src="/docs/0.7/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden clearfix">
+    
+  
+
+<nav id="TableOfContents"><h3>On This Page <button class="toc" onclick="collapseToc()"><i class="fa fa-compress" aria-hidden="true"></i></button></h3>
+  <ul>
+    <li><a href="#preparation">Preparation</a></li>
+    <li><a href="#setup">Setup</a></li>
+    <li><a href="#create-table">Create Table</a></li>
+    <li><a href="#insert-table">Insert Table</a></li>
+    <li><a href="#query-table">Query Table</a></li>
+    <li><a href="#update-table">Update Table</a></li>
+    <li><a href="#merge-into-table">Merge Into Table</a></li>
+    <li><a href="#streaming-write">Streaming Write</a></li>
+    <li><a href="#streaming-read">Streaming Read</a></li>
+    <li><a href="#schema-evolution">Schema Evolution</a></li>
+    <li><a href="#spark-procedure">Spark Procedure</a></li>
+    <li><a href="#spark-type-conversion">Spark Type Conversion</a></li>
+    <li><a href="#spark-2">Spark 2</a></li>
+  </ul>
+</nav>
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+
+
+
+
+
+
+      
+  <article class="markdown"><!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<h1 id="spark3">
+  Spark3
+  <a class="anchor" href="#spark3">#</a>
+</h1>
+<p>This documentation is a guide for using Paimon in Spark3.</p>
+<h2 id="preparation">
+  Preparation
+  <a class="anchor" href="#preparation">#</a>
+</h2>
+<p>Paimon currently supports Spark 3.5, 3.4, 3.3, 3.2 and 3.1. We recommend the latest Spark version for a better experience.</p>
+<p>Download the jar file with corresponding version.</p>
+<table>
+<thead>
+<tr>
+<th>Version</th>
+<th>Jar</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Spark 3.5</td>
+<td><a href="https://repo.maven.apache.org/maven2/org/apache/paimon/paimon-spark-3.5/0.7.0-incubating/paimon-spark-3.5-0.7.0-incubating.jar">paimon-spark-3.5-0.7.0-incubating.jar</a></td>
+</tr>
+<tr>
+<td>Spark 3.4</td>
+<td><a href="https://repo.maven.apache.org/maven2/org/apache/paimon/paimon-spark-3.4/0.7.0-incubating/paimon-spark-3.4-0.7.0-incubating.jar">paimon-spark-3.4-0.7.0-incubating.jar</a></td>
+</tr>
+<tr>
+<td>Spark 3.3</td>
+<td><a href="https://repo.maven.apache.org/maven2/org/apache/paimon/paimon-spark-3.3/0.7.0-incubating/paimon-spark-3.3-0.7.0-incubating.jar">paimon-spark-3.3-0.7.0-incubating.jar</a></td>
+</tr>
+<tr>
+<td>Spark 3.2</td>
+<td><a href="https://repo.maven.apache.org/maven2/org/apache/paimon/paimon-spark-3.2/0.7.0-incubating/paimon-spark-3.2-0.7.0-incubating.jar">paimon-spark-3.2-0.7.0-incubating.jar</a></td>
+</tr>
+<tr>
+<td>Spark 3.1</td>
+<td><a href="https://repo.maven.apache.org/maven2/org/apache/paimon/paimon-spark-3.1/0.7.0-incubating/paimon-spark-3.1-0.7.0-incubating.jar">paimon-spark-3.1-0.7.0-incubating.jar</a></td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+<p>You can also manually build bundled jar from the source code.</p>
+<p>To build from source code, <a href="https://github.com/apache/incubator-paimon.git">clone the git repository</a>.</p>
+<p>Build bundled jar with the following command.</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">mvn clean install -DskipTests
+</code></pre></div><p>For Spark 3.3, you can find the bundled jar in <code>./paimon-spark/paimon-spark-3.3/target/paimon-spark-3.3-0.7.0-incubating.jar</code>.</p>
+<h2 id="setup">
+  Setup
+  <a class="anchor" href="#setup">#</a>
+</h2>
+<blockquote class="book-hint info">
+  If you are using HDFS, make sure that the environment variable <code>HADOOP_HOME</code> or <code>HADOOP_CONF_DIR</code> is set.
+</blockquote>
+
+<p><strong>Step 1: Specify Paimon Jar File</strong></p>
+<p>Append path to paimon jar file to the <code>--jars</code> argument when starting <code>spark-sql</code>.</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">spark-sql ... --jars /path/to/paimon-spark-3.3-0.7.0-incubating.jar
+</code></pre></div><p>Alternatively, you can copy <code>paimon-spark-3.3-0.7.0-incubating.jar</code> under <code>spark/jars</code> in your Spark installation directory.</p>
+<p><strong>Step 2: Specify Paimon Catalog</strong></p>
+
+
+
+
+
+<div class="book-tabs"><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Catalog"
+    name="tabs-Specify Paimon Catalog"
+    id="tabs-Specify Paimon Catalog-0"
+    checked="checked" 
+    onclick="onSwitch('Catalog')"
+  />
+  <label for="tabs-Specify Paimon Catalog-0">Catalog</label>
+  <div class="book-tabs-content markdown-inner"><p>When starting <code>spark-sql</code>, use the following command to register Paimon’s Spark catalog with the name <code>paimon</code>. Table files of the warehouse is stored under <code>/tmp/paimon</code>.</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">spark-sql ... <span class="se">\
+</span><span class="se"></span>    --conf spark.sql.catalog.paimon<span class="o">=</span>org.apache.paimon.spark.SparkCatalog <span class="se">\
+</span><span class="se"></span>    --conf spark.sql.catalog.paimon.warehouse<span class="o">=</span>file:/tmp/paimon <span class="se">\
+</span><span class="se"></span>    --conf spark.sql.extensions<span class="o">=</span>org.apache.paimon.spark.extensions.PaimonSparkSessionExtensions
+</code></pre></div><p>Catalogs are configured using properties under spark.sql.catalog.(catalog_name). In above case, &lsquo;paimon&rsquo; is the
+catalog name, you can change it to your own favorite catalog name.</p>
+<p>After <code>spark-sql</code> command line has started, run the following SQL to create and switch to database <code>default</code>.</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="n">USE</span> <span class="n">paimon</span><span class="p">;</span>
+<span class="n">USE</span> <span class="k">default</span><span class="p">;</span>
+</code></pre></div><p>After switching to the catalog (<code>'USE paimon'</code>), Spark&rsquo;s existing tables will not be directly accessible, you
+can use the <code>spark_catalog.${database_name}.${table_name}</code> to access Spark tables.</p>
+</div><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Generic Catalog"
+    name="tabs-Specify Paimon Catalog"
+    id="tabs-Specify Paimon Catalog-1"
+     
+    onclick="onSwitch('Generic Catalog')"
+  />
+  <label for="tabs-Specify Paimon Catalog-1">Generic Catalog</label>
+  <div class="book-tabs-content markdown-inner"><p>When starting <code>spark-sql</code>, use the following command to register Paimon’s Spark Generic catalog to replace Spark
+default catalog <code>spark_catalog</code>. (default warehouse is Spark <code>spark.sql.warehouse.dir</code>)</p>
+<p>Currently, it is only recommended to use <code>SparkGenericCatalog</code> in the case of Hive metastore, Paimon will infer
+Hive conf from Spark session, you just need to configure Spark&rsquo;s Hive conf.</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">spark-sql ... <span class="se">\
+</span><span class="se"></span>    --conf spark.sql.catalog.spark_catalog<span class="o">=</span>org.apache.paimon.spark.SparkGenericCatalog <span class="se">\
+</span><span class="se"></span>    --conf spark.sql.extensions<span class="o">=</span>org.apache.paimon.spark.extensions.PaimonSparkSessionExtensions
+</code></pre></div><p>Using <code>SparkGenericCatalog</code>, you can use Paimon tables in this Catalog or non-Paimon tables such as Spark&rsquo;s csv,
+parquet, Hive tables, etc.</p>
+</div></div>
+
+<h2 id="create-table">
+  Create Table
+  <a class="anchor" href="#create-table">#</a>
+</h2>
+
+
+
+
+
+<div class="book-tabs"><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Catalog"
+    name="tabs-Create Paimon Table"
+    id="tabs-Create Paimon Table-0"
+    checked="checked" 
+    onclick="onSwitch('Catalog')"
+  />
+  <label for="tabs-Create Paimon Table-0">Catalog</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">create</span> <span class="k">table</span> <span class="n">my_table</span> <span class="p">(</span>
+    <span class="n">k</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">v</span> <span class="n">string</span>
+<span class="p">)</span> <span class="n">tblproperties</span> <span class="p">(</span>
+    <span class="s1">&#39;primary-key&#39;</span> <span class="o">=</span> <span class="s1">&#39;k&#39;</span>
+<span class="p">);</span>
+</code></pre></div></div><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Generic Catalog"
+    name="tabs-Create Paimon Table"
+    id="tabs-Create Paimon Table-1"
+     
+    onclick="onSwitch('Generic Catalog')"
+  />
+  <label for="tabs-Create Paimon Table-1">Generic Catalog</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">create</span> <span class="k">table</span> <span class="n">my_table</span> <span class="p">(</span>
+    <span class="n">k</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">v</span> <span class="n">string</span>
+<span class="p">)</span> <span class="k">USING</span> <span class="n">paimon</span>
+<span class="n">tblproperties</span> <span class="p">(</span>
+    <span class="s1">&#39;primary-key&#39;</span> <span class="o">=</span> <span class="s1">&#39;k&#39;</span>
+<span class="p">)</span> <span class="p">;</span>
+
+</code></pre></div></div></div>
+
+<h2 id="insert-table">
+  Insert Table
+  <a class="anchor" href="#insert-table">#</a>
+</h2>
+<blockquote class="book-hint info">
+  Paimon currently supports Spark 3.2+ for SQL write.
+</blockquote>
+
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">my_table</span> <span class="k">VALUES</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;Hi&#39;</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;Hello&#39;</span><span class="p">);</span>
+</code></pre></div><h2 id="query-table">
+  Query Table
+  <a class="anchor" href="#query-table">#</a>
+</h2>
+
+
+
+
+
+<div class="book-tabs"><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="SQL"
+    name="tabs-Query Paimon Table"
+    id="tabs-Query Paimon Table-0"
+    checked="checked" 
+    onclick="onSwitch('SQL')"
+  />
+  <label for="tabs-Query Paimon Table-0">SQL</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">my_table</span><span class="p">;</span>
+
+<span class="cm">/*
+</span><span class="cm">1	Hi
+</span><span class="cm">2	Hello
+</span><span class="cm">*/</span>
+</code></pre></div></div><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="DataFrame"
+    name="tabs-Query Paimon Table"
+    id="tabs-Query Paimon Table-1"
+     
+    onclick="onSwitch('DataFrame')"
+  />
+  <label for="tabs-Query Paimon Table-1">DataFrame</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre class="chroma"><code class="language-scala" data-lang="scala"><span class="k">val</span> <span class="n">dataset</span> <span class="k">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">format</span><span class="o">(</span><span class="s">&#34;paimon&#34;</span><span class="o">).</span><span class="n">load</span><span class="o">(</span><span class="s">&#34;file:/tmp/paimon/default.db/my_table&#34;</span><span class="o">)</span>
+<span class="n">dataset</span><span class="o">.</span><span class="n">show</span><span class="o">()</span>
+
+<span class="cm">/*
+</span><span class="cm">+---+------+
+</span><span class="cm">| k |     v|
+</span><span class="cm">+---+------+
+</span><span class="cm">|  1|    Hi|
+</span><span class="cm">|  2| Hello|
+</span><span class="cm">+---+------+
+</span><span class="cm">*/</span>
+</code></pre></div></div></div>
+
+<h2 id="update-table">
+  Update Table
+  <a class="anchor" href="#update-table">#</a>
+</h2>
+<blockquote class="book-hint info">
+  <p>Important table properties setting:</p>
+<ol>
+<li>Only <a href="//paimon.apache.org/docs/0.7/concepts/primary-key-table/">primary key table</a> supports this feature.</li>
+<li><a href="//paimon.apache.org/docs/0.7/concepts/primary-key-table/merge-engine/">MergeEngine</a> needs to be <a href="//paimon.apache.org/docs/0.7/concepts/primary-key-table/#deduplicate">deduplicate</a> or <a href="//paimon.apache.org/docs/0.7/concepts/primary-key-table/merge-engine/#partial-update">partial-update</a> to support this feature.</li>
+</ol>
+
+</blockquote>
+
+<blockquote class="book-hint warning">
+  Warning: we do not support updating primary keys.
+</blockquote>
+
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">UPDATE</span> <span class="n">my_table</span> <span class="k">SET</span> <span class="n">v</span> <span class="o">=</span> <span class="s1">&#39;new_value&#39;</span> <span class="k">WHERE</span> <span class="n">id</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+</code></pre></div><h2 id="merge-into-table">
+  Merge Into Table
+  <a class="anchor" href="#merge-into-table">#</a>
+</h2>
+<p>Paimon currently supports Merge Into syntax in Spark 3+, which allow a set of updates, insertions and deletions based on a source table in a single commit.</p>
+<blockquote class="book-hint into">
+  <ol>
+<li>This only work with primary-key table.</li>
+<li>In update clause, to update primary key columns is not supported.</li>
+<li><code>WHEN NOT MATCHED BY SOURCE</code> syntax is not supported.</li>
+</ol>
+
+</blockquote>
+
+<p><strong>Example: One</strong></p>
+<p>This is a simple demo that, if a row exists in the target table update it, else insert it.</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql">
+<span class="c1">-- Here both source and target tables have the same schema: (a INT, b INT, c STRING), and a is a primary key.
+</span><span class="c1"></span>
+<span class="n">MERGE</span> <span class="k">INTO</span> <span class="n">target</span>
+<span class="k">USING</span> <span class="k">source</span>
+<span class="k">ON</span> <span class="n">target</span><span class="p">.</span><span class="n">a</span> <span class="o">=</span> <span class="k">source</span><span class="p">.</span><span class="n">a</span>
+<span class="k">WHEN</span> <span class="n">MATCHED</span> <span class="k">THEN</span>
+<span class="k">UPDATE</span> <span class="k">SET</span> <span class="o">*</span>
+<span class="k">WHEN</span> <span class="k">NOT</span> <span class="n">MATCHED</span>
+<span class="k">THEN</span> <span class="k">INSERT</span> <span class="o">*</span>
+
+</code></pre></div><p><strong>Example: Two</strong></p>
+<p>This is a demo with multiple, conditional clauses.</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql">
+<span class="c1">-- Here both source and target tables have the same schema: (a INT, b INT, c STRING), and a is a primary key.
+</span><span class="c1"></span>
+<span class="n">MERGE</span> <span class="k">INTO</span> <span class="n">target</span>
+<span class="k">USING</span> <span class="k">source</span>
+<span class="k">ON</span> <span class="n">target</span><span class="p">.</span><span class="n">a</span> <span class="o">=</span> <span class="k">source</span><span class="p">.</span><span class="n">a</span>
+<span class="k">WHEN</span> <span class="n">MATCHED</span> <span class="k">AND</span> <span class="n">target</span><span class="p">.</span><span class="n">a</span> <span class="o">=</span> <span class="mi">5</span> <span class="k">THEN</span>
+   <span class="k">UPDATE</span> <span class="k">SET</span> <span class="n">b</span> <span class="o">=</span> <span class="k">source</span><span class="p">.</span><span class="n">b</span> <span class="o">+</span> <span class="n">target</span><span class="p">.</span><span class="n">b</span>      <span class="c1">-- when matched and meet the condition 1, then update b;
+</span><span class="c1"></span><span class="k">WHEN</span> <span class="n">MATCHED</span> <span class="k">AND</span> <span class="k">source</span><span class="p">.</span><span class="k">c</span> <span class="o">&gt;</span> <span class="s1">&#39;c2&#39;</span> <span class="k">THEN</span>
+   <span class="k">UPDATE</span> <span class="k">SET</span> <span class="o">*</span>    <span class="c1">-- when matched and meet the condition 2, then update all the columns;
+</span><span class="c1"></span><span class="k">WHEN</span> <span class="n">MATCHED</span> <span class="k">THEN</span>
+   <span class="k">DELETE</span>      <span class="c1">-- when matched, delete this row in target table;
+</span><span class="c1"></span><span class="k">WHEN</span> <span class="k">NOT</span> <span class="n">MATCHED</span> <span class="k">AND</span> <span class="k">c</span> <span class="o">&gt;</span> <span class="s1">&#39;c9&#39;</span> <span class="k">THEN</span>
+   <span class="k">INSERT</span> <span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="k">c</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">*</span> <span class="mi">1</span><span class="p">.</span><span class="mi">1</span><span class="p">,</span> <span class="k">c</span><span class="p">)</span>      <span class="c1">-- when not matched but meet the condition 3, then transform and insert this row;
+</span><span class="c1"></span><span class="k">WHEN</span> <span class="k">NOT</span> <span class="n">MATCHED</span> <span class="k">THEN</span>
+<span class="k">INSERT</span> <span class="o">*</span>      <span class="c1">-- when not matched, insert this row without any transformation;
+</span><span class="c1"></span>
+</code></pre></div><h2 id="streaming-write">
+  Streaming Write
+  <a class="anchor" href="#streaming-write">#</a>
+</h2>
+<blockquote class="book-hint info">
+  <p>Paimon currently supports Spark 3+ for streaming write.</p>
+<p>Paimon Structured Streaming only supports the two <code>append</code> and <code>complete</code> modes.</p>
+
+</blockquote>
+
+<div class="highlight"><pre class="chroma"><code class="language-scala" data-lang="scala"><span class="c1">// Create a paimon table if not exists.
+</span><span class="c1"></span><span class="n">spark</span><span class="o">.</span><span class="n">sql</span><span class="o">(</span><span class="s">s&#34;&#34;&#34;
+</span><span class="s">           |CREATE TABLE T (k INT, v STRING)
+</span><span class="s">           |TBLPROPERTIES (&#39;primary-key&#39;=&#39;a&#39;, &#39;bucket&#39;=&#39;3&#39;)
+</span><span class="s">           |&#34;&#34;&#34;</span><span class="o">.</span><span class="n">stripMargin</span><span class="o">)</span>
+
+<span class="c1">// Here we use MemoryStream to fake a streaming source.
+</span><span class="c1"></span><span class="k">val</span> <span class="n">inputData</span> <span class="k">=</span> <span class="nc">MemoryStream</span><span class="o">[(</span><span class="kt">Int</span>, <span class="kt">String</span><span class="o">)]</span>
+<span class="k">val</span> <span class="n">df</span> <span class="k">=</span> <span class="n">inputData</span><span class="o">.</span><span class="n">toDS</span><span class="o">().</span><span class="n">toDF</span><span class="o">(</span><span class="s">&#34;k&#34;</span><span class="o">,</span> <span class="s">&#34;v&#34;</span><span class="o">)</span>
+
+<span class="c1">// Streaming Write to paimon table.
+</span><span class="c1"></span><span class="k">val</span> <span class="n">stream</span> <span class="k">=</span> <span class="n">df</span>
+  <span class="o">.</span><span class="n">writeStream</span>
+  <span class="o">.</span><span class="n">outputMode</span><span class="o">(</span><span class="s">&#34;append&#34;</span><span class="o">)</span>
+  <span class="o">.</span><span class="n">option</span><span class="o">(</span><span class="s">&#34;checkpointLocation&#34;</span><span class="o">,</span> <span class="s">&#34;/path/to/checkpoint&#34;</span><span class="o">)</span>
+  <span class="o">.</span><span class="n">format</span><span class="o">(</span><span class="s">&#34;paimon&#34;</span><span class="o">)</span>
+  <span class="o">.</span><span class="n">start</span><span class="o">(</span><span class="s">&#34;/path/to/paimon/sink/table&#34;</span><span class="o">)</span>
+</code></pre></div><h2 id="streaming-read">
+  Streaming Read
+  <a class="anchor" href="#streaming-read">#</a>
+</h2>
+<blockquote class="book-hint info">
+  Paimon currently supports Spark 3.3+ for streaming read.
+</blockquote>
+
+<p>Paimon supports rich scan mode for streaming read. There is a list:</p>
+<table class="configuration table table-bordered">
+    <thead>
+        <tr>
+            <th class="text-left" style="width: 20%">Scan Mode</th>
+            <th class="text-left" style="width: 60%">Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><h5>latest</h5></td>
+            <td>For streaming sources, continuously reads latest changes without producing a snapshot at the beginning. </td>
+        </tr>
+        <tr>
+            <td><h5>latest-full</h5></td>
+            <td>For streaming sources, produces the latest snapshot on the table upon first startup, and continue to read the latest changes.</td>
+        </tr>
+        <tr>
+            <td><h5>from-timestamp</h5></td>
+            <td>For streaming sources, continuously reads changes starting from timestamp specified by "scan.timestamp-millis", without producing a snapshot at the beginning. </td>
+        </tr>
+        <tr>
+            <td><h5>from-snapshot</h5></td>
+            <td>For streaming sources, continuously reads changes starting from snapshot specified by "scan.snapshot-id", without producing a snapshot at the beginning. </td>
+        </tr>
+        <tr>
+            <td><h5>from-snapshot-full</h5></td>
+            <td>For streaming sources, produces from snapshot specified by "scan.snapshot-id" on the table upon first startup, and continuously reads changes.</td>
+        </tr>
+        <tr>
+            <td><h5>default</h5></td>
+            <td>It is equivalent to from-snapshot if "scan.snapshot-id" is specified. It is equivalent to from-timestamp if "timestamp-millis" is specified. Or, It is equivalent to latest-full.</td>
+        </tr>
+    </tbody>
+</table>
+<p>A simple example with default scan mode:</p>
+<div class="highlight"><pre class="chroma"><code class="language-scala" data-lang="scala"><span class="c1">// no any scan-related configs are provided, that will use latest-full scan mode.
+</span><span class="c1"></span><span class="k">val</span> <span class="n">query</span> <span class="k">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">readStream</span>
+  <span class="o">.</span><span class="n">format</span><span class="o">(</span><span class="s">&#34;paimon&#34;</span><span class="o">)</span>
+  <span class="o">.</span><span class="n">load</span><span class="o">(</span><span class="s">&#34;/path/to/paimon/source/table&#34;</span><span class="o">)</span>
+  <span class="o">.</span><span class="n">writeStream</span>
+  <span class="o">.</span><span class="n">format</span><span class="o">(</span><span class="s">&#34;console&#34;</span><span class="o">)</span>
+  <span class="o">.</span><span class="n">start</span><span class="o">()</span>
+</code></pre></div><p>Paimon Structured Streaming also supports a variety of streaming read modes, it can support many triggers and many read limits.</p>
+<p>These read limits are supported:</p>
+<table class="configuration table table-bordered">
+    <thead>
+        <tr>
+            <th class="text-left" style="width: 20%">Key</th>
+            <th class="text-left" style="width: 15%">Default</th>
+            <th class="text-left" style="width: 10%">Type</th>
+            <th class="text-left" style="width: 55%">Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><h5>read.stream.maxFilesPerTrigger</h5></td>
+            <td style="word-wrap: break-word;">(none)</td>
+            <td>Integer</td>
+            <td>The maximum number of files returned in a single batch.</td>
+        </tr>
+        <tr>
+            <td><h5>read.stream.maxBytesPerTrigger</h5></td>
+            <td style="word-wrap: break-word;">(none)</td>
+            <td>Long</td>
+            <td>The maximum number of bytes returned in a single batch.</td>
+        </tr>
+        <tr>
+            <td><h5>read.stream.maxRowsPerTrigger</h5></td>
+            <td style="word-wrap: break-word;">(none)</td>
+            <td>Long</td>
+            <td>The maximum number of rows returned in a single batch.</td>
+        </tr>
+        <tr>
+            <td><h5>read.stream.minRowsPerTrigger</h5></td>
+            <td style="word-wrap: break-word;">(none)</td>
+            <td>Long</td>
+            <td>The minimum number of rows returned in a single batch, which used to create MinRowsReadLimit with read.stream.maxTriggerDelayMs together.</td>
+        </tr>
+        <tr>
+            <td><h5>read.stream.maxTriggerDelayMs</h5></td>
+            <td style="word-wrap: break-word;">(none)</td>
+            <td>Long</td>
+            <td>The maximum delay between two adjacent batches, which used to create MinRowsReadLimit with read.stream.minRowsPerTrigger together.</td>
+        </tr>
+    </tbody>
+</table>
+<p><strong>Example: One</strong></p>
+<p>Use <code>org.apache.spark.sql.streaming.Trigger.AvailableNow()</code> and <code>maxBytesPerTrigger</code> defined by paimon.</p>
+<div class="highlight"><pre class="chroma"><code class="language-scala" data-lang="scala"><span class="c1">// Trigger.AvailableNow()) processes all available data at the start
+</span><span class="c1">// of the query in one or multiple batches, then terminates the query.
+</span><span class="c1">// That set read.stream.maxBytesPerTrigger to 128M means that each
+</span><span class="c1">// batch processes a maximum of 128 MB of data.
+</span><span class="c1"></span><span class="k">val</span> <span class="n">query</span> <span class="k">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">readStream</span>
+  <span class="o">.</span><span class="n">format</span><span class="o">(</span><span class="s">&#34;paimon&#34;</span><span class="o">)</span>
+  <span class="o">.</span><span class="n">option</span><span class="o">(</span><span class="s">&#34;read.stream.maxBytesPerTrigger&#34;</span><span class="o">,</span> <span class="s">&#34;134217728&#34;</span><span class="o">)</span>
+  <span class="o">.</span><span class="n">load</span><span class="o">(</span><span class="s">&#34;/path/to/paimon/source/table&#34;</span><span class="o">)</span>
+  <span class="o">.</span><span class="n">writeStream</span>
+  <span class="o">.</span><span class="n">format</span><span class="o">(</span><span class="s">&#34;console&#34;</span><span class="o">)</span>
+  <span class="o">.</span><span class="n">trigger</span><span class="o">(</span><span class="nc">Trigger</span><span class="o">.</span><span class="nc">AvailableNow</span><span class="o">())</span>
+  <span class="o">.</span><span class="n">start</span><span class="o">()</span>
+</code></pre></div><p><strong>Example: Two</strong></p>
+<p>Use <code>org.apache.spark.sql.connector.read.streaming.ReadMinRows</code>.</p>
+<div class="highlight"><pre class="chroma"><code class="language-scala" data-lang="scala"><span class="c1">// It will not trigger a batch until there are more than 5,000 pieces of data,
+</span><span class="c1">// unless the interval between the two batches is more than 300 seconds.
+</span><span class="c1"></span><span class="k">val</span> <span class="n">query</span> <span class="k">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">readStream</span>
+  <span class="o">.</span><span class="n">format</span><span class="o">(</span><span class="s">&#34;paimon&#34;</span><span class="o">)</span>
+  <span class="o">.</span><span class="n">option</span><span class="o">(</span><span class="s">&#34;read.stream.minRowsPerTrigger&#34;</span><span class="o">,</span> <span class="s">&#34;5000&#34;</span><span class="o">)</span>
+  <span class="o">.</span><span class="n">option</span><span class="o">(</span><span class="s">&#34;read.stream.maxTriggerDelayMs&#34;</span><span class="o">,</span> <span class="s">&#34;300000&#34;</span><span class="o">)</span>
+  <span class="o">.</span><span class="n">load</span><span class="o">(</span><span class="s">&#34;/path/to/paimon/source/table&#34;</span><span class="o">)</span>
+  <span class="o">.</span><span class="n">writeStream</span>
+  <span class="o">.</span><span class="n">format</span><span class="o">(</span><span class="s">&#34;console&#34;</span><span class="o">)</span>
+  <span class="o">.</span><span class="n">start</span><span class="o">()</span>
+</code></pre></div><p>Paimon Structured Streaming supports read row in the form of changelog (add rowkind column in row to represent its
+change type) in two ways:</p>
+<ul>
+<li>Direct streaming read with the system audit_log table</li>
+<li>Set <code>read.changelog</code> to true (default is false), then streaming read with table location</li>
+</ul>
+<p><strong>Example:</strong></p>
+<div class="highlight"><pre class="chroma"><code class="language-scala" data-lang="scala"><span class="c1">// Option 1
+</span><span class="c1"></span><span class="k">val</span> <span class="n">query1</span> <span class="k">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">readStream</span>
+  <span class="o">.</span><span class="n">format</span><span class="o">(</span><span class="s">&#34;paimon&#34;</span><span class="o">)</span>
+  <span class="o">.</span><span class="n">table</span><span class="o">(</span><span class="s">&#34;`table_name$audit_log`&#34;</span><span class="o">)</span>
+  <span class="o">.</span><span class="n">writeStream</span>
+  <span class="o">.</span><span class="n">format</span><span class="o">(</span><span class="s">&#34;console&#34;</span><span class="o">)</span>
+  <span class="o">.</span><span class="n">start</span><span class="o">()</span>
+
+<span class="c1">// Option 2
+</span><span class="c1"></span><span class="k">val</span> <span class="n">query2</span> <span class="k">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">readStream</span>
+  <span class="o">.</span><span class="n">format</span><span class="o">(</span><span class="s">&#34;paimon&#34;</span><span class="o">)</span>
+  <span class="o">.</span><span class="n">option</span><span class="o">(</span><span class="s">&#34;read.changelog&#34;</span><span class="o">,</span> <span class="s">&#34;true&#34;</span><span class="o">)</span>
+  <span class="o">.</span><span class="n">load</span><span class="o">(</span><span class="s">&#34;/path/to/paimon/source/table&#34;</span><span class="o">)</span>
+  <span class="o">.</span><span class="n">writeStream</span>
+  <span class="o">.</span><span class="n">format</span><span class="o">(</span><span class="s">&#34;console&#34;</span><span class="o">)</span>
+  <span class="o">.</span><span class="n">start</span><span class="o">()</span>
+
+<span class="cm">/*
+</span><span class="cm">+I   1  Hi
+</span><span class="cm">+I   2  Hello
+</span><span class="cm">*/</span>
+</code></pre></div><h2 id="schema-evolution">
+  Schema Evolution
+  <a class="anchor" href="#schema-evolution">#</a>
+</h2>
+<p>Schema evolution is a feature that allows users to easily modify the current schema of a table to adapt to existing data, or new data that changes over time, while maintaining data integrity and consistency.</p>
+<p>Paimon supports automatic schema merging of source data and current table data while data is being written, and uses the merged schema as the latest schema of the table, and it only requires configuring <code>write.merge-schema</code>.</p>
+<div class="highlight"><pre class="chroma"><code class="language-scala" data-lang="scala"><span class="n">data</span><span class="o">.</span><span class="n">write</span>
+  <span class="o">.</span><span class="n">format</span><span class="o">(</span><span class="s">&#34;paimon&#34;</span><span class="o">)</span>
+  <span class="o">.</span><span class="n">mode</span><span class="o">(</span><span class="s">&#34;append&#34;</span><span class="o">)</span>
+  <span class="o">.</span><span class="n">option</span><span class="o">(</span><span class="s">&#34;write.merge-schema&#34;</span><span class="o">,</span> <span class="s">&#34;true&#34;</span><span class="o">)</span>
+  <span class="o">.</span><span class="n">save</span><span class="o">(</span><span class="n">location</span><span class="o">)</span>
+</code></pre></div><p>When enable <code>write.merge-schema</code>, Paimon can allow users to perform the following actions on table schema by default:</p>
+<ul>
+<li>Adding columns</li>
+<li>Up-casting the type of column(e.g. Int -&gt; Long)</li>
+</ul>
+<p>Paimon also supports explicit type conversions between certain types (e.g. String -&gt; Date, Long -&gt; Int), it requires an explicit configuration <code>write.merge-schema.explicit-cast</code>.</p>
+<p>Schema evolution can be used in streaming mode at the same time.</p>
+<div class="highlight"><pre class="chroma"><code class="language-scala" data-lang="scala"><span class="k">val</span> <span class="n">inputData</span> <span class="k">=</span> <span class="nc">MemoryStream</span><span class="o">[(</span><span class="kt">Int</span>, <span class="kt">String</span><span class="o">)]</span>
+<span class="n">inputData</span>
+  <span class="o">.</span><span class="n">toDS</span><span class="o">()</span>
+  <span class="o">.</span><span class="n">toDF</span><span class="o">(</span><span class="s">&#34;col1&#34;</span><span class="o">,</span> <span class="s">&#34;col2&#34;</span><span class="o">)</span>
+  <span class="o">.</span><span class="n">writeStream</span>
+  <span class="o">.</span><span class="n">format</span><span class="o">(</span><span class="s">&#34;paimon&#34;</span><span class="o">)</span>
+  <span class="o">.</span><span class="n">option</span><span class="o">(</span><span class="s">&#34;checkpointLocation&#34;</span><span class="o">,</span> <span class="s">&#34;/path/to/checkpoint&#34;</span><span class="o">)</span>
+  <span class="o">.</span><span class="n">option</span><span class="o">(</span><span class="s">&#34;write.merge-schema&#34;</span><span class="o">,</span> <span class="s">&#34;true&#34;</span><span class="o">)</span>
+  <span class="o">.</span><span class="n">option</span><span class="o">(</span><span class="s">&#34;write.merge-schema.explicit-cast&#34;</span><span class="o">,</span> <span class="s">&#34;true&#34;</span><span class="o">)</span>
+  <span class="o">.</span><span class="n">start</span><span class="o">(</span><span class="n">location</span><span class="o">)</span>
+</code></pre></div><p>Here list the configurations.</p>
+<table class="configuration table table-bordered">
+    <thead>
+        <tr>
+            <th class="text-left" style="width: 20%">Scan Mode</th>
+            <th class="text-left" style="width: 60%">Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><h5>write.merge-schema</h5></td>
+            <td>If true, merge the data schema and the table schema automatically before write data.</td>
+        </tr>
+        <tr>
+            <td><h5>write.merge-schema.explicit-cast</h5></td>
+            <td>If true, allow to merge data types if the two types meet the rules for explicit casting.</td>
+        </tr>
+    </tbody>
+</table>
+<h2 id="spark-procedure">
+  Spark Procedure
+  <a class="anchor" href="#spark-procedure">#</a>
+</h2>
+<p>This section introduce all available spark procedures about paimon.
+s</p>
+<table class="table table-bordered">
+    <thead>
+    <tr>
+      <th class="text-left" style="width: 4%">Procedure Name</th>
+      <th class="text-left" style="width: 20%">Explaination</th>
+      <th class="text-left" style="width: 4%">Example</th>
+    </tr>
+    </thead>
+    <tbody style="font-size: 12px; ">
+    <tr>
+      <td>compact</td>
+      <td>identifier: the target table identifier. Cannot be empty.<br><br><nobr>partitions: partition filter. Left empty for all partitions.<br> "," means "AND"<br>";" means "OR"</nobr><br><br>order_strategy: 'order' or 'zorder' or 'hilbert' or 'none'. Left empty for 'none'. <br><br><nobr>order_columns: the columns need to be sort. Left empty if 'order_strategy' is 'none'. </nobr><br><br>If you want sort compact two partitions date=01 and date=02, you need to write 'date=01;date=02'<br><br>If you want sort one partition with date=01 and day=01, you need to write 'date=01,day=01'</td>
+      <td><nobr>SET spark.sql.shuffle.partitions=10; --set the compact parallelism</nobr><br><nobr>CALL sys.compact(table => 'T', partitions => 'p=0',  order_strategy => 'zorder', order_by => 'a,b')</nobr></td>
+    </tr>
+    <tr>
+      <td>expire_snapshots</td>
+      <td>
+         To expire snapshots. Argument:
+            <li>table: the target table identifier. Cannot be empty.</li>
+            <li>retain_max: the maximum number of completed snapshots to retain.</li>
+            <li>retain_min: the minimum number of completed snapshots to retain.</li>
+            <li>older_than: timestamp before which snapshots will be removed.</li>
+            <li>max_deletes: the maximum number of snapshots that can be deleted at once.</li>
+      </td>
+      <td>CALL sys.expire_snapshots(table => 'default.T', retainMax => 10)</td>
+    </tr>
+    </tbody>
+</table>
+<h2 id="spark-type-conversion">
+  Spark Type Conversion
+  <a class="anchor" href="#spark-type-conversion">#</a>
+</h2>
+<p>This section lists all supported type conversion between Spark and Paimon.
+All Spark&rsquo;s data types are available in package <code>org.apache.spark.sql.types</code>.</p>
+<table class="table table-bordered">
+    <thead>
+    <tr>
+      <th class="text-left" style="width: 10%">Spark Data Type</th>
+      <th class="text-left" style="width: 10%">Paimon Data Type</th>
+      <th class="text-left" style="width: 5%">Atomic Type</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td><code>StructType</code></td>
+      <td><code>RowType</code></td>
+      <td>false</td>
+    </tr>
+    <tr>
+      <td><code>MapType</code></td>
+      <td><code>MapType</code></td>
+      <td>false</td>
+    </tr>
+    <tr>
+      <td><code>ArrayType</code></td>
+      <td><code>ArrayType</code></td>
+      <td>false</td>
+    </tr>
+    <tr>
+      <td><code>BooleanType</code></td>
+      <td><code>BooleanType</code></td>
+      <td>true</td>
+    </tr>
+    <tr>
+      <td><code>ByteType</code></td>
+      <td><code>TinyIntType</code></td>
+      <td>true</td>
+    </tr>
+    <tr>
+      <td><code>ShortType</code></td>
+      <td><code>SmallIntType</code></td>
+      <td>true</td>
+    </tr>
+    <tr>
+      <td><code>IntegerType</code></td>
+      <td><code>IntType</code></td>
+      <td>true</td>
+    </tr>
+    <tr>
+      <td><code>LongType</code></td>
+      <td><code>BigIntType</code></td>
+      <td>true</td>
+    </tr>
+    <tr>
+      <td><code>FloatType</code></td>
+      <td><code>FloatType</code></td>
+      <td>true</td>
+    </tr>
+    <tr>
+      <td><code>DoubleType</code></td>
+      <td><code>DoubleType</code></td>
+      <td>true</td>
+    </tr>
+    <tr>
+      <td><code>StringType</code></td>
+      <td><code>VarCharType</code>, <code>CharType</code></td>
+      <td>true</td>
+    </tr>
+    <tr>
+      <td><code>DateType</code></td>
+      <td><code>DateType</code></td>
+      <td>true</td>
+    </tr>
+    <tr>
+      <td><code>TimestampType</code></td>
+      <td><code>TimestampType</code>, <code>LocalZonedTimestamp</code></td>
+      <td>true</td>
+    </tr>
+    <tr>
+      <td><code>DecimalType(precision, scale)</code></td>
+      <td><code>DecimalType(precision, scale)</code></td>
+      <td>true</td>
+    </tr>
+    <tr>
+      <td><code>BinaryType</code></td>
+      <td><code>VarBinaryType</code>, <code>BinaryType</code></td>
+      <td>true</td>
+    </tr>
+    </tbody>
+</table>
+<blockquote class="book-hint info">
+  <ul>
+<li>Currently, Spark&rsquo;s field comment cannot be described under Flink CLI.</li>
+<li>Conversion between Spark&rsquo;s <code>UserDefinedType</code> and Paimon&rsquo;s <code>UserDefinedType</code> is not supported.</li>
+</ul>
+
+</blockquote>
+
+<h2 id="spark-2">
+  Spark 2
+  <a class="anchor" href="#spark-2">#</a>
+</h2>
+<p>Paimon supports Spark 2.4+. We highly recommend using versions above Spark3, as Spark2 only provides reading capabilities.</p>
+Download <a href="https://repo.maven.apache.org/maven2/org/apache/paimon/paimon-spark-2/0.7.0-incubating/paimon-spark-2-0.7.0-incubating.jar">paimon-spark-2-0.7.0-incubating.jar</a>.
+
+
+
+<blockquote class="book-hint info">
+  If you are using HDFS, make sure that the environment variable <code>HADOOP_HOME</code> or <code>HADOOP_CONF_DIR</code> is set.
+</blockquote>
+
+<p><strong>Step 1: Prepare Test Data</strong></p>
+<p>Paimon currently only supports reading tables through Spark2. To create a Paimon table with records, please follow our <a href="//paimon.apache.org/docs/0.7/engines/flink/#quick-start">Flink quick start guide</a>.</p>
+<p>After the guide, all table files should be stored under the path <code>/tmp/paimon</code>, or the warehouse path you&rsquo;ve specified.</p>
+<p><strong>Step 2: Specify Paimon Jar File</strong></p>
+<p>You can append path to paimon jar file to the <code>--jars</code> argument when starting <code>spark-shell</code>.</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">spark-shell ... --jars /path/to/paimon-spark-2-0.7.0-incubating.jar
+</code></pre></div><p>Alternatively, you can copy <code>paimon-spark-2-0.7.0-incubating.jar</code> under <code>spark/jars</code> in your Spark installation directory.</p>
+<p><strong>Step 3: Query Table</strong></p>
+<p>Paimon with Spark 2.4 does not support DDL. You can use the <code>Dataset</code> reader and register the <code>Dataset</code> as a temporary table. In spark shell:</p>
+<div class="highlight"><pre class="chroma"><code class="language-scala" data-lang="scala"><span class="k">val</span> <span class="n">dataset</span> <span class="k">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">format</span><span class="o">(</span><span class="s">&#34;paimon&#34;</span><span class="o">).</span><span class="n">load</span><span class="o">(</span><span class="s">&#34;file:/tmp/paimon/default.db/word_count&#34;</span><span class="o">)</span>
+<span class="n">dataset</span><span class="o">.</span><span class="n">createOrReplaceTempView</span><span class="o">(</span><span class="s">&#34;word_count&#34;</span><span class="o">)</span>
+<span class="n">spark</span><span class="o">.</span><span class="n">sql</span><span class="o">(</span><span class="s">&#34;SELECT * FROM word_count&#34;</span><span class="o">).</span><span class="n">show</span><span class="o">()</span>
+</code></pre></div></article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  
+
+
+
+
+<a href="//github.com/apache/incubator-paimon/edit/0.7/docs/content/engines/spark.md" style="color:black"><i class="fa fa-edit fa-fw"></i>Edit This Page</a>
+
+
+ 
+        
+
+
+<hr style="margin-top: 20px; border: 1px solid #e5e5e5;" />
+
+<table style="border-spacing: 10px;">
+    <tbody>
+    <tr>
+        <td style="width: 30%;">
+            <img src="/docs/0.7/img/incubator_feather_egg_logo.png" style="all: unset; width: 100%;">
+        </td>
+        <td>
+            Apache Paimon is an effort undergoing incubation at The Apache Software Foundation (ASF), sponsored by the
+            Apache Incubator.
+            Incubation is required of all newly accepted projects until a further review indicates that the
+            infrastructure, communications,
+            and decision making process have stabilized in a manner consistent with other successful ASF projects.
+            While incubation status is not necessarily a reflection of the completeness or stability of the code,
+            it does indicate that the project has yet to be fully endorsed by the ASF.
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            Copyright &copy; 2023 The Apache Software Foundation. Apache Paimon, Paimon, and its feather logo are
+            trademarks of The Apache Software Foundation.
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+      </footer>
+
+      
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      
+  
+
+<nav id="TableOfContents"><h3>On This Page <button class="toc" onclick="collapseToc()"><i class="fa fa-compress" aria-hidden="true"></i></button></h3>
+  <ul>
+    <li><a href="#preparation">Preparation</a></li>
+    <li><a href="#setup">Setup</a></li>
+    <li><a href="#create-table">Create Table</a></li>
+    <li><a href="#insert-table">Insert Table</a></li>
+    <li><a href="#query-table">Query Table</a></li>
+    <li><a href="#update-table">Update Table</a></li>
+    <li><a href="#merge-into-table">Merge Into Table</a></li>
+    <li><a href="#streaming-write">Streaming Write</a></li>
+    <li><a href="#streaming-read">Streaming Read</a></li>
+    <li><a href="#schema-evolution">Schema Evolution</a></li>
+    <li><a href="#spark-procedure">Spark Procedure</a></li>
+    <li><a href="#spark-type-conversion">Spark Type Conversion</a></li>
+    <li><a href="#spark-2">Spark 2</a></li>
+  </ul>
+</nav>
+
+ 
+    </aside>
+    <aside class="expand-toc">
+      <button class="toc" onclick="expandToc()">
+        <i class="fa fa-expand" aria-hidden="true"></i>
+      </button>
+    </aside>
+    
+  </main>
+
+  
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

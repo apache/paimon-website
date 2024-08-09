@@ -1,0 +1,1394 @@
+
+<!DOCTYPE html>
+<html lang="en" dir=>
+
+<head>
+  <meta name="generator" content="Hugo 0.80.0" />
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Write Performance #  Paimon&rsquo;s write performance is closely related to checkpoint, so if you need greater write throughput:
+ Flink Configuration (&#39;flink-conf.yaml&#39; or SET in SQL): Increase the checkpoint interval (&#39;execution.checkpointing.interval&#39;), increase max concurrent checkpoints to 3 (&#39;execution.checkpointing.max-concurrent-checkpoints&#39;), or just use batch mode. Increase write-buffer-size. Enable write-buffer-spillable. Rescale bucket number if you are using Fixed-Bucket mode.  Option &#39;changelog-producer&#39; = &#39;lookup&#39; or &#39;full-compaction&#39;, and option &#39;full-compaction.delta-commits&#39; have a large impact on write performance, if it is a snapshot / full synchronization phase you can unset these options and then enable them again in the incremental phase.">
+<meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="Write Performance" />
+<meta property="og:description" content="Write Performance #  Paimon&rsquo;s write performance is closely related to checkpoint, so if you need greater write throughput:
+ Flink Configuration (&#39;flink-conf.yaml&#39; or SET in SQL): Increase the checkpoint interval (&#39;execution.checkpointing.interval&#39;), increase max concurrent checkpoints to 3 (&#39;execution.checkpointing.max-concurrent-checkpoints&#39;), or just use batch mode. Increase write-buffer-size. Enable write-buffer-spillable. Rescale bucket number if you are using Fixed-Bucket mode.  Option &#39;changelog-producer&#39; = &#39;lookup&#39; or &#39;full-compaction&#39;, and option &#39;full-compaction.delta-commits&#39; have a large impact on write performance, if it is a snapshot / full synchronization phase you can unset these options and then enable them again in the incremental phase." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="//paimon.apache.org/docs/0.6/maintenance/write-performance/" />
+
+<title>Write Performance | Apache Paimon</title>
+<link rel="manifest" href="/docs/0.6/manifest.json">
+<link rel="icon" href="/docs/0.6/favicon.png" type="image/x-icon">
+<link rel="stylesheet" href="/docs/0.6/book.min.3bc4108a5b57c9a7e6fcae92ff69940435f8c46c4e1e4a311aedc9b2d8e06792.css" integrity="sha256-O8QQiltXyafm/K6S/2mUBDX4xGxOHkoxGu3JstjgZ5I=">
+<script defer src="/docs/0.6/en.search.min.bdbb2261b557a7c02c04a5095c8a17bb87853c6bb8544247aaf1506cb12c096e.js" integrity="sha256-vbsiYbVXp8AsBKUJXIoXu4eFPGu4VEJHqvFQbLEsCW4="></script>
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+  
+
+<link rel="stylesheet" type="text/css" href="//paimon.apache.org/docs/0.6/font-awesome/css/font-awesome.min.css">
+<script src="//paimon.apache.org/docs/0.6/js/anchor.min.js"></script>
+<script src="//paimon.apache.org/docs/0.6/js/flink.js"></script>
+
+
+  
+  <script>
+    var _paq = window._paq = window._paq || [];
+     
+     
+    _paq.push(['disableCookies']);
+     
+    _paq.push(["setDomains", ["*.flink.apache.org","*.nightlies.apache.org/flink"]]);
+    _paq.push(['trackPageView']);
+    _paq.push(['enableLinkTracking']);
+    (function() {
+      var u="//matomo.privacy.apache.org/";
+      _paq.push(['setTrackerUrl', u+'matomo.php']);
+      _paq.push(['setSiteId', '1']);
+      var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+      g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+    })();
+  </script>
+  
+</head>
+
+<body dir=>
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      
+  
+
+<nav>
+
+
+<a id="logo" href="//paimon.apache.org/docs/0.6">
+    <img width="100%" src="//paimon.apache.org/docs/0.6/paimon_black.svg">
+</a>
+<p style="text-align:right">0.6.0-incubating</p>
+
+<div class="book-search">
+  <input type="text" id="book-search-input" placeholder="Search" aria-label="Search" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-dc8a1c63e6da60163016ce21cae1faa0" class="toggle"  />
+    <label for="section-dc8a1c63e6da60163016ce21cae1faa0" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-book title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Concepts</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/concepts/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/concepts/basic-concepts/" class="">Basic Concepts</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/concepts/file-layouts/" class="">File Layouts</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/concepts/primary-key-table/" class="">Primary Key Table</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/concepts/append-only-table/" class="">Append Only Table</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-90f5541dc4fa46a212e954b9193ea0f9" class="toggle"  />
+    <label for="section-90f5541dc4fa46a212e954b9193ea0f9" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-gear title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Engines</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/engines/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/engines/flink/" class="">Flink</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/engines/spark/" class="">Spark</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/engines/hive/" class="">Hive</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/engines/presto/" class="">Presto</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/engines/trino/" class="">Trino</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-e2d76c106dab115385ef7f124cda2ba4" class="toggle"  />
+    <label for="section-e2d76c106dab115385ef7f124cda2ba4" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-folder title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Filesystems</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/filesystems/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/filesystems/hdfs/" class="">HDFS</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/filesystems/oss/" class="">OSS</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/filesystems/s3/" class="">S3</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-f6ca435e98b926845c0060f9e7f85362" class="toggle"  />
+    <label for="section-f6ca435e98b926845c0060f9e7f85362" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-database title maindish" aria-hidden="true"></i>&nbsp;&nbsp;How to</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/how-to/creating-catalogs/" class="">Creating Catalogs</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/how-to/creating-tables/" class="">Creating Tables</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/how-to/altering-tables/" class="">Altering Tables</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/how-to/writing-tables/" class="">Writing Tables</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/how-to/querying-tables/" class="">Querying Tables</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/how-to/system-tables/" class="">System Tables</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/how-to/lookup-joins/" class="">Lookup Joins</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-582e435c19ca5fafbf9764337d648e63" class="toggle"  />
+    <label for="section-582e435c19ca5fafbf9764337d648e63" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-database title maindish" aria-hidden="true"></i>&nbsp;&nbsp;CDC Ingestion</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/cdc-ingestion/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/cdc-ingestion/mysql-cdc/" class="">Mysql CDC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/cdc-ingestion/kafka-cdc/" class="">Kafka CDC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/cdc-ingestion/mongo-cdc/" class="">Mongo CDC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/cdc-ingestion/pulsar-cdc/" class="">Pulsar CDC</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-697a4b6a0388d6cfa4f418aba3b4edfe" class="toggle" checked />
+    <label for="section-697a4b6a0388d6cfa4f418aba3b4edfe" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-wrench title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Maintenance</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/maintenance/write-performance/" class=" active">Write Performance</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/maintenance/read-performance/" class="">Read Performance</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/maintenance/dedicated-compaction/" class="">Dedicated Compaction</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/maintenance/manage-snapshots/" class="">Manage Snapshots</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/maintenance/manage-partition/" class="">Manage Partition</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/maintenance/rescale-bucket/" class="">Rescale Bucket</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/maintenance/manage-tags/" class="">Manage Tags</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/maintenance/metrics/" class="">Metrics</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/maintenance/configurations/" class="">Configurations</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-1b3eda2e8317c0686a4d41cefa0a3453" class="toggle"  />
+    <label for="section-1b3eda2e8317c0686a4d41cefa0a3453" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-briefcase title maindish" aria-hidden="true"></i>&nbsp;&nbsp;API</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/api/java-api/" class="">Java API</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/api/flink-api/" class="">Flink API</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-07c567e5a9f3ce62aea4ff0a1e2dc065" class="toggle"  />
+    <label for="section-07c567e5a9f3ce62aea4ff0a1e2dc065" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-briefcase title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Migration</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/migration/migration-from-hive/" class="">Migration From Hive</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/migration/upsert-to-partitioned/" class="">Upsert To Partitioned</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  	<br/>
+  
+  
+    <input type="checkbox" id="section-8c828bcf882f666cdd6821a70cc768ee" class="toggle"  />
+    <label for="section-8c828bcf882f666cdd6821a70cc768ee" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-sitemap title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Project</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/project/roadmap/" class="">Roadmap</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/project/download/" class="">Download</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/project/contributing/" class="">Contributing</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-392fc6f653ae23ff676811656a71ebbf" class="toggle"  />
+    <label for="section-392fc6f653ae23ff676811656a71ebbf" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-sitemap title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Learn Paimon</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/learn-paimon/understand-files/" class="">Understand Files</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br/>
+<hr class="menu-break">
+
+<a href="//paimon.apache.org" style="color:black;margin-bottom:0.5em"><i class="link fa fa-external-link title" aria-hidden="true"></i> Project Homepage</a>
+<br/>
+
+<a href="//paimon.apache.org/docs/master/api/java/" style="color:black;margin-bottom:0.5em"><i class="link fa fa-external-link title" aria-hidden="true"></i> JavaDocs</a>
+<br/>
+
+<hr class="menu-break">
+<li style="list-style-type: none">
+  <br>
+  <input type="checkbox" id="section-version-picker" class="toggle">
+  <label for="section-version-picker" class="flex justify-between">
+     <div style="font-weight:450;margin-bottom:0.5em">Pick Docs Version</div>
+     <span>▾</span>
+  </label>
+  <ul>
+    <a href="//paimon.apache.org/docs/0.6">
+      0.6 (✓)
+    </a>
+    <hr class="menu-break">
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/master">
+          master
+        </a>
+      </li>
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/0.6">
+          stable
+        </a>
+      </li>
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/0.5">
+          0.5
+        </a>
+      </li>
+    
+    <hr class="menu-break">
+    <li>
+      <a href="//paimon.apache.org/docs/0.6/versions">
+          All Versions
+      </a>
+    </li>
+  </ul>
+</li>
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var menu=document.querySelector("aside.book-menu nav");addEventListener("beforeunload",function(event){localStorage.setItem("menu.scrollTop",menu.scrollTop);});menu.scrollTop=localStorage.getItem("menu.scrollTop");})();</script>
+
+
+ 
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/docs/0.6/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <strong>Write Performance</strong>
+
+  <label for="toc-control">
+    
+    <img src="/docs/0.6/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden clearfix">
+    
+  
+
+<nav id="TableOfContents"><h3>On This Page <button class="toc" onclick="collapseToc()"><i class="fa fa-compress" aria-hidden="true"></i></button></h3>
+  <ul>
+    <li><a href="#parallelism">Parallelism</a></li>
+    <li><a href="#compaction">Compaction</a>
+      <ul>
+        <li><a href="#asynchronous-compaction">Asynchronous Compaction</a></li>
+        <li><a href="#number-of-sorted-runs-to-pause-writing">Number of Sorted Runs to Pause Writing</a></li>
+        <li><a href="#number-of-sorted-runs-to-trigger-compaction">Number of Sorted Runs to Trigger Compaction</a></li>
+      </ul>
+    </li>
+    <li><a href="#local-merging">Local Merging</a></li>
+    <li><a href="#file-format">File Format</a></li>
+    <li><a href="#file-compression">File Compression</a></li>
+    <li><a href="#stability">Stability</a></li>
+    <li><a href="#write-initialize">Write Initialize</a></li>
+    <li><a href="#write-memory">Write Memory</a></li>
+    <li><a href="#commit-memory">Commit Memory</a></li>
+  </ul>
+</nav>
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+
+
+
+
+
+
+      
+  <article class="markdown"><!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<h1 id="write-performance">
+  Write Performance
+  <a class="anchor" href="#write-performance">#</a>
+</h1>
+<p>Paimon&rsquo;s write performance is closely related to checkpoint, so if you need greater write throughput:</p>
+<ol>
+<li>Flink Configuration (<code>'flink-conf.yaml'</code> or <code>SET</code> in SQL): Increase the checkpoint interval
+(<code>'execution.checkpointing.interval'</code>), increase max concurrent checkpoints to 3
+(<code>'execution.checkpointing.max-concurrent-checkpoints'</code>), or just use batch mode.</li>
+<li>Increase <code>write-buffer-size</code>.</li>
+<li>Enable <code>write-buffer-spillable</code>.</li>
+<li>Rescale bucket number if you are using Fixed-Bucket mode.</li>
+</ol>
+<p>Option <code>'changelog-producer' = 'lookup' or 'full-compaction'</code>, and option <code>'full-compaction.delta-commits'</code> have a
+large impact on write performance, if it is a snapshot / full synchronization phase you can unset these options and
+then enable them again in the incremental phase.</p>
+<p>If you find that the input of the job shows a jagged pattern in the case of backpressure, it may be imbalanced work
+nodes. You can consider turning on <a href="#asynchronous-compaction">Asynchronous Compaction</a> to observe if the
+throughput is increased.</p>
+<h2 id="parallelism">
+  Parallelism
+  <a class="anchor" href="#parallelism">#</a>
+</h2>
+<p>It is recommended that the parallelism of sink should be less than or equal to the number of buckets, preferably equal. You can control the parallelism of the sink with the <code>sink.parallelism</code> table property.</p>
+<table class="table table-bordered">
+    <thead>
+    <tr>
+      <th class="text-left" style="width: 20%">Option</th>
+      <th class="text-left" style="width: 5%">Required</th>
+      <th class="text-left" style="width: 5%">Default</th>
+      <th class="text-left" style="width: 10%">Type</th>
+      <th class="text-left" style="width: 60%">Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td><h5>sink.parallelism</h5></td>
+      <td>No</td>
+      <td style="word-wrap: break-word;">(none)</td>
+      <td>Integer</td>
+      <td>Defines the parallelism of the sink operator. By default, the parallelism is determined by the framework using the same parallelism of the upstream chained operator.</td>
+    </tr>
+    </tbody>
+</table>
+<h2 id="compaction">
+  Compaction
+  <a class="anchor" href="#compaction">#</a>
+</h2>
+<h3 id="asynchronous-compaction">
+  Asynchronous Compaction
+  <a class="anchor" href="#asynchronous-compaction">#</a>
+</h3>
+<p>Compaction is inherently asynchronous, but if you want it to be completely asynchronous and not blocking writing,
+expect a mode to have maximum writing throughput, the compaction can be done slowly and not in a hurry.
+You can use the following strategies for your table:</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">num-sorted-run.stop-trigger <span class="o">=</span> <span class="m">2147483647</span>
+sort-spill-threshold <span class="o">=</span> <span class="m">10</span>
+</code></pre></div><p>This configuration will generate more files during peak write periods and gradually merge into optimal read
+performance during low write periods.</p>
+<p>In the case of <code>'changelog-producer' = 'lookup'</code>, by default, the lookup will be completed at checkpointing, which
+will block the checkpoint. If you want an asynchronous lookup, you can use <code>'changelog-producer.lookup-wait' = 'false'</code>.</p>
+<h3 id="number-of-sorted-runs-to-pause-writing">
+  Number of Sorted Runs to Pause Writing
+  <a class="anchor" href="#number-of-sorted-runs-to-pause-writing">#</a>
+</h3>
+<p>When the number of sorted runs is small, Paimon writers will perform compaction asynchronously in separated threads, so
+records can be continuously written into the table. However, to avoid unbounded growth of sorted runs, writers will
+pause writing when the number of sorted runs hits the threshold. The following table property determines
+the threshold.</p>
+<table class="table table-bordered">
+    <thead>
+    <tr>
+      <th class="text-left" style="width: 20%">Option</th>
+      <th class="text-left" style="width: 5%">Required</th>
+      <th class="text-left" style="width: 5%">Default</th>
+      <th class="text-left" style="width: 10%">Type</th>
+      <th class="text-left" style="width: 60%">Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td><h5>num-sorted-run.stop-trigger</h5></td>
+      <td>No</td>
+      <td style="word-wrap: break-word;">(none)</td>
+      <td>Integer</td>
+      <td>The number of sorted runs that trigger the stopping of writes, the default value is 'num-sorted-run.compaction-trigger' + 1.</td>
+    </tr>
+    </tbody>
+</table>
+<p>Write stalls will become less frequent when <code>num-sorted-run.stop-trigger</code> becomes larger, thus improving writing
+performance. However, if this value becomes too large, more memory and CPU time will be needed when querying the
+table. If you are concerned about the OOM problem, please configure the following option.
+Its value depends on your memory size.</p>
+<table class="table table-bordered">
+    <thead>
+    <tr>
+      <th class="text-left" style="width: 20%">Option</th>
+      <th class="text-left" style="width: 5%">Required</th>
+      <th class="text-left" style="width: 5%">Default</th>
+      <th class="text-left" style="width: 10%">Type</th>
+      <th class="text-left" style="width: 60%">Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td><h5>sort-spill-threshold</h5></td>
+      <td>No</td>
+      <td style="word-wrap: break-word;">(none)</td>
+      <td>Integer</td>
+      <td>If the maximum number of sort readers exceeds this value, a spill will be attempted. This prevents too many readers from consuming too much memory and causing OOM.</td>
+    </tr>
+    </tbody>
+</table>
+<h3 id="number-of-sorted-runs-to-trigger-compaction">
+  Number of Sorted Runs to Trigger Compaction
+  <a class="anchor" href="#number-of-sorted-runs-to-trigger-compaction">#</a>
+</h3>
+<p>Paimon uses <a href="//paimon.apache.org/docs/0.6/concepts/file-layouts/#lsm-trees">LSM tree</a> which supports a large number of updates. LSM organizes files in several <a href="//paimon.apache.org/docs/0.6/concepts/file-layouts/#sorted-runs">sorted runs</a>. When querying records from an LSM tree, all sorted runs must be combined to produce a complete view of all records.</p>
+<p>One can easily see that too many sorted runs will result in poor query performance. To keep the number of sorted runs in a reasonable range, Paimon writers will automatically perform <a href="//paimon.apache.org/docs/0.6/concepts/file-layouts/#compaction">compactions</a>. The following table property determines the minimum number of sorted runs to trigger a compaction.</p>
+<table class="table table-bordered">
+    <thead>
+    <tr>
+      <th class="text-left" style="width: 20%">Option</th>
+      <th class="text-left" style="width: 5%">Required</th>
+      <th class="text-left" style="width: 5%">Default</th>
+      <th class="text-left" style="width: 10%">Type</th>
+      <th class="text-left" style="width: 60%">Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td><h5>num-sorted-run.compaction-trigger</h5></td>
+      <td>No</td>
+      <td style="word-wrap: break-word;">5</td>
+      <td>Integer</td>
+      <td>The sorted run number to trigger compaction. Includes level0 files (one file one sorted run) and high-level runs (one level one sorted run).</td>
+    </tr>
+    </tbody>
+</table>
+<p>Compaction will become less frequent when <code>num-sorted-run.compaction-trigger</code> becomes larger, thus improving writing performance. However, if this value becomes too large, more memory and CPU time will be needed when querying the table. This is a trade-off between writing and query performance.</p>
+<h2 id="local-merging">
+  Local Merging
+  <a class="anchor" href="#local-merging">#</a>
+</h2>
+<p>If your job suffers from primary key data skew
+(for example, you want to count the number of views for each page in a website,
+and some particular pages are very popular among the users),
+you can set <code>'local-merge-buffer-size'</code> so that input records will be buffered and merged
+before they&rsquo;re shuffled by bucket and written into sink.
+This is particularly useful when the same primary key is updated frequently between snapshots.</p>
+<p>The buffer will be flushed when it is full. We recommend starting with <code>64 mb</code>
+when you are faced with data skew but don&rsquo;t know where to start adjusting buffer size.</p>
+<p>(Currently, Local merging not works for CDC ingestion)</p>
+<h2 id="file-format">
+  File Format
+  <a class="anchor" href="#file-format">#</a>
+</h2>
+<p>If you want to achieve ultimate compaction performance, you can consider using row storage file format AVRO.</p>
+<ul>
+<li>The advantage is that you can achieve high write throughput and compaction performance.</li>
+<li>The disadvantage is that your analysis queries will be slow, and the biggest problem with row storage is that it
+does not have the query projection. For example, if the table have 100 columns but only query a few columns, the
+IO of row storage cannot be ignored. Additionally, compression efficiency will decrease and storage costs will
+increase.</li>
+</ul>
+<p>This a tradeoff.</p>
+<p>Enable row storage through the following options:</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">file.format <span class="o">=</span> avro
+metadata.stats-mode <span class="o">=</span> none
+</code></pre></div><p>The collection of statistical information for row storage is a bit expensive, so I suggest turning off statistical
+information as well.</p>
+<p>If you don&rsquo;t want to modify all files to Avro format, at least you can consider modifying the files in the previous
+layers to Avro format. You can use <code>'file.format.per.level' = '0:avro,1:avro'</code> to specify the files in the first two
+layers to be in Avro format.</p>
+<h2 id="file-compression">
+  File Compression
+  <a class="anchor" href="#file-compression">#</a>
+</h2>
+<p>By default, Paimon uses high-performance compression algorithms such as LZ4 and SNAPPY, but their compression rates
+are not so good. If you want to reduce the write/read performance, you can modify the compression algorithm:</p>
+<ol>
+<li><code>'file.compression'</code>: Default file compression format. If you need a higher compression rate, I recommend using <code>'ZSTD'</code>.</li>
+<li><code>'file.compression.per.level'</code>: Define different compression policies for different level. For example <code>'0:lz4,1:zstd'</code>.</li>
+</ol>
+<h2 id="stability">
+  Stability
+  <a class="anchor" href="#stability">#</a>
+</h2>
+<p>If there are too few buckets or resources, full-compaction may cause the checkpoint timeout, Flink&rsquo;s default
+checkpoint timeout is 10 minutes.</p>
+<p>If you expect stability even in this case, you can turn up the checkpoint timeout, for example:</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">execution.checkpointing.timeout <span class="o">=</span> <span class="m">60</span> min
+</code></pre></div><h2 id="write-initialize">
+  Write Initialize
+  <a class="anchor" href="#write-initialize">#</a>
+</h2>
+<p>In the initialization of write, the writer of the bucket needs to read all historical files. If there is a bottleneck
+here (For example, writing a large number of partitions simultaneously), you can use <code>write-manifest-cache</code> to cache
+the read manifest data to accelerate initialization.</p>
+<h2 id="write-memory">
+  Write Memory
+  <a class="anchor" href="#write-memory">#</a>
+</h2>
+<p>There are three main places in Paimon writer that takes up memory:</p>
+<ul>
+<li>Writer&rsquo;s memory buffer, shared and preempted by all writers of a single task. This memory value can be adjusted by the <code>write-buffer-size</code> table property.</li>
+<li>Memory consumed when merging several sorted runs for compaction. Can be adjusted by the <code>num-sorted-run.compaction-trigger</code> option to change the number of sorted runs to be merged.</li>
+<li>If the row is very large, reading too many lines of data at once will consume a lot of memory when making a compaction. Reducing the <code>read.batch-size</code> option can alleviate the impact of this case.</li>
+<li>The memory consumed by writing columnar (ORC, Parquet, etc.) file. Decreasing the <code>orc.write.batch-size</code> option can reduce the consumption of memory for ORC format.</li>
+<li>If files are automatically compaction in the write task, dictionaries for certain large columns can significantly consume memory during compaction.
+<ul>
+<li>To disable dictionary encoding for all fields in Parquet format, set <code>'parquet.enable.dictionary'= 'false'</code>.</li>
+<li>To disable dictionary encoding for all fields in ORC format, set <code>orc.dictionary.key.threshold='0'</code>. Additionally,set <code>orc.column.encoding.direct='field1,field2'</code> to disable dictionary encoding for specific columns.</li>
+</ul>
+</li>
+</ul>
+<p>If your Flink job does not rely on state, please avoid using managed memory, which you can control with the following Flink parameter:</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">taskmanager.memory.managed.size<span class="o">=</span>1m
+</code></pre></div><h2 id="commit-memory">
+  Commit Memory
+  <a class="anchor" href="#commit-memory">#</a>
+</h2>
+<p>Committer node may use a large memory if the amount of data written to the table is particularly large, OOM may occur
+if the memory is too small. In this case, you need to increase the Committer heap memory, but you may not want to
+increase the memory of Flink&rsquo;s TaskManager uniformly, which may lead to a waste of memory.</p>
+<p>You can use fine-grained-resource-management of Flink to increase committer heap memory only:</p>
+<ol>
+<li>Configure Flink Configuration <code>cluster.fine-grained-resource-management.enabled: true</code>. (This is default after Flink 1.18)</li>
+<li>Configure Paimon Table Options: <code>sink.committer-memory</code>, for example 300 MB, depends on your <code>TaskManager</code>.
+(<code>sink.committer-cpu</code> is also supported)</li>
+</ol>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  
+
+
+
+
+<a href="//github.com/apache/incubator-paimon/edit/0.6/docs/content/maintenance/write-performance.md" style="color:black"><i class="fa fa-edit fa-fw"></i>Edit This Page</a>
+
+
+ 
+        
+      </footer>
+
+      
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      
+  
+
+<nav id="TableOfContents"><h3>On This Page <button class="toc" onclick="collapseToc()"><i class="fa fa-compress" aria-hidden="true"></i></button></h3>
+  <ul>
+    <li><a href="#parallelism">Parallelism</a></li>
+    <li><a href="#compaction">Compaction</a>
+      <ul>
+        <li><a href="#asynchronous-compaction">Asynchronous Compaction</a></li>
+        <li><a href="#number-of-sorted-runs-to-pause-writing">Number of Sorted Runs to Pause Writing</a></li>
+        <li><a href="#number-of-sorted-runs-to-trigger-compaction">Number of Sorted Runs to Trigger Compaction</a></li>
+      </ul>
+    </li>
+    <li><a href="#local-merging">Local Merging</a></li>
+    <li><a href="#file-format">File Format</a></li>
+    <li><a href="#file-compression">File Compression</a></li>
+    <li><a href="#stability">Stability</a></li>
+    <li><a href="#write-initialize">Write Initialize</a></li>
+    <li><a href="#write-memory">Write Memory</a></li>
+    <li><a href="#commit-memory">Commit Memory</a></li>
+  </ul>
+</nav>
+
+ 
+    </aside>
+    <aside class="expand-toc">
+      <button class="toc" onclick="expandToc()">
+        <i class="fa fa-expand" aria-hidden="true"></i>
+      </button>
+    </aside>
+    
+  </main>
+
+  
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

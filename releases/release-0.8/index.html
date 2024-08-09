@@ -1,0 +1,676 @@
+
+<!DOCTYPE html>
+<html lang="en" dir=>
+
+<head>
+  <meta name="generator" content="Hugo 0.80.0" />
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Apache Paimon 0.8 Available #  May 9, 2024 - Jingsong Lee (jingsonglee0@gmail.com)
+Apache Paimon PMC has officially released Apache Paimon 0.8.0 version. A total of 47 people contributed to this version and completed over 350 Commits. Thank you to all contributors for their support!
+This version is the first release by Paimon after graduating and becoming a top-level project on Apache. It includes a large number of new features and is also the longest release by Paimon.">
+<meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="Release 0.8" />
+<meta property="og:description" content="Apache Paimon 0.8 Available #  May 9, 2024 - Jingsong Lee (jingsonglee0@gmail.com)
+Apache Paimon PMC has officially released Apache Paimon 0.8.0 version. A total of 47 people contributed to this version and completed over 350 Commits. Thank you to all contributors for their support!
+This version is the first release by Paimon after graduating and becoming a top-level project on Apache. It includes a large number of new features and is also the longest release by Paimon." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="//paimon.apache.org/releases/release-0.8/" />
+
+<title>Release 0.8 | Apache Paimon</title>
+<link rel="manifest" href="/manifest.json">
+<link rel="icon" href="/favicon.png" type="image/x-icon">
+<link rel="stylesheet" href="/book.min.3bc4108a5b57c9a7e6fcae92ff69940435f8c46c4e1e4a311aedc9b2d8e06792.css" integrity="sha256-O8QQiltXyafm/K6S/2mUBDX4xGxOHkoxGu3JstjgZ5I=">
+<script defer src="/en.search.min.b8cd5c37e5577acee4525f978f54176cdd2533aca4e85e6d6b68ac076ad987c7.js" integrity="sha256-uM1cN&#43;VXes7kUl&#43;Xj1QXbN0lM6yk6F5ta2isB2rZh8c="></script>
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+  
+
+<link rel="stylesheet" type="text/css" href="//paimon.apache.org/font-awesome/css/font-awesome.min.css">
+<script src="//paimon.apache.org/js/anchor.min.js"></script>
+<script src="//paimon.apache.org/js/flink.js"></script>
+
+
+  
+  <script>
+    var _paq = window._paq = window._paq || [];
+     
+     
+    _paq.push(['disableCookies']);
+     
+    _paq.push(["setDomains", ["*.flink.apache.org","*.nightlies.apache.org/flink"]]);
+    _paq.push(['trackPageView']);
+    _paq.push(['enableLinkTracking']);
+    (function() {
+      var u="//matomo.privacy.apache.org/";
+      _paq.push(['setTrackerUrl', u+'matomo.php']);
+      _paq.push(['setSiteId', '1']);
+      var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+      g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+    })();
+  </script>
+  
+</head>
+
+<body dir=>
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      
+  
+
+<nav>
+
+
+<a id="logo" href="//paimon.apache.org">
+    <img width="100%" src="//paimon.apache.org/paimon_black.svg">
+</a>
+<p style="text-align:right"></p>
+
+<div class="book-search">
+  <input type="text" id="book-search-input" placeholder="Search" aria-label="Search" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/downloads/" class="">Downloads</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-23530e8a89b9ff74f008983e690a9935" class="toggle" checked />
+    <label for="section-23530e8a89b9ff74f008983e690a9935" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em">Releases</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/releases/release-0.8.2/" class="">Release 0.8.2</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/releases/release-0.8.1/" class="">Release 0.8.1</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/releases/release-0.8/" class=" active">Release 0.8</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/releases/release-0.7/" class="">Release 0.7</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/releases/release-0.6/" class="">Release 0.6</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/releases/release-0.5/" class="">Release 0.5</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/releases/release-0.4/" class="">Release 0.4</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var menu=document.querySelector("aside.book-menu nav");addEventListener("beforeunload",function(event){localStorage.setItem("menu.scrollTop",menu.scrollTop);});menu.scrollTop=localStorage.getItem("menu.scrollTop");})();</script>
+
+
+ 
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <strong>Release 0.8</strong>
+
+  <label for="toc-control">
+    
+    <img src="/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden clearfix">
+    
+  
+
+<nav id="TableOfContents"><h3>On This Page <button class="toc" onclick="collapseToc()"><i class="fa fa-compress" aria-hidden="true"></i></button></h3>
+  <ul>
+    <li><a href="#version-overview">Version Overview</a></li>
+    <li><a href="#deletion-vectors">Deletion Vectors</a></li>
+    <li><a href="#bucket-default-value">Bucket Default Value</a></li>
+    <li><a href="#universal-file-indexing">Universal File Indexing</a></li>
+    <li><a href="#read-and-write-performance-optimization">Read and Write Performance Optimization</a></li>
+    <li><a href="#changelog-lifecycle">Changelog Lifecycle</a></li>
+    <li><a href="#privilege-management-system">Privilege management system</a></li>
+    <li><a href="#the-rest-of-the-core-features">The rest of the core features</a></li>
+    <li><a href="#flink">Flink</a>
+      <ul>
+        <li><a href="#datastream-api">DataStream API</a></li>
+        <li><a href="#lookup-join">Lookup Join</a></li>
+        <li><a href="#other-flink-changes">Other Flink Changes</a></li>
+      </ul>
+    </li>
+    <li><a href="#spark">Spark</a></li>
+    <li><a href="#ecology-and-related-projects">Ecology and Related Projects</a></li>
+  </ul>
+</nav>
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown"><!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<h1 id="apache-paimon-08-available">
+  Apache Paimon 0.8 Available
+  <a class="anchor" href="#apache-paimon-08-available">#</a>
+</h1>
+<p>May 9, 2024 - Jingsong Lee (<a href="mailto:jingsonglee0@gmail.com">jingsonglee0@gmail.com</a>)</p>
+<p>Apache Paimon PMC has officially released Apache Paimon 0.8.0 version. A total of 47 people contributed to
+this version and completed over 350 Commits. Thank you to all contributors for their support!</p>
+<p>This version is the first release by Paimon after graduating and becoming a top-level project on Apache.
+It includes a large number of new features and is also the longest release by Paimon.</p>
+<h2 id="version-overview">
+  Version Overview
+  <a class="anchor" href="#version-overview">#</a>
+</h2>
+<p>Paimon&rsquo;s long-term plan is to become a unified lake storage format that meets the main requirements for minute level
+big data: offline batch computing, real-time stream computing, and OLAP computing.</p>
+<p>The notable changes in this version include:</p>
+<ol>
+<li>Add Deletion Vectors for near real-time updates and fast queries</li>
+<li>Adjust the default value of Bucket to -1 to improve usability for new learners</li>
+<li>Add a universal file indexing mechanism to improve OLAP query performance</li>
+<li>Optimize memory and performance for read and write processes, reduce IO access times</li>
+<li>A separate management mechanism for Changelog files to extend their lifecycle</li>
+<li>Add a file system based privilege system to manage read and write permissions</li>
+</ol>
+<h2 id="deletion-vectors">
+  Deletion Vectors
+  <a class="anchor" href="#deletion-vectors">#</a>
+</h2>
+<p>Paimon&rsquo;s Deletion Vectors mode allows your primary key table (with &lsquo;delete-vectors.enabled&rsquo; set to &lsquo;true&rsquo;) to achieve
+significant read performance improvement without sacrificing too much write update performance, achieving near real-time
+updates and fast queries.</p>
+
+<img 
+  src="//paimon.apache.org/img/deletion-vectors.png"
+  alt=""
+  width=""
+  style="display:block;margin-left:auto;margin-right:auto"
+>
+
+<p>This mode will do more work to generate deletion files at checkpoint, so it is recommended that your Flink stream write
+jobs have a larger &lsquo;execution.checkpointing.timeout&rsquo; value to avoid checkpoint timeouts.</p>
+<p>With the latest 0.8.0 version of paimon-flink, paimon-spark, paimon-hive, and paimon-trino, you can enjoy the optimized
+query performance of this feature, and the Starrocks integration will be included in 3.2.8 &amp; 3.3.2 versions, Apache Doris
+integration will be included in 2.0.10 &amp; 2.1.4 versions.</p>
+<p>It is recommended to enable this feature for most primary key tables.</p>
+<h2 id="bucket-default-value">
+  Bucket Default Value
+  <a class="anchor" href="#bucket-default-value">#</a>
+</h2>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">T</span> <span class="p">(</span>
+  <span class="n">k</span> <span class="nb">INT</span> <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="k">NOT</span> <span class="n">ENFORCED</span><span class="p">,</span>
+  <span class="n">v0</span> <span class="nb">INT</span><span class="p">,</span>
+  <span class="n">v1</span> <span class="nb">INT</span>
+<span class="p">);</span>
+</code></pre></div><p>For the above SQL CREATE TABLE, Paimon used a default value of bucket of 1 in the past version, which caused some new
+learners to test Paimon with single parallelism, which would be a big bottleneck, this version adjusts the bucket to -1:</p>
+<ul>
+<li>For primary key tables: bucket to -1 uses dynamic bucket mode, which will consume more writes resources than the fixed
+bucket mode, but it brings distributed processing with easy configuration.</li>
+<li>For Append tables: a bucket of -1 is a scalable mode, which has better and more convenient distributed processing.</li>
+</ul>
+<p>This change will greatly improve the experience, and Paimon can cover most scenarios without having to configure any
+parameters. For compatibility issues, old tables will continue to use bucket 1 by default, only newly created tables
+will be affected.</p>
+<h2 id="universal-file-indexing">
+  Universal File Indexing
+  <a class="anchor" href="#universal-file-indexing">#</a>
+</h2>
+<p>Prior to this release, you could use ORC&rsquo;s own indexing mechanism to speed up queries, but it only supported a few
+indexes such as Bloom filter, and you could only generate good corresponding indexes when writing to a file.</p>
+<p>To solve these problems, this release proposes Paimon&rsquo;s Universal file index (configure &lsquo;file-index.bloom-filter.columns&rsquo;),
+which will maintain the index file separately:</p>
+<ul>
+<li>Supports not only indexing of fields, but also construction of indexes on Map Keys.</li>
+<li>Plans to support building indexes on existing files at any time, which will prevent you from rewriting data files when
+adding new indexes.</li>
+<li>Plan to add indexes for Bitmap, N-Gram BloomFilter, inverted, and so on in subsequent releases.</li>
+</ul>
+<p>The current universal file index is only the basic framework, and only supports Append tables, which need to be
+improved in subsequent releases.</p>
+<h2 id="read-and-write-performance-optimization">
+  Read and Write Performance Optimization
+  <a class="anchor" href="#read-and-write-performance-optimization">#</a>
+</h2>
+<p>In this release, the performance of critical codes for reading and writing has been optimized:</p>
+<ol>
+<li>Write performance optimization:
+a. Optimized serialization performance on writes, with a 10-20% performance improvement on overall writes.
+b. Significantly improved the performance of Append table for multi-partition writes (more than 5 partitions).
+c. Increased the default value of &lsquo;num-sorted-run.stop-trigger&rsquo;, which slows down backpressure.
+d. Optimized startup performance for dynamic bucket writes.</li>
+<li>Commit performance optimization:
+a. Dramatically reduce the memory usage of Commit node.
+b. Remove useless checks in Commit, write-only commits will be much faster.
+c. Partition Expire performance has been greatly improved.</li>
+<li>Query performance optimization:
+a. Significantly reduce the memory usage of Plan generation.
+b. Reduced access to the file system NameNode in the plan and read phases, which is also beneficial to the OLAP performance of the object store.
+c. codegen supports cache, which will effectively improve the performance of short queries.
+d. Hive queries dramatically reduce the frequency of file system NameNode accesses by serializing Table objects.
+e. Dramatically improve the query performance of the first_row merge-engine.</li>
+</ol>
+<h2 id="changelog-lifecycle">
+  Changelog Lifecycle
+  <a class="anchor" href="#changelog-lifecycle">#</a>
+</h2>
+<p>In the previous version, for primary key table, the default Snapshot retention time of Table is 1 hour, which means
+the Snapshots before 1 hour will be expired, this will seriously affect the security of streaming read, the job
+streaming read this table can not hang for more than 1 hour, otherwise it will consume the snapshot that have already
+been expired, and it won&rsquo;t be able to be recovered.</p>
+<p>The solution can be to configure <code>consumer-id</code> in the streaming job, the job that writes the table will check all the
+consumers of the table in the filesystem when deciding whether the snapshot has expired or not, if there are still users
+relying on the snapshot, the snapshot will not be deleted at the time of expiration. However, consumers require some
+management operations and different jobs need to be configured with different consumer ids, which requires some
+management costs.</p>
+<p>In this release, a new solution is proposed, which allow the Paimon table to act like a real queue and save Changelogs
+for a longer period of time. Actually, the reason we can&rsquo;t save too many snapshots is that the Snapshot contains the
+result file of multiple versions of Compaction, which is very large and takes up more space, while we only need the
+Changelog file for streaming read, so we can separate the lifecycle of the Changelog:</p>
+
+<img 
+  src="//paimon.apache.org/img/changelog-lifecycle.png"
+  alt=""
+  width=""
+  style="display:block;margin-left:auto;margin-right:auto"
+>
+
+<p>When the Snapshot expires, we create the corresponding changelog reference, delete the multiple versions of the Compaction
+file, and keep only the Changelog file. This way you can set up a changelog lifecycle of 1 day:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">T</span> <span class="p">(</span>
+  <span class="n">k</span> <span class="nb">INT</span> <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="k">NOT</span> <span class="n">ENFORCED</span><span class="p">,</span>
+  <span class="p">...</span>
+<span class="p">)</span> <span class="k">WITH</span> <span class="p">(</span>
+  <span class="s1">&#39;changelog-producer&#39;</span><span class="o">=</span><span class="s1">&#39;input&#39;</span><span class="p">,</span>
+  <span class="s1">&#39;changelog.time-retained&#39;</span> <span class="o">=</span> <span class="s1">&#39;1 d&#39;</span>
+<span class="p">)</span>
+</code></pre></div><p>The current version only supports Changelog files, so you need to configure <code>changelog-producer</code> for table to work.</p>
+<h2 id="privilege-management-system">
+  Privilege management system
+  <a class="anchor" href="#privilege-management-system">#</a>
+</h2>
+<p>In this release, Paimon provides a file-based privilege system. Permissions determine which users can perform which
+operations on which objects, so you can manage table access in a fine-grained way. Currently, Paimon uses the
+Identity-Based Access Control (IBAC) permission model, where permissions are assigned directly to users.</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">CREATE</span> <span class="k">CATALOG</span> <span class="o">`</span><span class="n">my</span><span class="o">-</span><span class="k">catalog</span><span class="o">`</span> <span class="k">WITH</span> <span class="p">(</span>
+    <span class="s1">&#39;type&#39;</span> <span class="o">=</span> <span class="s1">&#39;paimon&#39;</span><span class="p">,</span>
+     <span class="c1">-- ...
+</span><span class="c1"></span>    <span class="s1">&#39;user&#39;</span> <span class="o">=</span> <span class="s1">&#39;root&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;password&#39;</span> <span class="o">=</span> <span class="s1">&#39;mypassword&#39;</span>
+<span class="p">);</span>
+
+<span class="c1">-- create a user authenticated by the specified password
+</span><span class="c1">-- change &#39;user&#39; and &#39;password&#39; to the username and password you want
+</span><span class="c1"></span><span class="k">CALL</span> <span class="n">sys</span><span class="p">.</span><span class="n">create_privileged_user</span><span class="p">(</span><span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="s1">&#39;password&#39;</span><span class="p">);</span>
+
+<span class="c1">-- you can change &#39;user&#39; to the username you want, and &#39;SELECT&#39; to other privilege you want
+</span><span class="c1">-- grant &#39;user&#39; with privilege &#39;SELECT&#39; on the whole catalog
+</span><span class="c1"></span><span class="k">CALL</span> <span class="n">sys</span><span class="p">.</span><span class="n">grant_privilege_to_user</span><span class="p">(</span><span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="s1">&#39;SELECT&#39;</span><span class="p">);</span>
+<span class="c1">-- grant &#39;user&#39; with privilege &#39;SELECT&#39; on database my_db
+</span><span class="c1"></span><span class="k">CALL</span> <span class="n">sys</span><span class="p">.</span><span class="n">grant_privilege_to_user</span><span class="p">(</span><span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="s1">&#39;SELECT&#39;</span><span class="p">,</span> <span class="s1">&#39;my_db&#39;</span><span class="p">);</span>
+<span class="c1">-- grant &#39;user&#39; with privilege &#39;SELECT&#39; on table my_db.my_tbl
+</span><span class="c1"></span><span class="k">CALL</span> <span class="n">sys</span><span class="p">.</span><span class="n">grant_privilege_to_user</span><span class="p">(</span><span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="s1">&#39;SELECT&#39;</span><span class="p">,</span> <span class="s1">&#39;my_db&#39;</span><span class="p">,</span> <span class="s1">&#39;my_tbl&#39;</span><span class="p">);</span>
+</code></pre></div><p>This privilege system does not prevent access to older versions. Please upgrade all engines to the new Paimon version
+for the privilege system to take effect.</p>
+<h2 id="the-rest-of-the-core-features">
+  The rest of the core features
+  <a class="anchor" href="#the-rest-of-the-core-features">#</a>
+</h2>
+<ol>
+<li>support TTL specification when creating Tag, which allows you to create Tag more freely for safe batch reading.</li>
+<li>new record level TTL configuration (<code>record-level.expire-time</code>), the data will be expired at the time of Compaction,
+which can effectively reduce the pressure of Compaction by eliminating the expired data.</li>
+<li>aggregation functions <code>collect</code>, <code>merge_map</code>, <code>last_value</code>, <code>nested_update</code> support retraction
+(<code>DELETE</code> / <code>UPDATE_BEFORE</code>) message input, the specific use of the test with your scenario.</li>
+<li>Sequence Field is redesigned, when two data&rsquo;s Sequence Fields are equal, the order of entering Paimon will be used
+to decide the order.</li>
+<li>A new Time Travel method is added, which can specify the batch reading from snapshot watermark.</li>
+<li>Documentation: Flink and Spark have separate catalogs, including pages for reading, writing, table management, etc.
+Hope you like them.</li>
+<li>system tables: greatly improve the query performance and stability of <code>files</code> &amp; <code>snapshots</code> &amp; <code>partitions</code> system table.</li>
+<li>ORC: greatly improve the write performance of orc complex types (array, map); support zstd compression, which is a
+highly recommended algorithm for high compression.</li>
+</ol>
+<h2 id="flink">
+  Flink
+  <a class="anchor" href="#flink">#</a>
+</h2>
+<h3 id="datastream-api">
+  DataStream API
+  <a class="anchor" href="#datastream-api">#</a>
+</h3>
+<p>The old version does not provide DataStream API, it is recommended to use Table API and DataStream conversion to write
+code, however, it is difficult to solve some problems, for example, users want to write to Paimon while writing to
+other DataStream Sinks, Table conversion is difficult to solve this problem. So this version proposes a complete
+DataStream API:</p>
+<ol>
+<li>
+<p><code>FlinkSinkBuilder</code>: build DataStream Sink. 2.</p>
+</li>
+<li>
+<p><code>FlinkSourceBuilder</code>: build the DataStream Source.</p>
+</li>
+<li>
+<p>We still don&rsquo;t recommend you to use DataStream API directly, we recommend you to prioritize using SQL to solve your business problems.</p>
+</li>
+</ol>
+<h3 id="lookup-join">
+  Lookup Join
+  <a class="anchor" href="#lookup-join">#</a>
+</h3>
+<ol>
+<li>Flink Lookup Join uses Hash Lookup to fetch data in this version, which avoids the overhead of RocksDB&rsquo;s data
+insertion.</li>
+<li>This version also continues to improve the Hash Lookup, supports compression, and defaults to lz4, the
+<code>changelog-producer</code> for lookup will also benefit from this.</li>
+<li>And Flink Lookup Join introduces max_pt mode, which is an interesting mode, it will only join the latest partition data, which is more suitable for the dimension table where each partition is full data.</li>
+</ol>
+<p>At present, Flink Lookup Join is still worth improving, for example, it does not Shuffle the data of the main table
+(or we can say fact table) according to the primary key of the dimension table, and the current Cache utilization is
+very unfriendly, which leads to a large amount of IO, which is a problem that needs to be solved in the next version
+of Flink.</p>
+<h3 id="other-flink-changes">
+  Other Flink Changes
+  <a class="anchor" href="#other-flink-changes">#</a>
+</h3>
+<ol>
+<li>Batch read partitioned table performance has been greatly improved. Previously, due to a design problem, each batch
+would scan all partitions, which has now been removed.</li>
+<li>Metrics system has been redesigned, removing metrics at partition and bucket level, which would cause OOM when Flink
+JobManager runs for a long time.</li>
+<li>Introduced <code>commit.force-create-snapshot</code> to force snapshot generation, which allows certain operations to strongly
+rely on snapshot generation.</li>
+<li>Enhance Compact Sort: introduce Hilbert Sort, this kind of Sort still has some effect when there are more than 5
+fields, while z-order only recommends to sort within 5 fields; Sort new Range policy, which can avoid the skewed
+sorting problem due to the inconsistency of row sizes.</li>
+<li>CDC Ingestion&rsquo;s time function supports the handling of epoch time.</li>
+<li>Optimized the scalability of Flink&rsquo;s <code>consumer-id</code> streaming to support multi-partition streaming.</li>
+<li>Flink 1.19, COMPACT Procedure support named argument, and we regret to decide, due to the maintenance of more than 5
+versions, no longer support Flink 1.14, recommended to use Flink 1.17 + version!</li>
+</ol>
+<h2 id="spark">
+  Spark
+  <a class="anchor" href="#spark">#</a>
+</h2>
+<p>Spark continues to optimize query performance, supporting the generation and use of statistics at the table level.</p>
+<p>Spark uses COW technology to support DELETE and UPDATE for Append tables, and Spark DELETE supports primary key tables
+for all MergeEngines. Spark DELETE and UPDATE also support subquery conditions. Spark COMPACT Procedure supports the
+where method.</p>
+<p>Other improvements:</p>
+<ol>
+<li>Spark Generic Catalog supports function methods.</li>
+<li>Delete Tag Procedure supports the ability to delete multiple Tags.</li>
+<li>Unfortunately, due to the maintenance of more than 5 versions, Spark 2 is no longer supported, recommended to use
+Spark 3.3+ version.</li>
+</ol>
+<h2 id="ecology-and-related-projects">
+  Ecology and Related Projects
+  <a class="anchor" href="#ecology-and-related-projects">#</a>
+</h2>
+<ol>
+<li>Hive Migration: Supports migration of entire Hive Database to Paimon Tables.</li>
+<li>Introducing Jdbc Catalog, which allows you to get rid of the Hive Metastore dependency.</li>
+<li>Hive Writer supports Tez-mr engine, we only recommend Hive Writer for small data volume.</li>
+<li>Paimon-Trino latest version only supports Trino 420+ version, but the performance of query orc has been greatly
+improved.</li>
+<li>Paimon-Webui project development has made great progress and will be released soon.</li>
+</ol>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  
+
+
+
+
+<a href="//github.com/apache/paimon/edit//docs/content/releases/release-0.8.md" style="color:black"><i class="fa fa-edit fa-fw"></i>Edit This Page</a>
+
+
+ 
+        
+      </footer>
+
+      
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      
+  
+
+<nav id="TableOfContents"><h3>On This Page <button class="toc" onclick="collapseToc()"><i class="fa fa-compress" aria-hidden="true"></i></button></h3>
+  <ul>
+    <li><a href="#version-overview">Version Overview</a></li>
+    <li><a href="#deletion-vectors">Deletion Vectors</a></li>
+    <li><a href="#bucket-default-value">Bucket Default Value</a></li>
+    <li><a href="#universal-file-indexing">Universal File Indexing</a></li>
+    <li><a href="#read-and-write-performance-optimization">Read and Write Performance Optimization</a></li>
+    <li><a href="#changelog-lifecycle">Changelog Lifecycle</a></li>
+    <li><a href="#privilege-management-system">Privilege management system</a></li>
+    <li><a href="#the-rest-of-the-core-features">The rest of the core features</a></li>
+    <li><a href="#flink">Flink</a>
+      <ul>
+        <li><a href="#datastream-api">DataStream API</a></li>
+        <li><a href="#lookup-join">Lookup Join</a></li>
+        <li><a href="#other-flink-changes">Other Flink Changes</a></li>
+      </ul>
+    </li>
+    <li><a href="#spark">Spark</a></li>
+    <li><a href="#ecology-and-related-projects">Ecology and Related Projects</a></li>
+  </ul>
+</nav>
+
+ 
+    </aside>
+    <aside class="expand-toc">
+      <button class="toc" onclick="expandToc()">
+        <i class="fa fa-expand" aria-hidden="true"></i>
+      </button>
+    </aside>
+    
+  </main>
+
+  
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

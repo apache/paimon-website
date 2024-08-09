@@ -1,0 +1,1735 @@
+
+<!DOCTYPE html>
+<html lang="en" dir=>
+
+<head>
+  <meta name="generator" content="Hugo 0.80.0" />
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Querying Tables #  Just like all other tables, Paimon tables can be queried with SELECT statement.
+Batch Query #  Paimon&rsquo;s batch read returns all the data in a snapshot of the table. By default, batch reads return the latest snapshot.
+-- Flink SQL SET &#39;execution.runtime-mode&#39; = &#39;batch&#39;; Batch Time Travel #  Paimon batch reads with time travel can specify a snapshot or a tag and read the corresponding data.">
+<meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="Querying Tables" />
+<meta property="og:description" content="Querying Tables #  Just like all other tables, Paimon tables can be queried with SELECT statement.
+Batch Query #  Paimon&rsquo;s batch read returns all the data in a snapshot of the table. By default, batch reads return the latest snapshot.
+-- Flink SQL SET &#39;execution.runtime-mode&#39; = &#39;batch&#39;; Batch Time Travel #  Paimon batch reads with time travel can specify a snapshot or a tag and read the corresponding data." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="//paimon.apache.org/docs/0.6/how-to/querying-tables/" />
+
+<title>Querying Tables | Apache Paimon</title>
+<link rel="manifest" href="/docs/0.6/manifest.json">
+<link rel="icon" href="/docs/0.6/favicon.png" type="image/x-icon">
+<link rel="stylesheet" href="/docs/0.6/book.min.3bc4108a5b57c9a7e6fcae92ff69940435f8c46c4e1e4a311aedc9b2d8e06792.css" integrity="sha256-O8QQiltXyafm/K6S/2mUBDX4xGxOHkoxGu3JstjgZ5I=">
+<script defer src="/docs/0.6/en.search.min.bdbb2261b557a7c02c04a5095c8a17bb87853c6bb8544247aaf1506cb12c096e.js" integrity="sha256-vbsiYbVXp8AsBKUJXIoXu4eFPGu4VEJHqvFQbLEsCW4="></script>
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+  
+
+<link rel="stylesheet" type="text/css" href="//paimon.apache.org/docs/0.6/font-awesome/css/font-awesome.min.css">
+<script src="//paimon.apache.org/docs/0.6/js/anchor.min.js"></script>
+<script src="//paimon.apache.org/docs/0.6/js/flink.js"></script>
+
+
+  
+  <script>
+    var _paq = window._paq = window._paq || [];
+     
+     
+    _paq.push(['disableCookies']);
+     
+    _paq.push(["setDomains", ["*.flink.apache.org","*.nightlies.apache.org/flink"]]);
+    _paq.push(['trackPageView']);
+    _paq.push(['enableLinkTracking']);
+    (function() {
+      var u="//matomo.privacy.apache.org/";
+      _paq.push(['setTrackerUrl', u+'matomo.php']);
+      _paq.push(['setSiteId', '1']);
+      var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+      g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+    })();
+  </script>
+  
+</head>
+
+<body dir=>
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      
+  
+
+<nav>
+
+
+<a id="logo" href="//paimon.apache.org/docs/0.6">
+    <img width="100%" src="//paimon.apache.org/docs/0.6/paimon_black.svg">
+</a>
+<p style="text-align:right">0.6.0-incubating</p>
+
+<div class="book-search">
+  <input type="text" id="book-search-input" placeholder="Search" aria-label="Search" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-dc8a1c63e6da60163016ce21cae1faa0" class="toggle"  />
+    <label for="section-dc8a1c63e6da60163016ce21cae1faa0" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-book title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Concepts</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/concepts/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/concepts/basic-concepts/" class="">Basic Concepts</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/concepts/file-layouts/" class="">File Layouts</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/concepts/primary-key-table/" class="">Primary Key Table</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/concepts/append-only-table/" class="">Append Only Table</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-90f5541dc4fa46a212e954b9193ea0f9" class="toggle"  />
+    <label for="section-90f5541dc4fa46a212e954b9193ea0f9" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-gear title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Engines</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/engines/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/engines/flink/" class="">Flink</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/engines/spark/" class="">Spark</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/engines/hive/" class="">Hive</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/engines/presto/" class="">Presto</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/engines/trino/" class="">Trino</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-e2d76c106dab115385ef7f124cda2ba4" class="toggle"  />
+    <label for="section-e2d76c106dab115385ef7f124cda2ba4" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-folder title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Filesystems</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/filesystems/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/filesystems/hdfs/" class="">HDFS</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/filesystems/oss/" class="">OSS</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/filesystems/s3/" class="">S3</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-f6ca435e98b926845c0060f9e7f85362" class="toggle" checked />
+    <label for="section-f6ca435e98b926845c0060f9e7f85362" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-database title maindish" aria-hidden="true"></i>&nbsp;&nbsp;How to</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/how-to/creating-catalogs/" class="">Creating Catalogs</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/how-to/creating-tables/" class="">Creating Tables</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/how-to/altering-tables/" class="">Altering Tables</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/how-to/writing-tables/" class="">Writing Tables</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/how-to/querying-tables/" class=" active">Querying Tables</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/how-to/system-tables/" class="">System Tables</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/how-to/lookup-joins/" class="">Lookup Joins</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-582e435c19ca5fafbf9764337d648e63" class="toggle"  />
+    <label for="section-582e435c19ca5fafbf9764337d648e63" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-database title maindish" aria-hidden="true"></i>&nbsp;&nbsp;CDC Ingestion</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/cdc-ingestion/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/cdc-ingestion/mysql-cdc/" class="">Mysql CDC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/cdc-ingestion/kafka-cdc/" class="">Kafka CDC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/cdc-ingestion/mongo-cdc/" class="">Mongo CDC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/cdc-ingestion/pulsar-cdc/" class="">Pulsar CDC</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-697a4b6a0388d6cfa4f418aba3b4edfe" class="toggle"  />
+    <label for="section-697a4b6a0388d6cfa4f418aba3b4edfe" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-wrench title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Maintenance</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/maintenance/write-performance/" class="">Write Performance</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/maintenance/read-performance/" class="">Read Performance</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/maintenance/dedicated-compaction/" class="">Dedicated Compaction</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/maintenance/manage-snapshots/" class="">Manage Snapshots</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/maintenance/manage-partition/" class="">Manage Partition</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/maintenance/rescale-bucket/" class="">Rescale Bucket</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/maintenance/manage-tags/" class="">Manage Tags</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/maintenance/metrics/" class="">Metrics</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/maintenance/configurations/" class="">Configurations</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-1b3eda2e8317c0686a4d41cefa0a3453" class="toggle"  />
+    <label for="section-1b3eda2e8317c0686a4d41cefa0a3453" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-briefcase title maindish" aria-hidden="true"></i>&nbsp;&nbsp;API</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/api/java-api/" class="">Java API</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/api/flink-api/" class="">Flink API</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-07c567e5a9f3ce62aea4ff0a1e2dc065" class="toggle"  />
+    <label for="section-07c567e5a9f3ce62aea4ff0a1e2dc065" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-briefcase title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Migration</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/migration/migration-from-hive/" class="">Migration From Hive</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/migration/upsert-to-partitioned/" class="">Upsert To Partitioned</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  	<br/>
+  
+  
+    <input type="checkbox" id="section-8c828bcf882f666cdd6821a70cc768ee" class="toggle"  />
+    <label for="section-8c828bcf882f666cdd6821a70cc768ee" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-sitemap title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Project</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/project/roadmap/" class="">Roadmap</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/project/download/" class="">Download</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/project/contributing/" class="">Contributing</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-392fc6f653ae23ff676811656a71ebbf" class="toggle"  />
+    <label for="section-392fc6f653ae23ff676811656a71ebbf" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-sitemap title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Learn Paimon</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.6/learn-paimon/understand-files/" class="">Understand Files</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br/>
+<hr class="menu-break">
+
+<a href="//paimon.apache.org" style="color:black;margin-bottom:0.5em"><i class="link fa fa-external-link title" aria-hidden="true"></i> Project Homepage</a>
+<br/>
+
+<a href="//paimon.apache.org/docs/master/api/java/" style="color:black;margin-bottom:0.5em"><i class="link fa fa-external-link title" aria-hidden="true"></i> JavaDocs</a>
+<br/>
+
+<hr class="menu-break">
+<li style="list-style-type: none">
+  <br>
+  <input type="checkbox" id="section-version-picker" class="toggle">
+  <label for="section-version-picker" class="flex justify-between">
+     <div style="font-weight:450;margin-bottom:0.5em">Pick Docs Version</div>
+     <span>▾</span>
+  </label>
+  <ul>
+    <a href="//paimon.apache.org/docs/0.6">
+      0.6 (✓)
+    </a>
+    <hr class="menu-break">
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/master">
+          master
+        </a>
+      </li>
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/0.6">
+          stable
+        </a>
+      </li>
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/0.5">
+          0.5
+        </a>
+      </li>
+    
+    <hr class="menu-break">
+    <li>
+      <a href="//paimon.apache.org/docs/0.6/versions">
+          All Versions
+      </a>
+    </li>
+  </ul>
+</li>
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var menu=document.querySelector("aside.book-menu nav");addEventListener("beforeunload",function(event){localStorage.setItem("menu.scrollTop",menu.scrollTop);});menu.scrollTop=localStorage.getItem("menu.scrollTop");})();</script>
+
+
+ 
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/docs/0.6/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <strong>Querying Tables</strong>
+
+  <label for="toc-control">
+    
+    <img src="/docs/0.6/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden clearfix">
+    
+  
+
+<nav id="TableOfContents"><h3>On This Page <button class="toc" onclick="collapseToc()"><i class="fa fa-compress" aria-hidden="true"></i></button></h3>
+  <ul>
+    <li><a href="#batch-query">Batch Query</a>
+      <ul>
+        <li><a href="#batch-time-travel">Batch Time Travel</a></li>
+        <li><a href="#batch-incremental">Batch Incremental</a></li>
+      </ul>
+    </li>
+    <li><a href="#streaming-query">Streaming Query</a>
+      <ul>
+        <li><a href="#streaming-time-travel">Streaming Time Travel</a></li>
+        <li><a href="#consumer-id">Consumer ID</a></li>
+        <li><a href="#read-overwrite">Read Overwrite</a></li>
+      </ul>
+    </li>
+    <li><a href="#read-parallelism">Read Parallelism</a></li>
+    <li><a href="#query-optimization">Query Optimization</a></li>
+  </ul>
+</nav>
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+
+
+
+
+
+
+      
+  <article class="markdown"><!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<h1 id="querying-tables">
+  Querying Tables
+  <a class="anchor" href="#querying-tables">#</a>
+</h1>
+<p>Just like all other tables, Paimon tables can be queried with <code>SELECT</code> statement.</p>
+<h2 id="batch-query">
+  Batch Query
+  <a class="anchor" href="#batch-query">#</a>
+</h2>
+<p>Paimon&rsquo;s batch read returns all the data in a snapshot of the table. By default, batch reads return the latest snapshot.</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="c1">-- Flink SQL
+</span><span class="c1"></span><span class="k">SET</span> <span class="s1">&#39;execution.runtime-mode&#39;</span> <span class="o">=</span> <span class="s1">&#39;batch&#39;</span><span class="p">;</span>
+</code></pre></div><h3 id="batch-time-travel">
+  Batch Time Travel
+  <a class="anchor" href="#batch-time-travel">#</a>
+</h3>
+<p>Paimon batch reads with time travel can specify a snapshot or a tag and read the corresponding data.</p>
+
+
+
+
+
+<div class="book-tabs"><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Flink (dynamic option)"
+    name="tabs-time-travel-example"
+    id="tabs-time-travel-example-0"
+    checked="checked" 
+    onclick="onSwitch('Flink (dynamic option)')"
+  />
+  <label for="tabs-time-travel-example-0">Flink (dynamic option)</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="c1">-- read the snapshot with id 1L
+</span><span class="c1"></span><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">t</span> <span class="cm">/*+ OPTIONS(&#39;scan.snapshot-id&#39; = &#39;1&#39;) */</span><span class="p">;</span>
+
+<span class="c1">-- read the snapshot from specified timestamp in unix milliseconds
+</span><span class="c1"></span><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">t</span> <span class="cm">/*+ OPTIONS(&#39;scan.timestamp-millis&#39; = &#39;1678883047356&#39;) */</span><span class="p">;</span>
+
+<span class="c1">-- read tag &#39;my-tag&#39;
+</span><span class="c1"></span><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">t</span> <span class="cm">/*+ OPTIONS(&#39;scan.tag-name&#39; = &#39;my-tag&#39;) */</span><span class="p">;</span>
+</code></pre></div></div><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Flink 1.18&#43;"
+    name="tabs-time-travel-example"
+    id="tabs-time-travel-example-1"
+     
+    onclick="onSwitch('Flink 1.18\u002b')"
+  />
+  <label for="tabs-time-travel-example-1">Flink 1.18&#43;</label>
+  <div class="book-tabs-content markdown-inner"><p>Flink SQL supports time travel syntax after 1.18.</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="c1">-- read the snapshot from specified timestamp
+</span><span class="c1"></span><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">t</span> <span class="k">FOR</span> <span class="n">SYSTEM_TIME</span> <span class="k">AS</span> <span class="k">OF</span> <span class="k">TIMESTAMP</span> <span class="s1">&#39;2023-01-01 00:00:00&#39;</span><span class="p">;</span>
+
+<span class="c1">-- you can also use some simple expressions (see flink document to get supported functions)
+</span><span class="c1"></span><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">t</span> <span class="k">FOR</span> <span class="n">SYSTEM_TIME</span> <span class="k">AS</span> <span class="k">OF</span> <span class="k">TIMESTAMP</span> <span class="s1">&#39;2023-01-01 00:00:00&#39;</span> <span class="o">+</span> <span class="nb">INTERVAL</span> <span class="s1">&#39;1&#39;</span> <span class="k">DAY</span>
+</code></pre></div></div><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Spark3"
+    name="tabs-time-travel-example"
+    id="tabs-time-travel-example-2"
+     
+    onclick="onSwitch('Spark3')"
+  />
+  <label for="tabs-time-travel-example-2">Spark3</label>
+  <div class="book-tabs-content markdown-inner"><p>Requires Spark 3.3+.</p>
+<p>you can use <code>VERSION AS OF</code> and <code>TIMESTAMP AS OF</code> in query to do time travel:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="c1">-- read the snapshot with id 1L (use snapshot id as version)
+</span><span class="c1"></span><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">t</span> <span class="k">VERSION</span> <span class="k">AS</span> <span class="k">OF</span> <span class="mi">1</span><span class="p">;</span>
+
+<span class="c1">-- read the snapshot from specified timestamp 
+</span><span class="c1"></span><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">t</span> <span class="k">TIMESTAMP</span> <span class="k">AS</span> <span class="k">OF</span> <span class="s1">&#39;2023-06-01 00:00:00.123&#39;</span><span class="p">;</span>
+
+<span class="c1">-- read the snapshot from specified timestamp in unix seconds
+</span><span class="c1"></span><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">t</span> <span class="k">TIMESTAMP</span> <span class="k">AS</span> <span class="k">OF</span> <span class="mi">1678883047</span><span class="p">;</span>
+
+<span class="c1">-- read tag &#39;my-tag&#39;
+</span><span class="c1"></span><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">t</span> <span class="k">VERSION</span> <span class="k">AS</span> <span class="k">OF</span> <span class="s1">&#39;my-tag&#39;</span><span class="p">;</span>
+</code></pre></div></div><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Spark3-DF"
+    name="tabs-time-travel-example"
+    id="tabs-time-travel-example-3"
+     
+    onclick="onSwitch('Spark3-DF')"
+  />
+  <label for="tabs-time-travel-example-3">Spark3-DF</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre class="chroma"><code class="language-scala" data-lang="scala"><span class="c1">// read the snapshot from specified timestamp in unix seconds
+</span><span class="c1"></span><span class="n">spark</span><span class="o">.</span><span class="n">read</span>
+    <span class="o">.</span><span class="n">option</span><span class="o">(</span><span class="s">&#34;scan.timestamp-millis&#34;</span><span class="o">,</span> <span class="s">&#34;1678883047000&#34;</span><span class="o">)</span>
+    <span class="o">.</span><span class="n">format</span><span class="o">(</span><span class="s">&#34;paimon&#34;</span><span class="o">)</span>
+    <span class="o">.</span><span class="n">load</span><span class="o">(</span><span class="s">&#34;path/to/table&#34;</span><span class="o">)</span>
+</code></pre></div><div class="highlight"><pre class="chroma"><code class="language-scala" data-lang="scala"><span class="c1">// read the snapshot with id 1L (use snapshot id as version)
+</span><span class="c1"></span><span class="n">spark</span><span class="o">.</span><span class="n">read</span>
+    <span class="o">.</span><span class="n">option</span><span class="o">(</span><span class="s">&#34;scan.snapshot-id&#34;</span><span class="o">,</span> <span class="mi">1</span><span class="o">)</span>
+    <span class="o">.</span><span class="n">format</span><span class="o">(</span><span class="s">&#34;paimon&#34;</span><span class="o">)</span>
+    <span class="o">.</span><span class="n">load</span><span class="o">(</span><span class="s">&#34;path/to/table&#34;</span><span class="o">)</span>
+</code></pre></div><div class="highlight"><pre class="chroma"><code class="language-scala" data-lang="scala"><span class="c1">// read tag &#39;my-tag&#39;
+</span><span class="c1"></span><span class="n">spark</span><span class="o">.</span><span class="n">read</span>
+    <span class="o">.</span><span class="n">option</span><span class="o">(</span><span class="s">&#34;scan.tag-name&#34;</span><span class="o">,</span> <span class="s">&#34;my-tag&#34;</span><span class="o">)</span>
+    <span class="o">.</span><span class="n">format</span><span class="o">(</span><span class="s">&#34;paimon&#34;</span><span class="o">)</span>
+    <span class="o">.</span><span class="n">load</span><span class="o">(</span><span class="s">&#34;path/to/table&#34;</span><span class="o">)</span>
+</code></pre></div></div><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Trino"
+    name="tabs-time-travel-example"
+    id="tabs-time-travel-example-4"
+     
+    onclick="onSwitch('Trino')"
+  />
+  <label for="tabs-time-travel-example-4">Trino</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="c1">-- read the snapshot from specified timestamp with a long value in unix milliseconds
+</span><span class="c1"></span><span class="k">SET</span> <span class="k">SESSION</span> <span class="n">paimon</span><span class="p">.</span><span class="n">scan_timestamp_millis</span><span class="o">=</span><span class="mi">1679486589444</span><span class="p">;</span>
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">t</span><span class="p">;</span>
+</code></pre></div></div><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Trino 368&#43;"
+    name="tabs-time-travel-example"
+    id="tabs-time-travel-example-5"
+     
+    onclick="onSwitch('Trino 368\u002b')"
+  />
+  <label for="tabs-time-travel-example-5">Trino 368&#43;</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="c1">-- read the snapshot from specified timestamp
+</span><span class="c1"></span><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">t</span> <span class="k">FOR</span> <span class="k">TIMESTAMP</span> <span class="k">AS</span> <span class="k">OF</span> <span class="k">TIMESTAMP</span> <span class="s1">&#39;2023-01-01 00:00:00 Asia/Shanghai&#39;</span><span class="p">;</span>
+
+<span class="c1">-- read the snapshot with id 1L (use snapshot id as version)
+</span><span class="c1"></span><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">t</span> <span class="k">FOR</span> <span class="k">VERSION</span> <span class="k">AS</span> <span class="k">OF</span> <span class="mi">1</span><span class="p">;</span>
+</code></pre></div></div><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Hive"
+    name="tabs-time-travel-example"
+    id="tabs-time-travel-example-6"
+     
+    onclick="onSwitch('Hive')"
+  />
+  <label for="tabs-time-travel-example-6">Hive</label>
+  <div class="book-tabs-content markdown-inner"><p>Hive requires adding the following configuration parameters to the hive-site.xml file:</p>
+<div class="highlight"><pre class="chroma"><code class="language-xml" data-lang="xml"><span class="c">&lt;!--This parameter is used to configure the whitelist of permissible configuration items allowed for use in SQL standard authorization mode.--&gt;</span>
+<span class="nt">&lt;property&gt;</span>
+  <span class="nt">&lt;name&gt;</span>hive.security.authorization.sqlstd.confwhitelist<span class="nt">&lt;/name&gt;</span>
+  <span class="nt">&lt;value&gt;</span>mapred.*|hive.*|mapreduce.*|spark.*<span class="nt">&lt;/value&gt;</span>
+<span class="nt">&lt;/property&gt;</span>
+
+<span class="c">&lt;!--This parameter is an additional configuration for hive.security.authorization.sqlstd.confwhitelist. It allows you to add other permissible configuration items to the existing whitelist.--&gt;</span>
+<span class="nt">&lt;property&gt;</span>
+ <span class="nt">&lt;name&gt;</span>hive.security.authorization.sqlstd.confwhitelist.append<span class="nt">&lt;/name&gt;</span>
+  <span class="nt">&lt;value&gt;</span>mapred.*|hive.*|mapreduce.*|spark.*<span class="nt">&lt;/value&gt;</span>
+<span class="nt">&lt;/property&gt;</span>
+</code></pre></div><div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="c1">-- read the snapshot with id 1L (use snapshot id as version)
+</span><span class="c1"></span><span class="k">SET</span> <span class="n">paimon</span><span class="p">.</span><span class="n">scan</span><span class="p">.</span><span class="n">snapshot</span><span class="o">-</span><span class="n">id</span><span class="o">=</span><span class="mi">1</span>
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">t</span><span class="p">;</span>
+<span class="k">SET</span> <span class="n">paimon</span><span class="p">.</span><span class="n">scan</span><span class="p">.</span><span class="n">snapshot</span><span class="o">-</span><span class="n">id</span><span class="o">=</span><span class="k">null</span><span class="p">;</span>
+
+<span class="c1">-- read the snapshot from specified timestamp in unix seconds
+</span><span class="c1"></span><span class="k">SET</span> <span class="n">paimon</span><span class="p">.</span><span class="n">scan</span><span class="p">.</span><span class="k">timestamp</span><span class="o">-</span><span class="n">millis</span><span class="o">=</span><span class="mi">1679486589444</span><span class="p">;</span>
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">t</span><span class="p">;</span>
+<span class="k">SET</span> <span class="n">paimon</span><span class="p">.</span><span class="n">scan</span><span class="p">.</span><span class="k">timestamp</span><span class="o">-</span><span class="n">millis</span><span class="o">=</span><span class="k">null</span><span class="p">;</span>
+    
+<span class="c1">-- read tag &#39;my-tag&#39;
+</span><span class="c1"></span><span class="k">set</span> <span class="n">paimon</span><span class="p">.</span><span class="n">scan</span><span class="p">.</span><span class="n">tag</span><span class="o">-</span><span class="n">name</span><span class="o">=</span><span class="n">my</span><span class="o">-</span><span class="n">tag</span><span class="p">;</span>
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">t</span><span class="p">;</span>
+<span class="k">set</span> <span class="n">paimon</span><span class="p">.</span><span class="n">scan</span><span class="p">.</span><span class="n">tag</span><span class="o">-</span><span class="n">name</span><span class="o">=</span><span class="k">null</span><span class="p">;</span>
+</code></pre></div></div></div>
+
+<h3 id="batch-incremental">
+  Batch Incremental
+  <a class="anchor" href="#batch-incremental">#</a>
+</h3>
+<p>Read incremental changes between start snapshot (exclusive) and end snapshot.</p>
+<p>For example:</p>
+<ul>
+<li>&lsquo;5,10&rsquo; means changes between snapshot 5 and snapshot 10.</li>
+<li>&lsquo;TAG1,TAG3&rsquo; means changes between TAG1 and TAG3.</li>
+</ul>
+
+
+
+
+
+<div class="book-tabs"><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Flink"
+    name="tabs-incremental-example"
+    id="tabs-incremental-example-0"
+    checked="checked" 
+    onclick="onSwitch('Flink')"
+  />
+  <label for="tabs-incremental-example-0">Flink</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="c1">-- incremental between snapshot ids
+</span><span class="c1"></span><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">t</span> <span class="cm">/*+ OPTIONS(&#39;incremental-between&#39; = &#39;12,20&#39;) */</span><span class="p">;</span>
+
+<span class="c1">-- incremental between snapshot time mills
+</span><span class="c1"></span><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">t</span> <span class="cm">/*+ OPTIONS(&#39;incremental-between-timestamp&#39; = &#39;1692169000000,1692169900000&#39;) */</span><span class="p">;</span>
+</code></pre></div></div><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Spark3"
+    name="tabs-incremental-example"
+    id="tabs-incremental-example-1"
+     
+    onclick="onSwitch('Spark3')"
+  />
+  <label for="tabs-incremental-example-1">Spark3</label>
+  <div class="book-tabs-content markdown-inner"><p>Requires Spark 3.2+.</p>
+<p>Paimon supports that use Spark SQL to do the incremental query that implemented by Spark Table Valued Function.
+To enable this needs these configs below:</p>
+<div class="highlight"><pre class="chroma"><code class="language-text" data-lang="text">--conf spark.sql.extensions=org.apache.paimon.spark.extensions.PaimonSparkSessionExtensions
+</code></pre></div><p>you can use <code>paimon_incremental_query</code> in query to extract the incremental data:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="c1">-- read the incremental data between snapshot id 12 and snapshot id 20.
+</span><span class="c1"></span><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">paimon_incremental_query</span><span class="p">(</span><span class="s1">&#39;tableName&#39;</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">20</span><span class="p">);</span>
+</code></pre></div></div><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Spark-DF"
+    name="tabs-incremental-example"
+    id="tabs-incremental-example-2"
+     
+    onclick="onSwitch('Spark-DF')"
+  />
+  <label for="tabs-incremental-example-2">Spark-DF</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre class="chroma"><code class="language-scala" data-lang="scala"><span class="c1">// incremental between snapshot ids
+</span><span class="c1"></span><span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">()</span>
+  <span class="o">.</span><span class="n">format</span><span class="o">(</span><span class="s">&#34;paimon&#34;</span><span class="o">)</span>
+  <span class="o">.</span><span class="n">option</span><span class="o">(</span><span class="s">&#34;incremental-between&#34;</span><span class="o">,</span> <span class="s">&#34;12,20&#34;</span><span class="o">)</span>
+  <span class="o">.</span><span class="n">load</span><span class="o">(</span><span class="s">&#34;path/to/table&#34;</span><span class="o">)</span>
+
+<span class="c1">// incremental between snapshot time mills
+</span><span class="c1"></span><span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">()</span>
+  <span class="o">.</span><span class="n">format</span><span class="o">(</span><span class="s">&#34;paimon&#34;</span><span class="o">)</span>
+  <span class="o">.</span><span class="n">option</span><span class="o">(</span><span class="s">&#34;incremental-between-timestamp&#34;</span><span class="o">,</span> <span class="s">&#34;1692169000000,1692169900000&#34;</span><span class="o">)</span>
+  <span class="o">.</span><span class="n">load</span><span class="o">(</span><span class="s">&#34;path/to/table&#34;</span><span class="o">)</span>
+</code></pre></div></div><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Hive"
+    name="tabs-incremental-example"
+    id="tabs-incremental-example-3"
+     
+    onclick="onSwitch('Hive')"
+  />
+  <label for="tabs-incremental-example-3">Hive</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="c1">-- incremental between snapshot ids
+</span><span class="c1"></span><span class="k">SET</span> <span class="n">paimon</span><span class="p">.</span><span class="n">incremental</span><span class="o">-</span><span class="k">between</span><span class="o">=</span><span class="s1">&#39;12,20&#39;</span><span class="p">;</span>
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">t</span><span class="p">;</span>
+<span class="k">SET</span> <span class="n">paimon</span><span class="p">.</span><span class="n">incremental</span><span class="o">-</span><span class="k">between</span><span class="o">=</span><span class="k">null</span><span class="p">;</span>
+
+<span class="c1">-- incremental between snapshot time mills
+</span><span class="c1"></span><span class="k">SET</span> <span class="n">paimon</span><span class="p">.</span><span class="n">incremental</span><span class="o">-</span><span class="k">between</span><span class="o">-</span><span class="k">timestamp</span><span class="o">=</span><span class="s1">&#39;1692169000000,1692169900000&#39;</span><span class="p">;</span>
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">t</span><span class="p">;</span>
+<span class="k">SET</span> <span class="n">paimon</span><span class="p">.</span><span class="n">incremental</span><span class="o">-</span><span class="k">between</span><span class="o">-</span><span class="k">timestamp</span><span class="o">=</span><span class="k">null</span><span class="p">;</span>
+</code></pre></div></div></div>
+
+<p>In Batch SQL, the <code>DELETE</code> records are not allowed to be returned, so records of <code>-D</code> will be dropped.
+If you want see <code>DELETE</code> records, you can use audit_log table:</p>
+
+
+
+
+
+<div class="book-tabs"><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Flink"
+    name="tabs-incremental-audit_log"
+    id="tabs-incremental-audit_log-0"
+    checked="checked" 
+    onclick="onSwitch('Flink')"
+  />
+  <label for="tabs-incremental-audit_log-0">Flink</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">t$audit_log</span> <span class="cm">/*+ OPTIONS(&#39;incremental-between&#39; = &#39;12,20&#39;) */</span><span class="p">;</span>
+</code></pre></div></div></div>
+
+<h2 id="streaming-query">
+  Streaming Query
+  <a class="anchor" href="#streaming-query">#</a>
+</h2>
+<p>By default, Streaming read produces the latest snapshot on the table upon first startup,
+and continue to read the latest changes.</p>
+<p>Paimon by default ensures that your startup is properly processed with the full amount
+included.</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="c1">-- Flink SQL
+</span><span class="c1"></span><span class="k">SET</span> <span class="s1">&#39;execution.runtime-mode&#39;</span> <span class="o">=</span> <span class="s1">&#39;streaming&#39;</span><span class="p">;</span>
+</code></pre></div><p>You can also do streaming read without the snapshot data, you can use <code>latest</code> scan mode:</p>
+
+
+
+
+
+<div class="book-tabs"><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Flink"
+    name="tabs-latest streaming read"
+    id="tabs-latest streaming read-0"
+    checked="checked" 
+    onclick="onSwitch('Flink')"
+  />
+  <label for="tabs-latest streaming read-0">Flink</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="c1">-- Continuously reads latest changes without producing a snapshot at the beginning.
+</span><span class="c1"></span><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">t</span> <span class="cm">/*+ OPTIONS(&#39;scan.mode&#39; = &#39;latest&#39;) */</span><span class="p">;</span>
+</code></pre></div></div></div>
+
+<h3 id="streaming-time-travel">
+  Streaming Time Travel
+  <a class="anchor" href="#streaming-time-travel">#</a>
+</h3>
+<p>If you only want to process data for today and beyond, you can do so with partitioned filters:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">t</span> <span class="k">WHERE</span> <span class="n">dt</span> <span class="o">&gt;</span> <span class="s1">&#39;2023-06-26&#39;</span><span class="p">;</span>
+</code></pre></div><p>If it&rsquo;s not a partitioned table, or you can&rsquo;t filter by partition, you can use Time travel&rsquo;s stream read.</p>
+
+
+
+
+
+<div class="book-tabs"><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Flink (dynamic option)"
+    name="tabs-streaming-time-travel"
+    id="tabs-streaming-time-travel-0"
+    checked="checked" 
+    onclick="onSwitch('Flink (dynamic option)')"
+  />
+  <label for="tabs-streaming-time-travel-0">Flink (dynamic option)</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="c1">-- read changes from snapshot id 1L 
+</span><span class="c1"></span><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">t</span> <span class="cm">/*+ OPTIONS(&#39;scan.snapshot-id&#39; = &#39;1&#39;) */</span><span class="p">;</span>
+
+<span class="c1">-- read changes from snapshot specified timestamp
+</span><span class="c1"></span><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">t</span> <span class="cm">/*+ OPTIONS(&#39;scan.timestamp-millis&#39; = &#39;1678883047356&#39;) */</span><span class="p">;</span>
+
+<span class="c1">-- read snapshot id 1L upon first startup, and continue to read the changes
+</span><span class="c1"></span><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">t</span> <span class="cm">/*+ OPTIONS(&#39;scan.mode&#39;=&#39;from-snapshot-full&#39;,&#39;scan.snapshot-id&#39; = &#39;1&#39;) */</span><span class="p">;</span>
+</code></pre></div></div><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Flink 1.18&#43;"
+    name="tabs-streaming-time-travel"
+    id="tabs-streaming-time-travel-1"
+     
+    onclick="onSwitch('Flink 1.18\u002b')"
+  />
+  <label for="tabs-streaming-time-travel-1">Flink 1.18&#43;</label>
+  <div class="book-tabs-content markdown-inner"><p>Flink SQL supports time travel syntax after 1.18.</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="c1">-- read the snapshot from specified timestamp
+</span><span class="c1"></span><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">t</span> <span class="k">FOR</span> <span class="n">SYSTEM_TIME</span> <span class="k">AS</span> <span class="k">OF</span> <span class="k">TIMESTAMP</span> <span class="s1">&#39;2023-01-01 00:00:00&#39;</span><span class="p">;</span>
+
+<span class="c1">-- you can also use some simple expressions (see flink document to get supported functions)
+</span><span class="c1"></span><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">t</span> <span class="k">FOR</span> <span class="n">SYSTEM_TIME</span> <span class="k">AS</span> <span class="k">OF</span> <span class="k">TIMESTAMP</span> <span class="s1">&#39;2023-01-01 00:00:00&#39;</span> <span class="o">+</span> <span class="nb">INTERVAL</span> <span class="s1">&#39;1&#39;</span> <span class="k">DAY</span>
+</code></pre></div></div></div>
+
+<p>Time travel&rsquo;s stream read rely on snapshots, but by default, snapshot only retains data within 1 hour, which can
+prevent you from reading older incremental data. So, Paimon also provides another mode for streaming reads,
+<code>scan.file-creation-time-millis</code>, which provides a rough filtering to retain files generated after <code>timeMillis</code>.</p>
+
+
+
+
+
+<div class="book-tabs"><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Flink (dynamic option)"
+    name="tabs-file-creation-time-millis"
+    id="tabs-file-creation-time-millis-0"
+    checked="checked" 
+    onclick="onSwitch('Flink (dynamic option)')"
+  />
+  <label for="tabs-file-creation-time-millis-0">Flink (dynamic option)</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">t</span> <span class="cm">/*+ OPTIONS(&#39;scan.file-creation-time-millis&#39; = &#39;1678883047356&#39;) */</span><span class="p">;</span>
+</code></pre></div></div></div>
+
+<h3 id="consumer-id">
+  Consumer ID
+  <a class="anchor" href="#consumer-id">#</a>
+</h3>
+<p>You can specify the <code>consumer-id</code> when streaming read table:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">t</span> <span class="cm">/*+ OPTIONS(&#39;consumer-id&#39; = &#39;myid&#39;) */</span><span class="p">;</span>
+</code></pre></div><p>When stream read Paimon tables, the next snapshot id to be recorded into the file system. This has several advantages:</p>
+<ol>
+<li>When previous job is stopped, the newly started job can continue to consume from the previous progress without
+resuming from the state. The newly reading will start reading from next snapshot id found in consumer files.</li>
+<li>When deciding whether a snapshot has expired, Paimon looks at all the consumers of the table in the file system,
+and if there are consumers that still depend on this snapshot, then this snapshot will not be deleted by expiration.</li>
+<li>When there is no watermark definition, the Paimon table will pass the watermark in the snapshot to the downstream
+Paimon table, which means you can track the progress of the watermark for the entire pipeline.</li>
+</ol>
+<blockquote class="book-hint info">
+  NOTE: The consumer will prevent expiration of the snapshot. You can specify &lsquo;consumer.expiration-time&rsquo; to manage the
+lifetime of consumers.
+</blockquote>
+
+<p>By default, the consumer uses <code>exactly-once</code> mode to record consumption progress, which strictly ensures that what is
+recorded in the consumer is the snapshot-id + 1 that all readers have exactly consumed. You can set <code>consumer.mode</code> to
+<code>at-least-once</code> to allow readers consume snapshots at different rates and record the slowest snapshot-id among all
+readers into the consumer. This mode can provide more capabilities, such as watermark alignment.</p>
+<blockquote class="book-hint warning">
+  <ol>
+<li>When there is no watermark definition, the consumer in <code>at-least-once</code> mode cannot provide the ability to pass the
+watermark in the snapshot to the downstream.</li>
+<li>Since the implementation of <code>exactly-once</code> mode and <code>at-least-once</code> mode are completely different, the state of
+flink is incompatible and cannot be restored from the state when switching modes.</li>
+</ol>
+
+</blockquote>
+
+<p>You can reset a consumer with a given consumer ID and next snapshot ID and delete a consumer with a given consumer ID.</p>
+<blockquote class="book-hint info">
+  First, you need to stop the streaming task using this consumer ID, and then execute the reset consumer action job.
+</blockquote>
+
+
+
+
+
+
+<div class="book-tabs"><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Flink"
+    name="tabs-reset-consumer"
+    id="tabs-reset-consumer-0"
+    checked="checked" 
+    onclick="onSwitch('Flink')"
+  />
+  <label for="tabs-reset-consumer-0">Flink</label>
+  <div class="book-tabs-content markdown-inner"><p>Run the following command:</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">&lt;FLINK_HOME&gt;/bin/flink run <span class="se">\
+</span><span class="se"></span>    /path/to/paimon-flink-action-0.6.0-incubating.jar <span class="se">\
+</span><span class="se"></span>    reset-consumer <span class="se">\
+</span><span class="se"></span>    --warehouse &lt;warehouse-path&gt; <span class="se">\
+</span><span class="se"></span>    --database &lt;database-name&gt; <span class="se">\ </span>
+    --table &lt;table-name&gt; <span class="se">\
+</span><span class="se"></span>    --consumer_id &lt;consumer-id&gt; <span class="se">\
+</span><span class="se"></span>    <span class="o">[</span>--next_snapshot &lt;next-snapshot-id&gt;<span class="o">]</span> <span class="se">\
+</span><span class="se"></span>    <span class="o">[</span>--catalog_conf &lt;paimon-catalog-conf&gt; <span class="o">[</span>--catalog_conf &lt;paimon-catalog-conf&gt; ...<span class="o">]]</span>
+</code></pre></div><p>please don&rsquo;t specify &ndash;next_snapshot parameter if you want to delete the consumer.</p>
+</div></div>
+
+<h3 id="read-overwrite">
+  Read Overwrite
+  <a class="anchor" href="#read-overwrite">#</a>
+</h3>
+<p>Streaming reading will ignore the commits generated by <code>INSERT OVERWRITE</code> by default. If you want to read the
+commits of <code>OVERWRITE</code>, you can configure <code>streaming-read-overwrite</code>.</p>
+<h2 id="read-parallelism">
+  Read Parallelism
+  <a class="anchor" href="#read-parallelism">#</a>
+</h2>
+
+
+
+
+
+<div class="book-tabs"><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Flink"
+    name="tabs-Read Parallelism"
+    id="tabs-Read Parallelism-0"
+    checked="checked" 
+    onclick="onSwitch('Flink')"
+  />
+  <label for="tabs-Read Parallelism-0">Flink</label>
+  <div class="book-tabs-content markdown-inner"><p>By default, the parallelism of batch reads is the same as the number of splits, while the parallelism of stream
+reads is the same as the number of buckets, but not greater than <code>scan.infer-parallelism.max</code>.</p>
+<p>Disable <code>scan.infer-parallelism</code>, global parallelism will be used for reads.</p>
+<p>You can also manually specify the parallelism from <code>scan.parallelism</code>.</p>
+<table class="configuration table table-bordered">
+    <thead>
+        <tr>
+            <th class="text-left" style="width: 20%">Key</th>
+            <th class="text-left" style="width: 15%">Default</th>
+            <th class="text-left" style="width: 10%">Type</th>
+            <th class="text-left" style="width: 55%">Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><h5>scan.infer-parallelism</h5></td>
+            <td style="word-wrap: break-word;">true</td>
+            <td>Boolean</td>
+            <td>If it is false, parallelism of source are set by global parallelism. Otherwise, source parallelism is inferred from splits number (batch mode) or bucket number(streaming mode).</td>
+        </tr>
+         <tr>
+            <td><h5>scan.infer-parallelism.max</h5></td>
+            <td style="word-wrap: break-word;">1024</td>
+            <td>Integer</td>
+            <td>If scan.infer-parallelism is true, limit the parallelism of source through this option.</td>
+        </tr>
+        <tr>
+            <td><h5>scan.parallelism</h5></td>
+            <td style="word-wrap: break-word;">(none)</td>
+            <td>Integer</td>
+            <td>Define a custom parallelism for the scan source. By default, if this option is not defined, the planner will derive the parallelism for each statement individually by also considering the global configuration. If user enable the scan.infer-parallelism, the planner will derive the parallelism by inferred parallelism.</td>
+        </tr>
+    </tbody>
+</table>
+</div></div>
+
+<h2 id="query-optimization">
+  Query Optimization
+  <a class="anchor" href="#query-optimization">#</a>
+</h2>
+<p>
+<span class="label">Batch</span>
+
+<span class="label">Streaming</span>
+</p>
+<p>It is highly recommended to specify partition and primary key filters
+along with the query, which will speed up the data skipping of the query.</p>
+<p>The filter functions that can accelerate data skipping are:</p>
+<ul>
+<li><code>=</code></li>
+<li><code>&lt;</code></li>
+<li><code>&lt;=</code></li>
+<li><code>&gt;</code></li>
+<li><code>&gt;=</code></li>
+<li><code>IN (...)</code></li>
+<li><code>LIKE 'abc%'</code></li>
+<li><code>IS NULL</code></li>
+</ul>
+<p>Paimon will sort the data by primary key, which speeds up the point queries
+and range queries. When using a composite primary key, it is best for the query
+filters to form a <a href="https://dev.mysql.com/doc/refman/5.7/en/multiple-column-indexes.html">leftmost prefix</a>
+of the primary key for good acceleration.</p>
+<p>Suppose that a table has the following specification:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">orders</span> <span class="p">(</span>
+    <span class="n">catalog_id</span> <span class="nb">BIGINT</span><span class="p">,</span>
+    <span class="n">order_id</span> <span class="nb">BIGINT</span><span class="p">,</span>
+    <span class="p">.....,</span>
+    <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="p">(</span><span class="n">catalog_id</span><span class="p">,</span> <span class="n">order_id</span><span class="p">)</span> <span class="k">NOT</span> <span class="n">ENFORCED</span> <span class="c1">-- composite primary key
+</span><span class="c1"></span><span class="p">);</span>
+</code></pre></div><p>The query obtains a good acceleration by specifying a range filter for
+the leftmost prefix of the primary key.</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">orders</span> <span class="k">WHERE</span> <span class="n">catalog_id</span><span class="o">=</span><span class="mi">1025</span><span class="p">;</span>
+
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">orders</span> <span class="k">WHERE</span> <span class="n">catalog_id</span><span class="o">=</span><span class="mi">1025</span> <span class="k">AND</span> <span class="n">order_id</span><span class="o">=</span><span class="mi">29495</span><span class="p">;</span>
+
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">orders</span>
+  <span class="k">WHERE</span> <span class="n">catalog_id</span><span class="o">=</span><span class="mi">1025</span>
+  <span class="k">AND</span> <span class="n">order_id</span><span class="o">&gt;</span><span class="mi">2035</span> <span class="k">AND</span> <span class="n">order_id</span><span class="o">&lt;</span><span class="mi">6000</span><span class="p">;</span>
+</code></pre></div><p>However, the following filter cannot accelerate the query well.</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">orders</span> <span class="k">WHERE</span> <span class="n">order_id</span><span class="o">=</span><span class="mi">29495</span><span class="p">;</span>
+
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">orders</span> <span class="k">WHERE</span> <span class="n">catalog_id</span><span class="o">=</span><span class="mi">1025</span> <span class="k">OR</span> <span class="n">order_id</span><span class="o">=</span><span class="mi">29495</span><span class="p">;</span>
+</code></pre></div></article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  
+
+
+
+
+<a href="//github.com/apache/incubator-paimon/edit/0.6/docs/content/how-to/querying-tables.md" style="color:black"><i class="fa fa-edit fa-fw"></i>Edit This Page</a>
+
+
+ 
+        
+      </footer>
+
+      
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      
+  
+
+<nav id="TableOfContents"><h3>On This Page <button class="toc" onclick="collapseToc()"><i class="fa fa-compress" aria-hidden="true"></i></button></h3>
+  <ul>
+    <li><a href="#batch-query">Batch Query</a>
+      <ul>
+        <li><a href="#batch-time-travel">Batch Time Travel</a></li>
+        <li><a href="#batch-incremental">Batch Incremental</a></li>
+      </ul>
+    </li>
+    <li><a href="#streaming-query">Streaming Query</a>
+      <ul>
+        <li><a href="#streaming-time-travel">Streaming Time Travel</a></li>
+        <li><a href="#consumer-id">Consumer ID</a></li>
+        <li><a href="#read-overwrite">Read Overwrite</a></li>
+      </ul>
+    </li>
+    <li><a href="#read-parallelism">Read Parallelism</a></li>
+    <li><a href="#query-optimization">Query Optimization</a></li>
+  </ul>
+</nav>
+
+ 
+    </aside>
+    <aside class="expand-toc">
+      <button class="toc" onclick="expandToc()">
+        <i class="fa fa-expand" aria-hidden="true"></i>
+      </button>
+    </aside>
+    
+  </main>
+
+  
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

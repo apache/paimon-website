@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Maintenance on Apache Paimon</title>
+    <link>//paimon.apache.org/docs/0.7/maintenance/</link>
+    <description>Recent content in Maintenance on Apache Paimon</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language><atom:link href="//paimon.apache.org/docs/0.7/maintenance/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Write Performance</title>
+      <link>//paimon.apache.org/docs/0.7/maintenance/write-performance/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/0.7/maintenance/write-performance/</guid>
+      <description>Write Performance #  Paimon&amp;rsquo;s write performance is closely related to checkpoint, so if you need greater write throughput:
+ Flink Configuration (&#39;flink-conf.yaml&#39; or SET in SQL): Increase the checkpoint interval (&#39;execution.checkpointing.interval&#39;), increase max concurrent checkpoints to 3 (&#39;execution.checkpointing.max-concurrent-checkpoints&#39;), or just use batch mode. Increase write-buffer-size. Enable write-buffer-spillable. Rescale bucket number if you are using Fixed-Bucket mode.  Option &#39;changelog-producer&#39; = &#39;lookup&#39; or &#39;full-compaction&#39;, and option &#39;full-compaction.delta-commits&#39; have a large impact on write performance, if it is a snapshot / full synchronization phase you can unset these options and then enable them again in the incremental phase.</description>
+    </item>
+    
+    <item>
+      <title>Read Performance</title>
+      <link>//paimon.apache.org/docs/0.7/maintenance/read-performance/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/0.7/maintenance/read-performance/</guid>
+      <description>Read Performance #  Primary Key Table #  For Primary Key Table, it&amp;rsquo;s a &amp;lsquo;MergeOnRead&amp;rsquo; technology. When reading data, multiple layers of LSM data are merged, and the number of parallelism will be limited by the number of buckets. Although Paimon&amp;rsquo;s merge performance is efficient, it still cannot catch up with the ordinary AppendOnly table.
+If you want to query fast enough in certain scenarios, but can only find older data, you can:</description>
+    </item>
+    
+    <item>
+      <title>Dedicated Compaction</title>
+      <link>//paimon.apache.org/docs/0.7/maintenance/dedicated-compaction/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/0.7/maintenance/dedicated-compaction/</guid>
+      <description>Dedicated Compaction #  Paimon&amp;rsquo;s snapshot management supports writing with multiple writers.
+For S3-like object store, its &#39;RENAME&#39; does not have atomic semantic. We need to configure Hive metastore and enable &#39;lock.enabled&#39; option for the catalog.  By default, Paimon supports concurrent writing to different partitions. A recommended mode is that streaming job writes records to Paimon&amp;rsquo;s latest partition; Simultaneously batch job (overwrite) writes records to the historical partition.
+So far, everything works very well, but if you need multiple writers to write records to the same partition, it will be a bit more complicated.</description>
+    </item>
+    
+    <item>
+      <title>Manage Snapshots</title>
+      <link>//paimon.apache.org/docs/0.7/maintenance/manage-snapshots/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/0.7/maintenance/manage-snapshots/</guid>
+      <description>Manage Snapshots #  This section will describe the management and behavior related to snapshots.
+Expire Snapshots #  Paimon writers generate one or two snapshots per commit. Each snapshot may add some new data files or mark some old data files as deleted. However, the marked data files are not truly deleted because Paimon also supports time traveling to an earlier snapshot. They are only deleted when the snapshot expires.</description>
+    </item>
+    
+    <item>
+      <title>Manage Partition</title>
+      <link>//paimon.apache.org/docs/0.7/maintenance/manage-partition/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/0.7/maintenance/manage-partition/</guid>
+      <description>Expiring Partitions #  You can set partition.expiration-time when creating a partitioned table. Paimon will periodically check the status of partitions and delete expired partitions according to time.
+How to determine whether a partition has expired: compare the time extracted from the partition with the current time to see if survival time has exceeded the partition.expiration-time.
+Note: After the partition expires, it is logically deleted and the latest snapshot cannot query its data.</description>
+    </item>
+    
+    <item>
+      <title>Rescale Bucket</title>
+      <link>//paimon.apache.org/docs/0.7/maintenance/rescale-bucket/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/0.7/maintenance/rescale-bucket/</guid>
+      <description>Rescale Bucket #  Since the number of total buckets dramatically influences the performance, Paimon allows users to tune bucket numbers by ALTER TABLE command and reorganize data layout by INSERT OVERWRITE without recreating the table/partition. When executing overwrite jobs, the framework will automatically scan the data with the old bucket number and hash the record according to the current bucket number.
+Rescale Overwrite #  -- rescale number of total buckets ALTER TABLE table_identifier SET (&amp;#39;bucket&amp;#39; = &amp;#39;.</description>
+    </item>
+    
+    <item>
+      <title>Manage Tags</title>
+      <link>//paimon.apache.org/docs/0.7/maintenance/manage-tags/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/0.7/maintenance/manage-tags/</guid>
+      <description>Manage Tags #  Paimon&amp;rsquo;s snapshots can provide an easy way to query historical data. But in most scenarios, a job will generate too many snapshots and table will expire old snapshots according to table configuration. Snapshot expiration will also delete old data files, and the historical data of expired snapshots cannot be queried anymore.
+To solve this problem, you can create a tag based on a snapshot. The tag will maintain the manifests and data files of the snapshot.</description>
+    </item>
+    
+    <item>
+      <title>Metrics</title>
+      <link>//paimon.apache.org/docs/0.7/maintenance/metrics/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/0.7/maintenance/metrics/</guid>
+      <description>Paimon Metrics #  Paimon has built a metrics system to measure the behaviours of reading and writing, like how many manifest files it scanned in the last planning, how long it took in the last commit operation, how many files it deleted in the last compact operation.
+In Paimon&amp;rsquo;s metrics system, metrics are updated and reported at different levels of granularity. Currently, the levels of table and bucket are provided, which means you can get metrics per table or bucket.</description>
+    </item>
+    
+    <item>
+      <title>Configurations</title>
+      <link>//paimon.apache.org/docs/0.7/maintenance/configurations/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/0.7/maintenance/configurations/</guid>
+      <description>Configuration #  CoreOptions #  Core options for paimon.
+  Key Default Type Description     auto-create false Boolean Whether to create underlying storage when reading and writing the table.   bucket 1 Integer Bucket number for file store.   bucket-key (none) String Specify the paimon distribution policy. Data is assigned to each bucket according to the hash value of bucket-key.
+If you specify multiple fields, delimiter is &#39;,&#39;.</description>
+    </item>
+    
+  </channel>
+</rss>

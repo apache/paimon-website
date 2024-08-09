@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Primary Key Table on Apache Paimon</title>
+    <link>//paimon.apache.org/docs/master/concepts/primary-key-table/</link>
+    <description>Recent content in Primary Key Table on Apache Paimon</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language><atom:link href="//paimon.apache.org/docs/master/concepts/primary-key-table/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Overview</title>
+      <link>//paimon.apache.org/docs/master/concepts/primary-key-table/overview/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/concepts/primary-key-table/overview/</guid>
+      <description>Overview #  Primary key table is the default table type when creating a table. Users can insert, update or delete records in the table.
+Primary keys consist of a set of columns that contain unique values for each record. Paimon enforces data ordering by sorting the primary key within each bucket, allowing users to achieve high performance by applying filtering conditions on the primary key. See CREATE TABLE.</description>
+    </item>
+    
+    <item>
+      <title>Data Distribution</title>
+      <link>//paimon.apache.org/docs/master/concepts/primary-key-table/data-distribution/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/concepts/primary-key-table/data-distribution/</guid>
+      <description>Data Distribution #  By default, Paimon table only has one bucket, which means it only provides single parallelism read and write. Please configure the bucket strategy to your table.  A bucket is the smallest storage unit for reads and writes, each bucket directory contains an LSM tree.
+Fixed Bucket #  Configure a bucket greater than 0, using Fixed Bucket mode, according to Math.abs(key_hashcode % numBuckets) to compute the bucket of record.</description>
+    </item>
+    
+    <item>
+      <title>Merge Engine</title>
+      <link>//paimon.apache.org/docs/master/concepts/primary-key-table/merge-engine/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/concepts/primary-key-table/merge-engine/</guid>
+      <description>Merge Engine #  When Paimon sink receives two or more records with the same primary keys, it will merge them into one record to keep primary keys unique. By specifying the merge-engine table property, users can choose how records are merged together.
+Always set table.exec.sink.upsert-materialize to NONE in Flink SQL TableConfig, sink upsert-materialize may result in strange behavior. When the input is out of order, we recommend that you use Sequence Field to correct disorder.</description>
+    </item>
+    
+    <item>
+      <title>Changelog Producer</title>
+      <link>//paimon.apache.org/docs/master/concepts/primary-key-table/changelog-producer/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/concepts/primary-key-table/changelog-producer/</guid>
+      <description>Changelog Producer #  Streaming queries will continuously produce the latest changes.
+By specifying the changelog-producer table property when creating the table, users can choose the pattern of changes produced from table files.
+The changelog-producer table property only affects changelog from table files. It does not affect the external log system.  None #  By default, no extra changelog producer will be applied to the writer of table. Paimon source can only see the merged changes across snapshots, like what keys are removed and what are the new values of some keys.</description>
+    </item>
+    
+    <item>
+      <title>Sequence &amp; Rowkind</title>
+      <link>//paimon.apache.org/docs/master/concepts/primary-key-table/sequence-rowkind/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/concepts/primary-key-table/sequence-rowkind/</guid>
+      <description>Sequence and Rowkind #  When creating a table, you can specify the &#39;sequence.field&#39; by specifying fields to determine the order of updates, or you can specify the &#39;rowkind.field&#39; to determine the changelog kind of record.
+Sequence Field #  By default, the primary key table determines the merge order according to the input order (the last input record will be the last to merge). However, in distributed computing, there will be some cases that lead to data disorder.</description>
+    </item>
+    
+  </channel>
+</rss>

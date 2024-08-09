@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Append Table on Apache Paimon</title>
+    <link>//paimon.apache.org/docs/master/concepts/append-table/</link>
+    <description>Recent content in Append Table on Apache Paimon</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language><atom:link href="//paimon.apache.org/docs/master/concepts/append-table/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Overview</title>
+      <link>//paimon.apache.org/docs/master/concepts/append-table/overview/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/concepts/append-table/overview/</guid>
+      <description>Overview #  If a table does not have a primary key defined, it is an append table by default.
+You can only insert a complete record into the table in streaming. This type of table is suitable for use cases that do not require streaming updates (such as log data synchronization).
+We highly recommend using Append Scalable Table. (bucket = -1).  </description>
+    </item>
+    
+    <item>
+      <title>Append Scalable Table</title>
+      <link>//paimon.apache.org/docs/master/concepts/append-table/append-scalable-table/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/concepts/append-table/append-scalable-table/</guid>
+      <description>Append Scalable Table #  Definition #  By defining &#39;bucket&#39; = &#39;-1&#39; in table properties, you can assign a special mode (we call it &amp;ldquo;unaware-bucket mode&amp;rdquo;) to this table (see Example). In this mode, all the things are different. We don&amp;rsquo;t have the concept of bucket anymore, and we don&amp;rsquo;t guarantee the order of streaming read. We regard this table as a batch off-line table ( although we can stream read and write still).</description>
+    </item>
+    
+    <item>
+      <title>Append Queue Table</title>
+      <link>//paimon.apache.org/docs/master/concepts/append-table/append-queue-table/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/concepts/append-table/append-queue-table/</guid>
+      <description>Append Queue Table #  Definition #  In this mode, you can regard append table as a queue separated by bucket. Every record in the same bucket is ordered strictly, streaming read will transfer the record to down-stream exactly in the order of writing. To use this mode, you do not need to config special configurations, all the data will go into one bucket as a queue. You can also define the bucket and bucket-key to enable larger parallelism and disperse data (see Example).</description>
+    </item>
+    
+  </channel>
+</rss>
