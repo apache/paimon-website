@@ -40,6 +40,11 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 20.x
+        
+      - name: Set up pnpm v9
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
 
       - name: Copy out old docs directory
         run: |
@@ -75,11 +80,9 @@ jobs:
       - name: Build and move out main site
         run: |
           cd main
-          npm install
-          cd library/markdown-parser
-          npm install
-          cd ../../
-          npm run build
+          npm config --global set registry https://registry.npmmirror.com/
+          pnpm install
+          pnpm run build
           cd ..
           mv main/dist/paimon-next-website/browser/* .
           rm -rf main
