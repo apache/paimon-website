@@ -1,0 +1,10 @@
+<div class="flex h-screen flex-col">
+  <div
+    class="page-header min-h-[360px] bg-[url('/assets/images/bg-header.png')] bg-contain bg-right-bottom bg-no-repeat px-8 pt-20"
+  >
+    <ng-content select="[header]"></ng-content>
+  </div>
+  <div class="flex-1 bg-paimon-gray-2">
+    <ng-content select="[content]"></ng-content>
+  </div>
+</div>

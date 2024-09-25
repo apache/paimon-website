@@ -1,0 +1,32 @@
+<div class="flex flex-col items-center justify-center gap-y-6">
+  <span class="h-4 text-xs font-normal text-paimon-gray-8" translate>TRUSTED BY ENTERPRISES</span>
+  <div class="h-14 text-4xl font-medium text-paimon-gray-2" translate>Who's Using</div>
+  <div class="px-8 text-center text-sm font-normal leading-5 text-paimon-gray-8 lg:px-48 xl:px-96">
+    <div translate>
+      Various companies and organizations are using Paimon for production and commercial products.
+    </div>
+    <div>
+      <span translate>Are you using this project?</span>
+      <a
+        class="space-x-0 text-paimon-blue-primary hover:underline"
+        href="https://github.com/apache/paimon/issues/915"
+        translate
+      >
+        Add your company
+      </a>
+    </div>
+  </div>
+  <div
+    class="gradient-shadow relative mb-32 mt-14 px-14 before:w-0 after:w-0 md:before:w-[100px] md:after:w-[100px]"
+  >
+    <div
+      class="relative grid grid-cols-2 items-center gap-14 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-7"
+    >
+      @for (item of listOfUsers; track $index) {
+        <div class="flex h-full w-full items-center justify-center">
+          <img [ngSrc]="item.src" [width]="item.width" [height]="item.height" [alt]="item.label" />
+        </div>
+      }
+    </div>
+  </div>
+</div>

@@ -1,0 +1,56 @@
+<div
+  class="bg-container z-1 flex h-screen flex-col items-center justify-center gap-y-5 bg-[url('/assets/images/bg.png')] bg-cover bg-[left_-780px_bottom_-16px] bg-no-repeat px-8 text-center lg:bg-[length:100%_100%] lg:bg-left-bottom lg:px-52"
+>
+  <div class="text-7xl font-medium">Apache Paimon™</div>
+  <div class="text-lg text-paimon-text-base" translate="@paimon.overview.description"></div>
+  <div class="flex gap-x-4">
+    <paimon-dropdown-links
+      [options]="[
+        {
+          label: 'Flink',
+          value: 'https://paimon.apache.org/docs/master/flink/quick-start/'
+        },
+        {
+          label: 'Spark',
+          value: 'https://paimon.apache.org/docs/master/spark/quick-start/'
+        },
+        {
+          label: 'Hive',
+          value: 'https://paimon.apache.org/docs/master/engines/hive/'
+        },
+        {
+          label: 'Presto',
+          value: 'https://paimon.apache.org/docs/master/engines/presto/'
+        },
+        {
+          label: 'Trino',
+          value: 'https://paimon.apache.org/docs/master/engines/trino/'
+        }
+      ]"
+    >
+      <a
+        href="#"
+        class="flex h-12 w-[156px] items-center justify-center rounded-3xl bg-paimon-blue-primary px-4 py-2 text-center text-sm font-normal text-white hover:bg-paimon-blue-hover"
+        aria-expanded="true"
+        aria-haspopup="true"
+      >
+        <span translate>Get Started</span>
+        <svg class="h-5 w-5 text-white" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+          <path
+            fill-rule="evenodd"
+            d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+            clip-rule="evenodd"
+          />
+        </svg>
+      </a>
+    </paimon-dropdown-links>
+    <a
+      href="https://github.com/apache/paimon/"
+      target="_blank"
+      class="flex h-12 w-[156px] items-center justify-center rounded-3xl bg-white px-4 py-2 text-center text-sm font-normal text-paimon-gray-14 hover:bg-paimon-gray-1"
+      translate
+    >
+      Source Code
+    </a>
+  </div>
+</div>

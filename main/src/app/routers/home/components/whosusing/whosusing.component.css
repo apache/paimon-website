@@ -1,0 +1,24 @@
+:host {
+  img {
+    max-width: 100%;
+  }
+
+  .gradient-shadow::before,
+  .gradient-shadow::after {
+    content: var(--tw-content);
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    z-index: 1;
+    background-image: linear-gradient(to right, rgba(18, 19, 22, 1) 0%, rgba(18, 19, 22, 0) 100%);
+  }
+
+  .gradient-shadow::before {
+    left: 0;
+  }
+
+  .gradient-shadow::after {
+    right: 0;
+    background-image: linear-gradient(to left, rgba(18, 19, 22, 1) 0%, rgba(18, 19, 22, 0) 100%);
+  }
+}

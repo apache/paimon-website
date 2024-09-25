@@ -1,0 +1,47 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --paimon-blue-1: #edf2fc;
+    --paimon-blue-2: #e0e9fb;
+    --paimon-blue-3: #ceddfc;
+    --paimon-blue-4: #afc9ff;
+    --paimon-blue-5: #90b2fa;
+    --paimon-blue-6: #6694f6;
+    --paimon-blue-7: #4077eb;
+    --paimon-blue-8: #2861d8;
+    --paimon-blue-9: #174fc5;
+    --paimon-blue-10: #083ba7;
+    --paimon-blue-11: #072d7e;
+    --paimon-blue-12: #062464;
+    --paimon-blue-13: #01143e;
+    --paimon-blue-14: #070b22;
+    --paimon-blue-15: #030611;
+    /*gray*/
+    --paimon-gray-1: #f4f4f6;
+    --paimon-gray-2: #ebecef;
+    --paimon-gray-3: #dddee4;
+    --paimon-gray-4: #c7c9d1;
+    --paimon-gray-5: #b3b6c1;
+    --paimon-gray-6: #a3a6b3;
+    --paimon-gray-7: #9295a5;
+    --paimon-gray-8: #818598;
+    --paimon-gray-9: #6e7587;
+    --paimon-gray-10: #5c6170;
+    --paimon-gray-11: #4c505d;
+    --paimon-gray-12: #2e3038;
+    --paimon-gray-13: #1e1f24;
+    --paimon-gray-14: #121316;
+    --paimon-gray-15: #0a0a0a;
+  }
+
+  @font-face {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+  }
+}

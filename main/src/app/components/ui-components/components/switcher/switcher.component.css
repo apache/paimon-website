@@ -1,0 +1,5 @@
+:host {
+  .animate-element {
+    transition: transform 300ms ease;
+  }
+}

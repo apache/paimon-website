@@ -1,0 +1,78 @@
+{
+  "name": "paimon-next-website",
+  "version": "0.0.0",
+  "scripts": {
+    "ng": "ng",
+    "parse": "cd library/markdown-parser && npm run parse",
+    "prestart": "npm run parse",
+    "start": "ng serve --port 8801",
+    "prebuild": "npm run parse",
+    "build": "ng build",
+    "serve:ssr:paimon-next-website": "node dist/paimon-next-website/server/server.mjs",
+    "i18n:extract": "ngx-translate-extract --input ./src --output ./src/assets/i18n/{en,zh}.json -ss -k --clean --format json",
+    "prepare": "husky",
+    "pre-commit": "lint-staged --no-stash"
+  },
+  "private": true,
+  "dependencies": {
+    "@angular/animations": "^18.2.0",
+    "@angular/common": "^18.2.0",
+    "@angular/compiler": "^18.2.0",
+    "@angular/core": "^18.2.0",
+    "@angular/forms": "^18.2.0",
+    "@angular/platform-browser": "^18.2.0",
+    "@angular/platform-browser-dynamic": "^18.2.0",
+    "@angular/platform-server": "^18.2.0",
+    "@angular/router": "^18.2.0",
+    "@angular/ssr": "^18.2.2",
+    "@ngx-translate/core": "^15.0.0",
+    "@ngx-translate/http-loader": "^8.0.0",
+    "express": "^4.18.2",
+    "rxjs": "~7.8.0",
+    "tslib": "^2.3.0",
+    "zone.js": "~0.14.10"
+  },
+  "devDependencies": {
+    "@angular-devkit/build-angular": "^18.2.2",
+    "@angular/cli": "^18.2.2",
+    "@angular/compiler-cli": "^18.2.0",
+    "@commitlint/cli": "^19.5.0",
+    "@commitlint/config-angular": "^19.5.0",
+    "@types/express": "^4.17.17",
+    "@types/jasmine": "~5.1.0",
+    "@types/node": "^18.18.0",
+    "@vendure/ngx-translate-extract": "^9.2.1",
+    "angular-eslint": "18.3.1",
+    "autoprefixer": "^10.4.20",
+    "daisyui": "^4.12.10",
+    "eslint": "^9.9.1",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "husky": "^9.1.6",
+    "jasmine-core": "~5.2.0",
+    "karma": "~6.4.0",
+    "karma-chrome-launcher": "~3.2.0",
+    "karma-coverage": "~2.2.0",
+    "karma-jasmine": "~5.1.0",
+    "karma-jasmine-html-reporter": "~2.1.0",
+    "lint-staged": "^15.2.10",
+    "postcss": "^8.4.44",
+    "prettier": "^3.3.3",
+    "prettier-eslint": "^16.3.0",
+    "prettier-plugin-tailwindcss": "^0.6.6",
+    "tailwindcss": "^3.4.10",
+    "typescript": "~5.5.2",
+    "typescript-eslint": "8.2.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint-staged",
+      "commit-msg": "commitlint -e $HUSKY_GIT_PARAMS"
+    }
+  },
+  "lint-staged": {
+    "*.{ts,html}": [
+      "eslint --fix"
+    ]
+  }
+}
