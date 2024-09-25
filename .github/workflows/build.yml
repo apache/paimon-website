@@ -54,7 +54,6 @@ jobs:
 
       - name: Create asf-site branch
         run: |
-          git checkout master
           git branch -D asf-site
           git checkout --orphan asf-site
 
@@ -76,6 +75,9 @@ jobs:
         run: |
           cd main
           npm install
+          cd library/markdown-parser
+          npm install
+          cd ../../
           npm run build
           cd ..
           mv main/dist/paimon-next-website/browser/* .
