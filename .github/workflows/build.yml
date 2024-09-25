@@ -54,6 +54,7 @@ jobs:
 
       - name: Create asf-site branch
         run: |
+          git checkout feat/paimon-next
           git branch -D asf-site
           git checkout --orphan asf-site
 
