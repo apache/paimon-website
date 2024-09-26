@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, UrlTree } from '@angular/router';
+import { ActivatedRouteSnapshot, CanActivate, GuardResult, MaybeAsync } from '@angular/router';
 import { map, Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { ArticleService } from '@paimon/app/services/article.service';
@@ -17,9 +17,7 @@ export class PreloadGuard implements CanActivate {
     );
   }
 
-  canActivate(
-    route: ActivatedRouteSnapshot
-  ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    return this.preload(route.params?.id);
+  canActivate(route: ActivatedRouteSnapshot): MaybeAsync<GuardResult> {
+    return this.preload(route.params?.['id']);
   }
 }

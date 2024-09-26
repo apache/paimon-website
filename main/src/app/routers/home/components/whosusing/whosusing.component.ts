@@ -47,7 +47,7 @@ export class WhosusingComponent {
     const largeHeightImgs = ['highlandhuanyu.png', 'ziroom.png', 'dinky.png'];
     return {
       label: img,
-      src: `/assets/users/${img}`,
+      src: `assets/users/${img}`,
       width: largeHeightImgs.includes(img) ? 64 : 191,
       height: largeHeightImgs.includes(img) ? 72 : 133
     };
