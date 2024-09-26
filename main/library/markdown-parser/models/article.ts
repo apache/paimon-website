@@ -26,7 +26,8 @@ export class Article {
     readonly authors: string[],
     readonly editors: string[],
     readonly date: string,
-    readonly content: string
+    readonly content: string,
+    readonly languages: string[] // 'zh' | 'en'
   ) {}
 }
 
@@ -48,7 +49,8 @@ export class ResolvedArticle {
     readonly authors: Profile[],
     readonly editors: Profile[],
     readonly toc: TOC[],
-    readonly date: Date | null
+    readonly date: Date | null,
+    readonly languages: string[]
   ) {}
 }
 
@@ -61,9 +63,9 @@ export type BriefArticle = Omit<ResolvedArticle, 'content'>;
  */
 export function parseArticleFromBuffer(name: string, buffer: Buffer): Article {
   try {
-    const { authors, editors, categories, date, __content } = parseMarkdownWithYAML(buffer);
+    const { authors, editors, categories, date, __content, languages } = parseMarkdownWithYAML(buffer);
     const categoriesString = categories?.map((c: string | number) => c.toString()) || [];
-    return new Article(name, categoriesString, authors || [], editors || [], date, __content);
+    return new Article(name, categoriesString, authors || [], editors || [], date, __content, languages);
   } catch (e) {
     console.log(e);
     throw new Error(name);
@@ -76,7 +78,7 @@ export function parseArticleFromBuffer(name: string, buffer: Buffer): Article {
  * @param profileCollection
  */
 export function resolveArticle(article: Article, profileCollection: Profile[]): ResolvedArticle {
-  const { name, content, categories, authors, editors, date } = article;
+  const { name, content, categories, authors, editors, date, languages } = article;
   checkArticleData(name, authors, editors);
   const tokensList = new marked.Lexer().lex(content) as unknown as ExtendTokensList;
 
@@ -100,7 +102,8 @@ export function resolveArticle(article: Article, profileCollection: Profile[]): 
     resolvedAuthors,
     resolvedEditors,
     toc,
-    validDate
+    validDate,
+    languages
   );
 }
 

@@ -23,16 +23,19 @@
     "target": "ES2022",
     "module": "ES2022",
     "resolveJsonModule": true,
+    "useDefineForClassFields": false,
     "lib": ["ES2022", "es2018", "es2019", "es2020", "es2021", "dom"],
+    "types": ["node"],
     "paths": {
       "@paimon/*": ["src/*"],
       "@paimon-markdown-parser/*": ["./library/markdown-parser/models/*"]
     }
   },
   "angularCompilerOptions": {
+    "noPropertyAccessFromIndexSignature": false,
     "enableI18nLegacyMessageIdFormat": false,
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true,
-    "strictTemplates": true
+    "strictTemplates": true,
   }
 }

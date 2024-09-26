@@ -3,11 +3,11 @@ import { EnvironmentProviders, importProvidersFrom, makeEnvironmentProviders } f
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
-export const provideTranslate = (): EnvironmentProviders =>
+export const provideTranslate = (defaultLanguage: string): EnvironmentProviders =>
   makeEnvironmentProviders([
     importProvidersFrom(
       TranslateModule.forRoot({
-        defaultLanguage: 'en',
+        defaultLanguage,
         loader: {
           provide: TranslateLoader,
           useFactory: (http: HttpClient) => new TranslateHttpLoader(http),

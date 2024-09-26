@@ -1,0 +1,16 @@
+<ul
+  class="fixed flex flex-col gap-3 border-l-2 border-solid border-paimon-gray-4"
+  [ngClass]="classNames"
+>
+  @for (item of links; track $index) {
+    <li
+      [style.padding-left.px]="item.depth * 12"
+      class="cursor-pointer font-normal hover:text-paimon-blue-primary"
+      [class.text-paimon-blue-primary]="highLightId === item.id"
+    >
+      <a [class.high-light]="highLightId === item.id" (click)="scrollTo(item.id, item.text)">
+        {{ item.text }}
+      </a>
+    </li>
+  }
+</ul>

@@ -1,6 +1,6 @@
-import { DOCUMENT } from '@angular/common';
-import { inject, Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
 import { TranslateService } from '@ngx-translate/core';
+import { LocalStorageService } from '@paimon/app/services/local-storage.service';
 
 export type Language = 'zh' | 'en';
 
@@ -8,37 +8,17 @@ export type Language = 'zh' | 'en';
   providedIn: 'root'
 })
 export class LanguageService {
-  private defaultLanguage = 'en';
-  private _doc = inject(DOCUMENT);
-
-  private get window(): Window | null {
-    return this._doc.defaultView;
-  }
-
-  constructor(private translateService: TranslateService) {}
-
-  init(): void {
-    this.restoreLanguage();
-  }
-
-  restoreLanguage(): void {
-    if (this.window) {
-      const language = this.window.localStorage?.getItem('language') || this.defaultLanguage;
-      if (language) {
-        this.translateService.use(language);
-      }
-    }
-  }
+  constructor(
+    private translateService: TranslateService,
+    private localStorageService: LocalStorageService
+  ) {}
 
   get language(): Language {
     return this.translateService.currentLang as Language;
   }
 
-  setLanguage(language: string): void {
-    console.log(language, 'changed');
-    if (this.window) {
-      this.translateService.use(language);
-      localStorage.setItem('language', language);
-    }
+  setLanguage(language: Language): void {
+    this.translateService.use(language);
+    this.localStorageService.setLanguage(language);
   }
 }

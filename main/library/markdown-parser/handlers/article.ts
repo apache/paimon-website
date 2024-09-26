@@ -17,6 +17,9 @@ export function processArticles(profiles: Profile[]): ResolvedArticle[] {
   let articles: ResolvedArticle[] = [];
   let preArticle: Partial<ResolvedArticle>;
 
+  if (!fs.existsSync(articleSource)) {
+    mkdirSync(articleSource, { recursive: true });
+  }
   readdirSync(articleSource).forEach(file => {
     const { name } = parseFileName(file);
     const article = parseArticleFromBuffer(name, readFileSync(`${articleSource}/${name}.md`));

@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BriefArticle, ResolvedArticle } from '@paimon-markdown-parser/article';
-import { Observable, of } from 'rxjs';
+import { map, Observable, of } from 'rxjs';
 import { shareReplay, tap } from 'rxjs/operators';
 import { BaseUrlService } from '@paimon/app/services/base-url.service';
+import { LanguageService } from '@paimon/app/services/language.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,15 +12,17 @@ import { BaseUrlService } from '@paimon/app/services/base-url.service';
 export class ArticleService {
   briefArticles$: Observable<BriefArticle[]> | null = null;
   articles = new Map<string, ResolvedArticle>();
+
   constructor(
     private httpClient: HttpClient,
-    private baseUrlService: BaseUrlService
+    private baseUrlService: BaseUrlService,
+    private languageService: LanguageService
   ) {}
 
-  getCategories(articles: BriefArticle[], type: number, maxCount = 0): string[] {
+  getCategories(articles: BriefArticle[], maxCount = 0): string[] {
     const categoryMap = new Map<string, number>();
     articles.forEach(item => {
-      (type ? item.categories : item.categoriesCN).forEach(key => {
+      item.categories.forEach(key => {
         const value = categoryMap.get(key);
         if (!value) {
           categoryMap.set(key, 1);
@@ -31,7 +34,7 @@ export class ArticleService {
     return Array.from(categoryMap)
       .sort(([, pc], [, nc]) => nc - pc)
       .filter(([, c]) => c > maxCount)
-      .map(([v]) => v);
+      .map(([v]: [string, number]) => v);
   }
 
   list(): Observable<BriefArticle[]> {
@@ -40,7 +43,10 @@ export class ArticleService {
     } else {
       this.briefArticles$ = this.httpClient
         .get<BriefArticle[]>(`${this.baseUrlService.getBaseUrl()}/articles/list.json`)
-        .pipe(shareReplay(1));
+        .pipe(
+          map(data => data.filter(v => !v.languages || v.languages.includes(this.languageService.language))),
+          shareReplay(1)
+        );
       return this.briefArticles$;
     }
   }

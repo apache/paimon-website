@@ -1,0 +1,103 @@
+<div class="flex w-max items-center gap-4">
+  <a
+    (click)="previous()"
+    href="javascript:void(0)"
+    [class.cursor-not-allowed]="previousDisabled()"
+    [class.opacity-70]="previousDisabled()"
+    class="flex h-8 w-10 items-center justify-center rounded-3xl bg-paimon-gray-1 text-paimon-gray-9"
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      xmlns:xlink="http://www.w3.org/1999/xlink"
+      fill="currentColor"
+      version="1.1"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+    >
+      <g transform="matrix(-1,0,0,1,48,0)">
+        <g></g>
+        <g>
+          <path
+            d="M44,12.75L28,12.75L28,11.25L44,11.25L44,12.75Z"
+            fill-rule="evenodd"
+            fill="currentColor"
+            fill-opacity="1"
+          />
+        </g>
+        <g>
+          <path
+            d="M45.06066,12L38.53033,5.46967L37.46967,6.53033L42.93934,12L37.46967,17.4697L38.53033,18.5303L45.06066,12Z"
+            fill-rule="evenodd"
+            fill="currentColor"
+            fill-opacity="1"
+          />
+        </g>
+      </g>
+    </svg>
+  </a>
+
+  <ul class="flex-1 flex-row bg-paimon-gray-1 md:rounded-3xl">
+    @for (item of list; track $index) {
+      <li
+        class="hidden h-8 cursor-pointer md:inline-flex"
+        [class.rounded-l-3xl]="isFirstIndex()"
+        [class.rounded-r-3xl]="isLastIndex()"
+        [class.bg-paimon-blue-primary]="item === pageIndex"
+        [class.text-paimon-gray-2]="item === pageIndex"
+        [class.text-paimon-gray-9]="item !== pageIndex"
+      >
+        <a
+          href="javascript:void(0)"
+          class="relative z-10 inline-flex items-center px-4 py-2 text-sm font-semibold focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+          [class.select-page]="item === pageIndex"
+          [class.none-border]="item === '···'"
+          (click)="setPageIndex(item)"
+        >
+          {{ item }}
+        </a>
+      </li>
+    }
+
+    <li class="inline-flex h-10 min-w-20 md:hidden">
+      <a class="flex items-center justify-center px-8 py-2">{{ pageIndex }} / {{ maxPage }}</a>
+    </li>
+  </ul>
+  <a
+    (click)="next()"
+    href="javascript:void(0)"
+    [class.cursor-not-allowed]="nextDisabled()"
+    [class.opacity-70]="nextDisabled()"
+    class="flex h-8 w-10 items-center justify-center rounded-3xl bg-paimon-gray-1 text-paimon-gray-9"
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      xmlns:xlink="http://www.w3.org/1999/xlink"
+      fill="none"
+      version="1.1"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+    >
+      <g>
+        <g></g>
+        <g>
+          <path
+            d="M20,12.75L4,12.75L4,11.25L20,11.25L20,12.75Z"
+            fill-rule="evenodd"
+            fill="currentColor"
+            fill-opacity="1"
+          />
+        </g>
+        <g>
+          <path
+            d="M21.06066,12L14.53033,5.46967L13.46967,6.53033L18.93934,12L13.46967,17.4697L14.53033,18.5303L21.06066,12Z"
+            fill-rule="evenodd"
+            fill="currentColor"
+            fill-opacity="1"
+          />
+        </g>
+      </g>
+    </svg>
+  </a>
+</div>

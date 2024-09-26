@@ -1,10 +1,11 @@
 <div class="flex h-screen flex-col">
   <div
-    class="page-header min-h-[360px] bg-[url('/assets/images/bg-header.png')] bg-contain bg-right-bottom bg-no-repeat px-8 pt-20"
+    class="page-header min-h-80 bg-[url('/assets/images/bg-header.png')] bg-cover bg-[right_-200px_bottom] bg-no-repeat px-8 pt-16 lg:bg-right-bottom xl:bg-contain"
   >
     <ng-content select="[header]"></ng-content>
   </div>
-  <div class="flex-1 bg-paimon-gray-2">
+  <div class="flex-1 bg-paimon-gray-2 pb-10">
     <ng-content select="[content]"></ng-content>
   </div>
+  <paimon-footer></paimon-footer>
 </div>

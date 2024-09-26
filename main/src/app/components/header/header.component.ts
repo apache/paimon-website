@@ -15,10 +15,11 @@ import { DividerComponent } from '@paimon/app/components/ui-components';
 import { SwitcherComponent } from '@paimon/app/components/ui-components/components/switcher/switcher.component';
 import { FormsModule } from '@angular/forms';
 import { DropdownLinksComponent } from '@paimon/app/components/ui-components/components/dropdown-links/dropdown-links.component';
-import { Language, LanguageService } from '@paimon/app/services/language.service';
-import { fromEvent } from 'rxjs';
+import { fromEvent, startWith } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { RouterLink } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
+import { Language, LanguageService } from '@paimon/app/services/language.service';
 
 @Component({
   selector: 'paimon-header',
@@ -30,7 +31,8 @@ import { TranslateModule } from '@ngx-translate/core';
     SwitcherComponent,
     FormsModule,
     TranslateModule,
-    DropdownLinksComponent
+    DropdownLinksComponent,
+    RouterLink
   ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css',
@@ -57,15 +59,15 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
     if (this.getWindow()) {
       fromEvent(this.getWindow()!, 'scroll')
-        .pipe(takeUntilDestroyed(this.destroyRef))
+        .pipe(startWith(true), takeUntilDestroyed(this.destroyRef))
         .subscribe(() => {
           const isScrolled = this.getWindow()?.pageYOffset || this._doc.documentElement.scrollTop;
           if (isScrolled > 0) {
-            this.headerElement.nativeElement.classList.add('bg-paimon-gray-14');
             this.headerElement.nativeElement.classList.remove('bg-transparent');
+            this.headerElement.nativeElement.classList.add('bg-paimon-gray-14');
           } else {
-            this.headerElement.nativeElement.classList.add('bg-transparent');
             this.headerElement.nativeElement.classList.remove('bg-paimon-gray-14');
+            this.headerElement.nativeElement.classList.add('bg-transparent');
           }
         });
 
@@ -86,7 +88,7 @@ export class HeaderComponent implements OnInit {
     this.cdr.markForCheck();
   }
 
-  languageChange(lang: string): void {
+  languageChange(lang: Language): void {
     this.languageService.setLanguage(lang);
   }
 }

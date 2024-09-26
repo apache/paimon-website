@@ -5,7 +5,7 @@ import { KeyFeaturesComponent } from '@paimon/app/routers/home/components/key-fe
 import { WhosusingComponent } from '@paimon/app/routers/home/components/whosusing/whosusing.component';
 import { TeamComponent } from '@paimon/app/routers/home/components/team/team.component';
 import { JoinCommunityComponent } from '@paimon/app/routers/home/components/join-community/join-community.component';
-import { FooterComponent } from '@paimon/app/routers/home/components/footer/footer.component';
+import { FooterComponent } from '@paimon/app/components/footer/footer.component';
 
 @Component({
   selector: 'paimon-home',

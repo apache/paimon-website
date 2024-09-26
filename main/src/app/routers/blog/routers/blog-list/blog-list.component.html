@@ -1,1 +1,57 @@
-<div>list</div>
+@if (listOfCategories.length > 0) {
+  <div class="flex flex-row flex-wrap gap-4 py-10">
+    <div
+      (click)="categoryChange('')"
+      [class.bg-paimon-blue-primary]="selectedCategory === ''"
+      [class.text-paimon-gray-1]="selectedCategory === ''"
+      [class.bg-paimon-gray-1]="selectedCategory !== ''"
+      class="flex h-8 cursor-pointer items-center justify-center rounded-2xl bg-paimon-gray-1 px-4 py-2"
+      translate
+    >
+      All
+    </div>
+    @for (item of listOfCategories; track $index) {
+      <div
+        (click)="categoryChange(item)"
+        [class.bg-paimon-blue-primary]="selectedCategory === item"
+        [class.text-paimon-gray-1]="selectedCategory === item"
+        [class.bg-paimon-gray-1]="selectedCategory !== item"
+        class="flex h-8 w-max cursor-pointer items-center justify-center rounded-2xl px-4 py-2"
+      >
+        {{ item }}
+      </div>
+    }
+  </div>
+}
+@if (listOfShownArticles.length) {
+  <div class="flex flex-row gap-12">
+    <div class="hidden w-60 flex-col gap-8 md:flex">
+      <div class="text-xl font-normal text-paimon-gray-8" translate>Latest Posts</div>
+      <div class="flex flex-col gap-8">
+        @for (item of listOfLatestArticles; track $index) {
+          <div class="flex flex-row items-center gap-4 text-base font-normal text-paimon-gray-14">
+            <a [routerLink]="[item.id]" class="hover:text-paimon-blue-primary">{{ item.name }}</a>
+          </div>
+        }
+      </div>
+    </div>
+    <div class="flex flex-1 flex-col">
+      <div class="flex flex-1 flex-col gap-8">
+        @for (item of listOfShownArticles; track $index) {
+          <paimon-blog-card [article]="item"></paimon-blog-card>
+        }
+      </div>
+      <div class="mt-8">
+        <paimon-pagination
+          [total]="total"
+          [(pageIndex)]="pageIndex"
+          [(pageSize)]="pageSize"
+          (pageIndexChange)="updateShown()"
+          (pageSizeChange)="updateShown()"
+        ></paimon-pagination>
+      </div>
+    </div>
+  </div>
+} @else {
+  <div class="flex min-h-40 items-center justify-center" translate>No Post found</div>
+}
