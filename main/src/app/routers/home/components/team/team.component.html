@@ -18,18 +18,28 @@
       </a>
     </div>
     <div
-      class="flex items-end justify-start pb-12 pl-12 pr-12 lg:justify-end lg:pb-0 lg:pl-0 lg:pr-9"
+      class="flex items-end justify-center pb-12 pl-12 pr-12 lg:justify-end lg:pb-0 lg:pl-0 lg:pr-9"
     >
-      <div class="relative grid grid-cols-4 items-center gap-4 md:grid-cols-5 lg:grid-cols-6">
+      <div
+        class="relative grid grid-cols-2 items-center gap-4 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6"
+      >
         @for (item of listOfTeam; track $index) {
-          <div class="flex h-full w-full items-center justify-center">
-            <img
-              [ngSrc]="'https://avatars.githubusercontent.com/u/' + item.avatarId"
-              [width]="92"
-              [height]="92"
-              [alt]="item.name"
-            />
-          </div>
+          <a
+            class="flex h-full w-full items-center justify-center"
+            [attr.title]="item.name"
+            [attr.href]="'https://github.com/' + item.github"
+            target="_blank"
+          >
+            <div class="h-full w-full rounded bg-paimon-gray-2">
+              <img
+                class="rounded"
+                [ngSrc]="'https://avatars.githubusercontent.com/u/' + item.avatarId"
+                [width]="92"
+                [height]="92"
+                [alt]="item.name"
+              />
+            </div>
+          </a>
         }
       </div>
     </div>

@@ -34,8 +34,7 @@ const typeDesc = {
 
 const exampleList = [
   'feat: add new features',
-  'feat(features): add new features',
-  'Note that release，hotfix，chore，revert are optional without header [AONE-12345678]'
+  'feat(features): add new features'
 ];
 
 function parseMessage(message) {
@@ -51,6 +50,7 @@ function parseMessage(message) {
   }
   return null;
 }
+
 function getTypeEnumRule() {
   const messages = fs.readFileSync(commitEditMsg, { encoding: 'utf-8' });
   const myMessage = parseMessage(messages);

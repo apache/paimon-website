@@ -9,6 +9,7 @@
         "@schematics/angular:component": {
           "changeDetection": "OnPush",
           "standalone": true,
+          "style": "none",
           "skipTests": true
         },
         "@schematics/angular:class": {
@@ -40,12 +41,11 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/paimon-next-website",
+            "outputPath": "dist",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
-              "zone.js",
-              "@angular/localize/init"
+              "zone.js"
             ],
             "tsConfig": "tsconfig.app.json",
             "assets": [
@@ -58,9 +58,10 @@
             "styles": [
               "src/styles.css"
             ],
-            "scripts": [],
             "server": "src/main.server.ts",
-            "prerender": true,
+            "prerender": {
+              "routesFile": "src/assets/metadata/routes.txt"
+            },
             "ssr": {
               "entry": "server.ts"
             },
@@ -104,36 +105,27 @@
           },
           "defaultConfiguration": "development"
         },
-        "extract-i18n": {
-          "builder": "@angular-devkit/build-angular:extract-i18n"
-        },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "polyfills": [
-              "zone.js",
-              "zone.js/testing",
-              "@angular/localize/init"
-            ],
-            "tsConfig": "tsconfig.spec.json",
-            "assets": [
-              {
-                "glob": "**/*",
-                "input": "public"
-              }
-            ],
-            "styles": [
-              "src/styles.css"
-            ],
-            "scripts": []
-          }
-        },
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
             "lintFilePatterns": [
               "src/**/*.ts",
               "src/**/*.html"
+            ]
+          }
+        }
+      }
+    },
+    "markdown-parser": {
+      "root": "library/markdown-parser",
+      "sourceRoot": "library/markdown-parser/src",
+      "projectType": "library",
+      "architect": {
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "library/markdown-parser/**/*.ts"
             ]
           }
         }

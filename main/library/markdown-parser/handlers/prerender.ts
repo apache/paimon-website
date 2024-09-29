@@ -1,30 +1,37 @@
-import { ResolvedArticle } from '../models/article';
-import { Profile } from '../models/profile';
-import { getDirectoryPath } from '../utils/directory';
-import { writeFileSync } from 'fs';
+/**
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
 import { SitemapStream, streamToPromise } from 'sitemap';
+
+import { writeFileSync } from 'fs';
 import { Readable } from 'stream';
+
+import { ResolvedArticle } from '../models/article';
+import { getDirectoryPath } from '../utils/directory';
 
 const { dist, distRoot } = getDirectoryPath();
 
-export class tabList {
-  type: string;
-  city: tab[];
-}
-
-export class tab {
-  type?: string;
-  num?: number;
-}
-
-export function processRoutes(articles: ResolvedArticle[], profiles: Profile[]): void {
-  const articleUrls = articles.map(item => `/article/detail/${item.id}`);
-  const articleUrlHome: string[] = [];
-  const authorUrls = profiles.map(item => `/author/${item.id}`);
-  const homeUrls = ['/', '/article'];
-  const content = [...homeUrls, ...articleUrls, ...articleUrlHome, ...authorUrls].join('\n');
+export function processRoutes(articles: ResolvedArticle[]): void {
+  const articleUrls = articles.map(item => `/blog/${item.id}`);
+  const homeUrls = ['/', '/blog'];
+  const content = [...homeUrls, ...articleUrls].join('\n');
   writeFileSync(`${dist}/routes.txt`, content);
-  processSitemap(homeUrls, [...articleUrls, ...articleUrlHome, ...authorUrls]);
+  processSitemap(homeUrls, [...articleUrls]);
 }
 
 export function processSitemap(homeUrls: string[], innerUrls: string[]): void {
@@ -33,7 +40,7 @@ export function processSitemap(homeUrls: string[], innerUrls: string[]): void {
 
   const sitemapStream = new SitemapStream({ hostname: 'https://paimon.apache.org/' });
 
-  streamToPromise(Readable.from([...innerLinks, ...homeLinks]).pipe(sitemapStream))
+  streamToPromise(Readable.from([...innerLinks, ...homeLinks]).pipe(sitemapStream) as Readable)
     .then(data => data.toString())
     .then(d => writeFileSync(`${distRoot}/sitemap.xml`, d));
 }

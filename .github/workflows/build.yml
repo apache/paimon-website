@@ -91,7 +91,7 @@ jobs:
           pnpm install
           pnpm run build --base-href="${{ inputs.base_href }}"
           cd ..
-          mv main/dist/paimon-next-website/browser/* .
+          mv main/dist/browser/* .
           rm -rf main
 
       - name: Clone Paimon repo

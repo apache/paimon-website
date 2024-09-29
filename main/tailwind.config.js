@@ -4,7 +4,8 @@ module.exports = {
   content: ['./src/**/*.{html,ts}'],
   theme: {
     fontFamily: {
-      roboto: ['Roboto', 'sans-serif']
+      roboto:
+        'system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans","Liberation Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji"'
     },
     extend: {
       colors: {
@@ -46,14 +47,23 @@ module.exports = {
           base: 'var(--paimon-gray-1)',
           hover: 'var(--paimon-gray-4)'
         }
+      },
+      keyframes: {
+        'fade-in': {
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' }
+        }
+      },
+      animation: {
+        'paimon-loading': 'fade-in 0.5s infinite alternate'
       }
     }
   },
   plugins: [
+    require('tailwindcss-animation-delay'),
     {
       tailwindcss: {},
       autoprefixer: {}
     }
-    // require('@tailwindcss/typography')
   ]
 };

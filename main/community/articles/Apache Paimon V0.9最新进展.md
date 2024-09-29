@@ -4,7 +4,8 @@ authors:
 categories:
   - 技术探索
 date: 2024.08.22
-
+languages:
+  - zh
 ---
 
 # Apache Paimon V0.9最新进展

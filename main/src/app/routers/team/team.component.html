@@ -1,0 +1,73 @@
+<paimon-page-container>
+  <div header>
+    <div class="mt-16 text-6xl font-normal text-paimon-gray-3" translate>Our Team</div>
+  </div>
+  <div content class="flex flex-col gap-20 px-8 pt-20 text-paimon-gray-14">
+    <div class="flex flex-col gap-x-36 gap-y-8 md:flex-row">
+      <div class="pt-4 text-4xl font-medium md:w-52" translate>PMC Members</div>
+      <div class="flex-1 overflow-x-hidden">
+        <div class="flex justify-start">
+          <div class="relative flex flex-wrap gap-4">
+            @for (item of listOfPMCs; track $index) {
+              <div
+                class="flex w-[156px] flex-col items-center justify-between gap-4 rounded-lg bg-paimon-gray-1 p-1.5 pb-6"
+              >
+                <img
+                  [ngSrc]="'https://avatars.githubusercontent.com/u/' + item.avatarId"
+                  [width]="144"
+                  [height]="144"
+                  [alt]="item.name"
+                  class="rounded-lg"
+                />
+                <a
+                  class="flex h-9 items-end text-base leading-5 hover:underline"
+                  [attr.href]="'https://github.com/' + item.github"
+                  target="_blank"
+                >
+                  {{ item.name }}
+                </a>
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="flex flex-col gap-x-36 gap-y-8 md:flex-row">
+      <div class="pt-4 text-4xl font-medium md:w-52">
+        <div translate>Committers</div>
+        <div class="text-base font-normal text-paimon-gray-13" translate>
+          (Apart from PMC members)
+        </div>
+      </div>
+      <div class="flex-1 overflow-x-hidden">
+        <div class="flex justify-start">
+          <div class="relative flex flex-wrap gap-4">
+            @for (item of listOfCommitters; track $index) {
+              <div
+                class="flex w-[156px] flex-col items-center justify-between gap-4 rounded-lg bg-paimon-gray-1 p-1.5 pb-6"
+              >
+                <img
+                  [ngSrc]="'https://avatars.githubusercontent.com/u/' + item.avatarId"
+                  [width]="144"
+                  [height]="144"
+                  [alt]="item.name"
+                  class="rounded-lg"
+                />
+                <a
+                  class="flex h-9 items-end text-base leading-5 hover:underline"
+                  [attr.href]="'https://github.com/' + item.github"
+                  target="_blank"
+                >
+                  {{ item.name }}
+                </a>
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="ml-[-32px] mr-[-32px] bg-paimon-gray-14 p-9">
+      <paimon-join-community></paimon-join-community>
+    </div>
+  </div>
+</paimon-page-container>

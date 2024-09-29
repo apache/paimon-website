@@ -40,6 +40,7 @@ yarn-error.log
 /libpeerconnection.log
 testem.log
 /typings
+.eslintcache
 
 # System files
 .DS_Store

@@ -1,21 +1,27 @@
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  EventEmitter,
-  Input,
-  OnChanges,
-  OnInit,
-  Output
-} from '@angular/core';
-import { NgForOf } from '@angular/common';
+/**
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'paimon-pagination',
   standalone: true,
-  imports: [NgForOf],
   templateUrl: './pagination.component.html',
-  styleUrl: './pagination.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PaginationComponent implements OnInit, OnChanges {
@@ -25,9 +31,7 @@ export class PaginationComponent implements OnInit, OnChanges {
   @Output() pageIndexChange = new EventEmitter<number>();
   @Output() pageSizeChange = new EventEmitter<number>();
   maxPage = 1;
-  list: (string | number)[] = [];
-
-  constructor(private cdr: ChangeDetectorRef) {}
+  list: Array<string | number> = [];
 
   ngOnInit(): void {
     this.maxPage = Math.ceil(this.total / this.pageSize);
@@ -38,6 +42,7 @@ export class PaginationComponent implements OnInit, OnChanges {
     this.maxPage = Math.ceil(this.total / this.pageSize);
     this.pageChange();
   }
+
   previous(): void {
     if (!this.previousDisabled()) {
       this.setPageIndex(this.pageIndex - 1);
@@ -73,6 +78,7 @@ export class PaginationComponent implements OnInit, OnChanges {
       this.pageChange();
     }
   }
+
   pageChange(): void {
     if (this.maxPage < 8) {
       this.list = [];
