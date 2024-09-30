@@ -18,7 +18,7 @@
  */
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, Observable, of } from 'rxjs';
+import { combineLatest, map, Observable, of } from 'rxjs';
 import { shareReplay, tap } from 'rxjs/operators';
 
 import { BriefArticle, ResolvedArticle } from '@paimon-markdown-parser/article';
@@ -61,12 +61,11 @@ export class ArticleService {
     if (this.briefArticles$) {
       return this.briefArticles$;
     } else {
-      this.briefArticles$ = this.httpClient
-        .get<BriefArticle[]>(`${this.baseUrlService.getBaseUrl()}/articles/list.json`)
-        .pipe(
-          map(data => data.filter(v => !v.languages || v.languages.includes(this.languageService.language))),
-          shareReplay(1)
-        );
+      const query$ = this.httpClient.get<BriefArticle[]>(`${this.baseUrlService.getBaseUrl()}/articles/list.json`);
+      this.briefArticles$ = combineLatest([query$, this.languageService.languageChanged()]).pipe(
+        map(([data, language]) => data.filter(v => !v.languages || v.languages.includes(language))),
+        shareReplay(1)
+      );
       return this.briefArticles$;
     }
   }

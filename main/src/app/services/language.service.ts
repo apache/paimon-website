@@ -17,6 +17,7 @@
  * under the License.
  */
 import { Injectable } from '@angular/core';
+import { map, Observable } from 'rxjs';
 
 import { TranslateService } from '@ngx-translate/core';
 
@@ -35,6 +36,10 @@ export class LanguageService {
 
   get language(): Language {
     return this.translateService.currentLang as Language;
+  }
+
+  languageChanged(): Observable<Language> {
+    return this.translateService.onLangChange.asObservable().pipe(map(event => event.lang as Language));
   }
 
   setLanguage(language: Language): void {
