@@ -25,8 +25,7 @@ export const Configuration = {
     source: 'community',
     dist: 'metadata',
     article: 'articles',
-    profile: 'profiles',
-    search: 'search'
+    profile: 'profiles'
   },
   article: {
     abstract: {

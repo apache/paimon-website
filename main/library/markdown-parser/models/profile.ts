@@ -27,11 +27,9 @@ export class Profile {
     readonly id: string,
     readonly name: string,
     readonly title: string | null,
-    readonly detail: string | null,
     readonly image: string | null,
     readonly blog: string | null,
-    readonly github: string | null,
-    readonly exist: boolean
+    readonly github: string | null
   ) {}
 }
 
@@ -41,9 +39,9 @@ export class Profile {
  * @param buffer
  */
 export function parseProfileFromBuffer(name: string, buffer: Buffer): Profile {
-  const { title, profile, image, blog, github } = parse(String(buffer)) || {};
+  const { title, image, blog, github } = parse(String(buffer)) || {};
   const id = generateUUID(name);
-  return new Profile(id, name, title, profile, image || pickRandom(Configuration.image.profile), blog, github, true);
+  return new Profile(id, name, title, image || pickRandom(Configuration.image.profile), blog, github);
 }
 
 /**
@@ -58,6 +56,6 @@ export function resolveProfile(name: string, profileCollection: Profile[]): Prof
     return targetProfile;
   } else {
     const id = generateUUID(name);
-    return new Profile(id, name, null, null, null, null, null, false);
+    return new Profile(id, name, null, null, null, null);
   }
 }

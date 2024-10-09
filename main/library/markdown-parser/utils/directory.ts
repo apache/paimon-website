@@ -25,7 +25,6 @@ export const getDirectoryPath = (): {
   source: string;
   dist: string;
   distRoot: string;
-  search: string;
   articleDist: string;
   profileDist: string;
   articleSource: string;
@@ -39,7 +38,6 @@ export const getDirectoryPath = (): {
     source,
     dist,
     distRoot,
-    search: resolve(dist, Configuration.directory.search),
     articleDist: resolve(dist, Configuration.directory.article),
     profileDist: resolve(dist, Configuration.directory.profile),
     articleSource: resolve(source, Configuration.directory.article),

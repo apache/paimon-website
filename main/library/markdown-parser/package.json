@@ -26,7 +26,6 @@
     "html-entities": "^2.5.2",
     "marked": "^14.1.2",
     "md5": "^2.3.0",
-    "pinyin-pro": "^3.24.2",
     "prismjs": "^1.29.0",
     "sitemap": "^8.0.0",
     "ts-node": "^10.9.2",

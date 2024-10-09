@@ -17,6 +17,7 @@
  * under the License.
  */
 import { isValid } from 'date-fns';
+
 export function getValidDate(name: string, date: string): Date | null {
   if (date) {
     const parsedDate = new Date(date);

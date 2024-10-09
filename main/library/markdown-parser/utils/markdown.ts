@@ -21,6 +21,7 @@ import { Renderer, marked, Tokens } from 'marked';
 import prism from 'prismjs';
 import loadLanguages from 'prismjs/components/';
 import { loadFront as parseMarkdownWithYAML } from 'yaml-front-matter';
+
 loadLanguages(['java']);
 
 const githubSlugger = new GithubSlugger();
@@ -34,6 +35,7 @@ class ArticleRender extends Renderer {
       return `<h${depth} id="${slugText}">${text}</h${depth}>`;
     }
   }
+
   override code({ text, lang }: Tokens.Code): string {
     const language = prism.languages[lang!] || prism.languages['java'];
     const highlight = prism.highlight(text, language, lang!);
