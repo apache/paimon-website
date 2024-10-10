@@ -1,0 +1,794 @@
+
+<!DOCTYPE html>
+<html lang="en" dir=>
+
+<head>
+  <meta name="generator" content="Hugo 0.80.0" />
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Apache Paimon 0.9 Available #  Sep 13, 2024 - Jingsong Lee (jingsonglee0@gmail.com)
+The Apache Paimon PMC officially announces the release of Apache Paimon 0.9.0. This version was developed over the course of four months, with the participation of 80 contributors, resulting in more than 600 commits.
+Thank you to all contributors for your support!
+The community has decided that the next version will be 1.0, marking that most functionalities of Apache Paimon have become relatively mature and stable.">
+<meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="Release 0.9" />
+<meta property="og:description" content="Apache Paimon 0.9 Available #  Sep 13, 2024 - Jingsong Lee (jingsonglee0@gmail.com)
+The Apache Paimon PMC officially announces the release of Apache Paimon 0.9.0. This version was developed over the course of four months, with the participation of 80 contributors, resulting in more than 600 commits.
+Thank you to all contributors for your support!
+The community has decided that the next version will be 1.0, marking that most functionalities of Apache Paimon have become relatively mature and stable." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="//paimon.apache.org/releases/release-0.9/" />
+
+<title>Release 0.9 | Apache Paimon</title>
+<link rel="manifest" href="/manifest.json">
+<link rel="icon" href="/favicon.png" type="image/x-icon">
+<link rel="stylesheet" href="/book.min.3bc4108a5b57c9a7e6fcae92ff69940435f8c46c4e1e4a311aedc9b2d8e06792.css" integrity="sha256-O8QQiltXyafm/K6S/2mUBDX4xGxOHkoxGu3JstjgZ5I=">
+<script defer src="/en.search.min.c7f70bbbfee352f08e0ae29a292e3eb1d337621c73fb6ea29e47f374bb2924e6.js" integrity="sha256-x/cLu/7jUvCOCuKaKS4&#43;sdM3Yhxz&#43;26inkfzdLspJOY="></script>
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+  
+
+<link rel="stylesheet" type="text/css" href="//paimon.apache.org/font-awesome/css/font-awesome.min.css">
+<script src="//paimon.apache.org/js/anchor.min.js"></script>
+<script src="//paimon.apache.org/js/flink.js"></script>
+
+
+  
+  <script>
+    var _paq = window._paq = window._paq || [];
+     
+     
+    _paq.push(['disableCookies']);
+     
+    _paq.push(["setDomains", ["*.flink.apache.org","*.nightlies.apache.org/flink"]]);
+    _paq.push(['trackPageView']);
+    _paq.push(['enableLinkTracking']);
+    (function() {
+      var u="//matomo.privacy.apache.org/";
+      _paq.push(['setTrackerUrl', u+'matomo.php']);
+      _paq.push(['setSiteId', '1']);
+      var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+      g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+    })();
+  </script>
+  
+</head>
+
+<body dir=>
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      
+  
+
+<nav>
+
+
+<a id="logo" href="//paimon.apache.org">
+    <img width="100%" src="//paimon.apache.org/paimon_black.svg">
+</a>
+<p style="text-align:right"></p>
+
+<div class="book-search">
+  <input type="text" id="book-search-input" placeholder="Search" aria-label="Search" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/downloads/" class="">Downloads</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-23530e8a89b9ff74f008983e690a9935" class="toggle" checked />
+    <label for="section-23530e8a89b9ff74f008983e690a9935" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em">Releases</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/releases/release-0.9/" class=" active">Release 0.9</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/releases/release-0.8.2/" class="">Release 0.8.2</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/releases/release-0.8.1/" class="">Release 0.8.1</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/releases/release-0.8/" class="">Release 0.8</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/releases/release-0.7/" class="">Release 0.7</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/releases/release-0.6/" class="">Release 0.6</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/releases/release-0.5/" class="">Release 0.5</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/releases/release-0.4/" class="">Release 0.4</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var menu=document.querySelector("aside.book-menu nav");addEventListener("beforeunload",function(event){localStorage.setItem("menu.scrollTop",menu.scrollTop);});menu.scrollTop=localStorage.getItem("menu.scrollTop");})();</script>
+
+
+ 
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <strong>Release 0.9</strong>
+
+  <label for="toc-control">
+    
+    <img src="/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden clearfix">
+    
+  
+
+<nav id="TableOfContents"><h3>On This Page <button class="toc" onclick="collapseToc()"><i class="fa fa-compress" aria-hidden="true"></i></button></h3>
+  <ul>
+    <li><a href="#version-overview">Version Overview</a></li>
+    <li><a href="#compatibility-changes">Compatibility Changes</a>
+      <ul>
+        <li><a href="#bucketed-append-tables">Bucketed Append Tables</a></li>
+        <li><a href="#file-format-and-compression">File Format and Compression</a></li>
+        <li><a href="#cdc-ingestion">CDC Ingestion</a></li>
+      </ul>
+    </li>
+    <li><a href="#paimon-branch">Paimon Branch</a></li>
+    <li><a href="#universal-format">Universal Format</a></li>
+    <li><a href="#caching-catalog">Caching Catalog</a></li>
+    <li><a href="#deletion-vectors">Deletion Vectors</a></li>
+    <li><a href="#core">Core</a>
+      <ul>
+        <li><a href="#new-aggregation-functions">New Aggregation Functions</a></li>
+        <li><a href="#universal-file-index">Universal File Index</a></li>
+        <li><a href="#historical-partition-compact">Historical Partition Compact</a></li>
+      </ul>
+    </li>
+    <li><a href="#flink">Flink</a>
+      <ul>
+        <li><a href="#cluster">Cluster</a></li>
+        <li><a href="#partition-mark-done">Partition Mark Done</a></li>
+        <li><a href="#table-clone">Table Clone</a></li>
+        <li><a href="#procedures">Procedures</a></li>
+      </ul>
+    </li>
+    <li><a href="#spark">Spark</a>
+      <ul>
+        <li><a href="#dynamic-options">Dynamic Options</a></li>
+        <li><a href="#bucketed-join">Bucketed Join</a></li>
+        <li><a href="#writing-to-dynamic-bucket-tables">Writing to Dynamic Bucket Tables</a></li>
+      </ul>
+    </li>
+    <li><a href="#other-progress">Other Progress</a></li>
+  </ul>
+</nav>
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown"><!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<h1 id="apache-paimon-09-available">
+  Apache Paimon 0.9 Available
+  <a class="anchor" href="#apache-paimon-09-available">#</a>
+</h1>
+<p>Sep 13, 2024 - Jingsong Lee (<a href="mailto:jingsonglee0@gmail.com">jingsonglee0@gmail.com</a>)</p>
+<p>The Apache Paimon PMC officially announces the release of Apache Paimon 0.9.0. This version was developed over the
+course of four months, with the participation of 80 contributors, resulting in more than 600 commits.</p>
+<p>Thank you to all contributors for your support!</p>
+<p>The community has decided that the next version will be 1.0, marking that most functionalities of Apache Paimon have
+become relatively mature and stable.</p>
+<h2 id="version-overview">
+  Version Overview
+  <a class="anchor" href="#version-overview">#</a>
+</h2>
+<p>Paimon&rsquo;s long-term plan is to become a unified lake storage format that meets the main requirements for minute level
+big data: offline batch computing, real-time stream computing, and OLAP computing.</p>
+<p>Notable changes in this version include:</p>
+<ol>
+<li>Paimon Branch: The branch functionality is now officially production-ready, and the introduction of the &lsquo;scan.fallback-branch&rsquo;
+feature helps to better unify stream and batch storage for businesses.</li>
+<li>Universal Format: This version introduces native Iceberg compatibility. You can enable Iceberg compatibility mode, and
+Paimon will generate Iceberg-compatible snapshots in real-time, allowing you to use the Iceberg ecosystem to read this Paimon table.</li>
+<li>Caching Catalog: This version introduces the implementation of Caching Catalog by default. Table metadata and manifest
+files will be cached in the catalog, which can accelerate OLAP query performance.</li>
+<li>Improvements in Bucketed Append Table Availability: The small file issue has been significantly alleviated, and it
+can be applied to bucketed joins in Spark, reducing shuffles during joins.</li>
+<li>Support for DELETE &amp; UPDATE &amp; MERGEINTO in Append Tables: This version introduces support for DELETE, UPDATE, and
+MERGE INTO in append tables. You can modify and delete records in append tables using Spark SQL, and it also supports
+Deletion Vectors mode.</li>
+</ol>
+<h2 id="compatibility-changes">
+  Compatibility Changes
+  <a class="anchor" href="#compatibility-changes">#</a>
+</h2>
+<p>The following changes may impact the compatibility of your usage.</p>
+<h3 id="bucketed-append-tables">
+  Bucketed Append Tables
+  <a class="anchor" href="#bucketed-append-tables">#</a>
+</h3>
+<p>When defining a table without a primary key, if the number of &lsquo;bucket&rsquo; is defined, the table is considered a Bucketed
+Append table, previously referred to as an Append Queue table, as it is more commonly used in ordered stream writes and
+reads. The issue of small files has been significantly alleviated, and it can be applied in Spark for Bucketed Joins,
+reducing shuffles during joins.</p>
+<p>Here are some changes to its default values:</p>
+<ol>
+<li>Bucketed Append tables are prohibited from being defined without a bucket-key. The behavior in previous versions was
+to hash the entire row to determine the corresponding bucket, which is an unintuitive behavior. We recommend using
+an older version of Paimon to refresh the data (write into a new valid table).</li>
+<li>The default value of the &lsquo;compaction.max.file-num&rsquo; option for Bucketed Append tables has been adjusted to 5, meaning
+there will be fewer small files within a single bucket to avoid excessive small files affecting production usability.</li>
+</ol>
+<p>Despite this, we still recommend that you avoid defining Bucketed Append tables unless necessary; the default bucket -1
+mode is more user-friendly.</p>
+<h3 id="file-format-and-compression">
+  File Format and Compression
+  <a class="anchor" href="#file-format-and-compression">#</a>
+</h3>
+<p>The Paimon community is focused on improving overall performance under default options. The following option default
+values have been modified in version 0.9:</p>
+<ol>
+<li>File Format &lsquo;file.format&rsquo;: The default has changed from ORC to Parquet. There is no essential difference between these
+formats, but Parquet generally performs better, and the community has completed all capabilities for Parquet, including
+support for nested types, Filter PushDown, and more.</li>
+<li>File Size &lsquo;target-file-size&rsquo;: The size for primary key tables remains at 128MB, while the default for non-primary key
+tables (Append tables) has been adjusted to 256MB.</li>
+<li>Compression Default &lsquo;file.compression&rsquo;: The default has changed from LZ4 to ZSTD, with the default ZSTD compression
+level set to 1. You can adjust the compression level using &lsquo;file.compression.zstd-level&rsquo;, consuming more CPU for
+greater compression rates.</li>
+<li>Local Spill Compression Level &lsquo;spill-compression.zstd-level&rsquo;: Likewise, local spill can also achieve greater
+compression rates by adjusting the level.</li>
+</ol>
+<h3 id="cdc-ingestion">
+  CDC Ingestion
+  <a class="anchor" href="#cdc-ingestion">#</a>
+</h3>
+<p>The dependency for Flink CDC has been upgraded to version 3.1. Since Flink CDC has become a sub-project of Flink in this
+version, the package names have been modified, rendering older versions of CDC unsupported. MySQL CDC, MongoDB CDC, and
+Postgres CDC will be affected.</p>
+<h2 id="paimon-branch">
+  Paimon Branch
+  <a class="anchor" href="#paimon-branch">#</a>
+</h2>
+<p>Branching is an interesting feature that allows us to manipulate Paimon tables in a manner similar to Git. It has
+reached a production-ready state in Paimon 0.9, and Alibaba&rsquo;s internal teams are already using it in production
+environments for tasks such as data correction and stream-batch integration.</p>
+<p>For example, you can use branches for data correction:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="c1">-- create branch named &#39;branch1&#39; from tag &#39;tag1&#39;
+</span><span class="c1"></span><span class="k">CALL</span> <span class="n">sys</span><span class="p">.</span><span class="n">create_branch</span><span class="p">(</span><span class="s1">&#39;default.T&#39;</span><span class="p">,</span> <span class="s1">&#39;branch1&#39;</span><span class="p">,</span> <span class="s1">&#39;tag1&#39;</span><span class="p">);</span>
+
+<span class="c1">-- write to branch &#39;branch1&#39;
+</span><span class="c1"></span><span class="k">INSERT</span> <span class="k">INTO</span> <span class="o">`</span><span class="n">t$branch_branch1</span><span class="o">`</span> <span class="k">SELECT</span> <span class="p">...</span>
+
+<span class="c1">-- read from branch &#39;branch1&#39;
+</span><span class="c1"></span><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="o">`</span><span class="n">t$branch_branch1</span><span class="o">`</span><span class="p">;</span>
+
+<span class="c1">-- replace master branch with &#39;branch1&#39;
+</span><span class="c1"></span><span class="k">CALL</span> <span class="n">sys</span><span class="p">.</span><span class="n">fast_forward</span><span class="p">(</span><span class="s1">&#39;default.T&#39;</span><span class="p">,</span> <span class="s1">&#39;branch1&#39;</span><span class="p">);</span>
+</code></pre></div><p>You can also use branches for unified stream-batch storage. You can set up a separate stream branch and then configure
+&lsquo;scan.fallback-branch&rsquo;. This way, when a batch processing job reads from the current branch and a partition is missing,
+it will attempt to read that partition from the fallback branch.</p>
+<p>Suppose you create a Paimon table partitioned by date. You have a long-running streaming job that inserts records into
+Paimon so that today&rsquo;s data can be queried in a timely manner. You also have a nightly batch processing job that overwrites
+the partitions in Paimon to ensure data accuracy. When you query this Paimon table, you want to read first from the results
+of the batch processing job. However, if a specific partition (for example, today&rsquo;s partition) is missing in its results,
+you want to read from the results of the streaming job. In this case, you can create a branch for the streaming job and
+set &lsquo;scan.fallback-branch&rsquo; to that streaming branch.</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="c1">-- create a branch for streaming job (realtime)
+</span><span class="c1"></span><span class="k">CALL</span> <span class="n">sys</span><span class="p">.</span><span class="n">create_branch</span><span class="p">(</span><span class="s1">&#39;default.T&#39;</span><span class="p">,</span> <span class="s1">&#39;rt&#39;</span><span class="p">);</span>
+
+<span class="c1">-- set primary key and bucket number for the branch
+</span><span class="c1"></span><span class="k">ALTER</span> <span class="k">TABLE</span> <span class="o">`</span><span class="n">T$branch_rt</span><span class="o">`</span> <span class="k">SET</span> <span class="p">(</span>
+    <span class="s1">&#39;primary-key&#39;</span> <span class="o">=</span> <span class="s1">&#39;dt,name&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;bucket&#39;</span> <span class="o">=</span> <span class="s1">&#39;2&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;changelog-producer&#39;</span> <span class="o">=</span> <span class="s1">&#39;lookup&#39;</span>
+<span class="p">);</span>
+
+<span class="c1">-- set fallback branch
+</span><span class="c1"></span><span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">T</span> <span class="k">SET</span> <span class="p">(</span>
+    <span class="s1">&#39;scan.fallback-branch&#39;</span> <span class="o">=</span> <span class="s1">&#39;rt&#39;</span>
+<span class="p">);</span>
+
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">T</span><span class="p">;</span>
+</code></pre></div><h2 id="universal-format">
+  Universal Format
+  <a class="anchor" href="#universal-format">#</a>
+</h2>
+<p>Paimon&rsquo;s Universal Format allows you to use Iceberg clients or compute engines to read data within Paimon. By using the
+&lsquo;metadata.iceberg-compatible&rsquo; option, Paimon automatically generates Iceberg snapshots in the filesystem when creating
+snapshots, without requiring any additional dependencies or concerns about governance-related issues.</p>
+<p>Notable points include:</p>
+<ol>
+<li>Iceberg metadata is stored in the file system (corresponding to Iceberg&rsquo;s HadoopCatalog). For example, you can read
+it using Spark DataFrame: spark.read.format(&ldquo;iceberg&rdquo;).load(&ldquo;path&rdquo;).</li>
+<li>Iceberg views are read-only, and writing through this method may corrupt the table.</li>
+<li>For primary key tables, Iceberg views can only access the highest level (LSM Level) files. You can configure
+&lsquo;compaction.optimization-interval&rsquo; to control the visibility of the data.</li>
+</ol>
+<h2 id="caching-catalog">
+  Caching Catalog
+  <a class="anchor" href="#caching-catalog">#</a>
+</h2>
+<p>Paimon&rsquo;s metadata is stored in the filesystem, which leads to frequent access to the filesystem during the planning
+phase in compute engines, potentially impacting single-point performance, especially in object storage where this cost
+is even higher.</p>
+<p>This version introduces the implementation of Caching Catalog by default, which will be enabled automatically
+(it only caches manifest files smaller than 1MB by default). This can accelerate the performance of OLAP queries.</p>
+<p>You can control the behavior of the cache using the following options:</p>
+<table>
+<thead>
+<tr>
+<th>option</th>
+<th>default</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>cache-enabled</td>
+<td>true</td>
+<td>Controls whether the catalog will cache databases, tables and manifests.</td>
+</tr>
+<tr>
+<td>cache.expiration-interval</td>
+<td>1 min</td>
+<td>Controls the duration for which databases and tables in the catalog are cached.</td>
+</tr>
+<tr>
+<td>cache.manifest.max-memory</td>
+<td>(none)</td>
+<td>Controls the maximum memory to cache manifest content.</td>
+</tr>
+<tr>
+<td>cache.manifest.small-file-memory</td>
+<td>128 mb</td>
+<td>Controls the cache memory to cache small manifest files.</td>
+</tr>
+<tr>
+<td>cache.manifest.small-file-threshold</td>
+<td>1 mb</td>
+<td>Controls the threshold of small manifest file.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="deletion-vectors">
+  Deletion Vectors
+  <a class="anchor" href="#deletion-vectors">#</a>
+</h2>
+<p>The Deletion Vectors mode is fully available in version 0.9.</p>
+<p>For primary key tables, the Deletion Vectors mode now supports asynchronous compaction (defaulting to semi-synchronous),
+significantly enhancing its usability without heavily impacting checkpoints. Since the DV mode requires local disk usage,
+we recommend using SSDs for local disks; performance can be quite poor with lower-quality HDDs.</p>
+<p>For non-primary key tables (Append tables), version 0.9 supports DELETE, UPDATE, and MERGE INTO operations via Spark SQL,
+making Paimon append tables resemble complete database tables, enabling fine-grained modifications and deletions for users.</p>
+<p>Moreover, non-primary key tables also support the Deletion Vectors mode. Before enabling it, deletions and modifications
+are done using copy-on-write; once the DV mode is enabled, deletions and modifications switch to merge-on-write.
+Deletion files will be removed during compaction.</p>
+<h2 id="core">
+  Core
+  <a class="anchor" href="#core">#</a>
+</h2>
+<h3 id="new-aggregation-functions">
+  New Aggregation Functions
+  <a class="anchor" href="#new-aggregation-functions">#</a>
+</h3>
+<p>The new aggregation functions include hll_sketch, theta_sketch, rbm32, and rbm64. You can use these sketch-related
+functions to estimate COUNT DISTINCT.</p>
+<p>Paimon does not support custom aggregation functions but encourages you to propose enhancements to the built-in function library in the community.</p>
+<h3 id="universal-file-index">
+  Universal File Index
+  <a class="anchor" href="#universal-file-index">#</a>
+</h3>
+<p>The universal file index now supports the Bitmap type and also supports the REWRITE CALL command, allowing you to regenerate the corresponding index.</p>
+<p>Bitmap indexes perform well under joint filter conditions across multiple fields.</p>
+<h3 id="historical-partition-compact">
+  Historical Partition Compact
+  <a class="anchor" href="#historical-partition-compact">#</a>
+</h3>
+<p>Additionally, if your table is a partitioned table, although Paimon has built-in automatic compaction, its historical
+partitions may not have undergone full compaction. In version 0.9, we introduced partition_idle_time to automatically
+select partitions that haven&rsquo;t been updated for full compaction, reducing small files and improving query performance.</p>
+<h2 id="flink">
+  Flink
+  <a class="anchor" href="#flink">#</a>
+</h2>
+<h3 id="cluster">
+  Cluster
+  <a class="anchor" href="#cluster">#</a>
+</h3>
+<p>Clustering allows you to organize data in an Append table based on the values of certain columns during the write process.
+This data organization method can significantly improve the efficiency of downstream tasks when reading data, as it enables
+faster and more targeted data queries. This feature only supports Append tables (with bucket = -1) and batch execution mode.</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">my_table</span> <span class="cm">/*+ OPTIONS(&#39;sink.clustering.by-columns&#39; = &#39;a,b&#39;) */</span> <span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="k">source</span><span class="p">;</span>
+</code></pre></div><h3 id="partition-mark-done">
+  Partition Mark Done
+  <a class="anchor" href="#partition-mark-done">#</a>
+</h3>
+<p>For partitioned tables, each partition may need to be scheduled to trigger downstream batch computations. Therefore,
+it is essential to choose the right timing to indicate that a partition is ready for scheduling, while minimizing
+data drift during the scheduling process. We refer to this process as &ldquo;Marking a Partition as Done.&rdquo;</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">my_partitioned_table</span> <span class="p">(</span>
+    <span class="n">f0</span> <span class="nb">INT</span><span class="p">,</span>
+    <span class="n">f1</span> <span class="nb">INT</span><span class="p">,</span>
+    <span class="n">f2</span> <span class="nb">INT</span><span class="p">,</span>
+    <span class="p">...</span>
+    <span class="n">dt</span> <span class="n">STRING</span>
+<span class="p">)</span> <span class="n">PARTITIONED</span> <span class="k">BY</span> <span class="p">(</span><span class="n">dt</span><span class="p">)</span> <span class="k">WITH</span> <span class="p">(</span>
+    <span class="s1">&#39;partition.timestamp-formatter&#39;</span><span class="o">=</span><span class="s1">&#39;yyyyMMdd&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;partition.timestamp-pattern&#39;</span><span class="o">=</span><span class="s1">&#39;$dt&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;partition.time-interval&#39;</span><span class="o">=</span><span class="s1">&#39;1 d&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;partition.idle-time-to-done&#39;</span><span class="o">=</span><span class="s1">&#39;15 m&#39;</span>
+<span class="p">);</span>
+</code></pre></div><ol>
+<li>First, it is necessary to define the time parsing for the partition and the time interval between partitions to
+determine when it is appropriate to mark a partition as complete.</li>
+<li>Second, idle time needs to be defined, which determines how long a partition must wait without new data before it
+can be marked as complete.</li>
+<li>Third, by default, marking a partition as complete will create a _SUCCESS file. You can also configure
+partition.mark-done-action to define specific actions.</li>
+</ol>
+<h3 id="table-clone">
+  Table Clone
+  <a class="anchor" href="#table-clone">#</a>
+</h3>
+<p>In Paimon 0.9, the clone table action is supported for data migration. Currently, it only clones the table files used
+by the latest snapshot. If the table you are cloning hasn’t been modified during this period, it is recommended to
+submit a Flink batch job for better performance. However, if you wish to clone the table while writing, you should
+submit a Flink stream processing job for automatic fault recovery. This command can assist you with convenient data
+backup and migration.</p>
+<h3 id="procedures">
+  Procedures
+  <a class="anchor" href="#procedures">#</a>
+</h3>
+<p>Paimon 0.9 introduces a large number of procedures. Additionally, Flink procedures now support the latest version of
+named procedures, making your execution more convenient without the need to specify all parameters forcefully.</p>
+<h2 id="spark">
+  Spark
+  <a class="anchor" href="#spark">#</a>
+</h2>
+<h3 id="dynamic-options">
+  Dynamic Options
+  <a class="anchor" href="#dynamic-options">#</a>
+</h3>
+<p>Historically, Spark SQL lacked the capability for dynamic parameters, while Flink SQL offers dynamic options that are
+very convenient. In version 0.9, Spark introduces this capability through the SET command. The SET command allows for
+specific Paimon configurations by requiring the prefix spark.paimon. to be added.</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="c1">-- set paimon conf
+</span><span class="c1"></span><span class="k">SET</span> <span class="n">spark</span><span class="p">.</span><span class="n">paimon</span><span class="p">.</span><span class="n">file</span><span class="p">.</span><span class="n">block</span><span class="o">-</span><span class="k">size</span><span class="o">=</span><span class="mi">512</span><span class="n">M</span><span class="p">;</span>
+
+<span class="c1">-- reset conf
+</span><span class="c1"></span><span class="k">RESET</span> <span class="n">spark</span><span class="p">.</span><span class="n">paimon</span><span class="p">.</span><span class="n">file</span><span class="p">.</span><span class="n">block</span><span class="o">-</span><span class="k">size</span><span class="p">;</span>
+</code></pre></div><h3 id="bucketed-join">
+  Bucketed Join
+  <a class="anchor" href="#bucketed-join">#</a>
+</h3>
+<p>Hive has a feature called Bucketed Join. When two tables are bucketed by the same column, a Bucketed Join can be
+performed without the need for shuffling the data; the join can be executed directly on the buckets, making it very efficient.</p>
+<p>Buckets are one of the core concepts in Paimon. Previously, Paimon lacked integration with compute engines, preventing
+the utilization of this feature for optimization.</p>
+<p>In version 0.9, Paimon achieves deep integration with Spark SQL, enabling this optimization:</p>
+<ul>
+<li>Optimized Execution: By leveraging the bucket structure during join operations, Paimon can significantly reduce
+the overhead of data shuffling, leading to better performance on join queries.</li>
+<li>Seamless Configuration: Users can easily define buckets when creating tables, allowing for straightforward
+implementation of bucketed joins in their Spark SQL queries.</li>
+</ul>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="c1">-- Enable bucketing optimization
+</span><span class="c1"></span><span class="k">SET</span> <span class="n">spark</span><span class="p">.</span><span class="k">sql</span><span class="p">.</span><span class="n">sources</span><span class="p">.</span><span class="n">v2</span><span class="p">.</span><span class="n">bucketing</span><span class="p">.</span><span class="n">enabled</span><span class="o">=</span><span class="k">true</span><span class="p">;</span>
+
+<span class="c1">-- Bucketed Join
+</span><span class="c1"></span><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">t1</span> <span class="k">JOIN</span> <span class="n">t2</span> <span class="k">on</span> <span class="n">t1</span><span class="p">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">t2</span><span class="p">.</span><span class="n">id</span>
+</code></pre></div><p>As long as both tables involved in the join are bucketed tables (whether they are primary key tables or non-primary key
+tables) and the bucket-key field corresponds to the join field, an efficient Bucketed Join will take place. This
+optimization minimizes data shuffling and enhances query performance, making it a valuable feature for handling large
+datasets in Paimon.</p>
+<h3 id="writing-to-dynamic-bucket-tables">
+  Writing to Dynamic Bucket Tables
+  <a class="anchor" href="#writing-to-dynamic-bucket-tables">#</a>
+</h3>
+<ul>
+<li>Optimized Writing: Spark SQL can now write to dynamic bucket tables with optimizations that reduce data shuffling
+during the first write operation.</li>
+<li>Cross-Partition Updates: Spark SQL now supports writing to tables with cross-partition updates, although the overall
+efficiency for these operations is still not optimal.</li>
+</ul>
+<h2 id="other-progress">
+  Other Progress
+  <a class="anchor" href="#other-progress">#</a>
+</h2>
+<ul>
+<li>Paimon Web UI: The Web UI is being released; feel free to try it out!</li>
+<li>Paimon Python: The release process for version 0.1 is expected to start soon.</li>
+<li>Paimon Rust: In development, with an expected release of a readable version in 0.1.</li>
+</ul>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  
+
+
+
+
+<a href="//github.com/apache/paimon/edit//docs/content/releases/release-0.9.md" style="color:black"><i class="fa fa-edit fa-fw"></i>Edit This Page</a>
+
+
+ 
+        
+      </footer>
+
+      
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      
+  
+
+<nav id="TableOfContents"><h3>On This Page <button class="toc" onclick="collapseToc()"><i class="fa fa-compress" aria-hidden="true"></i></button></h3>
+  <ul>
+    <li><a href="#version-overview">Version Overview</a></li>
+    <li><a href="#compatibility-changes">Compatibility Changes</a>
+      <ul>
+        <li><a href="#bucketed-append-tables">Bucketed Append Tables</a></li>
+        <li><a href="#file-format-and-compression">File Format and Compression</a></li>
+        <li><a href="#cdc-ingestion">CDC Ingestion</a></li>
+      </ul>
+    </li>
+    <li><a href="#paimon-branch">Paimon Branch</a></li>
+    <li><a href="#universal-format">Universal Format</a></li>
+    <li><a href="#caching-catalog">Caching Catalog</a></li>
+    <li><a href="#deletion-vectors">Deletion Vectors</a></li>
+    <li><a href="#core">Core</a>
+      <ul>
+        <li><a href="#new-aggregation-functions">New Aggregation Functions</a></li>
+        <li><a href="#universal-file-index">Universal File Index</a></li>
+        <li><a href="#historical-partition-compact">Historical Partition Compact</a></li>
+      </ul>
+    </li>
+    <li><a href="#flink">Flink</a>
+      <ul>
+        <li><a href="#cluster">Cluster</a></li>
+        <li><a href="#partition-mark-done">Partition Mark Done</a></li>
+        <li><a href="#table-clone">Table Clone</a></li>
+        <li><a href="#procedures">Procedures</a></li>
+      </ul>
+    </li>
+    <li><a href="#spark">Spark</a>
+      <ul>
+        <li><a href="#dynamic-options">Dynamic Options</a></li>
+        <li><a href="#bucketed-join">Bucketed Join</a></li>
+        <li><a href="#writing-to-dynamic-bucket-tables">Writing to Dynamic Bucket Tables</a></li>
+      </ul>
+    </li>
+    <li><a href="#other-progress">Other Progress</a></li>
+  </ul>
+</nav>
+
+ 
+    </aside>
+    <aside class="expand-toc">
+      <button class="toc" onclick="expandToc()">
+        <i class="fa fa-expand" aria-hidden="true"></i>
+      </button>
+    </aside>
+    
+  </main>
+
+  
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

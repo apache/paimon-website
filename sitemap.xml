@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  
+  <url>
+    <loc>//paimon.apache.org/downloads/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/releases/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/releases/release-0.9/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/releases/release-0.8.2/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/releases/release-0.8.1/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/releases/release-0.8/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/releases/release-0.7/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/releases/release-0.6/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/releases/release-0.5/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/releases/release-0.4/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/categories/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/tags/</loc>
+  </url>
+  
+</urlset>
