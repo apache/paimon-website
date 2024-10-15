@@ -52,10 +52,15 @@ module.exports = {
         'fade-in': {
           '0%': { opacity: '0' },
           '100%': { opacity: '1' }
+        },
+        slide: {
+          '0%': { transform: 'translateX(0%)' },
+          '100%': { transform: 'translateX(-100%)' }
         }
       },
       animation: {
-        'paimon-loading': 'fade-in 0.5s infinite alternate'
+        'paimon-loading': 'fade-in 0.5s infinite alternate',
+        'paimon-slide': 'slide 60s linear infinite'
       }
     }
   },

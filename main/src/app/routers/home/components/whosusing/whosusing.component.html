@@ -16,9 +16,30 @@
       </a>
     </div>
   </div>
+
+  <!-- pc -->
   <div
-    class="gradient-shadow relative mb-32 mt-14 px-14 before:w-0 after:w-0 md:before:w-[100px] md:after:w-[100px]"
+    class="gradient-shadow group mb-32 hidden overflow-hidden px-14 before:w-0 after:w-0 sm:flex md:before:w-[100px] md:after:w-[100px]"
   >
+    <div
+      class="group-hover:paused flex shrink-0 grow-0 basis-auto animate-paimon-slide flex-row items-center space-x-3 hover:cursor-pointer"
+    >
+      @for (item of listOfUsers; track $index) {
+        <img [ngSrc]="item.src" [width]="item.width" [height]="item.height" [alt]="item.label" />
+      }
+    </div>
+    <!--  make the slider seamless looping  -->
+    <div
+      class="group-hover:paused flex shrink-0 grow-0 basis-auto animate-paimon-slide flex-row items-center space-x-3 hover:cursor-pointer"
+    >
+      @for (item of listOfUsers; track $index) {
+        <img [ngSrc]="item.src" [width]="item.width" [height]="item.height" [alt]="item.label" />
+      }
+    </div>
+  </div>
+
+  <!-- mobile -->
+  <div class="relative mb-32 mt-14 block px-14 before:w-0 after:w-0 sm:hidden">
     <div
       class="relative grid grid-cols-2 items-center gap-14 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-7"
     >
