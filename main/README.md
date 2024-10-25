@@ -99,3 +99,15 @@ If you want to update the English translation, you need to modify the component'
 The blog post supports both English and Chinese. The language of the blog post will be determined by the `languages` field in the front matter of the markdown file.
 
 If user chooses the Chinese language in the website, the Chinese blog post will be displayed; otherwise, the English blog post will be displayed.
+
+## Users Maintenance
+
+List of users who are using Apache Paimon are maintained in the `src/assets/users/` file.
+
+### Add a new user
+
+Firstly You should prepare a new image file with transparent background (png format best) and which color is in grayscale.
+
+Then add the image file `xxx.png` in the `src/assets/users/` directory and add the `xxx.png` item in the `WhosusingComponent`.
+
+Save the file and preview the page to make sure it looks well.

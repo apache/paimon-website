@@ -46,6 +46,7 @@ export class WhosusingComponent {
     'dustess.png',
     'babeltime.png',
     'tongchengtravel.png',
+    'xiaopeng.png',
     'mihoyo.png',
     'highlandhuanyu.png',
     'ziroom.png',
@@ -57,18 +58,24 @@ export class WhosusingComponent {
     'amoro.png',
     'netEase-media.png',
     'celerdata.png',
+    'aodong.png',
     'unicom.png',
+    'wanglong.png',
     'unicom-digital.png',
     'zhihu.png',
+    'vivo.png',
     'xgimi.png',
-    'bilibili.png'
+    'yiou.png',
+    'bilibili.png',
+    'zto.png'
   ].map(img => {
-    const largeHeightImgs = ['highlandhuanyu.png', 'ziroom.png', 'dinky.png'];
+    const largeHeight = ['highlandhuanyu.png', 'ziroom.png', 'dinky.png'].includes(img);
+    const mediumHeight = ['aodong.png', 'yiou.png'].includes(img);
     return {
       label: img,
       src: `assets/users/${img}`,
-      width: largeHeightImgs.includes(img) ? 64 : 191,
-      height: largeHeightImgs.includes(img) ? 72 : 133
+      width: largeHeight ? 64 : mediumHeight ? 128 : 192,
+      height: largeHeight ? 72 : mediumHeight ? 96 : 133
     };
   });
 }
