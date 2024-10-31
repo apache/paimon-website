@@ -21,6 +21,12 @@ env:
 
 on:
   workflow_dispatch:
+    inputs:
+      base_href:
+        description: 'Base href for the website'
+        type: string
+        default: 'https://paimon.apache.org/'
+        required: true
   schedule:
     - cron: '0 0 * * *' # deploy every day
 
@@ -35,6 +41,17 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 1.8
+
+      - name: Set up pnpm v9
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+          run_install: false
+
+      - name: Set up Node.js 20 LTS
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.x
 
       - name: Copy out old docs directory
         run: |
@@ -70,9 +87,11 @@ jobs:
       - name: Build and move out main site
         run: |
           cd main
-          python build.py
+          npm config --global set registry https://registry.npmmirror.com/
+          pnpm install
+          pnpm run build --base-href="${{ inputs.base_href }}"
           cd ..
-          mv main/target/* .
+          mv main/dist/browser/* .
           rm -rf main
 
       - name: Clone Paimon repo

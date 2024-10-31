@@ -1,0 +1,14 @@
+<div class="relative flex flex-col gap-6 rounded-2xl bg-paimon-gray-1 p-6">
+  <div class="text-xs font-normal text-paimon-gray-7">{{ article.date | date: 'longDate' }}</div>
+  <a class="text-2xl font-medium text-paimon-gray-14 hover:underline" [routerLink]="[article.id]">
+    {{ article.name }}
+  </a>
+  <div class="text-base text-paimon-gray-14 opacity-50">{{ article.abstract }}</div>
+  <a
+    [routerLink]="[article.id]"
+    class="p-30 mt-12 flex h-12 w-32 items-center justify-center rounded-3xl bg-paimon-gray-2 text-paimon-gray-13 hover:bg-paimon-gray-3"
+    translate
+  >
+    Read More
+  </a>
+</div>

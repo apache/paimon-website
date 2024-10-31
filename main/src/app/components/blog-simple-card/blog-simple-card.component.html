@@ -1,0 +1,19 @@
+<div class="flex h-[320px] w-[270px] flex-col gap-3 rounded-2xl bg-paimon-gray-13 p-2">
+  <img
+    class="max-h-[185px] rounded-2xl"
+    [ngSrc]="article.thumbnail || 'assets/images/blog-bg.png'"
+    width="254"
+    height="185"
+    [alt]="article.name"
+  />
+  <div class="h-[95px] flex-1 overflow-hidden break-keep text-lg">
+    {{ article.name }}
+  </div>
+  <a
+    [routerLink]="['/', 'blog', article.id]"
+    class="flex h-10 w-[135px] items-center justify-center rounded-3xl bg-paimon-gray-12 px-7 py-3 text-paimon-gray-1 hover:bg-paimon-gray-11"
+    translate
+  >
+    Read More
+  </a>
+</div>

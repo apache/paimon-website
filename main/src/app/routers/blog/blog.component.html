@@ -1,0 +1,25 @@
+<paimon-page-container>
+  <div header>
+    @if (!!article) {
+      <div class="flex flex-col gap-6">
+        <div class="mt-16 text-4xl font-normal text-paimon-gray-3">
+          {{ article.name }}
+        </div>
+        <div class="hidden flex-row flex-wrap gap-4 md:flex">
+          @for (item of article.categories; track $index) {
+            <div
+              class="flex h-8 w-max cursor-pointer items-center justify-center rounded-2xl bg-paimon-gray-12 px-4 py-2"
+            >
+              {{ item }}
+            </div>
+          }
+        </div>
+      </div>
+    } @else {
+      <div class="mt-16 text-6xl font-normal text-paimon-gray-3" translate>Learn about Paimon</div>
+    }
+  </div>
+  <div content class="px-8 pb-10 text-paimon-gray-14">
+    <router-outlet></router-outlet>
+  </div>
+</paimon-page-container>

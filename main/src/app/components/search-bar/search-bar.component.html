@@ -1,0 +1,87 @@
+<div class="block text-left">
+  <div>
+    <a
+      (click)="toggleSearchInput(true)"
+      class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-paimon-gray-13 text-center text-xs text-paimon-text-base hover:bg-paimon-gray-12 hover:text-white"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+        fill="currentColor"
+        version="1.1"
+        width="12"
+        height="12"
+        viewBox="0 0 12 12"
+      >
+        <g>
+          <path
+            d="M4.43812,8.87625Q2.57752,8.87625,1.2891,7.58714Q0.000682739,6.29804,0,4.43812Q0,2.57753,1.2891,1.2891Q2.57821,0.000682739,4.43812,0Q6.29872,0,7.58782,1.2891Q8.87693,2.57821,8.87624,4.43812Q8.87624,5.18919,8.63727,5.85491Q8.39829,6.52063,7.98862,7.03272L11.8122,10.8563Q12,11.0441,12,11.3343Q12,11.6245,11.8122,11.8122Q11.6245,12,11.3343,12Q11.0441,12,10.8563,11.8122L7.03272,7.98862Q6.52063,8.39829,5.85491,8.63727Q5.18919,8.87624,4.43812,8.87625ZM4.43812,7.51067Q5.71835,7.51067,6.61485,6.61485Q7.51135,5.71903,7.51067,4.43812Q7.51067,3.15789,6.61485,2.26208Q5.71903,1.36626,4.43812,1.36558Q3.15789,1.36558,2.26208,2.26208Q1.36626,3.15858,1.36558,4.43812Q1.36558,5.71835,2.26208,6.61485Q3.15858,7.51135,4.43812,7.51067Z"
+            fill="currentColor"
+            fill-opacity="1"
+          />
+        </g>
+      </svg>
+      @if (showSearchInput) {
+        <div
+          class="absolute right-2 top-14 z-20 h-auto w-[480px] overflow-auto rounded-md bg-paimon-gray-12"
+          role="menu"
+          aria-orientation="vertical"
+          tabindex="-1"
+          paimonClickOutside
+          (clickOutsideChange)="toggleSearchInput(false)"
+        >
+          <div>
+            <div class="group relative flex rounded-lg">
+              <input
+                [(ngModel)]="searchValue"
+                (ngModelChange)="search()"
+                type="text"
+                [placeholder]="'Search within blog posts by title or author...' | translate"
+                class="block w-full bg-transparent px-4 py-3 pe-11 text-xs text-paimon-text-base placeholder:text-paimon-gray-4 focus:border-b-paimon-gray-8 focus:outline-none focus-visible:outline-none"
+              />
+              <div
+                class="pointer-events-none absolute inset-y-0 end-0 z-20 flex items-center pe-4 text-paimon-text-base"
+              >
+                <svg
+                  class="size-4"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <circle cx="11" cy="11" r="8"></circle>
+                  <path d="m21 21-4.3-4.3"></path>
+                </svg>
+              </div>
+            </div>
+          </div>
+          <div class="flex flex-col" *ngIf="!!searchValue">
+            <ul
+              class="list-none border-t border-solid border-paimon-gray-10 p-4 text-left text-sm hover:bg-paimon-gray-13"
+            >
+              @for (item of listOfResult; track $index) {
+                <li class="hover:underline">
+                  <a
+                    [routerLink]="['/', 'blog', item.id]"
+                    class="flex w-full"
+                    (click)="toggleSearchInput(false); $event.stopPropagation()"
+                  >
+                    {{ item.name }}
+                  </a>
+                </li>
+              }
+              @if (searchValue && listOfResult.length === 0) {
+                <li translate>No Post found</li>
+              }
+            </ul>
+          </div>
+        </div>
+      }
+    </a>
+  </div>
+</div>

@@ -1,0 +1,45 @@
+<div class="mx-10 mb-32 flex flex-row gap-y-6 rounded-3xl bg-paimon-gray-13">
+  <div
+    class="relative grid w-full grid-cols-1 items-center justify-center gap-4 lg:grid-cols-2 lg:gap-14"
+  >
+    <div class="flex flex-col justify-start px-12 py-12 lg:px-[172px] lg:py-20">
+      <span class="h-4 text-xs font-normal text-paimon-gray-8" translate>TEAM</span>
+      <div class="mt-6 text-4xl font-medium text-paimon-gray-2 md:text-5xl">
+        <div translate>Our Members</div>
+      </div>
+      <a
+        href="https://paimon.apache.org/team"
+        class="mt-12 flex h-12 w-[156px] cursor-pointer items-center justify-center rounded-3xl bg-white px-4 py-2 text-center text-sm font-normal text-paimon-gray-14 hover:bg-paimon-gray-1"
+        translate
+      >
+        LEARN MORE
+      </a>
+    </div>
+    <div
+      class="flex items-end justify-center pb-12 pl-12 pr-12 lg:justify-end lg:pb-0 lg:pl-0 lg:pr-9"
+    >
+      <div
+        class="relative grid grid-cols-2 items-center gap-4 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6"
+      >
+        @for (item of listOfTeam; track $index) {
+          <a
+            class="flex h-full w-full items-center justify-center"
+            [attr.title]="item.name"
+            [attr.href]="'https://github.com/' + item.github"
+            target="_blank"
+          >
+            <div class="h-full w-full rounded bg-paimon-gray-2">
+              <img
+                class="rounded"
+                [ngSrc]="'https://avatars.githubusercontent.com/u/' + item.avatarId"
+                [width]="92"
+                [height]="92"
+                [alt]="item.name"
+              />
+            </div>
+          </a>
+        }
+      </div>
+    </div>
+  </div>
+</div>

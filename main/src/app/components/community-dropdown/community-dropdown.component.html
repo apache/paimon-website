@@ -1,0 +1,125 @@
+<div class="group block text-left">
+  <div>
+    <a
+      class="group/link inline-flex w-full justify-center px-3 py-2 text-sm font-semibold text-gray-300 shadow-sm hover:text-white"
+      aria-expanded="true"
+      aria-haspopup="true"
+    >
+      <span translate>COMMUNITY</span>
+      <svg
+        class="h-5 w-5 text-gray-300 transition delay-150 ease-in-out group-hover/link:rotate-180 group-hover/link:text-white"
+        viewBox="0 0 20 20"
+        fill="currentColor"
+        aria-hidden="true"
+      >
+        <path
+          fill-rule="evenodd"
+          d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+          clip-rule="evenodd"
+        />
+      </svg>
+    </a>
+    <div
+      class="invisible absolute left-0 z-20 h-auto w-screen overflow-auto rounded-md bg-paimon-gray-14 py-10 shadow-sm shadow-paimon-gray-13 ring-1 ring-black ring-opacity-5 hover:visible focus:outline-none group-hover:visible"
+      role="menu"
+      aria-orientation="vertical"
+      tabindex="-1"
+    >
+      <div class="flex flex-col gap-12 pl-52">
+        <div class="flex gap-10">
+          <div class="flex flex-col gap-9 border-l border-solid border-paimon-gray-12 pl-10">
+            <div class="flex flex-col">
+              <span class="mb-2 text-xs font-normal text-paimon-gray-11" translate>COMMUNITY</span>
+              <a
+                href="https://paimon.apache.org/docs/master/project/contributing/"
+                target="_self"
+                class="text-2xl leading-10 text-paimon-gray-2 hover:underline"
+                translate
+              >
+                How to Contribute
+              </a>
+              <a
+                [routerLink]="['/', 'team']"
+                target="_self"
+                class="text-2xl leading-10 text-paimon-gray-2 hover:underline"
+                translate
+              >
+                Our Team
+              </a>
+              <a
+                [routerLink]="['/', 'blog']"
+                target="_self"
+                class="text-2xl leading-10 text-paimon-gray-2 hover:underline"
+                translate
+              >
+                Blog
+              </a>
+            </div>
+            <div class="flex flex-col">
+              <span class="mb-2 text-xs font-normal text-paimon-gray-11">SECURITY</span>
+              <a
+                [routerLink]="['/', 'security']"
+                target="_self"
+                class="text-2xl leading-10 text-paimon-gray-2 hover:underline"
+              >
+                Security
+              </a>
+            </div>
+          </div>
+          <div class="flex flex-1 flex-col gap-9 border-l border-solid border-paimon-gray-12 pl-10">
+            <div class="flex flex-col">
+              <span class="mb-2 text-xs font-normal text-paimon-gray-11">ASF</span>
+              <a
+                class="text-2xl leading-10 text-paimon-gray-2 hover:underline"
+                href="https://www.apache.org/"
+              >
+                Foundation
+              </a>
+              <a
+                class="text-2xl leading-10 text-paimon-gray-2 hover:underline"
+                href="https://www.apache.org/licenses/"
+              >
+                License
+              </a>
+              <a
+                class="text-2xl leading-10 text-paimon-gray-2 hover:underline"
+                href="https://www.apache.org/events/current-event"
+              >
+                Events
+              </a>
+              <a
+                class="text-2xl leading-10 text-paimon-gray-2 hover:underline"
+                href="https://www.apache.org/security/"
+              >
+                Security
+              </a>
+              <a
+                class="text-2xl leading-10 text-paimon-gray-2 hover:underline"
+                href="https://www.apache.org/foundation/sponsorship.html"
+              >
+                Sponsorship
+              </a>
+              <a
+                class="text-2xl leading-10 text-paimon-gray-2 hover:underline"
+                href="https://www.apache.org/foundation/thanks.html"
+              >
+                Thanks
+              </a>
+              <a
+                class="text-2xl leading-10 text-paimon-gray-2 hover:underline"
+                href="https://privacy.apache.org/policies/privacy-policy-public.html"
+              >
+                Privacy
+              </a>
+            </div>
+          </div>
+          <div class="flex flex-1 gap-6 px-8">
+            @for (item of listOfArticle; track $index) {
+              <paimon-blog-simple-card [article]="item"></paimon-blog-simple-card>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

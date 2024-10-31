@@ -1,0 +1,13 @@
+<div class="relative flex flex-row rounded-full bg-paimon-gray-13 px-1 py-2 text-xs">
+  @for (item of options; track $index) {
+    <label class="z-10 flex cursor-pointer rounded-[32px] text-center">
+      <input class="hidden" type="radio" [value]="item.value" [formControl]="formControl" />
+      <div class="w-14">{{ item.label }}</div>
+    </label>
+  }
+  <div
+    class="absolute left-1 top-1 flex h-6 w-14 cursor-pointer rounded-[32px] bg-paimon-gray-12 duration-150 ease-in"
+    [class.translate-x-0]="!isLast"
+    [class.translate-x-full]="isLast"
+  ></div>
+</div>

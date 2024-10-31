@@ -1,0 +1,10 @@
+:host {
+  img {
+    max-width: 100%;
+  }
+
+  .gradient-shadow {
+    -webkit-mask-image: linear-gradient(90deg, transparent, #F4F4F6 20%, #F4F4F6 80%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #F4F4F6 20%, #F4F4F6 80%, transparent);
+  }
+}
