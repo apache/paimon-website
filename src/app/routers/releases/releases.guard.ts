@@ -16,18 +16,26 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-import { writeFileSync } from 'fs';
+import { inject } from '@angular/core';
+import { CanActivateFn, Router } from '@angular/router';
+import { map } from 'rxjs';
 
-import { ResolvedArticle } from '../models/article';
-import { BriefRelease } from '../models/document';
-import { getDirectoryPath } from '../utils/directory';
+import { DocumentService } from '@paimon/app/services/document.service';
 
-const { dist } = getDirectoryPath();
+export const canActivateReleases: CanActivateFn = (route, state) => {
+  const router = inject(Router);
+  const documentService = inject(DocumentService);
+  const urlTree = router.parseUrl(state.url);
 
-export function processRoutes(articles: ResolvedArticle[], releases: BriefRelease[]): void {
-  const articleUrls = articles.map(item => `/blog/${item.id}`);
-  const releaseUrls = releases.map(item => `/releases/${item.version}`);
-  const homeUrls = ['/', '/blog', '/downloads', '/releases'];
-  const content = [...homeUrls, ...articleUrls, ...releaseUrls].join('\n');
-  writeFileSync(`${dist}/routes.txt`, content);
-}
+  return documentService.listRelease().pipe(
+    map(() => {
+      const segments = urlTree.root.children['primary'].segments;
+      if (segments.length === 2 && documentService.releases.has(segments[1].path)) {
+        return true;
+      }
+
+      // if the version is not found, redirect to the latest version
+      return router.createUrlTree(['/releases', documentService.latestVersion]);
+    })
+  );
+};

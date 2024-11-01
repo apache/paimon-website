@@ -40,6 +40,7 @@ import { CommunityDropdownComponent } from '@paimon/app/components/community-dro
 import { SearchBarComponent } from '@paimon/app/components/search-bar/search-bar.component';
 import { DividerComponent, DropdownLinksComponent } from '@paimon/app/components/ui-components';
 import { SwitcherComponent } from '@paimon/app/components/ui-components/components/switcher/switcher.component';
+import { DocumentService } from '@paimon/app/services/document.service';
 import { Language, LanguageService } from '@paimon/app/services/language.service';
 
 @Component({
@@ -74,8 +75,13 @@ export class HeaderComponent implements OnInit {
   constructor(
     private el: ElementRef,
     private cdr: ChangeDetectorRef,
-    private languageService: LanguageService
+    private languageService: LanguageService,
+    private documentService: DocumentService
   ) {}
+
+  protected get latestReleaseVersion(): string {
+    return this.documentService.latestVersion;
+  }
 
   private getWindow(): Window | null {
     return this._doc.defaultView;

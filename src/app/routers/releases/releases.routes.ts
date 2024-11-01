@@ -16,42 +16,17 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-import { inject } from '@angular/core';
-import { CanActivateFn, Router, Routes, UrlSegment } from '@angular/router';
-import { map } from 'rxjs';
+import { Routes } from '@angular/router';
 
 import { ReleasesComponent } from '@paimon/app/routers/releases/releases.component';
+import { canActivateReleases } from '@paimon/app/routers/releases/releases.guard';
 import { ReleaseDetailComponent } from '@paimon/app/routers/releases/routers/release-detail/release-detail.component';
-import { DocumentService } from '@paimon/app/services/document.service';
-
-export const canActivate: CanActivateFn = (route, state) => {
-  const router = inject(Router);
-  const documentService = inject(DocumentService);
-  const urlTree = router.parseUrl(state.url);
-  const segments = urlTree.root.children['primary'].segments;
-
-  if (segments.length > 1) {
-    return true;
-  }
-
-  if (documentService.latestVersion) {
-    segments.push(new UrlSegment(documentService.latestVersion, {}));
-    return urlTree;
-  } else {
-    return documentService.listRelease().pipe(
-      map(() => {
-        segments.push(new UrlSegment(documentService.latestVersion, {}));
-        return urlTree;
-      })
-    );
-  }
-};
 
 export const releasesRoutes: Routes = [
   {
     path: '',
     component: ReleasesComponent,
-    canActivate: [canActivate],
+    canActivate: [canActivateReleases],
     children: [
       {
         path: ':version',

@@ -30,7 +30,7 @@ import { BaseUrlService } from '@paimon/app/services/base-url.service';
 })
 export class DocumentService {
   briefReleases$: Observable<BriefRelease[]> | null = null;
-  releases = new Map<string, ResolvedDocument>();
+  releases = new Map<string, ResolvedDocument | null>();
   latestVersion: string;
   activeVersion$ = new Subject<string>();
 
@@ -54,6 +54,10 @@ export class DocumentService {
       const query$ = this.httpClient.get<BriefRelease[]>(`${this.baseUrl}/releases.json`).pipe(
         tap(releases => {
           this.latestVersion = releases[0]?.version;
+          // initialize the cache with available versions
+          releases.forEach(release => {
+            this.releases.set(release.version, null);
+          });
         })
       );
       this.briefReleases$ = query$.pipe(shareReplay(1));

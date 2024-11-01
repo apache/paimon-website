@@ -64,7 +64,9 @@
         </a>
         <paimon-divider></paimon-divider>
         <a
-          [routerLink]="['/', 'releases']"
+          [routerLink]="
+            latestReleaseVersion ? ['/', 'releases', latestReleaseVersion] : ['/', 'releases']
+          "
           class="px-3 py-2 text-sm font-medium text-gray-300 hover:text-white"
           translate
         >
