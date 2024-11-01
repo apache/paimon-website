@@ -79,6 +79,7 @@ jobs:
 
       - name: Build and move out main site
         run: |
+          cd main
           npm config --global set registry https://registry.npmmirror.com/
           pnpm install
           pnpm run build --base-href="${{ inputs.base_href }}"
@@ -93,6 +94,7 @@ jobs:
 
       - name: Build docs
         run: |
+          cd main
           declare -a versions=${{ env.versions }}
           current_dir=$(pwd)
           cp ./.github/workflows/docs.sh /tmp/paimon/docs.sh
@@ -116,14 +118,9 @@ jobs:
             cd "$current_dir"
           done
 
-      # - name: Copy latest version
-      #   run: |
-      #     latest_version=${{ env.latest_version }}
-      #     rm -rf docs/latest
-      #     cp -r docs/"$latest_version" docs/latest
-
       - name: Push to github
         run: |
+          cd main
           git add -A
           git config --global user.name 'GitHub Actions'
           git config --global user.email 'actions@github.com'
