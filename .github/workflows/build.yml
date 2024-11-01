@@ -75,7 +75,7 @@ jobs:
           git checkout --orphan asf-site
 
       - name: Copy back docs directory
-        run: cp -r /tmp/docs docs
+        run: cp -r /tmp/docs main/docs
 
       - name: Build and move out main site
         run: |

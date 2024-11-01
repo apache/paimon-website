@@ -7,7 +7,7 @@
     "start": "ng serve --port 8801",
     "prebuild": "npm run parse",
     "build": "ng build",
-    "serve:ssr:paimon-next-website": "node dist/paimon-next-website/server/server.mjs",
+    "serve:ssr": "node dist/server/server.mjs",
     "i18n:extract": "ngx-translate-extract --input ./src --output ./src/assets/i18n/{en,zh}.json -ss -k --clean --format json",
     "prepare": "husky",
     "lint": "ng lint --cache",
