@@ -36,6 +36,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+        with:
+          path: main
 
       - name: Set up JDK 1.8
         uses: actions/setup-java@v1
@@ -55,6 +57,7 @@ jobs:
 
       - name: Copy out old docs directory
         run: |
+          cd main
           git fetch origin asf-site:asf-site
           git checkout asf-site
           if [[ -d docs ]]
@@ -72,25 +75,15 @@ jobs:
 
       - name: Copy back docs directory
         run: cp -r /tmp/docs docs
-      
-      # - name: Build pages
-      #   run: |
-      #     current_dir=$(pwd)
-      #     git submodule update --init --recursive
-      #     mv pages /tmp/paimon-pages
-      #     cp ./.github/workflows/pages.sh /tmp/paimon-pages/pages.sh
-      #     cd /tmp/paimon-pages
-      #     . ./pages.sh
-      #     cp -r target/* "$current_dir"
-      #     cd "$current_dir"
-      
+
       - name: Build and move out main site
         run: |
-          cd main
           npm config --global set registry https://registry.npmmirror.com/
           pnpm install
           pnpm run build --base-href="${{ inputs.base_href }}"
+          # move out the output
           cd ..
+          mv main/docs .
           mv main/dist/browser/* .
           rm -rf main
 
