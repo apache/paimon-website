@@ -36,8 +36,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-        with:
-          path: main
 
       - name: Set up JDK 1.8
         uses: actions/setup-java@v1
@@ -57,7 +55,6 @@ jobs:
 
       - name: Copy out old docs directory
         run: |
-          cd main
           git fetch origin asf-site:asf-site
           git checkout asf-site
           if [[ -d docs ]]
@@ -69,32 +66,35 @@ jobs:
 
       - name: Create asf-site branch
         run: |
-          cd main
           git checkout feat/releases-page
           git branch -D asf-site
           git checkout --orphan asf-site
 
       - name: Copy back docs directory
-        run: cp -r /tmp/docs main/docs
+        run: cp -r /tmp/docs docs
 
-      - name: Build and move out main site
+      - name: Build Website
         run: |
-          cd main
+          # move to temporary directory for building website
+          mkdir /tmp/main
+          mv * /tmp/main
+          cd /tmp/main
+          # build website
           npm config --global set registry https://registry.npmmirror.com/
           pnpm install
           pnpm run build --base-href="${{ inputs.base_href }}"
-          # move out the output
-          cd ..
-          mv main/docs .
-          mv main/dist/browser/* .
-          rm -rf main
+
+      - name: Move out output
+        run: |
+          mv /tmp/docs .
+          mv /tmp/main/dist/browser/* .
+          rm -rf /tmp/main
 
       - name: Clone Paimon repo
         run: git clone https://github.com/apache/paimon.git /tmp/paimon
 
       - name: Build docs
         run: |
-          cd main
           declare -a versions=${{ env.versions }}
           current_dir=$(pwd)
           cp ./.github/workflows/docs.sh /tmp/paimon/docs.sh
@@ -120,7 +120,6 @@ jobs:
 
       - name: Push to github
         run: |
-          cd main
           git add -A
           git config --global user.name 'GitHub Actions'
           git config --global user.email 'actions@github.com'
