@@ -27,7 +27,7 @@ import { pickRandom } from '../utils/pick-random';
 import { generateUUID } from '../utils/uuid';
 
 type ExtendToken = Token & { tokens: ExtendToken[] };
-type ExtendTokensList = ExtendToken[];
+export type ExtendTokensList = ExtendToken[];
 export interface TOC {
   depth: number;
   text: string;
@@ -149,7 +149,7 @@ function generateAbstract(tokensList: ExtendTokensList, minLength: number): stri
  * generate toc from markdown tokens, recursive when result less than maxDepth
  * @param tokensList
  */
-function generateTOC(tokensList: ExtendTokensList): TOC[] {
+export function generateTOC(tokensList: ExtendTokensList): TOC[] {
   githubSlugger.reset();
   return (
     tokensList.filter(token => token.type === 'heading' && token.depth > 1 && token.depth <= 3) as Tokens.Heading[]

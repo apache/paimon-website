@@ -16,30 +16,15 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-import { NgClass } from '@angular/common';
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Pipe, PipeTransform } from '@angular/core';
 
-export interface DropdownOption {
-  label: string;
-  value: string | string[];
-  target?: string;
-}
-
-@Component({
-  selector: 'paimon-dropdown-links',
-  standalone: true,
-  imports: [NgClass, RouterLink],
-  templateUrl: './dropdown-links.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  host: {
-    ngSkipHydration: 'true'
-  }
+@Pipe({
+  name: 'githubUrl',
+  standalone: true
 })
-export class DropdownLinksComponent {
-  @Input() options: DropdownOption[] = [];
-
-  protected isRouterLink(value: string | string[]): boolean {
-    return Array.isArray(value);
+export class GithubUrlPipe implements PipeTransform {
+  readonly githubUrl = 'https://github.com/apache/paimon-website';
+  transform(segments: string[]): string {
+    return `${this.githubUrl}/blob/master/main/${segments.join('/')}`;
   }
 }

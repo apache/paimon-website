@@ -1,0 +1,48 @@
+/**
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+
+import { ResolvedDocument } from '@paimon-markdown-parser/document';
+
+import { MarkdownRenderComponent } from '@paimon/app/components/markdown-render/markdown-render.component';
+import { PageContainerComponent } from '@paimon/app/components/page-container/page-container.component';
+import { GithubUrlPipe } from '@paimon/app/components/pipes/github-url.pipe';
+import { DocumentService } from '@paimon/app/services/document.service';
+
+@Component({
+  selector: 'paimon-downloads',
+  standalone: true,
+  imports: [PageContainerComponent, MarkdownRenderComponent, GithubUrlPipe],
+  templateUrl: './downloads.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
+})
+export class DownloadsComponent implements OnInit {
+  downloads: ResolvedDocument | null = null;
+  constructor(
+    private documentService: DocumentService,
+    private cdr: ChangeDetectorRef
+  ) {}
+
+  ngOnInit(): void {
+    this.documentService.getDownloads().subscribe(downloads => {
+      this.downloads = downloads;
+      this.cdr.markForCheck();
+    });
+  }
+}

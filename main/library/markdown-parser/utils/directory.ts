@@ -28,12 +28,16 @@ export const getDirectoryPath = (): {
   articleDist: string;
   profileDist: string;
   articleSource: string;
+  downloadsSource: string;
+  releasesSource: string;
+  docsDist: string;
   profileSource: string;
 } => {
   const processwd = process.cwd();
   const source = resolve(processwd, `../../${Configuration.directory.source}`);
   const distRoot = resolve(processwd, `../../src`);
   const dist = resolve(distRoot, `./assets/${Configuration.directory.dist}`);
+  const docsRoot = resolve(processwd, `../../docs`);
   return {
     source,
     dist,
@@ -41,6 +45,9 @@ export const getDirectoryPath = (): {
     articleDist: resolve(dist, Configuration.directory.article),
     profileDist: resolve(dist, Configuration.directory.profile),
     articleSource: resolve(source, Configuration.directory.article),
+    downloadsSource: resolve(docsRoot),
+    releasesSource: resolve(docsRoot, Configuration.directory.release),
+    docsDist: resolve(distRoot, `./assets/docs`),
     profileSource: resolve(source, Configuration.directory.profile)
   };
 };

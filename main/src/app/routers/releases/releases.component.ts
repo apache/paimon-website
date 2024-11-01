@@ -16,30 +16,16 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-import { NgClass } from '@angular/common';
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
 
-export interface DropdownOption {
-  label: string;
-  value: string | string[];
-  target?: string;
-}
+import { PageContainerComponent } from '@paimon/app/components/page-container/page-container.component';
 
 @Component({
-  selector: 'paimon-dropdown-links',
+  selector: 'paimon-releases',
   standalone: true,
-  imports: [NgClass, RouterLink],
-  templateUrl: './dropdown-links.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  host: {
-    ngSkipHydration: 'true'
-  }
+  imports: [RouterOutlet, PageContainerComponent],
+  templateUrl: './releases.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DropdownLinksComponent {
-  @Input() options: DropdownOption[] = [];
-
-  protected isRouterLink(value: string | string[]): boolean {
-    return Array.isArray(value);
-  }
-}
+export class ReleasesComponent {}

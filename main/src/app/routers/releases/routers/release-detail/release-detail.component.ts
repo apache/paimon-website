@@ -29,35 +29,47 @@ import {
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 
-import { TranslateModule } from '@ngx-translate/core';
-import { ResolvedArticle } from '@paimon-markdown-parser/article';
+import { ResolvedDocument } from '@paimon-markdown-parser/document';
 
 import { MarkdownRenderComponent } from '@paimon/app/components/markdown-render/markdown-render.component';
-import { AnchorComponent } from '@paimon/app/routers/blog/components/anchor/anchor.component';
-import { BlogDetailFooterComponent } from '@paimon/app/routers/blog/components/blog-detail-footer/blog-detail-footer.component';
-import { ArticleService } from '@paimon/app/services/article.service';
+import { GithubUrlPipe } from '@paimon/app/components/pipes/github-url.pipe';
+import { DropdownLinksComponent, DropdownOption } from '@paimon/app/components/ui-components';
+import { DocumentService } from '@paimon/app/services/document.service';
 
 @Component({
-  selector: 'paimon-blog-detail',
+  selector: 'paimon-release-detail',
   standalone: true,
-  imports: [RouterLink, AnchorComponent, BlogDetailFooterComponent, MarkdownRenderComponent, TranslateModule],
-  templateUrl: './blog-detail.component.html',
+  imports: [RouterLink, DropdownLinksComponent, MarkdownRenderComponent, GithubUrlPipe],
+  templateUrl: './release-detail.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class BlogDetailComponent implements OnInit {
-  article: ResolvedArticle | null = null;
+export class ReleaseDetailComponent implements OnInit {
+  release: ResolvedDocument | null;
+  links: DropdownOption[] = [];
 
   private readonly destroyRef = inject(DestroyRef);
   private readonly platformId = inject(PLATFORM_ID);
 
+  get latestVersion(): string {
+    return this.documentService.latestVersion;
+  }
+
   constructor(
-    private articleService: ArticleService,
+    private documentService: DocumentService,
     private activatedRoute: ActivatedRoute,
     private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
-    this.activatedRoute.params.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(({ id }) => {
+    this.documentService.listRelease().subscribe(releases => {
+      this.links = releases.map(release => ({
+        label: release.version,
+        value: ['/', 'releases', release.version]
+      }));
+      this.cdr.markForCheck();
+    });
+
+    this.activatedRoute.params.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(({ version }) => {
       if (isPlatformBrowser(this.platformId)) {
         window.scrollTo({
           top: 0,
@@ -65,10 +77,11 @@ export class BlogDetailComponent implements OnInit {
           behavior: 'auto'
         });
       }
-      this.articleService.get(id).subscribe(article => {
-        this.article = article;
+      this.documentService.getRelease(version).subscribe(release => {
+        this.release = release;
         this.cdr.markForCheck();
       });
+      this.documentService.activeVersion$.next(version);
     });
   }
 }

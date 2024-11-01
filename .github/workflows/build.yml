@@ -66,23 +66,23 @@ jobs:
 
       - name: Create asf-site branch
         run: |
-          git checkout master
+          git checkout feat/releases-page
           git branch -D asf-site
           git checkout --orphan asf-site
 
       - name: Copy back docs directory
         run: cp -r /tmp/docs docs
       
-      - name: Build pages
-        run: |
-          current_dir=$(pwd)
-          git submodule update --init --recursive
-          mv pages /tmp/paimon-pages
-          cp ./.github/workflows/pages.sh /tmp/paimon-pages/pages.sh
-          cd /tmp/paimon-pages
-          . ./pages.sh
-          cp -r target/* "$current_dir"
-          cd "$current_dir"
+      # - name: Build pages
+      #   run: |
+      #     current_dir=$(pwd)
+      #     git submodule update --init --recursive
+      #     mv pages /tmp/paimon-pages
+      #     cp ./.github/workflows/pages.sh /tmp/paimon-pages/pages.sh
+      #     cd /tmp/paimon-pages
+      #     . ./pages.sh
+      #     cp -r target/* "$current_dir"
+      #     cd "$current_dir"
       
       - name: Build and move out main site
         run: |

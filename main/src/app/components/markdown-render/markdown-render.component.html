@@ -1,0 +1,13 @@
+<div class="container relative m-auto flex flex-row gap-8 px-8 py-6">
+  <div class="flex flex-1 flex-col gap-4 overflow-auto">
+    <ng-content select="[header]"></ng-content>
+    <div class="markdown" [innerHTML]="safeContent"></div>
+    <ng-content select="[footer]"></ng-content>
+  </div>
+  <div class="hidden w-60 lg:block" [class.invisible]="!showAnchor">
+    <paimon-anchor
+      [links]="anchors"
+      classNames="top-24 text-xs max-h-[50vh] overflow-x-hidden overflow-y-auto text-paimon-gray-14"
+    ></paimon-anchor>
+  </div>
+</div>

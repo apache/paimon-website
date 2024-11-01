@@ -4,7 +4,7 @@
 >
   @for (item of links; track $index) {
     <li
-      [style.padding-left.px]="item.depth * 12"
+      [style.padding-left.px]="item.depth * 12 + 8"
       [class.text-paimon-blue-primary]="highLightId === item.id"
       class="cursor-pointer font-normal hover:text-paimon-blue-primary"
     >

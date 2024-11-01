@@ -19,13 +19,15 @@
 import { writeFileSync } from 'fs';
 
 import { ResolvedArticle } from '../models/article';
+import { BriefRelease } from '../models/document';
 import { getDirectoryPath } from '../utils/directory';
 
 const { dist } = getDirectoryPath();
 
-export function processRoutes(articles: ResolvedArticle[]): void {
+export function processRoutes(articles: ResolvedArticle[], releases: BriefRelease[]): void {
   const articleUrls = articles.map(item => `/blog/${item.id}`);
-  const homeUrls = ['/', '/blog'];
-  const content = [...homeUrls, ...articleUrls].join('\n');
+  const releaseUrls = releases.map(item => `/releases/${item.version}`);
+  const homeUrls = ['/', '/blog', '/releases'];
+  const content = [...homeUrls, ...articleUrls, ...releaseUrls].join('\n');
   writeFileSync(`${dist}/routes.txt`, content);
 }

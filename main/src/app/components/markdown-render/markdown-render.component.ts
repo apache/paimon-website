@@ -23,52 +23,68 @@ import {
   Component,
   DestroyRef,
   inject,
+  Input,
   OnInit,
   PLATFORM_ID
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { fromEvent, startWith } from 'rxjs';
 
-import { TranslateModule } from '@ngx-translate/core';
-import { ResolvedArticle } from '@paimon-markdown-parser/article';
+import { TOC } from '@paimon-markdown-parser/article';
 
-import { MarkdownRenderComponent } from '@paimon/app/components/markdown-render/markdown-render.component';
 import { AnchorComponent } from '@paimon/app/routers/blog/components/anchor/anchor.component';
-import { BlogDetailFooterComponent } from '@paimon/app/routers/blog/components/blog-detail-footer/blog-detail-footer.component';
-import { ArticleService } from '@paimon/app/services/article.service';
 
 @Component({
-  selector: 'paimon-blog-detail',
+  selector: 'paimon-markdown-render',
   standalone: true,
-  imports: [RouterLink, AnchorComponent, BlogDetailFooterComponent, MarkdownRenderComponent, TranslateModule],
-  templateUrl: './blog-detail.component.html',
+  imports: [AnchorComponent],
+  templateUrl: './markdown-render.component.html',
+  styleUrl: './markdown-render.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class BlogDetailComponent implements OnInit {
-  article: ResolvedArticle | null = null;
+export class MarkdownRenderComponent implements OnInit {
+  @Input() set html(content: string) {
+    this.safeContent = this.sanitized.bypassSecurityTrustHtml(content);
+    this.cdr.markForCheck();
+  }
+  @Input() set toc(anchors: TOC[]) {
+    this.anchors = this.getFlattenTreeFromTOC(anchors);
+    this.cdr.markForCheck();
+  }
+  safeContent: SafeHtml | null = null;
+  anchors: TOC[] = [];
+  showAnchor = false;
 
   private readonly destroyRef = inject(DestroyRef);
   private readonly platformId = inject(PLATFORM_ID);
 
   constructor(
-    private articleService: ArticleService,
-    private activatedRoute: ActivatedRoute,
+    private sanitized: DomSanitizer,
     private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
-    this.activatedRoute.params.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(({ id }) => {
-      if (isPlatformBrowser(this.platformId)) {
-        window.scrollTo({
-          top: 0,
-          left: 0,
-          behavior: 'auto'
+    if (isPlatformBrowser(this.platformId)) {
+      fromEvent(window, 'scroll')
+        .pipe(startWith(true), takeUntilDestroyed(this.destroyRef))
+        .subscribe(() => {
+          const offsetY = window.scrollY || document.documentElement.scrollTop;
+          this.showAnchor = offsetY > 280;
+          this.cdr.markForCheck();
         });
-      }
-      this.articleService.get(id).subscribe(article => {
-        this.article = article;
-        this.cdr.markForCheck();
-      });
-    });
+    }
   }
+
+  private getFlattenTreeFromTOC = (toc: TOC[]): TOC[] => {
+    if (!toc.length) {
+      return [];
+    } else {
+      const firstDepth = toc[0].depth;
+      return toc.map(e => ({
+        ...e,
+        depth: e.depth - firstDepth
+      }));
+    }
+  };
 }

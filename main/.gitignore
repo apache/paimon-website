@@ -2,6 +2,7 @@
 
 # Compiled output
 /src/assets/metadata/
+/src/assets/docs/
 /src/sitemap.xml
 /metadata
 /dist

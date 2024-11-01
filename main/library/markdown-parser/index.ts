@@ -17,11 +17,13 @@
  * under the License.
  */
 import { processArticles } from './handlers/article';
+import { processDocuments } from './handlers/document';
 import { processRoutes } from './handlers/prerender';
 import { processProfiles } from './handlers/profile';
 
 const profiles = processProfiles();
+const documents = processDocuments();
 
 const articles = processArticles(profiles);
 // init folder
-processRoutes(articles);
+processRoutes(articles, documents.releases);

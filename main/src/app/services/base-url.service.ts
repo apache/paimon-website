@@ -27,9 +27,9 @@ export class BaseUrlService {
 
   getBaseUrl(): string {
     if (isPlatformBrowser(this.platformId)) {
-      return './assets/metadata';
+      return './assets';
     } else {
-      return 'http://localhost:8801/assets/metadata';
+      return 'http://localhost:8801/assets';
     }
   }
 }

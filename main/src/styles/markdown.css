@@ -5,6 +5,10 @@
   word-break: break-all;
 }
 
+.markdown a {
+  color: var(--paimon-blue-8);
+}
+
 .markdown img {
   max-width: 70%;
 }
@@ -108,9 +112,28 @@
   margin: 0 1px;
   padding: 0.2em 0.4em;
   font-size: 0.9em;
-  background: var(--paimon-gray-6);
+  background: var(--paimon-gray-5);
   border: 1px solid var(--paimon-gray-3);
   border-radius: 3px;
+}
+
+/* prismjs syntax highlight */
+.markdown code .token.keyword {
+  color: #000;
+  font-weight: 700;
+}
+
+.markdown code .token.operator {
+  color: #0086b3;
+}
+
+.markdown code .token.comment {
+  color: #998;
+  font-style: italic;
+}
+
+.markdown code .token.string {
+  color: #d14;
 }
 
 .markdown pre {

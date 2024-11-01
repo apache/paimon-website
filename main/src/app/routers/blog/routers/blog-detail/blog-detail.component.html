@@ -1,6 +1,6 @@
 @if (article) {
-  <div class="container relative m-auto flex flex-row gap-8 px-8 py-6">
-    <div class="flex flex-1 flex-col gap-4 overflow-auto">
+  <paimon-markdown-render [html]="article.content" [toc]="article.toc">
+    <div header>
       <ol class="flex items-center whitespace-nowrap">
         <li class="inline-flex items-center text-paimon-gray-12 hover:text-paimon-blue-primary">
           <svg
@@ -44,7 +44,8 @@
           {{ article.name }}
         </li>
       </ol>
-      <div class="markdown" [innerHTML]="safeContent"></div>
+    </div>
+    <div footer>
       <paimon-blog-detail-footer
         [preName]="article.pre?.name"
         [preUrl]="['/', 'blog', article.pre?.id]"
@@ -52,11 +53,5 @@
         [nextUrl]="['/', 'blog', article.next?.id]"
       ></paimon-blog-detail-footer>
     </div>
-    <div class="hidden w-60 lg:block" [class.invisible]="!showAnchor">
-      <paimon-anchor
-        [links]="article.toc"
-        classNames="top-24 text-xs max-h-[50vh] overflow-x-hidden overflow-y-auto"
-      ></paimon-anchor>
-    </div>
-  </div>
+  </paimon-markdown-render>
 }

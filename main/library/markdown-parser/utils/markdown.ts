@@ -22,7 +22,7 @@ import prism from 'prismjs';
 import loadLanguages from 'prismjs/components/';
 import { loadFront as parseMarkdownWithYAML } from 'yaml-front-matter';
 
-loadLanguages(['java']);
+loadLanguages(['java', 'sql']);
 
 const githubSlugger = new GithubSlugger();
 

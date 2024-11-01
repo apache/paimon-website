@@ -33,6 +33,10 @@ export class ArticleService {
   briefArticles$: Observable<BriefArticle[]> | null = null;
   articles = new Map<string, ResolvedArticle>();
 
+  get baseUrl(): string {
+    return `${this.baseUrlService.getBaseUrl()}/metadata`;
+  }
+
   constructor(
     private httpClient: HttpClient,
     private baseUrlService: BaseUrlService,
@@ -61,7 +65,7 @@ export class ArticleService {
     if (this.briefArticles$) {
       return this.briefArticles$;
     } else {
-      const query$ = this.httpClient.get<BriefArticle[]>(`${this.baseUrlService.getBaseUrl()}/articles/list.json`);
+      const query$ = this.httpClient.get<BriefArticle[]>(`${this.baseUrl}/articles/list.json`);
       this.briefArticles$ = combineLatest([query$, this.languageService.languageChanged()]).pipe(
         map(([data, language]) => data.filter(v => !v.languages || v.languages.includes(language))),
         shareReplay(1)
@@ -75,7 +79,7 @@ export class ArticleService {
     if (cacheArticle) {
       return of(cacheArticle);
     } else {
-      return this.httpClient.get<ResolvedArticle>(`${this.baseUrlService.getBaseUrl()}/articles/${id}.json`).pipe(
+      return this.httpClient.get<ResolvedArticle>(`${this.baseUrl}/articles/${id}.json`).pipe(
         tap(article => {
           this.articles.set(id, article);
         })
