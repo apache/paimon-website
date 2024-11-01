@@ -69,6 +69,7 @@ jobs:
 
       - name: Create asf-site branch
         run: |
+          cd main
           git checkout feat/releases-page
           git branch -D asf-site
           git checkout --orphan asf-site
