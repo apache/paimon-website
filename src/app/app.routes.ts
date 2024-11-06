@@ -18,7 +18,7 @@
  */
 import { Routes } from '@angular/router';
 
-import { DownloadsComponent } from '@paimon/app/routers/downloads/downloads.component';
+import { DownloadsComponent, downloadsResolver } from '@paimon/app/routers/downloads/downloads.component';
 import { HomeComponent } from '@paimon/app/routers/home/home.component';
 import { SecurityComponent } from '@paimon/app/routers/security/security.component';
 import { TeamComponent } from '@paimon/app/routers/team/team.component';
@@ -42,7 +42,10 @@ export const routes: Routes = [
   },
   {
     path: 'downloads',
-    component: DownloadsComponent
+    component: DownloadsComponent,
+    resolve: {
+      downloads: downloadsResolver
+    }
   },
   {
     path: 'releases',

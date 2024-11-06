@@ -16,7 +16,8 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
+import { ActivatedRoute, ResolveFn } from '@angular/router';
 
 import { ResolvedDocument } from '@paimon-markdown-parser/document';
 
@@ -24,6 +25,11 @@ import { MarkdownRenderComponent } from '@paimon/app/components/markdown-render/
 import { PageContainerComponent } from '@paimon/app/components/page-container/page-container.component';
 import { GithubUrlPipe } from '@paimon/app/components/pipes/github-url.pipe';
 import { DocumentService } from '@paimon/app/services/document.service';
+
+export const downloadsResolver: ResolveFn<unknown> = () => {
+  const documentService = inject(DocumentService);
+  return documentService.getDownloads();
+};
 
 @Component({
   selector: 'paimon-downloads',
@@ -35,12 +41,12 @@ import { DocumentService } from '@paimon/app/services/document.service';
 export class DownloadsComponent implements OnInit {
   downloads: ResolvedDocument | null = null;
   constructor(
-    private documentService: DocumentService,
+    private activatedRoute: ActivatedRoute,
     private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
-    this.documentService.getDownloads().subscribe(downloads => {
+    this.activatedRoute.data.subscribe(({ downloads }) => {
       this.downloads = downloads;
       this.cdr.markForCheck();
     });
