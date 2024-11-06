@@ -119,7 +119,7 @@ The release notes are maintained in the `community/docs/releases` directory.
 ### Add a new release note
 
 1. Create a new markdown file `release-{version}.md` in the `community/docs/releases` directory.
-2. Add the following front matter to the markdown file, including the title, type (always `release`), semantic version, release date.
+2. Add the following front matter to the markdown file, including the title, type (always `release`) and semantic version.
 
     ```markdown
     ---
@@ -128,5 +128,6 @@ The release notes are maintained in the `community/docs/releases` directory.
     version: 0.9.0
     ---
     ```
+   If you'd like to use some pictures in the markdown, you can save theme in the `public/img` directory and use relative path, such as `![image](./img/xxx.png)`.
 3. Update the latest version in the `community/docs/downloads.md`.
 4. Commit the changes and push them to the repository.
