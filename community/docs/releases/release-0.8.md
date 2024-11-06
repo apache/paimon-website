@@ -35,7 +35,7 @@ Paimon's Deletion Vectors mode allows your primary key table (with 'delete-vecto
 significant read performance improvement without sacrificing too much write update performance, achieving near real-time
 updates and fast queries.
 
-<img src="/img/deletion-vectors.png" />
+<img src="./img/deletion-vectors.png" alt="deletion vectors" />
 
 This mode will do more work to generate deletion files at checkpoint, so it is recommended that your Flink stream write
 jobs have a larger 'execution.checkpointing.timeout' value to avoid checkpoint timeouts.
@@ -121,7 +121,7 @@ for a longer period of time. Actually, the reason we can't save too many snapsho
 result file of multiple versions of Compaction, which is very large and takes up more space, while we only need the
 Changelog file for streaming read, so we can separate the lifecycle of the Changelog:
 
-<img src="/img/changelog-lifecycle.png" />
+<img src="./img/changelog-lifecycle.png" alt="changelog lifecycle" />
 
 When the Snapshot expires, we create the corresponding changelog reference, delete the multiple versions of the Compaction
 file, and keep only the Changelog file. This way you can set up a changelog lifecycle of 1 day:
