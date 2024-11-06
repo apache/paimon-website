@@ -62,8 +62,8 @@ export class BriefRelease {
  */
 export function parseDocumentFromBuffer(name: string, buffer: Buffer): Document {
   try {
-    const { title, type, version, alias, __content } = parseMarkdownWithYAML(buffer);
-    return new Document(title, type, __content, alias, version);
+    const { title, type, version, __content } = parseMarkdownWithYAML(buffer);
+    return new Document(title, type, __content, name, version);
   } catch (e) {
     console.log(e);
     throw new Error(name);

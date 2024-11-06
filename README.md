@@ -111,3 +111,22 @@ Firstly You should prepare a new image file with transparent background (png for
 Then add the image file `xxx.png` in the `src/assets/users/` directory and add the `xxx.png` item in the `WhosusingComponent`.
 
 Save the file and preview the page to make sure it looks well.
+
+## Release Notes Maintenance
+
+The release notes are maintained in the `community/docs/releases` directory.
+
+### Add a new release note
+
+1. Create a new markdown file `release-{version}.md` in the `community/docs/releases` directory.
+2. Add the following front matter to the markdown file, including the title, type (always `release`), semantic version, release date.
+
+    ```markdown
+    ---
+    title: "Release 0.9"
+    type: release
+    version: 0.9.0
+    ---
+    ```
+3. Update the latest version in the `community/docs/downloads.md`.
+4. Commit the changes and push them to the repository.

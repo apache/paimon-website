@@ -2,7 +2,6 @@
 title: "Release 0.8.2"
 type: release
 version: 0.8.2
-alias: release-0.8.2
 ---
 
 # Apache Paimon 0.8.2 Available

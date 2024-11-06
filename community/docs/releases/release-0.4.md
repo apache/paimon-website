@@ -2,7 +2,6 @@
 title: "Release 0.4"
 type: release
 version: 0.4.0
-alias: release-0.4
 ---
 
 # Apache Paimon 0.4 Available

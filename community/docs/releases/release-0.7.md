@@ -2,7 +2,6 @@
 title: "Release 0.7"
 type: release
 version: 0.7.0
-alias: release-0.7
 ---
 
 # Apache Paimon 0.7 Available

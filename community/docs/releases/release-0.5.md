@@ -2,7 +2,6 @@
 title: "Release 0.5"
 type: release
 version: 0.5.0
-alias: release-0.5
 ---
 
 # Apache Paimon 0.5 Available
