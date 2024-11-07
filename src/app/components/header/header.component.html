@@ -200,7 +200,7 @@
               </li>
               <li class="hover:bg-paimon-gray-12">
                 <a
-                  href="https://paimon.apache.org/downloads.html"
+                  [routerLink]="['/', 'downloads']"
                   class="flex h-10 w-full items-center justify-start px-8 no-underline hover:text-paimon-text-hover"
                   translate
                 >
@@ -209,7 +209,11 @@
               </li>
               <li class="hover:bg-paimon-gray-12">
                 <a
-                  href="https://paimon.apache.org/release-0.9.html"
+                  [routerLink]="
+                    latestReleaseVersion
+                      ? ['/', 'releases', latestReleaseVersion]
+                      : ['/', 'releases']
+                  "
                   class="flex h-10 w-full items-center justify-start px-8 no-underline hover:text-paimon-text-hover"
                   translate
                 >
