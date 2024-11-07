@@ -72,27 +72,23 @@ jobs:
 
       - name: Copy back docs directory
         run: cp -r /tmp/docs docs
-      
-      - name: Build pages
+
+      - name: Build Website
         run: |
-          current_dir=$(pwd)
-          git submodule update --init --recursive
-          mv pages /tmp/paimon-pages
-          cp ./.github/workflows/pages.sh /tmp/paimon-pages/pages.sh
-          cd /tmp/paimon-pages
-          . ./pages.sh
-          cp -r target/* "$current_dir"
-          cd "$current_dir"
-      
-      - name: Build and move out main site
-        run: |
-          cd main
+          # move to temporary directory for building website
+          mkdir /tmp/main
+          mv * /tmp/main
+          cd /tmp/main
+          # build website
           npm config --global set registry https://registry.npmmirror.com/
           pnpm install
           pnpm run build --base-href="${{ inputs.base_href }}"
-          cd ..
-          mv main/dist/browser/* .
-          rm -rf main
+
+      - name: Move out output
+        run: |
+          mv /tmp/docs .
+          mv /tmp/main/dist/browser/* .
+          rm -rf /tmp/main
 
       - name: Clone Paimon repo
         run: git clone https://github.com/apache/paimon.git /tmp/paimon
@@ -121,12 +117,6 @@ jobs:
             git reset --hard HEAD
             cd "$current_dir"
           done
-
-      # - name: Copy latest version
-      #   run: |
-      #     latest_version=${{ env.latest_version }}
-      #     rm -rf docs/latest
-      #     cp -r docs/"$latest_version" docs/latest
 
       - name: Push to github
         run: |

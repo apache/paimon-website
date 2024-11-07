@@ -1,0 +1,364 @@
+<header #header class="fixed z-50 h-auto w-full bg-paimon-gray-14">
+  <div class="flex h-16 w-full items-center justify-between pl-4 pr-2 lg:pl-8 lg:pr-8">
+    <!-- Logo -->
+    <div class="z-50 flex-shrink-0">
+      <a
+        [routerLink]="['/']"
+        class="relative flex h-full items-center leading-none text-paimon-text-base"
+      >
+        <img
+          priority="true"
+          ngSrc="assets/icons/logo.svg"
+          alt="Apache Paimon"
+          width="186"
+          height="39"
+        />
+      </a>
+    </div>
+    <!-- Navigation Menu -->
+    <div class="hidden h-16 flex-grow items-center justify-center lg:flex">
+      <div class="flex h-full items-center space-x-2.5">
+        <paimon-dropdown-links
+          [options]="[
+            {
+              label: 'master',
+              value: 'https://paimon.apache.org/docs/master'
+            },
+            {
+              label: '0.9',
+              value: 'https://paimon.apache.org/docs/0.9'
+            },
+            {
+              label: '0.8',
+              value: 'https://paimon.apache.org/docs/0.8'
+            }
+          ]"
+        >
+          <a
+            class="group/link inline-flex w-full justify-center px-3 py-2 text-sm font-semibold text-gray-300 shadow-sm hover:text-white"
+            aria-expanded="true"
+            aria-haspopup="true"
+          >
+            <span translate>DOCUMENT</span>
+            <svg
+              class="h-5 w-5 text-gray-300 transition delay-150 ease-in-out group-hover/link:rotate-180 group-hover/link:text-white"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+              aria-hidden="true"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+                clip-rule="evenodd"
+              />
+            </svg>
+          </a>
+        </paimon-dropdown-links>
+        <paimon-divider></paimon-divider>
+        <a
+          [routerLink]="['/', 'downloads']"
+          class="px-3 py-2 text-sm font-medium text-gray-300 hover:text-white"
+          translate
+        >
+          DOWNLOADS
+        </a>
+        <paimon-divider></paimon-divider>
+        <a
+          [routerLink]="
+            latestReleaseVersion ? ['/', 'releases', latestReleaseVersion] : ['/', 'releases']
+          "
+          class="px-3 py-2 text-sm font-medium text-gray-300 hover:text-white"
+          translate
+        >
+          RELEASES
+        </a>
+        <paimon-divider></paimon-divider>
+        <a
+          [routerLink]="['/', 'blog']"
+          class="px-3 py-2 text-sm font-medium text-gray-300 hover:text-white"
+          translate
+        >
+          BLOG
+        </a>
+        <paimon-divider></paimon-divider>
+        <paimon-community-dropdown></paimon-community-dropdown>
+      </div>
+    </div>
+
+    <!-- Right Side / More Actions -->
+    <div class="flex items-center gap-2 lg:gap-4">
+      <paimon-switcher
+        [options]="[
+          {
+            label: 'EN',
+            value: 'en'
+          },
+          {
+            label: '中文',
+            value: 'zh'
+          }
+        ]"
+        [(ngModel)]="language"
+        (ngModelChange)="languageChange($event)"
+      ></paimon-switcher>
+      <paimon-search-bar class="hidden lg:block"></paimon-search-bar>
+      <a
+        href="https://github.com/apache/paimon/"
+        target="_blank"
+        class="hidden w-[120px] rounded-[32px] bg-paimon-gray-13 px-4 py-2 text-center text-xs text-paimon-text-base hover:bg-paimon-gray-12 hover:text-white lg:block"
+      >
+        GITHUB
+      </a>
+
+      <!-- Mobile Menu Button -->
+      <div class="lg:hidden">
+        <button
+          (click)="toggleMenu()"
+          type="button"
+          class="ignored inline-flex items-center justify-center rounded-md p-2 text-paimon-text-base hover:text-paimon-text-hover focus:text-paimon-text-hover focus:outline-none"
+          aria-controls="mobile-menu"
+          aria-expanded="false"
+        >
+          <span class="sr-only pointer-events-none" translate>Open Menu</span>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="pointer-events-none size-6"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+            />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Dropdown Menu -->
+    <div
+      id="dropdown-menu"
+      class="dropdown-menu fixed inset-x-0 top-16 hidden overflow-y-auto overflow-x-hidden bg-paimon-gray-13 py-1 shadow-sm shadow-paimon-gray-13 backdrop-blur-md"
+      paimonClickOutside
+      [skipSelectors]="['ignored']"
+      (clickOutsideChange)="hideMenu()"
+    >
+      <nav class="grid grid-cols-1 items-center gap-3">
+        <div class="flex justify-between">
+          <div class="flex flex-1 flex-col gap-4">
+            <ul class="list-none items-center gap-3 text-sm font-semibold">
+              <li class="hover:bg-paimon-gray-12">
+                <a
+                  (click)="toggleMobileMenus('document')"
+                  class="flex h-10 w-full items-center justify-start px-8 no-underline hover:text-paimon-text-hover"
+                >
+                  <span translate>DOCUMENT</span>
+                  <svg
+                    class="h-5 w-5 text-gray-300 group-hover/link:text-white"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+                      clip-rule="evenodd"
+                    />
+                  </svg>
+                </a>
+                @if (expandedMenu === 'document') {
+                  <ul class="list-none items-center gap-3 text-sm font-semibold">
+                    <li>
+                      <a
+                        class="flex h-10 w-full items-center justify-start px-8 pl-12 no-underline hover:text-paimon-text-hover"
+                        href="https://paimon.apache.org/docs/master"
+                      >
+                        master
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        class="flex h-10 w-full items-center justify-start px-8 pl-12 no-underline hover:text-paimon-text-hover"
+                        href="https://paimon.apache.org/docs/0.9"
+                      >
+                        0.9
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        class="flex h-10 w-full items-center justify-start px-8 pl-12 no-underline hover:text-paimon-text-hover"
+                        href="https://paimon.apache.org/docs/0.8"
+                      >
+                        0.8
+                      </a>
+                    </li>
+                  </ul>
+                }
+              </li>
+              <li class="hover:bg-paimon-gray-12">
+                <a
+                  href="https://paimon.apache.org/downloads.html"
+                  class="flex h-10 w-full items-center justify-start px-8 no-underline hover:text-paimon-text-hover"
+                  translate
+                >
+                  DOWNLOADS
+                </a>
+              </li>
+              <li class="hover:bg-paimon-gray-12">
+                <a
+                  href="https://paimon.apache.org/release-0.9.html"
+                  class="flex h-10 w-full items-center justify-start px-8 no-underline hover:text-paimon-text-hover"
+                  translate
+                >
+                  RELEASES
+                </a>
+              </li>
+              <li class="hover:bg-paimon-gray-12">
+                <a
+                  [routerLink]="['/', 'blog']"
+                  class="flex h-10 w-full items-center justify-start px-8 no-underline hover:text-paimon-text-hover"
+                  translate
+                >
+                  BLOG
+                </a>
+              </li>
+              <li class="hover:bg-paimon-gray-12">
+                <a
+                  (click)="toggleMobileMenus('community')"
+                  class="flex h-10 w-full items-center justify-start px-8 no-underline hover:text-paimon-text-hover"
+                >
+                  <span translate>COMMUNITY</span>
+                  <svg
+                    class="h-5 w-5 text-gray-300 group-hover/link:text-white"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+                      clip-rule="evenodd"
+                    />
+                  </svg>
+                </a>
+                @if (expandedMenu === 'community') {
+                  <ul class="list-none items-center gap-3 text-sm font-semibold">
+                    <li>
+                      <a
+                        href="https://paimon.apache.org/docs/master/project/contributing/"
+                        class="flex h-10 w-full items-center justify-start px-8 pl-12 no-underline hover:text-paimon-text-hover"
+                        translate
+                      >
+                        How to Contribute
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        [routerLink]="['/', 'team']"
+                        class="flex h-10 w-full items-center justify-start px-8 pl-12 no-underline hover:text-paimon-text-hover"
+                        translate
+                      >
+                        TEAM
+                      </a>
+                    </li>
+                  </ul>
+                }
+              </li>
+              <li class="hover:bg-paimon-gray-12">
+                <a
+                  [routerLink]="['/', 'security']"
+                  class="flex h-10 w-full items-center justify-start px-8 no-underline hover:text-paimon-text-hover"
+                >
+                  Security
+                </a>
+              </li>
+              <li class="hover:bg-paimon-gray-12">
+                <a
+                  (click)="toggleMobileMenus('asf')"
+                  class="flex h-10 w-full items-center justify-start px-8 no-underline hover:text-paimon-text-hover"
+                >
+                  ASF
+                  <svg
+                    class="h-5 w-5 text-gray-300 group-hover/link:text-white"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+                      clip-rule="evenodd"
+                    />
+                  </svg>
+                </a>
+                @if (expandedMenu === 'asf') {
+                  <ul class="list-none items-center gap-3 text-sm font-semibold">
+                    <li>
+                      <a
+                        href="https://www.apache.org/"
+                        class="flex h-10 w-full items-center justify-start px-8 pl-12 no-underline hover:text-paimon-text-hover"
+                      >
+                        Foundation
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        class="flex h-10 w-full items-center justify-start px-8 pl-12 no-underline hover:text-paimon-text-hover"
+                        href="https://www.apache.org/licenses/"
+                      >
+                        License
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        class="flex h-10 w-full items-center justify-start px-8 pl-12 no-underline hover:text-paimon-text-hover"
+                        href="https://www.apache.org/events/current-event"
+                      >
+                        Events
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        class="flex h-10 w-full items-center justify-start px-8 pl-12 no-underline hover:text-paimon-text-hover"
+                        href="https://www.apache.org/security/"
+                      >
+                        Security
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        class="flex h-10 w-full items-center justify-start px-8 pl-12 no-underline hover:text-paimon-text-hover"
+                        href="https://www.apache.org/foundation/sponsorship.html"
+                      >
+                        Sponsorship
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        class="flex h-10 w-full items-center justify-start px-8 pl-12 no-underline hover:text-paimon-text-hover"
+                        href="https://www.apache.org/foundation/thanks.html"
+                      >
+                        Thanks
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        class="flex h-10 w-full items-center justify-start px-8 pl-12 no-underline hover:text-paimon-text-hover"
+                        href="https://privacy.apache.org/policies/privacy-policy-public.html"
+                      >
+                        Privacy
+                      </a>
+                    </li>
+                  </ul>
+                }
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </div>
+</header>
