@@ -18,15 +18,10 @@ name: "Build website and document"
 env:
   versions: ("master" "0.9") # defines what versions of document should be updated
   latest_version: "0.9" # defines what version docs/latest links to
+  base_href: "https://paimon.apache.org/" # website base href
 
 on:
   workflow_dispatch:
-    inputs:
-      base_href:
-        description: 'Base href for the website'
-        type: string
-        default: 'https://paimon.apache.org/'
-        required: true
   schedule:
     - cron: '0 0 * * *' # deploy every day
 
@@ -82,7 +77,7 @@ jobs:
           # build website
           npm config --global set registry https://registry.npmmirror.com/
           pnpm install
-          pnpm run build --base-href="${{ inputs.base_href }}"
+          pnpm run build --base-href="${{ env.base_href }}"
 
       - name: Move out output
         run: |
