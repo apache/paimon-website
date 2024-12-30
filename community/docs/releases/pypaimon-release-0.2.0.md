@@ -13,8 +13,8 @@ this is the first version.
 
 ## What is PyPaimon?
 
-[PyPaimon](https://github.com/apache/paimon-python) is the Python SDK of Apache Paimon. The repository defines 
-the Python SDK API, and a Java-based implementation currently.
+[PyPaimon](https://github.com/apache/paimon-python) is the Python SDK of Apache Paimon. It provides a way
+for users to get data from Paimon tables with Python for data analysis, and write data back to Paimon tables.
 
 ## Version Overview
 
@@ -170,3 +170,8 @@ table_commit.commit(commit_messages)
 table_write.close()
 table_commit.close()
 ```
+
+### Various data formats
+
+PyPaimon supports reading data in following formats: Pandas, Apache Arrow and DuckDB, and writing data in following
+formats: Pandas, Apache Arrow. Please refer to the [document](https://paimon.apache.org/docs/master/program-api/python-api/) for details.
