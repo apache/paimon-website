@@ -16,8 +16,8 @@
 name: "Build website and document"
 
 env:
-  versions: ("master" "0.9") # defines what versions of document should be updated
-  latest_version: "0.9" # defines what version docs/latest links to
+  versions: ("master" "1.0") # defines what versions of document should be updated
+  latest_version: "1.0" # defines what version docs/latest links to
   base_href: "https://paimon.apache.org/" # website base href
 
 on:
