@@ -2,6 +2,7 @@
 title: "Release 0.6"
 type: release
 version: 0.6.0
+date: 2023-12-13
 ---
 
 # Apache Paimon 0.6 Available

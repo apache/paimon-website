@@ -1,7 +1,8 @@
 ---
 title: "PyPaimon Release 0.2.0"
 type: release
-version: 0.2.0
+version: pypaimon-0.2.0
+date: 2024-12-19
 ---
 
 # PyPaimon 0.2.0 Available

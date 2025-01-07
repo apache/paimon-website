@@ -2,6 +2,7 @@
 title: "Release 0.8.2"
 type: release
 version: 0.8.2
+date: 2024-07-12
 ---
 
 # Apache Paimon 0.8.2 Available

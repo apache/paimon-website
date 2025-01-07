@@ -30,7 +30,8 @@ export class Document {
     readonly type: string, // 'release' | 'download'
     readonly content: string,
     readonly alias: string,
-    readonly version?: string
+    readonly version?: string,
+    readonly date?: string
   ) {}
 }
 
@@ -44,7 +45,8 @@ export class ResolvedDocument {
     readonly content: string,
     readonly toc: TOC[],
     readonly alias: string, // for `Edit this page` button
-    readonly version?: string
+    readonly version?: string,
+    readonly date?: string
   ) {}
 }
 
@@ -62,8 +64,8 @@ export class BriefRelease {
  */
 export function parseDocumentFromBuffer(name: string, buffer: Buffer): Document {
   try {
-    const { title, type, version, __content } = parseMarkdownWithYAML(buffer);
-    return new Document(title, type, __content, name, version);
+    const { title, type, version, date, __content } = parseMarkdownWithYAML(buffer);
+    return new Document(title, type, __content, name, version, date);
   } catch (e) {
     console.log(e);
     throw new Error(name);
@@ -75,10 +77,10 @@ export function parseDocumentFromBuffer(name: string, buffer: Buffer): Document 
  * @param doc
  */
 export function resolveDocument(doc: Document): ResolvedDocument {
-  const { title, type, content, alias, version } = doc;
+  const { title, type, content, alias, version, date } = doc;
   const tokensList = new marked.Lexer().lex(doc.content) as unknown as ExtendTokensList;
 
   const contentString = parseMarkdownToHTML(content);
   const toc = generateTOC(tokensList);
-  return new ResolvedDocument(title, type, contentString, toc, alias, version);
+  return new ResolvedDocument(title, type, contentString, toc, alias, version, date);
 }
