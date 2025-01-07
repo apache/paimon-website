@@ -85,7 +85,7 @@ Please replace `${flink.version}` in the following xml file to the version of Fl
 
 Also include `<dependency>` elements for any extension modules you need: `paimon-flink-cdc`, `paimon-flink-action`, and so forth.
 
-### Spars3
+### Spark
 
 Please replace `${spark.version}` in the following xml file to the version of Flink you're using. For example, `3.4` or `3.5`.
 
