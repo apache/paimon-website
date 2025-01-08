@@ -31,7 +31,7 @@ export class Document {
     readonly content: string,
     readonly alias: string,
     readonly version?: string,
-    readonly weight?: string
+    readonly weight?: number
   ) {}
 }
 
@@ -46,7 +46,7 @@ export class ResolvedDocument {
     readonly toc: TOC[],
     readonly alias: string, // for `Edit this page` button
     readonly version?: string,
-    readonly weight?: string
+    readonly weight?: number
   ) {}
 }
 
