@@ -52,7 +52,7 @@ export function processDocuments(): { releases: BriefRelease[] } {
 
   // sort by weight
   const briefReleases = releases
-    .sort((a, b) => b.weight - a.weight))
+    .sort((a, b) => b.weight - a.weight)
     .map(release => new BriefRelease(release.title, release.version));
 
   writeFileSync(`${docsDist}/releases.json`, JSON.stringify(briefReleases));
