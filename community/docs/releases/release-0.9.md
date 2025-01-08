@@ -2,7 +2,7 @@
 title: "Release 0.9"
 type: release
 version: 0.9.0
-date: 2024-09-13
+weight: 90
 ---
 
 # Apache Paimon 0.9 Available

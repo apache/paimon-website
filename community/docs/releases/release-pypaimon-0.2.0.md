@@ -2,7 +2,7 @@
 title: "PyPaimon Release 0.2.0"
 type: release
 version: pypaimon-0.2.0
-date: 2024-12-19
+weight: 91
 ---
 
 # PyPaimon 0.2.0 Available

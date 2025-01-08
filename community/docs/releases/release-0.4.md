@@ -2,7 +2,7 @@
 title: "Release 0.4"
 type: release
 version: 0.4.0
-date: 2023-06-07
+weight: 40
 ---
 
 # Apache Paimon 0.4 Available

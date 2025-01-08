@@ -2,7 +2,7 @@
 title: "Release 0.7"
 type: release
 version: 0.7.0
-date: 2024-02-29
+weight: 70
 ---
 
 # Apache Paimon 0.7 Available

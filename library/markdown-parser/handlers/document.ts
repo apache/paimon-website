@@ -50,9 +50,9 @@ export function processDocuments(): { releases: BriefRelease[] } {
 
   releases.forEach(release => writeFileSync(`${docsDist}/${release.version}.json`, JSON.stringify(release)));
 
-  // sort by date
+  // sort by weight
   const briefReleases = releases
-    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+    .sort((a, b) => b.weight - a.weight))
     .map(release => new BriefRelease(release.title, release.version));
 
   writeFileSync(`${docsDist}/releases.json`, JSON.stringify(briefReleases));
