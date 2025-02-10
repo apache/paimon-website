@@ -12,7 +12,7 @@ Paimon is released as a source artifact, and also through Maven.
 
 | RELEASE | DATE       | DOWNLOAD                                                                                                                                                                                                                                                                                                           |
 |---------|------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| 1.0.0   | 2025-01-03 | [tar](https://www.apache.org/dyn/closer.lua/paimon/paimon-1.0.0/apache-paimon-1.0.0-src.tgz)               ([digest](https://downloads.apache.org/paimon/paimon-1.0.0/apache-paimon-1.0.0-src.tgz.sha512),                [pgp](https://downloads.apache.org/paimon/paimon-1.0.0/apache-paimon-1.0.0-src.tgz.asc)) |                                                                                                                                                                                                                                                                                                                                                                                                                                            |
+| 1.0.1   | 2025-01-03 | [tar](https://www.apache.org/dyn/closer.lua/paimon/paimon-1.0.1/apache-paimon-1.0.1-src.tgz)               ([digest](https://downloads.apache.org/paimon/paimon-1.0.1/apache-paimon-1.0.1-src.tgz.sha512),                [pgp](https://downloads.apache.org/paimon/paimon-1.0.1/apache-paimon-1.0.1-src.tgz.asc)) |                                                                                                                                                                                                                                                                                                                                                                                                                                            |
 | 0.9.0   | 2024-09-13 | [tar](https://www.apache.org/dyn/closer.lua/paimon/paimon-0.9.0/apache-paimon-0.9.0-src.tgz)               ([digest](https://downloads.apache.org/paimon/paimon-0.9.0/apache-paimon-0.9.0-src.tgz.sha512),                [pgp](https://downloads.apache.org/paimon/paimon-0.9.0/apache-paimon-0.9.0-src.tgz.asc)) |                                                                                                                                                                                                                                                                                                                                                                                                                                            |
 | 0.8.2   | 2024-07-12 | [tar](https://www.apache.org/dyn/closer.lua/paimon/paimon-0.8.2/apache-paimon-0.8.2-src.tgz)               ([digest](https://downloads.apache.org/paimon/paimon-0.8.2/apache-paimon-0.8.2-src.tgz.sha512),                [pgp](https://downloads.apache.org/paimon/paimon-0.8.2/apache-paimon-0.8.2-src.tgz.asc)) |                                                                                                                                                                                                                                                                                                                                                                                                                                            |
 
@@ -78,7 +78,7 @@ Please replace `${flink.version}` in the following xml file to the version of Fl
     <dependency>
         <groupId>org.apache.paimon</groupId>
         <artifactId>paimon-flink-${flink.version}</artifactId>
-        <version>1.0.0</version>
+        <version>1.0.1</version>
     </dependency>
 </dependencies>
 ```
@@ -94,7 +94,7 @@ Please replace `${spark.version}` in the following xml file to the version of Fl
     <dependency>
         <groupId>org.apache.paimon</groupId>
         <artifactId>paimon-spark-${spark.version}</artifactId>
-        <version>1.0.0</version>
+        <version>1.0.1</version>
     </dependency>
 </dependencies>
 ```
