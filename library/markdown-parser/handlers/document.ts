@@ -17,8 +17,6 @@
  * under the License.
  */
 
-import { gt } from 'semver';
-
 import * as fs from 'fs';
 import { mkdirSync, readdirSync, readFileSync, writeFileSync } from 'fs';
 import { parse as parseFileName } from 'path';
@@ -52,9 +50,11 @@ export function processDocuments(): { releases: BriefRelease[] } {
 
   releases.forEach(release => writeFileSync(`${docsDist}/${release.version}.json`, JSON.stringify(release)));
 
+  // sort by weight
   const briefReleases = releases
-    .map(release => new BriefRelease(release.title, release.version))
-    .sort((a, b) => (gt(a.version, b.version) ? -1 : 1));
+    .sort((a, b) => b.weight - a.weight)
+    .map(release => new BriefRelease(release.title, release.version));
+
   writeFileSync(`${docsDist}/releases.json`, JSON.stringify(briefReleases));
 
   return { releases: briefReleases };

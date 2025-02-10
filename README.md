@@ -126,8 +126,11 @@ The release notes are maintained in the `community/docs/releases` directory.
     title: "Release 0.9"
     type: release
     version: 0.9.0
+    weight: 90
     ---
     ```
+   The `weight` field is used to sort the release notes in the website. The higher the number, the earlier the release note will be displayed.
+   
    If you'd like to use some pictures in the markdown, you can save theme in the `public/img` directory and use relative path, such as `![image](./img/xxx.png)`.
 3. Update the latest version in the `community/docs/downloads.md`.
 4. Commit the changes and push them to the repository.
