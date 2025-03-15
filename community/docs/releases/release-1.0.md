@@ -172,7 +172,7 @@ We completely restructured Paimon's Parquet Reader by referencing Spark SQL's Pa
 
 Improvements in Nested Schema support Nested Projection Pushdown and Nested Schema Evolution, allowing Paimon to fully support nested types and complete Schema Evolution.
 
-Interestingly, a binlog system table has been introduced to allow querying binlogs through a binlog table; previous and subsequent updates will be packed into a single line, allowing stream reads to behave like MySQL binlogs, enabling you to处理在一起的 -U 和 +U 消息 (process -U and +U messages together).
+Interestingly, a binlog system table has been introduced to allow querying binlogs through a binlog table; previous and subsequent updates will be packed into a single line, allowing stream reads to behave like MySQL binlogs, enabling you to process -U and +U messages together.
 
 ## Flink Integration
 
