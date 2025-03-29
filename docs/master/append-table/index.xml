@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Table w/o PK on Apache Paimon</title>
+    <link>//paimon.apache.org/docs/master/append-table/</link>
+    <description>Recent content in Table w/o PK on Apache Paimon</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language><atom:link href="//paimon.apache.org/docs/master/append-table/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Overview</title>
+      <link>//paimon.apache.org/docs/master/append-table/overview/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/append-table/overview/</guid>
+      <description>Overview #  If a table does not have a primary key defined, it is an append table. Compared to the primary key table, it does not have the ability to directly receive changelogs. It cannot be directly updated with data through upsert. It can only receive incoming data from append data.
+Flink CREATE TABLE my_table ( product_id BIGINT, price DOUBLE, sales BIGINT ) WITH ( -- &amp;#39;target-file-size&amp;#39; = &amp;#39;256 MB&amp;#39;,  -- &amp;#39;file.</description>
+    </item>
+    
+    <item>
+      <title>Streaming</title>
+      <link>//paimon.apache.org/docs/master/append-table/streaming/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/append-table/streaming/</guid>
+      <description>Streaming #  You can stream write to the Append table in a very flexible way through Flink, or read the Append table through Flink, using it like a queue. The only difference is that its latency is in minutes. Its advantages are very low cost and the ability to push down filters and projection.
+Pre small files merging #  &amp;ldquo;Pre&amp;rdquo; means that this compact occurs before committing files to the snapshot.</description>
+    </item>
+    
+    <item>
+      <title>Query Performance</title>
+      <link>//paimon.apache.org/docs/master/append-table/query-performance/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/append-table/query-performance/</guid>
+      <description>Query Performance #  Data Skipping By Order #  Paimon by default records the maximum and minimum values of each field in the manifest file.
+In the query, according to the WHERE condition of the query, together with the statistics in the manifest we can perform file filtering. If the filtering effect is good, the query that would have cost minutes will be accelerated to milliseconds to complete the execution.</description>
+    </item>
+    
+    <item>
+      <title>Update</title>
+      <link>//paimon.apache.org/docs/master/append-table/update/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/append-table/update/</guid>
+      <description>Update #  Now, only Spark SQL supports DELETE &amp;amp; UPDATE, you can take a look at Spark Write.
+Example:
+DELETE FROM my_table WHERE currency = &amp;#39;UNKNOWN&amp;#39;; Update append table has two modes:
+ COW (Copy on Write): search for the hit files and then rewrite each file to remove the data that needs to be deleted from the files. This operation is costly. MOW (Merge on Write): By specifying &#39;deletion-vectors.</description>
+    </item>
+    
+    <item>
+      <title>Bucketed</title>
+      <link>//paimon.apache.org/docs/master/append-table/bucketed/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/append-table/bucketed/</guid>
+      <description>Bucketed Append #  You can define the bucket and bucket-key to get a bucketed append table.
+Example to create bucketed append table:
+Flink CREATE TABLE my_table ( product_id BIGINT, price DOUBLE, sales BIGINT ) WITH ( &amp;#39;bucket&amp;#39; = &amp;#39;8&amp;#39;, &amp;#39;bucket-key&amp;#39; = &amp;#39;product_id&amp;#39; );  Streaming #  An ordinary Append table has no strict ordering guarantees for its streaming writes and reads, but there are some cases where you need to define a key similar to Kafka&amp;rsquo;s.</description>
+    </item>
+    
+  </channel>
+</rss>
