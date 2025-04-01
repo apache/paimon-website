@@ -87,7 +87,7 @@ Also include `<dependency>` elements for any extension modules you need: `paimon
 
 ### Spark
 
-Please replace `${spark.version}` in the following xml file to the version of Flink you're using. For example, `3.4` or `3.5`.
+Please replace `${spark.version}` in the following xml file to the version of Spark you're using. For example, `3.4` or `3.5`.
 
 ```xml
 <dependencies>
