@@ -1,0 +1,1 @@
+import{H as i}from"./chunk-AQTOR5VK.js";var e=class t{constructor(){this.githubUrl="https://github.com/apache/paimon-website"}transform(r){return`${this.githubUrl}/blob/master/main/${r.join("/")}`}static{this.\u0275fac=function(n){return new(n||t)}}static{this.\u0275pipe=i({name:"githubUrl",type:t,pure:!0,standalone:!0})}};export{e as a};
