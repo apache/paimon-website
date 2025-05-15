@@ -21,17 +21,16 @@ import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 
 import { TranslateModule } from '@ngx-translate/core';
 
+import { PageContainerComponent } from '@paimon/app/components/page-container/page-container.component';
 import { WHO_IS_USING } from '@paimon/app/tokens/users';
 
 @Component({
-  selector: 'paimon-whosusing',
+  selector: 'paimon-users',
   standalone: true,
-  imports: [NgOptimizedImage, TranslateModule],
-  templateUrl: './whosusing.component.html',
-  styleUrl: './whosusing.component.css',
-  preserveWhitespaces: true,
+  imports: [PageContainerComponent, TranslateModule, NgOptimizedImage],
+  templateUrl: './users.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class WhosusingComponent {
+export class UsersComponent {
   readonly listOfUsers = inject(WHO_IS_USING);
 }

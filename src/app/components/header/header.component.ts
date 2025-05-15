@@ -71,6 +71,24 @@ export class HeaderComponent implements OnInit {
 
   private readonly platformId = inject(PLATFORM_ID);
   private _doc = inject(DOCUMENT);
+  readonly versions = [
+    {
+      label: 'master',
+      value: 'https://paimon.apache.org/docs/master'
+    },
+    {
+      label: '1.1',
+      value: 'https://paimon.apache.org/docs/1.1'
+    },
+    {
+      label: '1.0',
+      value: 'https://paimon.apache.org/docs/1.0'
+    },
+    {
+      label: '0.9',
+      value: 'https://paimon.apache.org/docs/0.9'
+    }
+  ];
 
   constructor(
     private el: ElementRef,

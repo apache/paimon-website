@@ -22,6 +22,7 @@ import { DownloadsComponent, downloadsResolver } from '@paimon/app/routers/downl
 import { HomeComponent } from '@paimon/app/routers/home/home.component';
 import { SecurityComponent } from '@paimon/app/routers/security/security.component';
 import { TeamComponent } from '@paimon/app/routers/team/team.component';
+import { UsersComponent } from '@paimon/app/routers/users/users.component';
 
 export const routes: Routes = [
   {
@@ -46,6 +47,10 @@ export const routes: Routes = [
     resolve: {
       downloads: downloadsResolver
     }
+  },
+  {
+    path: 'users',
+    component: UsersComponent
   },
   {
     path: 'releases',

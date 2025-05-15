@@ -18,26 +18,7 @@
     <!-- Navigation Menu -->
     <div class="hidden h-16 flex-grow items-center justify-center lg:flex">
       <div class="flex h-full items-center space-x-2.5">
-        <paimon-dropdown-links
-          [options]="[
-            {
-              label: 'master',
-              value: 'https://paimon.apache.org/docs/master'
-            },
-            {
-              label: '1.1',
-              value: 'https://paimon.apache.org/docs/1.1'
-            },
-            {
-              label: '1.0',
-              value: 'https://paimon.apache.org/docs/1.0'
-            },
-            {
-              label: '0.9',
-              value: 'https://paimon.apache.org/docs/0.9'
-            }
-          ]"
-        >
+        <paimon-dropdown-links [options]="versions">
           <a
             class="group/link inline-flex w-full justify-center px-3 py-2 text-sm font-semibold text-gray-300 shadow-sm hover:text-white"
             aria-expanded="true"
@@ -83,6 +64,14 @@
           translate
         >
           BLOG
+        </a>
+        <paimon-divider></paimon-divider>
+        <a
+          [routerLink]="['/', 'users']"
+          class="px-3 py-2 text-sm font-medium text-gray-300 hover:text-white"
+          translate
+        >
+          Who's Using
         </a>
         <paimon-divider></paimon-divider>
         <paimon-community-dropdown></paimon-community-dropdown>
@@ -175,38 +164,16 @@
                 </a>
                 @if (expandedMenu === 'document') {
                   <ul class="list-none items-center gap-3 text-sm font-semibold">
-                    <li>
-                      <a
-                        class="flex h-10 w-full items-center justify-start px-8 pl-12 no-underline hover:text-paimon-text-hover"
-                        href="https://paimon.apache.org/docs/master"
-                      >
-                        master
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        class="flex h-10 w-full items-center justify-start px-8 pl-12 no-underline hover:text-paimon-text-hover"
-                        href="https://paimon.apache.org/docs/1.0"
-                      >
-                        1.0
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        class="flex h-10 w-full items-center justify-start px-8 pl-12 no-underline hover:text-paimon-text-hover"
-                        href="https://paimon.apache.org/docs/0.9"
-                      >
-                        0.9
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        class="flex h-10 w-full items-center justify-start px-8 pl-12 no-underline hover:text-paimon-text-hover"
-                        href="https://paimon.apache.org/docs/0.8"
-                      >
-                        0.8
-                      </a>
-                    </li>
+                    @for (version of versions; track version.label) {
+                      <li>
+                        <a
+                          class="flex h-10 w-full items-center justify-start px-8 pl-12 no-underline hover:text-paimon-text-hover"
+                          [attr.href]="version.value"
+                        >
+                          {{ version.label }}
+                        </a>
+                      </li>
+                    }
                   </ul>
                 }
               </li>
@@ -239,6 +206,15 @@
                   translate
                 >
                   BLOG
+                </a>
+              </li>
+              <li class="hover:bg-paimon-gray-12">
+                <a
+                  [routerLink]="['/', 'users']"
+                  class="flex h-10 w-full items-center justify-start px-8 no-underline hover:text-paimon-text-hover"
+                  translate
+                >
+                  Who's Using
                 </a>
               </li>
               <li class="hover:bg-paimon-gray-12">

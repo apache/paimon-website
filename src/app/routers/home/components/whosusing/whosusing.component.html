@@ -25,7 +25,13 @@
       class="group-hover:paused flex shrink-0 grow-0 basis-auto animate-paimon-slide flex-row items-center space-x-4 hover:cursor-pointer"
     >
       @for (item of listOfUsers; track $index) {
-        <img [ngSrc]="item.src" [width]="item.width" [height]="item.height" [alt]="item.label" />
+        <img
+          [ngSrc]="item.src"
+          [width]="item.width"
+          [height]="item.height"
+          [alt]="item.label"
+          class="grayscale"
+        />
       }
     </div>
     <!--  make the slider seamless looping  -->
@@ -33,7 +39,13 @@
       class="group-hover:paused flex shrink-0 grow-0 basis-auto animate-paimon-slide flex-row items-center space-x-3 hover:cursor-pointer"
     >
       @for (item of listOfUsers; track $index) {
-        <img [ngSrc]="item.src" [width]="item.width" [height]="item.height" [alt]="item.label" />
+        <img
+          [ngSrc]="item.src"
+          [width]="item.width"
+          [height]="item.height"
+          [alt]="item.label"
+          class="grayscale"
+        />
       }
     </div>
   </div>
@@ -45,7 +57,13 @@
     >
       @for (item of listOfUsers; track $index) {
         <div class="flex h-full w-full items-center justify-center">
-          <img [ngSrc]="item.src" [width]="item.width" [height]="item.height" [alt]="item.label" />
+          <img
+            [ngSrc]="item.src"
+            [width]="item.width"
+            [height]="item.height"
+            [alt]="item.label"
+            class="grayscale"
+          />
         </div>
       }
     </div>
