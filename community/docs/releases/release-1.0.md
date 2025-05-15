@@ -2,6 +2,7 @@
 title: "Release 1.0"
 type: release
 version: 1.0.1
+weight: 101
 ---
 
 # Apache Paimon 1.0 Available
