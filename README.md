@@ -108,7 +108,7 @@ List of users who are using Apache Paimon are maintained in the `src/assets/user
 
 Firstly, You should prepare a new image file with a transparent background (png format best).
 
-Then add the image file `xxx.png` in the `src/assets/users/` directory and add the `xxx.png` item in the `WHO_IS_USING`.
+Then add the image file `xxx.png` in the `src/assets/users/` directory and add the `xxx.png` item in the `src/app/tokens/users.ts`.
 
 Save the file and preview the page to make sure it looks well.
 
