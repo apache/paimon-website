@@ -1,0 +1,38 @@
+<paimon-page-container>
+  <div header>
+    <div class="mt-16 text-6xl font-normal text-paimon-gray-3" translate>Who's Using</div>
+    <div class="py-4 text-sm font-normal leading-5 text-paimon-gray-8">
+      <span translate>
+        Various companies and organizations are using Paimon for production and commercial products.
+      </span>
+      <span translate>Are you using this project?</span>
+      <a
+        class="space-x-0 text-paimon-blue-primary hover:underline"
+        href="https://github.com/apache/paimon/issues/915"
+        translate
+      >
+        Add your company
+      </a>
+    </div>
+  </div>
+  <div content>
+    <!-- mobile -->
+    <div class="relative mb-32 mt-14 block px-14 before:w-0 after:w-0">
+      <div
+        class="relative grid grid-cols-2 items-center gap-14 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-7"
+      >
+        @for (item of listOfUsers; track $index) {
+          <div class="flex h-full w-full items-center justify-center">
+            <img
+              [ngSrc]="item.src"
+              [width]="item.width"
+              [height]="item.height"
+              [alt]="item.label"
+              class="grayscale"
+            />
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+</paimon-page-container>
