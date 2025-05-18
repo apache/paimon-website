@@ -1,0 +1,2256 @@
+
+<!DOCTYPE html>
+<html lang="en" dir=>
+
+<head>
+  <meta name="generator" content="Hugo 0.80.0" />
+  
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Manage Branches #  In streaming data processing, it&rsquo;s difficult to correct data for it may affect the existing data, and users will see the streaming provisional results, which is not expected.
+We suppose the branch that the existing workflow is processing on is &lsquo;main&rsquo; branch, by creating custom data branch, it can help to do experimental tests and data validating for the new job on the existing table, which doesn&rsquo;t need to stop the existing reading / writing workflows and no need to copy data from the main branch.">
+<meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="Manage Branches" />
+<meta property="og:description" content="Manage Branches #  In streaming data processing, it&rsquo;s difficult to correct data for it may affect the existing data, and users will see the streaming provisional results, which is not expected.
+We suppose the branch that the existing workflow is processing on is &lsquo;main&rsquo; branch, by creating custom data branch, it can help to do experimental tests and data validating for the new job on the existing table, which doesn&rsquo;t need to stop the existing reading / writing workflows and no need to copy data from the main branch." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="//paimon.apache.org/docs/1.1/maintenance/manage-branches/" />
+
+<title>Manage Branches | Apache Paimon</title>
+<link rel="manifest" href="/docs/1.1/manifest.json">
+<link rel="icon" href="/docs/1.1/favicon.png" type="image/x-icon">
+<link rel="stylesheet" href="/docs/1.1/book.min.3bc4108a5b57c9a7e6fcae92ff69940435f8c46c4e1e4a311aedc9b2d8e06792.css" integrity="sha256-O8QQiltXyafm/K6S/2mUBDX4xGxOHkoxGu3JstjgZ5I=">
+<script defer src="/docs/1.1/en.search.min.1fe95a11b2f99072508f610e27e21c1ed57f26edb95b683483846b16f457c842.js" integrity="sha256-H&#43;laEbL5kHJQj2EOJ&#43;IcHtV/Ju25W2g0g4RrFvRXyEI="></script>
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+  
+  
+
+<link rel="stylesheet" type="text/css" href="//paimon.apache.org/docs/1.1/font-awesome/css/font-awesome.min.css">
+<script src="//paimon.apache.org/docs/1.1/js/anchor.min.js"></script>
+<script src="//paimon.apache.org/docs/1.1/js/flink.js"></script>
+
+
+
+  
+  <script>
+    var _paq = window._paq = window._paq || [];
+     
+     
+    _paq.push(['disableCookies']);
+     
+    _paq.push(["setDomains", ["*.flink.apache.org","*.nightlies.apache.org/flink"]]);
+    _paq.push(['trackPageView']);
+    _paq.push(['enableLinkTracking']);
+    (function() {
+      var u="//matomo.privacy.apache.org/";
+      _paq.push(['setTrackerUrl', u+'matomo.php']);
+      _paq.push(['setSiteId', '1']);
+      var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+      g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+    })();
+  </script>
+  
+</head>
+
+<body dir=>
+  
+    <input type="checkbox" class="hidden toggle" id="menu-control" />
+    <input type="checkbox" class="hidden toggle" id="toc-control" />
+  
+  <main class="container flex">
+    
+      <aside class="book-menu">
+        
+  
+
+<nav>
+
+
+<a id="logo" href="//paimon.apache.org/docs/1.1">
+    <img width="100%" src="//paimon.apache.org/docs/1.1/paimon_black.svg">
+</a>
+<p style="text-align:right">1.1.1</p>
+
+<div class="book-search">
+  <input type="text" id="book-search-input" placeholder="Search" aria-label="Search" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-dc8a1c63e6da60163016ce21cae1faa0" class="toggle"  />
+    <label for="section-dc8a1c63e6da60163016ce21cae1faa0" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-book title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Concepts</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/concepts/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/concepts/basic-concepts/" class="">Basic Concepts</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/concepts/concurrency-control/" class="">Concurrency Control</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/concepts/catalog/" class="">Catalog</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-e03f934865df9dd3baca303554bcaa71" class="toggle"  />
+    <label for="section-e03f934865df9dd3baca303554bcaa71" class="flex justify-between">RESTCatalog<span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/concepts/rest/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/concepts/rest/bear/" class="">Bear Token</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/concepts/rest/dlf/" class="">DLF Token</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/concepts/rest/rest-api/" class="">REST API</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/concepts/table-types/" class="">Table Types</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/concepts/system-tables/" class="">System Tables</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/concepts/data-types/" class="">Data Types</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-d3e7256ce393050c572ea7bd8cc4f240" class="toggle"  />
+    <label for="section-d3e7256ce393050c572ea7bd8cc4f240" class="flex justify-between">Specification<span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/concepts/spec/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/concepts/spec/schema/" class="">Schema</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/concepts/spec/snapshot/" class="">Snapshot</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/concepts/spec/manifest/" class="">Manifest</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/concepts/spec/datafile/" class="">DataFile</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/concepts/spec/tableindex/" class="">Table Index</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/concepts/spec/fileindex/" class="">File Index</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-3f6a6d4f1692040009c66ffaa328c8d0" class="toggle"  />
+    <label for="section-3f6a6d4f1692040009c66ffaa328c8d0" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-database title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Table with PK</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/primary-key-table/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/primary-key-table/data-distribution/" class="">Data Distribution</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/primary-key-table/table-mode/" class="">Table Mode</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-038bb7d17b5b7cb93fb60acbcf218f11" class="toggle"  />
+    <label for="section-038bb7d17b5b7cb93fb60acbcf218f11" class="flex justify-between">Merge Engine<span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/primary-key-table/merge-engine/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/primary-key-table/merge-engine/partial-update/" class="">Partial Update</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/primary-key-table/merge-engine/aggregation/" class="">Aggregation</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/primary-key-table/merge-engine/first-row/" class="">First Row</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/primary-key-table/changelog-producer/" class="">Changelog Producer</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/primary-key-table/sequence-rowkind/" class="">Sequence & Rowkind</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/primary-key-table/compaction/" class="">Compaction</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/primary-key-table/query-performance/" class="">Query Performance</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-f74847e1c917ba2b99e7b718bb318b30" class="toggle"  />
+    <label for="section-f74847e1c917ba2b99e7b718bb318b30" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-database title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Table w/o PK</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/append-table/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/append-table/streaming/" class="">Streaming</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/append-table/query-performance/" class="">Query Performance</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/append-table/update/" class="">Update</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/append-table/bucketed/" class="">Bucketed</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-998a37410d502937fe8444ed73a9ecf8" class="toggle"  />
+    <label for="section-998a37410d502937fe8444ed73a9ecf8" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-gear title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Engine Flink</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/flink/quick-start/" class="">Quick Start</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/flink/sql-ddl/" class="">SQL DDL</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/flink/sql-write/" class="">SQL Write</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/flink/sql-query/" class="">SQL Query</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/flink/consumer-id/" class="">Consumer ID</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/flink/sql-lookup/" class="">SQL Lookup</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/flink/sql-alter/" class="">SQL Alter</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/flink/clone-tables/" class="">Clone Tables</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/flink/procedures/" class="">Procedures</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/flink/action-jars/" class="">Action Jars</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/flink/savepoint/" class="">Savepoint</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-74c63bf75b4f6bd14a3ea6a1217f03ad" class="toggle"  />
+    <label for="section-74c63bf75b4f6bd14a3ea6a1217f03ad" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-gear title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Engine Spark</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/spark/quick-start/" class="">Quick Start</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/spark/sql-ddl/" class="">SQL DDL</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/spark/sql-functions/" class="">SQL Functions</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/spark/sql-write/" class="">SQL Write</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/spark/sql-query/" class="">SQL Query</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/spark/sql-alter/" class="">SQL Alter</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/spark/auxiliary/" class="">Auxiliary</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/spark/procedures/" class="">Procedures</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-16bf9de4e97c50dda6ce1ac6e934602c" class="toggle"  />
+    <label for="section-16bf9de4e97c50dda6ce1ac6e934602c" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-gear title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Ecosystem</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/ecosystem/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/ecosystem/starrocks/" class="">StarRocks</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/ecosystem/doris/" class="">Doris</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/ecosystem/hive/" class="">Hive</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/ecosystem/trino/" class="">Trino</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/ecosystem/amoro/" class="">Amoro</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-582e435c19ca5fafbf9764337d648e63" class="toggle"  />
+    <label for="section-582e435c19ca5fafbf9764337d648e63" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-gear title maindish" aria-hidden="true"></i>&nbsp;&nbsp;CDC Ingestion</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/cdc-ingestion/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/cdc-ingestion/mysql-cdc/" class="">Mysql CDC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/cdc-ingestion/postgres-cdc/" class="">Postgres CDC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/cdc-ingestion/kafka-cdc/" class="">Kafka CDC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/cdc-ingestion/mongo-cdc/" class="">Mongo CDC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/cdc-ingestion/pulsar-cdc/" class="">Pulsar CDC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/cdc-ingestion/debezium-bson/" class="">Debezium BSON</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-697a4b6a0388d6cfa4f418aba3b4edfe" class="toggle" checked />
+    <label for="section-697a4b6a0388d6cfa4f418aba3b4edfe" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-wrench title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Maintenance</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/maintenance/filesystems/" class="">Filesystems</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/maintenance/write-performance/" class="">Write Performance</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/maintenance/dedicated-compaction/" class="">Dedicated Compaction</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/maintenance/manage-snapshots/" class="">Manage Snapshots</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/maintenance/rescale-bucket/" class="">Rescale Bucket</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/maintenance/manage-tags/" class="">Manage Tags</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/maintenance/metrics/" class="">Metrics</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/maintenance/manage-privileges/" class="">Manage Privileges</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/maintenance/manage-branches/" class=" active">Manage Branches</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/maintenance/manage-partitions/" class="">Manage Partitions</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/maintenance/configurations/" class="">Configurations</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-049030059e0dc01edf74ba3d4d259dae" class="toggle"  />
+    <label for="section-049030059e0dc01edf74ba3d4d259dae" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-briefcase title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Program API</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/program-api/flink-api/" class="">Flink API</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/program-api/java-api/" class="">Java API</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/program-api/catalog-api/" class="">Catalog API</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/program-api/python-api/" class="">Python API</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-07c567e5a9f3ce62aea4ff0a1e2dc065" class="toggle"  />
+    <label for="section-07c567e5a9f3ce62aea4ff0a1e2dc065" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-briefcase title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Migration</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/migration/migration-from-hive/" class="">Migration From Hive</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/migration/migration-from-iceberg/" class="">Migration From Iceberg</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/migration/upsert-to-partitioned/" class="">Upsert To Partitioned</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/migration/iceberg-compatibility/" class="">Iceberg Compatibility</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  	<br/>
+  
+  
+    <input type="checkbox" id="section-8c828bcf882f666cdd6821a70cc768ee" class="toggle"  />
+    <label for="section-8c828bcf882f666cdd6821a70cc768ee" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-sitemap title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Project</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/project/roadmap/" class="">Roadmap</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/project/download/" class="">Download</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/project/contributing/" class="">Contributing</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/project/committer/" class="">Committer</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-392fc6f653ae23ff676811656a71ebbf" class="toggle"  />
+    <label for="section-392fc6f653ae23ff676811656a71ebbf" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-sitemap title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Learn Paimon</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/learn-paimon/understand-files/" class="">Understand Files</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br/>
+<hr class="menu-break">
+
+<a href="//paimon.apache.org" style="color:black;margin-bottom:0.5em"><i class="link fa fa-external-link title" aria-hidden="true"></i> Project Homepage</a>
+<br/>
+
+<a href="//paimon.apache.org/docs/master/api/java/" style="color:black;margin-bottom:0.5em"><i class="link fa fa-external-link title" aria-hidden="true"></i> JavaDocs</a>
+<br/>
+
+<hr class="menu-break">
+<li style="list-style-type: none">
+  <br>
+  <input type="checkbox" id="section-version-picker" class="toggle">
+  <label for="section-version-picker" class="flex justify-between">
+     <div style="font-weight:450;margin-bottom:0.5em">Pick Docs Version</div>
+     <span>▾</span>
+  </label>
+  <ul>
+    <a href="//paimon.apache.org/docs/1.1">
+      1.1 (✓)
+    </a>
+    <hr class="menu-break">
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/master">
+          master
+        </a>
+      </li>
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/1.1">
+          stable
+        </a>
+      </li>
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/1.1">
+          1.1
+        </a>
+      </li>
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/1.0">
+          1.0
+        </a>
+      </li>
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/0.9">
+          0.9
+        </a>
+      </li>
+    
+    <hr class="menu-break">
+    <li>
+      <a href="//paimon.apache.org/docs/1.1/versions">
+          All Versions
+      </a>
+    </li>
+  </ul>
+</li>
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var menu=document.querySelector("aside.book-menu nav");addEventListener("beforeunload",function(event){localStorage.setItem("menu.scrollTop",menu.scrollTop);});menu.scrollTop=localStorage.getItem("menu.scrollTop");})();</script>
+
+
+ 
+      </aside>
+    
+
+    <div class="book-page">
+      
+        <header class="book-header">
+          
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/docs/1.1/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <strong>Manage Branches</strong>
+
+  <label for="toc-control">
+    
+    <img src="/docs/1.1/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden clearfix">
+    
+  
+
+<nav id="TableOfContents"><h3>On This Page <button class="toc" onclick="collapseToc()"><i class="fa fa-compress" aria-hidden="true"></i></button></h3>
+  <ul>
+    <li><a href="#create-branches">Create Branches</a></li>
+    <li><a href="#delete-branches">Delete Branches</a></li>
+    <li><a href="#read--write-with-branch">Read / Write With Branch</a></li>
+    <li><a href="#fast-forward">Fast Forward</a></li>
+    <li><a href="#batch-reading-from-fallback-branch">Batch Reading from Fallback Branch</a></li>
+  </ul>
+</nav>
+
+
+  </aside>
+  
+ 
+        </header>
+      
+
+      
+
+
+
+
+
+
+      
+  <article class="markdown"><!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<h1 id="manage-branches">
+  Manage Branches
+  <a class="anchor" href="#manage-branches">#</a>
+</h1>
+<p>In streaming data processing, it&rsquo;s difficult to correct data for it may affect the existing data, and users will see the streaming provisional results, which is not expected.</p>
+<p>We suppose the branch that the existing workflow is processing on is &lsquo;main&rsquo; branch, by creating custom data branch, it can help to do experimental tests and data validating for the new job on the existing table, which doesn&rsquo;t need to stop the existing reading / writing workflows and no need to copy data from the main branch.</p>
+<p>By merge or replace branch operations, users can complete the correcting of data.</p>
+<h2 id="create-branches">
+  Create Branches
+  <a class="anchor" href="#create-branches">#</a>
+</h2>
+<p>Paimon supports creating branch from a specific tag, or just creating an empty branch which means the initial state of the created branch is like an empty table.</p>
+
+
+
+
+
+<div class="book-tabs"><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Flink SQL"
+    name="tabs-create-branches"
+    id="tabs-create-branches-0"
+    checked="checked" 
+    onclick="onSwitch('Flink SQL')"
+  />
+  <label for="tabs-create-branches-0">Flink SQL</label>
+  <div class="book-tabs-content markdown-inner"><p>Run the following sql:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="c1">-- create branch named &#39;branch1&#39; from tag &#39;tag1&#39;
+</span><span class="c1"></span><span class="k">CALL</span> <span class="n">sys</span><span class="p">.</span><span class="n">create_branch</span><span class="p">(</span><span class="s1">&#39;default.T&#39;</span><span class="p">,</span> <span class="s1">&#39;branch1&#39;</span><span class="p">,</span> <span class="s1">&#39;tag1&#39;</span><span class="p">);</span>
+
+<span class="c1">-- create empty branch named &#39;branch1&#39;
+</span><span class="c1"></span><span class="k">CALL</span> <span class="n">sys</span><span class="p">.</span><span class="n">create_branch</span><span class="p">(</span><span class="s1">&#39;default.T&#39;</span><span class="p">,</span> <span class="s1">&#39;branch1&#39;</span><span class="p">);</span>
+</code></pre></div></div><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Flink Action Jar"
+    name="tabs-create-branches"
+    id="tabs-create-branches-1"
+     
+    onclick="onSwitch('Flink Action Jar')"
+  />
+  <label for="tabs-create-branches-1">Flink Action Jar</label>
+  <div class="book-tabs-content markdown-inner"><p>Run the following command:</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">&lt;FLINK_HOME&gt;/bin/flink run <span class="se">\
+</span><span class="se"></span>    /path/to/paimon-flink-action-1.1.1.jar <span class="se">\
+</span><span class="se"></span>    create_branch <span class="se">\
+</span><span class="se"></span>    --warehouse &lt;warehouse-path&gt; <span class="se">\
+</span><span class="se"></span>    --database &lt;database-name&gt; <span class="se">\ </span>
+    --table &lt;table-name&gt; <span class="se">\
+</span><span class="se"></span>    --branch_name &lt;branch-name&gt; <span class="se">\
+</span><span class="se"></span>    <span class="o">[</span>--tag_name &lt;tag-name&gt;<span class="o">]</span> <span class="se">\
+</span><span class="se"></span>    <span class="o">[</span>--catalog_conf &lt;paimon-catalog-conf&gt; <span class="o">[</span>--catalog_conf &lt;paimon-catalog-conf&gt; ...<span class="o">]]</span>
+</code></pre></div></div><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Spark SQL"
+    name="tabs-create-branches"
+    id="tabs-create-branches-2"
+     
+    onclick="onSwitch('Spark SQL')"
+  />
+  <label for="tabs-create-branches-2">Spark SQL</label>
+  <div class="book-tabs-content markdown-inner"><p>Run the following sql:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="c1">-- create branch named &#39;branch1&#39; from tag &#39;tag1&#39;
+</span><span class="c1"></span><span class="k">CALL</span> <span class="n">sys</span><span class="p">.</span><span class="n">create_branch</span><span class="p">(</span><span class="s1">&#39;default.T&#39;</span><span class="p">,</span> <span class="s1">&#39;branch1&#39;</span><span class="p">,</span> <span class="s1">&#39;tag1&#39;</span><span class="p">);</span>
+
+<span class="c1">-- create empty branch named &#39;branch1&#39;
+</span><span class="c1"></span><span class="k">CALL</span> <span class="n">sys</span><span class="p">.</span><span class="n">create_branch</span><span class="p">(</span><span class="s1">&#39;default.T&#39;</span><span class="p">,</span> <span class="s1">&#39;empty_branch&#39;</span><span class="p">);</span>
+</code></pre></div></div></div>
+
+<h2 id="delete-branches">
+  Delete Branches
+  <a class="anchor" href="#delete-branches">#</a>
+</h2>
+<p>You can delete branch by its name.</p>
+<blockquote class="book-hint warning">
+  <strong>Note:</strong> The <code>Delete Branches</code> operation only deletes the metadata file. If you want to clear the data written during the branch, use <a href="//paimon.apache.org/docs/1.1/flink/procedures/">remove_orphan_files</a>
+</blockquote>
+
+
+
+
+
+
+<div class="book-tabs"><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Flink SQL"
+    name="tabs-delete-branches"
+    id="tabs-delete-branches-0"
+    checked="checked" 
+    onclick="onSwitch('Flink SQL')"
+  />
+  <label for="tabs-delete-branches-0">Flink SQL</label>
+  <div class="book-tabs-content markdown-inner"><p>Run the following sql:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">CALL</span> <span class="n">sys</span><span class="p">.</span><span class="n">delete_branch</span><span class="p">(</span><span class="s1">&#39;default.T&#39;</span><span class="p">,</span> <span class="s1">&#39;branch1&#39;</span><span class="p">);</span>
+</code></pre></div></div><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Flink Action Jar"
+    name="tabs-delete-branches"
+    id="tabs-delete-branches-1"
+     
+    onclick="onSwitch('Flink Action Jar')"
+  />
+  <label for="tabs-delete-branches-1">Flink Action Jar</label>
+  <div class="book-tabs-content markdown-inner"><p>Run the following command:</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">&lt;FLINK_HOME&gt;/bin/flink run <span class="se">\
+</span><span class="se"></span>    /path/to/paimon-flink-action-1.1.1.jar <span class="se">\
+</span><span class="se"></span>    delete_branch <span class="se">\
+</span><span class="se"></span>    --warehouse &lt;warehouse-path&gt; <span class="se">\
+</span><span class="se"></span>    --database &lt;database-name&gt; <span class="se">\ </span>
+    --table &lt;table-name&gt; <span class="se">\
+</span><span class="se"></span>    --branch_name &lt;branch-name&gt; <span class="se">\
+</span><span class="se"></span>    <span class="o">[</span>--catalog_conf &lt;paimon-catalog-conf&gt; <span class="o">[</span>--catalog_conf &lt;paimon-catalog-conf&gt; ...<span class="o">]]</span>
+</code></pre></div></div><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Spark SQL"
+    name="tabs-delete-branches"
+    id="tabs-delete-branches-2"
+     
+    onclick="onSwitch('Spark SQL')"
+  />
+  <label for="tabs-delete-branches-2">Spark SQL</label>
+  <div class="book-tabs-content markdown-inner"><p>Run the following sql:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">CALL</span> <span class="n">sys</span><span class="p">.</span><span class="n">delete_branch</span><span class="p">(</span><span class="s1">&#39;default.T&#39;</span><span class="p">,</span> <span class="s1">&#39;branch1&#39;</span><span class="p">);</span>
+</code></pre></div></div></div>
+
+<h2 id="read--write-with-branch">
+  Read / Write With Branch
+  <a class="anchor" href="#read--write-with-branch">#</a>
+</h2>
+<p>You can read or write with branch as below.</p>
+
+
+
+
+
+<div class="book-tabs"><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Flink"
+    name="tabs-read-write-branch"
+    id="tabs-read-write-branch-0"
+    checked="checked" 
+    onclick="onSwitch('Flink')"
+  />
+  <label for="tabs-read-write-branch-0">Flink</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="c1">-- read from branch &#39;branch1&#39;
+</span><span class="c1"></span><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="o">`</span><span class="n">t$branch_branch1</span><span class="o">`</span><span class="p">;</span>
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="o">`</span><span class="n">t$branch_branch1</span><span class="o">`</span> <span class="cm">/*+ OPTIONS(&#39;consumer-id&#39; = &#39;myid&#39;) */</span><span class="p">;</span>
+
+<span class="c1">-- write to branch &#39;branch1&#39;
+</span><span class="c1"></span><span class="k">INSERT</span> <span class="k">INTO</span> <span class="o">`</span><span class="n">t$branch_branch1</span><span class="o">`</span> <span class="k">SELECT</span> <span class="p">...</span>
+</code></pre></div></div><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Spark SQL"
+    name="tabs-read-write-branch"
+    id="tabs-read-write-branch-1"
+     
+    onclick="onSwitch('Spark SQL')"
+  />
+  <label for="tabs-read-write-branch-1">Spark SQL</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="c1">-- read from branch &#39;branch1&#39;
+</span><span class="c1"></span><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="o">`</span><span class="n">t$branch_branch1</span><span class="o">`</span><span class="p">;</span>
+
+<span class="c1">-- write to branch &#39;branch1&#39;
+</span><span class="c1"></span><span class="k">INSERT</span> <span class="k">INTO</span> <span class="o">`</span><span class="n">t$branch_branch1</span><span class="o">`</span> <span class="k">SELECT</span> <span class="p">...</span>
+</code></pre></div></div><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Spark DataFrame"
+    name="tabs-read-write-branch"
+    id="tabs-read-write-branch-2"
+     
+    onclick="onSwitch('Spark DataFrame')"
+  />
+  <label for="tabs-read-write-branch-2">Spark DataFrame</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="c1">-- read from branch &#39;branch1&#39;
+</span><span class="c1"></span><span class="n">spark</span><span class="p">.</span><span class="k">read</span><span class="p">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&#34;paimon&#34;</span><span class="p">).</span><span class="k">option</span><span class="p">(</span><span class="s2">&#34;branch&#34;</span><span class="p">,</span> <span class="s2">&#34;branch1&#34;</span><span class="p">).</span><span class="k">table</span><span class="p">(</span><span class="s2">&#34;t&#34;</span><span class="p">)</span>
+</code></pre></div></div></div>
+
+<h2 id="fast-forward">
+  Fast Forward
+  <a class="anchor" href="#fast-forward">#</a>
+</h2>
+<p>Fast-Forward the custom branch to main will delete all the snapshots, tags and schemas in the main branch that are created after the branch&rsquo;s initial tag. And copy snapshots, tags and schemas from the branch to the main branch.</p>
+<p>If your branch modifies the schema, after Fast Forward, if it is Spark SQL, you can execute <code>REFRESH TABLE my_table</code>
+to clean up the cache to avoid inconsistencies caused by caching.</p>
+
+
+
+
+
+<div class="book-tabs"><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Flink SQL"
+    name="tabs-fast_forward"
+    id="tabs-fast_forward-0"
+    checked="checked" 
+    onclick="onSwitch('Flink SQL')"
+  />
+  <label for="tabs-fast_forward-0">Flink SQL</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">CALL</span> <span class="n">sys</span><span class="p">.</span><span class="n">fast_forward</span><span class="p">(</span><span class="s1">&#39;default.T&#39;</span><span class="p">,</span> <span class="s1">&#39;branch1&#39;</span><span class="p">);</span>
+</code></pre></div></div><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Flink Action Jar"
+    name="tabs-fast_forward"
+    id="tabs-fast_forward-1"
+     
+    onclick="onSwitch('Flink Action Jar')"
+  />
+  <label for="tabs-fast_forward-1">Flink Action Jar</label>
+  <div class="book-tabs-content markdown-inner"><p>Run the following command:</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">&lt;FLINK_HOME&gt;/bin/flink run <span class="se">\
+</span><span class="se"></span>    /path/to/paimon-flink-action-1.1.1.jar <span class="se">\
+</span><span class="se"></span>    fast_forward <span class="se">\
+</span><span class="se"></span>    --warehouse &lt;warehouse-path&gt; <span class="se">\
+</span><span class="se"></span>    --database &lt;database-name&gt; <span class="se">\ </span>
+    --table &lt;table-name&gt; <span class="se">\
+</span><span class="se"></span>    --branch_name &lt;branch-name&gt; <span class="se">\
+</span><span class="se"></span>    <span class="o">[</span>--catalog_conf &lt;paimon-catalog-conf&gt; <span class="o">[</span>--catalog_conf &lt;paimon-catalog-conf&gt; ...<span class="o">]]</span>
+</code></pre></div></div></div>
+
+<h2 id="batch-reading-from-fallback-branch">
+  Batch Reading from Fallback Branch
+  <a class="anchor" href="#batch-reading-from-fallback-branch">#</a>
+</h2>
+<p>You can set the table option <code>scan.fallback-branch</code>
+so that when a batch job reads from the current branch, if a partition does not exist,
+the reader will try to read this partition from the fallback branch.
+For streaming read jobs, this feature is currently not supported, and will only produce results from the current branch.</p>
+<p>What&rsquo;s the use case of this feature? Say you have created a Paimon table partitioned by date.
+You have a long-running streaming job which inserts records into Paimon, so that today&rsquo;s data can be queried in time.
+You also have a batch job which runs at every night to insert corrected records of yesterday into Paimon,
+so that the preciseness of the data can be promised.</p>
+<p>When you query from this Paimon table, you would like to first read from the results of batch job.
+But if a partition (for example, today&rsquo;s partition) does not exist in its result,
+then you would like to read from the results of streaming job.
+In this case, you can create a branch for streaming job, and set <code>scan.fallback-branch</code> to this streaming branch.</p>
+<p>Let&rsquo;s look at an example.</p>
+
+
+
+
+
+<div class="book-tabs"><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Flink"
+    name="tabs-read-fallback-branch"
+    id="tabs-read-fallback-branch-0"
+    checked="checked" 
+    onclick="onSwitch('Flink')"
+  />
+  <label for="tabs-read-fallback-branch-0">Flink</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="c1">-- create Paimon table
+</span><span class="c1"></span><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">T</span> <span class="p">(</span>
+    <span class="n">dt</span> <span class="n">STRING</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
+    <span class="n">name</span> <span class="n">STRING</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
+    <span class="n">amount</span> <span class="nb">BIGINT</span>
+<span class="p">)</span> <span class="n">PARTITIONED</span> <span class="k">BY</span> <span class="p">(</span><span class="n">dt</span><span class="p">);</span>
+
+<span class="c1">-- create a branch for streaming job
+</span><span class="c1"></span><span class="k">CALL</span> <span class="n">sys</span><span class="p">.</span><span class="n">create_branch</span><span class="p">(</span><span class="s1">&#39;default.T&#39;</span><span class="p">,</span> <span class="s1">&#39;test&#39;</span><span class="p">);</span>
+
+<span class="c1">-- set primary key and bucket number for the branch
+</span><span class="c1"></span><span class="k">ALTER</span> <span class="k">TABLE</span> <span class="o">`</span><span class="n">T$branch_test</span><span class="o">`</span> <span class="k">SET</span> <span class="p">(</span>
+    <span class="s1">&#39;primary-key&#39;</span> <span class="o">=</span> <span class="s1">&#39;dt,name&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;bucket&#39;</span> <span class="o">=</span> <span class="s1">&#39;2&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;changelog-producer&#39;</span> <span class="o">=</span> <span class="s1">&#39;lookup&#39;</span>
+<span class="p">);</span>
+
+<span class="c1">-- set fallback branch
+</span><span class="c1"></span><span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">T</span> <span class="k">SET</span> <span class="p">(</span>
+    <span class="s1">&#39;scan.fallback-branch&#39;</span> <span class="o">=</span> <span class="s1">&#39;test&#39;</span>
+<span class="p">);</span>
+
+<span class="c1">-- write records into the streaming branch
+</span><span class="c1"></span><span class="k">INSERT</span> <span class="k">INTO</span> <span class="o">`</span><span class="n">T$branch_test</span><span class="o">`</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;20240725&#39;</span><span class="p">,</span> <span class="s1">&#39;apple&#39;</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;20240725&#39;</span><span class="p">,</span> <span class="s1">&#39;peach&#39;</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;20240726&#39;</span><span class="p">,</span> <span class="s1">&#39;cherry&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;20240726&#39;</span><span class="p">,</span> <span class="s1">&#39;pear&#39;</span><span class="p">,</span> <span class="mi">6</span><span class="p">);</span>
+
+<span class="c1">-- write records into the default branch
+</span><span class="c1"></span><span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">T</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;20240725&#39;</span><span class="p">,</span> <span class="s1">&#39;apple&#39;</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;20240725&#39;</span><span class="p">,</span> <span class="s1">&#39;banana&#39;</span><span class="p">,</span> <span class="mi">7</span><span class="p">);</span>
+
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">T</span><span class="p">;</span>
+<span class="cm">/*
+</span><span class="cm">+------------------+------------------+--------+
+</span><span class="cm">|               dt |             name | amount |
+</span><span class="cm">+------------------+------------------+--------+
+</span><span class="cm">|         20240725 |            apple |      5 |
+</span><span class="cm">|         20240725 |           banana |      7 |
+</span><span class="cm">|         20240726 |           cherry |      3 |
+</span><span class="cm">|         20240726 |             pear |      6 |
+</span><span class="cm">+------------------+------------------+--------+
+</span><span class="cm">*/</span>
+
+<span class="c1">-- reset fallback branch
+</span><span class="c1"></span><span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">T</span> <span class="k">RESET</span> <span class="p">(</span> <span class="s1">&#39;scan.fallback-branch&#39;</span> <span class="p">);</span>
+
+<span class="c1">-- now it only reads from default branch
+</span><span class="c1"></span><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">T</span><span class="p">;</span>
+<span class="cm">/*
+</span><span class="cm">+------------------+------------------+--------+
+</span><span class="cm">|               dt |             name | amount |
+</span><span class="cm">+------------------+------------------+--------+
+</span><span class="cm">|         20240725 |            apple |      5 |
+</span><span class="cm">|         20240725 |           banana |      7 |
+</span><span class="cm">+------------------+------------------+--------+
+</span><span class="cm">*/</span>
+</code></pre></div></div></div>
+
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  
+
+
+
+
+<a href="//github.com/apache/paimon/edit/1.1/docs/content/maintenance/manage-branches.md" style="color:black"><i class="fa fa-edit fa-fw"></i>Edit This Page</a>
+
+
+ 
+        
+
+
+<hr style="margin-top: 20px; border: 1px solid #e5e5e5;" />
+
+<table style="border-spacing: 10px;">
+    <tbody>
+    <tr>
+        <td colspan="2">
+            Copyright &copy; 2024 The Apache Software Foundation. Apache Paimon, Paimon, and its feather logo are
+            trademarks of The Apache Software Foundation.
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+      </footer>
+
+      
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      
+  
+
+<nav id="TableOfContents"><h3>On This Page <button class="toc" onclick="collapseToc()"><i class="fa fa-compress" aria-hidden="true"></i></button></h3>
+  <ul>
+    <li><a href="#create-branches">Create Branches</a></li>
+    <li><a href="#delete-branches">Delete Branches</a></li>
+    <li><a href="#read--write-with-branch">Read / Write With Branch</a></li>
+    <li><a href="#fast-forward">Fast Forward</a></li>
+    <li><a href="#batch-reading-from-fallback-branch">Batch Reading from Fallback Branch</a></li>
+  </ul>
+</nav>
+
+ 
+    </aside>
+    <aside class="expand-toc">
+      <button class="toc" onclick="expandToc()">
+        <i class="fa fa-expand" aria-hidden="true"></i>
+      </button>
+    </aside>
+    
+  </main>
+
+  
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
