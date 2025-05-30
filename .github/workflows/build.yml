@@ -1,0 +1,122 @@
+# Licensed to the Apache Software Foundation (ASF) under one or more
+# contributor license agreements.  See the NOTICE file distributed with
+# this work for additional information regarding copyright ownership.
+# The ASF licenses this file to You under the Apache License, Version 2.0
+# (the "License"); you may not use this file except in compliance with
+# the License.  You may obtain a copy of the License at
+#
+#    http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+name: "Build website and document"
+
+env:
+  versions: ("master" "1.1") # defines what versions of document should be updated
+  latest_version: "1.1" # defines what version docs/latest links to
+  base_href: "https://paimon.apache.org/" # website base href
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * *' # deploy every day
+
+jobs:
+  build-website:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up JDK 1.8
+        uses: actions/setup-java@v1
+        with:
+          java-version: 1.8
+
+      - name: Set up pnpm v9
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+          run_install: false
+
+      - name: Set up Node.js 20 LTS
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.x
+
+      - name: Copy out old docs directory
+        run: |
+          git fetch origin asf-site:asf-site
+          git checkout asf-site
+          if [[ -d docs ]]
+          then
+            cp -r docs /tmp/docs
+          else
+            mkdir /tmp/docs
+          fi
+
+      - name: Create asf-site branch
+        run: |
+          git checkout master
+          git branch -D asf-site
+          git checkout --orphan asf-site
+
+      - name: Copy back docs directory
+        run: cp -r /tmp/docs docs
+
+      - name: Build Website
+        run: |
+          # move to temporary directory for building website
+          mkdir /tmp/main
+          mv * /tmp/main
+          cd /tmp/main
+          # build website
+          npm config --global set registry https://registry.npmmirror.com/
+          pnpm install
+          pnpm run build --base-href="${{ env.base_href }}"
+
+      - name: Move out output
+        run: |
+          mv /tmp/docs .
+          mv /tmp/main/dist/browser/* .
+          rm -rf /tmp/main
+
+      - name: Clone Paimon repo
+        run: git clone https://github.com/apache/paimon.git /tmp/paimon
+
+      - name: Build docs
+        run: |
+          declare -a versions=${{ env.versions }}
+          current_dir=$(pwd)
+          cp ./.github/workflows/docs.sh /tmp/paimon/docs.sh
+          for version in "${versions[@]}"
+          do
+            # delete old document
+            rm -rf docs/"$version"
+            mkdir docs/"$version"
+            # build new document
+            cd /tmp/paimon
+            git checkout master
+            if [ "$version" != "master" ]
+            then
+              git checkout release-"$version"
+            fi
+            . ./docs.sh
+            # copy document to target directory
+            cp -r docs/target/* "$current_dir"/docs/"$version"
+            # clean up
+            git reset --hard HEAD
+            cd "$current_dir"
+          done
+
+      - name: Push to github
+        run: |
+          git add -A
+          git config --global user.name 'GitHub Actions'
+          git config --global user.email 'actions@github.com'
+          git commit -m "Build website and document"
+          git push -f origin asf-site
