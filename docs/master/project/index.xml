@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Project on Apache Paimon</title>
+    <link>//paimon.apache.org/docs/master/project/</link>
+    <description>Recent content in Project on Apache Paimon</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language><atom:link href="//paimon.apache.org/docs/master/project/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Roadmap</title>
+      <link>//paimon.apache.org/docs/master/project/roadmap/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/project/roadmap/</guid>
+      <description>Roadmap #  Flink Lookup Join #  Support Flink Custom Data Distribution Lookup Join to reach large-scale data lookup join.
+Produce Iceberg snapshots #  Introduce a mode to produce Iceberg snapshots.
+Variant Type #  Support Variant Type with Spark 4.0 and Flink 2.0. Unlocking support for semi-structured data.
+File Index #  Add more index:
+ Inverse  Vector Compaction #  Support Vector Compaction for super Wide Table.</description>
+    </item>
+    
+    <item>
+      <title>Download</title>
+      <link>//paimon.apache.org/docs/master/project/download/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/project/download/</guid>
+      <description>Download #  This documentation is a guide for downloading Paimon Jars.
+Engine Jars #     Version Jar     Flink 2.0 paimon-flink-2.0-1.2-SNAPSHOT.jar   Flink 1.20 paimon-flink-1.20-1.2-SNAPSHOT.jar   Flink 1.19 paimon-flink-1.19-1.2-SNAPSHOT.jar   Flink 1.18 paimon-flink-1.18-1.2-SNAPSHOT.jar   Flink 1.17 paimon-flink-1.17-1.2-SNAPSHOT.jar   Flink 1.16 paimon-flink-1.16-1.2-SNAPSHOT.jar   Flink 1.15 paimon-flink-1.15-1.2-SNAPSHOT.jar   Flink Action paimon-flink-action-1.2-SNAPSHOT.jar   Spark 3.5 paimon-spark-3.5-1.2-SNAPSHOT.jar   Spark 3.</description>
+    </item>
+    
+    <item>
+      <title>Contributing</title>
+      <link>//paimon.apache.org/docs/master/project/contributing/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/project/contributing/</guid>
+      <description>Contributing #  Apache Paimon is developed by an open and friendly community. Everybody is cordially welcome to join the community and contribute to Apache Paimon. There are several ways to interact with the community and contribute to Paimon including asking questions, filing bug reports, proposing new features, joining discussions on the mailing lists, contributing code or documentation, improving website, testing release candidates and writing corresponding blog etc.
+What do you want to do?</description>
+    </item>
+    
+    <item>
+      <title>Committer</title>
+      <link>//paimon.apache.org/docs/master/project/committer/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/project/committer/</guid>
+      <description>Committer #  Become a Committer #  How to become a committer #  There is no strict protocol for becoming a committer. Candidates for new committers are typically people that are active contributors and community members. Candidates are suggested by current committers or PPMC members, and voted upon by the PPMC.
+If you would like to become a committer, you should engage with the community and start contributing to Apache Paimon in any of the above ways.</description>
+    </item>
+    
+  </channel>
+</rss>
