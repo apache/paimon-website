@@ -1,0 +1,2404 @@
+
+<!DOCTYPE html>
+<html lang="en" dir=>
+
+<head>
+  <meta name="generator" content="Hugo 0.80.0" />
+  
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Manage Privileges #  Paimon provides a privilege system on catalogs. Privileges determine which users can perform which operations on which objects, so that you can manage table access in a fine-grained manner.
+Currently, Paimon adopts the identity-based access control (IBAC) privilege model. That is, privileges are directly assigned to users.
+This privilege system only prevents unwanted users from accessing tables through catalogs. It does not block access through temporary table (by specifying table path on filesystem), nor does it prevent user from directly modifying data files on filesystem.">
+<meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="Manage Privileges" />
+<meta property="og:description" content="Manage Privileges #  Paimon provides a privilege system on catalogs. Privileges determine which users can perform which operations on which objects, so that you can manage table access in a fine-grained manner.
+Currently, Paimon adopts the identity-based access control (IBAC) privilege model. That is, privileges are directly assigned to users.
+This privilege system only prevents unwanted users from accessing tables through catalogs. It does not block access through temporary table (by specifying table path on filesystem), nor does it prevent user from directly modifying data files on filesystem." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="//paimon.apache.org/docs/master/maintenance/manage-privileges/" />
+
+<title>Manage Privileges | Apache Paimon</title>
+<link rel="manifest" href="/docs/master/manifest.json">
+<link rel="icon" href="/docs/master/favicon.png" type="image/x-icon">
+<link rel="stylesheet" href="/docs/master/book.min.3bc4108a5b57c9a7e6fcae92ff69940435f8c46c4e1e4a311aedc9b2d8e06792.css" integrity="sha256-O8QQiltXyafm/K6S/2mUBDX4xGxOHkoxGu3JstjgZ5I=">
+<script defer src="/docs/master/en.search.min.ecf55ce92c33721b48fb9bacd3b38f0643446b8e9411ae286d20eb3aa0db4425.js" integrity="sha256-7PVc6SwzchtI&#43;5us07OPBkNEa46UEa4obSDrOqDbRCU="></script>
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+  
+  
+
+<link rel="stylesheet" type="text/css" href="//paimon.apache.org/docs/master/font-awesome/css/font-awesome.min.css">
+<script src="//paimon.apache.org/docs/master/js/anchor.min.js"></script>
+<script src="//paimon.apache.org/docs/master/js/flink.js"></script>
+
+
+
+  
+  <script>
+    var _paq = window._paq = window._paq || [];
+     
+     
+    _paq.push(['disableCookies']);
+     
+    _paq.push(["setDomains", ["*.flink.apache.org","*.nightlies.apache.org/flink"]]);
+    _paq.push(['trackPageView']);
+    _paq.push(['enableLinkTracking']);
+    (function() {
+      var u="//matomo.privacy.apache.org/";
+      _paq.push(['setTrackerUrl', u+'matomo.php']);
+      _paq.push(['setSiteId', '1']);
+      var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+      g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+    })();
+  </script>
+  
+</head>
+
+<body dir=>
+  
+    <input type="checkbox" class="hidden toggle" id="menu-control" />
+    <input type="checkbox" class="hidden toggle" id="toc-control" />
+  
+  <main class="container flex">
+    
+      <aside class="book-menu">
+        
+  
+
+<nav>
+
+
+<a id="logo" href="//paimon.apache.org/docs/master">
+    <img width="100%" src="//paimon.apache.org/docs/master/paimon_black.svg">
+</a>
+<p style="text-align:right">1.2-SNAPSHOT</p>
+
+<div class="book-search">
+  <input type="text" id="book-search-input" placeholder="Search" aria-label="Search" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-dc8a1c63e6da60163016ce21cae1faa0" class="toggle"  />
+    <label for="section-dc8a1c63e6da60163016ce21cae1faa0" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-book title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Concepts</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/basic-concepts/" class="">Basic Concepts</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/concurrency-control/" class="">Concurrency Control</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/catalog/" class="">Catalog</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-e03f934865df9dd3baca303554bcaa71" class="toggle"  />
+    <label for="section-e03f934865df9dd3baca303554bcaa71" class="flex justify-between">RESTCatalog<span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/rest/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/rest/bear/" class="">Bear Token</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/rest/dlf/" class="">DLF Token</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/rest/rest-api/" class="">REST API</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/table-types/" class="">Table Types</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/system-tables/" class="">System Tables</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/data-types/" class="">Data Types</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/functions/" class="">Functions</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-d3e7256ce393050c572ea7bd8cc4f240" class="toggle"  />
+    <label for="section-d3e7256ce393050c572ea7bd8cc4f240" class="flex justify-between">Specification<span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/spec/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/spec/schema/" class="">Schema</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/spec/snapshot/" class="">Snapshot</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/spec/manifest/" class="">Manifest</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/spec/datafile/" class="">DataFile</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/spec/tableindex/" class="">Table Index</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/spec/fileindex/" class="">File Index</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-3f6a6d4f1692040009c66ffaa328c8d0" class="toggle"  />
+    <label for="section-3f6a6d4f1692040009c66ffaa328c8d0" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-database title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Table with PK</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/primary-key-table/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/primary-key-table/data-distribution/" class="">Data Distribution</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/primary-key-table/table-mode/" class="">Table Mode</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-038bb7d17b5b7cb93fb60acbcf218f11" class="toggle"  />
+    <label for="section-038bb7d17b5b7cb93fb60acbcf218f11" class="flex justify-between">Merge Engine<span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/primary-key-table/merge-engine/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/primary-key-table/merge-engine/partial-update/" class="">Partial Update</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/primary-key-table/merge-engine/aggregation/" class="">Aggregation</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/primary-key-table/merge-engine/first-row/" class="">First Row</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/primary-key-table/changelog-producer/" class="">Changelog Producer</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/primary-key-table/sequence-rowkind/" class="">Sequence & Rowkind</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/primary-key-table/compaction/" class="">Compaction</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/primary-key-table/query-performance/" class="">Query Performance</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-f74847e1c917ba2b99e7b718bb318b30" class="toggle"  />
+    <label for="section-f74847e1c917ba2b99e7b718bb318b30" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-database title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Table w/o PK</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/append-table/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/append-table/streaming/" class="">Streaming</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/append-table/query-performance/" class="">Query Performance</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/append-table/update/" class="">Update</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/append-table/bucketed/" class="">Bucketed</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-998a37410d502937fe8444ed73a9ecf8" class="toggle"  />
+    <label for="section-998a37410d502937fe8444ed73a9ecf8" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-gear title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Engine Flink</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/flink/quick-start/" class="">Quick Start</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/flink/sql-ddl/" class="">SQL DDL</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/flink/sql-write/" class="">SQL Write</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/flink/sql-query/" class="">SQL Query</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/flink/consumer-id/" class="">Consumer ID</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/flink/sql-lookup/" class="">SQL Lookup</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/flink/sql-alter/" class="">SQL Alter</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/flink/procedures/" class="">Procedures</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/flink/action-jars/" class="">Action Jars</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/flink/savepoint/" class="">Savepoint</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-74c63bf75b4f6bd14a3ea6a1217f03ad" class="toggle"  />
+    <label for="section-74c63bf75b4f6bd14a3ea6a1217f03ad" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-gear title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Engine Spark</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/spark/quick-start/" class="">Quick Start</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/spark/sql-ddl/" class="">SQL DDL</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/spark/sql-functions/" class="">SQL Functions</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/spark/sql-write/" class="">SQL Write</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/spark/sql-query/" class="">SQL Query</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/spark/sql-alter/" class="">SQL Alter</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/spark/auxiliary/" class="">Auxiliary</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/spark/procedures/" class="">Procedures</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-16bf9de4e97c50dda6ce1ac6e934602c" class="toggle"  />
+    <label for="section-16bf9de4e97c50dda6ce1ac6e934602c" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-gear title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Ecosystem</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/ecosystem/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/ecosystem/starrocks/" class="">StarRocks</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/ecosystem/doris/" class="">Doris</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/ecosystem/hive/" class="">Hive</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/ecosystem/trino/" class="">Trino</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/ecosystem/amoro/" class="">Amoro</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-582e435c19ca5fafbf9764337d648e63" class="toggle"  />
+    <label for="section-582e435c19ca5fafbf9764337d648e63" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-gear title maindish" aria-hidden="true"></i>&nbsp;&nbsp;CDC Ingestion</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/cdc-ingestion/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/cdc-ingestion/mysql-cdc/" class="">Mysql CDC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/cdc-ingestion/postgres-cdc/" class="">Postgres CDC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/cdc-ingestion/kafka-cdc/" class="">Kafka CDC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/cdc-ingestion/mongo-cdc/" class="">Mongo CDC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/cdc-ingestion/pulsar-cdc/" class="">Pulsar CDC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/cdc-ingestion/debezium-bson/" class="">Debezium BSON</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-697a4b6a0388d6cfa4f418aba3b4edfe" class="toggle" checked />
+    <label for="section-697a4b6a0388d6cfa4f418aba3b4edfe" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-wrench title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Maintenance</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/maintenance/filesystems/" class="">Filesystems</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/maintenance/write-performance/" class="">Write Performance</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/maintenance/dedicated-compaction/" class="">Dedicated Compaction</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/maintenance/manage-snapshots/" class="">Manage Snapshots</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/maintenance/rescale-bucket/" class="">Rescale Bucket</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/maintenance/manage-tags/" class="">Manage Tags</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/maintenance/metrics/" class="">Metrics</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/maintenance/manage-privileges/" class=" active">Manage Privileges</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/maintenance/manage-branches/" class="">Manage Branches</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/maintenance/manage-partitions/" class="">Manage Partitions</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/maintenance/configurations/" class="">Configurations</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-049030059e0dc01edf74ba3d4d259dae" class="toggle"  />
+    <label for="section-049030059e0dc01edf74ba3d4d259dae" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-briefcase title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Program API</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/program-api/rest-api/" class="">REST API</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/program-api/flink-api/" class="">Flink API</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/program-api/java-api/" class="">Java API</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/program-api/catalog-api/" class="">Catalog API</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/program-api/python-api/" class="">Python API</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-07c567e5a9f3ce62aea4ff0a1e2dc065" class="toggle"  />
+    <label for="section-07c567e5a9f3ce62aea4ff0a1e2dc065" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-briefcase title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Migration</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/migration/migration-from-hive/" class="">Migration From Hive</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/migration/migration-from-iceberg/" class="">Migration From Iceberg</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/migration/upsert-to-partitioned/" class="">Upsert To Partitioned</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/migration/clone-to-paimon/" class="">Clone To Paimon</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-dc2f2ba83b7db3b9bfa35da4c73572d2" class="toggle"  />
+    <label for="section-dc2f2ba83b7db3b9bfa35da4c73572d2" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-briefcase title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Iceberg Metadata</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/iceberg/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/iceberg/append-table/" class="">Append Table</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/iceberg/primary-key-table/" class="">Primary Key Table</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/iceberg/iceberg-tags/" class="">Iceberg Tags</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/iceberg/hive-catalog/" class="">Hive Catalogs</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/iceberg/ecosystem/" class="">Ecosystem</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/iceberg/configurations/" class="">Configurations</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  	<br/>
+  
+  
+    <input type="checkbox" id="section-8c828bcf882f666cdd6821a70cc768ee" class="toggle"  />
+    <label for="section-8c828bcf882f666cdd6821a70cc768ee" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-sitemap title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Project</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/project/roadmap/" class="">Roadmap</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/project/download/" class="">Download</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/project/contributing/" class="">Contributing</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/project/committer/" class="">Committer</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-392fc6f653ae23ff676811656a71ebbf" class="toggle"  />
+    <label for="section-392fc6f653ae23ff676811656a71ebbf" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-sitemap title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Learn Paimon</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/learn-paimon/understand-files/" class="">Understand Files</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br/>
+<hr class="menu-break">
+
+<a href="//paimon.apache.org" style="color:black;margin-bottom:0.5em"><i class="link fa fa-external-link title" aria-hidden="true"></i> Project Homepage</a>
+<br/>
+
+<a href="//paimon.apache.org/docs/master/api/java/" style="color:black;margin-bottom:0.5em"><i class="link fa fa-external-link title" aria-hidden="true"></i> JavaDocs</a>
+<br/>
+
+<hr class="menu-break">
+<li style="list-style-type: none">
+  <br>
+  <input type="checkbox" id="section-version-picker" class="toggle">
+  <label for="section-version-picker" class="flex justify-between">
+     <div style="font-weight:450;margin-bottom:0.5em">Pick Docs Version</div>
+     <span>▾</span>
+  </label>
+  <ul>
+    <a href="//paimon.apache.org/docs/master">
+      1.2-SNAPSHOT (✓)
+    </a>
+    <hr class="menu-break">
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/master">
+          master
+        </a>
+      </li>
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/1.0">
+          stable
+        </a>
+      </li>
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/1.0">
+          1.0
+        </a>
+      </li>
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/0.9">
+          0.9
+        </a>
+      </li>
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/0.8">
+          0.8
+        </a>
+      </li>
+    
+    <hr class="menu-break">
+    <li>
+      <a href="//paimon.apache.org/docs/master/versions">
+          All Versions
+      </a>
+    </li>
+  </ul>
+</li>
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var menu=document.querySelector("aside.book-menu nav");addEventListener("beforeunload",function(event){localStorage.setItem("menu.scrollTop",menu.scrollTop);});menu.scrollTop=localStorage.getItem("menu.scrollTop");})();</script>
+
+
+ 
+      </aside>
+    
+
+    <div class="book-page">
+      
+        <header class="book-header">
+          
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/docs/master/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <strong>Manage Privileges</strong>
+
+  <label for="toc-control">
+    
+    <img src="/docs/master/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden clearfix">
+    
+  
+
+<nav id="TableOfContents"><h3>On This Page <button class="toc" onclick="collapseToc()"><i class="fa fa-compress" aria-hidden="true"></i></button></h3>
+  <ul>
+    <li><a href="#basic-concepts">Basic Concepts</a>
+      <ul>
+        <li><a href="#object">Object</a></li>
+        <li><a href="#privilege">Privilege</a></li>
+        <li><a href="#user">User</a></li>
+      </ul>
+    </li>
+    <li><a href="#enable-privileges">Enable Privileges</a></li>
+    <li><a href="#accessing-privileged-catalogs">Accessing Privileged Catalogs</a></li>
+    <li><a href="#creating-users">Creating Users</a></li>
+    <li><a href="#dropping-users">Dropping Users</a></li>
+    <li><a href="#granting-privileges-to-users">Granting Privileges to Users</a></li>
+    <li><a href="#revoking-privileges-to-users">Revoking Privileges to Users</a></li>
+  </ul>
+</nav>
+
+
+  </aside>
+  
+ 
+        </header>
+      
+
+      
+
+
+
+
+<article class="markdown">
+    <blockquote style="border-color:#f66">
+        This documentation is for an unreleased version of Apache Paimon. We recommend you use the latest <a href="https://paimon.apache.org/docs/1.0">stable version</a>.
+    </blockquote>
+</article>
+
+
+
+      
+  <article class="markdown"><!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<h1 id="manage-privileges">
+  Manage Privileges
+  <a class="anchor" href="#manage-privileges">#</a>
+</h1>
+<p>Paimon provides a privilege system on catalogs.
+Privileges determine which users can perform which operations on which objects,
+so that you can manage table access in a fine-grained manner.</p>
+<p>Currently, Paimon adopts the identity-based access control (IBAC) privilege model.
+That is, privileges are directly assigned to users.</p>
+<blockquote class="book-hint warning">
+  This privilege system only prevents unwanted users from accessing tables through catalogs.
+It does not block access through temporary table (by specifying table path on filesystem),
+nor does it prevent user from directly modifying data files on filesystem.
+If you need more serious protection, use a filesystem with access management instead.
+</blockquote>
+
+<h2 id="basic-concepts">
+  Basic Concepts
+  <a class="anchor" href="#basic-concepts">#</a>
+</h2>
+<p>We now introduce the basic concepts of the privilege system.</p>
+<h3 id="object">
+  Object
+  <a class="anchor" href="#object">#</a>
+</h3>
+<p>An object is an entity to which access can be granted. Unless allowed by a grant, access is denied.</p>
+<p>Currently, the privilege system in Paimon has three types of objects: CATALOG, DATABASE and TABLE.
+Objects have a logical hierarchy, which is related to the concept they represent.
+For example:</p>
+<ul>
+<li>If a user is granted a privilege on the catalog,
+he will also have this privilege on all databases and all tables in the catalog.</li>
+<li>If a user is granted a privilege on the database,
+he will also have this privilege on all tables in that database.</li>
+<li>If a user is revoked a privilege from the catalog,
+he will also lose this privilege on all databases and all tables in the catalog.</li>
+<li>If a user is revoked a privilege from the database,
+he will also lose this privilege on all tables in that database.</li>
+</ul>
+<h3 id="privilege">
+  Privilege
+  <a class="anchor" href="#privilege">#</a>
+</h3>
+<p>A privilege is a defined level of access to an object.
+Multiple privileges can be used to control the granularity of access granted on an object.
+Privileges are object-specific. Different objects may have different privileges.</p>
+<p>Currently, we support the following privileges.</p>
+<table>
+<thead>
+<tr>
+<th>Privilege</th>
+<th>Description</th>
+<th>Can be Granted on</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SELECT</td>
+<td>Queries data in a table.</td>
+<td>TABLE, DATABASE, CATALOG</td>
+</tr>
+<tr>
+<td>INSERT</td>
+<td>Inserts, updates or drops data in a table. Creates or drops tags and branches in a table.</td>
+<td>TABLE, DATABASE, CATALOG</td>
+</tr>
+<tr>
+<td>ALTER_TABLE</td>
+<td>Alters metadata of a table, including table name, column names, table options, etc.</td>
+<td>TABLE, DATABASE, CATALOG</td>
+</tr>
+<tr>
+<td>DROP_TABLE</td>
+<td>Drops a table.</td>
+<td>TABLE, DATABASE, CATALOG</td>
+</tr>
+<tr>
+<td>CREATE_TABLE</td>
+<td>Creates a table in a database.</td>
+<td>DATABASE, CATALOG</td>
+</tr>
+<tr>
+<td>DROP_DATABASE</td>
+<td>Drops a database.</td>
+<td>DATABASE, CATALOG</td>
+</tr>
+<tr>
+<td>CREATE_DATABASE</td>
+<td>Creates a database in the catalog.</td>
+<td>CATALOG</td>
+</tr>
+<tr>
+<td>ADMIN</td>
+<td>Creates or drops privileged users, grants or revokes privileges from users in a catalog.</td>
+<td>CATALOG</td>
+</tr>
+</tbody>
+</table>
+<h3 id="user">
+  User
+  <a class="anchor" href="#user">#</a>
+</h3>
+<p>The entity to which privileges can be granted. Users are authenticated by their password.</p>
+<p>When the privilege system is enabled, two special users will be created automatically.</p>
+<ul>
+<li>The <code>root</code> user,
+which is identified by the provided root password when enabling the privilege system.
+This user always has all privileges in the catalog.</li>
+<li>The <code>anonymous</code> user.
+This is the default user if no username and password is provided when creating the catalog.</li>
+</ul>
+<h2 id="enable-privileges">
+  Enable Privileges
+  <a class="anchor" href="#enable-privileges">#</a>
+</h2>
+<p>Paimon currently only supports file-based privilege system.
+Only catalogs with <code>'metastore' = 'filesystem'</code> (the default value) or <code>'metastore' = 'hive'</code> support such privilege system.</p>
+<p>To enable the privilege system on a filesystem / Hive catalog, do the following steps.</p>
+
+
+
+
+
+<div class="book-tabs"><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Flink 1.18&#43;"
+    name="tabs-enable-privileges"
+    id="tabs-enable-privileges-0"
+    checked="checked" 
+    onclick="onSwitch('Flink 1.18\u002b')"
+  />
+  <label for="tabs-enable-privileges-0">Flink 1.18&#43;</label>
+  <div class="book-tabs-content markdown-inner"><p>Run the following Flink SQL.</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="c1">-- use the catalog where you want to enable the privilege system
+</span><span class="c1"></span><span class="n">USE</span> <span class="k">CATALOG</span> <span class="o">`</span><span class="n">my</span><span class="o">-</span><span class="k">catalog</span><span class="o">`</span><span class="p">;</span>
+    
+<span class="c1">-- initialize privilege system by providing a root password
+</span><span class="c1">-- change &#39;root-password&#39; to the password you want
+</span><span class="c1"></span><span class="k">CALL</span> <span class="n">sys</span><span class="p">.</span><span class="n">init_file_based_privilege</span><span class="p">(</span><span class="s1">&#39;root-password&#39;</span><span class="p">);</span>
+</code></pre></div></div></div>
+
+<p>After the privilege system is enabled,
+please re-create the catalog and authenticate as <code>root</code> to create other users and grant them privileges.</p>
+<blockquote class="book-hint info">
+  Privilege system does not affect existing catalogs.
+That is, these catalogs can still access and modify the tables freely.
+Please drop and re-create all catalogs with the desired warehouse path
+if you want to use the privilege system in these catalogs.
+</blockquote>
+
+<h2 id="accessing-privileged-catalogs">
+  Accessing Privileged Catalogs
+  <a class="anchor" href="#accessing-privileged-catalogs">#</a>
+</h2>
+<p>To access a privileged catalog and to be authenticated as a user,
+you need to define <code>user</code> and <code>password</code> catalog options when creating the catalog.
+For example, the following SQL creates a catalog while trying to be authenticated as <code>root</code>,
+whose password is <code>mypassword</code>.</p>
+
+
+
+
+
+<div class="book-tabs"><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Flink"
+    name="tabs-access-catalog"
+    id="tabs-access-catalog-0"
+    checked="checked" 
+    onclick="onSwitch('Flink')"
+  />
+  <label for="tabs-access-catalog-0">Flink</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">CREATE</span> <span class="k">CATALOG</span> <span class="o">`</span><span class="n">my</span><span class="o">-</span><span class="k">catalog</span><span class="o">`</span> <span class="k">WITH</span> <span class="p">(</span>
+    <span class="s1">&#39;type&#39;</span> <span class="o">=</span> <span class="s1">&#39;paimon&#39;</span><span class="p">,</span>
+    <span class="c1">-- ...
+</span><span class="c1"></span>    <span class="s1">&#39;user&#39;</span> <span class="o">=</span> <span class="s1">&#39;root&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;password&#39;</span> <span class="o">=</span> <span class="s1">&#39;mypassword&#39;</span>
+<span class="p">);</span>
+</code></pre></div></div></div>
+
+<h2 id="creating-users">
+  Creating Users
+  <a class="anchor" href="#creating-users">#</a>
+</h2>
+<p>You must be authenticated as a user with <code>ADMIN</code> privilege (for example, <code>root</code>) to perform this operation.</p>
+<p>Do the following steps to create a user in the privilege system.</p>
+
+
+
+
+
+<div class="book-tabs"><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Flink 1.18&#43;"
+    name="tabs-create-users"
+    id="tabs-create-users-0"
+    checked="checked" 
+    onclick="onSwitch('Flink 1.18\u002b')"
+  />
+  <label for="tabs-create-users-0">Flink 1.18&#43;</label>
+  <div class="book-tabs-content markdown-inner"><p>Run the following Flink SQL.</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="c1">-- use the catalog where you want to create a user
+</span><span class="c1">-- you must be authenticated as a user with ADMIN privilege in this catalog
+</span><span class="c1"></span><span class="n">USE</span> <span class="k">CATALOG</span> <span class="o">`</span><span class="n">my</span><span class="o">-</span><span class="k">catalog</span><span class="o">`</span><span class="p">;</span>
+
+<span class="c1">-- create a user authenticated by the specified password
+</span><span class="c1">-- change &#39;user&#39; and &#39;password&#39; to the username and password you want
+</span><span class="c1"></span><span class="k">CALL</span> <span class="n">sys</span><span class="p">.</span><span class="n">create_privileged_user</span><span class="p">(</span><span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="s1">&#39;password&#39;</span><span class="p">);</span>
+</code></pre></div></div></div>
+
+<h2 id="dropping-users">
+  Dropping Users
+  <a class="anchor" href="#dropping-users">#</a>
+</h2>
+<p>You must be authenticated as a user with <code>ADMIN</code> privilege (for example, <code>root</code>) to perform this operation.</p>
+<p>Do the following steps to drop a user in the privilege system.</p>
+
+
+
+
+
+<div class="book-tabs"><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Flink 1.18&#43;"
+    name="tabs-drop-users"
+    id="tabs-drop-users-0"
+    checked="checked" 
+    onclick="onSwitch('Flink 1.18\u002b')"
+  />
+  <label for="tabs-drop-users-0">Flink 1.18&#43;</label>
+  <div class="book-tabs-content markdown-inner"><p>Run the following Flink SQL.</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="c1">-- use the catalog where you want to drop a user
+</span><span class="c1">-- you must be authenticated as a user with ADMIN privilege in this catalog
+</span><span class="c1"></span><span class="n">USE</span> <span class="k">CATALOG</span> <span class="o">`</span><span class="n">my</span><span class="o">-</span><span class="k">catalog</span><span class="o">`</span><span class="p">;</span>
+
+<span class="c1">-- change &#39;user&#39; to the username you want to drop
+</span><span class="c1"></span><span class="k">CALL</span> <span class="n">sys</span><span class="p">.</span><span class="n">drop_privileged_user</span><span class="p">(</span><span class="s1">&#39;user&#39;</span><span class="p">);</span>
+</code></pre></div></div></div>
+
+<h2 id="granting-privileges-to-users">
+  Granting Privileges to Users
+  <a class="anchor" href="#granting-privileges-to-users">#</a>
+</h2>
+<p>You must be authenticated as a user with <code>ADMIN</code> privilege (for example, <code>root</code>) to perform this operation.</p>
+<p>Do the following steps to grant a user with privilege in the privilege system.</p>
+
+
+
+
+
+<div class="book-tabs"><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Flink 1.18&#43;"
+    name="tabs-grant-to-users"
+    id="tabs-grant-to-users-0"
+    checked="checked" 
+    onclick="onSwitch('Flink 1.18\u002b')"
+  />
+  <label for="tabs-grant-to-users-0">Flink 1.18&#43;</label>
+  <div class="book-tabs-content markdown-inner"><p>Run the following Flink SQL.</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="c1">-- use the catalog where you want to drop a user
+</span><span class="c1">-- you must be authenticated as a user with ADMIN privilege in this catalog
+</span><span class="c1"></span><span class="n">USE</span> <span class="k">CATALOG</span> <span class="o">`</span><span class="n">my</span><span class="o">-</span><span class="k">catalog</span><span class="o">`</span><span class="p">;</span>
+
+<span class="c1">-- you can change &#39;user&#39; to the username you want, and &#39;SELECT&#39; to other privilege you want
+</span><span class="c1">-- grant &#39;user&#39; with privilege &#39;SELECT&#39; on the whole catalog
+</span><span class="c1"></span><span class="k">CALL</span> <span class="n">sys</span><span class="p">.</span><span class="n">grant_privilege_to_user</span><span class="p">(</span><span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="s1">&#39;SELECT&#39;</span><span class="p">);</span>
+<span class="c1">-- grant &#39;user&#39; with privilege &#39;SELECT&#39; on database my_db
+</span><span class="c1"></span><span class="k">CALL</span> <span class="n">sys</span><span class="p">.</span><span class="n">grant_privilege_to_user</span><span class="p">(</span><span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="s1">&#39;SELECT&#39;</span><span class="p">,</span> <span class="s1">&#39;my_db&#39;</span><span class="p">);</span>
+<span class="c1">-- grant &#39;user&#39; with privilege &#39;SELECT&#39; on table my_db.my_tbl
+</span><span class="c1"></span><span class="k">CALL</span> <span class="n">sys</span><span class="p">.</span><span class="n">grant_privilege_to_user</span><span class="p">(</span><span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="s1">&#39;SELECT&#39;</span><span class="p">,</span> <span class="s1">&#39;my_db&#39;</span><span class="p">,</span> <span class="s1">&#39;my_tbl&#39;</span><span class="p">);</span>
+</code></pre></div></div></div>
+
+<h2 id="revoking-privileges-to-users">
+  Revoking Privileges to Users
+  <a class="anchor" href="#revoking-privileges-to-users">#</a>
+</h2>
+<p>You must be authenticated as a user with <code>ADMIN</code> privilege (for example, <code>root</code>) to perform this operation.</p>
+<p>Do the following steps to revoke a privilege from user in the privilege system.</p>
+
+
+
+
+
+<div class="book-tabs"><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Flink 1.18&#43;"
+    name="tabs-revoke-from-users"
+    id="tabs-revoke-from-users-0"
+    checked="checked" 
+    onclick="onSwitch('Flink 1.18\u002b')"
+  />
+  <label for="tabs-revoke-from-users-0">Flink 1.18&#43;</label>
+  <div class="book-tabs-content markdown-inner"><p>Run the following Flink SQL.</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="c1">-- use the catalog where you want to drop a user
+</span><span class="c1">-- you must be authenticated as a user with ADMIN privilege in this catalog
+</span><span class="c1"></span><span class="n">USE</span> <span class="k">CATALOG</span> <span class="o">`</span><span class="n">my</span><span class="o">-</span><span class="k">catalog</span><span class="o">`</span><span class="p">;</span>
+
+<span class="c1">-- you can change &#39;user&#39; to the username you want, and &#39;SELECT&#39; to other privilege you want
+</span><span class="c1">-- revoke &#39;user&#39; with privilege &#39;SELECT&#39; on the whole catalog
+</span><span class="c1"></span><span class="k">CALL</span> <span class="n">sys</span><span class="p">.</span><span class="n">revoke_privilege_from_user</span><span class="p">(</span><span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="s1">&#39;SELECT&#39;</span><span class="p">);</span>
+<span class="c1">-- revoke &#39;user&#39; with privilege &#39;SELECT&#39; on database my_db
+</span><span class="c1"></span><span class="k">CALL</span> <span class="n">sys</span><span class="p">.</span><span class="n">revoke_privilege_from_user</span><span class="p">(</span><span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="s1">&#39;SELECT&#39;</span><span class="p">,</span> <span class="s1">&#39;my_db&#39;</span><span class="p">);</span>
+<span class="c1">-- revoke &#39;user&#39; with privilege &#39;SELECT&#39; on table my_db.my_tbl
+</span><span class="c1"></span><span class="k">CALL</span> <span class="n">sys</span><span class="p">.</span><span class="n">revoke_privilege_from_user</span><span class="p">(</span><span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="s1">&#39;SELECT&#39;</span><span class="p">,</span> <span class="s1">&#39;my_db&#39;</span><span class="p">,</span> <span class="s1">&#39;my_tbl&#39;</span><span class="p">);</span>
+</code></pre></div></div></div>
+
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  
+
+
+
+
+<a href="//github.com/apache/paimon/edit/master/docs/content/maintenance/manage-privileges.md" style="color:black"><i class="fa fa-edit fa-fw"></i>Edit This Page</a>
+
+
+ 
+        
+
+
+<hr style="margin-top: 20px; border: 1px solid #e5e5e5;" />
+
+<table style="border-spacing: 10px;">
+    <tbody>
+    <tr>
+        <td colspan="2">
+            Copyright &copy; 2025 The Apache Software Foundation. Apache Paimon, Paimon, and its feather logo are
+            trademarks of The Apache Software Foundation.
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+      </footer>
+
+      
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      
+  
+
+<nav id="TableOfContents"><h3>On This Page <button class="toc" onclick="collapseToc()"><i class="fa fa-compress" aria-hidden="true"></i></button></h3>
+  <ul>
+    <li><a href="#basic-concepts">Basic Concepts</a>
+      <ul>
+        <li><a href="#object">Object</a></li>
+        <li><a href="#privilege">Privilege</a></li>
+        <li><a href="#user">User</a></li>
+      </ul>
+    </li>
+    <li><a href="#enable-privileges">Enable Privileges</a></li>
+    <li><a href="#accessing-privileged-catalogs">Accessing Privileged Catalogs</a></li>
+    <li><a href="#creating-users">Creating Users</a></li>
+    <li><a href="#dropping-users">Dropping Users</a></li>
+    <li><a href="#granting-privileges-to-users">Granting Privileges to Users</a></li>
+    <li><a href="#revoking-privileges-to-users">Revoking Privileges to Users</a></li>
+  </ul>
+</nav>
+
+ 
+    </aside>
+    <aside class="expand-toc">
+      <button class="toc" onclick="expandToc()">
+        <i class="fa fa-expand" aria-hidden="true"></i>
+      </button>
+    </aside>
+    
+  </main>
+
+  
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

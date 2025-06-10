@@ -1,0 +1,2587 @@
+
+<!DOCTYPE html>
+<html lang="en" dir=>
+
+<head>
+  <meta name="generator" content="Hugo 0.80.0" />
+  
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Java-based Implementation For Python API #  Python SDK  has defined Python API for Paimon. Currently, there is only a Java-based implementation.
+Java-based implementation will launch a JVM and use py4j to execute Java code to read and write Paimon table.
+Environment Settings #  SDK Installing #  SDK is published at pypaimon. You can install by
+pip install pypaimon Java Runtime Environment #  This SDK needs JRE 1.">
+<meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="Python API" />
+<meta property="og:description" content="Java-based Implementation For Python API #  Python SDK  has defined Python API for Paimon. Currently, there is only a Java-based implementation.
+Java-based implementation will launch a JVM and use py4j to execute Java code to read and write Paimon table.
+Environment Settings #  SDK Installing #  SDK is published at pypaimon. You can install by
+pip install pypaimon Java Runtime Environment #  This SDK needs JRE 1." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="//paimon.apache.org/docs/master/program-api/python-api/" />
+
+<title>Python API | Apache Paimon</title>
+<link rel="manifest" href="/docs/master/manifest.json">
+<link rel="icon" href="/docs/master/favicon.png" type="image/x-icon">
+<link rel="stylesheet" href="/docs/master/book.min.3bc4108a5b57c9a7e6fcae92ff69940435f8c46c4e1e4a311aedc9b2d8e06792.css" integrity="sha256-O8QQiltXyafm/K6S/2mUBDX4xGxOHkoxGu3JstjgZ5I=">
+<script defer src="/docs/master/en.search.min.ecf55ce92c33721b48fb9bacd3b38f0643446b8e9411ae286d20eb3aa0db4425.js" integrity="sha256-7PVc6SwzchtI&#43;5us07OPBkNEa46UEa4obSDrOqDbRCU="></script>
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+  
+  
+
+<link rel="stylesheet" type="text/css" href="//paimon.apache.org/docs/master/font-awesome/css/font-awesome.min.css">
+<script src="//paimon.apache.org/docs/master/js/anchor.min.js"></script>
+<script src="//paimon.apache.org/docs/master/js/flink.js"></script>
+
+
+
+  
+  <script>
+    var _paq = window._paq = window._paq || [];
+     
+     
+    _paq.push(['disableCookies']);
+     
+    _paq.push(["setDomains", ["*.flink.apache.org","*.nightlies.apache.org/flink"]]);
+    _paq.push(['trackPageView']);
+    _paq.push(['enableLinkTracking']);
+    (function() {
+      var u="//matomo.privacy.apache.org/";
+      _paq.push(['setTrackerUrl', u+'matomo.php']);
+      _paq.push(['setSiteId', '1']);
+      var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+      g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+    })();
+  </script>
+  
+</head>
+
+<body dir=>
+  
+    <input type="checkbox" class="hidden toggle" id="menu-control" />
+    <input type="checkbox" class="hidden toggle" id="toc-control" />
+  
+  <main class="container flex">
+    
+      <aside class="book-menu">
+        
+  
+
+<nav>
+
+
+<a id="logo" href="//paimon.apache.org/docs/master">
+    <img width="100%" src="//paimon.apache.org/docs/master/paimon_black.svg">
+</a>
+<p style="text-align:right">1.2-SNAPSHOT</p>
+
+<div class="book-search">
+  <input type="text" id="book-search-input" placeholder="Search" aria-label="Search" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-dc8a1c63e6da60163016ce21cae1faa0" class="toggle"  />
+    <label for="section-dc8a1c63e6da60163016ce21cae1faa0" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-book title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Concepts</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/basic-concepts/" class="">Basic Concepts</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/concurrency-control/" class="">Concurrency Control</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/catalog/" class="">Catalog</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-e03f934865df9dd3baca303554bcaa71" class="toggle"  />
+    <label for="section-e03f934865df9dd3baca303554bcaa71" class="flex justify-between">RESTCatalog<span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/rest/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/rest/bear/" class="">Bear Token</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/rest/dlf/" class="">DLF Token</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/rest/rest-api/" class="">REST API</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/table-types/" class="">Table Types</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/system-tables/" class="">System Tables</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/data-types/" class="">Data Types</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/functions/" class="">Functions</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-d3e7256ce393050c572ea7bd8cc4f240" class="toggle"  />
+    <label for="section-d3e7256ce393050c572ea7bd8cc4f240" class="flex justify-between">Specification<span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/spec/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/spec/schema/" class="">Schema</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/spec/snapshot/" class="">Snapshot</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/spec/manifest/" class="">Manifest</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/spec/datafile/" class="">DataFile</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/spec/tableindex/" class="">Table Index</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/spec/fileindex/" class="">File Index</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-3f6a6d4f1692040009c66ffaa328c8d0" class="toggle"  />
+    <label for="section-3f6a6d4f1692040009c66ffaa328c8d0" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-database title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Table with PK</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/primary-key-table/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/primary-key-table/data-distribution/" class="">Data Distribution</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/primary-key-table/table-mode/" class="">Table Mode</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-038bb7d17b5b7cb93fb60acbcf218f11" class="toggle"  />
+    <label for="section-038bb7d17b5b7cb93fb60acbcf218f11" class="flex justify-between">Merge Engine<span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/primary-key-table/merge-engine/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/primary-key-table/merge-engine/partial-update/" class="">Partial Update</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/primary-key-table/merge-engine/aggregation/" class="">Aggregation</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/primary-key-table/merge-engine/first-row/" class="">First Row</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/primary-key-table/changelog-producer/" class="">Changelog Producer</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/primary-key-table/sequence-rowkind/" class="">Sequence & Rowkind</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/primary-key-table/compaction/" class="">Compaction</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/primary-key-table/query-performance/" class="">Query Performance</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-f74847e1c917ba2b99e7b718bb318b30" class="toggle"  />
+    <label for="section-f74847e1c917ba2b99e7b718bb318b30" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-database title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Table w/o PK</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/append-table/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/append-table/streaming/" class="">Streaming</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/append-table/query-performance/" class="">Query Performance</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/append-table/update/" class="">Update</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/append-table/bucketed/" class="">Bucketed</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-998a37410d502937fe8444ed73a9ecf8" class="toggle"  />
+    <label for="section-998a37410d502937fe8444ed73a9ecf8" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-gear title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Engine Flink</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/flink/quick-start/" class="">Quick Start</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/flink/sql-ddl/" class="">SQL DDL</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/flink/sql-write/" class="">SQL Write</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/flink/sql-query/" class="">SQL Query</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/flink/consumer-id/" class="">Consumer ID</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/flink/sql-lookup/" class="">SQL Lookup</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/flink/sql-alter/" class="">SQL Alter</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/flink/procedures/" class="">Procedures</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/flink/action-jars/" class="">Action Jars</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/flink/savepoint/" class="">Savepoint</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-74c63bf75b4f6bd14a3ea6a1217f03ad" class="toggle"  />
+    <label for="section-74c63bf75b4f6bd14a3ea6a1217f03ad" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-gear title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Engine Spark</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/spark/quick-start/" class="">Quick Start</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/spark/sql-ddl/" class="">SQL DDL</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/spark/sql-functions/" class="">SQL Functions</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/spark/sql-write/" class="">SQL Write</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/spark/sql-query/" class="">SQL Query</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/spark/sql-alter/" class="">SQL Alter</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/spark/auxiliary/" class="">Auxiliary</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/spark/procedures/" class="">Procedures</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-16bf9de4e97c50dda6ce1ac6e934602c" class="toggle"  />
+    <label for="section-16bf9de4e97c50dda6ce1ac6e934602c" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-gear title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Ecosystem</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/ecosystem/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/ecosystem/starrocks/" class="">StarRocks</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/ecosystem/doris/" class="">Doris</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/ecosystem/hive/" class="">Hive</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/ecosystem/trino/" class="">Trino</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/ecosystem/amoro/" class="">Amoro</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-582e435c19ca5fafbf9764337d648e63" class="toggle"  />
+    <label for="section-582e435c19ca5fafbf9764337d648e63" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-gear title maindish" aria-hidden="true"></i>&nbsp;&nbsp;CDC Ingestion</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/cdc-ingestion/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/cdc-ingestion/mysql-cdc/" class="">Mysql CDC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/cdc-ingestion/postgres-cdc/" class="">Postgres CDC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/cdc-ingestion/kafka-cdc/" class="">Kafka CDC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/cdc-ingestion/mongo-cdc/" class="">Mongo CDC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/cdc-ingestion/pulsar-cdc/" class="">Pulsar CDC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/cdc-ingestion/debezium-bson/" class="">Debezium BSON</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-697a4b6a0388d6cfa4f418aba3b4edfe" class="toggle"  />
+    <label for="section-697a4b6a0388d6cfa4f418aba3b4edfe" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-wrench title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Maintenance</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/maintenance/filesystems/" class="">Filesystems</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/maintenance/write-performance/" class="">Write Performance</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/maintenance/dedicated-compaction/" class="">Dedicated Compaction</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/maintenance/manage-snapshots/" class="">Manage Snapshots</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/maintenance/rescale-bucket/" class="">Rescale Bucket</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/maintenance/manage-tags/" class="">Manage Tags</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/maintenance/metrics/" class="">Metrics</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/maintenance/manage-privileges/" class="">Manage Privileges</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/maintenance/manage-branches/" class="">Manage Branches</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/maintenance/manage-partitions/" class="">Manage Partitions</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/maintenance/configurations/" class="">Configurations</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-049030059e0dc01edf74ba3d4d259dae" class="toggle" checked />
+    <label for="section-049030059e0dc01edf74ba3d4d259dae" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-briefcase title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Program API</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/program-api/rest-api/" class="">REST API</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/program-api/flink-api/" class="">Flink API</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/program-api/java-api/" class="">Java API</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/program-api/catalog-api/" class="">Catalog API</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/program-api/python-api/" class=" active">Python API</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-07c567e5a9f3ce62aea4ff0a1e2dc065" class="toggle"  />
+    <label for="section-07c567e5a9f3ce62aea4ff0a1e2dc065" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-briefcase title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Migration</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/migration/migration-from-hive/" class="">Migration From Hive</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/migration/migration-from-iceberg/" class="">Migration From Iceberg</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/migration/upsert-to-partitioned/" class="">Upsert To Partitioned</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/migration/clone-to-paimon/" class="">Clone To Paimon</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-dc2f2ba83b7db3b9bfa35da4c73572d2" class="toggle"  />
+    <label for="section-dc2f2ba83b7db3b9bfa35da4c73572d2" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-briefcase title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Iceberg Metadata</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/iceberg/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/iceberg/append-table/" class="">Append Table</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/iceberg/primary-key-table/" class="">Primary Key Table</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/iceberg/iceberg-tags/" class="">Iceberg Tags</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/iceberg/hive-catalog/" class="">Hive Catalogs</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/iceberg/ecosystem/" class="">Ecosystem</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/iceberg/configurations/" class="">Configurations</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  	<br/>
+  
+  
+    <input type="checkbox" id="section-8c828bcf882f666cdd6821a70cc768ee" class="toggle"  />
+    <label for="section-8c828bcf882f666cdd6821a70cc768ee" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-sitemap title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Project</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/project/roadmap/" class="">Roadmap</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/project/download/" class="">Download</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/project/contributing/" class="">Contributing</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/project/committer/" class="">Committer</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-392fc6f653ae23ff676811656a71ebbf" class="toggle"  />
+    <label for="section-392fc6f653ae23ff676811656a71ebbf" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-sitemap title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Learn Paimon</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/learn-paimon/understand-files/" class="">Understand Files</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br/>
+<hr class="menu-break">
+
+<a href="//paimon.apache.org" style="color:black;margin-bottom:0.5em"><i class="link fa fa-external-link title" aria-hidden="true"></i> Project Homepage</a>
+<br/>
+
+<a href="//paimon.apache.org/docs/master/api/java/" style="color:black;margin-bottom:0.5em"><i class="link fa fa-external-link title" aria-hidden="true"></i> JavaDocs</a>
+<br/>
+
+<hr class="menu-break">
+<li style="list-style-type: none">
+  <br>
+  <input type="checkbox" id="section-version-picker" class="toggle">
+  <label for="section-version-picker" class="flex justify-between">
+     <div style="font-weight:450;margin-bottom:0.5em">Pick Docs Version</div>
+     <span>▾</span>
+  </label>
+  <ul>
+    <a href="//paimon.apache.org/docs/master">
+      1.2-SNAPSHOT (✓)
+    </a>
+    <hr class="menu-break">
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/master">
+          master
+        </a>
+      </li>
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/1.0">
+          stable
+        </a>
+      </li>
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/1.0">
+          1.0
+        </a>
+      </li>
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/0.9">
+          0.9
+        </a>
+      </li>
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/0.8">
+          0.8
+        </a>
+      </li>
+    
+    <hr class="menu-break">
+    <li>
+      <a href="//paimon.apache.org/docs/master/versions">
+          All Versions
+      </a>
+    </li>
+  </ul>
+</li>
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var menu=document.querySelector("aside.book-menu nav");addEventListener("beforeunload",function(event){localStorage.setItem("menu.scrollTop",menu.scrollTop);});menu.scrollTop=localStorage.getItem("menu.scrollTop");})();</script>
+
+
+ 
+      </aside>
+    
+
+    <div class="book-page">
+      
+        <header class="book-header">
+          
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/docs/master/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <strong>Python API</strong>
+
+  <label for="toc-control">
+    
+    <img src="/docs/master/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden clearfix">
+    
+  
+
+<nav id="TableOfContents"><h3>On This Page <button class="toc" onclick="collapseToc()"><i class="fa fa-compress" aria-hidden="true"></i></button></h3>
+  <ul>
+    <li><a href="#environment-settings">Environment Settings</a>
+      <ul>
+        <li><a href="#sdk-installing">SDK Installing</a></li>
+        <li><a href="#java-runtime-environment">Java Runtime Environment</a></li>
+        <li><a href="#set-environment-variables">Set Environment Variables</a></li>
+      </ul>
+    </li>
+    <li><a href="#create-catalog">Create Catalog</a></li>
+    <li><a href="#create-database--table">Create Database &amp; Table</a>
+      <ul>
+        <li><a href="#create-database-optional">Create Database (optional)</a></li>
+        <li><a href="#create-schema">Create Schema</a></li>
+        <li><a href="#create-table">Create Table</a></li>
+      </ul>
+    </li>
+    <li><a href="#get-table">Get Table</a></li>
+    <li><a href="#batch-read">Batch Read</a>
+      <ul>
+        <li><a href="#set-read-parallelism">Set Read Parallelism</a></li>
+        <li><a href="#get-readbuilder-and-perform-pushdown">Get ReadBuilder and Perform pushdown</a></li>
+        <li><a href="#scan-plan">Scan Plan</a></li>
+        <li><a href="#read-splits">Read Splits</a></li>
+      </ul>
+    </li>
+    <li><a href="#batch-write">Batch Write</a></li>
+    <li><a href="#data-types">Data Types</a></li>
+    <li><a href="#predicate">Predicate</a></li>
+  </ul>
+</nav>
+
+
+  </aside>
+  
+ 
+        </header>
+      
+
+      
+
+
+
+
+<article class="markdown">
+    <blockquote style="border-color:#f66">
+        This documentation is for an unreleased version of Apache Paimon. We recommend you use the latest <a href="https://paimon.apache.org/docs/1.0">stable version</a>.
+    </blockquote>
+</article>
+
+
+
+      
+  <article class="markdown"><!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<h1 id="java-based-implementation-for-python-api">
+  Java-based Implementation For Python API
+  <a class="anchor" href="#java-based-implementation-for-python-api">#</a>
+</h1>
+<p><a href="https://github.com/apache/paimon-python">Python SDK </a> has defined Python API for Paimon. Currently, there is only a Java-based implementation.</p>
+<p>Java-based implementation will launch a JVM and use <code>py4j</code> to execute Java code to read and write Paimon table.</p>
+<h2 id="environment-settings">
+  Environment Settings
+  <a class="anchor" href="#environment-settings">#</a>
+</h2>
+<h3 id="sdk-installing">
+  SDK Installing
+  <a class="anchor" href="#sdk-installing">#</a>
+</h3>
+<p>SDK is published at <a href="https://pypi.org/project/pypaimon/">pypaimon</a>. You can install by</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">pip install pypaimon
+</code></pre></div><h3 id="java-runtime-environment">
+  Java Runtime Environment
+  <a class="anchor" href="#java-runtime-environment">#</a>
+</h3>
+<p>This SDK needs JRE 1.8. After installing JRE, make sure that at least one of the following conditions is met:</p>
+<ol>
+<li><code>java</code> command is available. You can verify it by <code>java -version</code>.</li>
+<li><code>JAVA_HOME</code> and <code>PATH</code> variables are set correctly. For example, you can set:</li>
+</ol>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="nb">export</span> <span class="nv">JAVA_HOME</span><span class="o">=</span>/path/to/java-directory
+<span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="nv">$JAVA_HOME</span>/bin:<span class="nv">$PATH</span>
+</code></pre></div><h3 id="set-environment-variables">
+  Set Environment Variables
+  <a class="anchor" href="#set-environment-variables">#</a>
+</h3>
+<p>Because we need to launch a JVM to access Java code, JVM environment need to be set. Besides, the java code need Hadoop
+dependencies, so hadoop environment should be set.</p>
+<h4 id="java-classpath">
+  Java classpath
+  <a class="anchor" href="#java-classpath">#</a>
+</h4>
+<p>The package has set necessary paimon core dependencies (Local/Hadoop FileIO, Avro/Orc/Parquet format support and
+FileSystem/Jdbc/Hive catalog), so If you just test codes in local or in hadoop environment, you don&rsquo;t need to set classpath.</p>
+<p>If you need other dependencies such as OSS/S3 filesystem jars, or special format and catalog ,please prepare jars and set
+classpath via one of the following ways:</p>
+<ol>
+<li>Set system environment variable: <code>export _PYPAIMON_JAVA_CLASSPATH=/path/to/jars/*</code></li>
+<li>Set environment variable in Python code:</li>
+</ol>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">pypaimon.py4j</span> <span class="kn">import</span> <span class="n">constants</span>
+
+<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="n">constants</span><span class="o">.</span><span class="n">PYPAIMON_JAVA_CLASSPATH</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;/path/to/jars/*&#39;</span>
+</code></pre></div><h4 id="jvm-args-optional">
+  JVM args (optional)
+  <a class="anchor" href="#jvm-args-optional">#</a>
+</h4>
+<p>You can set JVM args via one of the following ways:</p>
+<ol>
+<li>Set system environment variable: <code>export _PYPAIMON_JVM_ARGS='arg1 arg2 ...'</code></li>
+<li>Set environment variable in Python code:</li>
+</ol>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">pypaimon.py4j</span> <span class="kn">import</span> <span class="n">constants</span>
+
+<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="n">constants</span><span class="o">.</span><span class="n">PYPAIMON_JVM_ARGS</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;arg1 arg2 ...&#39;</span>
+</code></pre></div><h4 id="hadoop-classpath">
+  Hadoop classpath
+  <a class="anchor" href="#hadoop-classpath">#</a>
+</h4>
+<p>If the machine is in a hadoop environment, please ensure the value of the environment variable HADOOP_CLASSPATH include
+path to the common Hadoop libraries, then you don&rsquo;t need to set hadoop.</p>
+<p>Otherwise, you should set hadoop classpath via one of the following ways:</p>
+<ol>
+<li>Set system environment variable: <code>export _PYPAIMON_HADOOP_CLASSPATH=/path/to/jars/*</code></li>
+<li>Set environment variable in Python code:</li>
+</ol>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">pypaimon.py4j</span> <span class="kn">import</span> <span class="n">constants</span>
+
+<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="n">constants</span><span class="o">.</span><span class="n">PYPAIMON_HADOOP_CLASSPATH</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;/path/to/jars/*&#39;</span>
+</code></pre></div><p>If you just want to test codes in local, we recommend to use <a href="https://flink.apache.org/downloads/#additional-components">Flink Pre-bundled hadoop jar</a>.</p>
+<h2 id="create-catalog">
+  Create Catalog
+  <a class="anchor" href="#create-catalog">#</a>
+</h2>
+<p>Before coming into contact with the Table, you need to create a Catalog.</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">pypaimon.py4j</span> <span class="kn">import</span> <span class="n">Catalog</span>
+
+<span class="c1"># Note that keys and values are all string</span>
+<span class="n">catalog_options</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;metastore&#39;</span><span class="p">:</span> <span class="s1">&#39;filesystem&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;warehouse&#39;</span><span class="p">:</span> <span class="s1">&#39;file:///path/to/warehouse&#39;</span>
+<span class="p">}</span>
+<span class="n">catalog</span> <span class="o">=</span> <span class="n">Catalog</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">catalog_options</span><span class="p">)</span>
+</code></pre></div><h2 id="create-database--table">
+  Create Database &amp; Table
+  <a class="anchor" href="#create-database--table">#</a>
+</h2>
+<p>You can use the catalog to create table for writing data.</p>
+<h3 id="create-database-optional">
+  Create Database (optional)
+  <a class="anchor" href="#create-database-optional">#</a>
+</h3>
+<p>Table is located in a database. If you want to create table in a new database, you should create it.</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">catalog</span><span class="o">.</span><span class="n">create_database</span><span class="p">(</span>
+  <span class="n">name</span><span class="o">=</span><span class="s1">&#39;database_name&#39;</span><span class="p">,</span> 
+  <span class="n">ignore_if_exists</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>    <span class="c1"># If you want to raise error if the database exists, set False</span>
+  <span class="n">properties</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;key&#39;</span><span class="p">:</span> <span class="s1">&#39;value&#39;</span><span class="p">}</span> <span class="c1"># optional database properties</span>
+<span class="p">)</span>
+</code></pre></div><h3 id="create-schema">
+  Create Schema
+  <a class="anchor" href="#create-schema">#</a>
+</h3>
+<p>Table schema contains fields definition, partition keys, primary keys, table options and comment.
+The field definition is described by <code>pyarrow.Schema</code>. All arguments except fields definition are optional.</p>
+<p>Generally, there are two ways to build <code>pyarrow.Schema</code>.</p>
+<p>First, you can use <code>pyarrow.schema</code> method directly, for example:</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">pyarrow</span> <span class="kn">as</span> <span class="nn">pa</span>
+
+<span class="kn">from</span> <span class="nn">pypaimon</span> <span class="kn">import</span> <span class="n">Schema</span>
+
+<span class="n">pa_schema</span> <span class="o">=</span> <span class="n">pa</span><span class="o">.</span><span class="n">schema</span><span class="p">([</span>
+    <span class="p">(</span><span class="s1">&#39;dt&#39;</span><span class="p">,</span> <span class="n">pa</span><span class="o">.</span><span class="n">string</span><span class="p">()),</span>
+    <span class="p">(</span><span class="s1">&#39;hh&#39;</span><span class="p">,</span> <span class="n">pa</span><span class="o">.</span><span class="n">string</span><span class="p">()),</span>
+    <span class="p">(</span><span class="s1">&#39;pk&#39;</span><span class="p">,</span> <span class="n">pa</span><span class="o">.</span><span class="n">int64</span><span class="p">()),</span>
+    <span class="p">(</span><span class="s1">&#39;value&#39;</span><span class="p">,</span> <span class="n">pa</span><span class="o">.</span><span class="n">string</span><span class="p">())</span>
+<span class="p">])</span>
+
+<span class="n">schema</span> <span class="o">=</span> <span class="n">Schema</span><span class="p">(</span>
+    <span class="n">pa_schema</span><span class="o">=</span><span class="n">pa_schema</span><span class="p">,</span> 
+    <span class="n">partition_keys</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;dt&#39;</span><span class="p">,</span> <span class="s1">&#39;hh&#39;</span><span class="p">],</span>
+    <span class="n">primary_keys</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;dt&#39;</span><span class="p">,</span> <span class="s1">&#39;hh&#39;</span><span class="p">,</span> <span class="s1">&#39;pk&#39;</span><span class="p">],</span>
+    <span class="n">options</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;bucket&#39;</span><span class="p">:</span> <span class="s1">&#39;2&#39;</span><span class="p">},</span>
+    <span class="n">comment</span><span class="o">=</span><span class="s1">&#39;my test table&#39;</span>
+<span class="p">)</span>
+</code></pre></div><p>See <a href="//paimon.apache.org/docs/master/program-api/python-api/#data-types">Data Types</a> for all supported <code>pyarrow-to-paimon</code> data types mapping.</p>
+<p>Second, if you have some Pandas data, the <code>pa_schema</code> can be extracted from <code>DataFrame</code>:</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">pyarrow</span> <span class="kn">as</span> <span class="nn">pa</span>
+
+<span class="kn">from</span> <span class="nn">pypaimon</span> <span class="kn">import</span> <span class="n">Schema</span>
+
+<span class="c1"># Example DataFrame data</span>
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;dt&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;2024-01-01&#39;</span><span class="p">,</span> <span class="s1">&#39;2024-01-01&#39;</span><span class="p">,</span> <span class="s1">&#39;2024-01-02&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;hh&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;12&#39;</span><span class="p">,</span> <span class="s1">&#39;15&#39;</span><span class="p">,</span> <span class="s1">&#39;20&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;pk&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span>
+    <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">],</span>
+<span class="p">}</span>
+<span class="n">dataframe</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+<span class="c1"># Get Paimon Schema</span>
+<span class="n">record_batch</span> <span class="o">=</span> <span class="n">pa</span><span class="o">.</span><span class="n">RecordBatch</span><span class="o">.</span><span class="n">from_pandas</span><span class="p">(</span><span class="n">dataframe</span><span class="p">)</span>
+<span class="n">schema</span> <span class="o">=</span> <span class="n">Schema</span><span class="p">(</span>
+    <span class="n">pa_schema</span><span class="o">=</span><span class="n">record_batch</span><span class="o">.</span><span class="n">schema</span><span class="p">,</span> 
+    <span class="n">partition_keys</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;dt&#39;</span><span class="p">,</span> <span class="s1">&#39;hh&#39;</span><span class="p">],</span> 
+    <span class="n">primary_keys</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;dt&#39;</span><span class="p">,</span> <span class="s1">&#39;hh&#39;</span><span class="p">,</span> <span class="s1">&#39;pk&#39;</span><span class="p">],</span>
+    <span class="n">options</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;bucket&#39;</span><span class="p">:</span> <span class="s1">&#39;2&#39;</span><span class="p">},</span>
+    <span class="n">comment</span><span class="o">=</span><span class="s1">&#39;my test table&#39;</span>
+<span class="p">)</span>
+</code></pre></div><h3 id="create-table">
+  Create Table
+  <a class="anchor" href="#create-table">#</a>
+</h3>
+<p>After building table schema, you can create corresponding table:</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">schema</span> <span class="o">=</span> <span class="o">...</span>
+<span class="n">catalog</span><span class="o">.</span><span class="n">create_table</span><span class="p">(</span>
+    <span class="n">identifier</span><span class="o">=</span><span class="s1">&#39;database_name.table_name&#39;</span><span class="p">,</span>
+    <span class="n">schema</span><span class="o">=</span><span class="n">schema</span><span class="p">,</span> 
+    <span class="n">ignore_if_exists</span><span class="o">=</span><span class="bp">True</span> <span class="c1"># If you want to raise error if the table exists, set False</span>
+<span class="p">)</span>
+</code></pre></div><h2 id="get-table">
+  Get Table
+  <a class="anchor" href="#get-table">#</a>
+</h2>
+<p>The Table interface provides tools to read and write table.</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">table</span> <span class="o">=</span> <span class="n">catalog</span><span class="o">.</span><span class="n">get_table</span><span class="p">(</span><span class="s1">&#39;database_name.table_name&#39;</span><span class="p">)</span>
+</code></pre></div><h2 id="batch-read">
+  Batch Read
+  <a class="anchor" href="#batch-read">#</a>
+</h2>
+<h3 id="set-read-parallelism">
+  Set Read Parallelism
+  <a class="anchor" href="#set-read-parallelism">#</a>
+</h3>
+<p>TableRead interface provides parallelly reading for multiple splits. You can set <code>'max-workers': 'N'</code> in <code>catalog_options</code>
+to set thread numbers for reading splits. <code>max-workers</code> is 1 by default, that means TableRead will read splits sequentially
+if you doesn&rsquo;t set <code>max-workers</code>.</p>
+<h3 id="get-readbuilder-and-perform-pushdown">
+  Get ReadBuilder and Perform pushdown
+  <a class="anchor" href="#get-readbuilder-and-perform-pushdown">#</a>
+</h3>
+<p>A <code>ReadBuilder</code> is used to build reading utils and perform filter and projection pushdown.</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">table</span> <span class="o">=</span> <span class="n">catalog</span><span class="o">.</span><span class="n">get_table</span><span class="p">(</span><span class="s1">&#39;database_name.table_name&#39;</span><span class="p">)</span>
+<span class="n">read_builder</span> <span class="o">=</span> <span class="n">table</span><span class="o">.</span><span class="n">new_read_builder</span><span class="p">()</span>
+</code></pre></div><p>You can use <code>PredicateBuilder</code> to build filters and pushdown them by <code>ReadBuilder</code>:</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="c1"># Example filter: (&#39;f0&#39; &lt; 3 OR &#39;f1&#39; &gt; 6) AND &#39;f3&#39; = &#39;A&#39;</span>
+
+<span class="n">predicate_builder</span> <span class="o">=</span> <span class="n">read_builder</span><span class="o">.</span><span class="n">new_predicate_builder</span><span class="p">()</span>
+
+<span class="n">predicate1</span> <span class="o">=</span> <span class="n">predicate_builder</span><span class="o">.</span><span class="n">less_than</span><span class="p">(</span><span class="s1">&#39;f0&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">predicate2</span> <span class="o">=</span> <span class="n">predicate_builder</span><span class="o">.</span><span class="n">greater_than</span><span class="p">(</span><span class="s1">&#39;f1&#39;</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
+<span class="n">predicate3</span> <span class="o">=</span> <span class="n">predicate_builder</span><span class="o">.</span><span class="n">or_predicates</span><span class="p">([</span><span class="n">predicate1</span><span class="p">,</span> <span class="n">predicate2</span><span class="p">])</span>
+
+<span class="n">predicate4</span> <span class="o">=</span> <span class="n">predicate_builder</span><span class="o">.</span><span class="n">equal</span><span class="p">(</span><span class="s1">&#39;f3&#39;</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">)</span>
+<span class="n">predicate_5</span> <span class="o">=</span> <span class="n">predicate_builder</span><span class="o">.</span><span class="n">and_predicates</span><span class="p">([</span><span class="n">predicate3</span><span class="p">,</span> <span class="n">predicate4</span><span class="p">])</span>
+
+<span class="n">read_builder</span> <span class="o">=</span> <span class="n">read_builder</span><span class="o">.</span><span class="n">with_filter</span><span class="p">(</span><span class="n">predicate_5</span><span class="p">)</span>
+</code></pre></div><p>See <a href="//paimon.apache.org/docs/master/program-api/python-api/#predicate">Predicate</a> for all supported filters and building methods.</p>
+<p>You can also pushdown projection by <code>ReadBuilder</code>:</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="c1"># select f3 and f2 columns</span>
+<span class="n">read_builder</span> <span class="o">=</span> <span class="n">read_builder</span><span class="o">.</span><span class="n">with_projection</span><span class="p">([</span><span class="s1">&#39;f3&#39;</span><span class="p">,</span> <span class="s1">&#39;f2&#39;</span><span class="p">])</span>
+</code></pre></div><h3 id="scan-plan">
+  Scan Plan
+  <a class="anchor" href="#scan-plan">#</a>
+</h3>
+<p>Then you can step into Scan Plan stage to get <code>splits</code>:</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">table_scan</span> <span class="o">=</span> <span class="n">read_builder</span><span class="o">.</span><span class="n">new_scan</span><span class="p">()</span>
+<span class="n">splits</span> <span class="o">=</span> <span class="n">table_scan</span><span class="o">.</span><span class="n">plan</span><span class="p">()</span><span class="o">.</span><span class="n">splits</span><span class="p">()</span>
+</code></pre></div><h3 id="read-splits">
+  Read Splits
+  <a class="anchor" href="#read-splits">#</a>
+</h3>
+<p>Finally, you can read data from the <code>splits</code> to various data format.</p>
+<h4 id="apache-arrow">
+  Apache Arrow
+  <a class="anchor" href="#apache-arrow">#</a>
+</h4>
+<p>This requires <code>pyarrow</code> to be installed.</p>
+<p>You can read all the data into a <code>pyarrow.Table</code>:</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">table_read</span> <span class="o">=</span> <span class="n">read_builder</span><span class="o">.</span><span class="n">new_read</span><span class="p">()</span>
+<span class="n">pa_table</span> <span class="o">=</span> <span class="n">table_read</span><span class="o">.</span><span class="n">to_arrow</span><span class="p">(</span><span class="n">splits</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">pa_table</span><span class="p">)</span>
+
+<span class="c1"># pyarrow.Table</span>
+<span class="c1"># f0: int32</span>
+<span class="c1"># f1: string</span>
+<span class="c1"># ----</span>
+<span class="c1"># f0: [[1,2,3],[4,5,6],...]</span>
+<span class="c1"># f1: [[&#34;a&#34;,&#34;b&#34;,&#34;c&#34;],[&#34;d&#34;,&#34;e&#34;,&#34;f&#34;],...]</span>
+</code></pre></div><p>You can also read data into a <code>pyarrow.RecordBatchReader</code> and iterate record batches:</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">table_read</span> <span class="o">=</span> <span class="n">read_builder</span><span class="o">.</span><span class="n">new_read</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">batch</span> <span class="ow">in</span> <span class="n">table_read</span><span class="o">.</span><span class="n">to_arrow_batch_reader</span><span class="p">(</span><span class="n">splits</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span>
+
+<span class="c1"># pyarrow.RecordBatch</span>
+<span class="c1"># f0: int32</span>
+<span class="c1"># f1: string</span>
+<span class="c1"># ----</span>
+<span class="c1"># f0: [1,2,3]</span>
+<span class="c1"># f1: [&#34;a&#34;,&#34;b&#34;,&#34;c&#34;]</span>
+</code></pre></div><h4 id="pandas">
+  Pandas
+  <a class="anchor" href="#pandas">#</a>
+</h4>
+<p>This requires <code>pandas</code> to be installed.</p>
+<p>You can read all the data into a <code>pandas.DataFrame</code>:</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">table_read</span> <span class="o">=</span> <span class="n">read_builder</span><span class="o">.</span><span class="n">new_read</span><span class="p">()</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">table_read</span><span class="o">.</span><span class="n">to_pandas</span><span class="p">(</span><span class="n">splits</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+
+<span class="c1">#    f0 f1</span>
+<span class="c1"># 0   1  a</span>
+<span class="c1"># 1   2  b</span>
+<span class="c1"># 2   3  c</span>
+<span class="c1"># 3   4  d</span>
+<span class="c1"># ...</span>
+</code></pre></div><h4 id="duckdb">
+  DuckDB
+  <a class="anchor" href="#duckdb">#</a>
+</h4>
+<p>This requires <code>duckdb</code> to be installed.</p>
+<p>You can convert the splits into an in-memory DuckDB table and query it:</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">table_read</span> <span class="o">=</span> <span class="n">read_builder</span><span class="o">.</span><span class="n">new_read</span><span class="p">()</span>
+<span class="n">duckdb_con</span> <span class="o">=</span> <span class="n">table_read</span><span class="o">.</span><span class="n">to_duckdb</span><span class="p">(</span><span class="n">splits</span><span class="p">,</span> <span class="s1">&#39;duckdb_table&#39;</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">duckdb_con</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&#34;SELECT * FROM duckdb_table&#34;</span><span class="p">)</span><span class="o">.</span><span class="n">fetchdf</span><span class="p">())</span>
+<span class="c1">#    f0 f1</span>
+<span class="c1"># 0   1  a</span>
+<span class="c1"># 1   2  b</span>
+<span class="c1"># 2   3  c</span>
+<span class="c1"># 3   4  d</span>
+<span class="c1"># ...</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">duckdb_con</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&#34;SELECT * FROM duckdb_table WHERE f0 = 1&#34;</span><span class="p">)</span><span class="o">.</span><span class="n">fetchdf</span><span class="p">())</span>
+<span class="c1">#    f0 f1</span>
+<span class="c1"># 0   1  a</span>
+</code></pre></div><h4 id="ray">
+  Ray
+  <a class="anchor" href="#ray">#</a>
+</h4>
+<p>This requires <code>ray</code> to be installed.</p>
+<p>You can convert the splits into a Ray dataset and handle it by Ray API:</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">table_read</span> <span class="o">=</span> <span class="n">read_builder</span><span class="o">.</span><span class="n">new_read</span><span class="p">()</span>
+<span class="n">ray_dataset</span> <span class="o">=</span> <span class="n">table_read</span><span class="o">.</span><span class="n">to_ray</span><span class="p">(</span><span class="n">splits</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">ray_dataset</span><span class="p">)</span>
+<span class="c1"># MaterializedDataset(num_blocks=1, num_rows=9, schema={f0: int32, f1: string})</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">ray_dataset</span><span class="o">.</span><span class="n">take</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
+<span class="c1"># [{&#39;f0&#39;: 1, &#39;f1&#39;: &#39;a&#39;}, {&#39;f0&#39;: 2, &#39;f1&#39;: &#39;b&#39;}, {&#39;f0&#39;: 3, &#39;f1&#39;: &#39;c&#39;}]</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">ray_dataset</span><span class="o">.</span><span class="n">to_pandas</span><span class="p">())</span>
+<span class="c1">#    f0 f1</span>
+<span class="c1"># 0   1  a</span>
+<span class="c1"># 1   2  b</span>
+<span class="c1"># 2   3  c</span>
+<span class="c1"># 3   4  d</span>
+<span class="c1"># ...</span>
+</code></pre></div><h2 id="batch-write">
+  Batch Write
+  <a class="anchor" href="#batch-write">#</a>
+</h2>
+<p>Paimon table write is Two-Phase Commit, you can write many times, but once committed, no more data can be written.</p>
+<blockquote class="book-hint warning">
+  Currently, Python SDK doesn&rsquo;t support writing primary key table with <code>bucket=-1</code>.
+</blockquote>
+
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">table</span> <span class="o">=</span> <span class="n">catalog</span><span class="o">.</span><span class="n">get_table</span><span class="p">(</span><span class="s1">&#39;database_name.table_name&#39;</span><span class="p">)</span>
+
+<span class="c1"># 1. Create table write and commit</span>
+<span class="n">write_builder</span> <span class="o">=</span> <span class="n">table</span><span class="o">.</span><span class="n">new_batch_write_builder</span><span class="p">()</span>
+<span class="n">table_write</span> <span class="o">=</span> <span class="n">write_builder</span><span class="o">.</span><span class="n">new_write</span><span class="p">()</span>
+<span class="n">table_commit</span> <span class="o">=</span> <span class="n">write_builder</span><span class="o">.</span><span class="n">new_commit</span><span class="p">()</span>
+
+<span class="c1"># 2. Write data. Support 3 methods:</span>
+<span class="c1"># 2.1 Write pandas.DataFrame</span>
+<span class="n">dataframe</span> <span class="o">=</span> <span class="o">...</span>
+<span class="n">table_write</span><span class="o">.</span><span class="n">write_pandas</span><span class="p">(</span><span class="n">dataframe</span><span class="p">)</span>
+
+<span class="c1"># 2.2 Write pyarrow.Table</span>
+<span class="n">pa_table</span> <span class="o">=</span> <span class="o">...</span>
+<span class="n">table_write</span><span class="o">.</span><span class="n">write_arrow</span><span class="p">(</span><span class="n">pa_table</span><span class="p">)</span>
+
+<span class="c1"># 2.3 Write pyarrow.RecordBatch</span>
+<span class="n">record_batch</span> <span class="o">=</span> <span class="o">...</span>
+<span class="n">table_write</span><span class="o">.</span><span class="n">write_arrow_batch</span><span class="p">(</span><span class="n">record_batch</span><span class="p">)</span>
+
+<span class="c1"># 3. Commit data</span>
+<span class="n">commit_messages</span> <span class="o">=</span> <span class="n">table_write</span><span class="o">.</span><span class="n">prepare_commit</span><span class="p">()</span>
+<span class="n">table_commit</span><span class="o">.</span><span class="n">commit</span><span class="p">(</span><span class="n">commit_messages</span><span class="p">)</span>
+
+<span class="c1"># 4. Close resources</span>
+<span class="n">table_write</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<span class="n">table_commit</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</code></pre></div><p>By default, the data will be appended to table. If you want to overwrite table, you should use <code>TableWrite#overwrite</code> API:</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="c1"># overwrite whole table</span>
+<span class="n">write_builder</span><span class="o">.</span><span class="n">overwrite</span><span class="p">()</span>
+
+<span class="c1"># overwrite partition &#39;dt=2024-01-01&#39;</span>
+<span class="n">write_builder</span><span class="o">.</span><span class="n">overwrite</span><span class="p">({</span><span class="s1">&#39;dt&#39;</span><span class="p">:</span> <span class="s1">&#39;2024-01-01&#39;</span><span class="p">})</span>
+</code></pre></div><h2 id="data-types">
+  Data Types
+  <a class="anchor" href="#data-types">#</a>
+</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">pyarrow</th>
+<th style="text-align:left">Paimon</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">pyarrow.int8()</td>
+<td style="text-align:left">TINYINT</td>
+</tr>
+<tr>
+<td style="text-align:left">pyarrow.int16()</td>
+<td style="text-align:left">SMALLINT</td>
+</tr>
+<tr>
+<td style="text-align:left">pyarrow.int32()</td>
+<td style="text-align:left">INT</td>
+</tr>
+<tr>
+<td style="text-align:left">pyarrow.int64()</td>
+<td style="text-align:left">BIGINT</td>
+</tr>
+<tr>
+<td style="text-align:left">pyarrow.float16() <br/>pyarrow.float32()</td>
+<td style="text-align:left">FLOAT</td>
+</tr>
+<tr>
+<td style="text-align:left">pyarrow.float64()</td>
+<td style="text-align:left">DOUBLE</td>
+</tr>
+<tr>
+<td style="text-align:left">pyarrow.string()</td>
+<td style="text-align:left">STRING</td>
+</tr>
+<tr>
+<td style="text-align:left">pyarrow.boolean()</td>
+<td style="text-align:left">BOOLEAN</td>
+</tr>
+</tbody>
+</table>
+<h2 id="predicate">
+  Predicate
+  <a class="anchor" href="#predicate">#</a>
+</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Predicate kind</th>
+<th style="text-align:left">Predicate method</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">p1 and p2</td>
+<td style="text-align:left">PredicateBuilder.and_predicates([p1, p2])</td>
+</tr>
+<tr>
+<td style="text-align:left">p1 or p2</td>
+<td style="text-align:left">PredicateBuilder.or_predicates([p1, p2])</td>
+</tr>
+<tr>
+<td style="text-align:left">f = literal</td>
+<td style="text-align:left">PredicateBuilder.equal(f, literal)</td>
+</tr>
+<tr>
+<td style="text-align:left">f != literal</td>
+<td style="text-align:left">PredicateBuilder.not_equal(f, literal)</td>
+</tr>
+<tr>
+<td style="text-align:left">f &lt; literal</td>
+<td style="text-align:left">PredicateBuilder.less_than(f, literal)</td>
+</tr>
+<tr>
+<td style="text-align:left">f &lt;= literal</td>
+<td style="text-align:left">PredicateBuilder.less_or_equal(f, literal)</td>
+</tr>
+<tr>
+<td style="text-align:left">f &gt; literal</td>
+<td style="text-align:left">PredicateBuilder.greater_than(f, literal)</td>
+</tr>
+<tr>
+<td style="text-align:left">f &gt;= literal</td>
+<td style="text-align:left">PredicateBuilder.greater_or_equal(f, literal)</td>
+</tr>
+<tr>
+<td style="text-align:left">f is null</td>
+<td style="text-align:left">PredicateBuilder.is_null(f)</td>
+</tr>
+<tr>
+<td style="text-align:left">f is not null</td>
+<td style="text-align:left">PredicateBuilder.is_not_null(f)</td>
+</tr>
+<tr>
+<td style="text-align:left">f.startswith(literal)</td>
+<td style="text-align:left">PredicateBuilder.startswith(f, literal)</td>
+</tr>
+<tr>
+<td style="text-align:left">f.endswith(literal)</td>
+<td style="text-align:left">PredicateBuilder.endswith(f, literal)</td>
+</tr>
+<tr>
+<td style="text-align:left">f.contains(literal)</td>
+<td style="text-align:left">PredicateBuilder.contains(f, literal)</td>
+</tr>
+<tr>
+<td style="text-align:left">f is in [l1, l2]</td>
+<td style="text-align:left">PredicateBuilder.is_in(f, [l1, l2])</td>
+</tr>
+<tr>
+<td style="text-align:left">f is not in [l1, l2]</td>
+<td style="text-align:left">PredicateBuilder.is_not_in(f, [l1, l2])</td>
+</tr>
+<tr>
+<td style="text-align:left">lower &lt;= f &lt;= upper</td>
+<td style="text-align:left">PredicateBuilder.between(f, lower, upper)</td>
+</tr>
+</tbody>
+</table>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  
+
+
+
+
+<a href="//github.com/apache/paimon/edit/master/docs/content/program-api/python-api.md" style="color:black"><i class="fa fa-edit fa-fw"></i>Edit This Page</a>
+
+
+ 
+        
+
+
+<hr style="margin-top: 20px; border: 1px solid #e5e5e5;" />
+
+<table style="border-spacing: 10px;">
+    <tbody>
+    <tr>
+        <td colspan="2">
+            Copyright &copy; 2025 The Apache Software Foundation. Apache Paimon, Paimon, and its feather logo are
+            trademarks of The Apache Software Foundation.
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+      </footer>
+
+      
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      
+  
+
+<nav id="TableOfContents"><h3>On This Page <button class="toc" onclick="collapseToc()"><i class="fa fa-compress" aria-hidden="true"></i></button></h3>
+  <ul>
+    <li><a href="#environment-settings">Environment Settings</a>
+      <ul>
+        <li><a href="#sdk-installing">SDK Installing</a></li>
+        <li><a href="#java-runtime-environment">Java Runtime Environment</a></li>
+        <li><a href="#set-environment-variables">Set Environment Variables</a></li>
+      </ul>
+    </li>
+    <li><a href="#create-catalog">Create Catalog</a></li>
+    <li><a href="#create-database--table">Create Database &amp; Table</a>
+      <ul>
+        <li><a href="#create-database-optional">Create Database (optional)</a></li>
+        <li><a href="#create-schema">Create Schema</a></li>
+        <li><a href="#create-table">Create Table</a></li>
+      </ul>
+    </li>
+    <li><a href="#get-table">Get Table</a></li>
+    <li><a href="#batch-read">Batch Read</a>
+      <ul>
+        <li><a href="#set-read-parallelism">Set Read Parallelism</a></li>
+        <li><a href="#get-readbuilder-and-perform-pushdown">Get ReadBuilder and Perform pushdown</a></li>
+        <li><a href="#scan-plan">Scan Plan</a></li>
+        <li><a href="#read-splits">Read Splits</a></li>
+      </ul>
+    </li>
+    <li><a href="#batch-write">Batch Write</a></li>
+    <li><a href="#data-types">Data Types</a></li>
+    <li><a href="#predicate">Predicate</a></li>
+  </ul>
+</nav>
+
+ 
+    </aside>
+    <aside class="expand-toc">
+      <button class="toc" onclick="expandToc()">
+        <i class="fa fa-expand" aria-hidden="true"></i>
+      </button>
+    </aside>
+    
+  </main>
+
+  
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

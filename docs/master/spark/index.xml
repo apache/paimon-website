@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Engine Spark on Apache Paimon</title>
+    <link>//paimon.apache.org/docs/master/spark/</link>
+    <description>Recent content in Engine Spark on Apache Paimon</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language><atom:link href="//paimon.apache.org/docs/master/spark/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Quick Start</title>
+      <link>//paimon.apache.org/docs/master/spark/quick-start/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/spark/quick-start/</guid>
+      <description>Quick Start #  Preparation #  Paimon currently supports Spark 3.5, 3.4, 3.3, and 3.2. We recommend the latest Spark version for a better experience.
+Download the jar file with corresponding version.
+   Version Jar     Spark 3.5 paimon-spark-3.5-1.2-SNAPSHOT.jar   Spark 3.4 paimon-spark-3.4-1.2-SNAPSHOT.jar   Spark 3.3 paimon-spark-3.3-1.2-SNAPSHOT.jar   Spark 3.2 paimon-spark-3.2-1.2-SNAPSHOT.jar    You can also manually build bundled jar from the source code.</description>
+    </item>
+    
+    <item>
+      <title>SQL DDL</title>
+      <link>//paimon.apache.org/docs/master/spark/sql-ddl/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/spark/sql-ddl/</guid>
+      <description>SQL DDL #  Catalog #  Create Catalog #  Paimon catalogs currently support three types of metastores:
+ filesystem metastore (default), which stores both metadata and table files in filesystems. hive metastore, which additionally stores metadata in Hive metastore. Users can directly access the tables from Hive. jdbc metastore, which additionally stores metadata in relational databases such as MySQL, Postgres, etc.  See CatalogOptions for detailed options when creating a catalog.</description>
+    </item>
+    
+    <item>
+      <title>SQL Functions</title>
+      <link>//paimon.apache.org/docs/master/spark/sql-functions/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/spark/sql-functions/</guid>
+      <description>SQL Functions #  This section introduce all available Paimon Spark functions.
+max_pt #  max_pt($table_name)
+It accepts a string type literal to specify the table name and return a max-valid-toplevel partition value.
+ valid: the partition which contains data files toplevel: only return the first partition value if the table has multi-partition columns  It would throw exception when:
+ the table is not a partitioned table the partitioned table does not have partition all of the partitions do not contains data files  Example</description>
+    </item>
+    
+    <item>
+      <title>SQL Write</title>
+      <link>//paimon.apache.org/docs/master/spark/sql-write/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/spark/sql-write/</guid>
+      <description>SQL Write #  Insert Table #  The INSERT statement inserts new rows into a table or overwrites the existing data in the table. The inserted rows can be specified by value expressions or result from a query.
+Syntax
+INSERT { INTO | OVERWRITE } table_identifier [ part_spec ] [ column_list ] { value_expr | query }; Parameters
+  table_identifier: Specifies a table name, which may be optionally qualified with a database name.</description>
+    </item>
+    
+    <item>
+      <title>SQL Query</title>
+      <link>//paimon.apache.org/docs/master/spark/sql-query/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/spark/sql-query/</guid>
+      <description>SQL Query #  Just like all other tables, Paimon tables can be queried with SELECT statement.
+Batch Query #  Paimon&amp;rsquo;s batch read returns all the data in a snapshot of the table. By default, batch reads return the latest snapshot.
+-- read all columns SELECT * FROM t; Paimon also supports reading some hidden metadata columns, currently supporting the following columns:
+ __paimon_file_path: the file path of the record.</description>
+    </item>
+    
+    <item>
+      <title>SQL Alter</title>
+      <link>//paimon.apache.org/docs/master/spark/sql-alter/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/spark/sql-alter/</guid>
+      <description>Altering Tables #  Changing/Adding Table Properties #  The following SQL sets write-buffer-size table property to 256 MB.
+ALTER TABLE my_table SET TBLPROPERTIES ( &amp;#39;write-buffer-size&amp;#39; = &amp;#39;256 MB&amp;#39; ); Removing Table Properties #  The following SQL removes write-buffer-size table property.
+ALTER TABLE my_table UNSET TBLPROPERTIES (&amp;#39;write-buffer-size&amp;#39;); Changing/Adding Table Comment #  The following SQL changes comment of table my_table to table comment.
+ALTER TABLE my_table SET TBLPROPERTIES ( &amp;#39;comment&amp;#39; = &amp;#39;table comment&amp;#39; ); Removing Table Comment #  The following SQL removes table comment.</description>
+    </item>
+    
+    <item>
+      <title>Auxiliary</title>
+      <link>//paimon.apache.org/docs/master/spark/auxiliary/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/spark/auxiliary/</guid>
+      <description>Auxiliary Statements #  Set / Reset #  The SET command sets a property, returns the value of an existing property or returns all SQLConf properties with value and meaning. The RESET command resets runtime configurations specific to the current session which were set via the SET command to their default values.
+To set dynamic options globally, you need add the spark.paimon. prefix. You can also set dynamic table options at this format: spark.</description>
+    </item>
+    
+    <item>
+      <title>Procedures</title>
+      <link>//paimon.apache.org/docs/master/spark/procedures/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/spark/procedures/</guid>
+      <description>Procedures #  This section introduce all available spark procedures about paimon.
+  Procedure Name Explanation Example    compact  To compact files. Argument: table: the target table identifier. Cannot be empty. partitions: partition filter. the comma (&#34;,&#34;) represents &#34;AND&#34;, the semicolon (&#34;;&#34;) represents &#34;OR&#34;. If you want to compact one partition with date=01 and day=01, you need to write &#39;date=01,day=01&#39;. Left empty for all partitions. (Can&#39;t be used together with &#34;</description>
+    </item>
+    
+  </channel>
+</rss>
