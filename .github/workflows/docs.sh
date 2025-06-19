@@ -39,7 +39,7 @@ if [ $? -ne 0 ]; then
 fi
 
 # build Paimon; required for Javadoc step
-mvn clean install -B -DskipTests
+mvn -T 2C -B clean install -DskipTests -Pflink1,spark3 -pl "!paimon-e2e-tests"
 
 # build java/scala docs
 mkdir -p docs/target/api
