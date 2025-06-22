@@ -1,0 +1,1073 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Apache Paimon</title>
+    <link>//paimon.apache.org/docs/master/</link>
+    <description>Recent content on Apache Paimon</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language><atom:link href="//paimon.apache.org/docs/master/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Filesystems</title>
+      <link>//paimon.apache.org/docs/master/maintenance/filesystems/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/maintenance/filesystems/</guid>
+      <description>Filesystems #  Apache Paimon utilizes the same pluggable file systems as Apache Flink. Users can follow the standard plugin mechanism to configure the plugin structure if using Flink as compute engine. However, for other engines like Spark or Hive, the provided opt jars (by Flink) may get conflicts and cannot be used directly. It is not convenient for users to fix class conflicts, thus Paimon provides the self-contained and engine-unified FileSystem pluggable jars for user to query tables from Spark/Hive side.</description>
+    </item>
+    
+    <item>
+      <title>Migration From Hive</title>
+      <link>//paimon.apache.org/docs/master/migration/migration-from-hive/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/migration/migration-from-hive/</guid>
+      <description>Hive Table Migration #  Apache Hive supports ORC, Parquet file formats that could be migrated to Paimon. When migrating data to a paimon table, the origin table will be permanently disappeared. So please back up your data if you still need the original table. The migrated table will be append table.
+Now, we can use paimon hive catalog with Migrate Table Procedure to totally migrate a table from hive to paimon.</description>
+    </item>
+    
+    <item>
+      <title>Migration From Iceberg</title>
+      <link>//paimon.apache.org/docs/master/migration/migration-from-iceberg/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/migration/migration-from-iceberg/</guid>
+      <description>Iceberg Migration #  Apache Iceberg data with parquet file format could be migrated to Apache Paimon. When migrating an iceberg table to a paimon table, the origin iceberg table will permanently disappear. So please back up your data if you still need the original table. The migrated paimon table will be an append table.
+We highly recommend to back up iceberg table data before migrating, because migrating action is not atomic.</description>
+    </item>
+    
+    <item>
+      <title>Overview</title>
+      <link>//paimon.apache.org/docs/master/append-table/overview/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/append-table/overview/</guid>
+      <description>Overview #  If a table does not have a primary key defined, it is an append table. Compared to the primary key table, it does not have the ability to directly receive changelogs. It cannot be directly updated with data through upsert. It can only receive incoming data from append data.
+Flink CREATE TABLE my_table ( product_id BIGINT, price DOUBLE, sales BIGINT ) WITH ( -- &amp;#39;target-file-size&amp;#39; = &amp;#39;256 MB&amp;#39;,  -- &amp;#39;file.</description>
+    </item>
+    
+    <item>
+      <title>Overview</title>
+      <link>//paimon.apache.org/docs/master/cdc-ingestion/overview/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/cdc-ingestion/overview/</guid>
+      <description>Overview #  Paimon supports a variety of ways to ingest data into Paimon tables with schema evolution. This means that the added columns are synchronized to the Paimon table in real time and the synchronization job will not be restarted for this purpose.
+We currently support the following sync ways:
+ MySQL Synchronizing Table: synchronize one or multiple tables from MySQL into one Paimon table. MySQL Synchronizing Database: synchronize the whole MySQL database into one Paimon database.</description>
+    </item>
+    
+    <item>
+      <title>Overview</title>
+      <link>//paimon.apache.org/docs/master/concepts/overview/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/concepts/overview/</guid>
+      <description>Overview #  Apache Paimon&amp;rsquo;s Architecture:
+As shown in the architecture above:
+Read/Write: Paimon supports a versatile way to read/write data and perform OLAP queries.
+ For reads, it supports consuming data  from historical snapshots (in batch mode), from the latest offset (in streaming mode), or reading incremental snapshots in a hybrid way.   For writes, it supports  streaming synchronization from the changelog of databases (CDC) batch insert/overwrite from offline data.</description>
+    </item>
+    
+    <item>
+      <title>Overview</title>
+      <link>//paimon.apache.org/docs/master/concepts/rest/overview/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/concepts/rest/overview/</guid>
+      <description>RESTCatalog #  Overview #  Paimon REST Catalog provides a lightweight implementation to access the catalog service. Paimon could access the catalog service through a catalog server which implements REST API. You can see all APIs in REST API.
+Key Features #   User Defined Technology-Specific Logic Implementation  All technology-specific logic within the catalog server. This ensures that the user can define logic that could be owned by the user.</description>
+    </item>
+    
+    <item>
+      <title>Overview</title>
+      <link>//paimon.apache.org/docs/master/concepts/spec/overview/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/concepts/spec/overview/</guid>
+      <description>Spec Overview #  This is the specification for the Paimon table format, this document standardizes the underlying file structure and design of Paimon.
+Terms #   Schema: fields, primary keys definition, partition keys definition and options. Snapshot: the entrance to all data committed at some specific time point. Manifest list: includes several manifest files. Manifest: includes several data files or changelog files. Data File: contains incremental records. Changelog File: contains records produced by changelog-producer.</description>
+    </item>
+    
+    <item>
+      <title>Overview</title>
+      <link>//paimon.apache.org/docs/master/ecosystem/overview/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/ecosystem/overview/</guid>
+      <description>Overview #  Compatibility Matrix #     Engine Version Batch Read Batch Write Create Table Alter Table Streaming Write Streaming Read Batch Overwrite DELETE &amp;amp; UPDATE MERGE INTO Time Travel     Flink 1.15 - 1.20 ✅ ✅ ✅ ✅(1.17+) ✅ ✅ ✅ ✅(1.17+) ❌ ✅   Spark 3.2 - 3.5 ✅ ✅ ✅ ✅ ✅(3.3+) ✅(3.3+) ✅ ✅ ✅ ✅(3.3+)   Hive 2.</description>
+    </item>
+    
+    <item>
+      <title>Overview</title>
+      <link>//paimon.apache.org/docs/master/iceberg/overview/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/iceberg/overview/</guid>
+      <description>Overview #  Paimon supports generating Iceberg compatible metadata, so that Paimon tables can be consumed directly by Iceberg readers.
+Set the following table options, so that Paimon tables can generate Iceberg compatible metadata.
+  Option Default Type Description     metadata.iceberg.storage disabled Enum  When set, produce Iceberg metadata after a snapshot is committed, so that Iceberg readers can read Paimon&#39;s raw data files.  disabled: Disable Iceberg compatibility support.</description>
+    </item>
+    
+    <item>
+      <title>Overview</title>
+      <link>//paimon.apache.org/docs/master/primary-key-table/merge-engine/overview/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/primary-key-table/merge-engine/overview/</guid>
+      <description>Overview #  When Paimon sink receives two or more records with the same primary keys, it will merge them into one record to keep primary keys unique. By specifying the merge-engine table property, users can choose how records are merged together.
+Always set table.exec.sink.upsert-materialize to NONE in Flink SQL TableConfig, sink upsert-materialize may result in strange behavior. When the input is out of order, we recommend that you use Sequence Field to correct disorder.</description>
+    </item>
+    
+    <item>
+      <title>Overview</title>
+      <link>//paimon.apache.org/docs/master/primary-key-table/overview/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/primary-key-table/overview/</guid>
+      <description>Overview #  If you define a table with primary key, you can insert, update or delete records in the table.
+Primary keys consist of a set of columns that contain unique values for each record. Paimon enforces data ordering by sorting the primary key within each bucket, allowing users to achieve high performance by applying filtering conditions on the primary key. See CREATE TABLE.
+Bucket #  Unpartitioned tables, or partitions in partitioned tables, are sub-divided into buckets, to provide extra structure to the data that may be used for more efficient querying.</description>
+    </item>
+    
+    <item>
+      <title>Quick Start</title>
+      <link>//paimon.apache.org/docs/master/flink/quick-start/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/flink/quick-start/</guid>
+      <description>Quick Start #  This documentation is a guide for using Paimon in Flink.
+Jars #  Paimon currently supports Flink 2.0, 1.20, 1.19, 1.18, 1.17, 1.16, 1.15. We recommend the latest Flink version for a better experience.
+Download the jar file with corresponding version.
+ Currently, paimon provides two types jar: one of which(the bundled jar) is used for read/write data, and the other(action jar) for operations such as manually compaction,     Version Type Jar     Flink 2.</description>
+    </item>
+    
+    <item>
+      <title>Quick Start</title>
+      <link>//paimon.apache.org/docs/master/spark/quick-start/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/spark/quick-start/</guid>
+      <description>Quick Start #  Preparation #  Paimon currently supports Spark 3.5, 3.4, 3.3, and 3.2. We recommend the latest Spark version for a better experience.
+Download the jar file with corresponding version.
+   Version Jar     Spark 3.5 paimon-spark-3.5-1.2-SNAPSHOT.jar   Spark 3.4 paimon-spark-3.4-1.2-SNAPSHOT.jar   Spark 3.3 paimon-spark-3.3-1.2-SNAPSHOT.jar   Spark 3.2 paimon-spark-3.2-1.2-SNAPSHOT.jar    You can also manually build bundled jar from the source code.</description>
+    </item>
+    
+    <item>
+      <title>REST API</title>
+      <link>//paimon.apache.org/docs/master/program-api/rest-api/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/program-api/rest-api/</guid>
+      <description>REST API #  This is Java API for REST.
+Dependency #  Maven dependency:
+&amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.apache.paimon&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;paimon-api&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;1.2-SNAPSHOT&amp;lt;/version&amp;gt; &amp;lt;/dependency&amp;gt; Or download the jar file: Paimon API. RESTApi #  import org.apache.paimon.options.Options; import org.apache.paimon.rest.RESTApi; import java.util.List; import static org.apache.paimon.options.CatalogOptions.WAREHOUSE; import static org.apache.paimon.rest.RESTCatalogOptions.DLF_ACCESS_KEY_ID; import static org.apache.paimon.rest.RESTCatalogOptions.DLF_ACCESS_KEY_SECRET; import static org.apache.paimon.rest.RESTCatalogOptions.TOKEN; import static org.apache.paimon.rest.RESTCatalogOptions.TOKEN_PROVIDER; import static org.apache.paimon.rest.RESTCatalogOptions.URI; public class RESTApiExample { public static void main(String[] args) { Options options = new Options(); options.set(URI, &amp;#34;&amp;lt;catalog server url&amp;gt;&amp;#34;); options.</description>
+    </item>
+    
+    <item>
+      <title>Roadmap</title>
+      <link>//paimon.apache.org/docs/master/project/roadmap/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/project/roadmap/</guid>
+      <description>Roadmap #  Flink Lookup Join #  Support Flink Custom Data Distribution Lookup Join to reach large-scale data lookup join.
+Produce Iceberg snapshots #  Introduce a mode to produce Iceberg snapshots.
+Variant Type #  Support Variant Type with Spark 4.0 and Flink 2.0. Unlocking support for semi-structured data.
+File Index #  Add more index:
+ Inverse  Vector Compaction #  Support Vector Compaction for super Wide Table.</description>
+    </item>
+    
+    <item>
+      <title>Understand Files</title>
+      <link>//paimon.apache.org/docs/master/learn-paimon/understand-files/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/learn-paimon/understand-files/</guid>
+      <description>Understand Files #  This article is specifically designed to clarify the impact that various file operations have on files.
+This page provides concrete examples and practical tips for effectively managing them. Furthermore, through an in-depth exploration of operations such as commit and compact, we aim to offer insights into the creation and updates of files.
+Prerequisite #  Before delving further into this page, please ensure that you have read through the following sections:</description>
+    </item>
+    
+    <item>
+      <title>Upsert To Partitioned</title>
+      <link>//paimon.apache.org/docs/master/migration/upsert-to-partitioned/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/migration/upsert-to-partitioned/</guid>
+      <description>Upsert To Partitioned #  Note: Only Hive Engine can be used to query these upsert-to-partitioned tables.  The Tag Management will maintain the manifests and data files of the snapshot. A typical usage is creating tags daily, then you can maintain the historical data of each day for batch reading.
+When using primary key tables, a non-partitioned approach is often used to maintain updates, in order to mirror and synchronize tables from upstream database tables.</description>
+    </item>
+    
+    <item>
+      <title>Append Table</title>
+      <link>//paimon.apache.org/docs/master/iceberg/append-table/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/iceberg/append-table/</guid>
+      <description>Append Tables #  Let&amp;rsquo;s walk through a simple example, where we query Paimon tables with Iceberg connectors in Flink and Spark. Before trying out this example, make sure that your compute engine already supports Iceberg. Please refer to Iceberg&amp;rsquo;s document if you haven&amp;rsquo;t set up Iceberg.
+ Flink: Preparation when using Flink SQL Client Spark: Using Iceberg in Spark 3  Let&amp;rsquo;s now create a Paimon append only table with Iceberg compatibility enabled and insert some data.</description>
+    </item>
+    
+    <item>
+      <title>Basic Concepts</title>
+      <link>//paimon.apache.org/docs/master/concepts/basic-concepts/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/concepts/basic-concepts/</guid>
+      <description>Basic Concepts #  File Layouts #  All files of a table are stored under one base directory. Paimon files are organized in a layered style. The following image illustrates the file layout. Starting from a snapshot file, Paimon readers can recursively access all records from the table.
+Snapshot #  All snapshot files are stored in the snapshot directory.
+A snapshot file is a JSON file containing information about this snapshot, including</description>
+    </item>
+    
+    <item>
+      <title>Bear Token</title>
+      <link>//paimon.apache.org/docs/master/concepts/rest/bear/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/concepts/rest/bear/</guid>
+      <description>Bear Token #  A bearer token is an encrypted string, typically generated by the server based on a secret key. When the client sends a request to the server, it must include Authorization: Bearer &amp;lt;token&amp;gt; in the request header. After receiving the request, the server extracts the &amp;lt;token&amp;gt; and validates its legitimacy. If the validation passes, the authentication is successful.
+CREATE CATALOG `paimon-rest-catalog` WITH ( &amp;#39;type&amp;#39; = &amp;#39;paimon&amp;#39;, &amp;#39;uri&amp;#39; = &amp;#39;&amp;lt;catalog server url&amp;gt;&amp;#39;, &amp;#39;metastore&amp;#39; = &amp;#39;rest&amp;#39;, &amp;#39;warehouse&amp;#39; = &amp;#39;my_instance_name&amp;#39;, &amp;#39;token.</description>
+    </item>
+    
+    <item>
+      <title>Data Distribution</title>
+      <link>//paimon.apache.org/docs/master/primary-key-table/data-distribution/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/primary-key-table/data-distribution/</guid>
+      <description>Data Distribution #  A bucket is the smallest storage unit for reads and writes, each bucket directory contains an LSM tree.
+Fixed Bucket #  Configure a bucket greater than 0, using Fixed Bucket mode, according to Math.abs(key_hashcode % numBuckets) to compute the bucket of record.
+Rescaling buckets can only be done through offline processes, see Rescale Bucket. A too large number of buckets leads to too many small files, and a too small number of buckets leads to poor write performance.</description>
+    </item>
+    
+    <item>
+      <title>Download</title>
+      <link>//paimon.apache.org/docs/master/project/download/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/project/download/</guid>
+      <description>Download #  This documentation is a guide for downloading Paimon Jars.
+Engine Jars #     Version Jar     Flink 2.0 paimon-flink-2.0-1.2-SNAPSHOT.jar   Flink 1.20 paimon-flink-1.20-1.2-SNAPSHOT.jar   Flink 1.19 paimon-flink-1.19-1.2-SNAPSHOT.jar   Flink 1.18 paimon-flink-1.18-1.2-SNAPSHOT.jar   Flink 1.17 paimon-flink-1.17-1.2-SNAPSHOT.jar   Flink 1.16 paimon-flink-1.16-1.2-SNAPSHOT.jar   Flink 1.15 paimon-flink-1.15-1.2-SNAPSHOT.jar   Flink Action paimon-flink-action-1.2-SNAPSHOT.jar   Spark 3.5 paimon-spark-3.5-1.2-SNAPSHOT.jar   Spark 3.</description>
+    </item>
+    
+    <item>
+      <title>Flink API</title>
+      <link>//paimon.apache.org/docs/master/program-api/flink-api/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/program-api/flink-api/</guid>
+      <description>Flink API #  If possible, recommend using Flink SQL or Spark SQL, or simply use SQL APIs in programs.  Dependency #  Maven dependency:
+&amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.apache.paimon&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;paimon-flink-1.20&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;1.2-SNAPSHOT&amp;lt;/version&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.apache.flink&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;flink-table-api-java-bridge&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;1.20.0&amp;lt;/version&amp;gt; &amp;lt;scope&amp;gt;provided&amp;lt;/scope&amp;gt; &amp;lt;/dependency&amp;gt; Or download the jar file: Paimon Flink. Please choose your Flink version.
+Paimon relies on Hadoop environment, you should add hadoop classpath or bundled jar.
+Not only DataStream API, you can also read or write to Paimon tables by the conversion between DataStream and Table in Flink.</description>
+    </item>
+    
+    <item>
+      <title>Mysql CDC</title>
+      <link>//paimon.apache.org/docs/master/cdc-ingestion/mysql-cdc/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/cdc-ingestion/mysql-cdc/</guid>
+      <description>MySQL CDC #  Paimon supports synchronizing changes from different databases using change data capture (CDC). This feature requires Flink and its CDC connectors.
+Prepare CDC Bundled Jar #  Download CDC Bundled Jar and put them under &amp;lt;FLINK_HOME&amp;gt;/lib/.
+   Version Bundled Jar     3.1.x  flink-sql-connector-mysql-cdc-3.1.x.jar  mysql-connector-java-8.0.27.jar    Only cdc 3.1+ is supported.
+You can download the flink-connector-mysql-cdc jar package by clicking here.</description>
+    </item>
+    
+    <item>
+      <title>Partial Update</title>
+      <link>//paimon.apache.org/docs/master/primary-key-table/merge-engine/partial-update/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/primary-key-table/merge-engine/partial-update/</guid>
+      <description>Partial Update #  By specifying &#39;merge-engine&#39; = &#39;partial-update&#39;, users have the ability to update columns of a record through multiple updates until the record is complete. This is achieved by updating the value fields one by one, using the latest data under the same primary key. However, null values are not overwritten in the process.
+For example, suppose Paimon receives three records:
+ &amp;lt;1, 23.0, 10, NULL&amp;gt;- &amp;lt;1, NULL, NULL, &#39;This is a book&#39;&amp;gt; &amp;lt;1, 25.</description>
+    </item>
+    
+    <item>
+      <title>Postgres CDC</title>
+      <link>//paimon.apache.org/docs/master/cdc-ingestion/postgres-cdc/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/cdc-ingestion/postgres-cdc/</guid>
+      <description>Postgres CDC #  Paimon supports synchronizing changes from different databases using change data capture (CDC). This feature requires Flink and its CDC connectors.
+Prepare CDC Bundled Jar #  flink-connector-postgres-cdc-*.jar Synchronizing Tables #  By using PostgresSyncTableAction in a Flink DataStream job or directly through flink run, users can synchronize one or multiple tables from PostgreSQL into one Paimon table.
+To use this feature through flink run, run the following shell command.</description>
+    </item>
+    
+    <item>
+      <title>Schema</title>
+      <link>//paimon.apache.org/docs/master/concepts/spec/schema/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/concepts/spec/schema/</guid>
+      <description>Schema #  The version of the schema file starts from 0 and currently retains all versions of the schema. There may be old files that rely on the old schema version, so its deletion should be done with caution.
+Schema File is JSON, it includes:
+ fields: data field list, data field contains id, name, type, field id is used to support schema evolution. partitionKeys: field name list, partition definition of the table, it cannot be modified.</description>
+    </item>
+    
+    <item>
+      <title>SQL DDL</title>
+      <link>//paimon.apache.org/docs/master/flink/sql-ddl/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/flink/sql-ddl/</guid>
+      <description>SQL DDL #  Create Catalog #  Paimon catalogs currently support three types of metastores:
+ filesystem metastore (default), which stores both metadata and table files in filesystems. hive metastore, which additionally stores metadata in Hive metastore. Users can directly access the tables from Hive. jdbc metastore, which additionally stores metadata in relational databases such as MySQL, Postgres, etc.  See CatalogOptions for detailed options when creating a catalog.</description>
+    </item>
+    
+    <item>
+      <title>SQL DDL</title>
+      <link>//paimon.apache.org/docs/master/spark/sql-ddl/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/spark/sql-ddl/</guid>
+      <description>SQL DDL #  Catalog #  Create Catalog #  Paimon catalogs currently support three types of metastores:
+ filesystem metastore (default), which stores both metadata and table files in filesystems. hive metastore, which additionally stores metadata in Hive metastore. Users can directly access the tables from Hive. jdbc metastore, which additionally stores metadata in relational databases such as MySQL, Postgres, etc.  See CatalogOptions for detailed options when creating a catalog.</description>
+    </item>
+    
+    <item>
+      <title>SQL Functions</title>
+      <link>//paimon.apache.org/docs/master/spark/sql-functions/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/spark/sql-functions/</guid>
+      <description>SQL Functions #  This section introduce all available Paimon Spark functions.
+max_pt #  max_pt($table_name)
+It accepts a string type literal to specify the table name and return a max-valid-toplevel partition value.
+ valid: the partition which contains data files toplevel: only return the first partition value if the table has multi-partition columns  It would throw exception when:
+ the table is not a partitioned table the partitioned table does not have partition all of the partitions do not contains data files  Example</description>
+    </item>
+    
+    <item>
+      <title>SQL Write</title>
+      <link>//paimon.apache.org/docs/master/flink/sql-write/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/flink/sql-write/</guid>
+      <description>SQL Write #  Syntax #  INSERT { INTO | OVERWRITE } table_identifier [ part_spec ] [ column_list ] { value_expr | query }; For more information, please check the syntax document:
+Flink INSERT Statement
+INSERT INTO #  Use INSERT INTO to apply records and changes to tables.
+INSERT INTO my_table SELECT ... INSERT INTO supports both batch and streaming mode. In Streaming mode, by default, it will also perform compaction, snapshot expiration, and even partition expiration in Flink Sink (if it is configured).</description>
+    </item>
+    
+    <item>
+      <title>SQL Write</title>
+      <link>//paimon.apache.org/docs/master/spark/sql-write/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/spark/sql-write/</guid>
+      <description>SQL Write #  Insert Table #  The INSERT statement inserts new rows into a table or overwrites the existing data in the table. The inserted rows can be specified by value expressions or result from a query.
+Syntax
+INSERT { INTO | OVERWRITE } table_identifier [ part_spec ] [ column_list ] { value_expr | query }; Parameters
+  table_identifier: Specifies a table name, which may be optionally qualified with a database name.</description>
+    </item>
+    
+    <item>
+      <title>StarRocks</title>
+      <link>//paimon.apache.org/docs/master/ecosystem/starrocks/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/ecosystem/starrocks/</guid>
+      <description>StarRocks #  This documentation is a guide for using Paimon in StarRocks.
+Version #  Paimon currently supports StarRocks 3.1 and above. Recommended version is StarRocks 3.2.6 or above.
+Create Paimon Catalog #  Paimon catalogs are registered by executing a CREATE EXTERNAL CATALOG SQL in StarRocks. For example, you can use the following SQL to create a Paimon catalog named paimon_catalog.
+CREATE EXTERNAL CATALOG paimon_catalog PROPERTIES( &amp;#34;type&amp;#34; = &amp;#34;paimon&amp;#34;, &amp;#34;paimon.</description>
+    </item>
+    
+    <item>
+      <title>Streaming</title>
+      <link>//paimon.apache.org/docs/master/append-table/streaming/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/append-table/streaming/</guid>
+      <description>Streaming #  You can stream write to the Append table in a very flexible way through Flink, or read the Append table through Flink, using it like a queue. The only difference is that its latency is in minutes. Its advantages are very low cost and the ability to push down filters and projection.
+Pre small files merging #  &amp;ldquo;Pre&amp;rdquo; means that this compact occurs before committing files to the snapshot.</description>
+    </item>
+    
+    <item>
+      <title>Aggregation</title>
+      <link>//paimon.apache.org/docs/master/primary-key-table/merge-engine/aggregation/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/primary-key-table/merge-engine/aggregation/</guid>
+      <description>Aggregation #  NOTE: Always set table.exec.sink.upsert-materialize to NONE in Flink SQL TableConfig.  Sometimes users only care about aggregated results. The aggregation merge engine aggregates each value field with the latest data one by one under the same primary key according to the aggregate function.
+Each field not part of the primary keys can be given an aggregate function, specified by the fields.&amp;lt;field-name&amp;gt;.aggregate-function table property, otherwise it will use last_non_null_value aggregation as default.</description>
+    </item>
+    
+    <item>
+      <title>Concurrency Control</title>
+      <link>//paimon.apache.org/docs/master/concepts/concurrency-control/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/concepts/concurrency-control/</guid>
+      <description>Concurrency Control #  Paimon supports optimistic concurrency for multiple concurrent write jobs.
+Each job writes data at its own pace and generates a new snapshot based on the current snapshot by applying incremental files (deleting or adding files) at the time of committing.
+There may be two types of commit failures here:
+ Snapshot conflict: the snapshot id has been preempted, the table has generated a new snapshot from another job.</description>
+    </item>
+    
+    <item>
+      <title>Contributing</title>
+      <link>//paimon.apache.org/docs/master/project/contributing/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/project/contributing/</guid>
+      <description>Contributing #  Apache Paimon is developed by an open and friendly community. Everybody is cordially welcome to join the community and contribute to Apache Paimon. There are several ways to interact with the community and contribute to Paimon including asking questions, filing bug reports, proposing new features, joining discussions on the mailing lists, contributing code or documentation, improving website, testing release candidates and writing corresponding blog etc.
+What do you want to do?</description>
+    </item>
+    
+    <item>
+      <title>DLF Token</title>
+      <link>//paimon.apache.org/docs/master/concepts/rest/dlf/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/concepts/rest/dlf/</guid>
+      <description>DLF Token #  DLF (Data Lake Formation) building is a fully-managed platform for unified metadata and data storage and management, aiming to provide customers with functions such as metadata management, storage management, permission management, storage analysis, and storage optimization.
+DLF provides multiple authentication methods for different environments.
+The &#39;warehouse&#39; is your catalog instance name on the server, not the path.  Use the access key #  CREATE CATALOG `paimon-rest-catalog` WITH ( &amp;#39;type&amp;#39; = &amp;#39;paimon&amp;#39;, &amp;#39;uri&amp;#39; = &amp;#39;&amp;lt;catalog server url&amp;gt;&amp;#39;, &amp;#39;metastore&amp;#39; = &amp;#39;rest&amp;#39;, &amp;#39;warehouse&amp;#39; = &amp;#39;my_instance_name&amp;#39;, &amp;#39;token.</description>
+    </item>
+    
+    <item>
+      <title>Doris</title>
+      <link>//paimon.apache.org/docs/master/ecosystem/doris/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/ecosystem/doris/</guid>
+      <description>Doris #  This documentation is a guide for using Paimon in Doris.
+ More details can be found in Apache Doris Website
+ Version #  Paimon currently supports Apache Doris 2.0.6 and above.
+Create Paimon Catalog #  Use CREATE CATALOG statement in Apache Doris to create Paimon Catalog.
+Doris support multi types of Paimon Catalogs. Here are some examples:
+-- HDFS based Paimon Catalog CREATE CATALOG `paimon_hdfs` PROPERTIES ( &amp;#34;type&amp;#34; = &amp;#34;paimon&amp;#34;, &amp;#34;warehouse&amp;#34; = &amp;#34;hdfs://172.</description>
+    </item>
+    
+    <item>
+      <title>Java API</title>
+      <link>//paimon.apache.org/docs/master/program-api/java-api/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/program-api/java-api/</guid>
+      <description>Java API #  If possible, recommend using computing engines such as Flink SQL or Spark SQL.  Dependency #  Maven dependency:
+&amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.apache.paimon&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;paimon-bundle&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;1.2-SNAPSHOT&amp;lt;/version&amp;gt; &amp;lt;/dependency&amp;gt; Or download the jar file: Paimon Bundle. Paimon relies on Hadoop environment, you should add hadoop classpath or bundled jar.
+Create Catalog #  Before coming into contact with the Table, you need to create a Catalog.
+import org.apache.paimon.catalog.Catalog; import org.apache.paimon.catalog.CatalogContext; import org.</description>
+    </item>
+    
+    <item>
+      <title>Kafka CDC</title>
+      <link>//paimon.apache.org/docs/master/cdc-ingestion/kafka-cdc/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/cdc-ingestion/kafka-cdc/</guid>
+      <description>Kafka CDC #  Prepare Kafka Bundled Jar #  flink-sql-connector-kafka-*.jar Supported Formats #  Flink provides several Kafka CDC formats: Canal Json, Debezium Json, Debezium Avro, Ogg Json, Maxwell Json and Normal Json. If a message in a Kafka topic is a change event captured from another database using the Change Data Capture (CDC) tool, then you can use the Paimon Kafka CDC. Write the INSERT, UPDATE, DELETE messages parsed into the paimon table.</description>
+    </item>
+    
+    <item>
+      <title>Primary Key Table</title>
+      <link>//paimon.apache.org/docs/master/iceberg/primary-key-table/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/iceberg/primary-key-table/</guid>
+      <description>Primary Key Tables #  Let&amp;rsquo;s walk through a simple example, where we query Paimon tables with Iceberg connectors in Flink and Spark. Before trying out this example, make sure that your compute engine already supports Iceberg. Please refer to Iceberg&amp;rsquo;s document if you haven&amp;rsquo;t set up Iceberg.
+ Flink: Preparation when using Flink SQL Client Spark: Using Iceberg in Spark 3  Flink SQL CREATE CATALOG paimon_catalog WITH ( &amp;#39;type&amp;#39; = &amp;#39;paimon&amp;#39;, &amp;#39;warehouse&amp;#39; = &amp;#39;&amp;lt;path-to-warehouse&amp;gt;&amp;#39; ); CREATE TABLE paimon_catalog.</description>
+    </item>
+    
+    <item>
+      <title>Query Performance</title>
+      <link>//paimon.apache.org/docs/master/append-table/query-performance/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/append-table/query-performance/</guid>
+      <description>Query Performance #  Data Skipping By Order #  Paimon by default records the maximum and minimum values of each field in the manifest file.
+In the query, according to the WHERE condition of the query, together with the statistics in the manifest we can perform file filtering. If the filtering effect is good, the query that would have cost minutes will be accelerated to milliseconds to complete the execution.</description>
+    </item>
+    
+    <item>
+      <title>Snapshot</title>
+      <link>//paimon.apache.org/docs/master/concepts/spec/snapshot/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/concepts/spec/snapshot/</guid>
+      <description>Snapshot #  Each commit generates a snapshot file, and the version of the snapshot file starts from 1 and must be continuous. EARLIEST and LATEST are hint files at the beginning and end of the snapshot list, and they can be inaccurate. When hint files are inaccurate, the read will scan all snapshot files to determine the beginning and end.
+warehouse └── default.db └── my_table ├── snapshot ├── EARLIEST ├── LATEST ├── snapshot-1 ├── snapshot-2 └── snapshot-3 Writing commit will preempt the next snapshot id, and once the snapshot file is successfully written, this commit will be visible.</description>
+    </item>
+    
+    <item>
+      <title>Table Mode</title>
+      <link>//paimon.apache.org/docs/master/primary-key-table/table-mode/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/primary-key-table/table-mode/</guid>
+      <description>Table Mode #  The file structure of the primary key table is roughly shown in the above figure. The table or partition contains multiple buckets, and each bucket is a separate LSM tree structure that contains multiple files.
+The writing process of LSM is roughly as follows: Flink checkpoint flush L0 files, and trigger a compaction as needed to merge the data. According to the different processing ways during writing, there are three modes:</description>
+    </item>
+    
+    <item>
+      <title>Write Performance</title>
+      <link>//paimon.apache.org/docs/master/maintenance/write-performance/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/maintenance/write-performance/</guid>
+      <description>Write Performance #  Paimon&amp;rsquo;s write performance is closely related to checkpoint, so if you need greater write throughput:
+ Flink Configuration (&#39;flink-conf.yaml&#39;/&#39;config.yaml&#39; or SET in SQL): Increase the checkpoint interval (&#39;execution.checkpointing.interval&#39;), increase max concurrent checkpoints to 3 (&#39;execution.checkpointing.max-concurrent-checkpoints&#39;), or just use batch mode. Increase write-buffer-size. Enable write-buffer-spillable. Rescale bucket number if you are using Fixed-Bucket mode.  Option &#39;changelog-producer&#39; = &#39;lookup&#39; or &#39;full-compaction&#39;, and option &#39;full-compaction.delta-commits&#39; have a large impact on write performance, if it is a snapshot / full synchronization phase you can unset these options and then enable them again in the incremental phase.</description>
+    </item>
+    
+    <item>
+      <title>Catalog</title>
+      <link>//paimon.apache.org/docs/master/concepts/catalog/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/concepts/catalog/</guid>
+      <description>Catalog #  Paimon provides a Catalog abstraction to manage the table of contents and metadata. The Catalog abstraction provides a series of ways to help you better integrate with computing engines. We always recommend that you use Catalog to access the Paimon table.
+Catalogs #  Paimon catalogs currently support four types of metastores:
+ filesystem metastore (default), which stores both metadata and table files in filesystems. hive metastore, which additionally stores metadata in Hive metastore.</description>
+    </item>
+    
+    <item>
+      <title>Catalog API</title>
+      <link>//paimon.apache.org/docs/master/program-api/catalog-api/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/program-api/catalog-api/</guid>
+      <description>Catalog API #  Create Database #  You can use the catalog to create databases. The created databases are persistence in the file system.
+import org.apache.paimon.catalog.Catalog; public class CreateDatabase { public static void main(String[] args) { try { Catalog catalog = CreateCatalog.createFilesystemCatalog(); catalog.createDatabase(&amp;#34;my_db&amp;#34;, false); } catch (Catalog.DatabaseAlreadyExistException e) { // do something  } } } Determine Whether Database Exists #  You can use the catalog to determine whether the database exists</description>
+    </item>
+    
+    <item>
+      <title>Committer</title>
+      <link>//paimon.apache.org/docs/master/project/committer/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/project/committer/</guid>
+      <description>Committer #  Become a Committer #  How to become a committer #  There is no strict protocol for becoming a committer. Candidates for new committers are typically people that are active contributors and community members. Candidates are suggested by current committers or PPMC members, and voted upon by the PPMC.
+If you would like to become a committer, you should engage with the community and start contributing to Apache Paimon in any of the above ways.</description>
+    </item>
+    
+    <item>
+      <title>Dedicated Compaction</title>
+      <link>//paimon.apache.org/docs/master/maintenance/dedicated-compaction/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/maintenance/dedicated-compaction/</guid>
+      <description>Dedicated Compaction #  Paimon&amp;rsquo;s snapshot management supports writing with multiple writers.
+For S3-like object store, its &#39;RENAME&#39; does not have atomic semantic. We need to configure Hive metastore and enable &#39;lock.enabled&#39; option for the catalog.  By default, Paimon supports concurrent writing to different partitions. A recommended mode is that streaming job writes records to Paimon&amp;rsquo;s latest partition, Simultaneously batch job (overwrite) writes records to the historical partition.
+So far, everything works very well, but if you need multiple writers to write records to the same partition, it will be a bit more complicated.</description>
+    </item>
+    
+    <item>
+      <title>First Row</title>
+      <link>//paimon.apache.org/docs/master/primary-key-table/merge-engine/first-row/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/primary-key-table/merge-engine/first-row/</guid>
+      <description>First Row #  By specifying &#39;merge-engine&#39; = &#39;first-row&#39;, users can keep the first row of the same primary key. It differs from the deduplicate merge engine that in the first-row merge engine, it will generate insert only changelog.
+first-row merge engine only supports none and lookup changelog producer. For streaming queries must be used with the lookup changelog producer.   You can not specify sequence.field. Not accept DELETE and UPDATE_BEFORE message.</description>
+    </item>
+    
+    <item>
+      <title>Hive</title>
+      <link>//paimon.apache.org/docs/master/ecosystem/hive/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/ecosystem/hive/</guid>
+      <description>Hive #  This documentation is a guide for using Paimon in Hive.
+Version #  Paimon currently supports Hive 3.1, 2.3, 2.2, 2.1 and 2.1-cdh-6.3.
+Execution Engine #  Paimon currently supports MR and Tez execution engine for Hive Read, and MR execution engine for Hive Write. Note If you use beeline, please restart the hive cluster.
+Installation #  Download the jar file with corresponding version.
+    Jar     Hive 3.</description>
+    </item>
+    
+    <item>
+      <title>Iceberg Tags</title>
+      <link>//paimon.apache.org/docs/master/iceberg/iceberg-tags/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/iceberg/iceberg-tags/</guid>
+      <description>Iceberg Tags #  When enable iceberg compatibility, Paimon Tags will also be synced to Iceberg Tags.
+CREATE CATALOG paimon WITH ( &amp;#39;type&amp;#39; = &amp;#39;paimon&amp;#39;, &amp;#39;warehouse&amp;#39; = &amp;#39;&amp;lt;path-to-warehouse&amp;gt;&amp;#39; ); CREATE CATALOG iceberg WITH ( &amp;#39;type&amp;#39; = &amp;#39;iceberg&amp;#39;, &amp;#39;catalog-type&amp;#39; = &amp;#39;hadoop&amp;#39;, &amp;#39;warehouse&amp;#39; = &amp;#39;&amp;lt;path-to-warehouse&amp;gt;/iceberg&amp;#39;, &amp;#39;cache-enabled&amp;#39; = &amp;#39;false&amp;#39; -- disable iceberg catalog caching to quickly see the result ); -- create tag for paimon table CALL paimon.sys.create_tag(&amp;#39;default.T&amp;#39;, &amp;#39;tag1&amp;#39;, 1); -- query tag in iceberg table SELECT * FROM iceberg.</description>
+    </item>
+    
+    <item>
+      <title>Manifest</title>
+      <link>//paimon.apache.org/docs/master/concepts/spec/manifest/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/concepts/spec/manifest/</guid>
+      <description>Manifest #  Manifest List #  ├── manifest └── manifest-list-51c16f7b-421c-4bc0-80a0-17677f343358-1 Manifest List includes meta of several manifest files. Its name contains UUID, it is a avro file, the schema is:
+ _FILE_NAME: STRING, manifest file name. _FILE_SIZE: BIGINT, manifest file size. _NUM_ADDED_FILES: BIGINT, number added files in manifest. _NUM_DELETED_FILES: BIGINT, number deleted files in manifest. _PARTITION_STATS: SimpleStats, partition stats, the minimum and maximum values of partition fields in this manifest are beneficial for skipping certain manifest files during queries, it is a SimpleStats.</description>
+    </item>
+    
+    <item>
+      <title>Mongo CDC</title>
+      <link>//paimon.apache.org/docs/master/cdc-ingestion/mongo-cdc/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/cdc-ingestion/mongo-cdc/</guid>
+      <description>Mongo CDC #  Prepare MongoDB Bundled Jar #  flink-sql-connector-mongodb-cdc-*.jar only cdc 3.1+ is supported
+Synchronizing Tables #  By using MongoDBSyncTableAction in a Flink DataStream job or directly through flink run, users can synchronize one collection from MongoDB into one Paimon table.
+To use this feature through flink run, run the following shell command.
+&amp;lt;FLINK_HOME&amp;gt;/bin/flink run \  /path/to/paimon-flink-action-1.2-SNAPSHOT.jar \  mongodb_sync_table \  --warehouse &amp;lt;warehouse-path&amp;gt; \  --database &amp;lt;database-name&amp;gt; \  --table &amp;lt;table-name&amp;gt; \  [--partition_keys &amp;lt;partition_keys&amp;gt;] \  [--computed_column &amp;lt;&amp;#39;column-name=expr-name(args[, .</description>
+    </item>
+    
+    <item>
+      <title>SQL Query</title>
+      <link>//paimon.apache.org/docs/master/flink/sql-query/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/flink/sql-query/</guid>
+      <description>SQL Query #  Just like all other tables, Paimon tables can be queried with SELECT statement.
+Batch Query #  Paimon&amp;rsquo;s batch read returns all the data in a snapshot of the table. By default, batch reads return the latest snapshot.
+-- Flink SQL SET &amp;#39;execution.runtime-mode&amp;#39; = &amp;#39;batch&amp;#39;; Batch Time Travel #  Paimon batch reads with time travel can specify a snapshot or a tag and read the corresponding data.</description>
+    </item>
+    
+    <item>
+      <title>SQL Query</title>
+      <link>//paimon.apache.org/docs/master/spark/sql-query/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/spark/sql-query/</guid>
+      <description>SQL Query #  Just like all other tables, Paimon tables can be queried with SELECT statement.
+Batch Query #  Paimon&amp;rsquo;s batch read returns all the data in a snapshot of the table. By default, batch reads return the latest snapshot.
+-- read all columns SELECT * FROM t; Paimon also supports reading some hidden metadata columns, currently supporting the following columns:
+ __paimon_file_path: the file path of the record.</description>
+    </item>
+    
+    <item>
+      <title>Update</title>
+      <link>//paimon.apache.org/docs/master/append-table/update/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/append-table/update/</guid>
+      <description>Update #  Now, only Spark SQL supports DELETE &amp;amp; UPDATE, you can take a look at Spark Write.
+Example:
+DELETE FROM my_table WHERE currency = &amp;#39;UNKNOWN&amp;#39;; Update append table has two modes:
+ COW (Copy on Write): search for the hit files and then rewrite each file to remove the data that needs to be deleted from the files. This operation is costly. MOW (Merge on Write): By specifying &#39;deletion-vectors.</description>
+    </item>
+    
+    <item>
+      <title>Bucketed</title>
+      <link>//paimon.apache.org/docs/master/append-table/bucketed/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/append-table/bucketed/</guid>
+      <description>Bucketed Append #  You can define the bucket and bucket-key to get a bucketed append table.
+Example to create bucketed append table:
+Flink CREATE TABLE my_table ( product_id BIGINT, price DOUBLE, sales BIGINT ) WITH ( &amp;#39;bucket&amp;#39; = &amp;#39;8&amp;#39;, &amp;#39;bucket-key&amp;#39; = &amp;#39;product_id&amp;#39; );  Streaming #  An ordinary Append table has no strict ordering guarantees for its streaming writes and reads, but there are some cases where you need to define a key similar to Kafka&amp;rsquo;s.</description>
+    </item>
+    
+    <item>
+      <title>Changelog Producer</title>
+      <link>//paimon.apache.org/docs/master/primary-key-table/changelog-producer/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/primary-key-table/changelog-producer/</guid>
+      <description>Changelog Producer #  Streaming write can continuously produce the latest changes for streaming read.
+By specifying the changelog-producer table property when creating the table, users can choose the pattern of changes produced from table files.
+changelog-producer may significantly reduce compaction performance, please do not enable it unless necessary.  None #  By default, no extra changelog producer will be applied to the writer of table. Paimon source can only see the merged changes across snapshots, like what keys are removed and what are the new values of some keys.</description>
+    </item>
+    
+    <item>
+      <title>Clone To Paimon</title>
+      <link>//paimon.apache.org/docs/master/migration/clone-to-paimon/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/migration/clone-to-paimon/</guid>
+      <description>Clone To Paimon #  Clone supports cloning tables to Paimon tables.
+ Clone is OVERWRITE semantic that will overwrite the partitions of the target table according to the data. Clone is reentrant, but it requires existing tables to contain all fields from the source table and have the same partition fields.  Currently, clone supports:
+ Clone Hive tables in Hive Catalog to Paimon Catalog, supports Parquet, ORC, Avro formats, target table will be append table.</description>
+    </item>
+    
+    <item>
+      <title>Consumer ID</title>
+      <link>//paimon.apache.org/docs/master/flink/consumer-id/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/flink/consumer-id/</guid>
+      <description>Consumer ID #  Consumer id can help you accomplish the following two things:
+ Safe consumption: When deciding whether a snapshot has expired, Paimon looks at all the consumers of the table in the file system, and if there are consumers that still depend on this snapshot, then this snapshot will not be deleted by expiration. Resume from breakpoint: When previous job is stopped, the newly started job can continue to consume from the previous progress without resuming from the state.</description>
+    </item>
+    
+    <item>
+      <title>DataFile</title>
+      <link>//paimon.apache.org/docs/master/concepts/spec/datafile/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/concepts/spec/datafile/</guid>
+      <description>DataFile #  Partition #  Consider a Partition table via Flink SQL:
+CREATE TABLE part_t ( f0 INT, f1 STRING, dt STRING ) PARTITIONED BY (dt); INSERT INTO part_t VALUES (1, &amp;#39;11&amp;#39;, &amp;#39;20240514&amp;#39;); The file system will be:
+part_t ├── dt=20240514 │ └── bucket-0 │ └── data-ca1c3c38-dc8d-4533-949b-82e195b41bd4-0.orc ├── manifest │ ├── manifest-08995fe5-c2ac-4f54-9a5f-d3af1fcde41d-0 │ ├── manifest-list-51c16f7b-421c-4bc0-80a0-17677f343358-0 │ └── manifest-list-51c16f7b-421c-4bc0-80a0-17677f343358-1 ├── schema │ └── schema-0 └── snapshot ├── EARLIEST ├── LATEST └── snapshot-1 Paimon adopts the same partitioning concept as Apache Hive to separate data.</description>
+    </item>
+    
+    <item>
+      <title>Hive Catalogs</title>
+      <link>//paimon.apache.org/docs/master/iceberg/hive-catalog/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/iceberg/hive-catalog/</guid>
+      <description>Hive Catalog #  When creating Paimon table, set &#39;metadata.iceberg.storage&#39; = &#39;hive-catalog&#39;. This option value not only store Iceberg metadata like hadoop-catalog, but also create Iceberg external table in Hive. This Paimon table can be accessed from Iceberg Hive catalog later.
+To provide information about Hive metastore, you also need to set some (or all) of the following table options when creating Paimon table.
+  Option Default Type Description     metadata.</description>
+    </item>
+    
+    <item>
+      <title>Manage Snapshots</title>
+      <link>//paimon.apache.org/docs/master/maintenance/manage-snapshots/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/maintenance/manage-snapshots/</guid>
+      <description>Manage Snapshots #  This section will describe the management and behavior related to snapshots.
+Expire Snapshots #  Paimon writers generate one or two snapshot per commit. Each snapshot may add some new data files or mark some old data files as deleted. However, the marked data files are not truly deleted because Paimon also supports time traveling to an earlier snapshot. They are only deleted when the snapshot expires.</description>
+    </item>
+    
+    <item>
+      <title>Pulsar CDC</title>
+      <link>//paimon.apache.org/docs/master/cdc-ingestion/pulsar-cdc/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/cdc-ingestion/pulsar-cdc/</guid>
+      <description>Pulsar CDC #  Prepare Pulsar Bundled Jar #  flink-connector-pulsar-*.jar Supported Formats #  Flink provides several Pulsar CDC formats: Canal Json, Debezium Json, Debezium Avro, Ogg Json, Maxwell Json and Normal Json. If a message in a pulsar topic is a change event captured from another database using the Change Data Capture (CDC) tool, then you can use the Paimon Pulsar CDC. Write the INSERT, UPDATE, DELETE messages parsed into the paimon table.</description>
+    </item>
+    
+    <item>
+      <title>Python API</title>
+      <link>//paimon.apache.org/docs/master/program-api/python-api/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/program-api/python-api/</guid>
+      <description>Java-based Implementation For Python API #  Python SDK  has defined Python API for Paimon. Currently, there is only a Java-based implementation.
+Java-based implementation will launch a JVM and use py4j to execute Java code to read and write Paimon table.
+Environment Settings #  SDK Installing #  SDK is published at pypaimon. You can install by
+pip install pypaimon Java Runtime Environment #  This SDK needs JRE 1.</description>
+    </item>
+    
+    <item>
+      <title>Trino</title>
+      <link>//paimon.apache.org/docs/master/ecosystem/trino/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/ecosystem/trino/</guid>
+      <description>Trino #  This documentation is a guide for using Paimon in Trino.
+Version #  Paimon currently supports Trino 440.
+Filesystem #  From version 0.8, Paimon share Trino filesystem for all actions, which means, you should config Trino filesystem before using trino-paimon. You can find information about how to config filesystems for Trino on Trino official website.
+Preparing Paimon Jar File #  Download
+You can also manually build a bundled jar from the source code.</description>
+    </item>
+    
+    <item>
+      <title>Amoro</title>
+      <link>//paimon.apache.org/docs/master/ecosystem/amoro/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/ecosystem/amoro/</guid>
+      <description>Apache Amoro With Paimon #  Apache Amoro(incubating) is a Lakehouse management system built on open data lake formats. Working with compute engines including Flink, Spark, and Trino, Amoro brings pluggable and Table Maintenance features for a Lakehouse to provide out-of-the-box data warehouse experience, and helps data platforms or products easily build infra-decoupled, stream-and-batch-fused and lake-native architecture. AMS(Amoro Management Service) provides Lakehouse management features, like self-optimizing, data expiration, etc. It also provides a unified catalog service for all compute engines, which can also be combined with existing metadata services like HMS(Hive Metastore).</description>
+    </item>
+    
+    <item>
+      <title>Debezium BSON</title>
+      <link>//paimon.apache.org/docs/master/cdc-ingestion/debezium-bson/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/cdc-ingestion/debezium-bson/</guid>
+      <description>Debezium BSON Format #  The debezium-bson format is one of the formats supported by Kafka CDC. It is the format obtained by collecting mongodb through debezium, which is similar to debezium-json format. However, MongoDB does not have a fixed schema, and the field types of each document may be different, so the before/after fields in JSON are all string types, while the debezium-json format requires a JSON object type.</description>
+    </item>
+    
+    <item>
+      <title>Ecosystem</title>
+      <link>//paimon.apache.org/docs/master/iceberg/ecosystem/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/iceberg/ecosystem/</guid>
+      <description>Iceberg Ecosystems #  AWS Athena #  AWS Athena may use old manifest reader to read Iceberg manifest by names, we should let Paimon producing legacy Iceberg manifest list file, you can enable: &#39;metadata.iceberg.manifest-legacy-version&#39;.
+DuckDB #  Duckdb may rely on files placed in the root/data directory, while Paimon is usually placed directly in the root directory, so you can configure this parameter for the table to achieve compatibility: &#39;data-file.</description>
+    </item>
+    
+    <item>
+      <title>Sequence &amp; Rowkind</title>
+      <link>//paimon.apache.org/docs/master/primary-key-table/sequence-rowkind/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/primary-key-table/sequence-rowkind/</guid>
+      <description>Sequence and Rowkind #  When creating a table, you can specify the &#39;sequence.field&#39; by specifying fields to determine the order of updates, or you can specify the &#39;rowkind.field&#39; to determine the changelog kind of record.
+Sequence Field #  By default, the primary key table determines the merge order according to the input order (the last input record will be the last to merge). However, in distributed computing, there will be some cases that lead to data disorder.</description>
+    </item>
+    
+    <item>
+      <title>SQL Alter</title>
+      <link>//paimon.apache.org/docs/master/spark/sql-alter/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/spark/sql-alter/</guid>
+      <description>Altering Tables #  Changing/Adding Table Properties #  The following SQL sets write-buffer-size table property to 256 MB.
+ALTER TABLE my_table SET TBLPROPERTIES ( &amp;#39;write-buffer-size&amp;#39; = &amp;#39;256 MB&amp;#39; ); Removing Table Properties #  The following SQL removes write-buffer-size table property.
+ALTER TABLE my_table UNSET TBLPROPERTIES (&amp;#39;write-buffer-size&amp;#39;); Changing/Adding Table Comment #  The following SQL changes comment of table my_table to table comment.
+ALTER TABLE my_table SET TBLPROPERTIES ( &amp;#39;comment&amp;#39; = &amp;#39;table comment&amp;#39; ); Removing Table Comment #  The following SQL removes table comment.</description>
+    </item>
+    
+    <item>
+      <title>SQL Lookup</title>
+      <link>//paimon.apache.org/docs/master/flink/sql-lookup/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/flink/sql-lookup/</guid>
+      <description>Lookup Joins #  Lookup Joins are a type of join in streaming queries. It is used to enrich a table with data that is queried from Paimon. The join requires one table to have a processing time attribute and the other table to be backed by a lookup source connector.
+Paimon supports lookup joins on tables with primary keys and append tables in Flink. The following example illustrates this feature.</description>
+    </item>
+    
+    <item>
+      <title>Table Index</title>
+      <link>//paimon.apache.org/docs/master/concepts/spec/tableindex/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/concepts/spec/tableindex/</guid>
+      <description>Table index #  Table Index files is in the index directory.
+Dynamic Bucket Index #  Dynamic bucket index is used to store the correspondence between the hash value of the primary-key and the bucket.
+Its structure is very simple, only storing hash values in the file:
+HASH_VALUE | HASH_VALUE | HASH_VALUE | HASH_VALUE | &amp;hellip;
+HASH_VALUE is the hash value of the primary-key. 4 bytes, BIG_ENDIAN.
+Deletion Vectors #  Deletion file is used to store the deleted records position for each data file.</description>
+    </item>
+    
+    <item>
+      <title>Table Types</title>
+      <link>//paimon.apache.org/docs/master/concepts/table-types/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/concepts/table-types/</guid>
+      <description>Table Types #  Paimon supports table types:
+ table with pk: Paimon Data Table with Primary key table w/o pk: Paimon Data Table without Primary key view: metastore required, views in SQL are a kind of virtual table format-table: file format table refers to a directory that contains multiple files of the same format, where operations on this table allow for reading or writing to these files, compatible with Hive tables object table: provides metadata indexes for unstructured data objects in the specified Object Storage directory.</description>
+    </item>
+    
+    <item>
+      <title>Auxiliary</title>
+      <link>//paimon.apache.org/docs/master/spark/auxiliary/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/spark/auxiliary/</guid>
+      <description>Auxiliary Statements #  Set / Reset #  The SET command sets a property, returns the value of an existing property or returns all SQLConf properties with value and meaning. The RESET command resets runtime configurations specific to the current session which were set via the SET command to their default values.
+To set dynamic options globally, you need add the spark.paimon. prefix. You can also set dynamic table options at this format: spark.</description>
+    </item>
+    
+    <item>
+      <title>Compaction</title>
+      <link>//paimon.apache.org/docs/master/primary-key-table/compaction/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/primary-key-table/compaction/</guid>
+      <description>Compaction #  When more and more records are written into the LSM tree, the number of sorted runs will increase. Because querying an LSM tree requires all sorted runs to be combined, too many sorted runs will result in a poor query performance, or even out of memory.
+To limit the number of sorted runs, we have to merge several sorted runs into one big sorted run once in a while.</description>
+    </item>
+    
+    <item>
+      <title>Configurations</title>
+      <link>//paimon.apache.org/docs/master/iceberg/configurations/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/iceberg/configurations/</guid>
+      <description>Configurations #  Options for Iceberg Compatibility.
+  Key Default Type Description     metadata.iceberg.compaction.max.file-num 50 Integer If number of small Iceberg manifest metadata files exceeds this limit, always trigger manifest metadata compaction regardless of their total size.   metadata.iceberg.compaction.min.file-num 10 Integer Minimum number of Iceberg manifest metadata files to trigger manifest metadata compaction.   metadata.iceberg.database (none) String Metastore database name for Iceberg Catalog. Set this as an iceberg database alias if using a centralized Catalog.</description>
+    </item>
+    
+    <item>
+      <title>File Index</title>
+      <link>//paimon.apache.org/docs/master/concepts/spec/fileindex/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/concepts/spec/fileindex/</guid>
+      <description>File index #  Define file-index.${index_type}.columns, Paimon will create its corresponding index file for each file. If the index file is too small, it will be stored directly in the manifest, or in the directory of the data file. Each data file corresponds to an index file, which has a separate file definition and can contain different types of indexes with multiple columns.
+Index File #  File index file format.</description>
+    </item>
+    
+    <item>
+      <title>Rescale Bucket</title>
+      <link>//paimon.apache.org/docs/master/maintenance/rescale-bucket/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/maintenance/rescale-bucket/</guid>
+      <description>Rescale Bucket #  Since the number of total buckets dramatically influences the performance, Paimon allows users to tune bucket numbers by ALTER TABLE command and reorganize data layout by INSERT OVERWRITE without recreating the table/partition. When executing overwrite jobs, the framework will automatically scan the data with the old bucket number and hash the record according to the current bucket number.
+Rescale Overwrite #  -- rescale number of total buckets ALTER TABLE table_identifier SET (&amp;#39;bucket&amp;#39; = &amp;#39;.</description>
+    </item>
+    
+    <item>
+      <title>SQL Alter</title>
+      <link>//paimon.apache.org/docs/master/flink/sql-alter/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/flink/sql-alter/</guid>
+      <description>Altering Tables #  Changing/Adding Table Properties #  The following SQL sets write-buffer-size table property to 256 MB.
+ALTER TABLE my_table SET ( &amp;#39;write-buffer-size&amp;#39; = &amp;#39;256 MB&amp;#39; ); Removing Table Properties #  The following SQL removes write-buffer-size table property.
+ALTER TABLE my_table RESET (&amp;#39;write-buffer-size&amp;#39;); Changing/Adding Table Comment #  The following SQL changes comment of table my_table to table comment.
+ALTER TABLE my_table SET ( &amp;#39;comment&amp;#39; = &amp;#39;table comment&amp;#39; ); Removing Table Comment #  The following SQL removes table comment.</description>
+    </item>
+    
+    <item>
+      <title>System Tables</title>
+      <link>//paimon.apache.org/docs/master/concepts/system-tables/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/concepts/system-tables/</guid>
+      <description>System Tables #  Paimon provides a very rich set of system tables to help users better analyze and query the status of Paimon tables:
+ Query the status of the data table: Data System Table. Query the global status of the entire Catalog: Global System Table.  Data System Table #  Data System tables contain metadata and information about each Paimon data table, such as the snapshots created and the options in use.</description>
+    </item>
+    
+    <item>
+      <title>Data Types</title>
+      <link>//paimon.apache.org/docs/master/concepts/data-types/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/concepts/data-types/</guid>
+      <description>Data Types #  A data type describes the logical type of a value in the table ecosystem. It can be used to declare input and/or output types of operations.
+All data types supported by Paimon are as follows:
+  DataType Description     BOOLEAN Data type of a boolean with a (possibly) three-valued logic of TRUE, FALSE, and UNKNOWN.   CHAR
+CHAR(n)  Data type of a fixed-length character string.</description>
+    </item>
+    
+    <item>
+      <title>Manage Tags</title>
+      <link>//paimon.apache.org/docs/master/maintenance/manage-tags/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/maintenance/manage-tags/</guid>
+      <description>Manage Tags #  Paimon&amp;rsquo;s snapshots can provide an easy way to query historical data. But in most scenarios, a job will generate too many snapshots and table will expire old snapshots according to table configuration. Snapshot expiration will also delete old data files, and the historical data of expired snapshots cannot be queried anymore.
+To solve this problem, you can create a tag based on a snapshot. The tag will maintain the manifests and data files of the snapshot.</description>
+    </item>
+    
+    <item>
+      <title>Query Performance</title>
+      <link>//paimon.apache.org/docs/master/primary-key-table/query-performance/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/primary-key-table/query-performance/</guid>
+      <description>Query Performance #  Table Mode #  The table schema has the greatest impact on query performance. See Table Mode.
+For Merge On Read table, the most important thing you should pay attention to is the number of buckets, which will limit the concurrency of reading data.
+For MOW (Deletion Vectors) or COW table or Read Optimized table, there is no limit to the concurrency of reading data, and they can also utilize some filtering conditions for non-primary-key columns.</description>
+    </item>
+    
+    <item>
+      <title>Functions</title>
+      <link>//paimon.apache.org/docs/master/concepts/functions/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/concepts/functions/</guid>
+      <description>Functions #  Paimon introduces a Function abstraction designed to support functions in a standard format for compute engine, addressing:
+  Unified Column-Level Filtering and Processing: Facilitates operations at the column level, including tasks such as encryption and decryption of data.
+  Parameterized View Capabilities: Supports parameterized operations within views, enhancing the dynamism and usability of data retrieval processes.
+  Types of Functions Supported #  Currently, Paimon supports three types of functions:</description>
+    </item>
+    
+    <item>
+      <title>Metrics</title>
+      <link>//paimon.apache.org/docs/master/maintenance/metrics/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/maintenance/metrics/</guid>
+      <description>Paimon Metrics #  Paimon has built a metrics system to measure the behaviours of reading and writing, like how many manifest files it scanned in the last planning, how long it took in the last commit operation, how many files it deleted in the last compact operation.
+In Paimon&amp;rsquo;s metrics system, metrics are updated and reported at table granularity.
+There are three types of metrics provided in the Paimon metric system, Gauge, Counter, Histogram.</description>
+    </item>
+    
+    <item>
+      <title>Manage Privileges</title>
+      <link>//paimon.apache.org/docs/master/maintenance/manage-privileges/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/maintenance/manage-privileges/</guid>
+      <description>Manage Privileges #  Paimon provides a privilege system on catalogs. Privileges determine which users can perform which operations on which objects, so that you can manage table access in a fine-grained manner.
+Currently, Paimon adopts the identity-based access control (IBAC) privilege model. That is, privileges are directly assigned to users.
+This privilege system only prevents unwanted users from accessing tables through catalogs. It does not block access through temporary table (by specifying table path on filesystem), nor does it prevent user from directly modifying data files on filesystem.</description>
+    </item>
+    
+    <item>
+      <title>Manage Branches</title>
+      <link>//paimon.apache.org/docs/master/maintenance/manage-branches/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/maintenance/manage-branches/</guid>
+      <description>Manage Branches #  In streaming data processing, it&amp;rsquo;s difficult to correct data for it may affect the existing data, and users will see the streaming provisional results, which is not expected.
+We suppose the branch that the existing workflow is processing on is &amp;lsquo;main&amp;rsquo; branch, by creating custom data branch, it can help to do experimental tests and data validating for the new job on the existing table, which doesn&amp;rsquo;t need to stop the existing reading / writing workflows and no need to copy data from the main branch.</description>
+    </item>
+    
+    <item>
+      <title>Manage Partitions</title>
+      <link>//paimon.apache.org/docs/master/maintenance/manage-partitions/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/maintenance/manage-partitions/</guid>
+      <description>Manage Partitions #  Paimon provides multiple ways to manage partitions, including expire historical partitions by different strategies or mark a partition done to notify the downstream application that the partition has finished writing.
+Expiring Partitions #  You can set partition.expiration-time when creating a partitioned table. Paimon streaming sink will periodically check the status of partitions and delete expired partitions according to time.
+How to determine whether a partition has expired: you can set partition.</description>
+    </item>
+    
+    <item>
+      <title>Procedures</title>
+      <link>//paimon.apache.org/docs/master/flink/procedures/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/flink/procedures/</guid>
+      <description>Procedures #  Flink 1.18 and later versions support Call Statements, which make it easier to manipulate data and metadata of Paimon table by writing SQLs instead of submitting Flink jobs.
+In 1.18, the procedure only supports passing arguments by position. You must pass all arguments in order, and if you don&amp;rsquo;t want to pass some arguments, you must use &#39;&#39; as placeholder. For example, if you want to compact table default.</description>
+    </item>
+    
+    <item>
+      <title>Action Jars</title>
+      <link>//paimon.apache.org/docs/master/flink/action-jars/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/flink/action-jars/</guid>
+      <description>Action Jars #  After the Flink Local Cluster has been started, you can execute the action jar by using the following command.
+&amp;lt;FLINK_HOME&amp;gt;/bin/flink run \  /path/to/paimon-flink-action-1.2-SNAPSHOT.jar \  &amp;lt;action&amp;gt; &amp;lt;args&amp;gt; The following command is used to compact a table.
+&amp;lt;FLINK_HOME&amp;gt;/bin/flink run \  /path/to/paimon-flink-action-1.2-SNAPSHOT.jar \  compact \  --path &amp;lt;TABLE_PATH&amp;gt; Merging into table #  Paimon supports &amp;ldquo;MERGE INTO&amp;rdquo; via submitting the &amp;lsquo;merge_into&amp;rsquo; job through flink run.</description>
+    </item>
+    
+    <item>
+      <title>Procedures</title>
+      <link>//paimon.apache.org/docs/master/spark/procedures/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/spark/procedures/</guid>
+      <description>Procedures #  This section introduce all available spark procedures about paimon.
+  Procedure Name Explanation Example    compact  To compact files. Argument: table: the target table identifier. Cannot be empty. partitions: partition filter. the comma (&#34;,&#34;) represents &#34;AND&#34;, the semicolon (&#34;;&#34;) represents &#34;OR&#34;. If you want to compact one partition with date=01 and day=01, you need to write &#39;date=01,day=01&#39;. Left empty for all partitions. (Can&#39;t be used together with &#34;</description>
+    </item>
+    
+    <item>
+      <title>Savepoint</title>
+      <link>//paimon.apache.org/docs/master/flink/savepoint/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/flink/savepoint/</guid>
+      <description>Savepoint #  Paimon has its own snapshot management, this may conflict with Flink&amp;rsquo;s checkpoint management, causing exceptions when restoring from savepoint (don&amp;rsquo;t worry, it will not cause the storage to be damaged).
+It is recommended that you use the following methods to savepoint:
+ Use Flink Stop with savepoint. Use Paimon Tag with Flink Savepoint, and rollback-to-tag before restoring from savepoint.  Stop with savepoint #  This feature of Flink ensures that the last checkpoint is fully processed, which means there will be no more uncommitted metadata left.</description>
+    </item>
+    
+    <item>
+      <title>Configurations</title>
+      <link>//paimon.apache.org/docs/master/maintenance/configurations/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/maintenance/configurations/</guid>
+      <description>Configuration #  CoreOptions #  Core options for paimon.
+  Key Default Type Description     aggregation.remove-record-on-delete false Boolean Whether to remove the whole row in aggregation engine when -D records are received.   alter-column-null-to-not-null.disabled true Boolean If true, it disables altering column type from null to not null. Default is true. Users can disable this option to explicitly convert null column type to not null.</description>
+    </item>
+    
+    <item>
+      <title>REST API</title>
+      <link>//paimon.apache.org/docs/master/concepts/rest/rest-api/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/concepts/rest/rest-api/</guid>
+      <description>   Redoc.init(&#39;\/\/paimon.apache.org\/docs\/master/rest-catalog-open-api.yaml&#39;, { disableSearch: true }, document.getElementById(&#39;redoc-container&#39;));   </description>
+    </item>
+    
+    <item>
+      <title>Versions</title>
+      <link>//paimon.apache.org/docs/master/versions/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/versions/</guid>
+      <description>Versions #  An appendix of hosted documentation for all versions of Apache Paimon.
+ master    stable    1.0    0.9    0.8    </description>
+    </item>
+    
+  </channel>
+</rss>
