@@ -1,7 +1,7 @@
 ---
 title: "Release 1.3"
 type: release
-version: 1.3.0
+version: 1.3.1
 weight: 95
 ---
 
@@ -110,13 +110,13 @@ optimal results and significantly reducing the decision-making complexity relate
 
 To balance the effects of write amplification and sorting, Paimon utilized the hierarchical concept of LSM Tree to layer data files and the idea of Universal Compaction to select files that need to be clustered.
 
-<img src="./img/1.3-incremetal-1.png" alt="incremental-1" />
+<img src="./img/1.3-incremental-1.png" alt="incremental-1" />
 
 Through multi-level design, the data volume of each cluster is controlled. The higher the level of data clustering, the more stable it is, and the lower the probability of rewriting, in order to slow down write amplification while ensuring good sorting performance.
 
 Compared to tables without Cluster, under the dual clustering key filtering condition, Incremental Cluster query efficiency can be improved by over 150x;
 
-<img src="./img/1.3-incremetal-2.png" alt="incremental-2" />
+<img src="./img/1.3-incremental-2.png" alt="incremental-2" />
 
 After enabling Incremental Cluster for the Append table, scheduling Incremental Cluster periodically can not only solve the problem of small files, but also maintain excellent query efficiency for the Append table. At the same time, you can change the clustering key at any time after changing the query mode.
 
