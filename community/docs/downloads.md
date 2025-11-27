@@ -12,9 +12,9 @@ Paimon is released as a source artifact, and also through Maven.
 
 | RELEASE | DATE       | DOWNLOAD                                                                                                                                                                                                                                                                                                           |
 |---------|------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 1.3.1   | 2025-11-27 | [tar](https://www.apache.org/dyn/closer.lua/paimon/paimon-1.3.1/apache-paimon-1.3.1-src.tgz)               ([digest](https://downloads.apache.org/paimon/paimon-1.3.1/apache-paimon-1.3.1-src.tgz.sha512),                [pgp](https://downloads.apache.org/paimon/paimon-1.3.1/apache-paimon-1.3.1-src.tgz.asc)) |                                                                                                                                                                                                                                                                                                                                                                                                                                            |
 | 1.2.0   | 2025-07-16 | [tar](https://www.apache.org/dyn/closer.lua/paimon/paimon-1.2.0/apache-paimon-1.2.0-src.tgz)               ([digest](https://downloads.apache.org/paimon/paimon-1.2.0/apache-paimon-1.2.0-src.tgz.sha512),                [pgp](https://downloads.apache.org/paimon/paimon-1.2.0/apache-paimon-1.2.0-src.tgz.asc)) |                                                                                                                                                                                                                                                                                                                                                                                                                                            |
 | 1.1.1   | 2025-05-16 | [tar](https://www.apache.org/dyn/closer.lua/paimon/paimon-1.1.1/apache-paimon-1.1.1-src.tgz)               ([digest](https://downloads.apache.org/paimon/paimon-1.1.1/apache-paimon-1.1.1-src.tgz.sha512),                [pgp](https://downloads.apache.org/paimon/paimon-1.1.1/apache-paimon-1.1.1-src.tgz.asc)) |                                                                                                                                                                                                                                                                                                                                                                                                                                            |
-| 1.0.1   | 2025-02-10 | [tar](https://www.apache.org/dyn/closer.lua/paimon/paimon-1.0.1/apache-paimon-1.0.1-src.tgz)               ([digest](https://downloads.apache.org/paimon/paimon-1.0.1/apache-paimon-1.0.1-src.tgz.sha512),                [pgp](https://downloads.apache.org/paimon/paimon-1.0.1/apache-paimon-1.0.1-src.tgz.asc)) |                                                                                                                                                                                                                                                                                                                                                                                                                                            |
 
 To download a source distribution for a particular release, click on the *tar* link.
 
@@ -71,14 +71,14 @@ Add the following to the dependencies section of your `pom.xml` file:
 
 ### Flink
 
-Please replace `${flink.version}` in the following xml file to the version of Flink you're using. For example, `1.17` or `1.18`.
+Please replace `${flink.version}` in the following xml file to the version of Flink you're using. For example, `1.20`.
 
 ```xml
 <dependencies>
     <dependency>
         <groupId>org.apache.paimon</groupId>
         <artifactId>paimon-flink-${flink.version}</artifactId>
-        <version>1.1.0</version>
+        <version>1.3.1</version>
     </dependency>
 </dependencies>
 ```
@@ -87,14 +87,14 @@ Also include `<dependency>` elements for any extension modules you need: `paimon
 
 ### Spark
 
-Please replace `${spark.version}` in the following xml file to the version of Spark you're using. For example, `3.4` or `3.5`.
+Please replace `${spark.version}` in the following xml file to the version of Spark you're using. For example, `3.5`.
 
 ```xml
 <dependencies>
     <dependency>
         <groupId>org.apache.paimon</groupId>
         <artifactId>paimon-spark-${spark.version}</artifactId>
-        <version>1.1.0</version>
+        <version>1.3.1</version>
     </dependency>
 </dependencies>
 ```
