@@ -28,7 +28,7 @@ export const getDirectoryPath = (): {
   articleDist: string;
   profileDist: string;
   articleSource: string;
-  downloadsSource: string;
+  markdownSource: string;
   releasesSource: string;
   docsDist: string;
   profileSource: string;
@@ -44,7 +44,7 @@ export const getDirectoryPath = (): {
     articleDist: resolve(dist, Configuration.directory.article),
     profileDist: resolve(dist, Configuration.directory.profile),
     articleSource: resolve(source, Configuration.directory.article),
-    downloadsSource: resolve(source, 'docs'),
+    markdownSource: resolve(source, 'docs'),
     releasesSource: resolve(source, 'docs', Configuration.directory.release),
     docsDist: resolve(distRoot, `./assets/docs`),
     profileSource: resolve(source, Configuration.directory.profile)

@@ -27,7 +27,7 @@ const { dist } = getDirectoryPath();
 export function processRoutes(articles: ResolvedArticle[], releases: BriefRelease[]): void {
   const articleUrls = articles.map(item => `/blog/${item.id}`);
   const releaseUrls = releases.map(item => `/releases/${item.version}`);
-  const homeUrls = ['/', '/blog', '/downloads', '/releases'];
+  const homeUrls = ['/', '/blog', '/downloads', '/roadmap', '/releases'];
   const content = [...homeUrls, ...articleUrls, ...releaseUrls].join('\n');
   writeFileSync(`${dist}/routes.txt`, content);
 }

@@ -20,6 +20,7 @@ import { Routes } from '@angular/router';
 
 import { DownloadsComponent, downloadsResolver } from '@paimon/app/routers/downloads/downloads.component';
 import { HomeComponent } from '@paimon/app/routers/home/home.component';
+import { RoadmapComponent, roadmapResolver } from '@paimon/app/routers/roadmap/roadmap.component';
 import { SecurityComponent } from '@paimon/app/routers/security/security.component';
 import { TeamComponent } from '@paimon/app/routers/team/team.component';
 import { UsersComponent } from '@paimon/app/routers/users/users.component';
@@ -46,6 +47,13 @@ export const routes: Routes = [
     component: DownloadsComponent,
     resolve: {
       downloads: downloadsResolver
+    }
+  },
+  {
+    path: 'roadmap',
+    component: RoadmapComponent,
+    resolve: {
+      roadmap: roadmapResolver
     }
   },
   {

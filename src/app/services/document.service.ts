@@ -47,6 +47,10 @@ export class DocumentService {
     return this.httpClient.get<ResolvedDocument>(`${this.baseUrl}/downloads.json`);
   }
 
+  getRoadmap(): Observable<ResolvedDocument> {
+    return this.httpClient.get<ResolvedDocument>(`${this.baseUrl}/roadmap.json`);
+  }
+
   listRelease(): Observable<BriefRelease[]> {
     if (this.briefReleases$) {
       return this.briefReleases$;

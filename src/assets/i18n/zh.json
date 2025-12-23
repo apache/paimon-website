@@ -18,6 +18,7 @@
 	"DOCUMENT": "文档",
 	"DOCUMENTATION": "文档",
 	"DOWNLOADS": "下载",
+	"ROADMAP": "路线",
 	"Data Lake Capabilities": "数据湖功能",
 	"Defining Merge Engines, update records however you like. Deduplicate to keep last row, or partial-update, or aggregate records, or first-row, you decide.": "定义合并引擎，按你喜欢的方式更新记录。删除重复项以保留最后一行，或部分更新，或聚合记录，或第一行，由你决定",
 	"Defining changelog-producer, produce correct and complete changelog in updates for merge engines, simplifying your streaming analytics.": "定义 changelog-producer，为合并引擎的更新生成正确且完整的变更日志，简化您的流分析",

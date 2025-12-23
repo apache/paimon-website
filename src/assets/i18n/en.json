@@ -18,6 +18,7 @@
 	"DOCUMENT": "DOCUMENT",
 	"DOCUMENTATION": "DOCUMENTATION",
 	"DOWNLOADS": "DOWNLOADS",
+	"ROADMAP": "ROADMAP",
 	"Data Lake Capabilities": "Data Lake Capabilities",
 	"Defining Merge Engines, update records however you like. Deduplicate to keep last row, or partial-update, or aggregate records, or first-row, you decide.": "Defining Merge Engines, update records however you like. Deduplicate to keep last row, or partial-update, or aggregate records, or first-row, you decide.",
 	"Defining changelog-producer, produce correct and complete changelog in updates for merge engines, simplifying your streaming analytics.": "Defining changelog-producer, produce correct and complete changelog in updates for merge engines, simplifying your streaming analytics.",

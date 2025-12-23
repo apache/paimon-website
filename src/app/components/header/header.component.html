@@ -49,6 +49,14 @@
         </a>
         <paimon-divider></paimon-divider>
         <a
+          [routerLink]="['/', 'roadmap']"
+          class="px-3 py-2 text-sm font-medium text-gray-300 hover:text-white"
+          translate
+        >
+          ROADMAP
+        </a>
+        <paimon-divider></paimon-divider>
+        <a
           [routerLink]="
             latestReleaseVersion ? ['/', 'releases', latestReleaseVersion] : ['/', 'releases']
           "
@@ -184,6 +192,15 @@
                   translate
                 >
                   DOWNLOADS
+                </a>
+              </li>
+              <li class="hover:bg-paimon-gray-12">
+                <a
+                  [routerLink]="['/', 'roadmap']"
+                  class="flex h-10 w-full items-center justify-start px-8 no-underline hover:text-paimon-text-hover"
+                  translate
+                >
+                  ROADMAP
                 </a>
               </li>
               <li class="hover:bg-paimon-gray-12">

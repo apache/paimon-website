@@ -24,7 +24,7 @@ import { parse as parseFileName } from 'path';
 import { BriefRelease, parseDocumentFromBuffer, ResolvedDocument, resolveDocument } from '../models/document';
 import { getDirectoryPath } from '../utils/directory';
 
-const { downloadsSource, releasesSource, docsDist } = getDirectoryPath();
+const { markdownSource, releasesSource, docsDist } = getDirectoryPath();
 
 export function processDocuments(): { releases: BriefRelease[] } {
   if (fs.existsSync(docsDist)) {
@@ -37,9 +37,12 @@ export function processDocuments(): { releases: BriefRelease[] } {
   }
 
   const releases: ResolvedDocument[] = [];
-  const downloads = parseDocumentFromBuffer('downloads', readFileSync(`${downloadsSource}/downloads.md`));
+  const downloads = parseDocumentFromBuffer('downloads', readFileSync(`${markdownSource}/downloads.md`));
   const resolvedDownloads = resolveDocument(downloads);
   writeFileSync(`${docsDist}/downloads.json`, JSON.stringify(resolvedDownloads));
+  const roadmap = parseDocumentFromBuffer('roadmap', readFileSync(`${markdownSource}/roadmap.md`));
+  const resolvedRoadmap = resolveDocument(roadmap);
+  writeFileSync(`${docsDist}/roadmap.json`, JSON.stringify(resolvedRoadmap));
 
   readdirSync(releasesSource).forEach(file => {
     const { name } = parseFileName(file);
