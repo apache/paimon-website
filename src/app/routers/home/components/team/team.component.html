@@ -31,7 +31,7 @@
             <div class="h-full w-full rounded bg-paimon-gray-2">
               <img
                 class="rounded"
-                [ngSrc]="'https://avatars.githubusercontent.com/u/' + item.avatarId"
+                ngSrc="assets/avatars/{{ item.avatarId }}.png"
                 [width]="92"
                 [height]="92"
                 [alt]="item.name"
