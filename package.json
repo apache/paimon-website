@@ -2,10 +2,11 @@
   "name": "paimon-next-website",
   "version": "0.0.0",
   "scripts": {
+    "avatar": "tsx ./src/load-avatars.ts",
     "parse": "cd library/markdown-parser && npm run parse",
     "prestart": "npm run parse",
     "start": "ng serve --port 8801",
-    "prebuild": "npm run parse",
+    "prebuild": "npm run avatar && npm run parse",
     "build": "ng build",
     "serve:ssr": "node dist/server/server.mjs",
     "i18n:extract": "ngx-translate-extract --input ./src --output ./src/assets/i18n/{en,zh}.json -ss -k --clean --format json",
@@ -60,6 +61,7 @@
     "prettier-plugin-tailwindcss": "^0.6.6",
     "tailwindcss": "^3.4.10",
     "tailwindcss-animation-delay": "^2.0.1",
+    "tsx": "^4.21.0",
     "typescript": "~5.5.2",
     "typescript-eslint": "8.2.0"
   },

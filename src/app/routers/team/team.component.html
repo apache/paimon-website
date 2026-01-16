@@ -13,7 +13,7 @@
                 class="flex w-[156px] flex-col items-center justify-between gap-4 rounded-lg bg-paimon-gray-1 p-1.5 pb-6"
               >
                 <img
-                  [ngSrc]="'https://avatars.githubusercontent.com/u/' + item.avatarId"
+                  ngSrc="assets/avatars/{{ item.avatarId }}.png"
                   [width]="144"
                   [height]="144"
                   [alt]="item.name"
@@ -47,7 +47,7 @@
                 class="flex w-[156px] flex-col items-center justify-between gap-4 rounded-lg bg-paimon-gray-1 p-1.5 pb-6"
               >
                 <img
-                  [ngSrc]="'https://avatars.githubusercontent.com/u/' + item.avatarId"
+                  ngSrc="assets/avatars/{{ item.avatarId }}.png"
                   [width]="144"
                   [height]="144"
                   [alt]="item.name"

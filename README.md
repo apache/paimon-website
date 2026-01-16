@@ -14,6 +14,8 @@ Run `pnpm install` to install all dependencies.
 
 Run `pnpm start` for a dev server. Navigate to `http://localhost:8801/`. The application will automatically reload if you change any of the source files.
 
+> Before starting the dev server, make sure you have run `pnpm avatar` to load the avatars of the team members.
+
 ### Build
 
 Run `pnpm build` to build the project. The build artifacts will be stored in the `dist/` directory.
