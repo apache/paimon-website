@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Table w/o PK on Apache Paimon</title>
+    <link>//paimon.apache.org/docs/0.8/append-table/</link>
+    <description>Recent content in Table w/o PK on Apache Paimon</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language><atom:link href="//paimon.apache.org/docs/0.8/append-table/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Append Table</title>
+      <link>//paimon.apache.org/docs/0.8/append-table/append-table/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/0.8/append-table/append-table/</guid>
+      <description>Append Table #  If a table does not have a primary key defined, it is an append table by default.
+You can only insert a complete record into the table in streaming. This type of table is suitable for use cases that do not require streaming updates (such as log data synchronization).
+Flink CREATE TABLE my_table ( product_id BIGINT, price DOUBLE, sales BIGINT );  Data Distribution #  By default, append table has no bucket concept.</description>
+    </item>
+    
+    <item>
+      <title>Append Queue</title>
+      <link>//paimon.apache.org/docs/0.8/append-table/append-queue/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/0.8/append-table/append-queue/</guid>
+      <description>Append Queue #  Definition #  In this mode, you can regard append table as a queue separated by bucket. Every record in the same bucket is ordered strictly, streaming read will transfer the record to down-stream exactly in the order of writing. To use this mode, you do not need to config special configurations, all the data will go into one bucket as a queue. You can also define the bucket and bucket-key to enable larger parallelism and disperse data.</description>
+    </item>
+    
+  </channel>
+</rss>

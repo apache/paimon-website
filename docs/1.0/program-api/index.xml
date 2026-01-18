@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Program API on Apache Paimon</title>
+    <link>//paimon.apache.org/docs/1.0/program-api/</link>
+    <description>Recent content in Program API on Apache Paimon</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language><atom:link href="//paimon.apache.org/docs/1.0/program-api/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Flink API</title>
+      <link>//paimon.apache.org/docs/1.0/program-api/flink-api/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/1.0/program-api/flink-api/</guid>
+      <description>Flink API #  If possible, recommend using Flink SQL or Spark SQL, or simply use SQL APIs in programs.  Dependency #  Maven dependency:
+&amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.apache.paimon&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;paimon-flink-1.20&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;1.0.1&amp;lt;/version&amp;gt; &amp;lt;/dependency&amp;gt; &amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.apache.flink&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;flink-table-api-java-bridge&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;1.20.0&amp;lt;/version&amp;gt; &amp;lt;scope&amp;gt;provided&amp;lt;/scope&amp;gt; &amp;lt;/dependency&amp;gt; Or download the jar file: Paimon Flink. Please choose your Flink version.
+Paimon relies on Hadoop environment, you should add hadoop classpath or bundled jar.
+Not only DataStream API, you can also read or write to Paimon tables by the conversion between DataStream and Table in Flink.</description>
+    </item>
+    
+    <item>
+      <title>Java API</title>
+      <link>//paimon.apache.org/docs/1.0/program-api/java-api/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/1.0/program-api/java-api/</guid>
+      <description>Java API #  If possible, recommend using computing engines such as Flink SQL or Spark SQL.  Dependency #  Maven dependency:
+&amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.apache.paimon&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;paimon-bundle&amp;lt;/artifactId&amp;gt; &amp;lt;version&amp;gt;1.0.1&amp;lt;/version&amp;gt; &amp;lt;/dependency&amp;gt; Or download the jar file: Paimon Bundle. Paimon relies on Hadoop environment, you should add hadoop classpath or bundled jar.
+Create Catalog #  Before coming into contact with the Table, you need to create a Catalog.
+import org.apache.paimon.catalog.Catalog; import org.apache.paimon.catalog.CatalogContext; import org.</description>
+    </item>
+    
+    <item>
+      <title>Catalog API</title>
+      <link>//paimon.apache.org/docs/1.0/program-api/catalog-api/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/1.0/program-api/catalog-api/</guid>
+      <description>Catalog API #  Create Database #  You can use the catalog to create databases. The created databases are persistence in the file system.
+import org.apache.paimon.catalog.Catalog; public class CreateDatabase { public static void main(String[] args) { try { Catalog catalog = CreateCatalog.createFilesystemCatalog(); catalog.createDatabase(&amp;#34;my_db&amp;#34;, false); } catch (Catalog.DatabaseAlreadyExistException e) { // do something  } } } Determine Whether Database Exists #  You can use the catalog to determine whether the database exists</description>
+    </item>
+    
+    <item>
+      <title>Python API</title>
+      <link>//paimon.apache.org/docs/1.0/program-api/python-api/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/1.0/program-api/python-api/</guid>
+      <description>Java-based Implementation For Python API #  Python SDK  has defined Python API for Paimon. Currently, there is only a Java-based implementation.
+Java-based implementation will launch a JVM and use py4j to execute Java code to read and write Paimon table.
+Environment Settings #  SDK Installing #  SDK is published at pypaimon. You can install by
+pip install pypaimon Java Runtime Environment #  This SDK needs JRE 1.</description>
+    </item>
+    
+  </channel>
+</rss>

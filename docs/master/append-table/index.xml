@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Table w/o PK on Apache Paimon</title>
+    <link>//paimon.apache.org/docs/master/append-table/</link>
+    <description>Recent content in Table w/o PK on Apache Paimon</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language><atom:link href="//paimon.apache.org/docs/master/append-table/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Overview</title>
+      <link>//paimon.apache.org/docs/master/append-table/overview/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/append-table/overview/</guid>
+      <description>Overview #  If a table does not have a primary key defined, it is an append table. Compared to the primary key table, it does not have the ability to directly receive changelogs. It cannot be directly updated with data through upsert. It can only receive incoming data from append data.
+Flink CREATE TABLE my_table ( product_id BIGINT, price DOUBLE, sales BIGINT ) WITH ( -- &amp;#39;target-file-size&amp;#39; = &amp;#39;256 MB&amp;#39;,  -- &amp;#39;file.</description>
+    </item>
+    
+    <item>
+      <title>Streaming</title>
+      <link>//paimon.apache.org/docs/master/append-table/streaming/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/append-table/streaming/</guid>
+      <description>Streaming #  You can stream write to the Append table in a very flexible way through Flink, or read the Append table through Flink, using it like a queue. The only difference is that its latency is in minutes. Its advantages are very low cost and the ability to push down filters and projection.
+Pre small files merging #  &amp;ldquo;Pre&amp;rdquo; means that this compact occurs before committing files to the snapshot.</description>
+    </item>
+    
+    <item>
+      <title>Query Performance</title>
+      <link>//paimon.apache.org/docs/master/append-table/query-performance/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/append-table/query-performance/</guid>
+      <description>Query Performance #  Aggregate push down #  Append Table supports aggregate push down:
+SELECT COUNT(*) FROM TABLE WHERE DT = &amp;#39;20230101&amp;#39;; This query can be accelerated during compilation and returns very quickly.
+For Spark SQL, table with default metadata.stats-mode can be accelerated:
+SELECT MIN(a), MAX(b) FROM TABLE WHERE DT = &amp;#39;20230101&amp;#39;; SELECT * FROM TABLE ORDER BY a LIMIT 1; Min max topN query can be also accelerated during compilation and returns very quickly.</description>
+    </item>
+    
+    <item>
+      <title>Incremental Clustering</title>
+      <link>//paimon.apache.org/docs/master/append-table/incremental-clustering/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/append-table/incremental-clustering/</guid>
+      <description>Incremental Clustering #  Paimon currently supports ordering append tables using SFC (Space-Filling Curve)(see sort compact for more info). The resulting data layout typically delivers better performance for queries that target clustering keys. However, with the current SortCompaction, even when neither the data nor the clustering keys have changed, each run still rewrites the entire dataset, which is extremely costly.
+To address this, Paimon introduced a more flexible, incremental clustering mechanism—Incremental Clustering.</description>
+    </item>
+    
+    <item>
+      <title>Update</title>
+      <link>//paimon.apache.org/docs/master/append-table/update/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/append-table/update/</guid>
+      <description>Update #  Now, only Spark SQL supports DELETE &amp;amp; UPDATE, you can take a look at Spark Write.
+Example:
+DELETE FROM my_table WHERE currency = &amp;#39;UNKNOWN&amp;#39;; Update append table has two modes:
+ COW (Copy on Write): search for the hit files and then rewrite each file to remove the data that needs to be deleted from the files. This operation is costly. MOW (Merge on Write): By specifying &#39;deletion-vectors.</description>
+    </item>
+    
+    <item>
+      <title>Bucketed</title>
+      <link>//paimon.apache.org/docs/master/append-table/bucketed/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/append-table/bucketed/</guid>
+      <description>Bucketed Append #  You can define the bucket and bucket-key to get a bucketed append table.
+Example to create bucketed append table:
+Flink CREATE TABLE my_table ( product_id BIGINT, price DOUBLE, sales BIGINT ) WITH ( &amp;#39;bucket&amp;#39; = &amp;#39;8&amp;#39;, &amp;#39;bucket-key&amp;#39; = &amp;#39;product_id&amp;#39; );  Streaming #  An ordinary Append table has no strict ordering guarantees for its streaming writes and reads, but there are some cases where you need to define a key similar to Kafka&amp;rsquo;s.</description>
+    </item>
+    
+    <item>
+      <title>Row Tracking</title>
+      <link>//paimon.apache.org/docs/master/append-table/row-tracking/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/append-table/row-tracking/</guid>
+      <description>Row tracking #  Row tracking allows Paimon to track row-level tracking in a Paimon append table. Once enabled on a Paimon table, two more hidden columns will be added to the table schema:
+ _ROW_ID: BIGINT, this is a unique identifier for each row in the table. It is used to track the update of the row and can be used to identify the row in case of update, merge into or delete.</description>
+    </item>
+    
+    <item>
+      <title>Data Evolution</title>
+      <link>//paimon.apache.org/docs/master/append-table/data-evolution/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/append-table/data-evolution/</guid>
+      <description>Data Evolution #  Paimon supports complete Schema Evolution, allowing you to freely add, modify, or delete column schema. But how to backfill newly added columns or update column data.
+Data Evolution Mode is a new feature for Append tables that revolutionizes how you handle data evolution, particularly when adding new columns. This mode allows you to update partial columns without rewriting entire data files. Instead, it writes new column data to separate files and intelligently merges them with the original data during read operations.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,2197 @@
+
+<!DOCTYPE html>
+<html lang="en" dir=>
+
+<head>
+  <meta name="generator" content="Hugo 0.80.0" />
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Aggregation #  NOTE: Always set table.exec.sink.upsert-materialize to NONE in Flink SQL TableConfig.  Sometimes users only care about aggregated results. The aggregation merge engine aggregates each value field with the latest data one by one under the same primary key according to the aggregate function.
+Each field not part of the primary keys can be given an aggregate function, specified by the fields.&lt;field-name&gt;.aggregate-function table property, otherwise it will use last_non_null_value aggregation as default.">
+<meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="Aggregation" />
+<meta property="og:description" content="Aggregation #  NOTE: Always set table.exec.sink.upsert-materialize to NONE in Flink SQL TableConfig.  Sometimes users only care about aggregated results. The aggregation merge engine aggregates each value field with the latest data one by one under the same primary key according to the aggregate function.
+Each field not part of the primary keys can be given an aggregate function, specified by the fields.&lt;field-name&gt;.aggregate-function table property, otherwise it will use last_non_null_value aggregation as default." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="//paimon.apache.org/docs/master/primary-key-table/merge-engine/aggregation/" />
+
+<title>Aggregation | Apache Paimon</title>
+<link rel="manifest" href="/docs/master/manifest.json">
+<link rel="icon" href="/docs/master/favicon.png" type="image/x-icon">
+<link rel="stylesheet" href="/docs/master/book.min.3bc4108a5b57c9a7e6fcae92ff69940435f8c46c4e1e4a311aedc9b2d8e06792.css" integrity="sha256-O8QQiltXyafm/K6S/2mUBDX4xGxOHkoxGu3JstjgZ5I=">
+<script defer src="/docs/master/en.search.min.9b3fabc03cd4b5415f299488520c517fcb7ffdbdccceb582a99e0a5546a03860.js" integrity="sha256-mz&#43;rwDzUtUFfKZSIUgxRf8t//b3MzrWCqZ4KVUagOGA="></script>
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+  
+
+<link rel="stylesheet" type="text/css" href="//paimon.apache.org/docs/master/font-awesome/css/font-awesome.min.css">
+<script src="//paimon.apache.org/docs/master/js/anchor.min.js"></script>
+<script src="//paimon.apache.org/docs/master/js/flink.js"></script>
+
+
+  
+  <script>
+    var _paq = window._paq = window._paq || [];
+     
+     
+    _paq.push(['disableCookies']);
+     
+    _paq.push(["setDomains", ["*.flink.apache.org","*.nightlies.apache.org/flink"]]);
+    _paq.push(['trackPageView']);
+    _paq.push(['enableLinkTracking']);
+    (function() {
+      var u="//matomo.privacy.apache.org/";
+      _paq.push(['setTrackerUrl', u+'matomo.php']);
+      _paq.push(['setSiteId', '1']);
+      var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+      g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+    })();
+  </script>
+  
+</head>
+
+<body dir=>
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      
+  
+
+<nav>
+
+
+<a id="logo" href="//paimon.apache.org/docs/master">
+    <img width="100%" src="//paimon.apache.org/docs/master/paimon_black.svg">
+</a>
+<p style="text-align:right">0.9-SNAPSHOT</p>
+
+<div class="book-search">
+  <input type="text" id="book-search-input" placeholder="Search" aria-label="Search" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-dc8a1c63e6da60163016ce21cae1faa0" class="toggle"  />
+    <label for="section-dc8a1c63e6da60163016ce21cae1faa0" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-book title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Concepts</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/basic-concepts/" class="">Basic Concepts</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/concurrency-control/" class="">Concurrency Control</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-d3e7256ce393050c572ea7bd8cc4f240" class="toggle"  />
+    <label for="section-d3e7256ce393050c572ea7bd8cc4f240" class="flex justify-between">Specification<span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/spec/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/spec/schema/" class="">Schema</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/spec/snapshot/" class="">Snapshot</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/spec/manifest/" class="">Manifest</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/spec/datafile/" class="">DataFile</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/spec/tableindex/" class="">Table Index</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/spec/fileindex/" class="">File Index</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-3f6a6d4f1692040009c66ffaa328c8d0" class="toggle" checked />
+    <label for="section-3f6a6d4f1692040009c66ffaa328c8d0" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-database title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Table with PK</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/primary-key-table/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/primary-key-table/data-distribution/" class="">Data Distribution</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/primary-key-table/table-mode/" class="">Table Mode</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-038bb7d17b5b7cb93fb60acbcf218f11" class="toggle" checked />
+    <label for="section-038bb7d17b5b7cb93fb60acbcf218f11" class="flex justify-between">Merge Engine<span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/primary-key-table/merge-engine/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/primary-key-table/merge-engine/partial-update/" class="">Partial Update</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/primary-key-table/merge-engine/aggregation/" class=" active">Aggregation</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/primary-key-table/merge-engine/first-row/" class="">First Row</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/primary-key-table/changelog-producer/" class="">Changelog Producer</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/primary-key-table/sequence-rowkind/" class="">Sequence & Rowkind</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/primary-key-table/compaction/" class="">Compaction</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-f74847e1c917ba2b99e7b718bb318b30" class="toggle"  />
+    <label for="section-f74847e1c917ba2b99e7b718bb318b30" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-database title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Table w/o PK</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/append-table/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/append-table/streaming/" class="">Streaming</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/append-table/query/" class="">Query</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/append-table/update/" class="">Update</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/append-table/bucketed/" class="">Bucketed</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-998a37410d502937fe8444ed73a9ecf8" class="toggle"  />
+    <label for="section-998a37410d502937fe8444ed73a9ecf8" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-gear title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Engine Flink</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/flink/quick-start/" class="">Quick Start</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/flink/sql-ddl/" class="">SQL DDL</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/flink/sql-write/" class="">SQL Write</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/flink/sql-query/" class="">SQL Query</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/flink/sql-lookup/" class="">SQL Lookup</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/flink/sql-alter/" class="">SQL Alter</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-5c4df272c57150a3ff5abcdb519c51a4" class="toggle"  />
+    <label for="section-5c4df272c57150a3ff5abcdb519c51a4" class="flex justify-between">CDC Ingestion<span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/flink/cdc-ingestion/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/flink/cdc-ingestion/mysql-cdc/" class="">Mysql CDC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/flink/cdc-ingestion/postgres-cdc/" class="">Postgres CDC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/flink/cdc-ingestion/kafka-cdc/" class="">Kafka CDC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/flink/cdc-ingestion/mongo-cdc/" class="">Mongo CDC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/flink/cdc-ingestion/pulsar-cdc/" class="">Pulsar CDC</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/flink/expire-partition/" class="">Expire Partition</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/flink/procedures/" class="">Procedures</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/flink/action-jars/" class="">Action Jars</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/flink/savepoint/" class="">Savepoint</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-74c63bf75b4f6bd14a3ea6a1217f03ad" class="toggle"  />
+    <label for="section-74c63bf75b4f6bd14a3ea6a1217f03ad" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-gear title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Engine Spark</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/spark/quick-start/" class="">Quick Start</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/spark/sql-ddl/" class="">SQL DDL</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/spark/sql-write/" class="">SQL Write</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/spark/sql-query/" class="">SQL Query</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/spark/sql-alter/" class="">SQL Alter</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/spark/auxiliary/" class="">Auxiliary</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/spark/procedures/" class="">Procedures</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-90f5541dc4fa46a212e954b9193ea0f9" class="toggle"  />
+    <label for="section-90f5541dc4fa46a212e954b9193ea0f9" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-gear title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Engine Others</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/engines/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/engines/starrocks/" class="">StarRocks</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/engines/doris/" class="">Doris</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/engines/hive/" class="">Hive</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/engines/trino/" class="">Trino</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/engines/presto/" class="">Presto</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-e2d76c106dab115385ef7f124cda2ba4" class="toggle"  />
+    <label for="section-e2d76c106dab115385ef7f124cda2ba4" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-folder title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Filesystems</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/filesystems/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/filesystems/hdfs/" class="">HDFS</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/filesystems/oss/" class="">OSS</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/filesystems/s3/" class="">S3</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-697a4b6a0388d6cfa4f418aba3b4edfe" class="toggle"  />
+    <label for="section-697a4b6a0388d6cfa4f418aba3b4edfe" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-wrench title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Maintenance</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/maintenance/system-tables/" class="">System Tables</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/maintenance/write-performance/" class="">Write Performance</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/maintenance/dedicated-compaction/" class="">Dedicated Compaction</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/maintenance/manage-snapshots/" class="">Manage Snapshots</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/maintenance/rescale-bucket/" class="">Rescale Bucket</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/maintenance/manage-tags/" class="">Manage Tags</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/maintenance/metrics/" class="">Metrics</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/maintenance/manage-privileges/" class="">Manage Privileges</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/maintenance/manage-branches/" class="">Manage Branches</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/maintenance/configurations/" class="">Configurations</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-049030059e0dc01edf74ba3d4d259dae" class="toggle"  />
+    <label for="section-049030059e0dc01edf74ba3d4d259dae" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-briefcase title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Program API</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/program-api/flink-api/" class="">Flink API</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/program-api/java-api/" class="">Java API</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/program-api/catalog-api/" class="">Catalog API</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-07c567e5a9f3ce62aea4ff0a1e2dc065" class="toggle"  />
+    <label for="section-07c567e5a9f3ce62aea4ff0a1e2dc065" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-briefcase title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Migration</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/migration/migration-from-hive/" class="">Migration From Hive</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/migration/upsert-to-partitioned/" class="">Upsert To Partitioned</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/migration/clone-tables/" class="">Clone Tables</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  	<br/>
+  
+  
+    <input type="checkbox" id="section-8c828bcf882f666cdd6821a70cc768ee" class="toggle"  />
+    <label for="section-8c828bcf882f666cdd6821a70cc768ee" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-sitemap title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Project</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/project/roadmap/" class="">Roadmap</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/project/download/" class="">Download</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/project/contributing/" class="">Contributing</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-392fc6f653ae23ff676811656a71ebbf" class="toggle"  />
+    <label for="section-392fc6f653ae23ff676811656a71ebbf" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-sitemap title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Learn Paimon</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/learn-paimon/understand-files/" class="">Understand Files</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br/>
+<hr class="menu-break">
+
+<a href="//paimon.apache.org" style="color:black;margin-bottom:0.5em"><i class="link fa fa-external-link title" aria-hidden="true"></i> Project Homepage</a>
+<br/>
+
+<a href="//paimon.apache.org/docs/master/api/java/" style="color:black;margin-bottom:0.5em"><i class="link fa fa-external-link title" aria-hidden="true"></i> JavaDocs</a>
+<br/>
+
+<hr class="menu-break">
+<li style="list-style-type: none">
+  <br>
+  <input type="checkbox" id="section-version-picker" class="toggle">
+  <label for="section-version-picker" class="flex justify-between">
+     <div style="font-weight:450;margin-bottom:0.5em">Pick Docs Version</div>
+     <span>▾</span>
+  </label>
+  <ul>
+    <a href="//paimon.apache.org/docs/master">
+      0.9-SNAPSHOT (✓)
+    </a>
+    <hr class="menu-break">
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/master">
+          master
+        </a>
+      </li>
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/0.8">
+          stable
+        </a>
+      </li>
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/0.8">
+          0.8
+        </a>
+      </li>
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/0.7">
+          0.7
+        </a>
+      </li>
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/0.6">
+          0.6
+        </a>
+      </li>
+    
+    <hr class="menu-break">
+    <li>
+      <a href="//paimon.apache.org/docs/master/versions">
+          All Versions
+      </a>
+    </li>
+  </ul>
+</li>
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var menu=document.querySelector("aside.book-menu nav");addEventListener("beforeunload",function(event){localStorage.setItem("menu.scrollTop",menu.scrollTop);});menu.scrollTop=localStorage.getItem("menu.scrollTop");})();</script>
+
+
+ 
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/docs/master/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <strong>Aggregation</strong>
+
+  <label for="toc-control">
+    
+    <img src="/docs/master/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden clearfix">
+    
+  
+
+<nav id="TableOfContents"><h3>On This Page <button class="toc" onclick="collapseToc()"><i class="fa fa-compress" aria-hidden="true"></i></button></h3>
+  <ul>
+    <li><a href="#aggregation-functions">Aggregation Functions</a>
+      <ul>
+        <li><a href="#sum">sum</a></li>
+        <li><a href="#product">product</a></li>
+        <li><a href="#count">count</a></li>
+        <li><a href="#max">max</a></li>
+        <li><a href="#min">min</a></li>
+        <li><a href="#last_value">last_value</a></li>
+        <li><a href="#last_non_null_value">last_non_null_value</a></li>
+        <li><a href="#listagg">listagg</a></li>
+        <li><a href="#bool_and">bool_and</a></li>
+        <li><a href="#bool_or">bool_or</a></li>
+        <li><a href="#first_value">first_value</a></li>
+        <li><a href="#first_non_null_value">first_non_null_value</a></li>
+        <li><a href="#rbm32">rbm32</a></li>
+        <li><a href="#rbm64">rbm64</a></li>
+        <li><a href="#nested_update">nested_update</a></li>
+        <li><a href="#collect">collect</a></li>
+        <li><a href="#merge_map">merge_map</a></li>
+        <li><a href="#types-of-cardinality-sketches">Types of cardinality sketches</a></li>
+      </ul>
+    </li>
+    <li><a href="#retraction">Retraction</a></li>
+  </ul>
+</nav>
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+
+
+
+
+<article class="markdown">
+    <blockquote style="border-color:#f66">
+        This documentation is for an unreleased version of Apache Paimon. We recommend you use the latest <a href="https://paimon.apache.org/docs/0.8">stable version</a>.
+    </blockquote>
+</article>
+
+
+
+      
+  <article class="markdown"><!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<h1 id="aggregation">
+  Aggregation
+  <a class="anchor" href="#aggregation">#</a>
+</h1>
+<blockquote class="book-hint info">
+  NOTE: Always set <code>table.exec.sink.upsert-materialize</code> to <code>NONE</code> in Flink SQL TableConfig.
+</blockquote>
+
+<p>Sometimes users only care about aggregated results. The <code>aggregation</code> merge engine aggregates each value field with the latest data one by one under the same primary key according to the aggregate function.</p>
+<p>Each field not part of the primary keys can be given an aggregate function, specified by the <code>fields.&lt;field-name&gt;.aggregate-function</code> table property, otherwise it will use <code>last_non_null_value</code> aggregation as default. For example, consider the following table definition.</p>
+
+
+
+
+
+<div class="book-tabs"><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Flink"
+    name="tabs-aggregation-merge-engine-example"
+    id="tabs-aggregation-merge-engine-example-0"
+    checked="checked" 
+    onclick="onSwitch('Flink')"
+  />
+  <label for="tabs-aggregation-merge-engine-example-0">Flink</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">my_table</span> <span class="p">(</span>
+    <span class="n">product_id</span> <span class="nb">BIGINT</span><span class="p">,</span>
+    <span class="n">price</span> <span class="n">DOUBLE</span><span class="p">,</span>
+    <span class="n">sales</span> <span class="nb">BIGINT</span><span class="p">,</span>
+    <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="p">(</span><span class="n">product_id</span><span class="p">)</span> <span class="k">NOT</span> <span class="n">ENFORCED</span>
+<span class="p">)</span> <span class="k">WITH</span> <span class="p">(</span>
+    <span class="s1">&#39;merge-engine&#39;</span> <span class="o">=</span> <span class="s1">&#39;aggregation&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;fields.price.aggregate-function&#39;</span> <span class="o">=</span> <span class="s1">&#39;max&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;fields.sales.aggregate-function&#39;</span> <span class="o">=</span> <span class="s1">&#39;sum&#39;</span>
+<span class="p">);</span>
+</code></pre></div></div></div>
+
+<p>Field <code>price</code> will be aggregated by the <code>max</code> function, and field <code>sales</code> will be aggregated by the <code>sum</code> function. Given two input records <code>&lt;1, 23.0, 15&gt;</code> and <code>&lt;1, 30.2, 20&gt;</code>, the final result will be <code>&lt;1, 30.2, 35&gt;</code>.</p>
+<h2 id="aggregation-functions">
+  Aggregation Functions
+  <a class="anchor" href="#aggregation-functions">#</a>
+</h2>
+<p>Current supported aggregate functions and data types are:</p>
+<h3 id="sum">
+  sum
+  <a class="anchor" href="#sum">#</a>
+</h3>
+<p>The sum function aggregates the values across multiple rows.
+It supports DECIMAL, TINYINT, SMALLINT, INTEGER, BIGINT, FLOAT, and DOUBLE data types.</p>
+<h3 id="product">
+  product
+  <a class="anchor" href="#product">#</a>
+</h3>
+<p>The product function can compute product values across multiple lines.
+It supports DECIMAL, TINYINT, SMALLINT, INTEGER, BIGINT, FLOAT, and DOUBLE data types.</p>
+<h3 id="count">
+  count
+  <a class="anchor" href="#count">#</a>
+</h3>
+<p>In scenarios where counting rows that match a specific condition is required, you can use the SUM function to achieve this. By expressing a condition as a Boolean value (TRUE or FALSE) and converting it into a numerical value, you can effectively count the rows. In this approach, TRUE is converted to 1, and FALSE is converted to 0.</p>
+<p>For example, if you have a table orders and want to count the number of rows that meet a specific condition, you can use the following query:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="k">SUM</span><span class="p">(</span><span class="k">CASE</span> <span class="k">WHEN</span> <span class="n">condition</span> <span class="k">THEN</span> <span class="mi">1</span> <span class="k">ELSE</span> <span class="mi">0</span> <span class="k">END</span><span class="p">)</span> <span class="k">AS</span> <span class="k">count</span>
+<span class="k">FROM</span> <span class="n">orders</span><span class="p">;</span>
+</code></pre></div><h3 id="max">
+  max
+  <a class="anchor" href="#max">#</a>
+</h3>
+<p>The max function identifies and retains the maximum value.
+It supports CHAR, VARCHAR, DECIMAL, TINYINT, SMALLINT, INTEGER, BIGINT, FLOAT, DOUBLE, DATE, TIME, TIMESTAMP, and TIMESTAMP_LTZ data types.</p>
+<h3 id="min">
+  min
+  <a class="anchor" href="#min">#</a>
+</h3>
+<p>The min function identifies and retains the minimum value.
+It supports CHAR, VARCHAR, DECIMAL, TINYINT, SMALLINT, INTEGER, BIGINT, FLOAT, DOUBLE, DATE, TIME, TIMESTAMP, and TIMESTAMP_LTZ data types.</p>
+<h3 id="last_value">
+  last_value
+  <a class="anchor" href="#last_value">#</a>
+</h3>
+<p>The last_value function replaces the previous value with the most recently imported value.
+It supports all data types.</p>
+<h3 id="last_non_null_value">
+  last_non_null_value
+  <a class="anchor" href="#last_non_null_value">#</a>
+</h3>
+<p>The last_non_null_value function replaces the previous value with the latest non-null value.
+It supports all data types.</p>
+<h3 id="listagg">
+  listagg
+  <a class="anchor" href="#listagg">#</a>
+</h3>
+<p>The listagg function concatenates multiple string values into a single string.
+It supports STRING data type.
+Each field not part of the primary keys can be given a list agg delimiter, specified by the fields.<field-name>.list-agg-delimiter table property, otherwise it will use &ldquo;,&rdquo; as default.</p>
+<h3 id="bool_and">
+  bool_and
+  <a class="anchor" href="#bool_and">#</a>
+</h3>
+<p>The bool_and function evaluates whether all values in a boolean set are true.
+It supports BOOLEAN data type.</p>
+<h3 id="bool_or">
+  bool_or
+  <a class="anchor" href="#bool_or">#</a>
+</h3>
+<p>The bool_or function checks if at least one value in a boolean set is true.
+It supports BOOLEAN data type.</p>
+<h3 id="first_value">
+  first_value
+  <a class="anchor" href="#first_value">#</a>
+</h3>
+<p>The first_value function retrieves the first null value from a data set.
+It supports all data types.</p>
+<h3 id="first_non_null_value">
+  first_non_null_value
+  <a class="anchor" href="#first_non_null_value">#</a>
+</h3>
+<p>The first_non_null_value function selects the first non-null value in a data set.
+It supports all data types.</p>
+<h3 id="rbm32">
+  rbm32
+  <a class="anchor" href="#rbm32">#</a>
+</h3>
+<p>The rbm32 function aggregates multiple serialized 32-bit RoaringBitmap into a single RoaringBitmap.
+It supports VARBINARY data type.</p>
+<h3 id="rbm64">
+  rbm64
+  <a class="anchor" href="#rbm64">#</a>
+</h3>
+<p>The rbm64 function aggregates multiple serialized 64-bit Roaring64Bitmap into a single Roaring64Bitmap.
+It supports VARBINARY data type.</p>
+<h3 id="nested_update">
+  nested_update
+  <a class="anchor" href="#nested_update">#</a>
+</h3>
+<p>The nested_update function collects multiple rows into one array<row> (so-called &lsquo;nested table&rsquo;). It supports ARRAY<ROW> data types.</p>
+<p>Use <code>fields.&lt;field-name&gt;.nested-key=pk0,pk1,...</code> to specify the primary keys of the nested table. If no keys, row will be appended to array<row>.</p>
+<p>An example:</p>
+
+
+
+
+
+<div class="book-tabs"><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Flink"
+    name="tabs-nested_update-example"
+    id="tabs-nested_update-example-0"
+    checked="checked" 
+    onclick="onSwitch('Flink')"
+  />
+  <label for="tabs-nested_update-example-0">Flink</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="c1">-- orders table
+</span><span class="c1"></span><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">orders</span> <span class="p">(</span>
+  <span class="n">order_id</span> <span class="nb">BIGINT</span> <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="k">NOT</span> <span class="n">ENFORCED</span><span class="p">,</span>
+  <span class="n">user_name</span> <span class="n">STRING</span><span class="p">,</span>
+  <span class="n">address</span> <span class="n">STRING</span>
+<span class="p">);</span>
+
+<span class="c1">-- sub orders that have the same order_id 
+</span><span class="c1">-- belongs to the same order
+</span><span class="c1"></span><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">sub_orders</span> <span class="p">(</span>
+  <span class="n">order_id</span> <span class="nb">BIGINT</span><span class="p">,</span>
+  <span class="n">sub_order_id</span> <span class="nb">INT</span><span class="p">,</span>
+  <span class="n">product_name</span> <span class="n">STRING</span><span class="p">,</span>
+  <span class="n">price</span> <span class="nb">BIGINT</span><span class="p">,</span>
+  <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="p">(</span><span class="n">order_id</span><span class="p">,</span> <span class="n">sub_order_id</span><span class="p">)</span> <span class="k">NOT</span> <span class="n">ENFORCED</span>
+<span class="p">);</span>
+
+<span class="c1">-- wide table
+</span><span class="c1"></span><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">order_wide</span> <span class="p">(</span>
+  <span class="n">order_id</span> <span class="nb">BIGINT</span> <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="k">NOT</span> <span class="n">ENFORCED</span><span class="p">,</span>
+  <span class="n">user_name</span> <span class="n">STRING</span><span class="p">,</span>
+  <span class="n">address</span> <span class="n">STRING</span><span class="p">,</span>
+  <span class="n">sub_orders</span> <span class="nb">ARRAY</span><span class="o">&lt;</span><span class="k">ROW</span><span class="o">&lt;</span><span class="n">sub_order_id</span> <span class="nb">BIGINT</span><span class="p">,</span> <span class="n">product_name</span> <span class="n">STRING</span><span class="p">,</span> <span class="n">price</span> <span class="nb">BIGINT</span><span class="o">&gt;&gt;</span>
+<span class="p">)</span> <span class="k">WITH</span> <span class="p">(</span>
+  <span class="s1">&#39;merge-engine&#39;</span> <span class="o">=</span> <span class="s1">&#39;aggregation&#39;</span><span class="p">,</span>
+  <span class="s1">&#39;fields.sub_orders.aggregate-function&#39;</span> <span class="o">=</span> <span class="s1">&#39;nested_update&#39;</span><span class="p">,</span>
+  <span class="s1">&#39;fields.sub_orders.nested-key&#39;</span> <span class="o">=</span> <span class="s1">&#39;sub_order_id&#39;</span>
+<span class="p">);</span>
+
+<span class="c1">-- widen
+</span><span class="c1"></span><span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">order_wide</span>
+
+<span class="k">SELECT</span> 
+  <span class="n">order_id</span><span class="p">,</span> 
+  <span class="n">user_name</span><span class="p">,</span>
+  <span class="n">address</span><span class="p">,</span> 
+  <span class="k">CAST</span> <span class="p">(</span><span class="k">NULL</span> <span class="k">AS</span> <span class="nb">ARRAY</span><span class="o">&lt;</span><span class="k">ROW</span><span class="o">&lt;</span><span class="n">sub_order_id</span> <span class="nb">BIGINT</span><span class="p">,</span> <span class="n">product_name</span> <span class="n">STRING</span><span class="p">,</span> <span class="n">price</span> <span class="nb">BIGINT</span><span class="o">&gt;&gt;</span><span class="p">)</span> 
+<span class="k">FROM</span> <span class="n">orders</span>
+
+<span class="k">UNION</span> <span class="k">ALL</span> 
+  
+<span class="k">SELECT</span> 
+  <span class="n">order_id</span><span class="p">,</span> 
+  <span class="k">CAST</span> <span class="p">(</span><span class="k">NULL</span> <span class="k">AS</span> <span class="n">STRING</span><span class="p">),</span> 
+  <span class="k">CAST</span> <span class="p">(</span><span class="k">NULL</span> <span class="k">AS</span> <span class="n">STRING</span><span class="p">),</span> 
+  <span class="nb">ARRAY</span><span class="p">[</span><span class="k">ROW</span><span class="p">(</span><span class="n">sub_order_id</span><span class="p">,</span> <span class="n">product_name</span><span class="p">,</span> <span class="n">price</span><span class="p">)]</span> 
+<span class="k">FROM</span> <span class="n">sub_orders</span><span class="p">;</span>
+
+<span class="c1">-- query using UNNEST
+</span><span class="c1"></span><span class="k">SELECT</span> <span class="n">order_id</span><span class="p">,</span> <span class="n">user_name</span><span class="p">,</span> <span class="n">address</span><span class="p">,</span> <span class="n">sub_order_id</span><span class="p">,</span> <span class="n">product_name</span><span class="p">,</span> <span class="n">price</span> 
+<span class="k">FROM</span> <span class="n">order_wide</span><span class="p">,</span> <span class="k">UNNEST</span><span class="p">(</span><span class="n">sub_orders</span><span class="p">)</span> <span class="k">AS</span> <span class="n">so</span><span class="p">(</span><span class="n">sub_order_id</span><span class="p">,</span> <span class="n">product_name</span><span class="p">,</span> <span class="n">price</span><span class="p">)</span>
+</code></pre></div></div></div>
+
+<h3 id="collect">
+  collect
+  <a class="anchor" href="#collect">#</a>
+</h3>
+<p>The collect function collects elements into an Array. You can set <code>fields.&lt;field-name&gt;.distinct=true</code> to deduplicate elements.
+It only supports ARRAY type.</p>
+<h3 id="merge_map">
+  merge_map
+  <a class="anchor" href="#merge_map">#</a>
+</h3>
+<p>The merge_map function merge input maps. It only supports MAP type.</p>
+<h3 id="types-of-cardinality-sketches">
+  Types of cardinality sketches
+  <a class="anchor" href="#types-of-cardinality-sketches">#</a>
+</h3>
+<p>Paimon uses the <a href="https://datasketches.apache.org/">Apache DataSketches</a> library of stochastic streaming algorithms to implement sketch modules. The DataSketches library includes various types of sketches, each one designed to solve a different sort of problem. Paimon supports HyperLogLog (HLL) and Theta cardinality sketches.</p>
+<h4 id="hyperloglog">
+  HyperLogLog
+  <a class="anchor" href="#hyperloglog">#</a>
+</h4>
+<p>The HyperLogLog (HLL) sketch aggregator is a very compact sketch algorithm for approximate distinct counting.  You can also use the HLL aggregator to calculate a union of HLL sketches.</p>
+<h4 id="theta">
+  Theta
+  <a class="anchor" href="#theta">#</a>
+</h4>
+<p>The Theta sketch is a sketch algorithm for approximate distinct counting with set operations. Theta sketches let you count the overlap between sets, so that you can compute the union, intersection, or set difference between sketch objects.</p>
+<h4 id="choosing-a-sketch-type">
+  Choosing a sketch type
+  <a class="anchor" href="#choosing-a-sketch-type">#</a>
+</h4>
+<p>HLL and Theta sketches both support approximate distinct counting; however, the HLL sketch produces more accurate results and consumes less storage space. Theta sketches are more flexible but require significantly more memory.</p>
+<p>When choosing an approximation algorithm for your use case, consider the following:</p>
+<p>If your use case entails distinct counting and merging sketch objects, use the HLL sketch.
+If you need to evaluate union, intersection, or difference set operations, use the Theta sketch.
+You cannot merge HLL sketches with Theta sketches.</p>
+<h4 id="hll_sketch">
+  hll_sketch
+  <a class="anchor" href="#hll_sketch">#</a>
+</h4>
+<p>The hll_sketch function aggregates multiple serialized Sketch objects into a single Sketch.
+It supports VARBINARY data type.</p>
+<p>An example:</p>
+
+
+
+
+
+<div class="book-tabs"><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Flink"
+    name="tabs-hll_sketch-example"
+    id="tabs-hll_sketch-example-0"
+    checked="checked" 
+    onclick="onSwitch('Flink')"
+  />
+  <label for="tabs-hll_sketch-example-0">Flink</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="c1">-- source table
+</span><span class="c1"></span><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">VISITS</span> <span class="p">(</span>
+  <span class="n">id</span> <span class="nb">INT</span> <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="k">NOT</span> <span class="n">ENFORCED</span><span class="p">,</span>
+  <span class="n">user_id</span> <span class="n">STRING</span>
+<span class="p">);</span>
+
+<span class="c1">-- agg table
+</span><span class="c1"></span><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">UV_AGG</span> <span class="p">(</span>
+  <span class="n">id</span> <span class="nb">INT</span> <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="k">NOT</span> <span class="n">ENFORCED</span><span class="p">,</span>
+  <span class="n">uv</span> <span class="n">VARBINARY</span>
+<span class="p">)</span> <span class="k">WITH</span> <span class="p">(</span>
+  <span class="s1">&#39;merge-engine&#39;</span> <span class="o">=</span> <span class="s1">&#39;aggregation&#39;</span><span class="p">,</span>
+  <span class="s1">&#39;fields.f0.aggregate-function&#39;</span> <span class="o">=</span> <span class="s1">&#39;hll_sketch&#39;</span>
+<span class="p">);</span>
+
+<span class="c1">-- Register the following class as a Flink function with the name &#34;HLL_SKETCH&#34; 
+</span><span class="c1">-- which is used to transform input to sketch bytes array:
+</span><span class="c1">--
+</span><span class="c1">-- public static class HllSketchFunction extends ScalarFunction {
+</span><span class="c1">--   public byte[] eval(String user_id) {
+</span><span class="c1">--     HllSketch hllSketch = new HllSketch();
+</span><span class="c1">--     hllSketch.update(id);
+</span><span class="c1">--     return hllSketch.toCompactByteArray();
+</span><span class="c1">--   }
+</span><span class="c1">-- }
+</span><span class="c1">--
+</span><span class="c1"></span><span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">UV_AGG</span> <span class="k">SELECT</span> <span class="n">id</span><span class="p">,</span> <span class="n">HLL_SKETCH</span><span class="p">(</span><span class="n">user_id</span><span class="p">)</span> <span class="k">FROM</span> <span class="n">VISITS</span><span class="p">;</span>
+
+<span class="c1">-- Register the following class as a Flink function with the name &#34;HLL_SKETCH_COUNT&#34;
+</span><span class="c1">-- which is used to get cardinality from sketch bytes array:
+</span><span class="c1">-- 
+</span><span class="c1">-- public static class HllSketchCountFunction extends ScalarFunction { 
+</span><span class="c1">--   public Double eval(byte[] sketchBytes) {
+</span><span class="c1">--     if (sketchBytes == null) {
+</span><span class="c1">--       return 0d; 
+</span><span class="c1">--     } 
+</span><span class="c1">--     return HllSketch.heapify(sketchBytes).getEstimate(); 
+</span><span class="c1">--   } 
+</span><span class="c1">-- }
+</span><span class="c1">--
+</span><span class="c1">-- Then we can get user cardinality based on the aggregated field.
+</span><span class="c1"></span><span class="k">SELECT</span> <span class="n">id</span><span class="p">,</span> <span class="n">HLL_SKETCH_COUNT</span><span class="p">(</span><span class="n">UV</span><span class="p">)</span> <span class="k">as</span> <span class="n">uv</span> <span class="k">FROM</span> <span class="n">UV_AGG</span><span class="p">;</span>
+</code></pre></div></div></div>
+
+<h4 id="theta_sketch">
+  theta_sketch
+  <a class="anchor" href="#theta_sketch">#</a>
+</h4>
+<p>The theta_sketch function aggregates multiple serialized Sketch objects into a single Sketch.
+It supports VARBINARY data type.</p>
+<p>An example:</p>
+
+
+
+
+
+<div class="book-tabs"><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Flink"
+    name="tabs-theta_sketch-example"
+    id="tabs-theta_sketch-example-0"
+    checked="checked" 
+    onclick="onSwitch('Flink')"
+  />
+  <label for="tabs-theta_sketch-example-0">Flink</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="c1">-- source table
+</span><span class="c1"></span><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">VISITS</span> <span class="p">(</span>
+  <span class="n">id</span> <span class="nb">INT</span> <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="k">NOT</span> <span class="n">ENFORCED</span><span class="p">,</span>
+  <span class="n">user_id</span> <span class="n">STRING</span>
+<span class="p">);</span>
+
+<span class="c1">-- agg table
+</span><span class="c1"></span><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">UV_AGG</span> <span class="p">(</span>
+  <span class="n">id</span> <span class="nb">INT</span> <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="k">NOT</span> <span class="n">ENFORCED</span><span class="p">,</span>
+  <span class="n">uv</span> <span class="n">VARBINARY</span>
+<span class="p">)</span> <span class="k">WITH</span> <span class="p">(</span>
+  <span class="s1">&#39;merge-engine&#39;</span> <span class="o">=</span> <span class="s1">&#39;aggregation&#39;</span><span class="p">,</span>
+  <span class="s1">&#39;fields.f0.aggregate-function&#39;</span> <span class="o">=</span> <span class="s1">&#39;theta_sketch&#39;</span>
+<span class="p">);</span>
+
+<span class="c1">-- Register the following class as a Flink function with the name &#34;THETA_SKETCH&#34; 
+</span><span class="c1">-- which is used to transform input to sketch bytes array:
+</span><span class="c1">--
+</span><span class="c1">-- public static class ThetaSketchFunction extends ScalarFunction {
+</span><span class="c1">--   public byte[] eval(String user_id) {
+</span><span class="c1">--     UpdateSketch updateSketch = UpdateSketch.builder().build();
+</span><span class="c1">--     updateSketch.update(user_id);
+</span><span class="c1">--     return updateSketch.compact().toByteArray();
+</span><span class="c1">--   }
+</span><span class="c1">-- }
+</span><span class="c1">--
+</span><span class="c1"></span><span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">UV_AGG</span> <span class="k">SELECT</span> <span class="n">id</span><span class="p">,</span> <span class="n">THETA_SKETCH</span><span class="p">(</span><span class="n">user_id</span><span class="p">)</span> <span class="k">FROM</span> <span class="n">VISITS</span><span class="p">;</span>
+
+<span class="c1">-- Register the following class as a Flink function with the name &#34;THETA_SKETCH_COUNT&#34;
+</span><span class="c1">-- which is used to get cardinality from sketch bytes array:
+</span><span class="c1">-- 
+</span><span class="c1">-- public static class ThetaSketchCountFunction extends ScalarFunction { 
+</span><span class="c1">--   public Double eval(byte[] sketchBytes) {
+</span><span class="c1">--     if (sketchBytes == null) {
+</span><span class="c1">--       return 0d; 
+</span><span class="c1">--     } 
+</span><span class="c1">--     return Sketches.wrapCompactSketch(Memory.wrap(sketchBytes)).getEstimate(); 
+</span><span class="c1">--   } 
+</span><span class="c1">-- }
+</span><span class="c1">--
+</span><span class="c1">-- Then we can get user cardinality based on the aggregated field.
+</span><span class="c1"></span><span class="k">SELECT</span> <span class="n">id</span><span class="p">,</span> <span class="n">THETA_SKETCH_COUNT</span><span class="p">(</span><span class="n">UV</span><span class="p">)</span> <span class="k">as</span> <span class="n">uv</span> <span class="k">FROM</span> <span class="n">UV_AGG</span><span class="p">;</span>
+</code></pre></div></div></div>
+
+<blockquote class="book-hint info">
+  For streaming queries, <code>aggregation</code> merge engine must be used together with <code>lookup</code> or <code>full-compaction</code>
+<a href="//paimon.apache.org/docs/master/primary-key-table/changelog-producer/">changelog producer</a>. (&lsquo;input&rsquo; changelog producer is also supported, but only returns input records.)
+</blockquote>
+
+<h2 id="retraction">
+  Retraction
+  <a class="anchor" href="#retraction">#</a>
+</h2>
+<p>Only <code>sum</code>, <code>product</code>, <code>collect</code>, <code>merge_map</code>, <code>nested_update</code>, <code>last_value</code> and <code>last_non_null_value</code> supports retraction (<code>UPDATE_BEFORE</code> and <code>DELETE</code>), others aggregate functions do not support retraction.
+If you allow some functions to ignore retraction messages, you can configure:
+<code>'fields.${field_name}.ignore-retract'='true'</code>.</p>
+<p>The <code>last_value</code> and <code>last_non_null_value</code> just set field to null when accept retract messages.</p>
+<p>The <code>collect</code> and <code>merge_map</code> make a best-effort attempt to handle retraction messages, but the results are not
+guaranteed to be accurate. The following behaviors may occur when processing retraction messages:</p>
+<ol>
+<li>
+<p>It might fail to handle retraction messages if records are disordered. For example, the table uses <code>collect</code>, and the
+upstreams send <code>+I['A', 'B']</code> and <code>-U['A']</code> respectively. If the table receives <code>-U['A']</code> first, it can do nothing; then it receives
+<code>+I['A', 'B']</code>, the merge result will be <code>+I['A', 'B']</code> instead of <code>+I['B']</code>.</p>
+</li>
+<li>
+<p>The retract message from one upstream will retract the result merged from multiple upstreams. For example, the table
+uses <code>merge_map</code>, and one upstream sends <code>+I[1-&gt;A]</code>, another upstream sends <code>+I[1-&gt;B]</code>, <code>-D[1-&gt;B]</code> later. The table will
+merge two insert values to <code>+I[1-&gt;B]</code> first, and then the <code>-D[1-&gt;B]</code> will retract the whole result, so the final result
+is an empty map instead of <code>+I[1-&gt;A]</code></p>
+</li>
+</ol>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  
+
+
+
+
+<a href="//github.com/apache/paimon/edit/master/docs/content/primary-key-table/merge-engine/aggregation.md" style="color:black"><i class="fa fa-edit fa-fw"></i>Edit This Page</a>
+
+
+ 
+        
+
+
+<hr style="margin-top: 20px; border: 1px solid #e5e5e5;" />
+
+<table style="border-spacing: 10px;">
+    <tbody>
+    <tr>
+        <td colspan="2">
+            Copyright &copy; 2024 The Apache Software Foundation. Apache Paimon, Paimon, and its feather logo are
+            trademarks of The Apache Software Foundation.
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+      </footer>
+
+      
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      
+  
+
+<nav id="TableOfContents"><h3>On This Page <button class="toc" onclick="collapseToc()"><i class="fa fa-compress" aria-hidden="true"></i></button></h3>
+  <ul>
+    <li><a href="#aggregation-functions">Aggregation Functions</a>
+      <ul>
+        <li><a href="#sum">sum</a></li>
+        <li><a href="#product">product</a></li>
+        <li><a href="#count">count</a></li>
+        <li><a href="#max">max</a></li>
+        <li><a href="#min">min</a></li>
+        <li><a href="#last_value">last_value</a></li>
+        <li><a href="#last_non_null_value">last_non_null_value</a></li>
+        <li><a href="#listagg">listagg</a></li>
+        <li><a href="#bool_and">bool_and</a></li>
+        <li><a href="#bool_or">bool_or</a></li>
+        <li><a href="#first_value">first_value</a></li>
+        <li><a href="#first_non_null_value">first_non_null_value</a></li>
+        <li><a href="#rbm32">rbm32</a></li>
+        <li><a href="#rbm64">rbm64</a></li>
+        <li><a href="#nested_update">nested_update</a></li>
+        <li><a href="#collect">collect</a></li>
+        <li><a href="#merge_map">merge_map</a></li>
+        <li><a href="#types-of-cardinality-sketches">Types of cardinality sketches</a></li>
+      </ul>
+    </li>
+    <li><a href="#retraction">Retraction</a></li>
+  </ul>
+</nav>
+
+ 
+    </aside>
+    <aside class="expand-toc">
+      <button class="toc" onclick="expandToc()">
+        <i class="fa fa-expand" aria-hidden="true"></i>
+      </button>
+    </aside>
+    
+  </main>
+
+  
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

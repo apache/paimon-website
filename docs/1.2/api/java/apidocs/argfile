@@ -1,0 +1,6 @@
+'/tmp/paimon/paimon-common/target/generated-sources/antlr4/org/apache/paimon/codegen/codesplit/JavaParser.java'
+'/tmp/paimon/paimon-common/target/generated-sources/antlr4/org/apache/paimon/codegen/codesplit/JavaParserBaseListener.java'
+'/tmp/paimon/paimon-common/target/generated-sources/antlr4/org/apache/paimon/codegen/codesplit/JavaLexer.java'
+'/tmp/paimon/paimon-common/target/generated-sources/antlr4/org/apache/paimon/codegen/codesplit/JavaParserBaseVisitor.java'
+'/tmp/paimon/paimon-common/target/generated-sources/antlr4/org/apache/paimon/codegen/codesplit/JavaParserListener.java'
+'/tmp/paimon/paimon-common/target/generated-sources/antlr4/org/apache/paimon/codegen/codesplit/JavaParserVisitor.java'

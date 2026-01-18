@@ -1,0 +1,2486 @@
+
+<!DOCTYPE html>
+<html lang="en" dir=>
+
+<head>
+  <meta name="generator" content="Hugo 0.80.0" />
+  
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Cpp API #  Paimon C&#43;&#43; is a high-performance C&#43;&#43; implementation of Apache Paimon. Paimon C&#43;&#43; aims to provide a native, high-performance and extensible implementation that allows native engines to access the Paimon datalake format with maximum efficiency.
+Environment Settings #  Paimon C&#43;&#43; is currently governed under Alibaba open source community. You can checkout the document for more details about envinroment settings.
+git clone https://github.com/alibaba/paimon-cpp.git cd paimon-cpp mkdir build-release cd build-release cmake .">
+<meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="Cpp API" />
+<meta property="og:description" content="Cpp API #  Paimon C&#43;&#43; is a high-performance C&#43;&#43; implementation of Apache Paimon. Paimon C&#43;&#43; aims to provide a native, high-performance and extensible implementation that allows native engines to access the Paimon datalake format with maximum efficiency.
+Environment Settings #  Paimon C&#43;&#43; is currently governed under Alibaba open source community. You can checkout the document for more details about envinroment settings.
+git clone https://github.com/alibaba/paimon-cpp.git cd paimon-cpp mkdir build-release cd build-release cmake ." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="//paimon.apache.org/docs/master/program-api/cpp-api/" />
+
+<title>Cpp API | Apache Paimon</title>
+<link rel="manifest" href="/docs/master/manifest.json">
+<link rel="icon" href="/docs/master/favicon.png" type="image/x-icon">
+<link rel="stylesheet" href="/docs/master/book.min.3bc4108a5b57c9a7e6fcae92ff69940435f8c46c4e1e4a311aedc9b2d8e06792.css" integrity="sha256-O8QQiltXyafm/K6S/2mUBDX4xGxOHkoxGu3JstjgZ5I=">
+<script defer src="/docs/master/en.search.min.7889fcfaf94f3471b5ad58c638c1bcc89119f9e148ce196c101f800700d43327.js" integrity="sha256-eIn8&#43;vlPNHG1rVjGOMG8yJEZ&#43;eFIzhlsEB&#43;ABwDUMyc="></script>
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+  
+  
+
+<link rel="stylesheet" type="text/css" href="//paimon.apache.org/docs/master/font-awesome/css/font-awesome.min.css">
+<script src="//paimon.apache.org/docs/master/js/anchor.min.js"></script>
+<script src="//paimon.apache.org/docs/master/js/flink.js"></script>
+
+
+
+  
+  <script>
+    var _paq = window._paq = window._paq || [];
+     
+     
+    _paq.push(['disableCookies']);
+     
+    _paq.push(["setDomains", ["*.flink.apache.org","*.nightlies.apache.org/flink"]]);
+    _paq.push(['trackPageView']);
+    _paq.push(['enableLinkTracking']);
+    (function() {
+      var u="//matomo.privacy.apache.org/";
+      _paq.push(['setTrackerUrl', u+'matomo.php']);
+      _paq.push(['setSiteId', '1']);
+      var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+      g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+    })();
+  </script>
+  
+</head>
+
+<body dir=>
+  
+    <input type="checkbox" class="hidden toggle" id="menu-control" />
+    <input type="checkbox" class="hidden toggle" id="toc-control" />
+  
+  <main class="container flex">
+    
+      <aside class="book-menu">
+        
+  
+
+<nav>
+
+
+<a id="logo" href="//paimon.apache.org/docs/master">
+    <img width="100%" src="//paimon.apache.org/docs/master/paimon_black.svg">
+</a>
+<p style="text-align:right">1.4-SNAPSHOT</p>
+
+<div class="book-search">
+  <input type="text" id="book-search-input" placeholder="Search" aria-label="Search" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-dc8a1c63e6da60163016ce21cae1faa0" class="toggle"  />
+    <label for="section-dc8a1c63e6da60163016ce21cae1faa0" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-book title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Concepts</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/basic-concepts/" class="">Basic Concepts</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/concurrency-control/" class="">Concurrency Control</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/catalog/" class="">Catalog</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-e03f934865df9dd3baca303554bcaa71" class="toggle"  />
+    <label for="section-e03f934865df9dd3baca303554bcaa71" class="flex justify-between">RESTCatalog<span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/rest/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/rest/bear/" class="">Bear Token</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/rest/dlf/" class="">DLF Token</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/rest/tables/" class="">Tables</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/rest/pvfs/" class="">PVFS</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/rest/rest-api/" class="">REST API</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/system-tables/" class="">System Tables</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/data-types/" class="">Data Types</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/functions/" class="">Functions</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/views/" class="">Views</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-d3e7256ce393050c572ea7bd8cc4f240" class="toggle"  />
+    <label for="section-d3e7256ce393050c572ea7bd8cc4f240" class="flex justify-between">Specification<span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/spec/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/spec/schema/" class="">Schema</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/spec/snapshot/" class="">Snapshot</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/spec/manifest/" class="">Manifest</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/spec/datafile/" class="">DataFile</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/spec/fileformat/" class="">FileFormat</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/spec/tableindex/" class="">Table Index</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/spec/fileindex/" class="">File Index</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/spec/blob/" class="">Blob</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-3f6a6d4f1692040009c66ffaa328c8d0" class="toggle"  />
+    <label for="section-3f6a6d4f1692040009c66ffaa328c8d0" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-database title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Table with PK</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/primary-key-table/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/primary-key-table/data-distribution/" class="">Data Distribution</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/primary-key-table/table-mode/" class="">Table Mode</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-038bb7d17b5b7cb93fb60acbcf218f11" class="toggle"  />
+    <label for="section-038bb7d17b5b7cb93fb60acbcf218f11" class="flex justify-between">Merge Engine<span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/primary-key-table/merge-engine/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/primary-key-table/merge-engine/partial-update/" class="">Partial Update</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/primary-key-table/merge-engine/aggregation/" class="">Aggregation</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/primary-key-table/merge-engine/first-row/" class="">First Row</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/primary-key-table/changelog-producer/" class="">Changelog Producer</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/primary-key-table/sequence-rowkind/" class="">Sequence & Rowkind</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/primary-key-table/compaction/" class="">Compaction</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/primary-key-table/query-performance/" class="">Query Performance</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/primary-key-table/chain-table/" class="">Chain Table</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-f74847e1c917ba2b99e7b718bb318b30" class="toggle"  />
+    <label for="section-f74847e1c917ba2b99e7b718bb318b30" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-database title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Table w/o PK</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/append-table/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/append-table/streaming/" class="">Streaming</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/append-table/query-performance/" class="">Query Performance</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/append-table/incremental-clustering/" class="">Incremental Clustering</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/append-table/update/" class="">Update</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/append-table/bucketed/" class="">Bucketed</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/append-table/row-tracking/" class="">Row Tracking</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/append-table/data-evolution/" class="">Data Evolution</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-998a37410d502937fe8444ed73a9ecf8" class="toggle"  />
+    <label for="section-998a37410d502937fe8444ed73a9ecf8" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-gear title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Engine Flink</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/flink/quick-start/" class="">Quick Start</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/flink/sql-ddl/" class="">SQL DDL</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/flink/sql-write/" class="">SQL Write</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/flink/sql-query/" class="">SQL Query</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/flink/consumer-id/" class="">Consumer ID</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/flink/sql-lookup/" class="">SQL Lookup</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/flink/sql-alter/" class="">SQL Alter</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/flink/default-value/" class="">Default Value</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/flink/procedures/" class="">Procedures</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/flink/action-jars/" class="">Action Jars</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/flink/savepoint/" class="">Savepoint</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-74c63bf75b4f6bd14a3ea6a1217f03ad" class="toggle"  />
+    <label for="section-74c63bf75b4f6bd14a3ea6a1217f03ad" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-gear title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Engine Spark</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/spark/quick-start/" class="">Quick Start</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/spark/sql-ddl/" class="">SQL DDL</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/spark/sql-functions/" class="">SQL Functions</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/spark/sql-write/" class="">SQL Write</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/spark/sql-query/" class="">SQL Query</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/spark/sql-alter/" class="">SQL Alter</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/spark/auxiliary/" class="">Auxiliary</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/spark/default-value/" class="">Default Value</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/spark/dataframe/" class="">DataFrame</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/spark/sql-upsert/" class="">SQL Upsert</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/spark/structured-streaming/" class="">Structured Streaming</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/spark/procedures/" class="">Procedures</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-16bf9de4e97c50dda6ce1ac6e934602c" class="toggle"  />
+    <label for="section-16bf9de4e97c50dda6ce1ac6e934602c" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-gear title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Ecosystem</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/ecosystem/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/ecosystem/starrocks/" class="">StarRocks</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/ecosystem/doris/" class="">Doris</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/ecosystem/hive/" class="">Hive</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/ecosystem/trino/" class="">Trino</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/ecosystem/amoro/" class="">Amoro</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-582e435c19ca5fafbf9764337d648e63" class="toggle"  />
+    <label for="section-582e435c19ca5fafbf9764337d648e63" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-gear title maindish" aria-hidden="true"></i>&nbsp;&nbsp;CDC Ingestion</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/cdc-ingestion/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/cdc-ingestion/mysql-cdc/" class="">Mysql CDC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/cdc-ingestion/postgres-cdc/" class="">Postgres CDC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/cdc-ingestion/kafka-cdc/" class="">Kafka CDC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/cdc-ingestion/mongo-cdc/" class="">Mongo CDC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/cdc-ingestion/pulsar-cdc/" class="">Pulsar CDC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/cdc-ingestion/flink-cdc/" class="">Flink CDC</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-697a4b6a0388d6cfa4f418aba3b4edfe" class="toggle"  />
+    <label for="section-697a4b6a0388d6cfa4f418aba3b4edfe" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-wrench title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Maintenance</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/maintenance/filesystems/" class="">Filesystems</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/maintenance/write-performance/" class="">Write Performance</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/maintenance/dedicated-compaction/" class="">Dedicated Compaction</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/maintenance/manage-snapshots/" class="">Manage Snapshots</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/maintenance/rescale-bucket/" class="">Rescale Bucket</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/maintenance/manage-tags/" class="">Manage Tags</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/maintenance/metrics/" class="">Metrics</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/maintenance/manage-privileges/" class="">Manage Privileges</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/maintenance/manage-branches/" class="">Manage Branches</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/maintenance/manage-partitions/" class="">Manage Partitions</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/maintenance/configurations/" class="">Configurations</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-049030059e0dc01edf74ba3d4d259dae" class="toggle" checked />
+    <label for="section-049030059e0dc01edf74ba3d4d259dae" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-briefcase title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Program API</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/program-api/rest-api/" class="">REST API</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/program-api/flink-api/" class="">Flink API</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/program-api/java-api/" class="">Java API</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/program-api/catalog-api/" class="">Catalog API</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/program-api/python-api/" class="">Python API</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/program-api/cpp-api/" class=" active">Cpp API</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-07c567e5a9f3ce62aea4ff0a1e2dc065" class="toggle"  />
+    <label for="section-07c567e5a9f3ce62aea4ff0a1e2dc065" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-briefcase title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Migration</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/migration/migration-from-hive/" class="">Migration From Hive</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/migration/migration-from-iceberg/" class="">Migration From Iceberg</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/migration/upsert-to-partitioned/" class="">Upsert To Partitioned</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/migration/clone-to-paimon/" class="">Clone To Paimon</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-dc2f2ba83b7db3b9bfa35da4c73572d2" class="toggle"  />
+    <label for="section-dc2f2ba83b7db3b9bfa35da4c73572d2" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-briefcase title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Iceberg Metadata</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/iceberg/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/iceberg/append-table/" class="">Append Table</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/iceberg/primary-key-table/" class="">Primary Key Table</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/iceberg/iceberg-tags/" class="">Iceberg Tags</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/iceberg/hive-catalog/" class="">Hive Catalogs</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/iceberg/rest-catalog/" class="">Rest Catalog</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/iceberg/ecosystem/" class="">Ecosystem</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/iceberg/configurations/" class="">Configurations</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  	<br/>
+  
+  
+    <input type="checkbox" id="section-8c828bcf882f666cdd6821a70cc768ee" class="toggle"  />
+    <label for="section-8c828bcf882f666cdd6821a70cc768ee" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-sitemap title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Project</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/project/download/" class="">Download</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/project/contributing/" class="">Contributing</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/project/committer/" class="">Committer</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-392fc6f653ae23ff676811656a71ebbf" class="toggle"  />
+    <label for="section-392fc6f653ae23ff676811656a71ebbf" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-sitemap title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Learn Paimon</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/learn-paimon/understand-files/" class="">Understand Files</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br/>
+<hr class="menu-break">
+
+<a href="//paimon.apache.org" style="color:black;margin-bottom:0.5em"><i class="link fa fa-external-link title" aria-hidden="true"></i> Project Homepage</a>
+<br/>
+
+<a href="//paimon.apache.org/docs/master/api/java/" style="color:black;margin-bottom:0.5em"><i class="link fa fa-external-link title" aria-hidden="true"></i> JavaDocs</a>
+<br/>
+
+<hr class="menu-break">
+<li style="list-style-type: none">
+  <br>
+  <input type="checkbox" id="section-version-picker" class="toggle">
+  <label for="section-version-picker" class="flex justify-between">
+     <div style="font-weight:450;margin-bottom:0.5em">Pick Docs Version</div>
+     <span>▾</span>
+  </label>
+  <ul>
+    <a href="//paimon.apache.org/docs/master">
+      1.4-SNAPSHOT (✓)
+    </a>
+    <hr class="menu-break">
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/master">
+          master
+        </a>
+      </li>
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/1.3">
+          stable
+        </a>
+      </li>
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/1.3">
+          1.3
+        </a>
+      </li>
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/1.2">
+          1.2
+        </a>
+      </li>
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/1.1">
+          1.1
+        </a>
+      </li>
+    
+    <hr class="menu-break">
+    <li>
+      <a href="//paimon.apache.org/docs/master/versions">
+          All Versions
+      </a>
+    </li>
+  </ul>
+</li>
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var menu=document.querySelector("aside.book-menu nav");addEventListener("beforeunload",function(event){localStorage.setItem("menu.scrollTop",menu.scrollTop);});menu.scrollTop=localStorage.getItem("menu.scrollTop");})();</script>
+
+
+ 
+      </aside>
+    
+
+    <div class="book-page">
+      
+        <header class="book-header">
+          
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/docs/master/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <strong>Cpp API</strong>
+
+  <label for="toc-control">
+    
+    <img src="/docs/master/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden clearfix">
+    
+  
+
+<nav id="TableOfContents"><h3>On This Page <button class="toc" onclick="collapseToc()"><i class="fa fa-compress" aria-hidden="true"></i></button></h3>
+  <ul>
+    <li><a href="#environment-settings">Environment Settings</a></li>
+    <li><a href="#create-catalog">Create Catalog</a></li>
+    <li><a href="#create-database">Create Database</a></li>
+    <li><a href="#create-table">Create Table</a></li>
+    <li><a href="#batch-write">Batch Write</a></li>
+    <li><a href="#batch-read">Batch Read</a>
+      <ul>
+        <li><a href="#predicate-pushdown">Predicate pushdown</a></li>
+        <li><a href="#generate-splits">Generate Splits</a></li>
+        <li><a href="#read-apache-arrow">Read Apache Arrow</a></li>
+      </ul>
+    </li>
+    <li><a href="#documentation">Documentation</a></li>
+  </ul>
+</nav>
+
+
+  </aside>
+  
+ 
+        </header>
+      
+
+      
+
+
+
+
+<article class="markdown">
+    <blockquote style="border-color:#f66">
+        This documentation is for an unreleased version of Apache Paimon. We recommend you use the latest <a href="https://paimon.apache.org/docs/1.3">stable version</a>.
+    </blockquote>
+</article>
+
+
+
+      
+  <article class="markdown"><!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<h1 id="cpp-api">
+  Cpp API
+  <a class="anchor" href="#cpp-api">#</a>
+</h1>
+<p>Paimon C++ is a high-performance C++ implementation of Apache Paimon. Paimon C++ aims to provide a native,
+high-performance and extensible implementation that allows native engines to access the Paimon datalake
+format with maximum efficiency.</p>
+<h2 id="environment-settings">
+  Environment Settings
+  <a class="anchor" href="#environment-settings">#</a>
+</h2>
+<p><a href="https://github.com/alibaba/paimon-cpp.git">Paimon C++</a> is currently governed under Alibaba open source
+community. You can checkout the <a href="https://alibaba.github.io/paimon-cpp/getting_started.html">document</a>
+for more details about envinroment settings.</p>
+<div class="highlight"><pre class="chroma"><code class="language-sh" data-lang="sh">git clone https://github.com/alibaba/paimon-cpp.git
+<span class="nb">cd</span> paimon-cpp
+mkdir build-release
+<span class="nb">cd</span> build-release
+cmake ..
+make -j8       <span class="c1"># if you have 8 CPU cores, otherwise adjust</span>
+make install
+</code></pre></div><h2 id="create-catalog">
+  Create Catalog
+  <a class="anchor" href="#create-catalog">#</a>
+</h2>
+<p>Before coming into contact with the Table, you need to create a Catalog.</p>
+<div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++"><span class="cp">#include</span> <span class="cpf">&#34;paimon/catalog/catalog.h&#34;</span><span class="cp">
+</span><span class="cp"></span>
+<span class="c1">// Note that keys and values are all string
+</span><span class="c1"></span><span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">options</span><span class="p">;</span>
+<span class="n">PAIMON_ASSIGN_OR_RAISE</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">paimon</span><span class="o">::</span><span class="n">Catalog</span><span class="o">&gt;</span> <span class="n">catalog</span><span class="p">,</span>
+                       <span class="n">paimon</span><span class="o">::</span><span class="n">Catalog</span><span class="o">::</span><span class="n">Create</span><span class="p">(</span><span class="n">root_path</span><span class="p">,</span> <span class="n">options</span><span class="p">));</span>
+</code></pre></div><p>Current C++ Paimon only supports filesystem catalog. In the future, we will support REST catalog.
+See <a href="//paimon.apache.org/docs/master/concepts/catalog/">Catalog</a>.</p>
+<p>You can use the catalog to create table for writing data.</p>
+<h2 id="create-database">
+  Create Database
+  <a class="anchor" href="#create-database">#</a>
+</h2>
+<p>Table is located in a database. If you want to create table in a new database, you should create it.</p>
+<div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++"><span class="n">PAIMON_RETURN_NOT_OK</span><span class="p">(</span><span class="n">catalog</span><span class="o">-&gt;</span><span class="n">CreateDatabase</span><span class="p">(</span><span class="err">&#39;</span><span class="n">database_name</span><span class="err">&#39;</span><span class="p">,</span> <span class="n">options</span><span class="p">,</span> <span class="cm">/*ignore_if_exists=*/</span><span class="nb">false</span><span class="p">));</span>
+</code></pre></div><h2 id="create-table">
+  Create Table
+  <a class="anchor" href="#create-table">#</a>
+</h2>
+<p>Table schema contains fields definition, partition keys, primary keys, table options.
+The field definition is described by <code>Arrow::Schema</code>. All arguments except fields definition are optional.</p>
+<p>for example:</p>
+<div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++"><span class="n">arrow</span><span class="o">::</span><span class="n">FieldVector</span> <span class="n">fields</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">arrow</span><span class="o">::</span><span class="n">field</span><span class="p">(</span><span class="s">&#34;f0&#34;</span><span class="p">,</span> <span class="n">arrow</span><span class="o">::</span><span class="n">utf8</span><span class="p">()),</span>
+    <span class="n">arrow</span><span class="o">::</span><span class="n">field</span><span class="p">(</span><span class="s">&#34;f1&#34;</span><span class="p">,</span> <span class="n">arrow</span><span class="o">::</span><span class="n">int32</span><span class="p">()),</span>
+    <span class="n">arrow</span><span class="o">::</span><span class="n">field</span><span class="p">(</span><span class="s">&#34;f2&#34;</span><span class="p">,</span> <span class="n">arrow</span><span class="o">::</span><span class="n">int32</span><span class="p">()),</span>
+    <span class="n">arrow</span><span class="o">::</span><span class="n">field</span><span class="p">(</span><span class="s">&#34;f3&#34;</span><span class="p">,</span> <span class="n">arrow</span><span class="o">::</span><span class="n">float64</span><span class="p">()),</span>
+<span class="p">};</span>
+<span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">arrow</span><span class="o">::</span><span class="n">Schema</span><span class="o">&gt;</span> <span class="n">schema</span> <span class="o">=</span> <span class="n">arrow</span><span class="o">::</span><span class="n">schema</span><span class="p">(</span><span class="n">fields</span><span class="p">);</span>
+<span class="o">::</span><span class="n">ArrowSchema</span> <span class="n">arrow_schema</span><span class="p">;</span>
+<span class="n">arrow</span><span class="o">::</span><span class="n">Status</span> <span class="n">arrow_status</span> <span class="o">=</span> <span class="n">arrow</span><span class="o">::</span><span class="n">ExportSchema</span><span class="p">(</span><span class="o">*</span><span class="n">schema</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">arrow_schema</span><span class="p">);</span>
+<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">arrow_status</span><span class="p">.</span><span class="n">ok</span><span class="p">())</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">paimon</span><span class="o">::</span><span class="n">Status</span><span class="o">::</span><span class="n">Invalid</span><span class="p">(</span><span class="n">arrow_status</span><span class="p">.</span><span class="n">message</span><span class="p">());</span>
+<span class="p">}</span>
+<span class="n">PAIMON_RETURN_NOT_OK</span><span class="p">(</span><span class="n">catalog</span><span class="o">-&gt;</span><span class="n">CreateTable</span><span class="p">(</span><span class="n">paimon</span><span class="o">::</span><span class="n">Identifier</span><span class="p">(</span><span class="n">db_name</span><span class="p">,</span> <span class="n">table_name</span><span class="p">),</span>
+                                            <span class="o">&amp;</span><span class="n">arrow_schema</span><span class="p">,</span>
+                                            <span class="cm">/*partition_keys=*/</span><span class="p">{},</span>
+                                            <span class="cm">/*primary_keys=*/</span><span class="p">{},</span> <span class="n">options</span><span class="p">,</span>
+                                            <span class="cm">/*ignore_if_exists=*/</span><span class="nb">false</span><span class="p">));</span>
+</code></pre></div><p>See <a href="https://alibaba.github.io/paimon-cpp/user_guide/data_types.html">Data Types</a> for all supported
+<code>arrow-to-paimon</code> data types mapping.</p>
+<h2 id="batch-write">
+  Batch Write
+  <a class="anchor" href="#batch-write">#</a>
+</h2>
+<p>Paimon table write is Two-Phase Commit, you can write many times, but once committed, no more data can be written.
+C++ Paimon uses Apache Arrow as [in-memory format], check out <a href="https://alibaba.github.io/paimon-cpp/user_guide/arrow.html">document</a>
+for more details.</p>
+<p>for example:</p>
+<div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++"><span class="n">arrow</span><span class="o">::</span><span class="n">Result</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">arrow</span><span class="o">::</span><span class="n">StructArray</span><span class="o">&gt;&gt;</span> <span class="n">PrepareData</span><span class="p">(</span><span class="k">const</span> <span class="n">arrow</span><span class="o">::</span><span class="n">FieldVector</span><span class="o">&amp;</span> <span class="n">fields</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">arrow</span><span class="o">::</span><span class="n">StringBuilder</span> <span class="n">f0_builder</span><span class="p">;</span>
+    <span class="n">arrow</span><span class="o">::</span><span class="n">Int32Builder</span> <span class="n">f1_builder</span><span class="p">;</span>
+    <span class="n">arrow</span><span class="o">::</span><span class="n">Int32Builder</span> <span class="n">f2_builder</span><span class="p">;</span>
+    <span class="n">arrow</span><span class="o">::</span><span class="n">DoubleBuilder</span> <span class="n">f3_builder</span><span class="p">;</span>
+
+    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">tuple</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="kt">int</span><span class="p">,</span> <span class="kt">int</span><span class="p">,</span> <span class="kt">double</span><span class="o">&gt;&gt;</span> <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="p">{</span><span class="s">&#34;Alice&#34;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">11.0</span><span class="p">},</span> <span class="p">{</span><span class="s">&#34;Bob&#34;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">12.1</span><span class="p">},</span> <span class="p">{</span><span class="s">&#34;Cathy&#34;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mf">13.2</span><span class="p">}};</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="k">const</span> <span class="k">auto</span><span class="o">&amp;</span> <span class="nl">row</span> <span class="p">:</span> <span class="n">data</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">ARROW_RETURN_NOT_OK</span><span class="p">(</span><span class="n">f0_builder</span><span class="p">.</span><span class="n">Append</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">get</span><span class="o">&lt;</span><span class="mi">0</span><span class="o">&gt;</span><span class="p">(</span><span class="n">row</span><span class="p">)));</span>
+        <span class="n">ARROW_RETURN_NOT_OK</span><span class="p">(</span><span class="n">f1_builder</span><span class="p">.</span><span class="n">Append</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">get</span><span class="o">&lt;</span><span class="mi">1</span><span class="o">&gt;</span><span class="p">(</span><span class="n">row</span><span class="p">)));</span>
+        <span class="n">ARROW_RETURN_NOT_OK</span><span class="p">(</span><span class="n">f2_builder</span><span class="p">.</span><span class="n">Append</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">get</span><span class="o">&lt;</span><span class="mi">2</span><span class="o">&gt;</span><span class="p">(</span><span class="n">row</span><span class="p">)));</span>
+        <span class="n">ARROW_RETURN_NOT_OK</span><span class="p">(</span><span class="n">f3_builder</span><span class="p">.</span><span class="n">Append</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">get</span><span class="o">&lt;</span><span class="mi">3</span><span class="o">&gt;</span><span class="p">(</span><span class="n">row</span><span class="p">)));</span>
+    <span class="p">}</span>
+
+    <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">arrow</span><span class="o">::</span><span class="n">Array</span><span class="o">&gt;</span> <span class="n">f0_array</span><span class="p">,</span> <span class="n">f1_array</span><span class="p">,</span> <span class="n">f2_array</span><span class="p">,</span> <span class="n">f3_array</span><span class="p">;</span>
+    <span class="n">ARROW_RETURN_NOT_OK</span><span class="p">(</span><span class="n">f0_builder</span><span class="p">.</span><span class="n">Finish</span><span class="p">(</span><span class="o">&amp;</span><span class="n">f0_array</span><span class="p">));</span>
+    <span class="n">ARROW_RETURN_NOT_OK</span><span class="p">(</span><span class="n">f1_builder</span><span class="p">.</span><span class="n">Finish</span><span class="p">(</span><span class="o">&amp;</span><span class="n">f1_array</span><span class="p">));</span>
+    <span class="n">ARROW_RETURN_NOT_OK</span><span class="p">(</span><span class="n">f2_builder</span><span class="p">.</span><span class="n">Finish</span><span class="p">(</span><span class="o">&amp;</span><span class="n">f2_array</span><span class="p">));</span>
+    <span class="n">ARROW_RETURN_NOT_OK</span><span class="p">(</span><span class="n">f3_builder</span><span class="p">.</span><span class="n">Finish</span><span class="p">(</span><span class="o">&amp;</span><span class="n">f3_array</span><span class="p">));</span>
+
+    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">arrow</span><span class="o">::</span><span class="n">Array</span><span class="o">&gt;&gt;</span> <span class="n">children</span> <span class="o">=</span> <span class="p">{</span><span class="n">f0_array</span><span class="p">,</span> <span class="n">f1_array</span><span class="p">,</span> <span class="n">f2_array</span><span class="p">,</span> <span class="n">f3_array</span><span class="p">};</span>
+    <span class="k">auto</span> <span class="n">struct_type</span> <span class="o">=</span> <span class="n">arrow</span><span class="o">::</span><span class="n">struct_</span><span class="p">(</span><span class="n">fields</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">arrow</span><span class="o">::</span><span class="n">StructArray</span><span class="o">&gt;</span><span class="p">(</span><span class="n">struct_type</span><span class="p">,</span> <span class="n">f0_array</span><span class="o">-&gt;</span><span class="n">length</span><span class="p">(),</span> <span class="n">children</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div><div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++"><span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">table_path</span> <span class="o">=</span> <span class="n">root_path</span> <span class="o">+</span> <span class="s">&#34;/&#34;</span> <span class="o">+</span> <span class="n">db_name</span> <span class="o">+</span> <span class="s">&#34;.db/&#34;</span> <span class="o">+</span> <span class="n">table_name</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">commit_user</span> <span class="o">=</span> <span class="s">&#34;some_commit_user&#34;</span><span class="p">;</span>
+<span class="c1">// write
+</span><span class="c1"></span><span class="n">paimon</span><span class="o">::</span><span class="n">WriteContextBuilder</span> <span class="n">context_builder</span><span class="p">(</span><span class="n">table_path</span><span class="p">,</span> <span class="n">commit_user</span><span class="p">);</span>
+<span class="n">PAIMON_ASSIGN_OR_RAISE</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">paimon</span><span class="o">::</span><span class="n">WriteContext</span><span class="o">&gt;</span> <span class="n">write_context</span><span class="p">,</span>
+                        <span class="n">context_builder</span><span class="p">.</span><span class="n">SetOptions</span><span class="p">(</span><span class="n">options</span><span class="p">).</span><span class="n">Finish</span><span class="p">());</span>
+<span class="n">PAIMON_ASSIGN_OR_RAISE</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">paimon</span><span class="o">::</span><span class="n">FileStoreWrite</span><span class="o">&gt;</span> <span class="n">writer</span><span class="p">,</span>
+                        <span class="n">paimon</span><span class="o">::</span><span class="n">FileStoreWrite</span><span class="o">::</span><span class="n">Create</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">write_context</span><span class="p">)));</span>
+<span class="c1">// prepare data
+</span><span class="c1"></span><span class="k">auto</span> <span class="n">struct_array</span> <span class="o">=</span> <span class="n">PrepareData</span><span class="p">(</span><span class="n">fields</span><span class="p">);</span>
+<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">struct_array</span><span class="p">.</span><span class="n">ok</span><span class="p">())</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">paimon</span><span class="o">::</span><span class="n">Status</span><span class="o">::</span><span class="n">Invalid</span><span class="p">(</span><span class="n">struct_array</span><span class="p">.</span><span class="n">status</span><span class="p">().</span><span class="n">ToString</span><span class="p">());</span>
+<span class="p">}</span>
+<span class="o">::</span><span class="n">ArrowArray</span> <span class="n">arrow_array</span><span class="p">;</span>
+<span class="n">arrow_status</span> <span class="o">=</span> <span class="n">arrow</span><span class="o">::</span><span class="n">ExportArray</span><span class="p">(</span><span class="o">*</span><span class="n">struct_array</span><span class="p">.</span><span class="n">ValueUnsafe</span><span class="p">(),</span> <span class="o">&amp;</span><span class="n">arrow_array</span><span class="p">);</span>
+<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">arrow_status</span><span class="p">.</span><span class="n">ok</span><span class="p">())</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">paimon</span><span class="o">::</span><span class="n">Status</span><span class="o">::</span><span class="n">Invalid</span><span class="p">(</span><span class="n">arrow_status</span><span class="p">.</span><span class="n">message</span><span class="p">());</span>
+<span class="p">}</span>
+<span class="n">paimon</span><span class="o">::</span><span class="n">RecordBatchBuilder</span> <span class="n">batch_builder</span><span class="p">(</span><span class="o">&amp;</span><span class="n">arrow_array</span><span class="p">);</span>
+<span class="n">PAIMON_ASSIGN_OR_RAISE</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">paimon</span><span class="o">::</span><span class="n">RecordBatch</span><span class="o">&gt;</span> <span class="n">record_batch</span><span class="p">,</span>
+                        <span class="n">batch_builder</span><span class="p">.</span><span class="n">Finish</span><span class="p">());</span>
+<span class="n">PAIMON_RETURN_NOT_OK</span><span class="p">(</span><span class="n">writer</span><span class="o">-&gt;</span><span class="n">Write</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">record_batch</span><span class="p">)));</span>
+<span class="n">PAIMON_ASSIGN_OR_RAISE</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">paimon</span><span class="o">::</span><span class="n">CommitMessage</span><span class="o">&gt;&gt;</span> <span class="n">commit_message</span><span class="p">,</span>
+                        <span class="n">writer</span><span class="o">-&gt;</span><span class="n">PrepareCommit</span><span class="p">());</span>
+
+<span class="c1">// commit
+</span><span class="c1"></span><span class="n">paimon</span><span class="o">::</span><span class="n">CommitContextBuilder</span> <span class="n">commit_context_builder</span><span class="p">(</span><span class="n">table_path</span><span class="p">,</span> <span class="n">commit_user</span><span class="p">);</span>
+<span class="n">PAIMON_ASSIGN_OR_RAISE</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">paimon</span><span class="o">::</span><span class="n">CommitContext</span><span class="o">&gt;</span> <span class="n">commit_context</span><span class="p">,</span>
+                        <span class="n">commit_context_builder</span><span class="p">.</span><span class="n">SetOptions</span><span class="p">(</span><span class="n">options</span><span class="p">).</span><span class="n">Finish</span><span class="p">());</span>
+<span class="n">PAIMON_ASSIGN_OR_RAISE</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">paimon</span><span class="o">::</span><span class="n">FileStoreCommit</span><span class="o">&gt;</span> <span class="n">committer</span><span class="p">,</span>
+                        <span class="n">paimon</span><span class="o">::</span><span class="n">FileStoreCommit</span><span class="o">::</span><span class="n">Create</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">commit_context</span><span class="p">)));</span>
+<span class="n">PAIMON_RETURN_NOT_OK</span><span class="p">(</span><span class="n">committer</span><span class="o">-&gt;</span><span class="n">Commit</span><span class="p">(</span><span class="n">commit_message</span><span class="p">));</span>
+</code></pre></div><h2 id="batch-read">
+  Batch Read
+  <a class="anchor" href="#batch-read">#</a>
+</h2>
+<h3 id="predicate-pushdown">
+  Predicate pushdown
+  <a class="anchor" href="#predicate-pushdown">#</a>
+</h3>
+<p>A <code>ReadContextBuilder</code> is used to pass context to reader, push down and filter is done by reader.</p>
+<div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++"><span class="n">ReadContextBuilder</span> <span class="nf">read_context_builder</span><span class="p">(</span><span class="n">table_path</span><span class="p">);</span>
+</code></pre></div><p>You can use <code>PredicateBuilder</code> to build filters and pushdown them by <code>ReadContextBuilder</code>:</p>
+<div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++"><span class="cp"># Example filter: &#39;f3&#39; &gt; 12.0 OR &#39;f1&#39; == 1
+</span><span class="cp"></span><span class="n">PAIMON_ASSIGN_OR_RAISE</span><span class="p">(</span>
+    <span class="k">auto</span> <span class="n">predicate</span><span class="p">,</span>
+    <span class="n">PredicateBuilder</span><span class="o">::</span><span class="n">Or</span><span class="p">(</span>
+        <span class="p">{</span><span class="n">PredicateBuilder</span><span class="o">::</span><span class="n">GreaterThan</span><span class="p">(</span><span class="cm">/*field_index=*/</span><span class="mi">3</span><span class="p">,</span> <span class="cm">/*field_name=*/</span><span class="s">&#34;f3&#34;</span><span class="p">,</span>
+                                        <span class="n">FieldType</span><span class="o">::</span><span class="n">DOUBLE</span><span class="p">,</span> <span class="n">Literal</span><span class="p">(</span><span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="p">(</span><span class="mf">12.0</span><span class="p">))),</span>
+        <span class="n">PredicateBuilder</span><span class="o">::</span><span class="n">Equal</span><span class="p">(</span><span class="cm">/*field_index=*/</span><span class="mi">1</span><span class="p">,</span> <span class="cm">/*field_name=*/</span><span class="s">&#34;f1&#34;</span><span class="p">,</span> <span class="n">FieldType</span><span class="o">::</span><span class="n">INT</span><span class="p">,</span>
+                                    <span class="n">Literal</span><span class="p">(</span><span class="mi">1</span><span class="p">))}));</span>
+<span class="n">ReadContextBuilder</span> <span class="nf">read_context_builder</span><span class="p">(</span><span class="n">table_path</span><span class="p">);</span>
+<span class="n">read_context_builder</span><span class="p">.</span><span class="n">SetPredicate</span><span class="p">(</span><span class="n">predicate</span><span class="p">).</span><span class="n">EnablePredicateFilter</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
+</code></pre></div><p>You can also pushdown projection by <code>ReadContextBuilder</code>:</p>
+<div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++"><span class="cp"># select f3 and f2 columns
+</span><span class="cp"></span><span class="n">read_context_builder</span><span class="p">.</span><span class="n">SetReadSchema</span><span class="p">({</span><span class="s">&#34;f3&#34;</span><span class="p">,</span> <span class="s">&#34;f1&#34;</span><span class="p">,</span> <span class="s">&#34;f2&#34;</span><span class="p">});</span>
+</code></pre></div><h3 id="generate-splits">
+  Generate Splits
+  <a class="anchor" href="#generate-splits">#</a>
+</h3>
+<p>Then you can step into Scan Plan stage to get <code>splits</code>:</p>
+<div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++"><span class="c1">// scan
+</span><span class="c1"></span><span class="n">paimon</span><span class="o">::</span><span class="n">ScanContextBuilder</span> <span class="n">scan_context_builder</span><span class="p">(</span><span class="n">table_path</span><span class="p">);</span>
+<span class="n">PAIMON_ASSIGN_OR_RAISE</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">paimon</span><span class="o">::</span><span class="n">ScanContext</span><span class="o">&gt;</span> <span class="n">scan_context</span><span class="p">,</span>
+                        <span class="n">scan_context_builder</span><span class="p">.</span><span class="n">SetOptions</span><span class="p">(</span><span class="n">options</span><span class="p">).</span><span class="n">Finish</span><span class="p">());</span>
+<span class="n">PAIMON_ASSIGN_OR_RAISE</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">paimon</span><span class="o">::</span><span class="n">TableScan</span><span class="o">&gt;</span> <span class="n">scanner</span><span class="p">,</span>
+                        <span class="n">paimon</span><span class="o">::</span><span class="n">TableScan</span><span class="o">::</span><span class="n">Create</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">scan_context</span><span class="p">)));</span>
+<span class="n">PAIMON_ASSIGN_OR_RAISE</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">paimon</span><span class="o">::</span><span class="n">Plan</span><span class="o">&gt;</span> <span class="n">plan</span><span class="p">,</span> <span class="n">scanner</span><span class="o">-&gt;</span><span class="n">CreatePlan</span><span class="p">());</span>
+<span class="k">auto</span> <span class="n">splits</span> <span class="o">=</span> <span class="n">plan</span><span class="o">-&gt;</span><span class="n">Splits</span><span class="p">();</span>
+</code></pre></div><p>Finally, you can read data from the <code>splits</code> to arrow format.</p>
+<h3 id="read-apache-arrow">
+  Read Apache Arrow
+  <a class="anchor" href="#read-apache-arrow">#</a>
+</h3>
+<p>This requires <code>C++ Arrow</code> to be installed.</p>
+<div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++"><span class="n">PAIMON_ASSIGN_OR_RAISE</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">paimon</span><span class="o">::</span><span class="n">ReadContext</span><span class="o">&gt;</span> <span class="n">read_context</span><span class="p">,</span>
+                        <span class="n">read_context_builder</span><span class="p">.</span><span class="n">SetOptions</span><span class="p">(</span><span class="n">options</span><span class="p">).</span><span class="n">Finish</span><span class="p">());</span>
+<span class="n">PAIMON_ASSIGN_OR_RAISE</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">paimon</span><span class="o">::</span><span class="n">TableRead</span><span class="o">&gt;</span> <span class="n">table_read</span><span class="p">,</span>
+                        <span class="n">paimon</span><span class="o">::</span><span class="n">TableRead</span><span class="o">::</span><span class="n">Create</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">read_context</span><span class="p">)));</span>
+<span class="n">PAIMON_ASSIGN_OR_RAISE</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">paimon</span><span class="o">::</span><span class="n">BatchReader</span><span class="o">&gt;</span> <span class="n">batch_reader</span><span class="p">,</span>
+                        <span class="n">table_read</span><span class="o">-&gt;</span><span class="n">CreateReader</span><span class="p">(</span><span class="n">splits</span><span class="p">));</span>
+<span class="n">arrow</span><span class="o">::</span><span class="n">ArrayVector</span> <span class="n">result_array_vector</span><span class="p">;</span>
+<span class="k">while</span> <span class="p">(</span><span class="nb">true</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">PAIMON_ASSIGN_OR_RAISE</span><span class="p">(</span><span class="n">paimon</span><span class="o">::</span><span class="n">BatchReader</span><span class="o">::</span><span class="n">ReadBatch</span> <span class="n">batch</span><span class="p">,</span> <span class="n">batch_reader</span><span class="o">-&gt;</span><span class="n">NextBatch</span><span class="p">());</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">paimon</span><span class="o">::</span><span class="n">BatchReader</span><span class="o">::</span><span class="n">IsEofBatch</span><span class="p">(</span><span class="n">batch</span><span class="p">))</span> <span class="p">{</span>
+        <span class="k">break</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">auto</span><span class="o">&amp;</span> <span class="p">[</span><span class="n">c_array</span><span class="p">,</span> <span class="n">c_schema</span><span class="p">]</span> <span class="o">=</span> <span class="n">batch</span><span class="p">;</span>
+    <span class="k">auto</span> <span class="n">arrow_result</span> <span class="o">=</span> <span class="n">arrow</span><span class="o">::</span><span class="n">ImportArray</span><span class="p">(</span><span class="n">c_array</span><span class="p">.</span><span class="n">get</span><span class="p">(),</span> <span class="n">c_schema</span><span class="p">.</span><span class="n">get</span><span class="p">());</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">arrow_result</span><span class="p">.</span><span class="n">ok</span><span class="p">())</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">paimon</span><span class="o">::</span><span class="n">Status</span><span class="o">::</span><span class="n">Invalid</span><span class="p">(</span><span class="n">arrow_result</span><span class="p">.</span><span class="n">status</span><span class="p">().</span><span class="n">ToString</span><span class="p">());</span>
+    <span class="p">}</span>
+    <span class="k">auto</span> <span class="n">result_array</span> <span class="o">=</span> <span class="n">arrow_result</span><span class="p">.</span><span class="n">ValueUnsafe</span><span class="p">();</span>
+    <span class="n">result_array_vector</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">result_array</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="k">auto</span> <span class="n">chunk_result</span> <span class="o">=</span> <span class="n">arrow</span><span class="o">::</span><span class="n">ChunkedArray</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="n">result_array_vector</span><span class="p">);</span>
+<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">chunk_result</span><span class="p">.</span><span class="n">ok</span><span class="p">())</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">paimon</span><span class="o">::</span><span class="n">Status</span><span class="o">::</span><span class="n">Invalid</span><span class="p">(</span><span class="n">chunk_result</span><span class="p">.</span><span class="n">status</span><span class="p">().</span><span class="n">ToString</span><span class="p">());</span>
+<span class="p">}</span>
+</code></pre></div><h2 id="documentation">
+  Documentation
+  <a class="anchor" href="#documentation">#</a>
+</h2>
+<p>For more information, See <a href="https://alibaba.github.io/paimon-cpp/index.html">C++ Paimon Documentation</a>.</p>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  
+
+
+
+
+<a href="//github.com/apache/paimon/edit/master/docs/content/program-api/cpp-api.md" style="color:black"><i class="fa fa-edit fa-fw"></i>Edit This Page</a>
+
+
+ 
+        
+
+
+<hr style="margin-top: 20px; border: 1px solid #e5e5e5;" />
+
+<table style="border-spacing: 10px;">
+    <tbody>
+    <tr>
+        <td colspan="2">
+            Copyright &copy; 2025 The Apache Software Foundation. Apache Paimon, Paimon, and its feather logo are
+            trademarks of The Apache Software Foundation.
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+      </footer>
+
+      
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      
+  
+
+<nav id="TableOfContents"><h3>On This Page <button class="toc" onclick="collapseToc()"><i class="fa fa-compress" aria-hidden="true"></i></button></h3>
+  <ul>
+    <li><a href="#environment-settings">Environment Settings</a></li>
+    <li><a href="#create-catalog">Create Catalog</a></li>
+    <li><a href="#create-database">Create Database</a></li>
+    <li><a href="#create-table">Create Table</a></li>
+    <li><a href="#batch-write">Batch Write</a></li>
+    <li><a href="#batch-read">Batch Read</a>
+      <ul>
+        <li><a href="#predicate-pushdown">Predicate pushdown</a></li>
+        <li><a href="#generate-splits">Generate Splits</a></li>
+        <li><a href="#read-apache-arrow">Read Apache Arrow</a></li>
+      </ul>
+    </li>
+    <li><a href="#documentation">Documentation</a></li>
+  </ul>
+</nav>
+
+ 
+    </aside>
+    <aside class="expand-toc">
+      <button class="toc" onclick="expandToc()">
+        <i class="fa fa-expand" aria-hidden="true"></i>
+      </button>
+    </aside>
+    
+  </main>
+
+  
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
