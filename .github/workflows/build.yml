@@ -113,6 +113,24 @@ jobs:
             cd "$current_dir"
           done
 
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Clone Paimon Rust repo
+        run: git clone https://github.com/apache/paimon-rust.git /tmp/paimon-rust
+
+      - name: Build Paimon Rust docs
+        run: |
+          pip install mkdocs-material
+          cd /tmp/paimon-rust/docs
+          mkdocs build -d /tmp/paimon-rust-site
+          cd $GITHUB_WORKSPACE
+          rm -rf docs/rust
+          mkdir -p docs/rust
+          cp -r /tmp/paimon-rust-site/* docs/rust/
+
       - name: Push to github
         run: |
           git add -A
