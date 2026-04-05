@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Table w/o PK on Apache Paimon</title>
+    <link>//paimon.apache.org/docs/master/append-table/</link>
+    <description>Recent content in Table w/o PK on Apache Paimon</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language><atom:link href="//paimon.apache.org/docs/master/append-table/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Overview</title>
+      <link>//paimon.apache.org/docs/master/append-table/overview/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/append-table/overview/</guid>
+      <description>Overview #  If a table does not have a primary key defined, it is an append table. Compared to the primary key table, it does not have the ability to directly receive changelogs. It cannot be directly updated with data through upsert. It can only receive incoming data from append data.
+Flink CREATE TABLE my_table ( product_id BIGINT, price DOUBLE, sales BIGINT ) WITH ( -- &amp;#39;target-file-size&amp;#39; = &amp;#39;256 MB&amp;#39;,  -- &amp;#39;file.</description>
+    </item>
+    
+    <item>
+      <title>Incremental Clustering</title>
+      <link>//paimon.apache.org/docs/master/append-table/incremental-clustering/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/append-table/incremental-clustering/</guid>
+      <description>Incremental Clustering #  Paimon currently supports ordering append tables using SFC (Space-Filling Curve)(see sort compact for more info). The resulting data layout typically delivers better performance for queries that target clustering keys. However, with the current SortCompaction, even when neither the data nor the clustering keys have changed, each run still rewrites the entire dataset, which is extremely costly.
+To address this, Paimon introduced a more flexible, incremental clustering mechanism—Incremental Clustering.</description>
+    </item>
+    
+    <item>
+      <title>Bucketed</title>
+      <link>//paimon.apache.org/docs/master/append-table/bucketed/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/append-table/bucketed/</guid>
+      <description>Bucketed Append #  You can define the bucket and bucket-key to get a bucketed append table.
+Example to create bucketed append table:
+Flink CREATE TABLE my_table ( product_id BIGINT, price DOUBLE, sales BIGINT ) WITH ( &amp;#39;bucket&amp;#39; = &amp;#39;8&amp;#39;, &amp;#39;bucket-key&amp;#39; = &amp;#39;product_id&amp;#39; );  Data Skipping #  The primary and most significant advantage of a bucketed append table is data skipping. When queries contain equality (=) or IN filter conditions on the bucket-key, Paimon can efficiently push these predicates down to skip irrelevant bucket files entirely.</description>
+    </item>
+    
+    <item>
+      <title>Row Tracking</title>
+      <link>//paimon.apache.org/docs/master/append-table/row-tracking/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/append-table/row-tracking/</guid>
+      <description>Row tracking #  Row tracking allows Paimon to track row-level tracking in a Paimon append table. Once enabled on a Paimon table, two more hidden columns will be added to the table schema:
+ _ROW_ID: BIGINT, this is a unique identifier for each row in the table. It is used to track the update of the row and can be used to identify the row in case of update, merge into or delete.</description>
+    </item>
+    
+    <item>
+      <title>Data Evolution</title>
+      <link>//paimon.apache.org/docs/master/append-table/data-evolution/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/append-table/data-evolution/</guid>
+      <description>Data Evolution #  Overview #  Paimon supports complete Schema Evolution, allowing you to freely add, modify, or delete column schema. But how to backfill newly added columns or update column data.
+Data Evolution Mode is a new feature for Append tables that revolutionizes how you handle data evolution, particularly when adding new columns. This mode allows you to update partial columns without rewriting entire data files. Instead, it writes new column data to separate files and intelligently merges them with the original data during read operations.</description>
+    </item>
+    
+    <item>
+      <title>Blob Storage</title>
+      <link>//paimon.apache.org/docs/master/append-table/blob/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/append-table/blob/</guid>
+      <description>Blob Storage #  Overview #  The BLOB (Binary Large Object) type is a data type designed for storing multimodal data such as images, videos, audio files, and other large binary objects in Paimon tables. Unlike traditional BYTES type which stores binary data inline with other columns, BLOB type stores large binary data in separate files and maintains references to them, providing better performance for large objects.
+The Blob Storage is based on Data Evolution mode.</description>
+    </item>
+    
+    <item>
+      <title>Vector Storage</title>
+      <link>//paimon.apache.org/docs/master/append-table/vector/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/append-table/vector/</guid>
+      <description>Vector Storage #  Overview #  With the explosive growth of AI scenarios, vector storage has become increasingly important.
+Paimon provides optimized storage solutions specifically designed for vector data to meet the needs of various scenarios.
+Vector Data Type #  Vector data comes in many types, among which dense vectors are the most commonly used. They are typically expressed as fixed-length, densely packed arrays, generally without null elements.</description>
+    </item>
+    
+    <item>
+      <title>Global Index</title>
+      <link>//paimon.apache.org/docs/master/append-table/global-index/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/append-table/global-index/</guid>
+      <description>Global Index #  Overview #  Global Index is a powerful indexing mechanism for Data Evolution (append) tables. It enables efficient row-level lookups and filtering without full-table scans. Paimon supports multiple global index types:
+ BTree Index: A B-tree based index for scalar column lookups. Supports equality, IN, range predicates, and can be combined across multiple columns with AND/OR logic. Vector Index: An approximate nearest neighbor (ANN) index powered by DiskANN for vector similarity search.</description>
+    </item>
+    
+  </channel>
+</rss>

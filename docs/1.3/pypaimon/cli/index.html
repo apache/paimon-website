@@ -1,0 +1,2961 @@
+
+<!DOCTYPE html>
+<html lang="en" dir=>
+
+<head>
+  <meta name="generator" content="Hugo 0.80.0" />
+  
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Command Line Interface #  PyPaimon provides a command-line interface (CLI) for interacting with Paimon catalogs and tables. The CLI allows you to read data from Paimon tables directly from the command line.
+Installation #  The CLI is installed automatically when you install PyPaimon:
+pip install pypaimon After installation, the paimon command will be available in your terminal.
+Basic Usage #  Before using the CLI, you need to create a catalog configuration file.">
+<meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="Command Line Interface" />
+<meta property="og:description" content="Command Line Interface #  PyPaimon provides a command-line interface (CLI) for interacting with Paimon catalogs and tables. The CLI allows you to read data from Paimon tables directly from the command line.
+Installation #  The CLI is installed automatically when you install PyPaimon:
+pip install pypaimon After installation, the paimon command will be available in your terminal.
+Basic Usage #  Before using the CLI, you need to create a catalog configuration file." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="//paimon.apache.org/docs/master/pypaimon/cli/" />
+
+<title>Command Line Interface | Apache Paimon</title>
+<link rel="manifest" href="/docs/master/manifest.json">
+<link rel="icon" href="/docs/master/favicon.png" type="image/x-icon">
+<link rel="stylesheet" href="/docs/master/book.min.3bc4108a5b57c9a7e6fcae92ff69940435f8c46c4e1e4a311aedc9b2d8e06792.css" integrity="sha256-O8QQiltXyafm/K6S/2mUBDX4xGxOHkoxGu3JstjgZ5I=">
+<script defer src="/docs/master/en.search.min.8789e37a89118606487da753d79e5a25c08abe55da642a4caf79fe618bbc41bd.js" integrity="sha256-h4njeokRhgZIfadT155aJcCKvlXaZCpMr3n&#43;YYu8Qb0="></script>
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+  
+  
+
+<link rel="stylesheet" type="text/css" href="//paimon.apache.org/docs/master/font-awesome/css/font-awesome.min.css">
+<script src="//paimon.apache.org/docs/master/js/anchor.min.js"></script>
+<script src="//paimon.apache.org/docs/master/js/flink.js"></script>
+
+
+
+  
+  <script>
+    var _paq = window._paq = window._paq || [];
+     
+     
+    _paq.push(['disableCookies']);
+     
+    _paq.push(["setDomains", ["*.flink.apache.org","*.nightlies.apache.org/flink"]]);
+    _paq.push(['trackPageView']);
+    _paq.push(['enableLinkTracking']);
+    (function() {
+      var u="//matomo.privacy.apache.org/";
+      _paq.push(['setTrackerUrl', u+'matomo.php']);
+      _paq.push(['setSiteId', '1']);
+      var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+      g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+    })();
+  </script>
+  
+</head>
+
+<body dir=>
+  
+    <input type="checkbox" class="hidden toggle" id="menu-control" />
+    <input type="checkbox" class="hidden toggle" id="toc-control" />
+  
+  <main class="container flex">
+    
+      <aside class="book-menu">
+        
+  
+
+<nav>
+
+
+<a id="logo" href="//paimon.apache.org/docs/master">
+    <img width="100%" src="//paimon.apache.org/docs/master/paimon_black.svg">
+</a>
+<p style="text-align:right">1.5-SNAPSHOT</p>
+
+<div class="book-search">
+  <input type="text" id="book-search-input" placeholder="Search" aria-label="Search" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-dc8a1c63e6da60163016ce21cae1faa0" class="toggle"  />
+    <label for="section-dc8a1c63e6da60163016ce21cae1faa0" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-book title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Concepts</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/basic-concepts/" class="">Basic Concepts</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/concurrency-control/" class="">Concurrency Control</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/catalog/" class="">Catalog</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-e03f934865df9dd3baca303554bcaa71" class="toggle"  />
+    <label for="section-e03f934865df9dd3baca303554bcaa71" class="flex justify-between">RESTCatalog<span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/rest/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/rest/bear/" class="">Bear Token</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/rest/dlf/" class="">DLF Token</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/rest/tables/" class="">Tables</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/rest/pvfs/" class="">PVFS</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/rest/rest-api/" class="">REST API</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/system-tables/" class="">System Tables</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/data-types/" class="">Data Types</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/functions/" class="">Functions</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/views/" class="">Views</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-d3e7256ce393050c572ea7bd8cc4f240" class="toggle"  />
+    <label for="section-d3e7256ce393050c572ea7bd8cc4f240" class="flex justify-between">Specification<span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/spec/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/spec/schema/" class="">Schema</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/spec/snapshot/" class="">Snapshot</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/spec/manifest/" class="">Manifest</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/spec/datafile/" class="">DataFile</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/spec/fileformat/" class="">FileFormat</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/spec/tableindex/" class="">Table Index</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/spec/fileindex/" class="">File Index</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-3f6a6d4f1692040009c66ffaa328c8d0" class="toggle"  />
+    <label for="section-3f6a6d4f1692040009c66ffaa328c8d0" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-database title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Table with PK</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/primary-key-table/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/primary-key-table/data-distribution/" class="">Data Distribution</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/primary-key-table/table-mode/" class="">Table Mode</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-038bb7d17b5b7cb93fb60acbcf218f11" class="toggle"  />
+    <label for="section-038bb7d17b5b7cb93fb60acbcf218f11" class="flex justify-between">Merge Engine<span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/primary-key-table/merge-engine/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/primary-key-table/merge-engine/partial-update/" class="">Partial Update</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/primary-key-table/merge-engine/aggregation/" class="">Aggregation</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/primary-key-table/merge-engine/first-row/" class="">First Row</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/primary-key-table/changelog-producer/" class="">Changelog Producer</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/primary-key-table/sequence-rowkind/" class="">Sequence & Rowkind</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/primary-key-table/compaction/" class="">Compaction</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/primary-key-table/query-performance/" class="">Query Performance</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/primary-key-table/chain-table/" class="">Chain Table</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/primary-key-table/pk-clustering-override/" class="">PK Clustering Override</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-f74847e1c917ba2b99e7b718bb318b30" class="toggle"  />
+    <label for="section-f74847e1c917ba2b99e7b718bb318b30" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-database title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Table w/o PK</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/append-table/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/append-table/incremental-clustering/" class="">Incremental Clustering</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/append-table/bucketed/" class="">Bucketed</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/append-table/row-tracking/" class="">Row Tracking</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/append-table/data-evolution/" class="">Data Evolution</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/append-table/blob/" class="">Blob Storage</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/append-table/vector/" class="">Vector Storage</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/append-table/global-index/" class="">Global Index</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-998a37410d502937fe8444ed73a9ecf8" class="toggle"  />
+    <label for="section-998a37410d502937fe8444ed73a9ecf8" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-gear title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Engine Flink</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/flink/quick-start/" class="">Quick Start</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/flink/sql-ddl/" class="">SQL DDL</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/flink/sql-write/" class="">SQL Write</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/flink/sql-query/" class="">SQL Query</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/flink/consumer-id/" class="">Consumer ID</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/flink/sql-lookup/" class="">SQL Lookup</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/flink/sql-alter/" class="">SQL Alter</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/flink/default-value/" class="">Default Value</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/flink/procedures/" class="">Procedures</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/flink/action-jars/" class="">Action Jars</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/flink/savepoint/" class="">Savepoint</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-74c63bf75b4f6bd14a3ea6a1217f03ad" class="toggle"  />
+    <label for="section-74c63bf75b4f6bd14a3ea6a1217f03ad" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-gear title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Engine Spark</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/spark/quick-start/" class="">Quick Start</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/spark/sql-ddl/" class="">SQL DDL</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/spark/sql-functions/" class="">SQL Functions</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/spark/sql-write/" class="">SQL Write</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/spark/sql-query/" class="">SQL Query</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/spark/sql-alter/" class="">SQL Alter</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/spark/auxiliary/" class="">Auxiliary</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/spark/default-value/" class="">Default Value</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/spark/dataframe/" class="">DataFrame</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/spark/sql-upsert/" class="">SQL Upsert</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/spark/structured-streaming/" class="">Structured Streaming</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/spark/procedures/" class="">Procedures</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-16bf9de4e97c50dda6ce1ac6e934602c" class="toggle"  />
+    <label for="section-16bf9de4e97c50dda6ce1ac6e934602c" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-gear title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Ecosystem</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/ecosystem/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/ecosystem/starrocks/" class="">StarRocks</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/ecosystem/doris/" class="">Doris</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/ecosystem/hive/" class="">Hive</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/ecosystem/trino/" class="">Trino</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/ecosystem/amoro/" class="">Amoro</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-582e435c19ca5fafbf9764337d648e63" class="toggle"  />
+    <label for="section-582e435c19ca5fafbf9764337d648e63" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-gear title maindish" aria-hidden="true"></i>&nbsp;&nbsp;CDC Ingestion</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/cdc-ingestion/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/cdc-ingestion/mysql-cdc/" class="">Mysql CDC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/cdc-ingestion/postgres-cdc/" class="">Postgres CDC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/cdc-ingestion/kafka-cdc/" class="">Kafka CDC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/cdc-ingestion/mongo-cdc/" class="">Mongo CDC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/cdc-ingestion/pulsar-cdc/" class="">Pulsar CDC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/cdc-ingestion/flink-cdc/" class="">Flink CDC</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-697a4b6a0388d6cfa4f418aba3b4edfe" class="toggle"  />
+    <label for="section-697a4b6a0388d6cfa4f418aba3b4edfe" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-wrench title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Maintenance</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/maintenance/filesystems/" class="">Filesystems</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/maintenance/write-performance/" class="">Write Performance</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/maintenance/dedicated-compaction/" class="">Dedicated Compaction</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/maintenance/manage-snapshots/" class="">Manage Snapshots</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/maintenance/rescale-bucket/" class="">Rescale Bucket</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/maintenance/manage-tags/" class="">Manage Tags</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/maintenance/metrics/" class="">Metrics</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/maintenance/manage-privileges/" class="">Manage Privileges</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/maintenance/manage-branches/" class="">Manage Branches</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/maintenance/manage-partitions/" class="">Manage Partitions</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/maintenance/configurations/" class="">Configurations</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-049030059e0dc01edf74ba3d4d259dae" class="toggle"  />
+    <label for="section-049030059e0dc01edf74ba3d4d259dae" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-briefcase title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Program API</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/program-api/rest-api/" class="">REST API</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/program-api/flink-api/" class="">Flink API</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/program-api/java-api/" class="">Java API</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/program-api/catalog-api/" class="">Catalog API</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/program-api/cpp-api/" class="">Cpp API</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/program-api/rust-api/" class="">Rust API</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-a6ea2e2b6bd9ce399341429eea9e9b98" class="toggle" checked />
+    <label for="section-a6ea2e2b6bd9ce399341429eea9e9b98" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-briefcase title maindish" aria-hidden="true"></i>&nbsp;&nbsp;PyPaimon</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/pypaimon/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/pypaimon/python-api/" class="">Python API</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/pypaimon/manage-tags/" class="">Manage Tags</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/pypaimon/ray-data/" class="">Ray Data</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/pypaimon/pytorch/" class="">PyTorch</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/pypaimon/data-evolution/" class="">Data Evolution</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/pypaimon/fuse-support/" class="">FUSE Support</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/pypaimon/pyjindosdk-support/" class="">PyJindoSDK Support</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/pypaimon/cli/" class=" active">Command Line Interface</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-07c567e5a9f3ce62aea4ff0a1e2dc065" class="toggle"  />
+    <label for="section-07c567e5a9f3ce62aea4ff0a1e2dc065" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-briefcase title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Migration</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/migration/migration-from-hive/" class="">Migration From Hive</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/migration/upsert-to-partitioned/" class="">Upsert To Partitioned</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/migration/clone-to-paimon/" class="">Clone To Paimon</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-dc2f2ba83b7db3b9bfa35da4c73572d2" class="toggle"  />
+    <label for="section-dc2f2ba83b7db3b9bfa35da4c73572d2" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-briefcase title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Iceberg Metadata</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/iceberg/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/iceberg/append-table/" class="">Append Table</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/iceberg/primary-key-table/" class="">Primary Key Table</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/iceberg/iceberg-tags/" class="">Iceberg Tags</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/iceberg/hive-catalog/" class="">Hive Catalogs</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/iceberg/rest-catalog/" class="">Rest Catalog</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/iceberg/ecosystem/" class="">Ecosystem</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/iceberg/configurations/" class="">Configurations</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  	<br/>
+  
+  
+    <input type="checkbox" id="section-8c828bcf882f666cdd6821a70cc768ee" class="toggle"  />
+    <label for="section-8c828bcf882f666cdd6821a70cc768ee" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-sitemap title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Project</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/project/download/" class="">Download</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/project/contributing/" class="">Contributing</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/project/committer/" class="">Committer</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-392fc6f653ae23ff676811656a71ebbf" class="toggle"  />
+    <label for="section-392fc6f653ae23ff676811656a71ebbf" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-sitemap title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Learn Paimon</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/learn-paimon/understand-files/" class="">Understand Files</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/learn-paimon/scenario-guide/" class="">Scenario Guide</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br/>
+<hr class="menu-break">
+
+<a href="//paimon.apache.org" style="color:black;margin-bottom:0.5em"><i class="link fa fa-external-link title" aria-hidden="true"></i> Project Homepage</a>
+<br/>
+
+<a href="//paimon.apache.org/docs/master/api/java/" style="color:black;margin-bottom:0.5em"><i class="link fa fa-external-link title" aria-hidden="true"></i> JavaDocs</a>
+<br/>
+
+<hr class="menu-break">
+<li style="list-style-type: none">
+  <br>
+  <input type="checkbox" id="section-version-picker" class="toggle">
+  <label for="section-version-picker" class="flex justify-between">
+     <div style="font-weight:450;margin-bottom:0.5em">Pick Docs Version</div>
+     <span>▾</span>
+  </label>
+  <ul>
+    <a href="//paimon.apache.org/docs/master">
+      1.5-SNAPSHOT (✓)
+    </a>
+    <hr class="menu-break">
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/master">
+          master
+        </a>
+      </li>
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/1.4">
+          stable
+        </a>
+      </li>
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/1.4">
+          1.4
+        </a>
+      </li>
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/1.3">
+          1.3
+        </a>
+      </li>
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/1.2">
+          1.2
+        </a>
+      </li>
+    
+    <hr class="menu-break">
+    <li>
+      <a href="//paimon.apache.org/docs/master/versions">
+          All Versions
+      </a>
+    </li>
+  </ul>
+</li>
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var menu=document.querySelector("aside.book-menu nav");addEventListener("beforeunload",function(event){localStorage.setItem("menu.scrollTop",menu.scrollTop);});menu.scrollTop=localStorage.getItem("menu.scrollTop");})();</script>
+
+
+ 
+      </aside>
+    
+
+    <div class="book-page">
+      
+        <header class="book-header">
+          
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/docs/master/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <strong>Command Line Interface</strong>
+
+  <label for="toc-control">
+    
+    <img src="/docs/master/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden clearfix">
+    
+  
+
+<nav id="TableOfContents"><h3>On This Page <button class="toc" onclick="collapseToc()"><i class="fa fa-compress" aria-hidden="true"></i></button></h3>
+  <ul>
+    <li><a href="#installation">Installation</a></li>
+    <li><a href="#basic-usage">Basic Usage</a></li>
+    <li><a href="#table-commands">Table Commands</a>
+      <ul>
+        <li><a href="#table-read">Table Read</a></li>
+        <li><a href="#table-get">Table Get</a></li>
+        <li><a href="#table-snapshot">Table Snapshot</a></li>
+        <li><a href="#table-create">Table Create</a></li>
+        <li><a href="#table-import">Table Import</a></li>
+        <li><a href="#table-list-partitions">Table List Partitions</a></li>
+        <li><a href="#table-rename">Table Rename</a></li>
+        <li><a href="#table-full-text-search">Table Full-Text Search</a></li>
+        <li><a href="#table-drop">Table Drop</a></li>
+        <li><a href="#table-alter">Table Alter</a></li>
+      </ul>
+    </li>
+    <li><a href="#database-commands">Database Commands</a>
+      <ul>
+        <li><a href="#db-get">DB Get</a></li>
+        <li><a href="#db-create">DB Create</a></li>
+        <li><a href="#db-drop">DB Drop</a></li>
+        <li><a href="#db-alter">DB Alter</a></li>
+        <li><a href="#db-list-tables">DB List Tables</a></li>
+      </ul>
+    </li>
+    <li><a href="#catalog-commands">Catalog Commands</a>
+      <ul>
+        <li><a href="#catalog-list-dbs">Catalog List DBs</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+
+  </aside>
+  
+ 
+        </header>
+      
+
+      
+
+
+
+
+<article class="markdown">
+    <blockquote style="border-color:#f66">
+        This documentation is for an unreleased version of Apache Paimon. We recommend you use the latest <a href="https://paimon.apache.org/docs/1.4">stable version</a>.
+    </blockquote>
+</article>
+
+
+
+      
+  <article class="markdown"><!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<h1 id="command-line-interface">
+  Command Line Interface
+  <a class="anchor" href="#command-line-interface">#</a>
+</h1>
+<p>PyPaimon provides a command-line interface (CLI) for interacting with Paimon catalogs and tables.
+The CLI allows you to read data from Paimon tables directly from the command line.</p>
+<h2 id="installation">
+  Installation
+  <a class="anchor" href="#installation">#</a>
+</h2>
+<p>The CLI is installed automatically when you install PyPaimon:</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">pip install pypaimon
+</code></pre></div><p>After installation, the <code>paimon</code> command will be available in your terminal.</p>
+<h2 id="basic-usage">
+  Basic Usage
+  <a class="anchor" href="#basic-usage">#</a>
+</h2>
+<p>Before using the CLI, you need to create a catalog configuration file.
+By default, the CLI looks for a <code>paimon.yaml</code> file in the current directory.</p>
+<p>Create a <code>paimon.yaml</code> file with your catalog settings:</p>
+<p><strong>Filesystem Catalog:</strong></p>
+<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nt">metastore</span><span class="p">:</span><span class="w"> </span><span class="l">filesystem</span><span class="w">
+</span><span class="w"></span><span class="nt">warehouse</span><span class="p">:</span><span class="w"> </span><span class="l">/path/to/warehouse</span><span class="w">
+</span></code></pre></div><p><strong>REST Catalog:</strong></p>
+<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nt">metastore</span><span class="p">:</span><span class="w"> </span><span class="l">rest</span><span class="w">
+</span><span class="w"></span><span class="nt">uri</span><span class="p">:</span><span class="w"> </span><span class="l">http://localhost:8080</span><span class="w">
+</span><span class="w"></span><span class="nt">warehouse</span><span class="p">:</span><span class="w"> </span><span class="l">catalog_name</span><span class="w">
+</span></code></pre></div><p><strong>Usage:</strong></p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">paimon <span class="o">[</span>OPTIONS<span class="o">]</span> COMMAND <span class="o">[</span>ARGS<span class="o">]</span>...
+</code></pre></div><ul>
+<li><code>-c, --config PATH</code>: Path to catalog configuration file (default: <code>paimon.yaml</code>)</li>
+<li><code>--help</code>: Show help message and exit</li>
+</ul>
+<h2 id="table-commands">
+  Table Commands
+  <a class="anchor" href="#table-commands">#</a>
+</h2>
+<h3 id="table-read">
+  Table Read
+  <a class="anchor" href="#table-read">#</a>
+</h3>
+<p>Read data from a Paimon table and display it in a tabular format.</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">paimon table <span class="nb">read</span> mydb.users
+</code></pre></div><p><strong>Options:</strong></p>
+<ul>
+<li><code>--select, -s</code>: Select specific columns to read (comma-separated)</li>
+<li><code>--where, -w</code>: Filter condition in SQL-like syntax</li>
+<li><code>--limit, -l</code>: Maximum number of results to display (default: 100)</li>
+<li><code>--format, -f</code>: Output format: <code>table</code> (default) or <code>json</code></li>
+</ul>
+<p><strong>Examples:</strong></p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># Read with limit</span>
+paimon table <span class="nb">read</span> mydb.users -l <span class="m">50</span>
+
+<span class="c1"># Read specific columns</span>
+paimon table <span class="nb">read</span> mydb.users -s id,name,age
+
+<span class="c1"># Filter with WHERE clause</span>
+paimon table <span class="nb">read</span> mydb.users --where <span class="s2">&#34;age &gt; 18&#34;</span>
+
+<span class="c1"># Combine select, where, and limit</span>
+paimon table <span class="nb">read</span> mydb.users -s id,name -w <span class="s2">&#34;age &gt;= 20 AND city = &#39;Beijing&#39;&#34;</span> -l <span class="m">50</span>
+
+<span class="c1"># Output as JSON (for programmatic use)</span>
+paimon table <span class="nb">read</span> mydb.users --format json
+</code></pre></div><p><strong>WHERE Operators</strong></p>
+<p>The <code>--where</code> option supports SQL-like filter expressions:</p>
+<table>
+<thead>
+<tr>
+<th>Operator</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>=</code>, <code>!=</code>, <code>&lt;&gt;</code></td>
+<td><code>name = 'Alice'</code></td>
+</tr>
+<tr>
+<td><code>&lt;</code>, <code>&lt;=</code>, <code>&gt;</code>, <code>&gt;=</code></td>
+<td><code>age &gt; 18</code></td>
+</tr>
+<tr>
+<td><code>IS NULL</code>, <code>IS NOT NULL</code></td>
+<td><code>deleted_at IS NULL</code></td>
+</tr>
+<tr>
+<td><code>IN (...)</code>, <code>NOT IN (...)</code></td>
+<td><code>status IN ('active', 'pending')</code></td>
+</tr>
+<tr>
+<td><code>BETWEEN ... AND ...</code></td>
+<td><code>age BETWEEN 20 AND 30</code></td>
+</tr>
+<tr>
+<td><code>LIKE</code></td>
+<td><code>name LIKE 'A%'</code></td>
+</tr>
+</tbody>
+</table>
+<p>Multiple conditions can be combined with <code>AND</code> and <code>OR</code> (AND has higher precedence). Parentheses are supported for grouping:</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># AND condition</span>
+paimon table <span class="nb">read</span> mydb.users -w <span class="s2">&#34;age &gt;= 20 AND age &lt;= 30&#34;</span>
+
+<span class="c1"># OR condition</span>
+paimon table <span class="nb">read</span> mydb.users -w <span class="s2">&#34;city = &#39;Beijing&#39; OR city = &#39;Shanghai&#39;&#34;</span>
+
+<span class="c1"># Parenthesized grouping</span>
+paimon table <span class="nb">read</span> mydb.users -w <span class="s2">&#34;(age &gt; 18 OR name = &#39;Bob&#39;) AND city = &#39;Beijing&#39;&#34;</span>
+
+<span class="c1"># IN list</span>
+paimon table <span class="nb">read</span> mydb.users -w <span class="s2">&#34;city IN (&#39;Beijing&#39;, &#39;Shanghai&#39;, &#39;Hangzhou&#39;)&#34;</span>
+
+<span class="c1"># BETWEEN</span>
+paimon table <span class="nb">read</span> mydb.users -w <span class="s2">&#34;age BETWEEN 25 AND 35&#34;</span>
+
+<span class="c1"># LIKE pattern</span>
+paimon table <span class="nb">read</span> mydb.users -w <span class="s2">&#34;name LIKE &#39;A%&#39;&#34;</span>
+
+<span class="c1"># IS NULL / IS NOT NULL</span>
+paimon table <span class="nb">read</span> mydb.users -w <span class="s2">&#34;email IS NOT NULL&#34;</span>
+</code></pre></div><p>Literal values are automatically cast to the appropriate Python type based on the table schema (e.g., <code>INT</code> fields cast to <code>int</code>, <code>DOUBLE</code> to <code>float</code>).</p>
+<p>Output:</p>
+<pre><code> id    name  age      city
+  1   Alice   25   Beijing
+  2     Bob   30  Shanghai
+  3 Charlie   35 Guangzhou
+  4   David   28  Shenzhen
+  5     Eve   32  Hangzhou
+</code></pre><h3 id="table-get">
+  Table Get
+  <a class="anchor" href="#table-get">#</a>
+</h3>
+<p>Get and display table schema information in JSON format. The output format is the same as the schema JSON format used
+in table create, making it easy to export and reuse table schemas.</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">paimon table get mydb.users
+</code></pre></div><p>Output:</p>
+<div class="highlight"><pre class="chroma"><code class="language-json" data-lang="json"><span class="p">{</span>
+  <span class="nt">&#34;fields&#34;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">{</span><span class="nt">&#34;id&#34;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="nt">&#34;name&#34;</span><span class="p">:</span> <span class="s2">&#34;user_id&#34;</span><span class="p">,</span> <span class="nt">&#34;type&#34;</span><span class="p">:</span> <span class="s2">&#34;BIGINT&#34;</span><span class="p">},</span>
+    <span class="p">{</span><span class="nt">&#34;id&#34;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="nt">&#34;name&#34;</span><span class="p">:</span> <span class="s2">&#34;username&#34;</span><span class="p">,</span> <span class="nt">&#34;type&#34;</span><span class="p">:</span> <span class="s2">&#34;STRING&#34;</span><span class="p">},</span>
+    <span class="p">{</span><span class="nt">&#34;id&#34;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="nt">&#34;name&#34;</span><span class="p">:</span> <span class="s2">&#34;email&#34;</span><span class="p">,</span> <span class="nt">&#34;type&#34;</span><span class="p">:</span> <span class="s2">&#34;STRING&#34;</span><span class="p">},</span>
+    <span class="p">{</span><span class="nt">&#34;id&#34;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="nt">&#34;name&#34;</span><span class="p">:</span> <span class="s2">&#34;age&#34;</span><span class="p">,</span> <span class="nt">&#34;type&#34;</span><span class="p">:</span> <span class="s2">&#34;INT&#34;</span><span class="p">},</span>
+    <span class="p">{</span><span class="nt">&#34;id&#34;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="nt">&#34;name&#34;</span><span class="p">:</span> <span class="s2">&#34;city&#34;</span><span class="p">,</span> <span class="nt">&#34;type&#34;</span><span class="p">:</span> <span class="s2">&#34;STRING&#34;</span><span class="p">},</span>
+    <span class="p">{</span><span class="nt">&#34;id&#34;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="nt">&#34;name&#34;</span><span class="p">:</span> <span class="s2">&#34;created_at&#34;</span><span class="p">,</span> <span class="nt">&#34;type&#34;</span><span class="p">:</span> <span class="s2">&#34;TIMESTAMP&#34;</span><span class="p">},</span>
+    <span class="p">{</span><span class="nt">&#34;id&#34;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span> <span class="nt">&#34;name&#34;</span><span class="p">:</span> <span class="s2">&#34;is_active&#34;</span><span class="p">,</span> <span class="nt">&#34;type&#34;</span><span class="p">:</span> <span class="s2">&#34;BOOLEAN&#34;</span><span class="p">}</span>
+  <span class="p">],</span>
+  <span class="nt">&#34;partitionKeys&#34;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&#34;city&#34;</span><span class="p">],</span>
+  <span class="nt">&#34;primaryKeys&#34;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&#34;user_id&#34;</span><span class="p">],</span>
+  <span class="nt">&#34;options&#34;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&#34;bucket&#34;</span><span class="p">:</span> <span class="s2">&#34;4&#34;</span><span class="p">,</span>
+    <span class="nt">&#34;changelog-producer&#34;</span><span class="p">:</span> <span class="s2">&#34;input&#34;</span>
+  <span class="p">},</span>
+  <span class="nt">&#34;comment&#34;</span><span class="p">:</span> <span class="s2">&#34;User information table&#34;</span>
+<span class="p">}</span>
+</code></pre></div><p><strong>Note:</strong> The output JSON can be saved to a file and used directly with the <code>table create</code> command to recreate the table structure.</p>
+<h3 id="table-snapshot">
+  Table Snapshot
+  <a class="anchor" href="#table-snapshot">#</a>
+</h3>
+<p>Get and display the latest snapshot information of a Paimon table in JSON format. The snapshot contains metadata about the current state of the table.</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">paimon table snapshot mydb.users
+</code></pre></div><p>Output:</p>
+<div class="highlight"><pre class="chroma"><code class="language-json" data-lang="json"><span class="p">{</span>
+  <span class="nt">&#34;version&#34;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+  <span class="nt">&#34;id&#34;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+  <span class="nt">&#34;schemaId&#34;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+  <span class="nt">&#34;baseManifestList&#34;</span><span class="p">:</span> <span class="s2">&#34;manifest-list-5-base-...&#34;</span><span class="p">,</span>
+  <span class="nt">&#34;deltaManifestList&#34;</span><span class="p">:</span> <span class="s2">&#34;manifest-list-5-delta-...&#34;</span><span class="p">,</span>
+  <span class="nt">&#34;changelogManifestList&#34;</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span>
+  <span class="nt">&#34;totalRecordCount&#34;</span><span class="p">:</span> <span class="mi">1000</span><span class="p">,</span>
+  <span class="nt">&#34;deltaRecordCount&#34;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
+  <span class="nt">&#34;changelogRecordCount&#34;</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span>
+  <span class="nt">&#34;commitUser&#34;</span><span class="p">:</span> <span class="s2">&#34;user-123&#34;</span><span class="p">,</span>
+  <span class="nt">&#34;commitIdentifier&#34;</span><span class="p">:</span> <span class="mi">1709123456789</span><span class="p">,</span>
+  <span class="nt">&#34;commitKind&#34;</span><span class="p">:</span> <span class="s2">&#34;APPEND&#34;</span><span class="p">,</span>
+  <span class="nt">&#34;timeMillis&#34;</span><span class="p">:</span> <span class="mi">1709123456789</span><span class="p">,</span>
+  <span class="nt">&#34;watermark&#34;</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span>
+  <span class="nt">&#34;statistics&#34;</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span>
+  <span class="nt">&#34;nextRowId&#34;</span><span class="p">:</span> <span class="kc">null</span>
+<span class="p">}</span>
+</code></pre></div><h3 id="table-create">
+  Table Create
+  <a class="anchor" href="#table-create">#</a>
+</h3>
+<p>Create a new Paimon table with a schema defined in a JSON file. The schema JSON format is the same as the output from
+<code>table get</code>, ensuring consistency and easy schema reuse.</p>
+<p><strong>Options:</strong></p>
+<ul>
+<li><code>--schema, -s</code>: Path to schema JSON file - <strong>Required</strong></li>
+<li><code>--ignore-if-exists, -i</code>: Do not raise error if table already exists</li>
+</ul>
+<p>The schema JSON file follows the same format as output by <code>table get</code>:</p>
+<p><strong>Field Properties:</strong></p>
+<ul>
+<li><code>id</code>: Field ID (integer, typically starts from 0) - <strong>Required</strong></li>
+<li><code>name</code>: Field name - <strong>Required</strong></li>
+<li><code>type</code>: Field data type (e.g., <code>INT</code>, <code>BIGINT</code>, <code>STRING</code>, <code>TIMESTAMP</code>, <code>DECIMAL(10,2)</code>) - <strong>Required</strong></li>
+<li><code>description</code>: Optional field description</li>
+</ul>
+<p><strong>Schema Properties:</strong></p>
+<ul>
+<li><code>fields</code>: List of field definitions - <strong>Required</strong></li>
+<li><code>partitionKeys</code>: List of partition key column names</li>
+<li><code>primaryKeys</code>: List of primary key column names</li>
+<li><code>options</code>: Table options as key-value pairs</li>
+<li><code>comment</code>: Table comment</li>
+</ul>
+<p><strong>Example Workflow:</strong></p>
+<ol>
+<li>
+<p>Export schema from an existing table:</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">paimon table get mydb.users &gt; users_schema.json
+</code></pre></div></li>
+<li>
+<p>Create a new table with the same schema:</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">paimon table create mydb.users_copy --schema users_schema.json
+</code></pre></div></li>
+</ol>
+<h3 id="table-import">
+  Table Import
+  <a class="anchor" href="#table-import">#</a>
+</h3>
+<p>Import data from CSV or JSON files into an existing Paimon table. This is useful for bulk loading data from external sources.</p>
+<p><strong>Options:</strong></p>
+<ul>
+<li><code>--input, -i</code>: Path to input file (CSV or JSON format) - <strong>Required</strong></li>
+</ul>
+<p><strong>Supported Formats:</strong></p>
+<ul>
+<li><strong>CSV</strong> (<code>.csv</code>): Comma-separated values file</li>
+<li><strong>JSON</strong> (<code>.json</code>): JSON file with array of objects format</li>
+</ul>
+<h4 id="import-from-csv">
+  Import from CSV
+  <a class="anchor" href="#import-from-csv">#</a>
+</h4>
+<p>The CSV file should have:</p>
+<ul>
+<li>A header row with column names matching the table schema</li>
+<li>Data types compatible with the table columns</li>
+</ul>
+<pre><code class="language-csv" data-lang="csv">id,name,age,city
+1,Alice,25,Beijing
+2,Bob,30,Shanghai
+3,Charlie,35,Guangzhou
+</code></pre><p>Output:</p>
+<pre><code>Successfully imported 3 rows into 'mydb.users'.
+</code></pre><h4 id="import-from-json">
+  Import from JSON
+  <a class="anchor" href="#import-from-json">#</a>
+</h4>
+<p>The JSON file should be an array of objects with keys matching the table column names.</p>
+<div class="highlight"><pre class="chroma"><code class="language-json" data-lang="json"><span class="p">[</span>
+  <span class="p">{</span><span class="nt">&#34;id&#34;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="nt">&#34;name&#34;</span><span class="p">:</span> <span class="s2">&#34;Alice&#34;</span><span class="p">,</span> <span class="nt">&#34;age&#34;</span><span class="p">:</span> <span class="mi">25</span><span class="p">,</span> <span class="nt">&#34;city&#34;</span><span class="p">:</span> <span class="s2">&#34;Beijing&#34;</span><span class="p">},</span>
+  <span class="p">{</span><span class="nt">&#34;id&#34;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="nt">&#34;name&#34;</span><span class="p">:</span> <span class="s2">&#34;Bob&#34;</span><span class="p">,</span> <span class="nt">&#34;age&#34;</span><span class="p">:</span> <span class="mi">30</span><span class="p">,</span> <span class="nt">&#34;city&#34;</span><span class="p">:</span> <span class="s2">&#34;Shanghai&#34;</span><span class="p">},</span>
+  <span class="p">{</span><span class="nt">&#34;id&#34;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="nt">&#34;name&#34;</span><span class="p">:</span> <span class="s2">&#34;Charlie&#34;</span><span class="p">,</span> <span class="nt">&#34;age&#34;</span><span class="p">:</span> <span class="mi">35</span><span class="p">,</span> <span class="nt">&#34;city&#34;</span><span class="p">:</span> <span class="s2">&#34;Guangzhou&#34;</span><span class="p">}</span>
+<span class="p">]</span>
+</code></pre></div><p>Output:</p>
+<pre><code>Successfully imported 3 rows into 'mydb.users'.
+</code></pre><h4 id="important-notes">
+  Important Notes
+  <a class="anchor" href="#important-notes">#</a>
+</h4>
+<ul>
+<li>The target table must exist before importing data</li>
+<li>Column names in the file must match the table schema</li>
+<li>Data types should be compatible with the table schema</li>
+<li>The import operation appends data to the existing table</li>
+</ul>
+<h3 id="table-list-partitions">
+  Table List Partitions
+  <a class="anchor" href="#table-list-partitions">#</a>
+</h3>
+<p>List partitions of a Paimon table. Supports optional pattern filtering to match specific partitions.</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">paimon table list-partitions mydb.orders
+</code></pre></div><p><strong>Options:</strong></p>
+<ul>
+<li><code>--pattern, -p</code>: Partition name pattern to filter partitions</li>
+<li><code>--format, -f</code>: Output format: <code>table</code> (default) or <code>json</code></li>
+</ul>
+<p><strong>Examples:</strong></p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># List all partitions</span>
+paimon table list-partitions mydb.orders
+
+<span class="c1"># List partitions matching a pattern</span>
+paimon table list-partitions mydb.orders --pattern <span class="s2">&#34;dt=2024*&#34;</span>
+
+<span class="c1"># Output as JSON (for programmatic use)</span>
+paimon table list-partitions mydb.orders --format json
+</code></pre></div><p>Output:</p>
+<pre><code>              Partition  RecordCount  FileSizeInBytes  FileCount  LastFileCreationTime       UpdatedAt  UpdatedBy
+dt=2024-01-01,region=us          500          1048576         10         1704067200000  1704153600000      admin
+dt=2024-01-02,region=eu          300           524288          5         1704153600000  1704240000000      user1
+dt=2024-01-03,region=us          200           262144          3         1704240000000  1704326400000      admin
+</code></pre><h3 id="table-rename">
+  Table Rename
+  <a class="anchor" href="#table-rename">#</a>
+</h3>
+<p>Rename a table in the catalog. Both source and target must be specified in <code>database.table</code> format.</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">paimon table rename mydb.old_name mydb.new_name
+</code></pre></div><p>Output:</p>
+<pre><code>Table 'mydb.old_name' renamed to 'mydb.new_name' successfully.
+</code></pre><p><strong>Note:</strong> Both filesystem and REST catalogs support table rename. For filesystem catalogs, the rename is performed by renaming the underlying table directory.</p>
+<h3 id="table-full-text-search">
+  Table Full-Text Search
+  <a class="anchor" href="#table-full-text-search">#</a>
+</h3>
+<p>Perform full-text search on a Paimon table with a Tantivy full-text index and display matching rows.</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">paimon table full-text-search mydb.articles --column content --query <span class="s2">&#34;paimon lake&#34;</span>
+</code></pre></div><p><strong>Options:</strong></p>
+<ul>
+<li><code>--column, -c</code>: Text column to search on - <strong>Required</strong></li>
+<li><code>--query, -q</code>: Query text to search for - <strong>Required</strong></li>
+<li><code>--limit, -l</code>: Maximum number of results to return (default: 10)</li>
+<li><code>--select, -s</code>: Select specific columns to display (comma-separated)</li>
+<li><code>--format, -f</code>: Output format: <code>table</code> (default) or <code>json</code></li>
+</ul>
+<p><strong>Examples:</strong></p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># Basic full-text search</span>
+paimon table full-text-search mydb.articles -c content -q <span class="s2">&#34;paimon lake&#34;</span>
+
+<span class="c1"># Search with limit</span>
+paimon table full-text-search mydb.articles -c content -q <span class="s2">&#34;streaming data&#34;</span> -l <span class="m">20</span>
+
+<span class="c1"># Search with column projection</span>
+paimon table full-text-search mydb.articles -c content -q <span class="s2">&#34;paimon&#34;</span> -s <span class="s2">&#34;id,title,content&#34;</span>
+
+<span class="c1"># Output as JSON</span>
+paimon table full-text-search mydb.articles -c content -q <span class="s2">&#34;paimon&#34;</span> -f json
+</code></pre></div><p>Output:</p>
+<pre><code> id                                            content
+  0  Apache Paimon is a streaming data lake platform
+  2  Paimon supports real-time data ingestion and...
+  4  Data lake platforms like Paimon handle large-...
+</code></pre><p><strong>Note:</strong> The table must have a Tantivy full-text index built on the target column. See <a href="//paimon.apache.org/docs/master/append-table/global-index/">Global Index</a> for how to create full-text indexes.</p>
+<h3 id="table-drop">
+  Table Drop
+  <a class="anchor" href="#table-drop">#</a>
+</h3>
+<p>Drop a table from the catalog. This will permanently delete the table and all its data.</p>
+<p><strong>Options:</strong></p>
+<ul>
+<li><code>--ignore-if-not-exists, -i</code>: Do not raise error if table does not exist</li>
+</ul>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">paimon table drop mydb.old_table
+</code></pre></div><p>Output:</p>
+<pre><code>Table 'mydb.old_table' dropped successfully.
+</code></pre><p><strong>Warning:</strong> This operation cannot be undone. All data in the table will be permanently deleted.</p>
+<h3 id="table-alter">
+  Table Alter
+  <a class="anchor" href="#table-alter">#</a>
+</h3>
+<p>Alter a table&rsquo;s schema or options. This command supports multiple sub-commands for different types of schema changes.</p>
+<h4 id="basic-syntax">
+  Basic Syntax
+  <a class="anchor" href="#basic-syntax">#</a>
+</h4>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">paimon table alter DATABASE.TABLE <span class="o">[</span>--ignore-if-not-exists<span class="o">]</span> SUBCOMMAND <span class="o">[</span>OPTIONS<span class="o">]</span>
+</code></pre></div><p><strong>Global Options:</strong></p>
+<ul>
+<li><code>--ignore-if-not-exists, -i</code>: Do not raise error if table does not exist</li>
+</ul>
+<h4 id="set-option">
+  Set Option
+  <a class="anchor" href="#set-option">#</a>
+</h4>
+<p>Set a table option (key-value pair):</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">paimon table alter mydb.users set-option -k snapshot.num-retained-max -v <span class="m">10</span>
+</code></pre></div><h4 id="remove-option">
+  Remove Option
+  <a class="anchor" href="#remove-option">#</a>
+</h4>
+<p>Remove a table option:</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">paimon table alter mydb.users remove-option -k snapshot.num-retained-max
+</code></pre></div><h4 id="add-column">
+  Add Column
+  <a class="anchor" href="#add-column">#</a>
+</h4>
+<p>Add a new column to the table:</p>
+<p><strong>Example:</strong></p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">paimon table alter mydb.users add-column -n email -t STRING -c <span class="s2">&#34;User email address&#34;</span>
+</code></pre></div><p><strong>Example with position (first):</strong></p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">paimon table alter mydb.users add-column -n row_id -t BIGINT --first
+</code></pre></div><p><strong>Example with position (after):</strong></p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">paimon table alter mydb.users add-column -n email -t STRING --after name
+</code></pre></div><h4 id="drop-column">
+  Drop Column
+  <a class="anchor" href="#drop-column">#</a>
+</h4>
+<p>Drop a column from the table:</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">paimon table alter mydb.users drop-column -n email
+</code></pre></div><h4 id="rename-column">
+  Rename Column
+  <a class="anchor" href="#rename-column">#</a>
+</h4>
+<p>Rename an existing column:</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">paimon table alter mydb.users rename-column -n username -m user_name
+</code></pre></div><h4 id="alter-column">
+  Alter Column
+  <a class="anchor" href="#alter-column">#</a>
+</h4>
+<p>Alter an existing column&rsquo;s type, comment, or position. Multiple changes can be specified in a single command.</p>
+<p><strong>Change Column Type:</strong></p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">paimon table alter mydb.users alter-column -n age -t BIGINT
+</code></pre></div><p><strong>Change Column Comment:</strong></p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">paimon table alter mydb.users alter-column -n age -c <span class="s1">&#39;User age in years&#39;</span>
+</code></pre></div><p><strong>Change Column Position:</strong></p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">paimon table alter mydb.users alter-column -n age --first
+
+paimon table alter mydb.users alter-column -n age --after name
+</code></pre></div><p><strong>Multiple changes in one command:</strong></p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">paimon table alter mydb.users alter-column -n age -t BIGINT -c <span class="s1">&#39;User age in years&#39;</span>
+</code></pre></div><h4 id="update-comment">
+  Update Comment
+  <a class="anchor" href="#update-comment">#</a>
+</h4>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">paimon table alter mydb.users update-comment -c <span class="s2">&#34;Updated user information table&#34;</span>
+</code></pre></div><h2 id="database-commands">
+  Database Commands
+  <a class="anchor" href="#database-commands">#</a>
+</h2>
+<h3 id="db-get">
+  DB Get
+  <a class="anchor" href="#db-get">#</a>
+</h3>
+<p>Get and display database information in JSON format.</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">paimon db get mydb
+</code></pre></div><p>Output:</p>
+<div class="highlight"><pre class="chroma"><code class="language-json" data-lang="json"><span class="p">{</span>
+  <span class="nt">&#34;name&#34;</span><span class="p">:</span> <span class="s2">&#34;mydb&#34;</span><span class="p">,</span>
+  <span class="nt">&#34;options&#34;</span><span class="p">:</span> <span class="p">{}</span>
+<span class="p">}</span>
+</code></pre></div><h3 id="db-create">
+  DB Create
+  <a class="anchor" href="#db-create">#</a>
+</h3>
+<p>Create a new database.</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># Create a simple database</span>
+paimon db create mydb
+
+<span class="c1"># Create with properties</span>
+paimon db create mydb -p <span class="s1">&#39;{&#34;key1&#34;: &#34;value1&#34;, &#34;key2&#34;: &#34;value2&#34;}&#39;</span>
+
+<span class="c1"># Create and ignore if already exists</span>
+paimon db create mydb -i
+</code></pre></div><h3 id="db-drop">
+  DB Drop
+  <a class="anchor" href="#db-drop">#</a>
+</h3>
+<p>Drop an existing database.</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># Drop a database</span>
+paimon db drop mydb
+
+<span class="c1"># Drop and ignore if not exists</span>
+paimon db drop mydb -i
+
+<span class="c1"># Drop with all tables (cascade)</span>
+paimon db drop mydb --cascade
+</code></pre></div><h3 id="db-alter">
+  DB Alter
+  <a class="anchor" href="#db-alter">#</a>
+</h3>
+<p>Alter database properties by setting or removing properties.</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># Set properties</span>
+paimon db alter mydb --set <span class="s1">&#39;{&#34;key1&#34;: &#34;value1&#34;, &#34;key2&#34;: &#34;value2&#34;}&#39;</span>
+
+<span class="c1"># Remove properties</span>
+paimon db alter mydb --remove key1 key2
+
+<span class="c1"># Set and remove properties in one command</span>
+paimon db alter mydb --set <span class="s1">&#39;{&#34;key1&#34;: &#34;new_value&#34;}&#39;</span> --remove key2
+</code></pre></div><h3 id="db-list-tables">
+  DB List Tables
+  <a class="anchor" href="#db-list-tables">#</a>
+</h3>
+<p>List all tables in a database.</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">paimon db list-tables mydb
+</code></pre></div><p>Output:</p>
+<pre><code>orders
+products
+users
+</code></pre><h2 id="catalog-commands">
+  Catalog Commands
+  <a class="anchor" href="#catalog-commands">#</a>
+</h2>
+<h3 id="catalog-list-dbs">
+  Catalog List DBs
+  <a class="anchor" href="#catalog-list-dbs">#</a>
+</h3>
+<p>List all databases in the catalog.</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">paimon catalog list-dbs
+</code></pre></div><p>Output:</p>
+<pre><code>default
+mydb
+analytics
+</code></pre></article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  
+
+
+
+
+<a href="//github.com/apache/paimon/edit/master/docs/content/pypaimon/cli.md" style="color:black"><i class="fa fa-edit fa-fw"></i>Edit This Page</a>
+
+
+ 
+        
+
+
+<hr style="margin-top: 20px; border: 1px solid #e5e5e5;" />
+
+<table style="border-spacing: 10px;">
+    <tbody>
+    <tr>
+        <td colspan="2">
+            Copyright &copy; 2025 The Apache Software Foundation. Apache Paimon, Paimon, and its feather logo are
+            trademarks of The Apache Software Foundation.
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+      </footer>
+
+      
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      
+  
+
+<nav id="TableOfContents"><h3>On This Page <button class="toc" onclick="collapseToc()"><i class="fa fa-compress" aria-hidden="true"></i></button></h3>
+  <ul>
+    <li><a href="#installation">Installation</a></li>
+    <li><a href="#basic-usage">Basic Usage</a></li>
+    <li><a href="#table-commands">Table Commands</a>
+      <ul>
+        <li><a href="#table-read">Table Read</a></li>
+        <li><a href="#table-get">Table Get</a></li>
+        <li><a href="#table-snapshot">Table Snapshot</a></li>
+        <li><a href="#table-create">Table Create</a></li>
+        <li><a href="#table-import">Table Import</a></li>
+        <li><a href="#table-list-partitions">Table List Partitions</a></li>
+        <li><a href="#table-rename">Table Rename</a></li>
+        <li><a href="#table-full-text-search">Table Full-Text Search</a></li>
+        <li><a href="#table-drop">Table Drop</a></li>
+        <li><a href="#table-alter">Table Alter</a></li>
+      </ul>
+    </li>
+    <li><a href="#database-commands">Database Commands</a>
+      <ul>
+        <li><a href="#db-get">DB Get</a></li>
+        <li><a href="#db-create">DB Create</a></li>
+        <li><a href="#db-drop">DB Drop</a></li>
+        <li><a href="#db-alter">DB Alter</a></li>
+        <li><a href="#db-list-tables">DB List Tables</a></li>
+      </ul>
+    </li>
+    <li><a href="#catalog-commands">Catalog Commands</a>
+      <ul>
+        <li><a href="#catalog-list-dbs">Catalog List DBs</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+ 
+    </aside>
+    <aside class="expand-toc">
+      <button class="toc" onclick="expandToc()">
+        <i class="fa fa-expand" aria-hidden="true"></i>
+      </button>
+    </aside>
+    
+  </main>
+
+  
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

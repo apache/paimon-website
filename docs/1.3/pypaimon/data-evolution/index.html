@@ -1,0 +1,2702 @@
+
+<!DOCTYPE html>
+<html lang="en" dir=>
+
+<head>
+  <meta name="generator" content="Hugo 0.80.0" />
+  
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Data Evolution #  PyPaimon for Data Evolution mode. See Data Evolution.
+Prerequisites #  To use partial updates / data evolution, enable both options when creating the table:
+ row-tracking.enabled: true data-evolution.enabled: true  Update Columns By Row ID #  You can create TableUpdate.update_by_arrow_with_row_id to update columns to data evolution tables.
+The input data should include the _ROW_ID column, update operation will automatically sort and match each _ROW_ID to its corresponding first_row_id, then groups rows with the same first_row_id and writes them to a separate file.">
+<meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="Data Evolution" />
+<meta property="og:description" content="Data Evolution #  PyPaimon for Data Evolution mode. See Data Evolution.
+Prerequisites #  To use partial updates / data evolution, enable both options when creating the table:
+ row-tracking.enabled: true data-evolution.enabled: true  Update Columns By Row ID #  You can create TableUpdate.update_by_arrow_with_row_id to update columns to data evolution tables.
+The input data should include the _ROW_ID column, update operation will automatically sort and match each _ROW_ID to its corresponding first_row_id, then groups rows with the same first_row_id and writes them to a separate file." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="//paimon.apache.org/docs/master/pypaimon/data-evolution/" />
+
+<title>Data Evolution | Apache Paimon</title>
+<link rel="manifest" href="/docs/master/manifest.json">
+<link rel="icon" href="/docs/master/favicon.png" type="image/x-icon">
+<link rel="stylesheet" href="/docs/master/book.min.3bc4108a5b57c9a7e6fcae92ff69940435f8c46c4e1e4a311aedc9b2d8e06792.css" integrity="sha256-O8QQiltXyafm/K6S/2mUBDX4xGxOHkoxGu3JstjgZ5I=">
+<script defer src="/docs/master/en.search.min.8789e37a89118606487da753d79e5a25c08abe55da642a4caf79fe618bbc41bd.js" integrity="sha256-h4njeokRhgZIfadT155aJcCKvlXaZCpMr3n&#43;YYu8Qb0="></script>
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+  
+  
+
+<link rel="stylesheet" type="text/css" href="//paimon.apache.org/docs/master/font-awesome/css/font-awesome.min.css">
+<script src="//paimon.apache.org/docs/master/js/anchor.min.js"></script>
+<script src="//paimon.apache.org/docs/master/js/flink.js"></script>
+
+
+
+  
+  <script>
+    var _paq = window._paq = window._paq || [];
+     
+     
+    _paq.push(['disableCookies']);
+     
+    _paq.push(["setDomains", ["*.flink.apache.org","*.nightlies.apache.org/flink"]]);
+    _paq.push(['trackPageView']);
+    _paq.push(['enableLinkTracking']);
+    (function() {
+      var u="//matomo.privacy.apache.org/";
+      _paq.push(['setTrackerUrl', u+'matomo.php']);
+      _paq.push(['setSiteId', '1']);
+      var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+      g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+    })();
+  </script>
+  
+</head>
+
+<body dir=>
+  
+    <input type="checkbox" class="hidden toggle" id="menu-control" />
+    <input type="checkbox" class="hidden toggle" id="toc-control" />
+  
+  <main class="container flex">
+    
+      <aside class="book-menu">
+        
+  
+
+<nav>
+
+
+<a id="logo" href="//paimon.apache.org/docs/master">
+    <img width="100%" src="//paimon.apache.org/docs/master/paimon_black.svg">
+</a>
+<p style="text-align:right">1.5-SNAPSHOT</p>
+
+<div class="book-search">
+  <input type="text" id="book-search-input" placeholder="Search" aria-label="Search" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-dc8a1c63e6da60163016ce21cae1faa0" class="toggle"  />
+    <label for="section-dc8a1c63e6da60163016ce21cae1faa0" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-book title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Concepts</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/basic-concepts/" class="">Basic Concepts</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/concurrency-control/" class="">Concurrency Control</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/catalog/" class="">Catalog</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-e03f934865df9dd3baca303554bcaa71" class="toggle"  />
+    <label for="section-e03f934865df9dd3baca303554bcaa71" class="flex justify-between">RESTCatalog<span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/rest/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/rest/bear/" class="">Bear Token</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/rest/dlf/" class="">DLF Token</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/rest/tables/" class="">Tables</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/rest/pvfs/" class="">PVFS</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/rest/rest-api/" class="">REST API</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/system-tables/" class="">System Tables</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/data-types/" class="">Data Types</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/functions/" class="">Functions</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/views/" class="">Views</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-d3e7256ce393050c572ea7bd8cc4f240" class="toggle"  />
+    <label for="section-d3e7256ce393050c572ea7bd8cc4f240" class="flex justify-between">Specification<span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/spec/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/spec/schema/" class="">Schema</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/spec/snapshot/" class="">Snapshot</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/spec/manifest/" class="">Manifest</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/spec/datafile/" class="">DataFile</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/spec/fileformat/" class="">FileFormat</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/spec/tableindex/" class="">Table Index</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/spec/fileindex/" class="">File Index</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-3f6a6d4f1692040009c66ffaa328c8d0" class="toggle"  />
+    <label for="section-3f6a6d4f1692040009c66ffaa328c8d0" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-database title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Table with PK</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/primary-key-table/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/primary-key-table/data-distribution/" class="">Data Distribution</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/primary-key-table/table-mode/" class="">Table Mode</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-038bb7d17b5b7cb93fb60acbcf218f11" class="toggle"  />
+    <label for="section-038bb7d17b5b7cb93fb60acbcf218f11" class="flex justify-between">Merge Engine<span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/primary-key-table/merge-engine/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/primary-key-table/merge-engine/partial-update/" class="">Partial Update</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/primary-key-table/merge-engine/aggregation/" class="">Aggregation</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/primary-key-table/merge-engine/first-row/" class="">First Row</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/primary-key-table/changelog-producer/" class="">Changelog Producer</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/primary-key-table/sequence-rowkind/" class="">Sequence & Rowkind</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/primary-key-table/compaction/" class="">Compaction</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/primary-key-table/query-performance/" class="">Query Performance</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/primary-key-table/chain-table/" class="">Chain Table</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/primary-key-table/pk-clustering-override/" class="">PK Clustering Override</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-f74847e1c917ba2b99e7b718bb318b30" class="toggle"  />
+    <label for="section-f74847e1c917ba2b99e7b718bb318b30" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-database title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Table w/o PK</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/append-table/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/append-table/incremental-clustering/" class="">Incremental Clustering</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/append-table/bucketed/" class="">Bucketed</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/append-table/row-tracking/" class="">Row Tracking</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/append-table/data-evolution/" class="">Data Evolution</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/append-table/blob/" class="">Blob Storage</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/append-table/vector/" class="">Vector Storage</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/append-table/global-index/" class="">Global Index</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-998a37410d502937fe8444ed73a9ecf8" class="toggle"  />
+    <label for="section-998a37410d502937fe8444ed73a9ecf8" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-gear title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Engine Flink</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/flink/quick-start/" class="">Quick Start</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/flink/sql-ddl/" class="">SQL DDL</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/flink/sql-write/" class="">SQL Write</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/flink/sql-query/" class="">SQL Query</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/flink/consumer-id/" class="">Consumer ID</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/flink/sql-lookup/" class="">SQL Lookup</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/flink/sql-alter/" class="">SQL Alter</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/flink/default-value/" class="">Default Value</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/flink/procedures/" class="">Procedures</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/flink/action-jars/" class="">Action Jars</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/flink/savepoint/" class="">Savepoint</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-74c63bf75b4f6bd14a3ea6a1217f03ad" class="toggle"  />
+    <label for="section-74c63bf75b4f6bd14a3ea6a1217f03ad" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-gear title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Engine Spark</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/spark/quick-start/" class="">Quick Start</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/spark/sql-ddl/" class="">SQL DDL</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/spark/sql-functions/" class="">SQL Functions</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/spark/sql-write/" class="">SQL Write</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/spark/sql-query/" class="">SQL Query</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/spark/sql-alter/" class="">SQL Alter</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/spark/auxiliary/" class="">Auxiliary</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/spark/default-value/" class="">Default Value</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/spark/dataframe/" class="">DataFrame</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/spark/sql-upsert/" class="">SQL Upsert</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/spark/structured-streaming/" class="">Structured Streaming</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/spark/procedures/" class="">Procedures</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-16bf9de4e97c50dda6ce1ac6e934602c" class="toggle"  />
+    <label for="section-16bf9de4e97c50dda6ce1ac6e934602c" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-gear title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Ecosystem</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/ecosystem/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/ecosystem/starrocks/" class="">StarRocks</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/ecosystem/doris/" class="">Doris</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/ecosystem/hive/" class="">Hive</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/ecosystem/trino/" class="">Trino</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/ecosystem/amoro/" class="">Amoro</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-582e435c19ca5fafbf9764337d648e63" class="toggle"  />
+    <label for="section-582e435c19ca5fafbf9764337d648e63" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-gear title maindish" aria-hidden="true"></i>&nbsp;&nbsp;CDC Ingestion</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/cdc-ingestion/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/cdc-ingestion/mysql-cdc/" class="">Mysql CDC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/cdc-ingestion/postgres-cdc/" class="">Postgres CDC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/cdc-ingestion/kafka-cdc/" class="">Kafka CDC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/cdc-ingestion/mongo-cdc/" class="">Mongo CDC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/cdc-ingestion/pulsar-cdc/" class="">Pulsar CDC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/cdc-ingestion/flink-cdc/" class="">Flink CDC</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-697a4b6a0388d6cfa4f418aba3b4edfe" class="toggle"  />
+    <label for="section-697a4b6a0388d6cfa4f418aba3b4edfe" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-wrench title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Maintenance</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/maintenance/filesystems/" class="">Filesystems</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/maintenance/write-performance/" class="">Write Performance</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/maintenance/dedicated-compaction/" class="">Dedicated Compaction</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/maintenance/manage-snapshots/" class="">Manage Snapshots</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/maintenance/rescale-bucket/" class="">Rescale Bucket</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/maintenance/manage-tags/" class="">Manage Tags</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/maintenance/metrics/" class="">Metrics</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/maintenance/manage-privileges/" class="">Manage Privileges</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/maintenance/manage-branches/" class="">Manage Branches</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/maintenance/manage-partitions/" class="">Manage Partitions</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/maintenance/configurations/" class="">Configurations</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-049030059e0dc01edf74ba3d4d259dae" class="toggle"  />
+    <label for="section-049030059e0dc01edf74ba3d4d259dae" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-briefcase title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Program API</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/program-api/rest-api/" class="">REST API</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/program-api/flink-api/" class="">Flink API</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/program-api/java-api/" class="">Java API</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/program-api/catalog-api/" class="">Catalog API</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/program-api/cpp-api/" class="">Cpp API</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/program-api/rust-api/" class="">Rust API</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-a6ea2e2b6bd9ce399341429eea9e9b98" class="toggle" checked />
+    <label for="section-a6ea2e2b6bd9ce399341429eea9e9b98" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-briefcase title maindish" aria-hidden="true"></i>&nbsp;&nbsp;PyPaimon</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/pypaimon/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/pypaimon/python-api/" class="">Python API</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/pypaimon/manage-tags/" class="">Manage Tags</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/pypaimon/ray-data/" class="">Ray Data</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/pypaimon/pytorch/" class="">PyTorch</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/pypaimon/data-evolution/" class=" active">Data Evolution</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/pypaimon/fuse-support/" class="">FUSE Support</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/pypaimon/pyjindosdk-support/" class="">PyJindoSDK Support</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/pypaimon/cli/" class="">Command Line Interface</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-07c567e5a9f3ce62aea4ff0a1e2dc065" class="toggle"  />
+    <label for="section-07c567e5a9f3ce62aea4ff0a1e2dc065" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-briefcase title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Migration</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/migration/migration-from-hive/" class="">Migration From Hive</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/migration/upsert-to-partitioned/" class="">Upsert To Partitioned</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/migration/clone-to-paimon/" class="">Clone To Paimon</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-dc2f2ba83b7db3b9bfa35da4c73572d2" class="toggle"  />
+    <label for="section-dc2f2ba83b7db3b9bfa35da4c73572d2" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-briefcase title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Iceberg Metadata</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/iceberg/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/iceberg/append-table/" class="">Append Table</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/iceberg/primary-key-table/" class="">Primary Key Table</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/iceberg/iceberg-tags/" class="">Iceberg Tags</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/iceberg/hive-catalog/" class="">Hive Catalogs</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/iceberg/rest-catalog/" class="">Rest Catalog</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/iceberg/ecosystem/" class="">Ecosystem</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/iceberg/configurations/" class="">Configurations</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  	<br/>
+  
+  
+    <input type="checkbox" id="section-8c828bcf882f666cdd6821a70cc768ee" class="toggle"  />
+    <label for="section-8c828bcf882f666cdd6821a70cc768ee" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-sitemap title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Project</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/project/download/" class="">Download</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/project/contributing/" class="">Contributing</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/project/committer/" class="">Committer</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-392fc6f653ae23ff676811656a71ebbf" class="toggle"  />
+    <label for="section-392fc6f653ae23ff676811656a71ebbf" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-sitemap title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Learn Paimon</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/learn-paimon/understand-files/" class="">Understand Files</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/learn-paimon/scenario-guide/" class="">Scenario Guide</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br/>
+<hr class="menu-break">
+
+<a href="//paimon.apache.org" style="color:black;margin-bottom:0.5em"><i class="link fa fa-external-link title" aria-hidden="true"></i> Project Homepage</a>
+<br/>
+
+<a href="//paimon.apache.org/docs/master/api/java/" style="color:black;margin-bottom:0.5em"><i class="link fa fa-external-link title" aria-hidden="true"></i> JavaDocs</a>
+<br/>
+
+<hr class="menu-break">
+<li style="list-style-type: none">
+  <br>
+  <input type="checkbox" id="section-version-picker" class="toggle">
+  <label for="section-version-picker" class="flex justify-between">
+     <div style="font-weight:450;margin-bottom:0.5em">Pick Docs Version</div>
+     <span>▾</span>
+  </label>
+  <ul>
+    <a href="//paimon.apache.org/docs/master">
+      1.5-SNAPSHOT (✓)
+    </a>
+    <hr class="menu-break">
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/master">
+          master
+        </a>
+      </li>
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/1.4">
+          stable
+        </a>
+      </li>
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/1.4">
+          1.4
+        </a>
+      </li>
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/1.3">
+          1.3
+        </a>
+      </li>
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/1.2">
+          1.2
+        </a>
+      </li>
+    
+    <hr class="menu-break">
+    <li>
+      <a href="//paimon.apache.org/docs/master/versions">
+          All Versions
+      </a>
+    </li>
+  </ul>
+</li>
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var menu=document.querySelector("aside.book-menu nav");addEventListener("beforeunload",function(event){localStorage.setItem("menu.scrollTop",menu.scrollTop);});menu.scrollTop=localStorage.getItem("menu.scrollTop");})();</script>
+
+
+ 
+      </aside>
+    
+
+    <div class="book-page">
+      
+        <header class="book-header">
+          
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/docs/master/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <strong>Data Evolution</strong>
+
+  <label for="toc-control">
+    
+    <img src="/docs/master/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden clearfix">
+    
+  
+
+<nav id="TableOfContents"><h3>On This Page <button class="toc" onclick="collapseToc()"><i class="fa fa-compress" aria-hidden="true"></i></button></h3>
+  <ul>
+    <li><a href="#prerequisites">Prerequisites</a></li>
+    <li><a href="#update-columns-by-row-id">Update Columns By Row ID</a></li>
+    <li><a href="#filter-by-_row_id">Filter by _ROW_ID</a></li>
+    <li><a href="#upsert-by-key">Upsert By Key</a></li>
+    <li><a href="#update-columns-by-shards">Update Columns By Shards</a></li>
+  </ul>
+</nav>
+
+
+  </aside>
+  
+ 
+        </header>
+      
+
+      
+
+
+
+
+<article class="markdown">
+    <blockquote style="border-color:#f66">
+        This documentation is for an unreleased version of Apache Paimon. We recommend you use the latest <a href="https://paimon.apache.org/docs/1.4">stable version</a>.
+    </blockquote>
+</article>
+
+
+
+      
+  <article class="markdown"><!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<h1 id="data-evolution">
+  Data Evolution
+  <a class="anchor" href="#data-evolution">#</a>
+</h1>
+<p>PyPaimon for Data Evolution mode. See <a href="//paimon.apache.org/docs/master/append-table/data-evolution/">Data Evolution</a>.</p>
+<h2 id="prerequisites">
+  Prerequisites
+  <a class="anchor" href="#prerequisites">#</a>
+</h2>
+<p>To use partial updates / data evolution, enable both options when creating the table:</p>
+<ul>
+<li><strong><code>row-tracking.enabled</code></strong>: <code>true</code></li>
+<li><strong><code>data-evolution.enabled</code></strong>: <code>true</code></li>
+</ul>
+<h2 id="update-columns-by-row-id">
+  Update Columns By Row ID
+  <a class="anchor" href="#update-columns-by-row-id">#</a>
+</h2>
+<p>You can create <code>TableUpdate.update_by_arrow_with_row_id</code> to update columns to data evolution tables.</p>
+<p>The input data should include the <code>_ROW_ID</code> column, update operation will automatically sort and match each <code>_ROW_ID</code> to
+its corresponding <code>first_row_id</code>, then groups rows with the same <code>first_row_id</code> and writes them to a separate file.</p>
+<p><strong>Requirements for <code>_ROW_ID</code> updates</strong></p>
+<ul>
+<li><strong>Update columns only</strong>: include <code>_ROW_ID</code> plus the columns you want to update (partial schema is OK).</li>
+</ul>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">pyarrow</span> <span class="kn">as</span> <span class="nn">pa</span>
+<span class="kn">from</span> <span class="nn">pypaimon</span> <span class="kn">import</span> <span class="n">CatalogFactory</span><span class="p">,</span> <span class="n">Schema</span>
+
+<span class="n">catalog</span> <span class="o">=</span> <span class="n">CatalogFactory</span><span class="o">.</span><span class="n">create</span><span class="p">({</span><span class="s1">&#39;warehouse&#39;</span><span class="p">:</span> <span class="s1">&#39;/tmp/warehouse&#39;</span><span class="p">})</span>
+<span class="n">catalog</span><span class="o">.</span><span class="n">create_database</span><span class="p">(</span><span class="s1">&#39;default&#39;</span><span class="p">,</span> <span class="bp">False</span><span class="p">)</span>
+
+<span class="n">simple_pa_schema</span> <span class="o">=</span> <span class="n">pa</span><span class="o">.</span><span class="n">schema</span><span class="p">([</span>
+  <span class="p">(</span><span class="s1">&#39;f0&#39;</span><span class="p">,</span> <span class="n">pa</span><span class="o">.</span><span class="n">int8</span><span class="p">()),</span>
+  <span class="p">(</span><span class="s1">&#39;f1&#39;</span><span class="p">,</span> <span class="n">pa</span><span class="o">.</span><span class="n">int16</span><span class="p">()),</span>
+<span class="p">])</span>
+<span class="n">schema</span> <span class="o">=</span> <span class="n">Schema</span><span class="o">.</span><span class="n">from_pyarrow_schema</span><span class="p">(</span><span class="n">simple_pa_schema</span><span class="p">,</span>
+                                    <span class="n">options</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;row-tracking.enabled&#39;</span><span class="p">:</span> <span class="s1">&#39;true&#39;</span><span class="p">,</span> <span class="s1">&#39;data-evolution.enabled&#39;</span><span class="p">:</span> <span class="s1">&#39;true&#39;</span><span class="p">})</span>
+<span class="n">catalog</span><span class="o">.</span><span class="n">create_table</span><span class="p">(</span><span class="s1">&#39;default.test_row_tracking&#39;</span><span class="p">,</span> <span class="n">schema</span><span class="p">,</span> <span class="bp">False</span><span class="p">)</span>
+<span class="n">table</span> <span class="o">=</span> <span class="n">catalog</span><span class="o">.</span><span class="n">get_table</span><span class="p">(</span><span class="s1">&#39;default.test_row_tracking&#39;</span><span class="p">)</span>
+
+<span class="c1"># write all columns</span>
+<span class="n">write_builder</span> <span class="o">=</span> <span class="n">table</span><span class="o">.</span><span class="n">new_batch_write_builder</span><span class="p">()</span>
+<span class="n">table_write</span> <span class="o">=</span> <span class="n">write_builder</span><span class="o">.</span><span class="n">new_write</span><span class="p">()</span>
+<span class="n">table_commit</span> <span class="o">=</span> <span class="n">write_builder</span><span class="o">.</span><span class="n">new_commit</span><span class="p">()</span>
+<span class="n">expect_data</span> <span class="o">=</span> <span class="n">pa</span><span class="o">.</span><span class="n">Table</span><span class="o">.</span><span class="n">from_pydict</span><span class="p">({</span>
+  <span class="s1">&#39;f0&#39;</span><span class="p">:</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
+  <span class="s1">&#39;f1&#39;</span><span class="p">:</span> <span class="p">[</span><span class="o">-</span><span class="mi">1001</span><span class="p">,</span> <span class="mi">1002</span><span class="p">]</span>
+<span class="p">},</span> <span class="n">schema</span><span class="o">=</span><span class="n">simple_pa_schema</span><span class="p">)</span>
+<span class="n">table_write</span><span class="o">.</span><span class="n">write_arrow</span><span class="p">(</span><span class="n">expect_data</span><span class="p">)</span>
+<span class="n">table_commit</span><span class="o">.</span><span class="n">commit</span><span class="p">(</span><span class="n">table_write</span><span class="o">.</span><span class="n">prepare_commit</span><span class="p">())</span>
+<span class="n">table_write</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<span class="n">table_commit</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<span class="c1"># update partial columns</span>
+<span class="n">write_builder</span> <span class="o">=</span> <span class="n">table</span><span class="o">.</span><span class="n">new_batch_write_builder</span><span class="p">()</span>
+<span class="n">table_update</span> <span class="o">=</span> <span class="n">write_builder</span><span class="o">.</span><span class="n">new_update</span><span class="p">()</span><span class="o">.</span><span class="n">with_update_type</span><span class="p">([</span><span class="s1">&#39;f0&#39;</span><span class="p">])</span>
+<span class="n">table_commit</span> <span class="o">=</span> <span class="n">write_builder</span><span class="o">.</span><span class="n">new_commit</span><span class="p">()</span>
+<span class="n">data2</span> <span class="o">=</span> <span class="n">pa</span><span class="o">.</span><span class="n">Table</span><span class="o">.</span><span class="n">from_pydict</span><span class="p">({</span>
+  <span class="s1">&#39;_ROW_ID&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+  <span class="s1">&#39;f0&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span>
+<span class="p">},</span> <span class="n">schema</span><span class="o">=</span><span class="n">pa</span><span class="o">.</span><span class="n">schema</span><span class="p">([</span>
+  <span class="p">(</span><span class="s1">&#39;_ROW_ID&#39;</span><span class="p">,</span> <span class="n">pa</span><span class="o">.</span><span class="n">int64</span><span class="p">()),</span>
+  <span class="p">(</span><span class="s1">&#39;f0&#39;</span><span class="p">,</span> <span class="n">pa</span><span class="o">.</span><span class="n">int8</span><span class="p">()),</span>
+<span class="p">]))</span>
+<span class="n">cmts</span> <span class="o">=</span> <span class="n">table_update</span><span class="o">.</span><span class="n">update_by_arrow_with_row_id</span><span class="p">(</span><span class="n">data2</span><span class="p">)</span>
+<span class="n">table_commit</span><span class="o">.</span><span class="n">commit</span><span class="p">(</span><span class="n">cmts</span><span class="p">)</span>
+<span class="n">table_commit</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<span class="c1"># content should be:</span>
+<span class="c1">#   &#39;f0&#39;: [5, 6],</span>
+<span class="c1">#   &#39;f1&#39;: [-1001, 1002]</span>
+</code></pre></div><h2 id="filter-by-_row_id">
+  Filter by _ROW_ID
+  <a class="anchor" href="#filter-by-_row_id">#</a>
+</h2>
+<p>Requires the same <a href="#prerequisites">Prerequisites</a> (row-tracking and data-evolution enabled). On such tables you can filter by <code>_ROW_ID</code> to prune files at scan time. Supported: <code>equal('_ROW_ID', id)</code>, <code>is_in('_ROW_ID', [id1, ...])</code>, <code>between('_ROW_ID', low, high)</code>.</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">pb</span> <span class="o">=</span> <span class="n">table</span><span class="o">.</span><span class="n">new_read_builder</span><span class="p">()</span><span class="o">.</span><span class="n">new_predicate_builder</span><span class="p">()</span>
+<span class="n">rb</span> <span class="o">=</span> <span class="n">table</span><span class="o">.</span><span class="n">new_read_builder</span><span class="p">()</span><span class="o">.</span><span class="n">with_filter</span><span class="p">(</span><span class="n">pb</span><span class="o">.</span><span class="n">equal</span><span class="p">(</span><span class="s1">&#39;_ROW_ID&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">rb</span><span class="o">.</span><span class="n">new_read</span><span class="p">()</span><span class="o">.</span><span class="n">to_arrow</span><span class="p">(</span><span class="n">rb</span><span class="o">.</span><span class="n">new_scan</span><span class="p">()</span><span class="o">.</span><span class="n">plan</span><span class="p">()</span><span class="o">.</span><span class="n">splits</span><span class="p">())</span>
+</code></pre></div><h2 id="upsert-by-key">
+  Upsert By Key
+  <a class="anchor" href="#upsert-by-key">#</a>
+</h2>
+<p>If you want to <strong>upsert</strong> (update-or-insert) rows by one or more business key columns — without manually providing
+<code>_ROW_ID</code> — use <code>upsert_by_arrow_with_key</code>. For each input row:</p>
+<ul>
+<li><strong>Key matches</strong> an existing row → update that row in place.</li>
+<li><strong>No match</strong> → append as a new row.</li>
+</ul>
+<p><strong>Requirements</strong></p>
+<ul>
+<li>The table must have <code>data-evolution.enabled = true</code> and <code>row-tracking.enabled = true</code>.</li>
+<li>All <code>upsert_keys</code> must exist in both the table schema and the input data.</li>
+<li>For <strong>partitioned tables</strong>, the input data must contain all partition key columns. Partition keys are
+<strong>automatically stripped</strong> from <code>upsert_keys</code> during matching (since each partition is processed independently),
+so you do <strong>not</strong> need to include them in <code>upsert_keys</code>.</li>
+</ul>
+<p><strong>Example: basic upsert</strong></p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">pyarrow</span> <span class="kn">as</span> <span class="nn">pa</span>
+<span class="kn">from</span> <span class="nn">pypaimon</span> <span class="kn">import</span> <span class="n">CatalogFactory</span><span class="p">,</span> <span class="n">Schema</span>
+
+<span class="n">catalog</span> <span class="o">=</span> <span class="n">CatalogFactory</span><span class="o">.</span><span class="n">create</span><span class="p">({</span><span class="s1">&#39;warehouse&#39;</span><span class="p">:</span> <span class="s1">&#39;/tmp/warehouse&#39;</span><span class="p">})</span>
+<span class="n">catalog</span><span class="o">.</span><span class="n">create_database</span><span class="p">(</span><span class="s1">&#39;default&#39;</span><span class="p">,</span> <span class="bp">False</span><span class="p">)</span>
+
+<span class="n">pa_schema</span> <span class="o">=</span> <span class="n">pa</span><span class="o">.</span><span class="n">schema</span><span class="p">([</span>
+    <span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="n">pa</span><span class="o">.</span><span class="n">int32</span><span class="p">()),</span>
+    <span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="n">pa</span><span class="o">.</span><span class="n">string</span><span class="p">()),</span>
+    <span class="p">(</span><span class="s1">&#39;age&#39;</span><span class="p">,</span> <span class="n">pa</span><span class="o">.</span><span class="n">int32</span><span class="p">()),</span>
+<span class="p">])</span>
+<span class="n">schema</span> <span class="o">=</span> <span class="n">Schema</span><span class="o">.</span><span class="n">from_pyarrow_schema</span><span class="p">(</span>
+    <span class="n">pa_schema</span><span class="p">,</span>
+    <span class="n">options</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;row-tracking.enabled&#39;</span><span class="p">:</span> <span class="s1">&#39;true&#39;</span><span class="p">,</span> <span class="s1">&#39;data-evolution.enabled&#39;</span><span class="p">:</span> <span class="s1">&#39;true&#39;</span><span class="p">},</span>
+<span class="p">)</span>
+<span class="n">catalog</span><span class="o">.</span><span class="n">create_table</span><span class="p">(</span><span class="s1">&#39;default.users&#39;</span><span class="p">,</span> <span class="n">schema</span><span class="p">,</span> <span class="bp">False</span><span class="p">)</span>
+<span class="n">table</span> <span class="o">=</span> <span class="n">catalog</span><span class="o">.</span><span class="n">get_table</span><span class="p">(</span><span class="s1">&#39;default.users&#39;</span><span class="p">)</span>
+
+<span class="c1"># write initial data</span>
+<span class="n">write_builder</span> <span class="o">=</span> <span class="n">table</span><span class="o">.</span><span class="n">new_batch_write_builder</span><span class="p">()</span>
+<span class="n">write</span> <span class="o">=</span> <span class="n">write_builder</span><span class="o">.</span><span class="n">new_write</span><span class="p">()</span>
+<span class="n">commit</span> <span class="o">=</span> <span class="n">write_builder</span><span class="o">.</span><span class="n">new_commit</span><span class="p">()</span>
+<span class="n">write</span><span class="o">.</span><span class="n">write_arrow</span><span class="p">(</span><span class="n">pa</span><span class="o">.</span><span class="n">Table</span><span class="o">.</span><span class="n">from_pydict</span><span class="p">(</span>
+    <span class="p">{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Alice&#39;</span><span class="p">,</span> <span class="s1">&#39;Bob&#39;</span><span class="p">],</span> <span class="s1">&#39;age&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">30</span><span class="p">,</span> <span class="mi">25</span><span class="p">]},</span>
+    <span class="n">schema</span><span class="o">=</span><span class="n">pa_schema</span><span class="p">,</span>
+<span class="p">))</span>
+<span class="n">commit</span><span class="o">.</span><span class="n">commit</span><span class="p">(</span><span class="n">write</span><span class="o">.</span><span class="n">prepare_commit</span><span class="p">())</span>
+<span class="n">write</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<span class="n">commit</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<span class="c1"># upsert: update id=1, insert id=3</span>
+<span class="n">write_builder</span> <span class="o">=</span> <span class="n">table</span><span class="o">.</span><span class="n">new_batch_write_builder</span><span class="p">()</span>
+<span class="n">table_update</span> <span class="o">=</span> <span class="n">write_builder</span><span class="o">.</span><span class="n">new_update</span><span class="p">()</span>
+<span class="n">table_commit</span> <span class="o">=</span> <span class="n">write_builder</span><span class="o">.</span><span class="n">new_commit</span><span class="p">()</span>
+
+<span class="n">upsert_data</span> <span class="o">=</span> <span class="n">pa</span><span class="o">.</span><span class="n">Table</span><span class="o">.</span><span class="n">from_pydict</span><span class="p">(</span>
+    <span class="p">{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Alice_v2&#39;</span><span class="p">,</span> <span class="s1">&#39;Charlie&#39;</span><span class="p">],</span> <span class="s1">&#39;age&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">31</span><span class="p">,</span> <span class="mi">28</span><span class="p">]},</span>
+    <span class="n">schema</span><span class="o">=</span><span class="n">pa_schema</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">cmts</span> <span class="o">=</span> <span class="n">table_update</span><span class="o">.</span><span class="n">upsert_by_arrow_with_key</span><span class="p">(</span><span class="n">upsert_data</span><span class="p">,</span> <span class="n">upsert_keys</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">])</span>
+<span class="n">table_commit</span><span class="o">.</span><span class="n">commit</span><span class="p">(</span><span class="n">cmts</span><span class="p">)</span>
+<span class="n">table_commit</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<span class="c1"># content should be:</span>
+<span class="c1">#   id=1: name=&#39;Alice_v2&#39;, age=31   (updated)</span>
+<span class="c1">#   id=2: name=&#39;Bob&#39;,      age=25   (unchanged)</span>
+<span class="c1">#   id=3: name=&#39;Charlie&#39;,  age=28   (new)</span>
+</code></pre></div><p><strong>Example: partial-column upsert with <code>update_cols</code></strong></p>
+<p>Combine <code>with_update_type</code> with <code>upsert_by_arrow_with_key</code> to update only specific columns for
+matched rows while still appending full rows for new keys:</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">write_builder</span> <span class="o">=</span> <span class="n">table</span><span class="o">.</span><span class="n">new_batch_write_builder</span><span class="p">()</span>
+<span class="n">table_update</span> <span class="o">=</span> <span class="n">write_builder</span><span class="o">.</span><span class="n">new_update</span><span class="p">()</span><span class="o">.</span><span class="n">with_update_type</span><span class="p">([</span><span class="s1">&#39;age&#39;</span><span class="p">])</span>
+<span class="n">table_commit</span> <span class="o">=</span> <span class="n">write_builder</span><span class="o">.</span><span class="n">new_commit</span><span class="p">()</span>
+
+<span class="n">upsert_data</span> <span class="o">=</span> <span class="n">pa</span><span class="o">.</span><span class="n">Table</span><span class="o">.</span><span class="n">from_pydict</span><span class="p">(</span>
+    <span class="p">{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span> <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;ignored&#39;</span><span class="p">,</span> <span class="s1">&#39;David&#39;</span><span class="p">],</span> <span class="s1">&#39;age&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">99</span><span class="p">,</span> <span class="mi">22</span><span class="p">]},</span>
+    <span class="n">schema</span><span class="o">=</span><span class="n">pa_schema</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">cmts</span> <span class="o">=</span> <span class="n">table_update</span><span class="o">.</span><span class="n">upsert_by_arrow_with_key</span><span class="p">(</span><span class="n">upsert_data</span><span class="p">,</span> <span class="n">upsert_keys</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">])</span>
+<span class="n">table_commit</span><span class="o">.</span><span class="n">commit</span><span class="p">(</span><span class="n">cmts</span><span class="p">)</span>
+<span class="n">table_commit</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<span class="c1"># id=1: only &#39;age&#39; is updated to 99; &#39;name&#39; remains &#39;Alice_v2&#39;</span>
+<span class="c1"># id=4: appended as a full new row</span>
+</code></pre></div><p><strong>Example: partitioned table with composite key</strong></p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">partitioned_schema</span> <span class="o">=</span> <span class="n">pa</span><span class="o">.</span><span class="n">schema</span><span class="p">([</span>
+    <span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="n">pa</span><span class="o">.</span><span class="n">int32</span><span class="p">()),</span>
+    <span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="n">pa</span><span class="o">.</span><span class="n">string</span><span class="p">()),</span>
+    <span class="p">(</span><span class="s1">&#39;region&#39;</span><span class="p">,</span> <span class="n">pa</span><span class="o">.</span><span class="n">string</span><span class="p">()),</span>
+<span class="p">])</span>
+<span class="n">schema</span> <span class="o">=</span> <span class="n">Schema</span><span class="o">.</span><span class="n">from_pyarrow_schema</span><span class="p">(</span>
+    <span class="n">partitioned_schema</span><span class="p">,</span>
+    <span class="n">partition_keys</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;region&#39;</span><span class="p">],</span>
+    <span class="n">options</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;row-tracking.enabled&#39;</span><span class="p">:</span> <span class="s1">&#39;true&#39;</span><span class="p">,</span> <span class="s1">&#39;data-evolution.enabled&#39;</span><span class="p">:</span> <span class="s1">&#39;true&#39;</span><span class="p">},</span>
+<span class="p">)</span>
+<span class="n">catalog</span><span class="o">.</span><span class="n">create_table</span><span class="p">(</span><span class="s1">&#39;default.users_partitioned&#39;</span><span class="p">,</span> <span class="n">schema</span><span class="p">,</span> <span class="bp">False</span><span class="p">)</span>
+<span class="n">table</span> <span class="o">=</span> <span class="n">catalog</span><span class="o">.</span><span class="n">get_table</span><span class="p">(</span><span class="s1">&#39;default.users_partitioned&#39;</span><span class="p">)</span>
+
+<span class="c1"># ... write initial data ...</span>
+
+<span class="n">write_builder</span> <span class="o">=</span> <span class="n">table</span><span class="o">.</span><span class="n">new_batch_write_builder</span><span class="p">()</span>
+<span class="n">table_update</span> <span class="o">=</span> <span class="n">write_builder</span><span class="o">.</span><span class="n">new_update</span><span class="p">()</span>
+<span class="n">table_commit</span> <span class="o">=</span> <span class="n">write_builder</span><span class="o">.</span><span class="n">new_commit</span><span class="p">()</span>
+
+<span class="n">upsert_data</span> <span class="o">=</span> <span class="n">pa</span><span class="o">.</span><span class="n">Table</span><span class="o">.</span><span class="n">from_pydict</span><span class="p">(</span>
+    <span class="p">{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Alice_v2&#39;</span><span class="p">,</span> <span class="s1">&#39;Charlie&#39;</span><span class="p">],</span> <span class="s1">&#39;region&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;US&#39;</span><span class="p">,</span> <span class="s1">&#39;EU&#39;</span><span class="p">]},</span>
+    <span class="n">schema</span><span class="o">=</span><span class="n">partitioned_schema</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="c1"># upsert_keys=[&#39;id&#39;] only; partition key &#39;region&#39; is auto-stripped</span>
+<span class="n">cmts</span> <span class="o">=</span> <span class="n">table_update</span><span class="o">.</span><span class="n">upsert_by_arrow_with_key</span><span class="p">(</span><span class="n">upsert_data</span><span class="p">,</span> <span class="n">upsert_keys</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">])</span>
+<span class="n">table_commit</span><span class="o">.</span><span class="n">commit</span><span class="p">(</span><span class="n">cmts</span><span class="p">)</span>
+<span class="n">table_commit</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</code></pre></div><p><strong>Notes</strong></p>
+<ul>
+<li>Execution is driven <strong>partition-by-partition</strong>: only one partition&rsquo;s key set is loaded into memory at a time.</li>
+<li>Duplicate keys in the input data are automatically deduplicated — the <strong>last occurrence</strong> is kept.</li>
+<li>The upsert is atomic per commit — all matched updates and new appends are included in the same commit.</li>
+</ul>
+<h2 id="update-columns-by-shards">
+  Update Columns By Shards
+  <a class="anchor" href="#update-columns-by-shards">#</a>
+</h2>
+<p>If you want to <strong>compute a derived column</strong> (or <strong>update an existing column based on other columns</strong>) without providing
+<code>_ROW_ID</code>, you can use the shard scan + rewrite workflow:</p>
+<ul>
+<li>Read only the columns you need (projection)</li>
+<li>Compute the new values in the same row order</li>
+<li>Write only the updated columns back</li>
+<li>Commit per shard</li>
+</ul>
+<p>This is useful for backfilling a newly added column, or recomputing a column from other columns.</p>
+<p><strong>Example: compute <code>d = c + b - a</code></strong></p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">pyarrow</span> <span class="kn">as</span> <span class="nn">pa</span>
+<span class="kn">from</span> <span class="nn">pypaimon</span> <span class="kn">import</span> <span class="n">CatalogFactory</span><span class="p">,</span> <span class="n">Schema</span>
+
+<span class="n">catalog</span> <span class="o">=</span> <span class="n">CatalogFactory</span><span class="o">.</span><span class="n">create</span><span class="p">({</span><span class="s1">&#39;warehouse&#39;</span><span class="p">:</span> <span class="s1">&#39;/tmp/warehouse&#39;</span><span class="p">})</span>
+<span class="n">catalog</span><span class="o">.</span><span class="n">create_database</span><span class="p">(</span><span class="s1">&#39;default&#39;</span><span class="p">,</span> <span class="bp">False</span><span class="p">)</span>
+
+<span class="n">table_schema</span> <span class="o">=</span> <span class="n">pa</span><span class="o">.</span><span class="n">schema</span><span class="p">([</span>
+    <span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="n">pa</span><span class="o">.</span><span class="n">int32</span><span class="p">()),</span>
+    <span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="n">pa</span><span class="o">.</span><span class="n">int32</span><span class="p">()),</span>
+    <span class="p">(</span><span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="n">pa</span><span class="o">.</span><span class="n">int32</span><span class="p">()),</span>
+    <span class="p">(</span><span class="s1">&#39;d&#39;</span><span class="p">,</span> <span class="n">pa</span><span class="o">.</span><span class="n">int32</span><span class="p">()),</span>
+<span class="p">])</span>
+
+<span class="n">schema</span> <span class="o">=</span> <span class="n">Schema</span><span class="o">.</span><span class="n">from_pyarrow_schema</span><span class="p">(</span>
+    <span class="n">table_schema</span><span class="p">,</span>
+    <span class="n">options</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;row-tracking.enabled&#39;</span><span class="p">:</span> <span class="s1">&#39;true&#39;</span><span class="p">,</span> <span class="s1">&#39;data-evolution.enabled&#39;</span><span class="p">:</span> <span class="s1">&#39;true&#39;</span><span class="p">},</span>
+<span class="p">)</span>
+<span class="n">catalog</span><span class="o">.</span><span class="n">create_table</span><span class="p">(</span><span class="s1">&#39;default.t&#39;</span><span class="p">,</span> <span class="n">schema</span><span class="p">,</span> <span class="bp">False</span><span class="p">)</span>
+<span class="n">table</span> <span class="o">=</span> <span class="n">catalog</span><span class="o">.</span><span class="n">get_table</span><span class="p">(</span><span class="s1">&#39;default.t&#39;</span><span class="p">)</span>
+
+<span class="c1"># write initial data (a, b, c only)</span>
+<span class="n">write_builder</span> <span class="o">=</span> <span class="n">table</span><span class="o">.</span><span class="n">new_batch_write_builder</span><span class="p">()</span>
+<span class="n">write</span> <span class="o">=</span> <span class="n">write_builder</span><span class="o">.</span><span class="n">new_write</span><span class="p">()</span><span class="o">.</span><span class="n">with_write_type</span><span class="p">([</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">])</span>
+<span class="n">commit</span> <span class="o">=</span> <span class="n">write_builder</span><span class="o">.</span><span class="n">new_commit</span><span class="p">()</span>
+<span class="n">write</span><span class="o">.</span><span class="n">write_arrow</span><span class="p">(</span><span class="n">pa</span><span class="o">.</span><span class="n">Table</span><span class="o">.</span><span class="n">from_pydict</span><span class="p">({</span><span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">],</span> <span class="s1">&#39;c&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mi">200</span><span class="p">]}))</span>
+<span class="n">commit</span><span class="o">.</span><span class="n">commit</span><span class="p">(</span><span class="n">write</span><span class="o">.</span><span class="n">prepare_commit</span><span class="p">())</span>
+<span class="n">write</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<span class="n">commit</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<span class="c1"># shard update: read (a, b, c), write only (d)</span>
+<span class="n">update</span> <span class="o">=</span> <span class="n">write_builder</span><span class="o">.</span><span class="n">new_update</span><span class="p">()</span>
+<span class="n">update</span><span class="o">.</span><span class="n">with_read_projection</span><span class="p">([</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">])</span>
+<span class="n">update</span><span class="o">.</span><span class="n">with_update_type</span><span class="p">([</span><span class="s1">&#39;d&#39;</span><span class="p">])</span>
+
+<span class="n">shard_idx</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">num_shards</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">upd</span> <span class="o">=</span> <span class="n">update</span><span class="o">.</span><span class="n">new_shard_updator</span><span class="p">(</span><span class="n">shard_idx</span><span class="p">,</span> <span class="n">num_shards</span><span class="p">)</span>
+<span class="n">reader</span> <span class="o">=</span> <span class="n">upd</span><span class="o">.</span><span class="n">arrow_reader</span><span class="p">()</span>
+
+<span class="k">for</span> <span class="n">batch</span> <span class="ow">in</span> <span class="nb">iter</span><span class="p">(</span><span class="n">reader</span><span class="o">.</span><span class="n">read_next_batch</span><span class="p">,</span> <span class="bp">None</span><span class="p">):</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">batch</span><span class="o">.</span><span class="n">column</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">to_pylist</span><span class="p">()</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="n">batch</span><span class="o">.</span><span class="n">column</span><span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">to_pylist</span><span class="p">()</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">batch</span><span class="o">.</span><span class="n">column</span><span class="p">(</span><span class="s1">&#39;c&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">to_pylist</span><span class="p">()</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="p">[</span><span class="n">ci</span> <span class="o">+</span> <span class="n">bi</span> <span class="o">-</span> <span class="n">ai</span> <span class="k">for</span> <span class="n">ai</span><span class="p">,</span> <span class="n">bi</span><span class="p">,</span> <span class="n">ci</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">)]</span>
+
+    <span class="n">upd</span><span class="o">.</span><span class="n">update_by_arrow_batch</span><span class="p">(</span>
+        <span class="n">pa</span><span class="o">.</span><span class="n">RecordBatch</span><span class="o">.</span><span class="n">from_pydict</span><span class="p">({</span><span class="s1">&#39;d&#39;</span><span class="p">:</span> <span class="n">d</span><span class="p">},</span> <span class="n">schema</span><span class="o">=</span><span class="n">pa</span><span class="o">.</span><span class="n">schema</span><span class="p">([(</span><span class="s1">&#39;d&#39;</span><span class="p">,</span> <span class="n">pa</span><span class="o">.</span><span class="n">int32</span><span class="p">())]))</span>
+    <span class="p">)</span>
+
+<span class="n">commit_messages</span> <span class="o">=</span> <span class="n">upd</span><span class="o">.</span><span class="n">prepare_commit</span><span class="p">()</span>
+<span class="n">commit</span> <span class="o">=</span> <span class="n">write_builder</span><span class="o">.</span><span class="n">new_commit</span><span class="p">()</span>
+<span class="n">commit</span><span class="o">.</span><span class="n">commit</span><span class="p">(</span><span class="n">commit_messages</span><span class="p">)</span>
+<span class="n">commit</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</code></pre></div><p><strong>Example: update an existing column <code>c = b - a</code></strong></p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">update</span> <span class="o">=</span> <span class="n">write_builder</span><span class="o">.</span><span class="n">new_update</span><span class="p">()</span>
+<span class="n">update</span><span class="o">.</span><span class="n">with_read_projection</span><span class="p">([</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">])</span>
+<span class="n">update</span><span class="o">.</span><span class="n">with_update_type</span><span class="p">([</span><span class="s1">&#39;c&#39;</span><span class="p">])</span>
+
+<span class="n">upd</span> <span class="o">=</span> <span class="n">update</span><span class="o">.</span><span class="n">new_shard_updator</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">reader</span> <span class="o">=</span> <span class="n">upd</span><span class="o">.</span><span class="n">arrow_reader</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">batch</span> <span class="ow">in</span> <span class="nb">iter</span><span class="p">(</span><span class="n">reader</span><span class="o">.</span><span class="n">read_next_batch</span><span class="p">,</span> <span class="bp">None</span><span class="p">):</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">batch</span><span class="o">.</span><span class="n">column</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">to_pylist</span><span class="p">()</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="n">batch</span><span class="o">.</span><span class="n">column</span><span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">to_pylist</span><span class="p">()</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="p">[</span><span class="n">bi</span> <span class="o">-</span> <span class="n">ai</span> <span class="k">for</span> <span class="n">ai</span><span class="p">,</span> <span class="n">bi</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)]</span>
+    <span class="n">upd</span><span class="o">.</span><span class="n">update_by_arrow_batch</span><span class="p">(</span>
+        <span class="n">pa</span><span class="o">.</span><span class="n">RecordBatch</span><span class="o">.</span><span class="n">from_pydict</span><span class="p">({</span><span class="s1">&#39;c&#39;</span><span class="p">:</span> <span class="n">c</span><span class="p">},</span> <span class="n">schema</span><span class="o">=</span><span class="n">pa</span><span class="o">.</span><span class="n">schema</span><span class="p">([(</span><span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="n">pa</span><span class="o">.</span><span class="n">int32</span><span class="p">())]))</span>
+    <span class="p">)</span>
+
+<span class="n">commit_messages</span> <span class="o">=</span> <span class="n">upd</span><span class="o">.</span><span class="n">prepare_commit</span><span class="p">()</span>
+<span class="n">commit</span> <span class="o">=</span> <span class="n">write_builder</span><span class="o">.</span><span class="n">new_commit</span><span class="p">()</span>
+<span class="n">commit</span><span class="o">.</span><span class="n">commit</span><span class="p">(</span><span class="n">commit_messages</span><span class="p">)</span>
+<span class="n">commit</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</code></pre></div><p><strong>Notes</strong></p>
+<ul>
+<li><strong>Row order matters</strong>: the batches you write must have the <strong>same number of rows</strong> as the batches you read, in the
+same order for that shard.</li>
+<li><strong>Parallelism</strong>: run multiple shards by calling <code>new_shard_updator(shard_idx, num_shards)</code> for each shard.</li>
+</ul>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  
+
+
+
+
+<a href="//github.com/apache/paimon/edit/master/docs/content/pypaimon/data-evolution.md" style="color:black"><i class="fa fa-edit fa-fw"></i>Edit This Page</a>
+
+
+ 
+        
+
+
+<hr style="margin-top: 20px; border: 1px solid #e5e5e5;" />
+
+<table style="border-spacing: 10px;">
+    <tbody>
+    <tr>
+        <td colspan="2">
+            Copyright &copy; 2025 The Apache Software Foundation. Apache Paimon, Paimon, and its feather logo are
+            trademarks of The Apache Software Foundation.
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+      </footer>
+
+      
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      
+  
+
+<nav id="TableOfContents"><h3>On This Page <button class="toc" onclick="collapseToc()"><i class="fa fa-compress" aria-hidden="true"></i></button></h3>
+  <ul>
+    <li><a href="#prerequisites">Prerequisites</a></li>
+    <li><a href="#update-columns-by-row-id">Update Columns By Row ID</a></li>
+    <li><a href="#filter-by-_row_id">Filter by _ROW_ID</a></li>
+    <li><a href="#upsert-by-key">Upsert By Key</a></li>
+    <li><a href="#update-columns-by-shards">Update Columns By Shards</a></li>
+  </ul>
+</nav>
+
+ 
+    </aside>
+    <aside class="expand-toc">
+      <button class="toc" onclick="expandToc()">
+        <i class="fa fa-expand" aria-hidden="true"></i>
+      </button>
+    </aside>
+    
+  </main>
+
+  
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

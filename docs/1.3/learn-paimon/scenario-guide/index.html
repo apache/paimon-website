@@ -1,0 +1,3137 @@
+
+<!DOCTYPE html>
+<html lang="en" dir=>
+
+<head>
+  <meta name="generator" content="Hugo 0.80.0" />
+  
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Scenario Guide #  This guide helps you choose the right Paimon table type and configuration for your specific use case. Paimon provides Primary Key Table, Append Table, and Multimodal Data Lake capabilities — each with different modes and configurations that are suited for different scenarios.
+Quick Decision #     Scenario Table Type Key Configuration     CDC real-time sync from database Primary Key Table deletion-vectors.">
+<meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="Scenario Guide" />
+<meta property="og:description" content="Scenario Guide #  This guide helps you choose the right Paimon table type and configuration for your specific use case. Paimon provides Primary Key Table, Append Table, and Multimodal Data Lake capabilities — each with different modes and configurations that are suited for different scenarios.
+Quick Decision #     Scenario Table Type Key Configuration     CDC real-time sync from database Primary Key Table deletion-vectors." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="//paimon.apache.org/docs/master/learn-paimon/scenario-guide/" />
+
+<title>Scenario Guide | Apache Paimon</title>
+<link rel="manifest" href="/docs/master/manifest.json">
+<link rel="icon" href="/docs/master/favicon.png" type="image/x-icon">
+<link rel="stylesheet" href="/docs/master/book.min.3bc4108a5b57c9a7e6fcae92ff69940435f8c46c4e1e4a311aedc9b2d8e06792.css" integrity="sha256-O8QQiltXyafm/K6S/2mUBDX4xGxOHkoxGu3JstjgZ5I=">
+<script defer src="/docs/master/en.search.min.8789e37a89118606487da753d79e5a25c08abe55da642a4caf79fe618bbc41bd.js" integrity="sha256-h4njeokRhgZIfadT155aJcCKvlXaZCpMr3n&#43;YYu8Qb0="></script>
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+  
+  
+
+<link rel="stylesheet" type="text/css" href="//paimon.apache.org/docs/master/font-awesome/css/font-awesome.min.css">
+<script src="//paimon.apache.org/docs/master/js/anchor.min.js"></script>
+<script src="//paimon.apache.org/docs/master/js/flink.js"></script>
+
+
+
+  
+  <script>
+    var _paq = window._paq = window._paq || [];
+     
+     
+    _paq.push(['disableCookies']);
+     
+    _paq.push(["setDomains", ["*.flink.apache.org","*.nightlies.apache.org/flink"]]);
+    _paq.push(['trackPageView']);
+    _paq.push(['enableLinkTracking']);
+    (function() {
+      var u="//matomo.privacy.apache.org/";
+      _paq.push(['setTrackerUrl', u+'matomo.php']);
+      _paq.push(['setSiteId', '1']);
+      var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+      g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+    })();
+  </script>
+  
+</head>
+
+<body dir=>
+  
+    <input type="checkbox" class="hidden toggle" id="menu-control" />
+    <input type="checkbox" class="hidden toggle" id="toc-control" />
+  
+  <main class="container flex">
+    
+      <aside class="book-menu">
+        
+  
+
+<nav>
+
+
+<a id="logo" href="//paimon.apache.org/docs/master">
+    <img width="100%" src="//paimon.apache.org/docs/master/paimon_black.svg">
+</a>
+<p style="text-align:right">1.5-SNAPSHOT</p>
+
+<div class="book-search">
+  <input type="text" id="book-search-input" placeholder="Search" aria-label="Search" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-dc8a1c63e6da60163016ce21cae1faa0" class="toggle"  />
+    <label for="section-dc8a1c63e6da60163016ce21cae1faa0" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-book title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Concepts</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/basic-concepts/" class="">Basic Concepts</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/concurrency-control/" class="">Concurrency Control</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/catalog/" class="">Catalog</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-e03f934865df9dd3baca303554bcaa71" class="toggle"  />
+    <label for="section-e03f934865df9dd3baca303554bcaa71" class="flex justify-between">RESTCatalog<span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/rest/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/rest/bear/" class="">Bear Token</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/rest/dlf/" class="">DLF Token</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/rest/tables/" class="">Tables</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/rest/pvfs/" class="">PVFS</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/rest/rest-api/" class="">REST API</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/system-tables/" class="">System Tables</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/data-types/" class="">Data Types</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/functions/" class="">Functions</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/views/" class="">Views</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-d3e7256ce393050c572ea7bd8cc4f240" class="toggle"  />
+    <label for="section-d3e7256ce393050c572ea7bd8cc4f240" class="flex justify-between">Specification<span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/spec/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/spec/schema/" class="">Schema</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/spec/snapshot/" class="">Snapshot</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/spec/manifest/" class="">Manifest</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/spec/datafile/" class="">DataFile</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/spec/fileformat/" class="">FileFormat</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/spec/tableindex/" class="">Table Index</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/spec/fileindex/" class="">File Index</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-3f6a6d4f1692040009c66ffaa328c8d0" class="toggle"  />
+    <label for="section-3f6a6d4f1692040009c66ffaa328c8d0" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-database title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Table with PK</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/primary-key-table/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/primary-key-table/data-distribution/" class="">Data Distribution</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/primary-key-table/table-mode/" class="">Table Mode</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-038bb7d17b5b7cb93fb60acbcf218f11" class="toggle"  />
+    <label for="section-038bb7d17b5b7cb93fb60acbcf218f11" class="flex justify-between">Merge Engine<span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/primary-key-table/merge-engine/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/primary-key-table/merge-engine/partial-update/" class="">Partial Update</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/primary-key-table/merge-engine/aggregation/" class="">Aggregation</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/primary-key-table/merge-engine/first-row/" class="">First Row</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/primary-key-table/changelog-producer/" class="">Changelog Producer</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/primary-key-table/sequence-rowkind/" class="">Sequence & Rowkind</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/primary-key-table/compaction/" class="">Compaction</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/primary-key-table/query-performance/" class="">Query Performance</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/primary-key-table/chain-table/" class="">Chain Table</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/primary-key-table/pk-clustering-override/" class="">PK Clustering Override</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-f74847e1c917ba2b99e7b718bb318b30" class="toggle"  />
+    <label for="section-f74847e1c917ba2b99e7b718bb318b30" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-database title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Table w/o PK</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/append-table/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/append-table/incremental-clustering/" class="">Incremental Clustering</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/append-table/bucketed/" class="">Bucketed</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/append-table/row-tracking/" class="">Row Tracking</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/append-table/data-evolution/" class="">Data Evolution</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/append-table/blob/" class="">Blob Storage</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/append-table/vector/" class="">Vector Storage</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/append-table/global-index/" class="">Global Index</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-998a37410d502937fe8444ed73a9ecf8" class="toggle"  />
+    <label for="section-998a37410d502937fe8444ed73a9ecf8" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-gear title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Engine Flink</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/flink/quick-start/" class="">Quick Start</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/flink/sql-ddl/" class="">SQL DDL</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/flink/sql-write/" class="">SQL Write</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/flink/sql-query/" class="">SQL Query</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/flink/consumer-id/" class="">Consumer ID</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/flink/sql-lookup/" class="">SQL Lookup</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/flink/sql-alter/" class="">SQL Alter</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/flink/default-value/" class="">Default Value</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/flink/procedures/" class="">Procedures</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/flink/action-jars/" class="">Action Jars</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/flink/savepoint/" class="">Savepoint</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-74c63bf75b4f6bd14a3ea6a1217f03ad" class="toggle"  />
+    <label for="section-74c63bf75b4f6bd14a3ea6a1217f03ad" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-gear title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Engine Spark</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/spark/quick-start/" class="">Quick Start</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/spark/sql-ddl/" class="">SQL DDL</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/spark/sql-functions/" class="">SQL Functions</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/spark/sql-write/" class="">SQL Write</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/spark/sql-query/" class="">SQL Query</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/spark/sql-alter/" class="">SQL Alter</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/spark/auxiliary/" class="">Auxiliary</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/spark/default-value/" class="">Default Value</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/spark/dataframe/" class="">DataFrame</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/spark/sql-upsert/" class="">SQL Upsert</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/spark/structured-streaming/" class="">Structured Streaming</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/spark/procedures/" class="">Procedures</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-16bf9de4e97c50dda6ce1ac6e934602c" class="toggle"  />
+    <label for="section-16bf9de4e97c50dda6ce1ac6e934602c" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-gear title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Ecosystem</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/ecosystem/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/ecosystem/starrocks/" class="">StarRocks</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/ecosystem/doris/" class="">Doris</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/ecosystem/hive/" class="">Hive</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/ecosystem/trino/" class="">Trino</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/ecosystem/amoro/" class="">Amoro</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-582e435c19ca5fafbf9764337d648e63" class="toggle"  />
+    <label for="section-582e435c19ca5fafbf9764337d648e63" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-gear title maindish" aria-hidden="true"></i>&nbsp;&nbsp;CDC Ingestion</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/cdc-ingestion/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/cdc-ingestion/mysql-cdc/" class="">Mysql CDC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/cdc-ingestion/postgres-cdc/" class="">Postgres CDC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/cdc-ingestion/kafka-cdc/" class="">Kafka CDC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/cdc-ingestion/mongo-cdc/" class="">Mongo CDC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/cdc-ingestion/pulsar-cdc/" class="">Pulsar CDC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/cdc-ingestion/flink-cdc/" class="">Flink CDC</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-697a4b6a0388d6cfa4f418aba3b4edfe" class="toggle"  />
+    <label for="section-697a4b6a0388d6cfa4f418aba3b4edfe" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-wrench title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Maintenance</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/maintenance/filesystems/" class="">Filesystems</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/maintenance/write-performance/" class="">Write Performance</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/maintenance/dedicated-compaction/" class="">Dedicated Compaction</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/maintenance/manage-snapshots/" class="">Manage Snapshots</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/maintenance/rescale-bucket/" class="">Rescale Bucket</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/maintenance/manage-tags/" class="">Manage Tags</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/maintenance/metrics/" class="">Metrics</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/maintenance/manage-privileges/" class="">Manage Privileges</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/maintenance/manage-branches/" class="">Manage Branches</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/maintenance/manage-partitions/" class="">Manage Partitions</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/maintenance/configurations/" class="">Configurations</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-049030059e0dc01edf74ba3d4d259dae" class="toggle"  />
+    <label for="section-049030059e0dc01edf74ba3d4d259dae" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-briefcase title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Program API</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/program-api/rest-api/" class="">REST API</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/program-api/flink-api/" class="">Flink API</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/program-api/java-api/" class="">Java API</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/program-api/catalog-api/" class="">Catalog API</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/program-api/cpp-api/" class="">Cpp API</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/program-api/rust-api/" class="">Rust API</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-a6ea2e2b6bd9ce399341429eea9e9b98" class="toggle"  />
+    <label for="section-a6ea2e2b6bd9ce399341429eea9e9b98" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-briefcase title maindish" aria-hidden="true"></i>&nbsp;&nbsp;PyPaimon</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/pypaimon/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/pypaimon/python-api/" class="">Python API</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/pypaimon/manage-tags/" class="">Manage Tags</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/pypaimon/ray-data/" class="">Ray Data</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/pypaimon/pytorch/" class="">PyTorch</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/pypaimon/data-evolution/" class="">Data Evolution</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/pypaimon/fuse-support/" class="">FUSE Support</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/pypaimon/pyjindosdk-support/" class="">PyJindoSDK Support</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/pypaimon/cli/" class="">Command Line Interface</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-07c567e5a9f3ce62aea4ff0a1e2dc065" class="toggle"  />
+    <label for="section-07c567e5a9f3ce62aea4ff0a1e2dc065" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-briefcase title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Migration</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/migration/migration-from-hive/" class="">Migration From Hive</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/migration/upsert-to-partitioned/" class="">Upsert To Partitioned</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/migration/clone-to-paimon/" class="">Clone To Paimon</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-dc2f2ba83b7db3b9bfa35da4c73572d2" class="toggle"  />
+    <label for="section-dc2f2ba83b7db3b9bfa35da4c73572d2" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-briefcase title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Iceberg Metadata</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/iceberg/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/iceberg/append-table/" class="">Append Table</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/iceberg/primary-key-table/" class="">Primary Key Table</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/iceberg/iceberg-tags/" class="">Iceberg Tags</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/iceberg/hive-catalog/" class="">Hive Catalogs</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/iceberg/rest-catalog/" class="">Rest Catalog</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/iceberg/ecosystem/" class="">Ecosystem</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/iceberg/configurations/" class="">Configurations</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  	<br/>
+  
+  
+    <input type="checkbox" id="section-8c828bcf882f666cdd6821a70cc768ee" class="toggle"  />
+    <label for="section-8c828bcf882f666cdd6821a70cc768ee" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-sitemap title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Project</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/project/download/" class="">Download</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/project/contributing/" class="">Contributing</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/project/committer/" class="">Committer</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-392fc6f653ae23ff676811656a71ebbf" class="toggle" checked />
+    <label for="section-392fc6f653ae23ff676811656a71ebbf" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-sitemap title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Learn Paimon</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/learn-paimon/understand-files/" class="">Understand Files</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/learn-paimon/scenario-guide/" class=" active">Scenario Guide</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br/>
+<hr class="menu-break">
+
+<a href="//paimon.apache.org" style="color:black;margin-bottom:0.5em"><i class="link fa fa-external-link title" aria-hidden="true"></i> Project Homepage</a>
+<br/>
+
+<a href="//paimon.apache.org/docs/master/api/java/" style="color:black;margin-bottom:0.5em"><i class="link fa fa-external-link title" aria-hidden="true"></i> JavaDocs</a>
+<br/>
+
+<hr class="menu-break">
+<li style="list-style-type: none">
+  <br>
+  <input type="checkbox" id="section-version-picker" class="toggle">
+  <label for="section-version-picker" class="flex justify-between">
+     <div style="font-weight:450;margin-bottom:0.5em">Pick Docs Version</div>
+     <span>▾</span>
+  </label>
+  <ul>
+    <a href="//paimon.apache.org/docs/master">
+      1.5-SNAPSHOT (✓)
+    </a>
+    <hr class="menu-break">
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/master">
+          master
+        </a>
+      </li>
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/1.4">
+          stable
+        </a>
+      </li>
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/1.4">
+          1.4
+        </a>
+      </li>
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/1.3">
+          1.3
+        </a>
+      </li>
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/1.2">
+          1.2
+        </a>
+      </li>
+    
+    <hr class="menu-break">
+    <li>
+      <a href="//paimon.apache.org/docs/master/versions">
+          All Versions
+      </a>
+    </li>
+  </ul>
+</li>
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var menu=document.querySelector("aside.book-menu nav");addEventListener("beforeunload",function(event){localStorage.setItem("menu.scrollTop",menu.scrollTop);});menu.scrollTop=localStorage.getItem("menu.scrollTop");})();</script>
+
+
+ 
+      </aside>
+    
+
+    <div class="book-page">
+      
+        <header class="book-header">
+          
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/docs/master/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <strong>Scenario Guide</strong>
+
+  <label for="toc-control">
+    
+    <img src="/docs/master/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden clearfix">
+    
+  
+
+<nav id="TableOfContents"><h3>On This Page <button class="toc" onclick="collapseToc()"><i class="fa fa-compress" aria-hidden="true"></i></button></h3>
+  <ul>
+    <li><a href="#quick-decision">Quick Decision</a></li>
+    <li><a href="#primary-key-table">Primary Key Table</a>
+      <ul>
+        <li><a href="#scenario-1-cdc-real-time-sync">Scenario 1: CDC Real-Time Sync</a></li>
+        <li><a href="#scenario-2-multi-stream-partial-column-updates">Scenario 2: Multi-Stream Partial Column Updates</a></li>
+        <li><a href="#scenario-3-streaming-aggregation--metrics">Scenario 3: Streaming Aggregation / Metrics</a></li>
+        <li><a href="#scenario-4-log-deduplication-keep-first-record">Scenario 4: Log Deduplication (Keep First Record)</a></li>
+        <li><a href="#primary-key-table-bucket-mode-comparison">Primary Key Table: Bucket Mode Comparison</a></li>
+        <li><a href="#primary-key-table-table-mode-comparison">Primary Key Table: Table Mode Comparison</a></li>
+      </ul>
+    </li>
+    <li><a href="#append-table">Append Table</a>
+      <ul>
+        <li><a href="#scenario-5-batch-etl--data-warehouse-layers-unaware-bucket">Scenario 5: Batch ETL / Data Warehouse Layers (Unaware-Bucket)</a></li>
+        <li><a href="#scenario-6-high-frequency-point-queries-bucketed-append">Scenario 6: High-Frequency Point Queries (Bucketed Append)</a></li>
+        <li><a href="#scenario-7-queue-like-ordered-streaming-bucketed-append">Scenario 7: Queue-Like Ordered Streaming (Bucketed Append)</a></li>
+        <li><a href="#append-table-bucket-mode-comparison">Append Table: Bucket Mode Comparison</a></li>
+      </ul>
+    </li>
+    <li><a href="#multimodal-data-lake">Multimodal Data Lake</a>
+      <ul>
+        <li><a href="#scenario-8-storing-multimodal-data-blob-table">Scenario 8: Storing Multimodal Data (Blob Table)</a></li>
+        <li><a href="#scenario-9-vector-search--rag-applications">Scenario 9: Vector Search / RAG Applications</a></li>
+        <li><a href="#scenario-10-ai-feature-engineering-with-data-evolution">Scenario 10: AI Feature Engineering with Data Evolution</a></li>
+        <li><a href="#scenario-11-python-ai-pipeline-pypaimon">Scenario 11: Python AI Pipeline (PyPaimon)</a></li>
+      </ul>
+    </li>
+    <li><a href="#summary-table-type-decision-tree">Summary: Table Type Decision Tree</a></li>
+  </ul>
+</nav>
+
+
+  </aside>
+  
+ 
+        </header>
+      
+
+      
+
+
+
+
+<article class="markdown">
+    <blockquote style="border-color:#f66">
+        This documentation is for an unreleased version of Apache Paimon. We recommend you use the latest <a href="https://paimon.apache.org/docs/1.4">stable version</a>.
+    </blockquote>
+</article>
+
+
+
+      
+  <article class="markdown"><!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<h1 id="scenario-guide">
+  Scenario Guide
+  <a class="anchor" href="#scenario-guide">#</a>
+</h1>
+<p>This guide helps you choose the right Paimon table type and configuration for your specific use case. Paimon provides
+<strong>Primary Key Table</strong>, <strong>Append Table</strong>, and <strong>Multimodal Data Lake</strong> capabilities — each with different modes and
+configurations that are suited for different scenarios.</p>
+<h2 id="quick-decision">
+  Quick Decision
+  <a class="anchor" href="#quick-decision">#</a>
+</h2>
+<table>
+<thead>
+<tr>
+<th>Scenario</th>
+<th>Table Type</th>
+<th>Key Configuration</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CDC real-time sync from database</td>
+<td>Primary Key Table</td>
+<td><code>deletion-vectors.enabled = true</code></td>
+</tr>
+<tr>
+<td>Streaming aggregation / metrics</td>
+<td>Primary Key Table</td>
+<td><code>merge-engine = aggregation</code></td>
+</tr>
+<tr>
+<td>Multi-stream partial column updates</td>
+<td>Primary Key Table</td>
+<td><code>merge-engine = partial-update</code></td>
+</tr>
+<tr>
+<td>Log deduplication (keep first)</td>
+<td>Primary Key Table</td>
+<td><code>merge-engine = first-row</code></td>
+</tr>
+<tr>
+<td>Batch ETL / data warehouse layers</td>
+<td>Append Table</td>
+<td>Default (unaware-bucket)</td>
+</tr>
+<tr>
+<td>High-frequency point queries on key</td>
+<td>Append Table</td>
+<td><code>bucket = N, bucket-key = col</code></td>
+</tr>
+<tr>
+<td>Queue-like ordered streaming</td>
+<td>Append Table</td>
+<td><code>bucket = N, bucket-key = col</code></td>
+</tr>
+<tr>
+<td>Large-scale OLAP with ad-hoc queries</td>
+<td>Append Table</td>
+<td>Incremental Clustering</td>
+</tr>
+<tr>
+<td>Store images / videos / documents</td>
+<td>Append Table (Blob)</td>
+<td><code>blob-field</code>, Data Evolution enabled</td>
+</tr>
+<tr>
+<td>AI vector search / RAG</td>
+<td>Append Table (Vector)</td>
+<td><code>VECTOR</code> type, Global Index (DiskANN)</td>
+</tr>
+<tr>
+<td>AI feature engineering &amp; column evolution</td>
+<td>Append Table</td>
+<td><code>data-evolution.enabled = true</code></td>
+</tr>
+<tr>
+<td>Python AI pipeline (Ray / PyTorch)</td>
+<td>Append Table</td>
+<td>PyPaimon SDK</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="primary-key-table">
+  Primary Key Table
+  <a class="anchor" href="#primary-key-table">#</a>
+</h2>
+<p>Use a Primary Key Table when your data has a natural unique key and you need <strong>real-time updates</strong> (insert, update, delete).
+See <a href="//paimon.apache.org/docs/master/primary-key-table/overview/">Primary Key Table Overview</a>.</p>
+<h3 id="scenario-1-cdc-real-time-sync">
+  Scenario 1: CDC Real-Time Sync
+  <a class="anchor" href="#scenario-1-cdc-real-time-sync">#</a>
+</h3>
+<p><strong>When:</strong> You want to synchronize a MySQL / PostgreSQL / MongoDB table to the data lake in real-time with upsert
+semantics. This is the most common use case for Primary Key Tables.</p>
+<p><strong>Recommended Configuration:</strong></p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">orders</span> <span class="p">(</span>
+    <span class="n">order_id</span> <span class="nb">BIGINT</span><span class="p">,</span>
+    <span class="n">user_id</span> <span class="nb">BIGINT</span><span class="p">,</span>
+    <span class="n">amount</span> <span class="nb">DECIMAL</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span>
+    <span class="n">status</span> <span class="n">STRING</span><span class="p">,</span>
+    <span class="n">update_time</span> <span class="k">TIMESTAMP</span><span class="p">,</span>
+    <span class="n">dt</span> <span class="n">STRING</span><span class="p">,</span>
+    <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="p">(</span><span class="n">order_id</span><span class="p">,</span> <span class="n">dt</span><span class="p">)</span> <span class="k">NOT</span> <span class="n">ENFORCED</span>
+<span class="p">)</span> <span class="n">PARTITIONED</span> <span class="k">BY</span> <span class="p">(</span><span class="n">dt</span><span class="p">)</span> <span class="k">WITH</span> <span class="p">(</span>
+    <span class="s1">&#39;deletion-vectors.enabled&#39;</span> <span class="o">=</span> <span class="s1">&#39;true&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;changelog-producer&#39;</span> <span class="o">=</span> <span class="s1">&#39;lookup&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;sequence.field&#39;</span> <span class="o">=</span> <span class="s1">&#39;update_time&#39;</span>
+<span class="p">);</span>
+</code></pre></div><p><strong>Why this configuration:</strong></p>
+<ul>
+<li><strong><code>deletion-vectors.enabled = true</code></strong> (MOW mode): Enables <a href="//paimon.apache.org/docs/master/primary-key-table/table-mode/#merge-on-write">Merge On Write</a> with Deletion Vectors.
+This mode gives you the best balance of write and read performance. Compared to the default MOR mode, MOW
+avoids merging at read time, which greatly improves OLAP query performance.</li>
+<li><strong><code>changelog-producer = lookup</code></strong>: Generates a complete <a href="//paimon.apache.org/docs/master/primary-key-table/changelog-producer/#lookup">changelog</a>
+for downstream streaming consumers. If your CDC source is directly connected to a database (e.g., MySQL CDC, Postgres CDC),
+you can use <code>changelog-producer = input</code> instead, since the database CDC stream already provides a complete changelog.
+However, if your CDC source comes from Kafka (or other message queues), <code>input</code> may not be reliable — use <code>lookup</code> to
+ensure changelog correctness. If no downstream streaming read is needed, you can omit this to save compaction resources.</li>
+<li><strong><code>sequence.field = update_time</code></strong>: Guarantees correct update ordering even when data arrives out of order.</li>
+<li><strong>Bucketing</strong>: Use the default Dynamic Bucket (<code>bucket = -1</code>). The system automatically adjusts bucket count based
+on data volume. If you are sensitive to data visibility latency, set a fixed bucket number (e.g. <code>'bucket' = '5'</code>)
+— roughly 1 bucket per 1GB of data in a partition.</li>
+</ul>
+<p><strong>CDC Ingestion Tip:</strong> Use <a href="//paimon.apache.org/docs/master/cdc-ingestion/overview/">Paimon CDC Ingestion</a> for whole-database sync with
+automatic table creation and schema evolution support.</p>
+<h3 id="scenario-2-multi-stream-partial-column-updates">
+  Scenario 2: Multi-Stream Partial Column Updates
+  <a class="anchor" href="#scenario-2-multi-stream-partial-column-updates">#</a>
+</h3>
+<p><strong>When:</strong> Multiple data sources each contribute different columns to the same record, and you want to progressively
+merge them into a complete wide table (e.g., orders from one stream + logistics info from another).</p>
+<p><strong>Recommended Configuration:</strong></p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">order_wide</span> <span class="p">(</span>
+    <span class="n">order_id</span> <span class="nb">BIGINT</span> <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="k">NOT</span> <span class="n">ENFORCED</span><span class="p">,</span>
+    <span class="c1">-- from order stream
+</span><span class="c1"></span>    <span class="n">user_name</span> <span class="n">STRING</span><span class="p">,</span>
+    <span class="n">amount</span> <span class="nb">DECIMAL</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span>
+    <span class="n">order_time</span> <span class="k">TIMESTAMP</span><span class="p">,</span>
+    <span class="c1">-- from logistics stream
+</span><span class="c1"></span>    <span class="n">tracking_no</span> <span class="n">STRING</span><span class="p">,</span>
+    <span class="n">delivery_status</span> <span class="n">STRING</span><span class="p">,</span>
+    <span class="n">delivery_time</span> <span class="k">TIMESTAMP</span>
+<span class="p">)</span> <span class="k">WITH</span> <span class="p">(</span>
+    <span class="s1">&#39;merge-engine&#39;</span> <span class="o">=</span> <span class="s1">&#39;partial-update&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;fields.order_time.sequence-group&#39;</span> <span class="o">=</span> <span class="s1">&#39;user_name,amount&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;fields.delivery_time.sequence-group&#39;</span> <span class="o">=</span> <span class="s1">&#39;tracking_no,delivery_status&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;deletion-vectors.enabled&#39;</span> <span class="o">=</span> <span class="s1">&#39;true&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;changelog-producer&#39;</span> <span class="o">=</span> <span class="s1">&#39;lookup&#39;</span>
+<span class="p">);</span>
+</code></pre></div><p><strong>Why:</strong> The <a href="//paimon.apache.org/docs/master/primary-key-table/merge-engine/partial-update/">partial-update</a> merge engine allows each
+stream to update only its own columns without overwriting the others. <code>sequence-group</code> ensures ordering within each
+stream independently.</p>
+<h3 id="scenario-3-streaming-aggregation--metrics">
+  Scenario 3: Streaming Aggregation / Metrics
+  <a class="anchor" href="#scenario-3-streaming-aggregation--metrics">#</a>
+</h3>
+<p><strong>When:</strong> You need to pre-aggregate metrics in real-time (e.g., page views, total sales, UV count). Each incoming record
+should be aggregated with the existing value, not replace it.</p>
+<p><strong>Recommended Configuration:</strong></p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">product_metrics</span> <span class="p">(</span>
+    <span class="n">product_id</span> <span class="nb">BIGINT</span><span class="p">,</span>
+    <span class="n">dt</span> <span class="n">STRING</span><span class="p">,</span>
+    <span class="n">total_sales</span> <span class="nb">BIGINT</span><span class="p">,</span>
+    <span class="n">max_price</span> <span class="n">DOUBLE</span><span class="p">,</span>
+    <span class="n">uv</span> <span class="n">VARBINARY</span><span class="p">,</span>
+    <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="p">(</span><span class="n">product_id</span><span class="p">,</span> <span class="n">dt</span><span class="p">)</span> <span class="k">NOT</span> <span class="n">ENFORCED</span>
+<span class="p">)</span> <span class="n">PARTITIONED</span> <span class="k">BY</span> <span class="p">(</span><span class="n">dt</span><span class="p">)</span> <span class="k">WITH</span> <span class="p">(</span>
+    <span class="s1">&#39;merge-engine&#39;</span> <span class="o">=</span> <span class="s1">&#39;aggregation&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;fields.total_sales.aggregate-function&#39;</span> <span class="o">=</span> <span class="s1">&#39;sum&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;fields.max_price.aggregate-function&#39;</span> <span class="o">=</span> <span class="s1">&#39;max&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;fields.uv.aggregate-function&#39;</span> <span class="o">=</span> <span class="s1">&#39;hll_sketch&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;deletion-vectors.enabled&#39;</span> <span class="o">=</span> <span class="s1">&#39;true&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;changelog-producer&#39;</span> <span class="o">=</span> <span class="s1">&#39;lookup&#39;</span>
+<span class="p">);</span>
+</code></pre></div><p><strong>Why:</strong> The <a href="//paimon.apache.org/docs/master/primary-key-table/merge-engine/aggregation/">aggregation</a> merge engine supports 20+
+aggregate functions (<code>sum</code>, <code>max</code>, <code>min</code>, <code>count</code>, <code>hll_sketch</code>, <code>theta_sketch</code>, <code>collect</code>, <code>merge_map</code>, etc.), ideal
+for real-time metric accumulation.</p>
+<h3 id="scenario-4-log-deduplication-keep-first-record">
+  Scenario 4: Log Deduplication (Keep First Record)
+  <a class="anchor" href="#scenario-4-log-deduplication-keep-first-record">#</a>
+</h3>
+<p><strong>When:</strong> You receive a high-volume log stream with possible duplicates and only want to keep the first occurrence of
+each key (e.g., first login event per user per day).</p>
+<p><strong>Recommended Configuration:</strong></p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">first_login</span> <span class="p">(</span>
+    <span class="n">user_id</span> <span class="nb">BIGINT</span><span class="p">,</span>
+    <span class="n">dt</span> <span class="n">STRING</span><span class="p">,</span>
+    <span class="n">login_time</span> <span class="k">TIMESTAMP</span><span class="p">,</span>
+    <span class="n">device</span> <span class="n">STRING</span><span class="p">,</span>
+    <span class="n">ip</span> <span class="n">STRING</span><span class="p">,</span>
+    <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="p">(</span><span class="n">user_id</span><span class="p">,</span> <span class="n">dt</span><span class="p">)</span> <span class="k">NOT</span> <span class="n">ENFORCED</span>
+<span class="p">)</span> <span class="n">PARTITIONED</span> <span class="k">BY</span> <span class="p">(</span><span class="n">dt</span><span class="p">)</span> <span class="k">WITH</span> <span class="p">(</span>
+    <span class="s1">&#39;merge-engine&#39;</span> <span class="o">=</span> <span class="s1">&#39;first-row&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;changelog-producer&#39;</span> <span class="o">=</span> <span class="s1">&#39;lookup&#39;</span>
+<span class="p">);</span>
+</code></pre></div><p><strong>Why:</strong> The <a href="//paimon.apache.org/docs/master/primary-key-table/merge-engine/first-row/">first-row</a> merge engine keeps only the earliest
+record for each primary key and produces insert-only changelog, making it perfect for streaming log deduplication.</p>
+<h3 id="primary-key-table-bucket-mode-comparison">
+  Primary Key Table: Bucket Mode Comparison
+  <a class="anchor" href="#primary-key-table-bucket-mode-comparison">#</a>
+</h3>
+<table>
+<thead>
+<tr>
+<th>Mode</th>
+<th>Config</th>
+<th>Best For</th>
+<th>Trade-off</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Dynamic Bucket (default)</td>
+<td><code>bucket = -1</code></td>
+<td>Most scenarios, auto-scaling</td>
+<td>Requires single write job</td>
+</tr>
+<tr>
+<td>Fixed Bucket</td>
+<td><code>bucket = N</code></td>
+<td>Stable workloads, bucketed join</td>
+<td>Manual rescaling needed</td>
+</tr>
+<tr>
+<td>Postpone Bucket</td>
+<td><code>bucket = -2</code></td>
+<td>Adaptive Partition Level Bucket</td>
+<td>New data not visible until compaction</td>
+</tr>
+</tbody>
+</table>
+<p><strong>General guideline:</strong> ~1 bucket per 1GB of data in a partition, with each bucket containing 200MB–1GB of data.</p>
+<h3 id="primary-key-table-table-mode-comparison">
+  Primary Key Table: Table Mode Comparison
+  <a class="anchor" href="#primary-key-table-table-mode-comparison">#</a>
+</h3>
+<table>
+<thead>
+<tr>
+<th>Mode</th>
+<th>Config</th>
+<th>Write Perf</th>
+<th>Read Perf</th>
+<th>Best For</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MOR (default)</td>
+<td>—</td>
+<td>Very good</td>
+<td>Not so good</td>
+<td>Write-heavy, less query</td>
+</tr>
+<tr>
+<td>COW</td>
+<td><code>full-compaction.delta-commits = 1</code></td>
+<td>Very bad</td>
+<td>Very good</td>
+<td>Read-heavy, batch jobs</td>
+</tr>
+<tr>
+<td>MOW</td>
+<td><code>deletion-vectors.enabled = true</code></td>
+<td>Good</td>
+<td>Good</td>
+<td>Balanced (recommended for most)</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="append-table">
+  Append Table
+  <a class="anchor" href="#append-table">#</a>
+</h2>
+<p>Use an Append Table when your data <strong>has no natural primary key</strong>, or you are working with <strong>batch ETL</strong> pipelines
+where data is only inserted and does not need upsert semantics.
+See <a href="//paimon.apache.org/docs/master/append-table/overview/">Append Table Overview</a>.</p>
+<p>Compared to Primary Key Tables, Append Tables have much better batch read/write performance, simpler design, and lower
+resource consumption. <strong>We recommend using Append Tables for most batch processing scenarios.</strong></p>
+<h3 id="scenario-5-batch-etl--data-warehouse-layers-unaware-bucket">
+  Scenario 5: Batch ETL / Data Warehouse Layers (Unaware-Bucket)
+  <a class="anchor" href="#scenario-5-batch-etl--data-warehouse-layers-unaware-bucket">#</a>
+</h3>
+<p><strong>When:</strong> Standard data warehouse layering (ODS → DWD → DWS → ADS), bulk INSERT OVERWRITE, or Spark / Hive style
+batch processing.</p>
+<p><strong>Recommended Configuration:</strong></p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">dwd_events</span> <span class="p">(</span>
+    <span class="n">event_id</span> <span class="nb">BIGINT</span><span class="p">,</span>
+    <span class="n">user_id</span> <span class="nb">BIGINT</span><span class="p">,</span>
+    <span class="n">event_type</span> <span class="n">STRING</span><span class="p">,</span>
+    <span class="n">event_time</span> <span class="k">TIMESTAMP</span><span class="p">,</span>
+    <span class="n">dt</span> <span class="n">STRING</span>
+<span class="p">)</span> <span class="n">PARTITIONED</span> <span class="k">BY</span> <span class="p">(</span><span class="n">dt</span><span class="p">);</span>
+</code></pre></div><p>No bucket configuration needed. This is an <strong>unaware-bucket</strong> append table — the simplest and most commonly used form.
+Paimon automatically handles small file merging and supports:</p>
+<ul>
+<li><strong>Time travel</strong> and version rollback.</li>
+<li><strong>Schema evolution</strong> (add/drop/rename columns).</li>
+<li><strong>Data skipping</strong> via min-max stats in manifest files.</li>
+<li><strong>File Index</strong> (BloomFilter, Bitmap, Range Bitmap) for further query acceleration.</li>
+<li><strong>Row-level operations</strong> (DELETE / UPDATE / MERGE INTO in Spark SQL).</li>
+<li><strong>Incremental Clustering</strong> for advanced data layout optimization.</li>
+</ul>
+<p><strong>Query Optimization Tip:</strong> If your queries frequently filter on specific columns, consider using
+<a href="//paimon.apache.org/docs/master/append-table/incremental-clustering/">Incremental Clustering</a> to sort data by those columns:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">dwd_events</span> <span class="k">SET</span> <span class="p">(</span>
+    <span class="s1">&#39;clustering.incremental&#39;</span> <span class="o">=</span> <span class="s1">&#39;true&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;clustering.columns&#39;</span> <span class="o">=</span> <span class="s1">&#39;user_id&#39;</span>
+<span class="p">);</span>
+</code></pre></div><p>Or define a File Index for point lookups:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">dwd_events</span> <span class="k">SET</span> <span class="p">(</span>
+    <span class="s1">&#39;file-index.bloom-filter.columns&#39;</span> <span class="o">=</span> <span class="s1">&#39;user_id&#39;</span>
+<span class="p">);</span>
+</code></pre></div><h3 id="scenario-6-high-frequency-point-queries-bucketed-append">
+  Scenario 6: High-Frequency Point Queries (Bucketed Append)
+  <a class="anchor" href="#scenario-6-high-frequency-point-queries-bucketed-append">#</a>
+</h3>
+<p><strong>When:</strong> Your append table is frequently queried with equality or IN filters on a specific column
+(e.g., <code>WHERE product_id = xxx</code>). This is the <strong>most impactful</strong> advantage of a bucketed append table.</p>
+<p><strong>Recommended Configuration:</strong></p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">product_logs</span> <span class="p">(</span>
+    <span class="n">product_id</span> <span class="nb">BIGINT</span><span class="p">,</span>
+    <span class="n">log_time</span> <span class="k">TIMESTAMP</span><span class="p">,</span>
+    <span class="n">message</span> <span class="n">STRING</span><span class="p">,</span>
+    <span class="n">dt</span> <span class="n">STRING</span>
+<span class="p">)</span> <span class="n">PARTITIONED</span> <span class="k">BY</span> <span class="p">(</span><span class="n">dt</span><span class="p">)</span> <span class="k">WITH</span> <span class="p">(</span>
+    <span class="s1">&#39;bucket&#39;</span> <span class="o">=</span> <span class="s1">&#39;16&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;bucket-key&#39;</span> <span class="o">=</span> <span class="s1">&#39;product_id&#39;</span>
+<span class="p">);</span>
+</code></pre></div><p><strong>Why this is powerful:</strong> The <code>bucket-key</code> enables <strong>data skipping</strong> — when a query contains <code>=</code> or <code>IN</code> conditions on
+the bucket-key, Paimon pushes these predicates down and prunes all irrelevant bucket files entirely. With 16 buckets,
+a point query on <code>product_id</code> only reads ~1/16 of the data.</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="c1">-- Only reads the bucket containing product_id=12345, skips all other 15 buckets
+</span><span class="c1"></span><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">product_logs</span> <span class="k">WHERE</span> <span class="n">product_id</span> <span class="o">=</span> <span class="mi">12345</span><span class="p">;</span>
+
+<span class="c1">-- Only reads buckets for these 3 values
+</span><span class="c1"></span><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">product_logs</span> <span class="k">WHERE</span> <span class="n">product_id</span> <span class="k">IN</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span>
+</code></pre></div><p>See <a href="//paimon.apache.org/docs/master/append-table/bucketed/#data-skipping">Bucketed Append — Data Skipping</a>.</p>
+<p><strong>Bucketed Join Bonus:</strong> If two bucketed tables share the same <code>bucket-key</code> and bucket count, Spark can join them
+<strong>without shuffle</strong>, significantly accelerating batch join queries:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SET</span> <span class="n">spark</span><span class="p">.</span><span class="k">sql</span><span class="p">.</span><span class="n">sources</span><span class="p">.</span><span class="n">v2</span><span class="p">.</span><span class="n">bucketing</span><span class="p">.</span><span class="n">enabled</span> <span class="o">=</span> <span class="k">true</span><span class="p">;</span>
+
+<span class="c1">-- Both tables have bucket=16, bucket-key=product_id
+</span><span class="c1"></span><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">product_logs</span> <span class="k">JOIN</span> <span class="n">product_dim</span>
+<span class="k">ON</span> <span class="n">product_logs</span><span class="p">.</span><span class="n">product_id</span> <span class="o">=</span> <span class="n">product_dim</span><span class="p">.</span><span class="n">product_id</span><span class="p">;</span>
+</code></pre></div><p>See <a href="//paimon.apache.org/docs/master/append-table/bucketed/#bucketed-join">Bucketed Join</a>.</p>
+<h3 id="scenario-7-queue-like-ordered-streaming-bucketed-append">
+  Scenario 7: Queue-Like Ordered Streaming (Bucketed Append)
+  <a class="anchor" href="#scenario-7-queue-like-ordered-streaming-bucketed-append">#</a>
+</h3>
+<p><strong>When:</strong> You want to use Paimon as a message queue replacement with strict ordering guarantees per key (similar to
+Kafka partitioning), with the benefits of filter push-down and lower cost.</p>
+<p><strong>Recommended Configuration:</strong></p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">event_stream</span> <span class="p">(</span>
+    <span class="n">user_id</span> <span class="nb">BIGINT</span><span class="p">,</span>
+    <span class="n">event_type</span> <span class="n">STRING</span><span class="p">,</span>
+    <span class="n">event_time</span> <span class="k">TIMESTAMP</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span>
+    <span class="n">payload</span> <span class="n">STRING</span><span class="p">,</span>
+    <span class="n">WATERMARK</span> <span class="k">FOR</span> <span class="n">event_time</span> <span class="k">AS</span> <span class="n">event_time</span> <span class="o">-</span> <span class="nb">INTERVAL</span> <span class="s1">&#39;5&#39;</span> <span class="k">SECOND</span>
+<span class="p">)</span> <span class="k">WITH</span> <span class="p">(</span>
+    <span class="s1">&#39;bucket&#39;</span> <span class="o">=</span> <span class="s1">&#39;8&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;bucket-key&#39;</span> <span class="o">=</span> <span class="s1">&#39;user_id&#39;</span>
+<span class="p">);</span>
+</code></pre></div><p><strong>Why:</strong> Within the same bucket, records are strictly ordered by write time. Streaming reads deliver records in exact
+write order per bucket. This gives you Kafka-like partitioned ordering at data lake cost.</p>
+<p>See <a href="//paimon.apache.org/docs/master/append-table/bucketed/#bucketed-streaming">Bucketed Streaming</a>.</p>
+<h3 id="append-table-bucket-mode-comparison">
+  Append Table: Bucket Mode Comparison
+  <a class="anchor" href="#append-table-bucket-mode-comparison">#</a>
+</h3>
+<table>
+<thead>
+<tr>
+<th>Mode</th>
+<th>Config</th>
+<th>Data Skipping</th>
+<th>Bucketed Join</th>
+<th>Ordered Streaming</th>
+<th>Incremental Clustering</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Unaware-Bucket (default)</td>
+<td>No bucket config</td>
+<td>Via min-max / file index</td>
+<td>No</td>
+<td>No</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Bucketed</td>
+<td><code>bucket = N, bucket-key = col</code></td>
+<td><strong>Bucket-key filter pushdown</strong></td>
+<td>Yes</td>
+<td>Yes</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="multimodal-data-lake">
+  Multimodal Data Lake
+  <a class="anchor" href="#multimodal-data-lake">#</a>
+</h2>
+<p>Paimon is a multimodal lakehouse for AI. You can keep multimodal data, metadata, and embeddings in the same table and
+query them via vector search, full-text search, or SQL. All multimodal features are built on top of Append Tables with
+<a href="//paimon.apache.org/docs/master/append-table/data-evolution/">Data Evolution</a> mode enabled.</p>
+<h3 id="scenario-8-storing-multimodal-data-blob-table">
+  Scenario 8: Storing Multimodal Data (Blob Table)
+  <a class="anchor" href="#scenario-8-storing-multimodal-data-blob-table">#</a>
+</h3>
+<p><strong>When:</strong> You need to store images, videos, audio files, documents, or model weights alongside structured metadata in
+the data lake, and want efficient column projection without loading large binary data.</p>
+<p><strong>Recommended Configuration:</strong></p>
+
+
+
+
+
+<div class="book-tabs"><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Flink SQL"
+    name="tabs-blob-scenario"
+    id="tabs-blob-scenario-0"
+    checked="checked" 
+    onclick="onSwitch('Flink SQL')"
+  />
+  <label for="tabs-blob-scenario-0">Flink SQL</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">image_table</span> <span class="p">(</span>
+    <span class="n">id</span> <span class="nb">INT</span><span class="p">,</span>
+    <span class="n">name</span> <span class="n">STRING</span><span class="p">,</span>
+    <span class="n">label</span> <span class="n">STRING</span><span class="p">,</span>
+    <span class="n">image</span> <span class="n">BYTES</span>
+<span class="p">)</span> <span class="k">WITH</span> <span class="p">(</span>
+    <span class="s1">&#39;row-tracking.enabled&#39;</span> <span class="o">=</span> <span class="s1">&#39;true&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;data-evolution.enabled&#39;</span> <span class="o">=</span> <span class="s1">&#39;true&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;blob-field&#39;</span> <span class="o">=</span> <span class="s1">&#39;image&#39;</span>
+<span class="p">);</span>
+</code></pre></div></div><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Spark SQL"
+    name="tabs-blob-scenario"
+    id="tabs-blob-scenario-1"
+     
+    onclick="onSwitch('Spark SQL')"
+  />
+  <label for="tabs-blob-scenario-1">Spark SQL</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">image_table</span> <span class="p">(</span>
+    <span class="n">id</span> <span class="nb">INT</span><span class="p">,</span>
+    <span class="n">name</span> <span class="n">STRING</span><span class="p">,</span>
+    <span class="n">label</span> <span class="n">STRING</span><span class="p">,</span>
+    <span class="n">image</span> <span class="nb">BINARY</span>
+<span class="p">)</span> <span class="n">TBLPROPERTIES</span> <span class="p">(</span>
+    <span class="s1">&#39;row-tracking.enabled&#39;</span> <span class="o">=</span> <span class="s1">&#39;true&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;data-evolution.enabled&#39;</span> <span class="o">=</span> <span class="s1">&#39;true&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;blob-field&#39;</span> <span class="o">=</span> <span class="s1">&#39;image&#39;</span>
+<span class="p">);</span>
+</code></pre></div></div></div>
+
+<p><strong>Why:</strong> The <a href="//paimon.apache.org/docs/master/append-table/blob/">Blob Storage</a> separates large binary data into dedicated <code>.blob</code> files
+while metadata stays in standard columnar files (Parquet/ORC). This means:</p>
+<ul>
+<li><code>SELECT id, name, label FROM image_table</code> does <strong>not</strong> load any blob data — very fast.</li>
+<li>Blob data supports streaming reads for large objects (videos, model weights) without loading entire files into memory.</li>
+<li>Supports multiple input methods: local files, HTTP URLs, InputStreams, and byte arrays.</li>
+</ul>
+<p><strong>For external storage (e.g., blobs already in S3):</strong></p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">video_table</span> <span class="p">(</span>
+    <span class="n">id</span> <span class="nb">INT</span><span class="p">,</span>
+    <span class="n">title</span> <span class="n">STRING</span><span class="p">,</span>
+    <span class="n">video</span> <span class="n">BYTES</span>
+<span class="p">)</span> <span class="k">WITH</span> <span class="p">(</span>
+    <span class="s1">&#39;row-tracking.enabled&#39;</span> <span class="o">=</span> <span class="s1">&#39;true&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;data-evolution.enabled&#39;</span> <span class="o">=</span> <span class="s1">&#39;true&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;blob-descriptor-field&#39;</span> <span class="o">=</span> <span class="s1">&#39;video&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;blob-external-storage-field&#39;</span> <span class="o">=</span> <span class="s1">&#39;video&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;blob-external-storage-path&#39;</span> <span class="o">=</span> <span class="s1">&#39;s3://my-bucket/paimon-blobs/&#39;</span>
+<span class="p">);</span>
+</code></pre></div><p>This stores only descriptor references inline, while the actual blob data resides in external storage.</p>
+<h3 id="scenario-9-vector-search--rag-applications">
+  Scenario 9: Vector Search / RAG Applications
+  <a class="anchor" href="#scenario-9-vector-search--rag-applications">#</a>
+</h3>
+<p><strong>When:</strong> You are building a recommendation system, image retrieval, or RAG (Retrieval Augmented Generation)
+application that needs approximate nearest neighbor (ANN) search on embeddings.</p>
+<p><strong>Recommended Configuration:</strong></p>
+
+
+
+
+
+<div class="book-tabs"><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Spark SQL"
+    name="tabs-vector-scenario"
+    id="tabs-vector-scenario-0"
+    checked="checked" 
+    onclick="onSwitch('Spark SQL')"
+  />
+  <label for="tabs-vector-scenario-0">Spark SQL</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">doc_embeddings</span> <span class="p">(</span>
+    <span class="n">doc_id</span> <span class="nb">INT</span><span class="p">,</span>
+    <span class="n">title</span> <span class="n">STRING</span><span class="p">,</span>
+    <span class="n">content</span> <span class="n">STRING</span><span class="p">,</span>
+    <span class="n">embedding</span> <span class="nb">ARRAY</span><span class="o">&lt;</span><span class="nb">FLOAT</span><span class="o">&gt;</span>
+<span class="p">)</span> <span class="n">TBLPROPERTIES</span> <span class="p">(</span>
+    <span class="s1">&#39;row-tracking.enabled&#39;</span> <span class="o">=</span> <span class="s1">&#39;true&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;data-evolution.enabled&#39;</span> <span class="o">=</span> <span class="s1">&#39;true&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;global-index.enabled&#39;</span> <span class="o">=</span> <span class="s1">&#39;true&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;vector-field&#39;</span> <span class="o">=</span> <span class="s1">&#39;embedding&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;field.embedding.vector-dim&#39;</span> <span class="o">=</span> <span class="s1">&#39;768&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;vector.file.format&#39;</span> <span class="o">=</span> <span class="s1">&#39;lance&#39;</span>
+<span class="p">);</span>
+</code></pre></div></div><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Java API"
+    name="tabs-vector-scenario"
+    id="tabs-vector-scenario-1"
+     
+    onclick="onSwitch('Java API')"
+  />
+  <label for="tabs-vector-scenario-1">Java API</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="n">Schema</span> <span class="n">schema</span> <span class="o">=</span> <span class="n">Schema</span><span class="o">.</span><span class="na">newBuilder</span><span class="o">()</span>
+    <span class="o">.</span><span class="na">column</span><span class="o">(</span><span class="s">&#34;doc_id&#34;</span><span class="o">,</span> <span class="n">DataTypes</span><span class="o">.</span><span class="na">INT</span><span class="o">())</span>
+    <span class="o">.</span><span class="na">column</span><span class="o">(</span><span class="s">&#34;title&#34;</span><span class="o">,</span> <span class="n">DataTypes</span><span class="o">.</span><span class="na">STRING</span><span class="o">())</span>
+    <span class="o">.</span><span class="na">column</span><span class="o">(</span><span class="s">&#34;content&#34;</span><span class="o">,</span> <span class="n">DataTypes</span><span class="o">.</span><span class="na">STRING</span><span class="o">())</span>
+    <span class="o">.</span><span class="na">column</span><span class="o">(</span><span class="s">&#34;embedding&#34;</span><span class="o">,</span> <span class="n">DataTypes</span><span class="o">.</span><span class="na">VECTOR</span><span class="o">(</span><span class="n">768</span><span class="o">,</span> <span class="n">DataTypes</span><span class="o">.</span><span class="na">FLOAT</span><span class="o">()))</span>
+    <span class="o">.</span><span class="na">option</span><span class="o">(</span><span class="s">&#34;bucket&#34;</span><span class="o">,</span> <span class="s">&#34;-1&#34;</span><span class="o">)</span>
+    <span class="o">.</span><span class="na">option</span><span class="o">(</span><span class="s">&#34;row-tracking.enabled&#34;</span><span class="o">,</span> <span class="s">&#34;true&#34;</span><span class="o">)</span>
+    <span class="o">.</span><span class="na">option</span><span class="o">(</span><span class="s">&#34;data-evolution.enabled&#34;</span><span class="o">,</span> <span class="s">&#34;true&#34;</span><span class="o">)</span>
+    <span class="o">.</span><span class="na">option</span><span class="o">(</span><span class="s">&#34;global-index.enabled&#34;</span><span class="o">,</span> <span class="s">&#34;true&#34;</span><span class="o">)</span>
+    <span class="o">.</span><span class="na">option</span><span class="o">(</span><span class="s">&#34;vector.file.format&#34;</span><span class="o">,</span> <span class="s">&#34;lance&#34;</span><span class="o">)</span>
+    <span class="o">.</span><span class="na">build</span><span class="o">();</span>
+</code></pre></div></div></div>
+
+<p><strong>Build the vector index and search:</strong></p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="c1">-- Build DiskANN vector index
+</span><span class="c1"></span><span class="k">CALL</span> <span class="n">sys</span><span class="p">.</span><span class="n">create_global_index</span><span class="p">(</span>
+    <span class="k">table</span> <span class="o">=&gt;</span> <span class="s1">&#39;db.doc_embeddings&#39;</span><span class="p">,</span>
+    <span class="n">index_column</span> <span class="o">=&gt;</span> <span class="s1">&#39;embedding&#39;</span><span class="p">,</span>
+    <span class="n">index_type</span> <span class="o">=&gt;</span> <span class="s1">&#39;lumina-vector-ann&#39;</span><span class="p">,</span>
+    <span class="k">options</span> <span class="o">=&gt;</span> <span class="s1">&#39;lumina.index.dimension=768&#39;</span>
+<span class="p">);</span>
+
+<span class="c1">-- Search for top-5 nearest neighbors
+</span><span class="c1"></span><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">vector_search</span><span class="p">(</span><span class="s1">&#39;doc_embeddings&#39;</span><span class="p">,</span> <span class="s1">&#39;embedding&#39;</span><span class="p">,</span> <span class="nb">array</span><span class="p">(</span><span class="mi">0</span><span class="p">.</span><span class="mi">1</span><span class="n">f</span><span class="p">,</span> <span class="mi">0</span><span class="p">.</span><span class="mi">2</span><span class="n">f</span><span class="p">,</span> <span class="p">...),</span> <span class="mi">5</span><span class="p">);</span>
+</code></pre></div><p><strong>Why:</strong> The <a href="//paimon.apache.org/docs/master/append-table/global-index/">Global Index</a> with DiskANN provides high-performance ANN search.
+Vector data is stored in dedicated <code>.vector.lance</code> files optimized for dense vectors, while scalar columns stay in
+Parquet. You can also build a <strong>BTree Index</strong> on scalar columns for efficient filtering:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="c1">-- Build BTree index for scalar filtering
+</span><span class="c1"></span><span class="k">CALL</span> <span class="n">sys</span><span class="p">.</span><span class="n">create_global_index</span><span class="p">(</span>
+    <span class="k">table</span> <span class="o">=&gt;</span> <span class="s1">&#39;db.doc_embeddings&#39;</span><span class="p">,</span>
+    <span class="n">index_column</span> <span class="o">=&gt;</span> <span class="s1">&#39;title&#39;</span><span class="p">,</span>
+    <span class="n">index_type</span> <span class="o">=&gt;</span> <span class="s1">&#39;btree&#39;</span>
+<span class="p">);</span>
+
+<span class="c1">-- Scalar lookup is accelerated by BTree index
+</span><span class="c1"></span><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">doc_embeddings</span> <span class="k">WHERE</span> <span class="n">title</span> <span class="k">IN</span> <span class="p">(</span><span class="s1">&#39;doc_a&#39;</span><span class="p">,</span> <span class="s1">&#39;doc_b&#39;</span><span class="p">);</span>
+</code></pre></div><h3 id="scenario-10-ai-feature-engineering-with-data-evolution">
+  Scenario 10: AI Feature Engineering with Data Evolution
+  <a class="anchor" href="#scenario-10-ai-feature-engineering-with-data-evolution">#</a>
+</h3>
+<p><strong>When:</strong> You have a feature store or data pipeline where new feature columns are added frequently, and you want to
+backfill or update specific columns without rewriting entire data files.</p>
+<p><strong>Recommended Configuration:</strong></p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">feature_store</span> <span class="p">(</span>
+    <span class="n">user_id</span> <span class="nb">INT</span><span class="p">,</span>
+    <span class="n">age</span> <span class="nb">INT</span><span class="p">,</span>
+    <span class="n">gender</span> <span class="n">STRING</span><span class="p">,</span>
+    <span class="n">purchase_count</span> <span class="nb">INT</span>
+<span class="p">)</span> <span class="n">TBLPROPERTIES</span> <span class="p">(</span>
+    <span class="s1">&#39;row-tracking.enabled&#39;</span> <span class="o">=</span> <span class="s1">&#39;true&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;data-evolution.enabled&#39;</span> <span class="o">=</span> <span class="s1">&#39;true&#39;</span>
+<span class="p">);</span>
+</code></pre></div><p><strong>Update only specific columns via MERGE INTO:</strong></p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="c1">-- Later, add a new feature column
+</span><span class="c1"></span><span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">feature_store</span> <span class="k">ADD</span> <span class="n">COLUMNS</span> <span class="p">(</span><span class="n">embedding</span> <span class="nb">ARRAY</span><span class="o">&lt;</span><span class="nb">FLOAT</span><span class="o">&gt;</span><span class="p">);</span>
+
+<span class="c1">-- Backfill only the new column — no full file rewrite!
+</span><span class="c1"></span><span class="n">MERGE</span> <span class="k">INTO</span> <span class="n">feature_store</span> <span class="k">AS</span> <span class="n">t</span>
+<span class="k">USING</span> <span class="n">embedding_source</span> <span class="k">AS</span> <span class="n">s</span>
+<span class="k">ON</span> <span class="n">t</span><span class="p">.</span><span class="n">user_id</span> <span class="o">=</span> <span class="n">s</span><span class="p">.</span><span class="n">user_id</span>
+<span class="k">WHEN</span> <span class="n">MATCHED</span> <span class="k">THEN</span> <span class="k">UPDATE</span> <span class="k">SET</span> <span class="n">t</span><span class="p">.</span><span class="n">embedding</span> <span class="o">=</span> <span class="n">s</span><span class="p">.</span><span class="n">embedding</span><span class="p">;</span>
+</code></pre></div><p><strong>Why:</strong> <a href="//paimon.apache.org/docs/master/append-table/data-evolution/">Data Evolution</a> mode writes only the updated columns to new files
+and merges them at read time. This is ideal for:</p>
+<ul>
+<li>Adding new feature columns and backfilling data without rewriting the entire table.</li>
+<li>Iterative ML feature engineering — add, update, or refine features as your model evolves.</li>
+<li>Reducing I/O cost and storage overhead for frequent partial column updates.</li>
+</ul>
+<h3 id="scenario-11-python-ai-pipeline-pypaimon">
+  Scenario 11: Python AI Pipeline (PyPaimon)
+  <a class="anchor" href="#scenario-11-python-ai-pipeline-pypaimon">#</a>
+</h3>
+<p><strong>When:</strong> You are building ML training or inference pipelines in Python and need to read/write Paimon tables natively
+without JDK dependency.</p>
+<p><strong>Example: Read data for model training:</strong></p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">pypaimon</span> <span class="kn">import</span> <span class="n">CatalogFactory</span>
+<span class="kn">from</span> <span class="nn">torch.utils.data</span> <span class="kn">import</span> <span class="n">DataLoader</span>
+
+<span class="c1"># Connect to Paimon</span>
+<span class="n">catalog</span> <span class="o">=</span> <span class="n">CatalogFactory</span><span class="o">.</span><span class="n">create</span><span class="p">({</span><span class="s1">&#39;warehouse&#39;</span><span class="p">:</span> <span class="s1">&#39;s3://my-bucket/warehouse&#39;</span><span class="p">})</span>
+<span class="n">table</span> <span class="o">=</span> <span class="n">catalog</span><span class="o">.</span><span class="n">get_table</span><span class="p">(</span><span class="s1">&#39;db.feature_store&#39;</span><span class="p">)</span>
+
+<span class="c1"># Read with filter and projection</span>
+<span class="n">read_builder</span> <span class="o">=</span> <span class="n">table</span><span class="o">.</span><span class="n">new_read_builder</span><span class="p">()</span>
+<span class="n">read_builder</span> <span class="o">=</span> <span class="n">read_builder</span><span class="o">.</span><span class="n">with_projection</span><span class="p">([</span><span class="s1">&#39;user_id&#39;</span><span class="p">,</span> <span class="s1">&#39;embedding&#39;</span><span class="p">])</span>
+<span class="n">read_builder</span> <span class="o">=</span> <span class="n">read_builder</span><span class="o">.</span><span class="n">with_filter</span><span class="p">(</span>
+    <span class="n">read_builder</span><span class="o">.</span><span class="n">new_predicate_builder</span><span class="p">()</span><span class="o">.</span><span class="n">equal</span><span class="p">(</span><span class="s1">&#39;gender&#39;</span><span class="p">,</span> <span class="s1">&#39;M&#39;</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="n">splits</span> <span class="o">=</span> <span class="n">read_builder</span><span class="o">.</span><span class="n">new_scan</span><span class="p">()</span><span class="o">.</span><span class="n">plan</span><span class="p">()</span><span class="o">.</span><span class="n">splits</span><span class="p">()</span>
+<span class="n">table_read</span> <span class="o">=</span> <span class="n">read_builder</span><span class="o">.</span><span class="n">new_read</span><span class="p">()</span>
+
+<span class="c1"># Option 1: Load into PyTorch DataLoader</span>
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">table_read</span><span class="o">.</span><span class="n">to_torch</span><span class="p">(</span><span class="n">splits</span><span class="p">,</span> <span class="n">streaming</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">prefetch_concurrency</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">dataloader</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">num_workers</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">batch</span> <span class="ow">in</span> <span class="n">dataloader</span><span class="p">:</span>
+    <span class="c1"># Training loop</span>
+    <span class="k">pass</span>
+
+<span class="c1"># Option 2: Load into Ray for distributed processing</span>
+<span class="n">ray_dataset</span> <span class="o">=</span> <span class="n">table_read</span><span class="o">.</span><span class="n">to_ray</span><span class="p">(</span><span class="n">splits</span><span class="p">,</span> <span class="n">override_num_blocks</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+<span class="n">mapped</span> <span class="o">=</span> <span class="n">ray_dataset</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">row</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;feat&#39;</span><span class="p">:</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;embedding&#39;</span><span class="p">]})</span>
+
+<span class="c1"># Option 3: Load into Pandas / PyArrow</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">table_read</span><span class="o">.</span><span class="n">to_pandas</span><span class="p">(</span><span class="n">splits</span><span class="p">)</span>
+<span class="n">arrow_table</span> <span class="o">=</span> <span class="n">table_read</span><span class="o">.</span><span class="n">to_arrow</span><span class="p">(</span><span class="n">splits</span><span class="p">)</span>
+</code></pre></div><p><strong>Why:</strong> <a href="//paimon.apache.org/docs/master/pypaimon/overview/">PyPaimon</a> is a pure Python SDK (no JDK required) that integrates seamlessly
+with the Python AI ecosystem:</p>
+<ul>
+<li><strong>PyTorch</strong>: Direct <code>DataLoader</code> integration with streaming and prefetch support.</li>
+<li><strong>Ray</strong>: Distributed data processing with configurable parallelism.</li>
+<li><strong>Pandas / PyArrow</strong>: Native DataFrame and Arrow Table support for data science workflows.</li>
+<li><strong>Data Evolution</strong>: Python API supports <code>update_by_arrow_with_row_id</code> and <code>upsert_by_arrow_with_key</code> for
+row-level updates from Python. See <a href="//paimon.apache.org/docs/master/pypaimon/data-evolution/">PyPaimon Data Evolution</a>.</li>
+</ul>
+<hr>
+<h2 id="summary-table-type-decision-tree">
+  Summary: Table Type Decision Tree
+  <a class="anchor" href="#summary-table-type-decision-tree">#</a>
+</h2>
+<pre><code>Do you need upsert / update / delete?
+├── YES → Primary Key Table
+│   ├── Simple upsert (keep latest)? → merge-engine = deduplicate (default)
+│   ├── Progressive multi-column updates? → merge-engine = partial-update
+│   ├── Pre-aggregate metrics? → merge-engine = aggregation
+│   └── Dedup keep first? → merge-engine = first-row
+│
+│   Table mode:
+│   ├── Most scenarios → deletion-vectors.enabled = true (MOW, recommended)
+│   ├── Write-heavy, query-light → default MOR
+│   └── Read-heavy, batch → full-compaction.delta-commits = 1 (COW)
+│
+│   Bucket mode:
+│   ├── Most scenarios → bucket = -1 (Dynamic, default)
+│   ├── Stable workload, need bucketed join → bucket = N (Fixed)
+│   └── Unknown distribution → bucket = -2 (Postpone)
+│
+└── NO → Append Table
+    ├── Standard batch ETL? → No bucket config (unaware-bucket)
+    │   └── Need query acceleration? → Incremental Clustering or File Index
+    │
+    ├── Need bucket-key filter pushdown / join / ordered streaming?
+    │   → bucket = N, bucket-key = col (Bucketed Append)
+    │
+    └── AI / Multimodal scenarios? → Enable Data Evolution
+        ├── Store images / videos / docs? → Blob Table (blob-field)
+        ├── Vector search / RAG? → VECTOR type + Global Index (DiskANN)
+        ├── Feature engineering? → Data Evolution (MERGE INTO partial columns)
+        └── Python pipeline? → PyPaimon (Ray / PyTorch / Pandas)
+</code></pre></article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  
+
+
+
+
+<a href="//github.com/apache/paimon/edit/master/docs/content/learn-paimon/scenario-guide.md" style="color:black"><i class="fa fa-edit fa-fw"></i>Edit This Page</a>
+
+
+ 
+        
+
+
+<hr style="margin-top: 20px; border: 1px solid #e5e5e5;" />
+
+<table style="border-spacing: 10px;">
+    <tbody>
+    <tr>
+        <td colspan="2">
+            Copyright &copy; 2025 The Apache Software Foundation. Apache Paimon, Paimon, and its feather logo are
+            trademarks of The Apache Software Foundation.
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+      </footer>
+
+      
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      
+  
+
+<nav id="TableOfContents"><h3>On This Page <button class="toc" onclick="collapseToc()"><i class="fa fa-compress" aria-hidden="true"></i></button></h3>
+  <ul>
+    <li><a href="#quick-decision">Quick Decision</a></li>
+    <li><a href="#primary-key-table">Primary Key Table</a>
+      <ul>
+        <li><a href="#scenario-1-cdc-real-time-sync">Scenario 1: CDC Real-Time Sync</a></li>
+        <li><a href="#scenario-2-multi-stream-partial-column-updates">Scenario 2: Multi-Stream Partial Column Updates</a></li>
+        <li><a href="#scenario-3-streaming-aggregation--metrics">Scenario 3: Streaming Aggregation / Metrics</a></li>
+        <li><a href="#scenario-4-log-deduplication-keep-first-record">Scenario 4: Log Deduplication (Keep First Record)</a></li>
+        <li><a href="#primary-key-table-bucket-mode-comparison">Primary Key Table: Bucket Mode Comparison</a></li>
+        <li><a href="#primary-key-table-table-mode-comparison">Primary Key Table: Table Mode Comparison</a></li>
+      </ul>
+    </li>
+    <li><a href="#append-table">Append Table</a>
+      <ul>
+        <li><a href="#scenario-5-batch-etl--data-warehouse-layers-unaware-bucket">Scenario 5: Batch ETL / Data Warehouse Layers (Unaware-Bucket)</a></li>
+        <li><a href="#scenario-6-high-frequency-point-queries-bucketed-append">Scenario 6: High-Frequency Point Queries (Bucketed Append)</a></li>
+        <li><a href="#scenario-7-queue-like-ordered-streaming-bucketed-append">Scenario 7: Queue-Like Ordered Streaming (Bucketed Append)</a></li>
+        <li><a href="#append-table-bucket-mode-comparison">Append Table: Bucket Mode Comparison</a></li>
+      </ul>
+    </li>
+    <li><a href="#multimodal-data-lake">Multimodal Data Lake</a>
+      <ul>
+        <li><a href="#scenario-8-storing-multimodal-data-blob-table">Scenario 8: Storing Multimodal Data (Blob Table)</a></li>
+        <li><a href="#scenario-9-vector-search--rag-applications">Scenario 9: Vector Search / RAG Applications</a></li>
+        <li><a href="#scenario-10-ai-feature-engineering-with-data-evolution">Scenario 10: AI Feature Engineering with Data Evolution</a></li>
+        <li><a href="#scenario-11-python-ai-pipeline-pypaimon">Scenario 11: Python AI Pipeline (PyPaimon)</a></li>
+      </ul>
+    </li>
+    <li><a href="#summary-table-type-decision-tree">Summary: Table Type Decision Tree</a></li>
+  </ul>
+</nav>
+
+ 
+    </aside>
+    <aside class="expand-toc">
+      <button class="toc" onclick="expandToc()">
+        <i class="fa fa-expand" aria-hidden="true"></i>
+      </button>
+    </aside>
+    
+  </main>
+
+  
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

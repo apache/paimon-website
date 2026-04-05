@@ -1,0 +1,3139 @@
+
+<!DOCTYPE html>
+<html lang="en" dir=>
+
+<head>
+  <meta name="generator" content="Hugo 0.80.0" />
+  
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Blob Storage #  Overview #  The BLOB (Binary Large Object) type is a data type designed for storing multimodal data such as images, videos, audio files, and other large binary objects in Paimon tables. Unlike traditional BYTES type which stores binary data inline with other columns, BLOB type stores large binary data in separate files and maintains references to them, providing better performance for large objects.
+The Blob Storage is based on Data Evolution mode.">
+<meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="Blob Storage" />
+<meta property="og:description" content="Blob Storage #  Overview #  The BLOB (Binary Large Object) type is a data type designed for storing multimodal data such as images, videos, audio files, and other large binary objects in Paimon tables. Unlike traditional BYTES type which stores binary data inline with other columns, BLOB type stores large binary data in separate files and maintains references to them, providing better performance for large objects.
+The Blob Storage is based on Data Evolution mode." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="//paimon.apache.org/docs/master/append-table/blob/" />
+
+<title>Blob Storage | Apache Paimon</title>
+<link rel="manifest" href="/docs/master/manifest.json">
+<link rel="icon" href="/docs/master/favicon.png" type="image/x-icon">
+<link rel="stylesheet" href="/docs/master/book.min.3bc4108a5b57c9a7e6fcae92ff69940435f8c46c4e1e4a311aedc9b2d8e06792.css" integrity="sha256-O8QQiltXyafm/K6S/2mUBDX4xGxOHkoxGu3JstjgZ5I=">
+<script defer src="/docs/master/en.search.min.8789e37a89118606487da753d79e5a25c08abe55da642a4caf79fe618bbc41bd.js" integrity="sha256-h4njeokRhgZIfadT155aJcCKvlXaZCpMr3n&#43;YYu8Qb0="></script>
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+  
+  
+
+<link rel="stylesheet" type="text/css" href="//paimon.apache.org/docs/master/font-awesome/css/font-awesome.min.css">
+<script src="//paimon.apache.org/docs/master/js/anchor.min.js"></script>
+<script src="//paimon.apache.org/docs/master/js/flink.js"></script>
+
+
+
+  
+  <script>
+    var _paq = window._paq = window._paq || [];
+     
+     
+    _paq.push(['disableCookies']);
+     
+    _paq.push(["setDomains", ["*.flink.apache.org","*.nightlies.apache.org/flink"]]);
+    _paq.push(['trackPageView']);
+    _paq.push(['enableLinkTracking']);
+    (function() {
+      var u="//matomo.privacy.apache.org/";
+      _paq.push(['setTrackerUrl', u+'matomo.php']);
+      _paq.push(['setSiteId', '1']);
+      var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+      g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+    })();
+  </script>
+  
+</head>
+
+<body dir=>
+  
+    <input type="checkbox" class="hidden toggle" id="menu-control" />
+    <input type="checkbox" class="hidden toggle" id="toc-control" />
+  
+  <main class="container flex">
+    
+      <aside class="book-menu">
+        
+  
+
+<nav>
+
+
+<a id="logo" href="//paimon.apache.org/docs/master">
+    <img width="100%" src="//paimon.apache.org/docs/master/paimon_black.svg">
+</a>
+<p style="text-align:right">1.5-SNAPSHOT</p>
+
+<div class="book-search">
+  <input type="text" id="book-search-input" placeholder="Search" aria-label="Search" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-dc8a1c63e6da60163016ce21cae1faa0" class="toggle"  />
+    <label for="section-dc8a1c63e6da60163016ce21cae1faa0" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-book title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Concepts</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/basic-concepts/" class="">Basic Concepts</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/concurrency-control/" class="">Concurrency Control</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/catalog/" class="">Catalog</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-e03f934865df9dd3baca303554bcaa71" class="toggle"  />
+    <label for="section-e03f934865df9dd3baca303554bcaa71" class="flex justify-between">RESTCatalog<span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/rest/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/rest/bear/" class="">Bear Token</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/rest/dlf/" class="">DLF Token</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/rest/tables/" class="">Tables</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/rest/pvfs/" class="">PVFS</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/rest/rest-api/" class="">REST API</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/system-tables/" class="">System Tables</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/data-types/" class="">Data Types</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/functions/" class="">Functions</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/views/" class="">Views</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-d3e7256ce393050c572ea7bd8cc4f240" class="toggle"  />
+    <label for="section-d3e7256ce393050c572ea7bd8cc4f240" class="flex justify-between">Specification<span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/spec/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/spec/schema/" class="">Schema</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/spec/snapshot/" class="">Snapshot</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/spec/manifest/" class="">Manifest</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/spec/datafile/" class="">DataFile</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/spec/fileformat/" class="">FileFormat</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/spec/tableindex/" class="">Table Index</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/concepts/spec/fileindex/" class="">File Index</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-3f6a6d4f1692040009c66ffaa328c8d0" class="toggle"  />
+    <label for="section-3f6a6d4f1692040009c66ffaa328c8d0" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-database title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Table with PK</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/primary-key-table/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/primary-key-table/data-distribution/" class="">Data Distribution</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/primary-key-table/table-mode/" class="">Table Mode</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-038bb7d17b5b7cb93fb60acbcf218f11" class="toggle"  />
+    <label for="section-038bb7d17b5b7cb93fb60acbcf218f11" class="flex justify-between">Merge Engine<span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/primary-key-table/merge-engine/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/primary-key-table/merge-engine/partial-update/" class="">Partial Update</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/primary-key-table/merge-engine/aggregation/" class="">Aggregation</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/primary-key-table/merge-engine/first-row/" class="">First Row</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/primary-key-table/changelog-producer/" class="">Changelog Producer</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/primary-key-table/sequence-rowkind/" class="">Sequence & Rowkind</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/primary-key-table/compaction/" class="">Compaction</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/primary-key-table/query-performance/" class="">Query Performance</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/primary-key-table/chain-table/" class="">Chain Table</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/primary-key-table/pk-clustering-override/" class="">PK Clustering Override</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-f74847e1c917ba2b99e7b718bb318b30" class="toggle" checked />
+    <label for="section-f74847e1c917ba2b99e7b718bb318b30" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-database title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Table w/o PK</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/append-table/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/append-table/incremental-clustering/" class="">Incremental Clustering</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/append-table/bucketed/" class="">Bucketed</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/append-table/row-tracking/" class="">Row Tracking</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/append-table/data-evolution/" class="">Data Evolution</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/append-table/blob/" class=" active">Blob Storage</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/append-table/vector/" class="">Vector Storage</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/append-table/global-index/" class="">Global Index</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-998a37410d502937fe8444ed73a9ecf8" class="toggle"  />
+    <label for="section-998a37410d502937fe8444ed73a9ecf8" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-gear title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Engine Flink</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/flink/quick-start/" class="">Quick Start</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/flink/sql-ddl/" class="">SQL DDL</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/flink/sql-write/" class="">SQL Write</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/flink/sql-query/" class="">SQL Query</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/flink/consumer-id/" class="">Consumer ID</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/flink/sql-lookup/" class="">SQL Lookup</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/flink/sql-alter/" class="">SQL Alter</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/flink/default-value/" class="">Default Value</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/flink/procedures/" class="">Procedures</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/flink/action-jars/" class="">Action Jars</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/flink/savepoint/" class="">Savepoint</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-74c63bf75b4f6bd14a3ea6a1217f03ad" class="toggle"  />
+    <label for="section-74c63bf75b4f6bd14a3ea6a1217f03ad" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-gear title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Engine Spark</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/spark/quick-start/" class="">Quick Start</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/spark/sql-ddl/" class="">SQL DDL</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/spark/sql-functions/" class="">SQL Functions</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/spark/sql-write/" class="">SQL Write</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/spark/sql-query/" class="">SQL Query</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/spark/sql-alter/" class="">SQL Alter</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/spark/auxiliary/" class="">Auxiliary</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/spark/default-value/" class="">Default Value</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/spark/dataframe/" class="">DataFrame</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/spark/sql-upsert/" class="">SQL Upsert</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/spark/structured-streaming/" class="">Structured Streaming</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/spark/procedures/" class="">Procedures</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-16bf9de4e97c50dda6ce1ac6e934602c" class="toggle"  />
+    <label for="section-16bf9de4e97c50dda6ce1ac6e934602c" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-gear title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Ecosystem</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/ecosystem/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/ecosystem/starrocks/" class="">StarRocks</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/ecosystem/doris/" class="">Doris</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/ecosystem/hive/" class="">Hive</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/ecosystem/trino/" class="">Trino</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/ecosystem/amoro/" class="">Amoro</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-582e435c19ca5fafbf9764337d648e63" class="toggle"  />
+    <label for="section-582e435c19ca5fafbf9764337d648e63" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-gear title maindish" aria-hidden="true"></i>&nbsp;&nbsp;CDC Ingestion</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/cdc-ingestion/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/cdc-ingestion/mysql-cdc/" class="">Mysql CDC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/cdc-ingestion/postgres-cdc/" class="">Postgres CDC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/cdc-ingestion/kafka-cdc/" class="">Kafka CDC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/cdc-ingestion/mongo-cdc/" class="">Mongo CDC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/cdc-ingestion/pulsar-cdc/" class="">Pulsar CDC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/cdc-ingestion/flink-cdc/" class="">Flink CDC</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-697a4b6a0388d6cfa4f418aba3b4edfe" class="toggle"  />
+    <label for="section-697a4b6a0388d6cfa4f418aba3b4edfe" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-wrench title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Maintenance</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/maintenance/filesystems/" class="">Filesystems</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/maintenance/write-performance/" class="">Write Performance</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/maintenance/dedicated-compaction/" class="">Dedicated Compaction</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/maintenance/manage-snapshots/" class="">Manage Snapshots</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/maintenance/rescale-bucket/" class="">Rescale Bucket</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/maintenance/manage-tags/" class="">Manage Tags</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/maintenance/metrics/" class="">Metrics</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/maintenance/manage-privileges/" class="">Manage Privileges</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/maintenance/manage-branches/" class="">Manage Branches</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/maintenance/manage-partitions/" class="">Manage Partitions</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/maintenance/configurations/" class="">Configurations</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-049030059e0dc01edf74ba3d4d259dae" class="toggle"  />
+    <label for="section-049030059e0dc01edf74ba3d4d259dae" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-briefcase title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Program API</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/program-api/rest-api/" class="">REST API</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/program-api/flink-api/" class="">Flink API</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/program-api/java-api/" class="">Java API</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/program-api/catalog-api/" class="">Catalog API</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/program-api/cpp-api/" class="">Cpp API</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/program-api/rust-api/" class="">Rust API</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-a6ea2e2b6bd9ce399341429eea9e9b98" class="toggle"  />
+    <label for="section-a6ea2e2b6bd9ce399341429eea9e9b98" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-briefcase title maindish" aria-hidden="true"></i>&nbsp;&nbsp;PyPaimon</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/pypaimon/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/pypaimon/python-api/" class="">Python API</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/pypaimon/manage-tags/" class="">Manage Tags</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/pypaimon/ray-data/" class="">Ray Data</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/pypaimon/pytorch/" class="">PyTorch</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/pypaimon/data-evolution/" class="">Data Evolution</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/pypaimon/fuse-support/" class="">FUSE Support</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/pypaimon/pyjindosdk-support/" class="">PyJindoSDK Support</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/pypaimon/cli/" class="">Command Line Interface</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-07c567e5a9f3ce62aea4ff0a1e2dc065" class="toggle"  />
+    <label for="section-07c567e5a9f3ce62aea4ff0a1e2dc065" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-briefcase title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Migration</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/migration/migration-from-hive/" class="">Migration From Hive</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/migration/upsert-to-partitioned/" class="">Upsert To Partitioned</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/migration/clone-to-paimon/" class="">Clone To Paimon</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-dc2f2ba83b7db3b9bfa35da4c73572d2" class="toggle"  />
+    <label for="section-dc2f2ba83b7db3b9bfa35da4c73572d2" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-briefcase title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Iceberg Metadata</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/iceberg/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/iceberg/append-table/" class="">Append Table</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/iceberg/primary-key-table/" class="">Primary Key Table</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/iceberg/iceberg-tags/" class="">Iceberg Tags</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/iceberg/hive-catalog/" class="">Hive Catalogs</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/iceberg/rest-catalog/" class="">Rest Catalog</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/iceberg/ecosystem/" class="">Ecosystem</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/iceberg/configurations/" class="">Configurations</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  	<br/>
+  
+  
+    <input type="checkbox" id="section-8c828bcf882f666cdd6821a70cc768ee" class="toggle"  />
+    <label for="section-8c828bcf882f666cdd6821a70cc768ee" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-sitemap title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Project</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/project/download/" class="">Download</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/project/contributing/" class="">Contributing</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/project/committer/" class="">Committer</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-392fc6f653ae23ff676811656a71ebbf" class="toggle"  />
+    <label for="section-392fc6f653ae23ff676811656a71ebbf" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-sitemap title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Learn Paimon</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/learn-paimon/understand-files/" class="">Understand Files</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/master/learn-paimon/scenario-guide/" class="">Scenario Guide</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br/>
+<hr class="menu-break">
+
+<a href="//paimon.apache.org" style="color:black;margin-bottom:0.5em"><i class="link fa fa-external-link title" aria-hidden="true"></i> Project Homepage</a>
+<br/>
+
+<a href="//paimon.apache.org/docs/master/api/java/" style="color:black;margin-bottom:0.5em"><i class="link fa fa-external-link title" aria-hidden="true"></i> JavaDocs</a>
+<br/>
+
+<hr class="menu-break">
+<li style="list-style-type: none">
+  <br>
+  <input type="checkbox" id="section-version-picker" class="toggle">
+  <label for="section-version-picker" class="flex justify-between">
+     <div style="font-weight:450;margin-bottom:0.5em">Pick Docs Version</div>
+     <span>▾</span>
+  </label>
+  <ul>
+    <a href="//paimon.apache.org/docs/master">
+      1.5-SNAPSHOT (✓)
+    </a>
+    <hr class="menu-break">
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/master">
+          master
+        </a>
+      </li>
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/1.4">
+          stable
+        </a>
+      </li>
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/1.4">
+          1.4
+        </a>
+      </li>
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/1.3">
+          1.3
+        </a>
+      </li>
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/1.2">
+          1.2
+        </a>
+      </li>
+    
+    <hr class="menu-break">
+    <li>
+      <a href="//paimon.apache.org/docs/master/versions">
+          All Versions
+      </a>
+    </li>
+  </ul>
+</li>
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var menu=document.querySelector("aside.book-menu nav");addEventListener("beforeunload",function(event){localStorage.setItem("menu.scrollTop",menu.scrollTop);});menu.scrollTop=localStorage.getItem("menu.scrollTop");})();</script>
+
+
+ 
+      </aside>
+    
+
+    <div class="book-page">
+      
+        <header class="book-header">
+          
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/docs/master/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <strong>Blob Storage</strong>
+
+  <label for="toc-control">
+    
+    <img src="/docs/master/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden clearfix">
+    
+  
+
+<nav id="TableOfContents"><h3>On This Page <button class="toc" onclick="collapseToc()"><i class="fa fa-compress" aria-hidden="true"></i></button></h3>
+  <ul>
+    <li><a href="#overview">Overview</a></li>
+    <li><a href="#storage-layout">Storage Layout</a></li>
+    <li><a href="#storage-modes">Storage Modes</a></li>
+    <li><a href="#table-options">Table Options</a></li>
+    <li><a href="#sql-usage">SQL Usage</a>
+      <ul>
+        <li><a href="#creating-a-table">Creating a Table</a></li>
+        <li><a href="#inserting-blob-data">Inserting Blob Data</a></li>
+        <li><a href="#querying-blob-data">Querying Blob Data</a></li>
+        <li><a href="#blob-read-output-mode-blob-as-descriptor">Blob Read Output Mode (<code>blob-as-descriptor</code>)</a></li>
+        <li><a href="#external-storage-descriptor-fields">External-Storage Descriptor Fields</a></li>
+        <li><a href="#merge-into-support">MERGE INTO Support</a></li>
+      </ul>
+    </li>
+    <li><a href="#java-api-usage">Java API Usage</a>
+      <ul>
+        <li><a href="#creating-a-table-1">Creating a Table</a></li>
+        <li><a href="#construct-blob-from-different-sources">Construct blob from different sources</a></li>
+        <li><a href="#querying-blob-data-1">Querying Blob Data</a></li>
+        <li><a href="#descriptor-aware-write-behavior">Descriptor-Aware Write Behavior</a></li>
+        <li><a href="#blob-storage-mode-descriptor-only">Blob storage mode: DESCRIPTOR ONLY</a></li>
+        <li><a href="#blob-storage-mode-external-storage">Blob storage mode: EXTERNAL STORAGE</a></li>
+      </ul>
+    </li>
+    <li><a href="#limitations">Limitations</a></li>
+    <li><a href="#best-practices">Best Practices</a></li>
+  </ul>
+</nav>
+
+
+  </aside>
+  
+ 
+        </header>
+      
+
+      
+
+
+
+
+<article class="markdown">
+    <blockquote style="border-color:#f66">
+        This documentation is for an unreleased version of Apache Paimon. We recommend you use the latest <a href="https://paimon.apache.org/docs/1.4">stable version</a>.
+    </blockquote>
+</article>
+
+
+
+      
+  <article class="markdown"><!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<h1 id="blob-storage">
+  Blob Storage
+  <a class="anchor" href="#blob-storage">#</a>
+</h1>
+<h2 id="overview">
+  Overview
+  <a class="anchor" href="#overview">#</a>
+</h2>
+<p>The <code>BLOB</code> (Binary Large Object) type is a data type designed for storing multimodal data such as images, videos, audio files, and other large binary objects in Paimon tables. Unlike traditional <code>BYTES</code> type which stores binary data inline with other columns, <code>BLOB</code> type stores large binary data in separate files and maintains references to them, providing better performance for large objects.</p>
+<p>The Blob Storage is based on Data Evolution mode.</p>
+<p>The Blob type is ideal for:</p>
+<ul>
+<li><strong>Image Storage</strong>: Store product images, user avatars, medical imaging data</li>
+<li><strong>Video Content</strong>: Store video clips, surveillance footage, multimedia content</li>
+<li><strong>Audio Files</strong>: Store voice recordings, music files, podcast episodes</li>
+<li><strong>Document Storage</strong>: Store PDF documents, office files, large text files</li>
+<li><strong>Machine Learning</strong>: Store embeddings, model weights, feature vectors</li>
+<li><strong>Any Large Binary Data</strong>: Any data that is too large to store efficiently inline</li>
+</ul>
+<h2 id="storage-layout">
+  Storage Layout
+  <a class="anchor" href="#storage-layout">#</a>
+</h2>
+<p>When you define a table with a Blob column, Paimon automatically separates the storage:</p>
+<ol>
+<li><strong>Normal Data Files</strong> (e.g., <code>.parquet</code>, <code>.orc</code>): Store regular columns (INT, STRING, etc.)</li>
+<li><strong>Blob Data Files</strong> (<code>.blob</code>): Store the actual blob data</li>
+</ol>
+<p>For example, given a table with schema <code>(id INT, name STRING, picture BLOB)</code>:</p>
+<pre><code>table/
+├── bucket-0/
+│   ├── data-uuid-0.parquet      # Contains id, name columns
+│   ├── data-uuid-1.blob         # Contains picture blob data
+│   ├── data-uuid-2.blob         # Contains more picture blob data
+│   └── ...
+├── manifest/
+├── schema/
+└── snapshot/
+</code></pre><p>This separation provides several benefits:</p>
+<ul>
+<li>Efficient column projection (reading non-blob columns doesn&rsquo;t load blob data)</li>
+<li>Optimized file rolling based on blob size</li>
+<li>Better compression for regular columnar data</li>
+</ul>
+<p>For details about the blob file format structure, see <a href="//paimon.apache.org/docs/master/concepts/spec/fileformat/#blob">File Format - BLOB</a>.</p>
+<h2 id="storage-modes">
+  Storage Modes
+  <a class="anchor" href="#storage-modes">#</a>
+</h2>
+<p>Paimon supports three storage modes for BLOB fields:</p>
+<ol>
+<li>
+<p><strong>Default blob storage</strong>
+Blob bytes are written to Paimon-managed <code>.blob</code> files under the table path.</p>
+</li>
+<li>
+<p><strong>Descriptor-only storage</strong>
+Fields configured in <code>blob-descriptor-field</code> store only serialized <code>BlobDescriptor</code> bytes inline in data files. Paimon does not write <code>.blob</code> files for these fields, and writes must provide descriptor-based input.</p>
+</li>
+<li>
+<p><strong>External-storage descriptor mode</strong>
+Fields configured in <code>blob-external-storage-field</code> are a subset of <code>blob-descriptor-field</code>. At write time, Paimon writes the raw blob data to the configured <code>blob-external-storage-path</code> and stores only serialized <code>BlobDescriptor</code> bytes inline in data files.</p>
+</li>
+</ol>
+<p>This allows one table to mix raw-data BLOB fields, descriptor-only BLOB fields, and descriptor-based BLOB fields backed by external storage.</p>
+<h2 id="table-options">
+  Table Options
+  <a class="anchor" href="#table-options">#</a>
+</h2>
+<table class="table table-bordered">
+    <thead>
+      <tr>
+        <th class="text-left" style="width: 25%">Option</th>
+        <th class="text-center" style="width: 8%">Required</th>
+        <th class="text-center" style="width: 7%">Default</th>
+        <th class="text-center" style="width: 10%">Type</th>
+        <th class="text-center" style="width: 50%">Description</th>
+      </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td><h5>blob-field</h5></td>
+      <td>No</td>
+      <td style="word-wrap: break-word;">(none)</td>
+      <td>String</td>
+      <td>Specifies column names that should be stored as blob type. This is used when you want to treat a BYTES column as a BLOB.</td>
+    </tr>
+    <tr>
+      <td><h5>blob-as-descriptor</h5></td>
+      <td>No</td>
+      <td style="word-wrap: break-word;">false</td>
+      <td>Boolean</td>
+      <td>Controls read output format for blob fields. When set to true, queries return serialized BlobDescriptor bytes; when false, queries return actual blob bytes. This option is dynamic and can be changed with <code>ALTER TABLE ... SET</code>.</td>
+    </tr>
+    <tr>
+      <td><h5>blob-descriptor-field</h5></td>
+      <td>No</td>
+      <td style="word-wrap: break-word;">(none)</td>
+      <td>String</td>
+      <td>
+        Comma-separated BLOB field names stored as serialized <code>BlobDescriptor</code> bytes inline in normal data files.
+        By default, all blob fields store blob bytes in separate <code>.blob</code> files.
+        If configured, one table can mix:
+        some BLOB fields in <code>.blob</code> files and some as descriptor references.
+      </td>
+    </tr>
+    <tr>
+      <td><h5>blob-external-storage-field</h5></td>
+      <td>No</td>
+      <td style="word-wrap: break-word;">(none)</td>
+      <td>String</td>
+      <td>
+        Comma-separated BLOB field names whose raw data should be written to external storage at write time.
+        This option must be a subset of <code>blob-descriptor-field</code>.
+        For these fields, Paimon stores serialized <code>BlobDescriptor</code> bytes inline in data files.
+      </td>
+    </tr>
+    <tr>
+      <td><h5>blob-external-storage-path</h5></td>
+      <td>No</td>
+      <td style="word-wrap: break-word;">(none)</td>
+      <td>String</td>
+      <td>
+        External storage path used by fields configured in <code>blob-external-storage-field</code>.
+        Orphan file cleanup is not applied to this path.
+      </td>
+    </tr>
+    <tr>
+      <td><h5>blob.target-file-size</h5></td>
+      <td>No</td>
+      <td style="word-wrap: break-word;">(same as target-file-size)</td>
+      <td>MemorySize</td>
+      <td>Target size for blob files. When a blob file reaches this size, a new file is created. If not specified, uses the same value as <code>target-file-size</code>.</td>
+    </tr>
+    <tr>
+      <td><h5>row-tracking.enabled</h5></td>
+      <td>Yes*</td>
+      <td style="word-wrap: break-word;">false</td>
+      <td>Boolean</td>
+      <td>Must be enabled for blob tables to support row-level operations.</td>
+    </tr>
+    <tr>
+      <td><h5>data-evolution.enabled</h5></td>
+      <td>Yes*</td>
+      <td style="word-wrap: break-word;">false</td>
+      <td>Boolean</td>
+      <td>Must be enabled for blob tables to support schema evolution.</td>
+    </tr>
+    </tbody>
+</table>
+<p>*Required for blob functionality to work correctly.</p>
+<p>Specifically, if the storage system of the input BlobDescriptor differs from that used by Paimon,
+you can specify the storage configuration for the input blob descriptor using the prefix
+<code>blob-descriptor.</code>. For example, if the source data is stored in a different OSS endpoint,
+you can configure it as below (using flink sql as an example):</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">image_table</span> <span class="p">(</span>
+    <span class="n">id</span> <span class="nb">INT</span><span class="p">,</span>
+    <span class="n">name</span> <span class="n">STRING</span><span class="p">,</span>
+    <span class="n">image</span> <span class="n">BYTES</span>
+<span class="p">)</span> <span class="k">WITH</span> <span class="p">(</span>
+    <span class="s1">&#39;row-tracking.enabled&#39;</span> <span class="o">=</span> <span class="s1">&#39;true&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;data-evolution.enabled&#39;</span> <span class="o">=</span> <span class="s1">&#39;true&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;blob-field&#39;</span> <span class="o">=</span> <span class="s1">&#39;image&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;fs.oss.endpoint&#39;</span> <span class="o">=</span> <span class="s1">&#39;aaa&#39;</span><span class="p">,</span>                   <span class="c1">-- This is for Paimon&#39;s own config
+</span><span class="c1"></span>    <span class="s1">&#39;blob-descriptor.fs.oss.endpoint&#39;</span> <span class="o">=</span> <span class="s1">&#39;bbb&#39;</span>    <span class="c1">-- This is for input blob descriptors&#39; config
+</span><span class="c1"></span><span class="p">);</span>
+</code></pre></div><h2 id="sql-usage">
+  SQL Usage
+  <a class="anchor" href="#sql-usage">#</a>
+</h2>
+<h3 id="creating-a-table">
+  Creating a Table
+  <a class="anchor" href="#creating-a-table">#</a>
+</h3>
+
+
+
+
+
+<div class="book-tabs"><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Flink SQL"
+    name="tabs-blob-create-table"
+    id="tabs-blob-create-table-0"
+    checked="checked" 
+    onclick="onSwitch('Flink SQL')"
+  />
+  <label for="tabs-blob-create-table-0">Flink SQL</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="c1">-- Create a table with a blob field
+</span><span class="c1">-- Note: In Flink SQL, use BYTES type and specify blob-field option
+</span><span class="c1"></span><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">image_table</span> <span class="p">(</span>
+    <span class="n">id</span> <span class="nb">INT</span><span class="p">,</span>
+    <span class="n">name</span> <span class="n">STRING</span><span class="p">,</span>
+    <span class="n">image</span> <span class="n">BYTES</span>
+<span class="p">)</span> <span class="k">WITH</span> <span class="p">(</span>
+    <span class="s1">&#39;row-tracking.enabled&#39;</span> <span class="o">=</span> <span class="s1">&#39;true&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;data-evolution.enabled&#39;</span> <span class="o">=</span> <span class="s1">&#39;true&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;blob-field&#39;</span> <span class="o">=</span> <span class="s1">&#39;image&#39;</span>
+<span class="p">);</span>
+</code></pre></div></div><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Spark SQL"
+    name="tabs-blob-create-table"
+    id="tabs-blob-create-table-1"
+     
+    onclick="onSwitch('Spark SQL')"
+  />
+  <label for="tabs-blob-create-table-1">Spark SQL</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="c1">-- Create a table with a blob field
+</span><span class="c1">-- Note: In Spark SQL, use BINARY type and specify blob-field option
+</span><span class="c1"></span><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">image_table</span> <span class="p">(</span>
+    <span class="n">id</span> <span class="nb">INT</span><span class="p">,</span>
+    <span class="n">name</span> <span class="n">STRING</span><span class="p">,</span>
+    <span class="n">image</span> <span class="nb">BINARY</span>
+<span class="p">)</span> <span class="n">TBLPROPERTIES</span> <span class="p">(</span>
+    <span class="s1">&#39;row-tracking.enabled&#39;</span> <span class="o">=</span> <span class="s1">&#39;true&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;data-evolution.enabled&#39;</span> <span class="o">=</span> <span class="s1">&#39;true&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;blob-field&#39;</span> <span class="o">=</span> <span class="s1">&#39;image&#39;</span>
+<span class="p">);</span>
+</code></pre></div></div></div>
+
+<h3 id="inserting-blob-data">
+  Inserting Blob Data
+  <a class="anchor" href="#inserting-blob-data">#</a>
+</h3>
+
+
+
+
+
+<div class="book-tabs"><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Flink SQL"
+    name="tabs-blob-insert"
+    id="tabs-blob-insert-0"
+    checked="checked" 
+    onclick="onSwitch('Flink SQL')"
+  />
+  <label for="tabs-blob-insert-0">Flink SQL</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="c1">-- Insert data with inline blob bytes
+</span><span class="c1"></span><span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">image_table</span> <span class="k">VALUES</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;sample&#39;</span><span class="p">,</span> <span class="n">X</span><span class="s1">&#39;89504E470D0A1A0A&#39;</span><span class="p">);</span>
+
+<span class="c1">-- Insert from another table
+</span><span class="c1"></span><span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">image_table</span>
+<span class="k">SELECT</span> <span class="n">id</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">content</span> <span class="k">FROM</span> <span class="n">source_table</span><span class="p">;</span>
+</code></pre></div></div><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Spark SQL"
+    name="tabs-blob-insert"
+    id="tabs-blob-insert-1"
+     
+    onclick="onSwitch('Spark SQL')"
+  />
+  <label for="tabs-blob-insert-1">Spark SQL</label>
+  <div class="book-tabs-content markdown-inner"><div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="c1">-- Insert data with inline blob bytes
+</span><span class="c1"></span><span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">image_table</span> <span class="k">VALUES</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;sample&#39;</span><span class="p">,</span> <span class="n">X</span><span class="s1">&#39;89504E470D0A1A0A&#39;</span><span class="p">);</span>
+</code></pre></div></div></div>
+
+<h3 id="querying-blob-data">
+  Querying Blob Data
+  <a class="anchor" href="#querying-blob-data">#</a>
+</h3>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="c1">-- Select all columns including blob
+</span><span class="c1"></span><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">image_table</span><span class="p">;</span>
+
+<span class="c1">-- Select only non-blob columns (efficient - doesn&#39;t load blob data)
+</span><span class="c1"></span><span class="k">SELECT</span> <span class="n">id</span><span class="p">,</span> <span class="n">name</span> <span class="k">FROM</span> <span class="n">image_table</span><span class="p">;</span>
+
+<span class="c1">-- Select specific rows with blob
+</span><span class="c1"></span><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">image_table</span> <span class="k">WHERE</span> <span class="n">id</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+</code></pre></div><h3 id="blob-read-output-mode-blob-as-descriptor">
+  Blob Read Output Mode (<code>blob-as-descriptor</code>)
+  <a class="anchor" href="#blob-read-output-mode-blob-as-descriptor">#</a>
+</h3>
+<p><code>blob-as-descriptor</code> only controls how blob values are returned when reading.</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="c1">-- Return descriptor bytes
+</span><span class="c1"></span><span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">blob_table</span> <span class="k">SET</span> <span class="p">(</span><span class="s1">&#39;blob-as-descriptor&#39;</span> <span class="o">=</span> <span class="s1">&#39;true&#39;</span><span class="p">);</span>
+<span class="k">SELECT</span> <span class="n">image</span> <span class="k">FROM</span> <span class="n">blob_table</span><span class="p">;</span>
+
+<span class="c1">-- Return actual blob bytes
+</span><span class="c1"></span><span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">blob_table</span> <span class="k">SET</span> <span class="p">(</span><span class="s1">&#39;blob-as-descriptor&#39;</span> <span class="o">=</span> <span class="s1">&#39;false&#39;</span><span class="p">);</span>
+<span class="k">SELECT</span> <span class="n">image</span> <span class="k">FROM</span> <span class="n">blob_table</span><span class="p">;</span>
+</code></pre></div><h3 id="external-storage-descriptor-fields">
+  External-Storage Descriptor Fields
+  <a class="anchor" href="#external-storage-descriptor-fields">#</a>
+</h3>
+<p>If you want Paimon to accept raw BLOB input, write the data to an external location, and store only descriptor bytes inline, configure the target field(s) like this:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="s1">&#39;blob-descriptor-field&#39;</span> <span class="o">=</span> <span class="s1">&#39;image&#39;</span><span class="p">,</span>
+<span class="s1">&#39;blob-external-storage-field&#39;</span> <span class="o">=</span> <span class="s1">&#39;image&#39;</span><span class="p">,</span>
+<span class="s1">&#39;blob-external-storage-path&#39;</span> <span class="o">=</span> <span class="s1">&#39;s3://my-bucket/paimon-external-blobs/&#39;</span>
+</code></pre></div><p>For these configured fields:</p>
+<ul>
+<li>Paimon writes the raw blob data to <code>blob-external-storage-path</code></li>
+<li>Paimon stores serialized <code>BlobDescriptor</code> bytes inline in normal data files</li>
+<li>the field remains descriptor-based when reading and updating</li>
+<li>orphan file cleanup is not applied to the external storage path</li>
+</ul>
+<h3 id="merge-into-support">
+  MERGE INTO Support
+  <a class="anchor" href="#merge-into-support">#</a>
+</h3>
+<p>For Data Evolution writes in Flink and Spark:</p>
+<ul>
+<li>raw-data BLOB columns are still rejected in partial-column <code>MERGE INTO</code> updates</li>
+<li>descriptor-based BLOB columns are allowed</li>
+<li>fields configured in <code>blob-external-storage-field</code> are also allowed because they are descriptor-based fields</li>
+</ul>
+<h2 id="java-api-usage">
+  Java API Usage
+  <a class="anchor" href="#java-api-usage">#</a>
+</h2>
+<h3 id="creating-a-table-1">
+  Creating a Table
+  <a class="anchor" href="#creating-a-table-1">#</a>
+</h3>
+<p>The following example demonstrates how to create a table with a blob column, write blob data, and read it back using Paimon&rsquo;s Java API.</p>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="kn">import</span> <span class="nn">org.apache.paimon.catalog.Catalog</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.paimon.catalog.CatalogContext</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.paimon.catalog.CatalogFactory</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.paimon.catalog.Identifier</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.paimon.CoreOptions</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.paimon.data.BinaryString</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.paimon.data.Blob</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.paimon.data.BlobData</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.paimon.data.GenericRow</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.paimon.data.InternalRow</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.paimon.fs.Path</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.paimon.fs.SeekableInputStream</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.paimon.reader.RecordReader</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.paimon.schema.Schema</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.paimon.table.Table</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.paimon.table.sink.BatchTableCommit</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.paimon.table.sink.BatchTableWrite</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.paimon.table.sink.BatchWriteBuilder</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.paimon.table.source.ReadBuilder</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.paimon.types.DataTypes</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">java.io.ByteArrayInputStream</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.nio.file.Files</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">BlobTableExample</span> <span class="o">{</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+        <span class="c1">// 1. Create catalog
+</span><span class="c1"></span>        <span class="n">Path</span> <span class="n">warehouse</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Path</span><span class="o">(</span><span class="s">&#34;/tmp/paimon-warehouse&#34;</span><span class="o">);</span>
+        <span class="n">Catalog</span> <span class="n">catalog</span> <span class="o">=</span> <span class="n">CatalogFactory</span><span class="o">.</span><span class="na">createCatalog</span><span class="o">(</span><span class="n">CatalogContext</span><span class="o">.</span><span class="na">create</span><span class="o">(</span><span class="n">warehouse</span><span class="o">));</span>
+        <span class="n">catalog</span><span class="o">.</span><span class="na">createDatabase</span><span class="o">(</span><span class="s">&#34;my_db&#34;</span><span class="o">,</span> <span class="kc">true</span><span class="o">);</span>
+
+        <span class="c1">// 2. Define schema with BLOB column
+</span><span class="c1"></span>        <span class="n">Schema</span> <span class="n">schema</span> <span class="o">=</span> <span class="n">Schema</span><span class="o">.</span><span class="na">newBuilder</span><span class="o">()</span>
+                <span class="o">.</span><span class="na">column</span><span class="o">(</span><span class="s">&#34;id&#34;</span><span class="o">,</span> <span class="n">DataTypes</span><span class="o">.</span><span class="na">INT</span><span class="o">())</span>
+                <span class="o">.</span><span class="na">column</span><span class="o">(</span><span class="s">&#34;name&#34;</span><span class="o">,</span> <span class="n">DataTypes</span><span class="o">.</span><span class="na">STRING</span><span class="o">())</span>
+                <span class="o">.</span><span class="na">column</span><span class="o">(</span><span class="s">&#34;image&#34;</span><span class="o">,</span> <span class="n">DataTypes</span><span class="o">.</span><span class="na">BLOB</span><span class="o">())</span>  <span class="c1">// Blob column for storing images
+</span><span class="c1"></span>                <span class="o">.</span><span class="na">option</span><span class="o">(</span><span class="n">CoreOptions</span><span class="o">.</span><span class="na">ROW_TRACKING_ENABLED</span><span class="o">.</span><span class="na">key</span><span class="o">(),</span> <span class="s">&#34;true&#34;</span><span class="o">)</span>
+                <span class="o">.</span><span class="na">option</span><span class="o">(</span><span class="n">CoreOptions</span><span class="o">.</span><span class="na">DATA_EVOLUTION_ENABLED</span><span class="o">.</span><span class="na">key</span><span class="o">(),</span> <span class="s">&#34;true&#34;</span><span class="o">)</span>
+                <span class="o">.</span><span class="na">build</span><span class="o">();</span>
+
+        <span class="c1">// 3. Create table
+</span><span class="c1"></span>        <span class="n">Identifier</span> <span class="n">tableId</span> <span class="o">=</span> <span class="n">Identifier</span><span class="o">.</span><span class="na">create</span><span class="o">(</span><span class="s">&#34;my_db&#34;</span><span class="o">,</span> <span class="s">&#34;image_table&#34;</span><span class="o">);</span>
+        <span class="n">catalog</span><span class="o">.</span><span class="na">createTable</span><span class="o">(</span><span class="n">tableId</span><span class="o">,</span> <span class="n">schema</span><span class="o">,</span> <span class="kc">true</span><span class="o">);</span>
+        <span class="n">Table</span> <span class="n">table</span> <span class="o">=</span> <span class="n">catalog</span><span class="o">.</span><span class="na">getTable</span><span class="o">(</span><span class="n">tableId</span><span class="o">);</span>
+
+        <span class="c1">// 4. Write blob data
+</span><span class="c1"></span>        <span class="n">writeBlobData</span><span class="o">(</span><span class="n">table</span><span class="o">);</span>
+
+        <span class="c1">// 5. Read blob data back
+</span><span class="c1"></span>        <span class="n">readBlobData</span><span class="o">(</span><span class="n">table</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">writeBlobData</span><span class="o">(</span><span class="n">Table</span> <span class="n">table</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+        <span class="n">BatchWriteBuilder</span> <span class="n">writeBuilder</span> <span class="o">=</span> <span class="n">table</span><span class="o">.</span><span class="na">newBatchWriteBuilder</span><span class="o">();</span>
+
+        <span class="k">try</span> <span class="o">(</span><span class="n">BatchTableWrite</span> <span class="n">write</span> <span class="o">=</span> <span class="n">writeBuilder</span><span class="o">.</span><span class="na">newWrite</span><span class="o">();</span>
+             <span class="n">BatchTableCommit</span> <span class="n">commit</span> <span class="o">=</span> <span class="n">writeBuilder</span><span class="o">.</span><span class="na">newCommit</span><span class="o">())</span> <span class="o">{</span>
+
+            <span class="c1">// Method 1: Create blob from byte array
+</span><span class="c1"></span>            <span class="kt">byte</span><span class="o">[]</span> <span class="n">imageBytes</span> <span class="o">=</span> <span class="n">loadImageBytes</span><span class="o">(</span><span class="s">&#34;/path/to/image1.png&#34;</span><span class="o">);</span>
+            <span class="n">GenericRow</span> <span class="n">row1</span> <span class="o">=</span> <span class="n">GenericRow</span><span class="o">.</span><span class="na">of</span><span class="o">(</span>
+                    <span class="n">1</span><span class="o">,</span>
+                    <span class="n">BinaryString</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">&#34;image1&#34;</span><span class="o">),</span>
+                    <span class="k">new</span> <span class="n">BlobData</span><span class="o">(</span><span class="n">imageBytes</span><span class="o">)</span>
+            <span class="o">);</span>
+            <span class="n">write</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="n">row1</span><span class="o">);</span>
+
+            <span class="c1">// Method 2: Create blob from local file
+</span><span class="c1"></span>            <span class="n">GenericRow</span> <span class="n">row2</span> <span class="o">=</span> <span class="n">GenericRow</span><span class="o">.</span><span class="na">of</span><span class="o">(</span>
+                    <span class="n">2</span><span class="o">,</span>
+                    <span class="n">BinaryString</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">&#34;image2&#34;</span><span class="o">),</span>
+                    <span class="n">Blob</span><span class="o">.</span><span class="na">fromLocal</span><span class="o">(</span><span class="s">&#34;/path/to/image2.png&#34;</span><span class="o">)</span>
+            <span class="o">);</span>
+            <span class="n">write</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="n">row2</span><span class="o">);</span>
+
+            <span class="c1">// Method 3: Create blob from InputStream (useful for streaming data)
+</span><span class="c1"></span>            <span class="kt">byte</span><span class="o">[]</span> <span class="n">streamData</span> <span class="o">=</span> <span class="n">loadImageBytes</span><span class="o">(</span><span class="s">&#34;/path/to/image3.png&#34;</span><span class="o">);</span>
+            <span class="n">ByteArrayInputStream</span> <span class="n">inputStream</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ByteArrayInputStream</span><span class="o">(</span><span class="n">streamData</span><span class="o">);</span>
+            <span class="n">GenericRow</span> <span class="n">row3</span> <span class="o">=</span> <span class="n">GenericRow</span><span class="o">.</span><span class="na">of</span><span class="o">(</span>
+                    <span class="n">3</span><span class="o">,</span>
+                    <span class="n">BinaryString</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">&#34;image3&#34;</span><span class="o">),</span>
+                    <span class="n">Blob</span><span class="o">.</span><span class="na">fromInputStream</span><span class="o">(()</span> <span class="o">-&gt;</span> <span class="n">SeekableInputStream</span><span class="o">.</span><span class="na">wrap</span><span class="o">(</span><span class="n">inputStream</span><span class="o">))</span>
+            <span class="o">);</span>
+            <span class="n">write</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="n">row3</span><span class="o">);</span>
+
+            <span class="c1">// Method 4: Create blob from HTTP URL
+</span><span class="c1"></span>            <span class="n">GenericRow</span> <span class="n">row4</span> <span class="o">=</span> <span class="n">GenericRow</span><span class="o">.</span><span class="na">of</span><span class="o">(</span>
+                    <span class="n">4</span><span class="o">,</span>
+                    <span class="n">BinaryString</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">&#34;remote_image&#34;</span><span class="o">),</span>
+                    <span class="n">Blob</span><span class="o">.</span><span class="na">fromHttp</span><span class="o">(</span><span class="s">&#34;https://example.com/image.png&#34;</span><span class="o">)</span>
+            <span class="o">);</span>
+            <span class="n">write</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="n">row4</span><span class="o">);</span>
+
+            <span class="c1">// Commit all writes
+</span><span class="c1"></span>            <span class="n">commit</span><span class="o">.</span><span class="na">commit</span><span class="o">(</span><span class="n">write</span><span class="o">.</span><span class="na">prepareCommit</span><span class="o">());</span>
+        <span class="o">}</span>
+
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;Successfully wrote 4 rows with blob data&#34;</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">readBlobData</span><span class="o">(</span><span class="n">Table</span> <span class="n">table</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+        <span class="n">ReadBuilder</span> <span class="n">readBuilder</span> <span class="o">=</span> <span class="n">table</span><span class="o">.</span><span class="na">newReadBuilder</span><span class="o">();</span>
+        <span class="n">RecordReader</span><span class="o">&lt;</span><span class="n">InternalRow</span><span class="o">&gt;</span> <span class="n">reader</span> <span class="o">=</span>
+                <span class="n">readBuilder</span><span class="o">.</span><span class="na">newRead</span><span class="o">().</span><span class="na">createReader</span><span class="o">(</span><span class="n">readBuilder</span><span class="o">.</span><span class="na">newScan</span><span class="o">().</span><span class="na">plan</span><span class="o">());</span>
+
+        <span class="n">reader</span><span class="o">.</span><span class="na">forEachRemaining</span><span class="o">(</span><span class="n">row</span> <span class="o">-&gt;</span> <span class="o">{</span>
+            <span class="kt">int</span> <span class="n">id</span> <span class="o">=</span> <span class="n">row</span><span class="o">.</span><span class="na">getInt</span><span class="o">(</span><span class="n">0</span><span class="o">);</span>
+            <span class="n">String</span> <span class="n">name</span> <span class="o">=</span> <span class="n">row</span><span class="o">.</span><span class="na">getString</span><span class="o">(</span><span class="n">1</span><span class="o">).</span><span class="na">toString</span><span class="o">();</span>
+            <span class="n">Blob</span> <span class="n">blob</span> <span class="o">=</span> <span class="n">row</span><span class="o">.</span><span class="na">getBlob</span><span class="o">(</span><span class="n">2</span><span class="o">);</span>
+
+            <span class="c1">// Method 1: Read blob as byte array (loads entire blob into memory)
+</span><span class="c1"></span>            <span class="kt">byte</span><span class="o">[]</span> <span class="n">data</span> <span class="o">=</span> <span class="n">blob</span><span class="o">.</span><span class="na">toData</span><span class="o">();</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;Row &#34;</span> <span class="o">+</span> <span class="n">id</span> <span class="o">+</span> <span class="s">&#34;: &#34;</span> <span class="o">+</span> <span class="n">name</span> <span class="o">+</span> <span class="s">&#34;, blob size: &#34;</span> <span class="o">+</span> <span class="n">data</span><span class="o">.</span><span class="na">length</span><span class="o">);</span>
+
+            <span class="c1">// Method 2: Read blob as stream (better for large blobs)
+</span><span class="c1"></span>            <span class="k">try</span> <span class="o">(</span><span class="n">SeekableInputStream</span> <span class="n">in</span> <span class="o">=</span> <span class="n">blob</span><span class="o">.</span><span class="na">newInputStream</span><span class="o">())</span> <span class="o">{</span>
+                <span class="c1">// Process stream without loading entire blob into memory
+</span><span class="c1"></span>                <span class="kt">byte</span><span class="o">[]</span> <span class="n">buffer</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">byte</span><span class="o">[</span><span class="n">1024</span><span class="o">];</span>
+                <span class="kt">int</span> <span class="n">bytesRead</span><span class="o">;</span>
+                <span class="kt">long</span> <span class="n">totalSize</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span>
+                <span class="k">while</span> <span class="o">((</span><span class="n">bytesRead</span> <span class="o">=</span> <span class="n">in</span><span class="o">.</span><span class="na">read</span><span class="o">(</span><span class="n">buffer</span><span class="o">))</span> <span class="o">!=</span> <span class="o">-</span><span class="n">1</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="n">totalSize</span> <span class="o">+=</span> <span class="n">bytesRead</span><span class="o">;</span>
+                    <span class="c1">// Process buffer...
+</span><span class="c1"></span>                <span class="o">}</span>
+                <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;Streamed &#34;</span> <span class="o">+</span> <span class="n">totalSize</span> <span class="o">+</span> <span class="s">&#34; bytes&#34;</span><span class="o">);</span>
+            <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+            <span class="o">}</span>
+        <span class="o">});</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kt">byte</span><span class="o">[]</span> <span class="nf">loadImageBytes</span><span class="o">(</span><span class="n">String</span> <span class="n">path</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">Files</span><span class="o">.</span><span class="na">readAllBytes</span><span class="o">(</span><span class="n">java</span><span class="o">.</span><span class="na">nio</span><span class="o">.</span><span class="na">file</span><span class="o">.</span><span class="na">Path</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="n">path</span><span class="o">));</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div><h3 id="construct-blob-from-different-sources">
+  Construct blob from different sources
+  <a class="anchor" href="#construct-blob-from-different-sources">#</a>
+</h3>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="c1">// From byte array (data already in memory)
+</span><span class="c1"></span><span class="n">Blob</span> <span class="n">blob</span> <span class="o">=</span> <span class="n">Blob</span><span class="o">.</span><span class="na">fromData</span><span class="o">(</span><span class="n">imageBytes</span><span class="o">);</span>
+
+<span class="c1">// From local file system
+</span><span class="c1"></span><span class="n">Blob</span> <span class="n">blob</span> <span class="o">=</span> <span class="n">Blob</span><span class="o">.</span><span class="na">fromLocal</span><span class="o">(</span><span class="s">&#34;/path/to/image.png&#34;</span><span class="o">);</span>
+
+<span class="c1">// From any FileIO (supports HDFS, S3, OSS, etc.)
+</span><span class="c1"></span><span class="n">FileIO</span> <span class="n">fileIO</span> <span class="o">=</span> <span class="n">FileIO</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="k">new</span> <span class="n">Path</span><span class="o">(</span><span class="s">&#34;s3://bucket&#34;</span><span class="o">),</span> <span class="n">catalogContext</span><span class="o">);</span>
+<span class="n">Blob</span> <span class="n">blob</span> <span class="o">=</span> <span class="n">Blob</span><span class="o">.</span><span class="na">fromFile</span><span class="o">(</span><span class="n">fileIO</span><span class="o">,</span> <span class="s">&#34;s3://bucket/path/to/image.png&#34;</span><span class="o">);</span>
+
+<span class="c1">// From FileIO with offset and length (read partial file)
+</span><span class="c1"></span><span class="n">Blob</span> <span class="n">blob</span> <span class="o">=</span> <span class="n">Blob</span><span class="o">.</span><span class="na">fromFile</span><span class="o">(</span><span class="n">fileIO</span><span class="o">,</span> <span class="s">&#34;s3://bucket/large-file.bin&#34;</span><span class="o">,</span> <span class="n">1024</span><span class="o">,</span> <span class="n">2048</span><span class="o">);</span>
+
+<span class="c1">// From HTTP/HTTPS URL
+</span><span class="c1"></span><span class="n">Blob</span> <span class="n">blob</span> <span class="o">=</span> <span class="n">Blob</span><span class="o">.</span><span class="na">fromHttp</span><span class="o">(</span><span class="s">&#34;https://example.com/image.png&#34;</span><span class="o">);</span>
+
+<span class="c1">// From InputStream supplier (lazy loading)
+</span><span class="c1"></span><span class="n">Blob</span> <span class="n">blob</span> <span class="o">=</span> <span class="n">Blob</span><span class="o">.</span><span class="na">fromInputStream</span><span class="o">(()</span> <span class="o">-&gt;</span> <span class="k">new</span> <span class="n">FileInputStream</span><span class="o">(</span><span class="s">&#34;/path/to/image.png&#34;</span><span class="o">));</span>
+
+<span class="c1">// From BlobDescriptor (reconstruct blob reference from descriptor)
+</span><span class="c1"></span><span class="n">BlobDescriptor</span> <span class="n">descriptor</span> <span class="o">=</span> <span class="k">new</span> <span class="n">BlobDescriptor</span><span class="o">(</span><span class="s">&#34;s3://bucket/path/to/image.png&#34;</span><span class="o">,</span> <span class="n">0</span><span class="o">,</span> <span class="n">1024</span><span class="o">);</span>
+<span class="n">UriReader</span> <span class="n">uriReader</span> <span class="o">=</span> <span class="n">UriReader</span><span class="o">.</span><span class="na">fromFile</span><span class="o">(</span><span class="n">fileIO</span><span class="o">);</span>
+<span class="n">Blob</span> <span class="n">blob</span> <span class="o">=</span> <span class="n">Blob</span><span class="o">.</span><span class="na">fromDescriptor</span><span class="o">(</span><span class="n">uriReader</span><span class="o">,</span> <span class="n">descriptor</span><span class="o">);</span>
+</code></pre></div><h3 id="querying-blob-data-1">
+  Querying Blob Data
+  <a class="anchor" href="#querying-blob-data-1">#</a>
+</h3>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="c1">// Get blob from row (column index 2 in this example)
+</span><span class="c1"></span><span class="n">Blob</span> <span class="n">blob</span> <span class="o">=</span> <span class="n">row</span><span class="o">.</span><span class="na">getBlob</span><span class="o">(</span><span class="n">2</span><span class="o">);</span>
+
+<span class="c1">// Read as byte array (simple but loads entire blob into memory)
+</span><span class="c1"></span><span class="kt">byte</span><span class="o">[]</span> <span class="n">data</span> <span class="o">=</span> <span class="n">blob</span><span class="o">.</span><span class="na">toData</span><span class="o">();</span>
+
+<span class="c1">// Read as stream (recommended for large blobs)
+</span><span class="c1"></span><span class="k">try</span> <span class="o">(</span><span class="n">SeekableInputStream</span> <span class="n">in</span> <span class="o">=</span> <span class="n">blob</span><span class="o">.</span><span class="na">newInputStream</span><span class="o">())</span> <span class="o">{</span>
+    <span class="c1">// SeekableInputStream supports random access
+</span><span class="c1"></span>    <span class="n">in</span><span class="o">.</span><span class="na">seek</span><span class="o">(</span><span class="n">100</span><span class="o">);</span>  <span class="c1">// Jump to position 100
+</span><span class="c1"></span>    <span class="kt">byte</span><span class="o">[]</span> <span class="n">buffer</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">byte</span><span class="o">[</span><span class="n">1024</span><span class="o">];</span>
+    <span class="kt">int</span> <span class="n">bytesRead</span> <span class="o">=</span> <span class="n">in</span><span class="o">.</span><span class="na">read</span><span class="o">(</span><span class="n">buffer</span><span class="o">);</span>
+<span class="o">}</span>
+
+<span class="c1">// Get blob descriptor (for reference-based blobs)
+</span><span class="c1">// Note: Only works for BlobRef, not BlobData
+</span><span class="c1"></span><span class="n">BlobDescriptor</span> <span class="n">descriptor</span> <span class="o">=</span> <span class="n">blob</span><span class="o">.</span><span class="na">toDescriptor</span><span class="o">();</span>
+<span class="n">String</span> <span class="n">uri</span> <span class="o">=</span> <span class="n">descriptor</span><span class="o">.</span><span class="na">uri</span><span class="o">();</span>      <span class="c1">// e.g., &#34;s3://bucket/path/to/blob&#34;
+</span><span class="c1"></span><span class="kt">long</span> <span class="n">offset</span> <span class="o">=</span> <span class="n">descriptor</span><span class="o">.</span><span class="na">offset</span><span class="o">();</span>  <span class="c1">// Starting position in the file
+</span><span class="c1"></span><span class="kt">long</span> <span class="n">length</span> <span class="o">=</span> <span class="n">descriptor</span><span class="o">.</span><span class="na">length</span><span class="o">();</span>  <span class="c1">// Length of the blob data
+</span></code></pre></div><h3 id="descriptor-aware-write-behavior">
+  Descriptor-Aware Write Behavior
+  <a class="anchor" href="#descriptor-aware-write-behavior">#</a>
+</h3>
+<p>Paimon write path is descriptor-aware automatically:</p>
+<ol>
+<li>For blob fields stored in <code>.blob</code> files, input can be either blob bytes or a <code>BlobDescriptor</code>.</li>
+<li>For fields configured in <code>blob-descriptor-field</code>, Paimon stores descriptor bytes inline in data files (no <code>.blob</code> files for those fields), and input must be a descriptor.</li>
+<li>For fields configured in <code>blob-external-storage-field</code>, Paimon writes the blob data to <code>blob-external-storage-path</code> and stores descriptor bytes inline in data files.</li>
+<li>This behavior does not depend on <code>blob-as-descriptor</code>.</li>
+</ol>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="kn">import</span> <span class="nn">org.apache.paimon.catalog.Catalog</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.paimon.catalog.CatalogContext</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.paimon.catalog.CatalogFactory</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.paimon.catalog.Identifier</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.paimon.CoreOptions</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.paimon.data.BinaryString</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.paimon.data.Blob</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.paimon.data.BlobData</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.paimon.data.BlobDescriptor</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.paimon.data.GenericRow</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.paimon.data.InternalRow</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.paimon.fs.Path</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.paimon.reader.RecordReader</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.paimon.schema.Schema</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.paimon.table.Table</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.paimon.table.sink.BatchTableCommit</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.paimon.table.sink.BatchTableWrite</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.paimon.table.sink.BatchWriteBuilder</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.paimon.table.source.ReadBuilder</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.paimon.types.DataTypes</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">BlobDescriptorExample</span> <span class="o">{</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+        <span class="n">Path</span> <span class="n">warehouse</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Path</span><span class="o">(</span><span class="s">&#34;s3://my-bucket/paimon-warehouse&#34;</span><span class="o">);</span>
+        <span class="n">CatalogContext</span> <span class="n">catalogContext</span> <span class="o">=</span> <span class="n">CatalogContext</span><span class="o">.</span><span class="na">create</span><span class="o">(</span><span class="n">warehouse</span><span class="o">);</span>
+        <span class="n">Catalog</span> <span class="n">catalog</span> <span class="o">=</span> <span class="n">CatalogFactory</span><span class="o">.</span><span class="na">createCatalog</span><span class="o">(</span><span class="n">catalogContext</span><span class="o">);</span>
+        <span class="n">catalog</span><span class="o">.</span><span class="na">createDatabase</span><span class="o">(</span><span class="s">&#34;my_db&#34;</span><span class="o">,</span> <span class="kc">true</span><span class="o">);</span>
+
+        <span class="c1">// Create table: store &#34;video&#34; as descriptor bytes inline
+</span><span class="c1"></span>        <span class="n">Schema</span> <span class="n">schema</span> <span class="o">=</span> <span class="n">Schema</span><span class="o">.</span><span class="na">newBuilder</span><span class="o">()</span>
+                <span class="o">.</span><span class="na">column</span><span class="o">(</span><span class="s">&#34;id&#34;</span><span class="o">,</span> <span class="n">DataTypes</span><span class="o">.</span><span class="na">INT</span><span class="o">())</span>
+                <span class="o">.</span><span class="na">column</span><span class="o">(</span><span class="s">&#34;name&#34;</span><span class="o">,</span> <span class="n">DataTypes</span><span class="o">.</span><span class="na">STRING</span><span class="o">())</span>
+                <span class="o">.</span><span class="na">column</span><span class="o">(</span><span class="s">&#34;video&#34;</span><span class="o">,</span> <span class="n">DataTypes</span><span class="o">.</span><span class="na">BLOB</span><span class="o">())</span>
+                <span class="o">.</span><span class="na">option</span><span class="o">(</span><span class="n">CoreOptions</span><span class="o">.</span><span class="na">ROW_TRACKING_ENABLED</span><span class="o">.</span><span class="na">key</span><span class="o">(),</span> <span class="s">&#34;true&#34;</span><span class="o">)</span>
+                <span class="o">.</span><span class="na">option</span><span class="o">(</span><span class="n">CoreOptions</span><span class="o">.</span><span class="na">DATA_EVOLUTION_ENABLED</span><span class="o">.</span><span class="na">key</span><span class="o">(),</span> <span class="s">&#34;true&#34;</span><span class="o">)</span>
+                <span class="o">.</span><span class="na">option</span><span class="o">(</span><span class="n">CoreOptions</span><span class="o">.</span><span class="na">BLOB_DESCRIPTOR_FIELD</span><span class="o">.</span><span class="na">key</span><span class="o">(),</span> <span class="s">&#34;video&#34;</span><span class="o">)</span>
+                <span class="o">.</span><span class="na">build</span><span class="o">();</span>
+
+        <span class="n">Identifier</span> <span class="n">tableId</span> <span class="o">=</span> <span class="n">Identifier</span><span class="o">.</span><span class="na">create</span><span class="o">(</span><span class="s">&#34;my_db&#34;</span><span class="o">,</span> <span class="s">&#34;video_table&#34;</span><span class="o">);</span>
+        <span class="n">catalog</span><span class="o">.</span><span class="na">createTable</span><span class="o">(</span><span class="n">tableId</span><span class="o">,</span> <span class="n">schema</span><span class="o">,</span> <span class="kc">true</span><span class="o">);</span>
+        <span class="n">Table</span> <span class="n">table</span> <span class="o">=</span> <span class="n">catalog</span><span class="o">.</span><span class="na">getTable</span><span class="o">(</span><span class="n">tableId</span><span class="o">);</span>
+
+        <span class="c1">// Write blob using descriptor reference
+</span><span class="c1"></span>        <span class="n">writeLargeBlobWithDescriptor</span><span class="o">(</span><span class="n">table</span><span class="o">);</span>
+
+        <span class="c1">// Read blob data
+</span><span class="c1"></span>        <span class="n">readBlobData</span><span class="o">(</span><span class="n">table</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">writeLargeBlobWithDescriptor</span><span class="o">(</span><span class="n">Table</span> <span class="n">table</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+        <span class="n">BatchWriteBuilder</span> <span class="n">writeBuilder</span> <span class="o">=</span> <span class="n">table</span><span class="o">.</span><span class="na">newBatchWriteBuilder</span><span class="o">();</span>
+
+        <span class="k">try</span> <span class="o">(</span><span class="n">BatchTableWrite</span> <span class="n">write</span> <span class="o">=</span> <span class="n">writeBuilder</span><span class="o">.</span><span class="na">newWrite</span><span class="o">();</span>
+             <span class="n">BatchTableCommit</span> <span class="n">commit</span> <span class="o">=</span> <span class="n">writeBuilder</span><span class="o">.</span><span class="na">newCommit</span><span class="o">())</span> <span class="o">{</span>
+
+            <span class="c1">// For a very large file (e.g., 2GB video), instead of loading into memory:
+</span><span class="c1"></span>            <span class="c1">//   byte[] hugeVideo = Files.readAllBytes(...);  // This would cause OutOfMemoryError!
+</span><span class="c1"></span>            <span class="c1">//
+</span><span class="c1"></span>            <span class="c1">// Create a descriptor reference to external blob
+</span><span class="c1"></span>            <span class="n">String</span> <span class="n">externalUri</span> <span class="o">=</span> <span class="s">&#34;s3://my-bucket/videos/large_video.mp4&#34;</span><span class="o">;</span>
+            <span class="kt">long</span> <span class="n">fileSize</span> <span class="o">=</span> <span class="n">2L</span> <span class="o">*</span> <span class="n">1024</span> <span class="o">*</span> <span class="n">1024</span> <span class="o">*</span> <span class="n">1024</span><span class="o">;</span>  <span class="c1">// 2GB
+</span><span class="c1"></span>
+            <span class="n">BlobDescriptor</span> <span class="n">descriptor</span> <span class="o">=</span> <span class="k">new</span> <span class="n">BlobDescriptor</span><span class="o">(</span><span class="n">externalUri</span><span class="o">,</span> <span class="n">0</span><span class="o">,</span> <span class="n">fileSize</span><span class="o">);</span>
+            <span class="c1">// file io should be accessible to externalUri
+</span><span class="c1"></span>            <span class="n">FileIO</span> <span class="n">fileIO</span> <span class="o">=</span> <span class="n">Table</span><span class="o">.</span><span class="na">fileIO</span><span class="o">();</span>
+            <span class="n">UriReader</span> <span class="n">uriReader</span> <span class="o">=</span> <span class="n">UriReader</span><span class="o">.</span><span class="na">fromFile</span><span class="o">(</span><span class="n">fileIO</span><span class="o">);</span>
+            <span class="n">Blob</span> <span class="n">blob</span> <span class="o">=</span> <span class="n">Blob</span><span class="o">.</span><span class="na">fromDescriptor</span><span class="o">(</span><span class="n">uriReader</span><span class="o">,</span> <span class="n">descriptor</span><span class="o">);</span>
+
+            <span class="n">GenericRow</span> <span class="n">row</span> <span class="o">=</span> <span class="n">GenericRow</span><span class="o">.</span><span class="na">of</span><span class="o">(</span>
+                    <span class="n">1</span><span class="o">,</span>
+                    <span class="n">BinaryString</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">&#34;large_video&#34;</span><span class="o">),</span>
+                    <span class="n">blob</span><span class="o">);</span>
+            <span class="n">write</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="n">row</span><span class="o">);</span>
+
+            <span class="n">commit</span><span class="o">.</span><span class="na">commit</span><span class="o">(</span><span class="n">write</span><span class="o">.</span><span class="na">prepareCommit</span><span class="o">());</span>
+        <span class="o">}</span>
+
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;Successfully wrote large blob using descriptor reference&#34;</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">readBlobData</span><span class="o">(</span><span class="n">Table</span> <span class="n">table</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+        <span class="n">ReadBuilder</span> <span class="n">readBuilder</span> <span class="o">=</span> <span class="n">table</span><span class="o">.</span><span class="na">newReadBuilder</span><span class="o">();</span>
+        <span class="n">RecordReader</span><span class="o">&lt;</span><span class="n">InternalRow</span><span class="o">&gt;</span> <span class="n">reader</span> <span class="o">=</span>
+                <span class="n">readBuilder</span><span class="o">.</span><span class="na">newRead</span><span class="o">().</span><span class="na">createReader</span><span class="o">(</span><span class="n">readBuilder</span><span class="o">.</span><span class="na">newScan</span><span class="o">().</span><span class="na">plan</span><span class="o">());</span>
+
+        <span class="n">reader</span><span class="o">.</span><span class="na">forEachRemaining</span><span class="o">(</span><span class="n">row</span> <span class="o">-&gt;</span> <span class="o">{</span>
+            <span class="kt">int</span> <span class="n">id</span> <span class="o">=</span> <span class="n">row</span><span class="o">.</span><span class="na">getInt</span><span class="o">(</span><span class="n">0</span><span class="o">);</span>
+            <span class="n">String</span> <span class="n">name</span> <span class="o">=</span> <span class="n">row</span><span class="o">.</span><span class="na">getString</span><span class="o">(</span><span class="n">1</span><span class="o">).</span><span class="na">toString</span><span class="o">();</span>
+            <span class="n">Blob</span> <span class="n">blob</span> <span class="o">=</span> <span class="n">row</span><span class="o">.</span><span class="na">getBlob</span><span class="o">(</span><span class="n">2</span><span class="o">);</span>
+
+            <span class="c1">// Field is configured in blob-descriptor-field, so descriptor is stored inline
+</span><span class="c1"></span>            <span class="n">BlobDescriptor</span> <span class="n">descriptor</span> <span class="o">=</span> <span class="n">blob</span><span class="o">.</span><span class="na">toDescriptor</span><span class="o">();</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;Row &#34;</span> <span class="o">+</span> <span class="n">id</span> <span class="o">+</span> <span class="s">&#34;: &#34;</span> <span class="o">+</span> <span class="n">name</span><span class="o">);</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;  Blob URI: &#34;</span> <span class="o">+</span> <span class="n">descriptor</span><span class="o">.</span><span class="na">uri</span><span class="o">());</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;  Length: &#34;</span> <span class="o">+</span> <span class="n">descriptor</span><span class="o">.</span><span class="na">length</span><span class="o">());</span>
+        <span class="o">});</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div><p><strong>Reading blob data with different output modes:</strong></p>
+<p>The <code>blob-as-descriptor</code> option affects only read output:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="c1">-- When blob-as-descriptor = true: Returns BlobDescriptor bytes (reference to Paimon blob file)
+</span><span class="c1"></span><span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">video_table</span> <span class="k">SET</span> <span class="p">(</span><span class="s1">&#39;blob-as-descriptor&#39;</span> <span class="o">=</span> <span class="s1">&#39;true&#39;</span><span class="p">);</span>
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">video_table</span><span class="p">;</span>  <span class="c1">-- Returns serialized BlobDescriptor
+</span><span class="c1"></span>
+<span class="c1">-- When blob-as-descriptor = false: Returns actual blob bytes
+</span><span class="c1"></span><span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">video_table</span> <span class="k">SET</span> <span class="p">(</span><span class="s1">&#39;blob-as-descriptor&#39;</span> <span class="o">=</span> <span class="s1">&#39;false&#39;</span><span class="p">);</span>
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">video_table</span><span class="p">;</span>  <span class="c1">-- Returns actual blob bytes from Paimon storage
+</span></code></pre></div><h3 id="blob-storage-mode-descriptor-only">
+  Blob storage mode: DESCRIPTOR ONLY
+  <a class="anchor" href="#blob-storage-mode-descriptor-only">#</a>
+</h3>
+<p>If you want downstream tables to <strong>reuse</strong> upstream blob files (no copying and no new <code>.blob</code> files), configure the target blob field(s):</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="s1">&#39;blob-descriptor-field&#39;</span> <span class="o">=</span> <span class="s1">&#39;image&#39;</span>
+</code></pre></div><p>For these configured fields, Paimon stores only serialized <code>BlobDescriptor</code> bytes in normal data files. Reading the blob follows the descriptor URI to access bytes, and writing requires descriptor input for those fields.</p>
+<h3 id="blob-storage-mode-external-storage">
+  Blob storage mode: EXTERNAL STORAGE
+  <a class="anchor" href="#blob-storage-mode-external-storage">#</a>
+</h3>
+<p>If you want Paimon to write raw blob data to a separate external location while keeping only descriptor bytes inline, configure the target blob field(s):</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="s1">&#39;blob-descriptor-field&#39;</span> <span class="o">=</span> <span class="s1">&#39;image&#39;</span><span class="p">,</span>
+<span class="s1">&#39;blob-external-storage-field&#39;</span> <span class="o">=</span> <span class="s1">&#39;image&#39;</span><span class="p">,</span>
+<span class="s1">&#39;blob-external-storage-path&#39;</span> <span class="o">=</span> <span class="s1">&#39;oss://bucket/path/&#39;</span>
+</code></pre></div><p>For these configured fields:</p>
+<ul>
+<li>raw blob data is written to the configured external storage path</li>
+<li>normal data files keep only serialized <code>BlobDescriptor</code> bytes</li>
+<li>writes can still start from raw BLOB input</li>
+<li>the field is treated as descriptor-based for operations such as <code>MERGE INTO</code></li>
+</ul>
+<h2 id="limitations">
+  Limitations
+  <a class="anchor" href="#limitations">#</a>
+</h2>
+<ol>
+<li><strong>Append Table Only</strong>: Blob type is designed for append-only tables. Primary key tables are not supported.</li>
+<li><strong>No Predicate Pushdown</strong>: Blob columns cannot be used in filter predicates.</li>
+<li><strong>No Statistics</strong>: Statistics collection is not supported for blob columns.</li>
+<li><strong>Required Options</strong>: <code>row-tracking.enabled</code> and <code>data-evolution.enabled</code> must be set to <code>true</code>.</li>
+<li><strong>External Storage Cleanup</strong>: Files written through <code>blob-external-storage-path</code> are outside Paimon&rsquo;s orphan file cleanup scope.</li>
+</ol>
+<h2 id="best-practices">
+  Best Practices
+  <a class="anchor" href="#best-practices">#</a>
+</h2>
+<ol>
+<li>
+<p><strong>Use Column Projection</strong>: Always select only the columns you need. Avoid <code>SELECT *</code> if you don&rsquo;t need blob data.</p>
+</li>
+<li>
+<p><strong>Set Appropriate Target File Size</strong>: Configure <code>blob.target-file-size</code> based on your blob sizes. Larger values mean fewer files but larger individual files.</p>
+</li>
+<li>
+<p><strong>Use Descriptor Fields When Reusing External Blob Files</strong>: Configure <code>blob-descriptor-field</code> for fields that should keep descriptor references instead of writing new <code>.blob</code> files.</p>
+</li>
+<li>
+<p><strong>Use External-Storage Fields When Accepting Raw Input But Storing Descriptors</strong>: Configure <code>blob-external-storage-field</code> together with <code>blob-external-storage-path</code> when upstream writes raw blob bytes but you want descriptor-based storage.</p>
+</li>
+<li>
+<p><strong>Manage External Storage Lifecycle Separately</strong>: Files written to <code>blob-external-storage-path</code> are not cleaned up by Paimon, so retention and deletion should be managed externally.</p>
+</li>
+<li>
+<p><strong>Use Partitioning</strong>: Partition your blob tables by date or other dimensions to improve query performance and data management.</p>
+</li>
+</ol>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  
+
+
+
+
+<a href="//github.com/apache/paimon/edit/master/docs/content/append-table/blob.md" style="color:black"><i class="fa fa-edit fa-fw"></i>Edit This Page</a>
+
+
+ 
+        
+
+
+<hr style="margin-top: 20px; border: 1px solid #e5e5e5;" />
+
+<table style="border-spacing: 10px;">
+    <tbody>
+    <tr>
+        <td colspan="2">
+            Copyright &copy; 2025 The Apache Software Foundation. Apache Paimon, Paimon, and its feather logo are
+            trademarks of The Apache Software Foundation.
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+      </footer>
+
+      
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      
+  
+
+<nav id="TableOfContents"><h3>On This Page <button class="toc" onclick="collapseToc()"><i class="fa fa-compress" aria-hidden="true"></i></button></h3>
+  <ul>
+    <li><a href="#overview">Overview</a></li>
+    <li><a href="#storage-layout">Storage Layout</a></li>
+    <li><a href="#storage-modes">Storage Modes</a></li>
+    <li><a href="#table-options">Table Options</a></li>
+    <li><a href="#sql-usage">SQL Usage</a>
+      <ul>
+        <li><a href="#creating-a-table">Creating a Table</a></li>
+        <li><a href="#inserting-blob-data">Inserting Blob Data</a></li>
+        <li><a href="#querying-blob-data">Querying Blob Data</a></li>
+        <li><a href="#blob-read-output-mode-blob-as-descriptor">Blob Read Output Mode (<code>blob-as-descriptor</code>)</a></li>
+        <li><a href="#external-storage-descriptor-fields">External-Storage Descriptor Fields</a></li>
+        <li><a href="#merge-into-support">MERGE INTO Support</a></li>
+      </ul>
+    </li>
+    <li><a href="#java-api-usage">Java API Usage</a>
+      <ul>
+        <li><a href="#creating-a-table-1">Creating a Table</a></li>
+        <li><a href="#construct-blob-from-different-sources">Construct blob from different sources</a></li>
+        <li><a href="#querying-blob-data-1">Querying Blob Data</a></li>
+        <li><a href="#descriptor-aware-write-behavior">Descriptor-Aware Write Behavior</a></li>
+        <li><a href="#blob-storage-mode-descriptor-only">Blob storage mode: DESCRIPTOR ONLY</a></li>
+        <li><a href="#blob-storage-mode-external-storage">Blob storage mode: EXTERNAL STORAGE</a></li>
+      </ul>
+    </li>
+    <li><a href="#limitations">Limitations</a></li>
+    <li><a href="#best-practices">Best Practices</a></li>
+  </ul>
+</nav>
+
+ 
+    </aside>
+    <aside class="expand-toc">
+      <button class="toc" onclick="expandToc()">
+        <i class="fa fa-expand" aria-hidden="true"></i>
+      </button>
+    </aside>
+    
+  </main>
+
+  
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

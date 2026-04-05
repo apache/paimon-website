@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>PyPaimon on Apache Paimon</title>
+    <link>//paimon.apache.org/docs/master/pypaimon/</link>
+    <description>Recent content in PyPaimon on Apache Paimon</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language><atom:link href="//paimon.apache.org/docs/master/pypaimon/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Overview</title>
+      <link>//paimon.apache.org/docs/master/pypaimon/overview/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/pypaimon/overview/</guid>
+      <description>Overview #  PyPaimon is a Python implementation for connecting Paimon catalog, reading &amp;amp; writing tables. The complete Python implementation of the brand new PyPaimon does not require JDK installation.
+Environment Settings #  SDK is published at pypaimon. You can install by
+pip install pypaimon Build From Source #  You can build the source package by executing the following command:
+python3 setup.py sdist The package is under dist/. Then you can install the package by executing the following command:</description>
+    </item>
+    
+    <item>
+      <title>Python API</title>
+      <link>//paimon.apache.org/docs/master/pypaimon/python-api/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/pypaimon/python-api/</guid>
+      <description>Python API #  Create Catalog #  Before coming into contact with the Table, you need to create a Catalog.
+filesystem from pypaimon import CatalogFactory # Note that keys and values are all string catalog_options = { &amp;#39;warehouse&amp;#39;: &amp;#39;file:///path/to/warehouse&amp;#39; } catalog = CatalogFactory.create(catalog_options) rest catalog The sample code is as follows. The detailed meaning of option can be found in REST.
+from pypaimon import CatalogFactory # Note that keys and values are all string catalog_options = { &amp;#39;metastore&amp;#39;: &amp;#39;rest&amp;#39;, &amp;#39;warehouse&amp;#39;: &amp;#39;xxx&amp;#39;, &amp;#39;uri&amp;#39;: &amp;#39;xxx&amp;#39;, &amp;#39;token.</description>
+    </item>
+    
+    <item>
+      <title>Manage Tags</title>
+      <link>//paimon.apache.org/docs/master/pypaimon/manage-tags/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/pypaimon/manage-tags/</guid>
+      <description>Manage Tags #  Just like Java API of Paimon, you can create a tag based on a snapshot. The tag will maintain the manifests and data files of the snapshot. A typical usage is creating tags daily, then you can maintain the historical data of each day for batch reading.
+Create and Delete Tag #  You can create a tag with given name and snapshot ID, and delete a tag with given name.</description>
+    </item>
+    
+    <item>
+      <title>Ray Data</title>
+      <link>//paimon.apache.org/docs/master/pypaimon/ray-data/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/pypaimon/ray-data/</guid>
+      <description>Ray Data #  Read #  This requires ray to be installed.
+You can convert the splits into a Ray Dataset and handle it by Ray Data API for distributed processing:
+table_read = read_builder.new_read() ray_dataset = table_read.to_ray(splits) print(ray_dataset) # MaterializedDataset(num_blocks=1, num_rows=9, schema={f0: int32, f1: string}) print(ray_dataset.take(3)) # [{&amp;#39;f0&amp;#39;: 1, &amp;#39;f1&amp;#39;: &amp;#39;a&amp;#39;}, {&amp;#39;f0&amp;#39;: 2, &amp;#39;f1&amp;#39;: &amp;#39;b&amp;#39;}, {&amp;#39;f0&amp;#39;: 3, &amp;#39;f1&amp;#39;: &amp;#39;c&amp;#39;}] print(ray_dataset.to_pandas()) # f0 f1 # 0 1 a # 1 2 b # 2 3 c # 3 4 d # .</description>
+    </item>
+    
+    <item>
+      <title>PyTorch</title>
+      <link>//paimon.apache.org/docs/master/pypaimon/pytorch/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/pypaimon/pytorch/</guid>
+      <description>PyTorch #  Read #  This requires torch to be installed.
+You can read all the data into a torch.utils.data.Dataset or torch.utils.data.IterableDataset:
+from torch.utils.data import DataLoader table_read = read_builder.new_read() dataset = table_read.to_torch(splits, streaming=True, prefetch_concurrency=2) dataloader = DataLoader( dataset, batch_size=2, num_workers=2, # Concurrency to read data shuffle=False ) # Collect all data from dataloader for batch_idx, batch_data in enumerate(dataloader): print(batch_data) # output: # {&amp;#39;user_id&amp;#39;: tensor([1, 2]), &amp;#39;behavior&amp;#39;: [&amp;#39;a&amp;#39;, &amp;#39;b&amp;#39;]} # {&amp;#39;user_id&amp;#39;: tensor([3, 4]), &amp;#39;behavior&amp;#39;: [&amp;#39;c&amp;#39;, &amp;#39;d&amp;#39;]} # {&amp;#39;user_id&amp;#39;: tensor([5, 6]), &amp;#39;behavior&amp;#39;: [&amp;#39;e&amp;#39;, &amp;#39;f&amp;#39;]} # {&amp;#39;user_id&amp;#39;: tensor([7, 8]), &amp;#39;behavior&amp;#39;: [&amp;#39;g&amp;#39;, &amp;#39;h&amp;#39;]} When the streaming parameter is true, it will iteratively read; when it is false, it will read the full amount of data into memory.</description>
+    </item>
+    
+    <item>
+      <title>Data Evolution</title>
+      <link>//paimon.apache.org/docs/master/pypaimon/data-evolution/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/pypaimon/data-evolution/</guid>
+      <description>Data Evolution #  PyPaimon for Data Evolution mode. See Data Evolution.
+Prerequisites #  To use partial updates / data evolution, enable both options when creating the table:
+ row-tracking.enabled: true data-evolution.enabled: true  Update Columns By Row ID #  You can create TableUpdate.update_by_arrow_with_row_id to update columns to data evolution tables.
+The input data should include the _ROW_ID column, update operation will automatically sort and match each _ROW_ID to its corresponding first_row_id, then groups rows with the same first_row_id and writes them to a separate file.</description>
+    </item>
+    
+    <item>
+      <title>FUSE Support</title>
+      <link>//paimon.apache.org/docs/master/pypaimon/fuse-support/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/pypaimon/fuse-support/</guid>
+      <description>FUSE Support #  When using PyPaimon REST Catalog to access remote object storage (such as OSS, S3, or HDFS), data access typically goes through remote storage SDKs. However, in scenarios where remote storage paths are mounted locally via FUSE (Filesystem in Userspace), users can access data directly through local filesystem paths for better performance.
+This feature enables PyPaimon to use local file access when FUSE mount is available, bypassing remote storage SDKs.</description>
+    </item>
+    
+    <item>
+      <title>PyJindoSDK Support</title>
+      <link>//paimon.apache.org/docs/master/pypaimon/pyjindosdk-support/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/pypaimon/pyjindosdk-support/</guid>
+      <description>PyJindoSDK Support #  Introduction #  JindoSDK is a high-performance storage SDK developed by Alibaba Cloud for accessing OSS (Object Storage Service) and other cloud storage systems. It provides optimized I/O performance and deep integration with the Alibaba Cloud ecosystem.
+PyPaimon now supports using PyJindoSDK (the Python binding of JindoSDK) to access OSS. Compared to the legacy implementation based on PyArrow&amp;rsquo;s S3FileSystem, PyJindoSDK offers better performance and compatibility when working with OSS.</description>
+    </item>
+    
+    <item>
+      <title>Command Line Interface</title>
+      <link>//paimon.apache.org/docs/master/pypaimon/cli/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/pypaimon/cli/</guid>
+      <description>Command Line Interface #  PyPaimon provides a command-line interface (CLI) for interacting with Paimon catalogs and tables. The CLI allows you to read data from Paimon tables directly from the command line.
+Installation #  The CLI is installed automatically when you install PyPaimon:
+pip install pypaimon After installation, the paimon command will be available in your terminal.
+Basic Usage #  Before using the CLI, you need to create a catalog configuration file.</description>
+    </item>
+    
+  </channel>
+</rss>
