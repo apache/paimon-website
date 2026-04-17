@@ -1,7 +1,7 @@
 ---
-title: "Paimon Rust Release 0.1.0"
+title: "Rust Release 0.1.0"
 type: release
-version: Paimon Rust 0.1.0
+version: Rust 0.1.0
 ---
 
 # Paimon Rust 0.1.0 Available
