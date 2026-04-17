@@ -1,12 +1,12 @@
 ---
-title: "Rust Release 0.1.0"
+title: "Paimon Rust Release 0.1.0"
 type: release
 version: Rust 0.1.0
 ---
 
 # Paimon Rust 0.1.0 Available
 
-Apr 2025 - Yuxia Luo (luoyuxia@apache.org)
+Apr 2026 - Yuxia Luo (luoyuxia@apache.org)
 
 The Apache Paimon PMC officially announces the first release of Paimon Rust 0.1.0. This release includes
 133 commits from 21 contributors. We would like to express our sincere gratitude to all the developers
