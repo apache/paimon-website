@@ -17,7 +17,7 @@ The third pillar, Multimodal Data Lake, is newly introduced in 1.4. From the off
 
 > Paimon is a multimodal lakehouse for AI. Keep multimodal data, metadata, and embeddings in the same table and query them via vector search, full-text search, or SQL.
 
-Release 1.4 marks the strategic upgrade of Apache Paimon from a "real-time data lake" to an "AI multimodal data lake." By introducing BLOB type (multimodal large objects), Lumina vector index (DiskANN), Data Evolution (the foundation for data evolution), VECTOR type (native vectors), Variant Shredding (semi-structured columnar decomposition), and a significantly expanded PyPaimon SDK (PyTorch / Ray integration), Paimon has built a complete set of multimodal data management capabilities — managing structured data, semi-structured data, unstructured data, and vector embeddings in a single table, with unified querying through SQL, vector search, and full-text search. Paimon is no longer just a real-time data lake, but a multimodal data lake for the AI era.
+Release 1.4 marks the strategic upgrade of Apache Paimon from a "real-time data lake" to an "AI multimodal data lake." By introducing BLOB type (multimodal large objects), Lumina vector index (DiskANN), Data Evolution (the foundation for data evolution), VECTOR type (native vectors), Variant Shredding (semi-structured columnar decomposition), and a significantly expanded PyPaimon SDK (PyTorch / Ray integration), Paimon has built a complete set of multimodal data management capabilities — managing structured data, semi-structured data, unstructured data, and vector embeddings in a single table, with unified querying through SQL, vector search. Paimon is no longer just a real-time data lake, but a multimodal data lake for the AI era.
 
 ## 1. BLOB Type — Multimodal Large Object Storage
 
@@ -151,7 +151,6 @@ A brand-new first-class citizen data type `VECTOR<t, n>` for dense vector storag
 - Support FAISS vector index and JNI (#6985, #6991)
 - Spark support for vector search (#6950)
 - Flink support for vector search Procedure (#7550)
-- Support full-text search interface and Spark functions (#7548)
 - Arrow/Avro/Flink support for Vector type (#7236, #7449, #7238)
 - Vector storage support for data-evolution tables (#7240)
 
