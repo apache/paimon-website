@@ -89,9 +89,7 @@ A brand-new first-class citizen data type `VECTOR<t, n>` for dense vector storag
 - Declared at the SQL layer via `vector-field` and `field.<name>.vector-dim` table properties
 - Read/write support for Flink SQL, Spark SQL, Arrow, and Avro
 
-## 7. New File Formats and Index Modules
-
-## 8. Other Related Features
+## 7. Other Related Features
 
 - Chain Table: A new mode for primary key tables that enables incremental computation through snapshot + delta branches, approximately 15 commits
 - Object Table: Object table support, readable from both Spark SQL and Python
