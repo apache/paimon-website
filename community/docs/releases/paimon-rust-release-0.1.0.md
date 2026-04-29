@@ -218,10 +218,49 @@ async fn main() {
 For more information, visit the [documentation](https://paimon.apache.org/docs/rust/) and the
 [GitHub repository](https://github.com/apache/paimon-rust).
 
+## Future
+
+### Feature Parity with Paimon Java
+
+Continue aligning Paimon Rust with the Java implementation to cover core lakehouse capabilities:
+
+- **Primary Key Table** — full read/write support with sort-merge deduplication, dynamic bucket
+  assignment, and additional merge engines (partial-update, aggregation).
+- **DML & SQL** — copy-on-write DML (DELETE, UPDATE, MERGE INTO), `TRUNCATE TABLE`,
+  `DROP PARTITION`, `INSERT OVERWRITE PARTITION`, `CALL` procedures, and session-scoped
+  dynamic options (`SET`/`RESET`).
+- **System Tables** — `$schemas`, `$snapshots`, `$tags`, `$manifests` for metadata inspection
+  via DataFusion SQL.
+
+### Multimodal Support
+
+Build multimodal data capabilities on top of the Paimon lake format:
+
+- **Lumina Vector Index** — vector similarity search via DataFusion SQL.
+- **Vortex File Format** — [Vortex](https://github.com/spiraldb/vortex) columnar format support
+  as an alternative to Parquet.
+- **Variant Type** — semi-structured data support.
+- **Blob Type** — large binary object storage and DDL semantics.
+
+### TypeScript Language Binding
+
+As AI agents become a primary way to interact with data infrastructure, a native TypeScript binding allows agent frameworks to directly read and
+query Paimon tables without JVM overhead, making Paimon a first-class data source in the AI agent ecosystem.
+
+### Fluss Integration
+
+[Fluss](https://fluss.apache.org/) is a streaming storage built for real-time analytics, where
+fresh data lands in Fluss and is continuously tiered into the Paimon lake. By integrating
+[Fluss](https://fluss.apache.org/) as a DataFusion data source alongside Paimon,
+we can build a unified query layer that transparently merges real-time data in Fluss with
+historical data in Paimon, delivering second-level data freshness for analytical queries — all
+within a pure-Rust, JVM-free deployment.
+
+
 ## Contributors
 
 Thanks to all the contributors who made this release possible:
 
-Aitozi, Asura7969, Cancai Cai, DogeKing, ErXi, ForwardXu, Huanbing, HunterXHunter, Jiajia Li,
+Aitozi, Asura7969, Cancai Cai, DogeKing, ForwardXu, Huanbing, HunterXHunter, Jiajia Li,
 Jingsong Lee, QuakeWang, Ryan Tan, SeungMin, Song Chuanqi, WenjunMin, XiaoHongbo, Xuanwo,
-Yuxia Luo, Zach, umi, zmlcc
+Yuxia Luo, umi, zmlcc
