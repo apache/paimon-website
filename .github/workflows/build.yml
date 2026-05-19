@@ -131,6 +131,15 @@ jobs:
           mkdir -p docs/rust
           cp -r /tmp/paimon-rust-site/* docs/rust/
 
+      - name: Clone Paimon Mosaic repo
+        run: git clone --depth 1 https://github.com/apache/paimon-mosaic.git /tmp/paimon-mosaic
+
+      - name: Build Paimon Mosaic docs
+        run: |
+          rm -rf docs/mosaic
+          mkdir -p docs/mosaic
+          cp -r /tmp/paimon-mosaic/docs/* docs/mosaic/
+
       - name: Push to github
         run: |
           git add -A
