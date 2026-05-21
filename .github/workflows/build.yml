@@ -48,6 +48,9 @@ jobs:
         with:
           node-version: 20.x
 
+      - name: Enable yarn
+        run: corepack enable yarn
+
       - name: Copy out old docs directory
         run: |
           git fetch origin asf-site:asf-site
@@ -105,9 +108,18 @@ jobs:
             then
               git checkout release-"$version"
             fi
-            . ./docs.sh
-            # copy document to target directory
-            cp -r docs/target/* "$current_dir"/docs/"$version"
+            # master or version >= 1.5 uses Docusaurus, otherwise Hugo
+            if [ "$version" == "master" ] || [ "$(echo "$version" | awk -F. '{print ($1 * 100 + $2)}')" -ge 105 ]; then
+              cd docs
+              sed -i "s|baseUrl: '/docs/master/'|baseUrl: '/docs/$version/'|g" docusaurus.config.js
+              yarn install --frozen-lockfile
+              yarn build
+              cp -r build/* "$current_dir"/docs/"$version"
+              cd /tmp/paimon
+            else
+              . ./docs.sh
+              cp -r docs/target/* "$current_dir"/docs/"$version"
+            fi
             # clean up
             git reset --hard HEAD
             cd "$current_dir"
