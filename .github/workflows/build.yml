@@ -95,7 +95,7 @@ jobs:
         run: |
           declare -a versions=${{ env.versions }}
           current_dir=$(pwd)
-          cp ./.github/workflows/docs.sh /tmp/paimon/docs.sh
+          cp ./.github/workflows/docs.sh /tmp/docs.sh
           for version in "${versions[@]}"
           do
             # delete old document
@@ -117,7 +117,7 @@ jobs:
               cp -r build/* "$current_dir"/docs/"$version"
               cd /tmp/paimon
             else
-              . ./docs.sh
+              . /tmp/docs.sh
               cp -r docs/target/* "$current_dir"/docs/"$version"
             fi
             # clean up
