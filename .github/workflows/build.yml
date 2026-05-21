@@ -122,6 +122,7 @@ jobs:
             fi
             # clean up
             git reset --hard HEAD
+            git clean -fdx
             cd "$current_dir"
           done
 
