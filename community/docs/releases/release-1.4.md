@@ -1,7 +1,7 @@
 ---
 title: "Release 1.4"
 type: release
-version: 1.4.1
+version: 1.4.2
 weight: 96
 ---
 
