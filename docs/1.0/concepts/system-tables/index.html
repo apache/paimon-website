@@ -1,0 +1,2199 @@
+
+<!DOCTYPE html>
+<html lang="en" dir=>
+
+<head>
+  <meta name="generator" content="Hugo 0.80.0" />
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="System Tables #  Paimon provides a very rich set of system tables to help users better analyze and query the status of Paimon tables:
+ Query the status of the data table: Data System Table. Query the global status of the entire Catalog: Global System Table.  Data System Table #  Data System tables contain metadata and information about each Paimon data table, such as the snapshots created and the options in use.">
+<meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="System Tables" />
+<meta property="og:description" content="System Tables #  Paimon provides a very rich set of system tables to help users better analyze and query the status of Paimon tables:
+ Query the status of the data table: Data System Table. Query the global status of the entire Catalog: Global System Table.  Data System Table #  Data System tables contain metadata and information about each Paimon data table, such as the snapshots created and the options in use." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="//paimon.apache.org/docs/1.0/concepts/system-tables/" />
+
+<title>System Tables | Apache Paimon</title>
+<link rel="manifest" href="/docs/1.0/manifest.json">
+<link rel="icon" href="/docs/1.0/favicon.png" type="image/x-icon">
+<link rel="stylesheet" href="/docs/1.0/book.min.3bc4108a5b57c9a7e6fcae92ff69940435f8c46c4e1e4a311aedc9b2d8e06792.css" integrity="sha256-O8QQiltXyafm/K6S/2mUBDX4xGxOHkoxGu3JstjgZ5I=">
+<script defer src="/docs/1.0/en.search.min.b67c1ae3e934249b05884f728a5a0487547e350330284fc3cedd8dcea24150cd.js" integrity="sha256-tnwa4&#43;k0JJsFiE9yiloEh1R&#43;NQMwKE/Dzt2NzqJBUM0="></script>
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+  
+
+<link rel="stylesheet" type="text/css" href="//paimon.apache.org/docs/1.0/font-awesome/css/font-awesome.min.css">
+<script src="//paimon.apache.org/docs/1.0/js/anchor.min.js"></script>
+<script src="//paimon.apache.org/docs/1.0/js/flink.js"></script>
+
+
+  
+  <script>
+    var _paq = window._paq = window._paq || [];
+     
+     
+    _paq.push(['disableCookies']);
+     
+    _paq.push(["setDomains", ["*.flink.apache.org","*.nightlies.apache.org/flink"]]);
+    _paq.push(['trackPageView']);
+    _paq.push(['enableLinkTracking']);
+    (function() {
+      var u="//matomo.privacy.apache.org/";
+      _paq.push(['setTrackerUrl', u+'matomo.php']);
+      _paq.push(['setSiteId', '1']);
+      var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+      g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+    })();
+  </script>
+  
+</head>
+
+<body dir=>
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      
+  
+
+<nav>
+
+
+<a id="logo" href="//paimon.apache.org/docs/1.0">
+    <img width="100%" src="//paimon.apache.org/docs/1.0/paimon_black.svg">
+</a>
+<p style="text-align:right">1.0.1</p>
+
+<div class="book-search">
+  <input type="text" id="book-search-input" placeholder="Search" aria-label="Search" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-dc8a1c63e6da60163016ce21cae1faa0" class="toggle" checked />
+    <label for="section-dc8a1c63e6da60163016ce21cae1faa0" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-book title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Concepts</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/concepts/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/concepts/basic-concepts/" class="">Basic Concepts</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/concepts/concurrency-control/" class="">Concurrency Control</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/concepts/catalog/" class="">Catalog</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/concepts/table-types/" class="">Table Types</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/concepts/system-tables/" class=" active">System Tables</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/concepts/data-types/" class="">Data Types</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-d3e7256ce393050c572ea7bd8cc4f240" class="toggle"  />
+    <label for="section-d3e7256ce393050c572ea7bd8cc4f240" class="flex justify-between">Specification<span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/concepts/spec/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/concepts/spec/schema/" class="">Schema</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/concepts/spec/snapshot/" class="">Snapshot</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/concepts/spec/manifest/" class="">Manifest</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/concepts/spec/datafile/" class="">DataFile</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/concepts/spec/tableindex/" class="">Table Index</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/concepts/spec/fileindex/" class="">File Index</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-3f6a6d4f1692040009c66ffaa328c8d0" class="toggle"  />
+    <label for="section-3f6a6d4f1692040009c66ffaa328c8d0" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-database title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Table with PK</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/primary-key-table/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/primary-key-table/data-distribution/" class="">Data Distribution</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/primary-key-table/table-mode/" class="">Table Mode</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-038bb7d17b5b7cb93fb60acbcf218f11" class="toggle"  />
+    <label for="section-038bb7d17b5b7cb93fb60acbcf218f11" class="flex justify-between">Merge Engine<span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/primary-key-table/merge-engine/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/primary-key-table/merge-engine/partial-update/" class="">Partial Update</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/primary-key-table/merge-engine/aggregation/" class="">Aggregation</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/primary-key-table/merge-engine/first-row/" class="">First Row</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/primary-key-table/changelog-producer/" class="">Changelog Producer</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/primary-key-table/sequence-rowkind/" class="">Sequence & Rowkind</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/primary-key-table/compaction/" class="">Compaction</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/primary-key-table/query-performance/" class="">Query Performance</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-f74847e1c917ba2b99e7b718bb318b30" class="toggle"  />
+    <label for="section-f74847e1c917ba2b99e7b718bb318b30" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-database title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Table w/o PK</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/append-table/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/append-table/streaming/" class="">Streaming</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/append-table/query-performance/" class="">Query Performance</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/append-table/update/" class="">Update</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/append-table/bucketed/" class="">Bucketed</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-998a37410d502937fe8444ed73a9ecf8" class="toggle"  />
+    <label for="section-998a37410d502937fe8444ed73a9ecf8" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-gear title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Engine Flink</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/flink/quick-start/" class="">Quick Start</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/flink/sql-ddl/" class="">SQL DDL</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/flink/sql-write/" class="">SQL Write</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/flink/sql-query/" class="">SQL Query</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/flink/consumer-id/" class="">Consumer ID</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/flink/sql-lookup/" class="">SQL Lookup</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/flink/sql-alter/" class="">SQL Alter</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/flink/clone-tables/" class="">Clone Tables</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/flink/expire-partition/" class="">Expire Partition</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/flink/procedures/" class="">Procedures</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/flink/action-jars/" class="">Action Jars</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/flink/savepoint/" class="">Savepoint</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-74c63bf75b4f6bd14a3ea6a1217f03ad" class="toggle"  />
+    <label for="section-74c63bf75b4f6bd14a3ea6a1217f03ad" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-gear title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Engine Spark</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/spark/quick-start/" class="">Quick Start</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/spark/sql-ddl/" class="">SQL DDL</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/spark/sql-write/" class="">SQL Write</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/spark/sql-query/" class="">SQL Query</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/spark/sql-alter/" class="">SQL Alter</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/spark/auxiliary/" class="">Auxiliary</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/spark/procedures/" class="">Procedures</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-90f5541dc4fa46a212e954b9193ea0f9" class="toggle"  />
+    <label for="section-90f5541dc4fa46a212e954b9193ea0f9" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-gear title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Engine Others</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/engines/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/engines/starrocks/" class="">StarRocks</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/engines/doris/" class="">Doris</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/engines/hive/" class="">Hive</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/engines/trino/" class="">Trino</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-582e435c19ca5fafbf9764337d648e63" class="toggle"  />
+    <label for="section-582e435c19ca5fafbf9764337d648e63" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-gear title maindish" aria-hidden="true"></i>&nbsp;&nbsp;CDC Ingestion</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/cdc-ingestion/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/cdc-ingestion/mysql-cdc/" class="">Mysql CDC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/cdc-ingestion/postgres-cdc/" class="">Postgres CDC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/cdc-ingestion/kafka-cdc/" class="">Kafka CDC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/cdc-ingestion/mongo-cdc/" class="">Mongo CDC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/cdc-ingestion/pulsar-cdc/" class="">Pulsar CDC</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-697a4b6a0388d6cfa4f418aba3b4edfe" class="toggle"  />
+    <label for="section-697a4b6a0388d6cfa4f418aba3b4edfe" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-wrench title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Maintenance</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/maintenance/filesystems/" class="">Filesystems</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/maintenance/write-performance/" class="">Write Performance</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/maintenance/dedicated-compaction/" class="">Dedicated Compaction</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/maintenance/manage-snapshots/" class="">Manage Snapshots</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/maintenance/rescale-bucket/" class="">Rescale Bucket</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/maintenance/manage-tags/" class="">Manage Tags</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/maintenance/metrics/" class="">Metrics</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/maintenance/manage-privileges/" class="">Manage Privileges</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/maintenance/manage-branches/" class="">Manage Branches</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/maintenance/configurations/" class="">Configurations</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-049030059e0dc01edf74ba3d4d259dae" class="toggle"  />
+    <label for="section-049030059e0dc01edf74ba3d4d259dae" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-briefcase title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Program API</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/program-api/flink-api/" class="">Flink API</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/program-api/java-api/" class="">Java API</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/program-api/catalog-api/" class="">Catalog API</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/program-api/python-api/" class="">Python API</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-07c567e5a9f3ce62aea4ff0a1e2dc065" class="toggle"  />
+    <label for="section-07c567e5a9f3ce62aea4ff0a1e2dc065" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-briefcase title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Migration</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/migration/migration-from-hive/" class="">Migration From Hive</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/migration/upsert-to-partitioned/" class="">Upsert To Partitioned</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/migration/iceberg-compatibility/" class="">Iceberg Compatibility</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  	<br/>
+  
+  
+    <input type="checkbox" id="section-8c828bcf882f666cdd6821a70cc768ee" class="toggle"  />
+    <label for="section-8c828bcf882f666cdd6821a70cc768ee" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-sitemap title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Project</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/project/roadmap/" class="">Roadmap</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/project/download/" class="">Download</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/project/contributing/" class="">Contributing</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-392fc6f653ae23ff676811656a71ebbf" class="toggle"  />
+    <label for="section-392fc6f653ae23ff676811656a71ebbf" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-sitemap title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Learn Paimon</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/learn-paimon/understand-files/" class="">Understand Files</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br/>
+<hr class="menu-break">
+
+<a href="//paimon.apache.org" style="color:black;margin-bottom:0.5em"><i class="link fa fa-external-link title" aria-hidden="true"></i> Project Homepage</a>
+<br/>
+
+<a href="//paimon.apache.org/docs/master/api/java/" style="color:black;margin-bottom:0.5em"><i class="link fa fa-external-link title" aria-hidden="true"></i> JavaDocs</a>
+<br/>
+
+<hr class="menu-break">
+<li style="list-style-type: none">
+  <br>
+  <input type="checkbox" id="section-version-picker" class="toggle">
+  <label for="section-version-picker" class="flex justify-between">
+     <div style="font-weight:450;margin-bottom:0.5em">Pick Docs Version</div>
+     <span>▾</span>
+  </label>
+  <ul>
+    <a href="//paimon.apache.org/docs/1.0">
+      1.0 (✓)
+    </a>
+    <hr class="menu-break">
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/master">
+          master
+        </a>
+      </li>
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/1.0">
+          stable
+        </a>
+      </li>
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/1.0">
+          1.0
+        </a>
+      </li>
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/0.9">
+          0.9
+        </a>
+      </li>
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/0.8">
+          0.8
+        </a>
+      </li>
+    
+    <hr class="menu-break">
+    <li>
+      <a href="//paimon.apache.org/docs/1.0/versions">
+          All Versions
+      </a>
+    </li>
+  </ul>
+</li>
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var menu=document.querySelector("aside.book-menu nav");addEventListener("beforeunload",function(event){localStorage.setItem("menu.scrollTop",menu.scrollTop);});menu.scrollTop=localStorage.getItem("menu.scrollTop");})();</script>
+
+
+ 
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/docs/1.0/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <strong>System Tables</strong>
+
+  <label for="toc-control">
+    
+    <img src="/docs/1.0/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden clearfix">
+    
+  
+
+<nav id="TableOfContents"><h3>On This Page <button class="toc" onclick="collapseToc()"><i class="fa fa-compress" aria-hidden="true"></i></button></h3>
+  <ul>
+    <li><a href="#data-system-table">Data System Table</a>
+      <ul>
+        <li><a href="#snapshots-table">Snapshots Table</a></li>
+        <li><a href="#schemas-table">Schemas Table</a></li>
+        <li><a href="#options-table">Options Table</a></li>
+        <li><a href="#audit-log-table">Audit log Table</a></li>
+        <li><a href="#binlog-table">Binlog Table</a></li>
+        <li><a href="#read-optimized-table">Read-optimized Table</a></li>
+        <li><a href="#files-table">Files Table</a></li>
+        <li><a href="#tags-table">Tags Table</a></li>
+        <li><a href="#branches-table">Branches Table</a></li>
+        <li><a href="#consumers-table">Consumers Table</a></li>
+        <li><a href="#manifests-table">Manifests Table</a></li>
+        <li><a href="#aggregation-fields-table">Aggregation fields Table</a></li>
+        <li><a href="#partitions-table">Partitions Table</a></li>
+        <li><a href="#buckets-table">Buckets Table</a></li>
+        <li><a href="#statistic-table">Statistic Table</a></li>
+        <li><a href="#table-indexes-table">Table Indexes Table</a></li>
+      </ul>
+    </li>
+    <li><a href="#global-system-table">Global System Table</a>
+      <ul>
+        <li><a href="#all-options-table">ALL Options Table</a></li>
+        <li><a href="#catalog-options-table">Catalog Options Table</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+
+
+
+
+
+
+      
+  <article class="markdown"><!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<h1 id="system-tables">
+  System Tables
+  <a class="anchor" href="#system-tables">#</a>
+</h1>
+<p>Paimon provides a very rich set of system tables to help users better analyze and query the status of Paimon tables:</p>
+<ol>
+<li>Query the status of the data table: Data System Table.</li>
+<li>Query the global status of the entire Catalog: Global System Table.</li>
+</ol>
+<h2 id="data-system-table">
+  Data System Table
+  <a class="anchor" href="#data-system-table">#</a>
+</h2>
+<p>Data System tables contain metadata and information about each Paimon data table, such as the snapshots created and the
+options in use. Users can access system tables with batch queries.</p>
+<p>Currently, Flink, Spark, Trino and StarRocks support querying system tables.</p>
+<p>In some cases, the table name needs to be enclosed with back quotes to avoid syntax parsing conflicts, for example triple access mode:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">my_catalog</span><span class="p">.</span><span class="n">my_db</span><span class="p">.</span><span class="o">`</span><span class="n">my_table$snapshots</span><span class="o">`</span><span class="p">;</span>
+</code></pre></div><h3 id="snapshots-table">
+  Snapshots Table
+  <a class="anchor" href="#snapshots-table">#</a>
+</h3>
+<p>You can query the snapshot history information of the table through snapshots table, including the record count occurred in the snapshot.</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">my_table$snapshots</span><span class="p">;</span>
+
+<span class="cm">/*
+</span><span class="cm">+--------------+------------+-----------------+-------------------+--------------+-------------------------+--------------------------------+------------------------------- +--------------------------------+---------------------+---------------------+-------------------------+----------------+
+</span><span class="cm">|  snapshot_id |  schema_id |     commit_user | commit_identifier |  commit_kind |             commit_time |             base_manifest_list |            delta_manifest_list |        changelog_manifest_list |  total_record_count |  delta_record_count |  changelog_record_count |      watermark |
+</span><span class="cm">+--------------+------------+-----------------+-------------------+--------------+-------------------------+--------------------------------+------------------------------- +--------------------------------+---------------------+---------------------+-------------------------+----------------+
+</span><span class="cm">|            2 |          0 | 7ca4cd28-98e... |                 2 |       APPEND | 2022-10-26 11:44:15.600 | manifest-list-31323d5f-76e6... | manifest-list-31323d5f-76e6... | manifest-list-31323d5f-76e6... |                   2 |                   2 |                       0 |  1666755855600 |
+</span><span class="cm">|            1 |          0 | 870062aa-3e9... |                 1 |       APPEND | 2022-10-26 11:44:15.148 | manifest-list-31593d5f-76e6... | manifest-list-31593d5f-76e6... | manifest-list-31593d5f-76e6... |                   1 |                   1 |                       0 |  1666755855148 |
+</span><span class="cm">+--------------+------------+-----------------+-------------------+--------------+-------------------------+--------------------------------+------------------------------- +--------------------------------+---------------------+---------------------+-------------------------+----------------+
+</span><span class="cm">2 rows in set
+</span><span class="cm">*/</span>
+</code></pre></div><p>By querying the snapshots table, you can know the commit and expiration information about that table and time travel through the data.</p>
+<h3 id="schemas-table">
+  Schemas Table
+  <a class="anchor" href="#schemas-table">#</a>
+</h3>
+<p>You can query the historical schemas of the table through schemas table.</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">my_table$schemas</span><span class="p">;</span>
+
+<span class="cm">/*
+</span><span class="cm">+-----------+--------------------------------+----------------+--------------+---------+---------+-------------------------+
+</span><span class="cm">| schema_id |                         fields | partition_keys | primary_keys | options | comment |       update_time       |
+</span><span class="cm">+-----------+--------------------------------+----------------+--------------+---------+---------+-------------------------+
+</span><span class="cm">|         0 | [{&#34;id&#34;:0,&#34;name&#34;:&#34;word&#34;,&#34;typ... |             [] |     [&#34;word&#34;] |      {} |         | 2022-10-28 11:44:20.600 |
+</span><span class="cm">|         1 | [{&#34;id&#34;:0,&#34;name&#34;:&#34;word&#34;,&#34;typ... |             [] |     [&#34;word&#34;] |      {} |         | 2022-10-27 11:44:15.600 |
+</span><span class="cm">|         2 | [{&#34;id&#34;:0,&#34;name&#34;:&#34;word&#34;,&#34;typ... |             [] |     [&#34;word&#34;] |      {} |         | 2022-10-26 11:44:10.600 |
+</span><span class="cm">+-----------+--------------------------------+----------------+--------------+---------+---------+-------------------------+
+</span><span class="cm">3 rows in set
+</span><span class="cm">*/</span>
+</code></pre></div><p>You can join the snapshots table and schemas table to get the fields of given snapshots.</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="n">s</span><span class="p">.</span><span class="n">snapshot_id</span><span class="p">,</span> <span class="n">t</span><span class="p">.</span><span class="n">schema_id</span><span class="p">,</span> <span class="n">t</span><span class="p">.</span><span class="n">fields</span> 
+    <span class="k">FROM</span> <span class="n">my_table$snapshots</span> <span class="n">s</span> <span class="k">JOIN</span> <span class="n">my_table$schemas</span> <span class="n">t</span> 
+    <span class="k">ON</span> <span class="n">s</span><span class="p">.</span><span class="n">schema_id</span><span class="o">=</span><span class="n">t</span><span class="p">.</span><span class="n">schema_id</span> <span class="k">where</span> <span class="n">s</span><span class="p">.</span><span class="n">snapshot_id</span><span class="o">=</span><span class="mi">100</span><span class="p">;</span>
+</code></pre></div><h3 id="options-table">
+  Options Table
+  <a class="anchor" href="#options-table">#</a>
+</h3>
+<p>You can query the table&rsquo;s option information which is specified from the DDL through options table. The options not shown will be the default value. You can take reference to <a href="//paimon.apache.org/docs/1.0/maintenance/configurations/#coreoptions">Configuration</a>.</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">my_table$options</span><span class="p">;</span>
+
+<span class="cm">/*
+</span><span class="cm">+------------------------+--------------------+
+</span><span class="cm">|         key            |        value       |
+</span><span class="cm">+------------------------+--------------------+
+</span><span class="cm">| snapshot.time-retained |         5 h        |
+</span><span class="cm">+------------------------+--------------------+
+</span><span class="cm">1 rows in set
+</span><span class="cm">*/</span>
+</code></pre></div><h3 id="audit-log-table">
+  Audit log Table
+  <a class="anchor" href="#audit-log-table">#</a>
+</h3>
+<p>If you need to audit the changelog of the table, you can use the <code>audit_log</code> system table. Through <code>audit_log</code> table, you can get the <code>rowkind</code> column when you get the incremental data of the table. You can use this column for
+filtering and other operations to complete the audit.</p>
+<p>There are four values for <code>rowkind</code>:</p>
+<ul>
+<li><code>+I</code>: Insertion operation.</li>
+<li><code>-U</code>: Update operation with the previous content of the updated row.</li>
+<li><code>+U</code>: Update operation with new content of the updated row.</li>
+<li><code>-D</code>: Deletion operation.</li>
+</ul>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">my_table$audit_log</span><span class="p">;</span>
+
+<span class="cm">/*
+</span><span class="cm">+------------------+-----------------+-----------------+
+</span><span class="cm">|     rowkind      |     column_0    |     column_1    |
+</span><span class="cm">+------------------+-----------------+-----------------+
+</span><span class="cm">|        +I        |      ...        |      ...        |
+</span><span class="cm">+------------------+-----------------+-----------------+
+</span><span class="cm">|        -U        |      ...        |      ...        |
+</span><span class="cm">+------------------+-----------------+-----------------+
+</span><span class="cm">|        +U        |      ...        |      ...        |
+</span><span class="cm">+------------------+-----------------+-----------------+
+</span><span class="cm">3 rows in set
+</span><span class="cm">*/</span>
+</code></pre></div><h3 id="binlog-table">
+  Binlog Table
+  <a class="anchor" href="#binlog-table">#</a>
+</h3>
+<p>You can query the binlog through binlog table. In the binlog system table, the update before and update after will be packed in one row.</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">T$binlog</span><span class="p">;</span>
+
+<span class="cm">/*
+</span><span class="cm">+------------------+----------------------+-----------------------+
+</span><span class="cm">|     rowkind      |       column_0       |       column_1        |
+</span><span class="cm">+------------------+----------------------+-----------------------+
+</span><span class="cm">|        +I        |       [col_0]        |       [col_1]         |
+</span><span class="cm">+------------------+----------------------+-----------------------+
+</span><span class="cm">|        +U        | [col_0_ub, col_0_ua] | [col_1_ub, col_1_ua]  |
+</span><span class="cm">+------------------+----------------------+-----------------------+
+</span><span class="cm">|        -D        |       [col_0]        |       [col_1]         |
+</span><span class="cm">+------------------+----------------------+-----------------------+
+</span><span class="cm">*/</span>
+</code></pre></div><h3 id="read-optimized-table">
+  Read-optimized Table
+  <a class="anchor" href="#read-optimized-table">#</a>
+</h3>
+<p>If you require extreme reading performance and can accept reading slightly old data,
+you can use the <code>ro</code> (read-optimized) system table.
+Read-optimized system table improves reading performance by only scanning files which does not need merging.</p>
+<p>For primary-key tables, <code>ro</code> system table only scans files on the topmost level.
+That is to say, <code>ro</code> system table only produces the result of the latest full compaction.</p>
+<blockquote class="book-hint info">
+  It is possible that different buckets carry out full compaction at difference times,
+so it is possible that the values of different keys come from different snapshots.
+</blockquote>
+
+<p>For append tables, as all files can be read without merging,
+<code>ro</code> system table acts like the normal append table.</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">my_table$ro</span><span class="p">;</span>
+</code></pre></div><h3 id="files-table">
+  Files Table
+  <a class="anchor" href="#files-table">#</a>
+</h3>
+<p>You can query the files of the table with specific snapshot.</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="c1">-- Query the files of latest snapshot
+</span><span class="c1"></span><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">my_table$files</span><span class="p">;</span>
+
+<span class="cm">/*
+</span><span class="cm">+-----------+--------+--------------------------------+-------------+-----------+-------+--------------+--------------------+---------+---------+------------------------+-------------------------+-------------------------+---------------------+---------------------+-----------------------+
+</span><span class="cm">| partition | bucket |                      file_path | file_format | schema_id | level | record_count | file_size_in_bytes | min_key | max_key |      null_value_counts |         min_value_stats |         max_value_stats | min_sequence_number | max_sequence_number |         creation_time |
+</span><span class="cm">+-----------+--------+--------------------------------+-------------+-----------+-------+--------------+--------------------+---------+---------+------------------------+-------------------------+-------------------------+---------------------+---------------------+-----------------------+
+</span><span class="cm">|       [3] |      0 | data-8f64af95-29cc-4342-adc... |         orc |         0 |     0 |            1 |                593 |     [c] |     [c] | {cnt=0, val=0, word=0} | {cnt=3, val=33, word=c} | {cnt=3, val=33, word=c} |       1691551246234 |       1691551246637 |2023-02-24T16:06:21.166|
+</span><span class="cm">|       [2] |      0 | data-8b369068-0d37-4011-aa5... |         orc |         0 |     0 |            1 |                593 |     [b] |     [b] | {cnt=0, val=0, word=0} | {cnt=2, val=22, word=b} | {cnt=2, val=22, word=b} |       1691551246233 |       1691551246732 |2023-02-24T16:06:21.166|
+</span><span class="cm">|       [2] |      0 | data-83aa7973-060b-40b6-8c8... |         orc |         0 |     0 |            1 |                605 |     [d] |     [d] | {cnt=0, val=0, word=0} | {cnt=2, val=32, word=d} | {cnt=2, val=32, word=d} |       1691551246267 |       1691551246798 |2023-02-24T16:06:21.166|
+</span><span class="cm">|       [5] |      0 | data-3d304f4a-bcea-44dc-a13... |         orc |         0 |     0 |            1 |                593 |     [c] |     [c] | {cnt=0, val=0, word=0} | {cnt=5, val=51, word=c} | {cnt=5, val=51, word=c} |       1691551246788 |       1691551246152 |2023-02-24T16:06:21.166|
+</span><span class="cm">|       [1] |      0 | data-10abb5bc-0170-43ae-b6a... |         orc |         0 |     0 |            1 |                595 |     [a] |     [a] | {cnt=0, val=0, word=0} | {cnt=1, val=11, word=a} | {cnt=1, val=11, word=a} |       1691551246722 |       1691551246273 |2023-02-24T16:06:21.166|
+</span><span class="cm">|       [4] |      0 | data-2c9b7095-65b7-4013-a7a... |         orc |         0 |     0 |            1 |                593 |     [a] |     [a] | {cnt=0, val=0, word=0} | {cnt=4, val=12, word=a} | {cnt=4, val=12, word=a} |       1691551246321 |       1691551246109 |2023-02-24T16:06:21.166|
+</span><span class="cm">+-----------+--------+--------------------------------+-------------+-----------+-------+--------------+--------------------+---------+---------+------------------------+-------------------------+-------------------------+---------------------+---------------------+-----------------------+
+</span><span class="cm">6 rows in set
+</span><span class="cm">*/</span>
+
+<span class="c1">-- You can also query the files with specific snapshot
+</span><span class="c1"></span><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">my_table$files</span> <span class="cm">/*+ OPTIONS(&#39;scan.snapshot-id&#39;=&#39;1&#39;) */</span><span class="p">;</span>
+
+<span class="cm">/*
+</span><span class="cm">+-----------+--------+--------------------------------+-------------+-----------+-------+--------------+--------------------+---------+---------+------------------------+-------------------------+-------------------------+---------------------+---------------------+-----------------------+
+</span><span class="cm">| partition | bucket |                      file_path | file_format | schema_id | level | record_count | file_size_in_bytes | min_key | max_key |      null_value_counts |         min_value_stats |         max_value_stats | min_sequence_number | max_sequence_number |         creation_time |
+</span><span class="cm">+-----------+--------+--------------------------------+-------------+-----------+-------+--------------+--------------------+---------+---------+------------------------+-------------------------+-------------------------+---------------------+---------------------+-----------------------+
+</span><span class="cm">|       [3] |      0 | data-8f64af95-29cc-4342-adc... |         orc |         0 |     0 |            1 |                593 |     [c] |     [c] | {cnt=0, val=0, word=0} | {cnt=3, val=33, word=c} | {cnt=3, val=33, word=c} |       1691551246234 |       1691551246637 |2023-02-24T16:06:21.166|
+</span><span class="cm">|       [2] |      0 | data-8b369068-0d37-4011-aa5... |         orc |         0 |     0 |            1 |                593 |     [b] |     [b] | {cnt=0, val=0, word=0} | {cnt=2, val=22, word=b} | {cnt=2, val=22, word=b} |       1691551246233 |       1691551246732 |2023-02-24T16:06:21.166|
+</span><span class="cm">|       [1] |      0 | data-10abb5bc-0170-43ae-b6a... |         orc |         0 |     0 |            1 |                595 |     [a] |     [a] | {cnt=0, val=0, word=0} | {cnt=1, val=11, word=a} | {cnt=1, val=11, word=a} |       1691551246267 |       1691551246798 |2023-02-24T16:06:21.166|
+</span><span class="cm">+-----------+--------+--------------------------------+-------------+-----------+-------+--------------+--------------------+---------+---------+------------------------+-------------------------+-------------------------+---------------------+---------------------+-----------------------+
+</span><span class="cm">3 rows in set
+</span><span class="cm">*/</span>
+</code></pre></div><h3 id="tags-table">
+  Tags Table
+  <a class="anchor" href="#tags-table">#</a>
+</h3>
+<p>You can query the tag history information of the table through tags table, including which snapshots are the tags based on
+and some historical information of the snapshots. You can also get all tag names and time travel to a specific tag data by name.</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">my_table$tags</span><span class="p">;</span>
+
+<span class="cm">/*
+</span><span class="cm">+----------+-------------+-----------+-------------------------+--------------+--------------+
+</span><span class="cm">| tag_name | snapshot_id | schema_id |             commit_time | record_count |   branches   |
+</span><span class="cm">+----------+-------------+-----------+-------------------------+--------------+--------------+
+</span><span class="cm">|     tag1 |           1 |         0 | 2023-06-28 14:55:29.344 |            3 |      []      |
+</span><span class="cm">|     tag3 |           3 |         0 | 2023-06-28 14:58:24.691 |            7 |  [branch-1]  |
+</span><span class="cm">+----------+-------------+-----------+-------------------------+--------------+--------------+
+</span><span class="cm">2 rows in set
+</span><span class="cm">*/</span>
+</code></pre></div><h3 id="branches-table">
+  Branches Table
+  <a class="anchor" href="#branches-table">#</a>
+</h3>
+<p>You can query the branches of the table.</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">my_table$branches</span><span class="p">;</span>
+
+<span class="cm">/*
+</span><span class="cm">+----------------------+-------------------------+
+</span><span class="cm">|          branch_name |             create_time |
+</span><span class="cm">+----------------------+-------------------------+
+</span><span class="cm">|              branch1 | 2024-07-18 20:31:39.084 |
+</span><span class="cm">|              branch2 | 2024-07-18 21:11:14.373 |
+</span><span class="cm">+----------------------+-------------------------+
+</span><span class="cm">2 rows in set
+</span><span class="cm">*/</span>
+</code></pre></div><h3 id="consumers-table">
+  Consumers Table
+  <a class="anchor" href="#consumers-table">#</a>
+</h3>
+<p>You can query all consumers which contains next snapshot.</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">my_table$consumers</span><span class="p">;</span>
+
+<span class="cm">/*
+</span><span class="cm">+-------------+------------------+
+</span><span class="cm">| consumer_id | next_snapshot_id |
+</span><span class="cm">+-------------+------------------+
+</span><span class="cm">|         id1 |                1 |
+</span><span class="cm">|         id2 |                3 |
+</span><span class="cm">+-------------+------------------+
+</span><span class="cm">2 rows in set
+</span><span class="cm">*/</span>
+</code></pre></div><h3 id="manifests-table">
+  Manifests Table
+  <a class="anchor" href="#manifests-table">#</a>
+</h3>
+<p>You can query all manifest files contained in the latest snapshot or the specified snapshot of the current table.</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="c1">-- Query the manifest of latest snapshot
+</span><span class="c1"></span><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">my_table$manifests</span><span class="p">;</span>
+
+<span class="cm">/*
+</span><span class="cm">+--------------------------------+-------------+------------------+-------------------+---------------+---------------------+---------------------+
+</span><span class="cm">|                      file_name |   file_size |  num_added_files | num_deleted_files |     schema_id | min_partition_stats | max_partition_stats |
+</span><span class="cm">+--------------------------------+-------------+------------------+-------------------+---------------+---------------------+---------------------+
+</span><span class="cm">| manifest-f4dcab43-ef6b-4713... |        12365|               40 |                 0 |             0 |      [20230315, 00] |      [20230315, 20] |
+</span><span class="cm">| manifest-f4dcab43-ef6b-4713... |        1648 |                1 |                 0 |             0 |      [20230115, 00] |      [20230316, 23] |
+</span><span class="cm">+--------------------------------+-------------+------------------+-------------------+---------------+---------------------+---------------------+
+</span><span class="cm">2 rows in set
+</span><span class="cm">*/</span>
+
+<span class="c1">-- You can also query the manifest with specified snapshot
+</span><span class="c1"></span><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">my_table$manifests</span> <span class="cm">/*+ OPTIONS(&#39;scan.snapshot-id&#39;=&#39;1&#39;) */</span><span class="p">;</span>
+<span class="cm">/*
+</span><span class="cm">+--------------------------------+-------------+------------------+-------------------+---------------+---------------------+---------------------+
+</span><span class="cm">|                      file_name |   file_size |  num_added_files | num_deleted_files |     schema_id | min_partition_stats | max_partition_stats |
+</span><span class="cm">+--------------------------------+-------------+------------------+-------------------+---------------+---------------------+---------------------+
+</span><span class="cm">| manifest-f4dcab43-ef6b-4713... |        12365|               40 |                 0 |             0 |      [20230315, 00] |      [20230315, 20] |
+</span><span class="cm">+--------------------------------+-------------+------------------+-------------------+---------------+---------------------+---------------------+
+</span><span class="cm">1 rows in set
+</span><span class="cm">*/</span>
+
+<span class="o">-</span> <span class="n">You</span> <span class="n">can</span> <span class="n">also</span> <span class="n">query</span> <span class="n">the</span> <span class="n">manifest</span> <span class="k">with</span> <span class="n">specified</span> <span class="n">tagName</span>
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">my_table$manifests</span> <span class="cm">/*+ OPTIONS(&#39;scan.tag-name&#39;=&#39;tag1&#39;) */</span><span class="p">;</span>
+<span class="cm">/*
+</span><span class="cm">+--------------------------------+-------------+------------------+-------------------+---------------+---------------------+---------------------+
+</span><span class="cm">|                      file_name |   file_size |  num_added_files | num_deleted_files |     schema_id | min_partition_stats | max_partition_stats |
+</span><span class="cm">+--------------------------------+-------------+------------------+-------------------+---------------+---------------------+---------------------+
+</span><span class="cm">| manifest-f4dcab43-ef6b-4713... |        12365|               40 |                 0 |             0 |      [20230315, 00] |      [20230315, 20] |
+</span><span class="cm">+--------------------------------+-------------+------------------+-------------------+---------------+---------------------+---------------------+
+</span><span class="cm">1 rows in set
+</span><span class="cm">*/</span>
+
+<span class="o">-</span> <span class="n">You</span> <span class="n">can</span> <span class="n">also</span> <span class="n">query</span> <span class="n">the</span> <span class="n">manifest</span> <span class="k">with</span> <span class="n">specified</span> <span class="k">timestamp</span> <span class="k">in</span> <span class="n">unix</span> <span class="n">milliseconds</span>
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">my_table$manifests</span> <span class="cm">/*+ OPTIONS(&#39;scan.timestamp-millis&#39;=&#39;1678883047356&#39;) */</span><span class="p">;</span>
+<span class="cm">/*
+</span><span class="cm">+--------------------------------+-------------+------------------+-------------------+---------------+---------------------+---------------------+
+</span><span class="cm">|                      file_name |   file_size |  num_added_files | num_deleted_files |     schema_id | min_partition_stats | max_partition_stats |
+</span><span class="cm">+--------------------------------+-------------+------------------+-------------------+---------------+---------------------+---------------------+
+</span><span class="cm">| manifest-f4dcab43-ef6b-4713... |        12365|               40 |                 0 |             0 |      [20230315, 00] |      [20230315, 20] |
+</span><span class="cm">+--------------------------------+-------------+------------------+-------------------+---------------+---------------------+---------------------+
+</span><span class="cm">1 rows in set
+</span><span class="cm">*/</span>
+</code></pre></div><h3 id="aggregation-fields-table">
+  Aggregation fields Table
+  <a class="anchor" href="#aggregation-fields-table">#</a>
+</h3>
+<p>You can query the historical aggregation of the table through aggregation fields table.</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">my_table$aggregation_fields</span><span class="p">;</span>
+
+<span class="cm">/*
+</span><span class="cm">+------------+-----------------+--------------+--------------------------------+---------+
+</span><span class="cm">| field_name |      field_type |    function  |               function_options | comment |
+</span><span class="cm">+------------+-----------------+--------------+--------------------------------+---------+
+</span><span class="cm">| product_id | BIGINT NOT NULL |           [] |                             [] |  &lt;NULL&gt; |
+</span><span class="cm">|      price |             INT | [true,count] | [fields.price.ignore-retrac... |  &lt;NULL&gt; |
+</span><span class="cm">|      sales |          BIGINT |        [sum] | [fields.sales.aggregate-fun... |  &lt;NULL&gt; |
+</span><span class="cm">+------------+-----------------+--------------+--------------------------------+---------+
+</span><span class="cm">3 rows in set
+</span><span class="cm">*/</span>
+</code></pre></div><h3 id="partitions-table">
+  Partitions Table
+  <a class="anchor" href="#partitions-table">#</a>
+</h3>
+<p>You can query the partition files of the table.</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">my_table$partitions</span><span class="p">;</span>
+
+<span class="cm">/*
+</span><span class="cm">+---------------+----------------+--------------------+--------------------+------------------------+
+</span><span class="cm">|  partition    |   record_count |  file_size_in_bytes|          file_count|        last_update_time|
+</span><span class="cm">+---------------+----------------+--------------------+--------------------+------------------------+
+</span><span class="cm">|  [1]          |           1    |             645    |                1   | 2024-06-24 10:25:57.400|
+</span><span class="cm">+---------------+----------------+--------------------+--------------------+------------------------+
+</span><span class="cm">*/</span>
+</code></pre></div><h3 id="buckets-table">
+  Buckets Table
+  <a class="anchor" href="#buckets-table">#</a>
+</h3>
+<p>You can query the bucket files of the table.</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">my_table$buckets</span><span class="p">;</span>
+
+<span class="cm">/*
+</span><span class="cm">+---------------+--------+----------------+--------------------+--------------------+------------------------+
+</span><span class="cm">|  partition    | bucket |   record_count |  file_size_in_bytes|          file_count|        last_update_time|
+</span><span class="cm">+---------------+--------+----------------+--------------------+--------------------+------------------------+
+</span><span class="cm">|  [1]          |   0    |           1    |             645    |                1   | 2024-06-24 10:25:57.400|
+</span><span class="cm">+---------------+--------+----------------+--------------------+--------------------+------------------------+
+</span><span class="cm">*/</span>
+</code></pre></div><h3 id="statistic-table">
+  Statistic Table
+  <a class="anchor" href="#statistic-table">#</a>
+</h3>
+<p>You can query the statistic information through statistic table.</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">T$statistics</span><span class="p">;</span>
+
+<span class="cm">/*
+</span><span class="cm">+--------------+------------+-----------------------+------------------+----------+
+</span><span class="cm">|  snapshot_id |  schema_id |     mergedRecordCount | mergedRecordSize |  colstat |
+</span><span class="cm">+--------------+------------+-----------------------+------------------+----------+
+</span><span class="cm">|            2 |          0 |              2        |         2        |    {}    |
+</span><span class="cm">+--------------+------------+-----------------------+------------------+----------+
+</span><span class="cm">1 rows in set
+</span><span class="cm">*/</span>
+</code></pre></div><h3 id="table-indexes-table">
+  Table Indexes Table
+  <a class="anchor" href="#table-indexes-table">#</a>
+</h3>
+<p>You can query the table&rsquo;s index files generated for dynamic bucket table (index_type = HASH) and deletion vectors
+(index_type = DELETION_VECTORS) through indexes table.</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">my_table$table_indexes</span><span class="p">;</span>
+
+<span class="cm">/*
+</span><span class="cm">+--------------------------------+-------------+--------------------------------+--------------------------------+----------------------+----------------------+--------------------------------+
+</span><span class="cm">|                      partition |      bucket |                     index_type |                      file_name |            file_size |            row_count |                      dv_ranges |
+</span><span class="cm">+--------------------------------+-------------+--------------------------------+--------------------------------+----------------------+----------------------+--------------------------------+
+</span><span class="cm">|                   [2024-10-01] |           0 |                           HASH | index-70abfebf-149e-4796-9f... |                   12 |                    3 |                         &lt;NULL&gt; |
+</span><span class="cm">|                   [2024-10-01] |           0 |               DELETION_VECTORS | index-633857e7-cdce-47d2-87... |                   33 |                    1 | [(data-346cb9c8-4032-4d66-a... |
+</span><span class="cm">+--------------------------------+-------------+--------------------------------+--------------------------------+----------------------+----------------------+--------------------------------+
+</span><span class="cm">2 rows in set
+</span><span class="cm">*/</span>
+</code></pre></div><h2 id="global-system-table">
+  Global System Table
+  <a class="anchor" href="#global-system-table">#</a>
+</h2>
+<p>Global system tables contain the statistical information of all the tables exists in paimon. For convenient of searching, we create a reference system database called <code>sys</code>.
+We can display all the global system tables by sql in flink:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="n">USE</span> <span class="n">sys</span><span class="p">;</span>
+<span class="k">SHOW</span> <span class="n">TABLES</span><span class="p">;</span>
+</code></pre></div><h3 id="all-options-table">
+  ALL Options Table
+  <a class="anchor" href="#all-options-table">#</a>
+</h3>
+<p>This table is similar to <a href="#options-table">Options Table</a>, but it shows all the table options is all database.</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">sys</span><span class="p">.</span><span class="n">all_table_options</span><span class="p">;</span>
+
+<span class="cm">/*
+</span><span class="cm">+---------------+--------------------------------+--------------------------------+------------------+
+</span><span class="cm">| database_name |                     table_name |                            key |            value |
+</span><span class="cm">+---------------+--------------------------------+--------------------------------+------------------+
+</span><span class="cm">|         my_db |                    Orders_orc  |                         bucket |               -1 |
+</span><span class="cm">|         my_db |                        Orders2 |                         bucket |               -1 |
+</span><span class="cm">|         my_db |                        Orders2 |               sink.parallelism |                7 |
+</span><span class="cm">|         my_db2|                      OrdersSum |                         bucket |                1 |
+</span><span class="cm">+---------------+--------------------------------+--------------------------------+------------------+
+</span><span class="cm">7 rows in set
+</span><span class="cm">*/</span>
+</code></pre></div><h3 id="catalog-options-table">
+  Catalog Options Table
+  <a class="anchor" href="#catalog-options-table">#</a>
+</h3>
+<p>You can query the catalog&rsquo;s option information through catalog options table. The options not shown will be the default value. You can take reference to <a href="//paimon.apache.org/docs/1.0/maintenance/configurations/#coreoptions">Configuration</a>.</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">sys</span><span class="p">.</span><span class="n">catalog_options</span><span class="p">;</span>
+
+<span class="cm">/*
+</span><span class="cm">+-----------+---------------------------+
+</span><span class="cm">|       key |                     value |
+</span><span class="cm">+-----------+---------------------------+
+</span><span class="cm">| warehouse | hdfs:///path/to/warehouse |
+</span><span class="cm">+-----------+---------------------------+
+</span><span class="cm">1 rows in set
+</span><span class="cm">*/</span>
+</code></pre></div></article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  
+
+
+
+
+<a href="//github.com/apache/paimon/edit/1.0/docs/content/concepts/system-tables.md" style="color:black"><i class="fa fa-edit fa-fw"></i>Edit This Page</a>
+
+
+ 
+        
+
+
+<hr style="margin-top: 20px; border: 1px solid #e5e5e5;" />
+
+<table style="border-spacing: 10px;">
+    <tbody>
+    <tr>
+        <td colspan="2">
+            Copyright &copy; 2024 The Apache Software Foundation. Apache Paimon, Paimon, and its feather logo are
+            trademarks of The Apache Software Foundation.
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+      </footer>
+
+      
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      
+  
+
+<nav id="TableOfContents"><h3>On This Page <button class="toc" onclick="collapseToc()"><i class="fa fa-compress" aria-hidden="true"></i></button></h3>
+  <ul>
+    <li><a href="#data-system-table">Data System Table</a>
+      <ul>
+        <li><a href="#snapshots-table">Snapshots Table</a></li>
+        <li><a href="#schemas-table">Schemas Table</a></li>
+        <li><a href="#options-table">Options Table</a></li>
+        <li><a href="#audit-log-table">Audit log Table</a></li>
+        <li><a href="#binlog-table">Binlog Table</a></li>
+        <li><a href="#read-optimized-table">Read-optimized Table</a></li>
+        <li><a href="#files-table">Files Table</a></li>
+        <li><a href="#tags-table">Tags Table</a></li>
+        <li><a href="#branches-table">Branches Table</a></li>
+        <li><a href="#consumers-table">Consumers Table</a></li>
+        <li><a href="#manifests-table">Manifests Table</a></li>
+        <li><a href="#aggregation-fields-table">Aggregation fields Table</a></li>
+        <li><a href="#partitions-table">Partitions Table</a></li>
+        <li><a href="#buckets-table">Buckets Table</a></li>
+        <li><a href="#statistic-table">Statistic Table</a></li>
+        <li><a href="#table-indexes-table">Table Indexes Table</a></li>
+      </ul>
+    </li>
+    <li><a href="#global-system-table">Global System Table</a>
+      <ul>
+        <li><a href="#all-options-table">ALL Options Table</a></li>
+        <li><a href="#catalog-options-table">Catalog Options Table</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+ 
+    </aside>
+    <aside class="expand-toc">
+      <button class="toc" onclick="expandToc()">
+        <i class="fa fa-expand" aria-hidden="true"></i>
+      </button>
+    </aside>
+    
+  </main>
+
+  
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

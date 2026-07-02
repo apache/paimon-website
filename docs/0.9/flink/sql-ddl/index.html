@@ -1,0 +1,2048 @@
+
+<!DOCTYPE html>
+<html lang="en" dir=>
+
+<head>
+  <meta name="generator" content="Hugo 0.80.0" />
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="SQL DDL #  Create Catalog #  Paimon catalogs currently support three types of metastores:
+ filesystem metastore (default), which stores both metadata and table files in filesystems. hive metastore, which additionally stores metadata in Hive metastore. Users can directly access the tables from Hive. jdbc metastore, which additionally stores metadata in relational databases such as MySQL, Postgres, etc.  See CatalogOptions for detailed options when creating a catalog.">
+<meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="SQL DDL" />
+<meta property="og:description" content="SQL DDL #  Create Catalog #  Paimon catalogs currently support three types of metastores:
+ filesystem metastore (default), which stores both metadata and table files in filesystems. hive metastore, which additionally stores metadata in Hive metastore. Users can directly access the tables from Hive. jdbc metastore, which additionally stores metadata in relational databases such as MySQL, Postgres, etc.  See CatalogOptions for detailed options when creating a catalog." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="//paimon.apache.org/docs/0.9/flink/sql-ddl/" />
+
+<title>SQL DDL | Apache Paimon</title>
+<link rel="manifest" href="/docs/0.9/manifest.json">
+<link rel="icon" href="/docs/0.9/favicon.png" type="image/x-icon">
+<link rel="stylesheet" href="/docs/0.9/book.min.3bc4108a5b57c9a7e6fcae92ff69940435f8c46c4e1e4a311aedc9b2d8e06792.css" integrity="sha256-O8QQiltXyafm/K6S/2mUBDX4xGxOHkoxGu3JstjgZ5I=">
+<script defer src="/docs/0.9/en.search.min.d59d87ab70dfbc2a3756e384c31a6c049befd781d606c03c6e8a72fb998f8f65.js" integrity="sha256-1Z2Hq3DfvCo3VuOEwxpsBJvv14HWBsA8bopy&#43;5mPj2U="></script>
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+  
+
+<link rel="stylesheet" type="text/css" href="//paimon.apache.org/docs/0.9/font-awesome/css/font-awesome.min.css">
+<script src="//paimon.apache.org/docs/0.9/js/anchor.min.js"></script>
+<script src="//paimon.apache.org/docs/0.9/js/flink.js"></script>
+
+
+  
+  <script>
+    var _paq = window._paq = window._paq || [];
+     
+     
+    _paq.push(['disableCookies']);
+     
+    _paq.push(["setDomains", ["*.flink.apache.org","*.nightlies.apache.org/flink"]]);
+    _paq.push(['trackPageView']);
+    _paq.push(['enableLinkTracking']);
+    (function() {
+      var u="//matomo.privacy.apache.org/";
+      _paq.push(['setTrackerUrl', u+'matomo.php']);
+      _paq.push(['setSiteId', '1']);
+      var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+      g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+    })();
+  </script>
+  
+</head>
+
+<body dir=>
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      
+  
+
+<nav>
+
+
+<a id="logo" href="//paimon.apache.org/docs/0.9">
+    <img width="100%" src="//paimon.apache.org/docs/0.9/paimon_black.svg">
+</a>
+<p style="text-align:right">0.9.0</p>
+
+<div class="book-search">
+  <input type="text" id="book-search-input" placeholder="Search" aria-label="Search" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-dc8a1c63e6da60163016ce21cae1faa0" class="toggle"  />
+    <label for="section-dc8a1c63e6da60163016ce21cae1faa0" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-book title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Concepts</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/concepts/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/concepts/basic-concepts/" class="">Basic Concepts</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/concepts/concurrency-control/" class="">Concurrency Control</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-d3e7256ce393050c572ea7bd8cc4f240" class="toggle"  />
+    <label for="section-d3e7256ce393050c572ea7bd8cc4f240" class="flex justify-between">Specification<span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/concepts/spec/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/concepts/spec/schema/" class="">Schema</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/concepts/spec/snapshot/" class="">Snapshot</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/concepts/spec/manifest/" class="">Manifest</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/concepts/spec/datafile/" class="">DataFile</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/concepts/spec/tableindex/" class="">Table Index</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/concepts/spec/fileindex/" class="">File Index</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-3f6a6d4f1692040009c66ffaa328c8d0" class="toggle"  />
+    <label for="section-3f6a6d4f1692040009c66ffaa328c8d0" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-database title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Table with PK</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/primary-key-table/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/primary-key-table/data-distribution/" class="">Data Distribution</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/primary-key-table/table-mode/" class="">Table Mode</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-038bb7d17b5b7cb93fb60acbcf218f11" class="toggle"  />
+    <label for="section-038bb7d17b5b7cb93fb60acbcf218f11" class="flex justify-between">Merge Engine<span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/primary-key-table/merge-engine/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/primary-key-table/merge-engine/partial-update/" class="">Partial Update</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/primary-key-table/merge-engine/aggregation/" class="">Aggregation</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/primary-key-table/merge-engine/first-row/" class="">First Row</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/primary-key-table/changelog-producer/" class="">Changelog Producer</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/primary-key-table/sequence-rowkind/" class="">Sequence & Rowkind</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/primary-key-table/compaction/" class="">Compaction</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-f74847e1c917ba2b99e7b718bb318b30" class="toggle"  />
+    <label for="section-f74847e1c917ba2b99e7b718bb318b30" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-database title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Table w/o PK</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/append-table/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/append-table/streaming/" class="">Streaming</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/append-table/query/" class="">Query</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/append-table/update/" class="">Update</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/append-table/bucketed/" class="">Bucketed</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-998a37410d502937fe8444ed73a9ecf8" class="toggle" checked />
+    <label for="section-998a37410d502937fe8444ed73a9ecf8" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-gear title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Engine Flink</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/flink/quick-start/" class="">Quick Start</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/flink/sql-ddl/" class=" active">SQL DDL</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/flink/sql-write/" class="">SQL Write</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/flink/sql-query/" class="">SQL Query</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/flink/sql-lookup/" class="">SQL Lookup</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/flink/sql-alter/" class="">SQL Alter</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-5c4df272c57150a3ff5abcdb519c51a4" class="toggle"  />
+    <label for="section-5c4df272c57150a3ff5abcdb519c51a4" class="flex justify-between">CDC Ingestion<span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/flink/cdc-ingestion/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/flink/cdc-ingestion/mysql-cdc/" class="">Mysql CDC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/flink/cdc-ingestion/postgres-cdc/" class="">Postgres CDC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/flink/cdc-ingestion/kafka-cdc/" class="">Kafka CDC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/flink/cdc-ingestion/mongo-cdc/" class="">Mongo CDC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/flink/cdc-ingestion/pulsar-cdc/" class="">Pulsar CDC</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/flink/expire-partition/" class="">Expire Partition</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/flink/procedures/" class="">Procedures</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/flink/action-jars/" class="">Action Jars</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/flink/savepoint/" class="">Savepoint</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-74c63bf75b4f6bd14a3ea6a1217f03ad" class="toggle"  />
+    <label for="section-74c63bf75b4f6bd14a3ea6a1217f03ad" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-gear title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Engine Spark</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/spark/quick-start/" class="">Quick Start</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/spark/sql-ddl/" class="">SQL DDL</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/spark/sql-write/" class="">SQL Write</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/spark/sql-query/" class="">SQL Query</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/spark/sql-alter/" class="">SQL Alter</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/spark/auxiliary/" class="">Auxiliary</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/spark/procedures/" class="">Procedures</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-90f5541dc4fa46a212e954b9193ea0f9" class="toggle"  />
+    <label for="section-90f5541dc4fa46a212e954b9193ea0f9" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-gear title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Engine Others</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/engines/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/engines/starrocks/" class="">StarRocks</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/engines/doris/" class="">Doris</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/engines/hive/" class="">Hive</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/engines/trino/" class="">Trino</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/engines/presto/" class="">Presto</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-e2d76c106dab115385ef7f124cda2ba4" class="toggle"  />
+    <label for="section-e2d76c106dab115385ef7f124cda2ba4" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-folder title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Filesystems</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/filesystems/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/filesystems/hdfs/" class="">HDFS</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/filesystems/oss/" class="">OSS</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/filesystems/s3/" class="">S3</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-697a4b6a0388d6cfa4f418aba3b4edfe" class="toggle"  />
+    <label for="section-697a4b6a0388d6cfa4f418aba3b4edfe" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-wrench title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Maintenance</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/maintenance/system-tables/" class="">System Tables</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/maintenance/write-performance/" class="">Write Performance</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/maintenance/dedicated-compaction/" class="">Dedicated Compaction</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/maintenance/manage-snapshots/" class="">Manage Snapshots</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/maintenance/rescale-bucket/" class="">Rescale Bucket</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/maintenance/manage-tags/" class="">Manage Tags</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/maintenance/metrics/" class="">Metrics</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/maintenance/manage-privileges/" class="">Manage Privileges</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/maintenance/manage-branches/" class="">Manage Branches</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/maintenance/configurations/" class="">Configurations</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-049030059e0dc01edf74ba3d4d259dae" class="toggle"  />
+    <label for="section-049030059e0dc01edf74ba3d4d259dae" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-briefcase title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Program API</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/program-api/java-api/" class="">Java API</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/program-api/flink-api/" class="">Flink API</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-07c567e5a9f3ce62aea4ff0a1e2dc065" class="toggle"  />
+    <label for="section-07c567e5a9f3ce62aea4ff0a1e2dc065" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-briefcase title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Migration</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/migration/migration-from-hive/" class="">Migration From Hive</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/migration/upsert-to-partitioned/" class="">Upsert To Partitioned</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/migration/clone-tables/" class="">Clone Tables</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  	<br/>
+  
+  
+    <input type="checkbox" id="section-8c828bcf882f666cdd6821a70cc768ee" class="toggle"  />
+    <label for="section-8c828bcf882f666cdd6821a70cc768ee" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-sitemap title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Project</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/project/roadmap/" class="">Roadmap</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/project/download/" class="">Download</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/project/contributing/" class="">Contributing</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-392fc6f653ae23ff676811656a71ebbf" class="toggle"  />
+    <label for="section-392fc6f653ae23ff676811656a71ebbf" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-sitemap title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Learn Paimon</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/learn-paimon/understand-files/" class="">Understand Files</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br/>
+<hr class="menu-break">
+
+<a href="//paimon.apache.org" style="color:black;margin-bottom:0.5em"><i class="link fa fa-external-link title" aria-hidden="true"></i> Project Homepage</a>
+<br/>
+
+<a href="//paimon.apache.org/docs/master/api/java/" style="color:black;margin-bottom:0.5em"><i class="link fa fa-external-link title" aria-hidden="true"></i> JavaDocs</a>
+<br/>
+
+<hr class="menu-break">
+<li style="list-style-type: none">
+  <br>
+  <input type="checkbox" id="section-version-picker" class="toggle">
+  <label for="section-version-picker" class="flex justify-between">
+     <div style="font-weight:450;margin-bottom:0.5em">Pick Docs Version</div>
+     <span>▾</span>
+  </label>
+  <ul>
+    <a href="//paimon.apache.org/docs/0.9">
+      0.9 (✓)
+    </a>
+    <hr class="menu-break">
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/master">
+          master
+        </a>
+      </li>
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/0.9">
+          stable
+        </a>
+      </li>
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/0.9">
+          0.9
+        </a>
+      </li>
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/0.8">
+          0.8
+        </a>
+      </li>
+    
+    <hr class="menu-break">
+    <li>
+      <a href="//paimon.apache.org/docs/0.9/versions">
+          All Versions
+      </a>
+    </li>
+  </ul>
+</li>
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var menu=document.querySelector("aside.book-menu nav");addEventListener("beforeunload",function(event){localStorage.setItem("menu.scrollTop",menu.scrollTop);});menu.scrollTop=localStorage.getItem("menu.scrollTop");})();</script>
+
+
+ 
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/docs/0.9/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <strong>SQL DDL</strong>
+
+  <label for="toc-control">
+    
+    <img src="/docs/0.9/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden clearfix">
+    
+  
+
+<nav id="TableOfContents"><h3>On This Page <button class="toc" onclick="collapseToc()"><i class="fa fa-compress" aria-hidden="true"></i></button></h3>
+  <ul>
+    <li><a href="#create-catalog">Create Catalog</a>
+      <ul>
+        <li><a href="#create-filesystem-catalog">Create Filesystem Catalog</a></li>
+        <li><a href="#creating-hive-catalog">Creating Hive Catalog</a></li>
+        <li><a href="#creating-jdbc-catalog">Creating JDBC Catalog</a></li>
+      </ul>
+    </li>
+    <li><a href="#create-table">Create Table</a>
+      <ul>
+        <li><a href="#specify-statistics-mode">Specify Statistics Mode</a></li>
+        <li><a href="#field-default-value">Field Default Value</a></li>
+      </ul>
+    </li>
+    <li><a href="#create-table-as-select">Create Table As Select</a></li>
+    <li><a href="#create-table-like">Create Table Like</a></li>
+    <li><a href="#work-with-flink-temporary-tables">Work with Flink Temporary Tables</a></li>
+  </ul>
+</nav>
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+
+
+
+
+
+
+      
+  <article class="markdown"><!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<h1 id="sql-ddl">
+  SQL DDL
+  <a class="anchor" href="#sql-ddl">#</a>
+</h1>
+<h2 id="create-catalog">
+  Create Catalog
+  <a class="anchor" href="#create-catalog">#</a>
+</h2>
+<p>Paimon catalogs currently support three types of metastores:</p>
+<ul>
+<li><code>filesystem</code> metastore (default), which stores both metadata and table files in filesystems.</li>
+<li><code>hive</code> metastore, which additionally stores metadata in Hive metastore. Users can directly access the tables from Hive.</li>
+<li><code>jdbc</code> metastore, which additionally stores metadata in relational databases such as MySQL, Postgres, etc.</li>
+</ul>
+<p>See <a href="//paimon.apache.org/docs/0.9/maintenance/configurations/#catalogoptions">CatalogOptions</a> for detailed options when creating a catalog.</p>
+<h3 id="create-filesystem-catalog">
+  Create Filesystem Catalog
+  <a class="anchor" href="#create-filesystem-catalog">#</a>
+</h3>
+<p>The following Flink SQL registers and uses a Paimon catalog named <code>my_catalog</code>. Metadata and table files are stored under <code>hdfs:///path/to/warehouse</code>.</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">CREATE</span> <span class="k">CATALOG</span> <span class="n">my_catalog</span> <span class="k">WITH</span> <span class="p">(</span>
+    <span class="s1">&#39;type&#39;</span> <span class="o">=</span> <span class="s1">&#39;paimon&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;warehouse&#39;</span> <span class="o">=</span> <span class="s1">&#39;hdfs:///path/to/warehouse&#39;</span>
+<span class="p">);</span>
+
+<span class="n">USE</span> <span class="k">CATALOG</span> <span class="n">my_catalog</span><span class="p">;</span>
+</code></pre></div><p>You can define any default table options with the prefix <code>table-default.</code> for tables created in the catalog.</p>
+<h3 id="creating-hive-catalog">
+  Creating Hive Catalog
+  <a class="anchor" href="#creating-hive-catalog">#</a>
+</h3>
+<p>By using Paimon Hive catalog, changes to the catalog will directly affect the corresponding Hive metastore. Tables created in such catalog can also be accessed directly from Hive.</p>
+<p>To use Hive catalog, Database name, Table name and Field names should be <strong>lower</strong> case.</p>
+<p>Paimon Hive catalog in Flink relies on Flink Hive connector bundled jar. You should first download Hive connector bundled jar and add it to classpath.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Metastore version</th>
+<th style="text-align:left">Bundle Name</th>
+<th style="text-align:left">SQL Client JAR</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">2.3.0 - 3.1.3</td>
+<td style="text-align:left">Flink Bundle</td>
+<td style="text-align:left"><a href="https://nightlies.apache.org/flink/flink-docs-stable/docs/connectors/table/hive/overview/#using-bundled-hive-jar">Download</a></td>
+</tr>
+<tr>
+<td style="text-align:left">1.2.0 - x.x.x</td>
+<td style="text-align:left">Presto Bundle</td>
+<td style="text-align:left"><a href="https://repo.maven.apache.org/maven2/com/facebook/presto/hive/hive-apache/1.2.2-2/hive-apache-1.2.2-2.jar">Download</a></td>
+</tr>
+</tbody>
+</table>
+<p>The following Flink SQL registers and uses a Paimon Hive catalog named <code>my_hive</code>. Metadata and table files are stored under <code>hdfs:///path/to/warehouse</code>. In addition, metadata is also stored in Hive metastore.</p>
+<p>If your Hive requires security authentication such as Kerberos, LDAP, Ranger or you want the paimon table to be managed
+by Apache Atlas(Setting &lsquo;hive.metastore.event.listeners&rsquo; in hive-site.xml). You can specify the hive-conf-dir and
+hadoop-conf-dir parameter to the hive-site.xml file path.</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">CREATE</span> <span class="k">CATALOG</span> <span class="n">my_hive</span> <span class="k">WITH</span> <span class="p">(</span>
+    <span class="s1">&#39;type&#39;</span> <span class="o">=</span> <span class="s1">&#39;paimon&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;metastore&#39;</span> <span class="o">=</span> <span class="s1">&#39;hive&#39;</span><span class="p">,</span>
+    <span class="c1">-- &#39;uri&#39; = &#39;thrift://&lt;hive-metastore-host-name&gt;:&lt;port&gt;&#39;, default use &#39;hive.metastore.uris&#39; in HiveConf
+</span><span class="c1"></span>    <span class="c1">-- &#39;hive-conf-dir&#39; = &#39;...&#39;, this is recommended in the kerberos environment
+</span><span class="c1"></span>    <span class="c1">-- &#39;hadoop-conf-dir&#39; = &#39;...&#39;, this is recommended in the kerberos environment
+</span><span class="c1"></span>    <span class="c1">-- &#39;warehouse&#39; = &#39;hdfs:///path/to/warehouse&#39;, default use &#39;hive.metastore.warehouse.dir&#39; in HiveConf
+</span><span class="c1"></span><span class="p">);</span>
+
+<span class="n">USE</span> <span class="k">CATALOG</span> <span class="n">my_hive</span><span class="p">;</span>
+</code></pre></div><p>You can define any default table options with the prefix <code>table-default.</code> for tables created in the catalog.</p>
+<p>Also, you can create <a href="//paimon.apache.org/docs/0.9/flink/quick-start/">FlinkGenericCatalog</a>.</p>
+<blockquote>
+<p>When using hive catalog to change incompatible column types through alter table, you need to configure <code>hive.metastore.disallow.incompatible.col.type.changes=false</code>. see <a href="https://issues.apache.org/jira/browse/HIVE-17832">HIVE-17832</a>.</p>
+</blockquote>
+<blockquote>
+<p>If you are using Hive3, please disable Hive ACID:</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">hive.strict.managed.tables<span class="o">=</span><span class="nb">false</span>
+hive.create.as.insert.only<span class="o">=</span><span class="nb">false</span>
+metastore.create.as.acid<span class="o">=</span><span class="nb">false</span>
+</code></pre></div></blockquote>
+<h4 id="synchronizing-partitions-into-hive-metastore">
+  Synchronizing Partitions into Hive Metastore
+  <a class="anchor" href="#synchronizing-partitions-into-hive-metastore">#</a>
+</h4>
+<p>By default, Paimon does not synchronize newly created partitions into Hive metastore. Users will see an unpartitioned table in Hive. Partition push-down will be carried out by filter push-down instead.</p>
+<p>If you want to see a partitioned table in Hive and also synchronize newly created partitions into Hive metastore, please set the table property <code>metastore.partitioned-table</code> to true. Also see <a href="//paimon.apache.org/docs/0.9/maintenance/configurations/#CoreOptions">CoreOptions</a>.</p>
+<h4 id="adding-parameters-to-a-hive-table">
+  Adding Parameters to a Hive Table
+  <a class="anchor" href="#adding-parameters-to-a-hive-table">#</a>
+</h4>
+<p>Using the table option facilitates the convenient definition of Hive table parameters.
+Parameters prefixed with <code>hive.</code> will be automatically defined in the <code>TBLPROPERTIES</code> of the Hive table.
+For instance, using the option <code>hive.table.owner=Jon</code> will automatically add the parameter <code>table.owner=Jon</code> to the table properties during the creation process.</p>
+<h4 id="setting-location-in-properties">
+  Setting Location in Properties
+  <a class="anchor" href="#setting-location-in-properties">#</a>
+</h4>
+<p>If you are using an object storage , and you don&rsquo;t want that the location of paimon table/database is accessed by the filesystem of hive,
+which may lead to the error such as &ldquo;No FileSystem for scheme: s3a&rdquo;.
+You can set location in the properties of table/database by the config of <code>location-in-properties</code>. See
+<a href="//paimon.apache.org/docs/0.9/maintenance/configurations/#HiveCatalogOptions">setting the location of table/database in properties </a></p>
+<h3 id="creating-jdbc-catalog">
+  Creating JDBC Catalog
+  <a class="anchor" href="#creating-jdbc-catalog">#</a>
+</h3>
+<p>By using the Paimon JDBC catalog, changes to the catalog will be directly stored in relational databases such as SQLite, MySQL, postgres, etc.</p>
+<p>Currently, lock configuration is only supported for MySQL and SQLite. If you are using a different type of database for catalog storage, please do not configure <code>lock.enabled</code>.</p>
+<p>Paimon JDBC Catalog in Flink needs to correctly add the corresponding jar package for connecting to the database. You should first download JDBC  connector bundled jar and add it to classpath. such as MySQL, postgres</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">database type</th>
+<th style="text-align:left">Bundle Name</th>
+<th style="text-align:left">SQL Client JAR</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">mysql</td>
+<td style="text-align:left">mysql-connector-java</td>
+<td style="text-align:left"><a href="https://mvnrepository.com/artifact/mysql/mysql-connector-java">Download</a></td>
+</tr>
+<tr>
+<td style="text-align:left">postgres</td>
+<td style="text-align:left">postgresql</td>
+<td style="text-align:left"><a href="https://mvnrepository.com/artifact/org.postgresql/postgresql">Download</a></td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">CREATE</span> <span class="k">CATALOG</span> <span class="n">my_jdbc</span> <span class="k">WITH</span> <span class="p">(</span>
+    <span class="s1">&#39;type&#39;</span> <span class="o">=</span> <span class="s1">&#39;paimon&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;metastore&#39;</span> <span class="o">=</span> <span class="s1">&#39;jdbc&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;uri&#39;</span> <span class="o">=</span> <span class="s1">&#39;jdbc:mysql://&lt;host&gt;:&lt;port&gt;/&lt;databaseName&gt;&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;jdbc.user&#39;</span> <span class="o">=</span> <span class="s1">&#39;...&#39;</span><span class="p">,</span> 
+    <span class="s1">&#39;jdbc.password&#39;</span> <span class="o">=</span> <span class="s1">&#39;...&#39;</span><span class="p">,</span> 
+    <span class="s1">&#39;catalog-key&#39;</span><span class="o">=</span><span class="s1">&#39;jdbc&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;warehouse&#39;</span> <span class="o">=</span> <span class="s1">&#39;hdfs:///path/to/warehouse&#39;</span>
+<span class="p">);</span>
+
+<span class="n">USE</span> <span class="k">CATALOG</span> <span class="n">my_jdbc</span><span class="p">;</span>
+</code></pre></div><p>You can configure any connection parameters that have been declared by JDBC through &ldquo;jdbc.&rdquo;, the connection parameters may be different between different databases, please configure according to the actual situation.</p>
+<p>You can also perform logical isolation for databases under multiple catalogs by specifying &ldquo;catalog-key&rdquo;.</p>
+<p>Additionally, when creating a JdbcCatalog, you can specify the maximum length for the lock key by configuring &ldquo;lock-key-max-length,&rdquo; which defaults to 255. Since this value is a combination of {catalog-key}.{database-name}.{table-name}, please adjust accordingly.</p>
+<p>You can define any default table options with the prefix <code>table-default.</code> for tables created in the catalog.</p>
+<h2 id="create-table">
+  Create Table
+  <a class="anchor" href="#create-table">#</a>
+</h2>
+<p>After use Paimon catalog, you can create and drop tables. Tables created in Paimon Catalogs are managed by the catalog.
+When the table is dropped from catalog, its table files will also be deleted.</p>
+<p>The following SQL assumes that you have registered and are using a Paimon catalog. It creates a managed table named
+<code>my_table</code> with five columns in the catalog&rsquo;s <code>default</code> database, where <code>dt</code>, <code>hh</code> and <code>user_id</code> are the primary keys.</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">my_table</span> <span class="p">(</span>
+    <span class="n">user_id</span> <span class="nb">BIGINT</span><span class="p">,</span>
+    <span class="n">item_id</span> <span class="nb">BIGINT</span><span class="p">,</span>
+    <span class="n">behavior</span> <span class="n">STRING</span><span class="p">,</span>
+    <span class="n">dt</span> <span class="n">STRING</span><span class="p">,</span>
+    <span class="n">hh</span> <span class="n">STRING</span><span class="p">,</span>
+    <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="p">(</span><span class="n">dt</span><span class="p">,</span> <span class="n">hh</span><span class="p">,</span> <span class="n">user_id</span><span class="p">)</span> <span class="k">NOT</span> <span class="n">ENFORCED</span>
+<span class="p">);</span>
+</code></pre></div><p>You can create partitioned table:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">my_table</span> <span class="p">(</span>
+    <span class="n">user_id</span> <span class="nb">BIGINT</span><span class="p">,</span>
+    <span class="n">item_id</span> <span class="nb">BIGINT</span><span class="p">,</span>
+    <span class="n">behavior</span> <span class="n">STRING</span><span class="p">,</span>
+    <span class="n">dt</span> <span class="n">STRING</span><span class="p">,</span>
+    <span class="n">hh</span> <span class="n">STRING</span><span class="p">,</span>
+    <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="p">(</span><span class="n">dt</span><span class="p">,</span> <span class="n">hh</span><span class="p">,</span> <span class="n">user_id</span><span class="p">)</span> <span class="k">NOT</span> <span class="n">ENFORCED</span>
+<span class="p">)</span> <span class="n">PARTITIONED</span> <span class="k">BY</span> <span class="p">(</span><span class="n">dt</span><span class="p">,</span> <span class="n">hh</span><span class="p">);</span>
+</code></pre></div><blockquote class="book-hint info">
+  If you need cross partition upsert (primary keys not contain all partition fields), see <a href="//paimon.apache.org/docs/0.9/primary-key-table/data-distribution/#cross-partitions-upsert-dynamic-bucket-mode">Cross partition Upsert</a> mode.
+</blockquote>
+
+<blockquote class="book-hint info">
+  By configuring <a href="//paimon.apache.org/docs/0.9/flink/expire-partition/">partition.expiration-time</a>, expired partitions can be automatically deleted.
+</blockquote>
+
+<h3 id="specify-statistics-mode">
+  Specify Statistics Mode
+  <a class="anchor" href="#specify-statistics-mode">#</a>
+</h3>
+<p>Paimon will automatically collect the statistics of the data file for speeding up the query process. There are four modes supported:</p>
+<ul>
+<li><code>full</code>: collect the full metrics: <code>null_count, min, max</code> .</li>
+<li><code>truncate(length)</code>: length can be any positive number, the default mode is <code>truncate(16)</code>, which means collect the null count, min/max value with truncated length of 16.
+This is mainly to avoid too big column which will enlarge the manifest file.</li>
+<li><code>counts</code>: only collect the null count.</li>
+<li><code>none</code>: disable the metadata stats collection.</li>
+</ul>
+<p>The statistics collector mode can be configured by <code>'metadata.stats-mode'</code>, by default is <code>'truncate(16)'</code>.
+You can configure the field level by setting <code>'fields.{field_name}.stats-mode'</code>.</p>
+<h3 id="field-default-value">
+  Field Default Value
+  <a class="anchor" href="#field-default-value">#</a>
+</h3>
+<p>Paimon table currently supports setting default values for fields in table properties by <code>'fields.item_id.default-value'</code>,
+note that partition fields and primary key fields can not be specified.</p>
+<h2 id="create-table-as-select">
+  Create Table As Select
+  <a class="anchor" href="#create-table-as-select">#</a>
+</h2>
+<p>Table can be created and populated by the results of a query, for example, we have a sql like this: <code>CREATE TABLE table_b AS SELECT id, name FORM table_a</code>,
+The resulting table <code>table_b</code> will be equivalent to create the table and insert the data with the following statement:
+<code>CREATE TABLE table_b (id INT, name STRING); INSERT INTO table_b SELECT id, name FROM table_a;</code></p>
+<p>We can specify the primary key or partition when use <code>CREATE TABLE AS SELECT</code>, for syntax, please refer to the following sql.</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="cm">/* For streaming mode, you need to enable the checkpoint. */</span>
+
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">my_table</span> <span class="p">(</span>
+    <span class="n">user_id</span> <span class="nb">BIGINT</span><span class="p">,</span>
+    <span class="n">item_id</span> <span class="nb">BIGINT</span>
+<span class="p">);</span>
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">my_table_as</span> <span class="k">AS</span> <span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">my_table</span><span class="p">;</span>
+
+<span class="cm">/* partitioned table */</span>
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">my_table_partition</span> <span class="p">(</span>
+     <span class="n">user_id</span> <span class="nb">BIGINT</span><span class="p">,</span>
+     <span class="n">item_id</span> <span class="nb">BIGINT</span><span class="p">,</span>
+     <span class="n">behavior</span> <span class="n">STRING</span><span class="p">,</span>
+     <span class="n">dt</span> <span class="n">STRING</span><span class="p">,</span>
+     <span class="n">hh</span> <span class="n">STRING</span>
+<span class="p">)</span> <span class="n">PARTITIONED</span> <span class="k">BY</span> <span class="p">(</span><span class="n">dt</span><span class="p">,</span> <span class="n">hh</span><span class="p">);</span>
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">my_table_partition_as</span> <span class="k">WITH</span> <span class="p">(</span><span class="s1">&#39;partition&#39;</span> <span class="o">=</span> <span class="s1">&#39;dt&#39;</span><span class="p">)</span> <span class="k">AS</span> <span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">my_table_partition</span><span class="p">;</span>
+    
+<span class="cm">/* change options */</span>
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">my_table_options</span> <span class="p">(</span>
+       <span class="n">user_id</span> <span class="nb">BIGINT</span><span class="p">,</span>
+       <span class="n">item_id</span> <span class="nb">BIGINT</span>
+<span class="p">)</span> <span class="k">WITH</span> <span class="p">(</span><span class="s1">&#39;file.format&#39;</span> <span class="o">=</span> <span class="s1">&#39;orc&#39;</span><span class="p">);</span>
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">my_table_options_as</span> <span class="k">WITH</span> <span class="p">(</span><span class="s1">&#39;file.format&#39;</span> <span class="o">=</span> <span class="s1">&#39;parquet&#39;</span><span class="p">)</span> <span class="k">AS</span> <span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">my_table_options</span><span class="p">;</span>
+
+<span class="cm">/* primary key */</span>
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">my_table_pk</span> <span class="p">(</span>
+      <span class="n">user_id</span> <span class="nb">BIGINT</span><span class="p">,</span>
+      <span class="n">item_id</span> <span class="nb">BIGINT</span><span class="p">,</span>
+      <span class="n">behavior</span> <span class="n">STRING</span><span class="p">,</span>
+      <span class="n">dt</span> <span class="n">STRING</span><span class="p">,</span>
+      <span class="n">hh</span> <span class="n">STRING</span><span class="p">,</span>
+      <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="p">(</span><span class="n">dt</span><span class="p">,</span> <span class="n">hh</span><span class="p">,</span> <span class="n">user_id</span><span class="p">)</span> <span class="k">NOT</span> <span class="n">ENFORCED</span>
+<span class="p">);</span>
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">my_table_pk_as</span> <span class="k">WITH</span> <span class="p">(</span><span class="s1">&#39;primary-key&#39;</span> <span class="o">=</span> <span class="s1">&#39;dt,hh&#39;</span><span class="p">)</span> <span class="k">AS</span> <span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">my_table_pk</span><span class="p">;</span>
+
+
+<span class="cm">/* primary key + partition */</span>
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">my_table_all</span> <span class="p">(</span>
+      <span class="n">user_id</span> <span class="nb">BIGINT</span><span class="p">,</span>
+      <span class="n">item_id</span> <span class="nb">BIGINT</span><span class="p">,</span>
+      <span class="n">behavior</span> <span class="n">STRING</span><span class="p">,</span>
+      <span class="n">dt</span> <span class="n">STRING</span><span class="p">,</span>
+      <span class="n">hh</span> <span class="n">STRING</span><span class="p">,</span>
+      <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="p">(</span><span class="n">dt</span><span class="p">,</span> <span class="n">hh</span><span class="p">,</span> <span class="n">user_id</span><span class="p">)</span> <span class="k">NOT</span> <span class="n">ENFORCED</span> 
+<span class="p">)</span> <span class="n">PARTITIONED</span> <span class="k">BY</span> <span class="p">(</span><span class="n">dt</span><span class="p">,</span> <span class="n">hh</span><span class="p">);</span>
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">my_table_all_as</span> <span class="k">WITH</span> <span class="p">(</span><span class="s1">&#39;primary-key&#39;</span> <span class="o">=</span> <span class="s1">&#39;dt,hh&#39;</span><span class="p">,</span> <span class="s1">&#39;partition&#39;</span> <span class="o">=</span> <span class="s1">&#39;dt&#39;</span><span class="p">)</span> <span class="k">AS</span> <span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">my_table_all</span><span class="p">;</span>
+</code></pre></div><h2 id="create-table-like">
+  Create Table Like
+  <a class="anchor" href="#create-table-like">#</a>
+</h2>
+<p>To create a table with the same schema, partition, and table properties as another table, use CREATE TABLE LIKE.</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">my_table</span> <span class="p">(</span>
+    <span class="n">user_id</span> <span class="nb">BIGINT</span><span class="p">,</span>
+    <span class="n">item_id</span> <span class="nb">BIGINT</span><span class="p">,</span>
+    <span class="n">behavior</span> <span class="n">STRING</span><span class="p">,</span>
+    <span class="n">dt</span> <span class="n">STRING</span><span class="p">,</span>
+    <span class="n">hh</span> <span class="n">STRING</span><span class="p">,</span>
+    <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="p">(</span><span class="n">dt</span><span class="p">,</span> <span class="n">hh</span><span class="p">,</span> <span class="n">user_id</span><span class="p">)</span> <span class="k">NOT</span> <span class="n">ENFORCED</span>
+<span class="p">);</span>
+
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">my_table_like</span> <span class="k">LIKE</span> <span class="n">my_table</span> <span class="p">(</span><span class="k">EXCLUDING</span> <span class="k">OPTIONS</span><span class="p">);</span>
+</code></pre></div><h2 id="work-with-flink-temporary-tables">
+  Work with Flink Temporary Tables
+  <a class="anchor" href="#work-with-flink-temporary-tables">#</a>
+</h2>
+<p>Flink Temporary tables are just recorded but not managed by the current Flink SQL session. If the temporary table is
+dropped, its resources will not be deleted. Temporary tables are also dropped when Flink SQL session is closed.</p>
+<p>If you want to use Paimon catalog along with other tables but do not want to store them in other catalogs, you can
+create a temporary table. The following Flink SQL creates a Paimon catalog and a temporary table and also illustrates
+how to use both tables together.</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">CREATE</span> <span class="k">CATALOG</span> <span class="n">my_catalog</span> <span class="k">WITH</span> <span class="p">(</span>
+    <span class="s1">&#39;type&#39;</span> <span class="o">=</span> <span class="s1">&#39;paimon&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;warehouse&#39;</span> <span class="o">=</span> <span class="s1">&#39;hdfs:///path/to/warehouse&#39;</span>
+<span class="p">);</span>
+
+<span class="n">USE</span> <span class="k">CATALOG</span> <span class="n">my_catalog</span><span class="p">;</span>
+
+<span class="c1">-- Assume that there is already a table named my_table in my_catalog
+</span><span class="c1"></span>
+<span class="k">CREATE</span> <span class="k">TEMPORARY</span> <span class="k">TABLE</span> <span class="n">temp_table</span> <span class="p">(</span>
+    <span class="n">k</span> <span class="nb">INT</span><span class="p">,</span>
+    <span class="n">v</span> <span class="n">STRING</span>
+<span class="p">)</span> <span class="k">WITH</span> <span class="p">(</span>
+    <span class="s1">&#39;connector&#39;</span> <span class="o">=</span> <span class="s1">&#39;filesystem&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;path&#39;</span> <span class="o">=</span> <span class="s1">&#39;hdfs:///path/to/temp_table.csv&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;format&#39;</span> <span class="o">=</span> <span class="s1">&#39;csv&#39;</span>
+<span class="p">);</span>
+
+<span class="k">SELECT</span> <span class="n">my_table</span><span class="p">.</span><span class="n">k</span><span class="p">,</span> <span class="n">my_table</span><span class="p">.</span><span class="n">v</span><span class="p">,</span> <span class="n">temp_table</span><span class="p">.</span><span class="n">v</span> <span class="k">FROM</span> <span class="n">my_table</span> <span class="k">JOIN</span> <span class="n">temp_table</span> <span class="k">ON</span> <span class="n">my_table</span><span class="p">.</span><span class="n">k</span> <span class="o">=</span> <span class="n">temp_table</span><span class="p">.</span><span class="n">k</span><span class="p">;</span>
+</code></pre></div></article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  
+
+
+
+
+<a href="//github.com/apache/paimon/edit/0.9/docs/content/flink/sql-ddl.md" style="color:black"><i class="fa fa-edit fa-fw"></i>Edit This Page</a>
+
+
+ 
+        
+
+
+<hr style="margin-top: 20px; border: 1px solid #e5e5e5;" />
+
+<table style="border-spacing: 10px;">
+    <tbody>
+    <tr>
+        <td colspan="2">
+            Copyright &copy; 2024 The Apache Software Foundation. Apache Paimon, Paimon, and its feather logo are
+            trademarks of The Apache Software Foundation.
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+      </footer>
+
+      
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      
+  
+
+<nav id="TableOfContents"><h3>On This Page <button class="toc" onclick="collapseToc()"><i class="fa fa-compress" aria-hidden="true"></i></button></h3>
+  <ul>
+    <li><a href="#create-catalog">Create Catalog</a>
+      <ul>
+        <li><a href="#create-filesystem-catalog">Create Filesystem Catalog</a></li>
+        <li><a href="#creating-hive-catalog">Creating Hive Catalog</a></li>
+        <li><a href="#creating-jdbc-catalog">Creating JDBC Catalog</a></li>
+      </ul>
+    </li>
+    <li><a href="#create-table">Create Table</a>
+      <ul>
+        <li><a href="#specify-statistics-mode">Specify Statistics Mode</a></li>
+        <li><a href="#field-default-value">Field Default Value</a></li>
+      </ul>
+    </li>
+    <li><a href="#create-table-as-select">Create Table As Select</a></li>
+    <li><a href="#create-table-like">Create Table Like</a></li>
+    <li><a href="#work-with-flink-temporary-tables">Work with Flink Temporary Tables</a></li>
+  </ul>
+</nav>
+
+ 
+    </aside>
+    <aside class="expand-toc">
+      <button class="toc" onclick="expandToc()">
+        <i class="fa fa-expand" aria-hidden="true"></i>
+      </button>
+    </aside>
+    
+  </main>
+
+  
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

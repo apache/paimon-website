@@ -1,0 +1,3623 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="The Rust implementation of Apache Paimon">
+      
+      
+      
+        <link rel="canonical" href="https://apache.github.io/paimon-rust/sql/">
+      
+      
+        <link rel="prev" href="../getting-started/">
+      
+      
+        <link rel="next" href="../go-binding/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>SQL Integration - Apache Paimon Rust</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#sql-integration" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Apache Paimon Rust" class="md-header__button md-logo" aria-label="Apache Paimon Rust" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Apache Paimon Rust
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              SQL Integration
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/apache/paimon-rust" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    apache/paimon-rust
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Apache Paimon Rust" class="md-nav__button md-logo" aria-label="Apache Paimon Rust" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Apache Paimon Rust
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/apache/paimon-rust" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    apache/paimon-rust
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../getting-started/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SQL Integration
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SQL Integration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Setup
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#registering-catalog" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Registering Catalog
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#data-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Data Types
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ddl" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DDL
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="DDL">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#create-schema-drop-schema" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CREATE SCHEMA / DROP SCHEMA
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CREATE TABLE
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#partitioned-tables" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Partitioned Tables
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#complex-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Complex Types
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#drop-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DROP TABLE
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create-temporary-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CREATE TEMPORARY TABLE
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create-temporary-view" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CREATE TEMPORARY VIEW
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#drop-temporary-table-drop-temporary-view" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DROP TEMPORARY TABLE / DROP TEMPORARY VIEW
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#alter-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ALTER TABLE
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dml" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DML
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="DML">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#insert-into" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        INSERT INTO
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mosaic-read-scope" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mosaic Read Scope
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#insert-overwrite" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        INSERT OVERWRITE
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#update" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        UPDATE
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#delete" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DELETE
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#merge-into" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MERGE INTO
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#truncate-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TRUNCATE TABLE
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#drop-partition" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DROP PARTITION
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#procedures" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Procedures
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Procedures">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#create_tag" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        create_tag
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create_tag_from_timestamp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        create_tag_from_timestamp
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#delete_tag" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        delete_tag
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rollback_to" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        rollback_to
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rollback_to_timestamp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        rollback_to_timestamp
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create_lumina_index" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        create_lumina_index
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#queries" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Queries
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Queries">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#basic-queries" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Basic Queries
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#column-projection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Column Projection
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#filter-pushdown" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Filter Pushdown
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#count-pushdown" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        COUNT(*) Pushdown
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#vector-search" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Vector Search
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Vector Search">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#registration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Registration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Usage
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#supported-metrics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Supported Metrics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vector-index-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Vector Index Options
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#environment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Environment
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#full-text-search" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Full-Text Search
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Full-Text Search">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#registration_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Registration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#usage_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Usage
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#time-travel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Time Travel
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Time Travel">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#by-snapshot-id" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        By Snapshot ID
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#by-tag-name" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        By Tag Name
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#by-timestamp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        By Timestamp
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dynamic-options-set-reset" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dynamic Options (SET / RESET)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#temporary-tables" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Temporary Tables
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Temporary Tables">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#register_temp_table" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        register_temp_table
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create-temporary-table_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CREATE TEMPORARY TABLE
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create-temporary-view_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CREATE TEMPORARY VIEW
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deregister" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Deregister
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#system-tables" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        System Tables
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="System Tables">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#options" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        $options
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#schemas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        $schemas
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#snapshots" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        $snapshots
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tags" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        $tags
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#manifests" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        $manifests
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#partitions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        $partitions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#physical_files_size" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        $physical_files_size
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#referenced_files_size" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        $referenced_files_size
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#branch-references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Branch References
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#table-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Table Options
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Table Options">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bucket-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bucket Configuration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#merge-engine" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Merge Engine
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#other-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Other Options
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#full-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Full Example
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../go-binding/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Go Integration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../contributing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contributing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Releases
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Releases
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../releases/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Releases
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../release/creating-a-release/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Creating a Release
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../release/verifying-a-release-candidate/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Verifying a Release Candidate
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Setup
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#registering-catalog" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Registering Catalog
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#data-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Data Types
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ddl" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DDL
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="DDL">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#create-schema-drop-schema" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CREATE SCHEMA / DROP SCHEMA
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CREATE TABLE
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#partitioned-tables" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Partitioned Tables
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#complex-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Complex Types
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#drop-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DROP TABLE
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create-temporary-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CREATE TEMPORARY TABLE
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create-temporary-view" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CREATE TEMPORARY VIEW
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#drop-temporary-table-drop-temporary-view" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DROP TEMPORARY TABLE / DROP TEMPORARY VIEW
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#alter-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ALTER TABLE
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dml" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DML
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="DML">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#insert-into" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        INSERT INTO
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mosaic-read-scope" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mosaic Read Scope
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#insert-overwrite" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        INSERT OVERWRITE
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#update" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        UPDATE
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#delete" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DELETE
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#merge-into" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MERGE INTO
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#truncate-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TRUNCATE TABLE
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#drop-partition" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DROP PARTITION
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#procedures" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Procedures
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Procedures">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#create_tag" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        create_tag
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create_tag_from_timestamp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        create_tag_from_timestamp
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#delete_tag" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        delete_tag
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rollback_to" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        rollback_to
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rollback_to_timestamp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        rollback_to_timestamp
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create_lumina_index" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        create_lumina_index
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#queries" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Queries
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Queries">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#basic-queries" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Basic Queries
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#column-projection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Column Projection
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#filter-pushdown" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Filter Pushdown
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#count-pushdown" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        COUNT(*) Pushdown
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#vector-search" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Vector Search
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Vector Search">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#registration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Registration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Usage
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#supported-metrics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Supported Metrics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vector-index-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Vector Index Options
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#environment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Environment
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#full-text-search" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Full-Text Search
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Full-Text Search">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#registration_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Registration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#usage_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Usage
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#time-travel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Time Travel
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Time Travel">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#by-snapshot-id" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        By Snapshot ID
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#by-tag-name" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        By Tag Name
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#by-timestamp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        By Timestamp
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dynamic-options-set-reset" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dynamic Options (SET / RESET)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#temporary-tables" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Temporary Tables
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Temporary Tables">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#register_temp_table" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        register_temp_table
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create-temporary-table_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CREATE TEMPORARY TABLE
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create-temporary-view_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CREATE TEMPORARY VIEW
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deregister" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Deregister
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#system-tables" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        System Tables
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="System Tables">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#options" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        $options
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#schemas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        $schemas
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#snapshots" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        $snapshots
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tags" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        $tags
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#manifests" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        $manifests
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#partitions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        $partitions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#physical_files_size" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        $physical_files_size
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#referenced_files_size" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        $referenced_files_size
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#branch-references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Branch References
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#table-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Table Options
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Table Options">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bucket-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bucket Configuration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#merge-engine" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Merge Engine
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#other-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Other Options
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#full-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Full Example
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+
+<h1 id="sql-integration">SQL Integration<a class="headerlink" href="#sql-integration" title="Permanent link">&para;</a></h1>
+<p><a href="https://datafusion.apache.org/">Apache DataFusion</a> is a fast, extensible query engine for building data-centric systems in Rust. The <code>paimon-datafusion</code> crate provides a full SQL integration that lets you create, query, and modify Paimon tables.</p>
+<h2 id="setup">Setup<a class="headerlink" href="#setup" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">[dependencies]</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="n">paimon</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;0.1.0&quot;</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="n">paimon-datafusion</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;0.1.0&quot;</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="n">datafusion</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;53&quot;</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="n">tokio</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">version</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s2">&quot;1&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">features</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;full&quot;</span><span class="p">]</span><span class="w"> </span><span class="p">}</span>
+</code></pre></div>
+<p>To query tables with Mosaic data files, enable the <code>mosaic</code> feature on both crates:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="k">[dependencies]</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="n">paimon</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">version</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s2">&quot;0.1.0&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">features</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;mosaic&quot;</span><span class="p">]</span><span class="w"> </span><span class="p">}</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="n">paimon-datafusion</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">version</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s2">&quot;0.1.0&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">features</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;mosaic&quot;</span><span class="p">]</span><span class="w"> </span><span class="p">}</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="n">datafusion</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;53&quot;</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="n">tokio</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">version</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s2">&quot;1&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">features</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;full&quot;</span><span class="p">]</span><span class="w"> </span><span class="p">}</span>
+</code></pre></div>
+<p>Mosaic support is currently read-only. SQL queries can read existing <code>.mosaic</code> files, but Paimon Rust does not write Mosaic data files yet.</p>
+<h2 id="registering-catalog">Registering Catalog<a class="headerlink" href="#registering-catalog" title="Permanent link">&para;</a></h2>
+<p>Register an entire Paimon catalog so all databases and tables are accessible via <code>paimon.database.table</code> syntax:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="k">use</span><span class="w"> </span><span class="n">std</span><span class="p">::</span><span class="n">sync</span><span class="p">::</span><span class="n">Arc</span><span class="p">;</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="k">use</span><span class="w"> </span><span class="n">paimon</span><span class="p">::{</span><span class="n">CatalogOptions</span><span class="p">,</span><span class="w"> </span><span class="n">FileSystemCatalog</span><span class="p">,</span><span class="w"> </span><span class="n">Options</span><span class="p">};</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="k">use</span><span class="w"> </span><span class="n">paimon_datafusion</span><span class="p">::</span><span class="n">SQLContext</span><span class="p">;</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="k">async</span><span class="w"> </span><span class="k">fn</span><span class="w"> </span><span class="nf">example</span><span class="p">()</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="nb">Result</span><span class="o">&lt;</span><span class="p">(),</span><span class="w"> </span><span class="nb">Box</span><span class="o">&lt;</span><span class="k">dyn</span><span class="w"> </span><span class="n">std</span><span class="p">::</span><span class="n">error</span><span class="p">::</span><span class="n">Error</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">options</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Options</span><span class="p">::</span><span class="n">new</span><span class="p">();</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="w">    </span><span class="n">options</span><span class="p">.</span><span class="n">set</span><span class="p">(</span><span class="n">CatalogOptions</span><span class="p">::</span><span class="n">WAREHOUSE</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;file:///tmp/paimon-warehouse&quot;</span><span class="p">);</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">catalog</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Arc</span><span class="p">::</span><span class="n">new</span><span class="p">(</span><span class="n">FileSystemCatalog</span><span class="p">::</span><span class="n">new</span><span class="p">(</span><span class="n">options</span><span class="p">)</span><span class="o">?</span><span class="p">);</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">ctx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SQLContext</span><span class="p">::</span><span class="n">new</span><span class="p">();</span>
+<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="w">    </span><span class="n">ctx</span><span class="p">.</span><span class="n">register_catalog</span><span class="p">(</span><span class="s">&quot;paimon&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">catalog</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
+<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">df</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ctx</span><span class="p">.</span><span class="n">sql</span><span class="p">(</span><span class="s">&quot;SELECT * FROM paimon.default.my_table&quot;</span><span class="p">).</span><span class="k">await</span><span class="o">?</span><span class="p">;</span>
+<a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a><span class="w">    </span><span class="n">df</span><span class="p">.</span><span class="n">show</span><span class="p">().</span><span class="k">await</span><span class="o">?</span><span class="p">;</span>
+<a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a><span class="w">    </span><span class="nb">Ok</span><span class="p">(())</span>
+<a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a><span class="p">}</span>
+</code></pre></div>
+<p><code>SQLContext::new</code> creates a session context with the Paimon relation planner pre-registered. Use <code>register_catalog</code> to add one or more Paimon catalogs; registering a catalog also registers the built-in table-valued functions (<code>vector_search</code>, <code>full_text_search</code>) against it. It also manages session-scoped dynamic options internally for <code>SET</code>/<code>RESET</code> support.</p>
+<h2 id="data-types">Data Types<a class="headerlink" href="#data-types" title="Permanent link">&para;</a></h2>
+<p>The following SQL data types are supported in CREATE TABLE and mapped to their corresponding Paimon types:</p>
+<table>
+<thead>
+<tr>
+<th>SQL Type</th>
+<th>Paimon Type</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>BOOLEAN</code></td>
+<td>BooleanType</td>
+<td></td>
+</tr>
+<tr>
+<td><code>TINYINT</code></td>
+<td>TinyIntType</td>
+<td></td>
+</tr>
+<tr>
+<td><code>SMALLINT</code></td>
+<td>SmallIntType</td>
+<td></td>
+</tr>
+<tr>
+<td><code>INT</code> / <code>INTEGER</code></td>
+<td>IntType</td>
+<td></td>
+</tr>
+<tr>
+<td><code>BIGINT</code></td>
+<td>BigIntType</td>
+<td></td>
+</tr>
+<tr>
+<td><code>FLOAT</code> / <code>REAL</code></td>
+<td>FloatType</td>
+<td></td>
+</tr>
+<tr>
+<td><code>DOUBLE</code> / <code>DOUBLE PRECISION</code></td>
+<td>DoubleType</td>
+<td></td>
+</tr>
+<tr>
+<td><code>VARCHAR</code> / <code>TEXT</code> / <code>STRING</code> / <code>CHAR</code></td>
+<td>VarCharType</td>
+<td></td>
+</tr>
+<tr>
+<td><code>BINARY</code> / <code>VARBINARY</code> / <code>BYTEA</code></td>
+<td>VarBinaryType</td>
+<td></td>
+</tr>
+<tr>
+<td><code>BLOB</code></td>
+<td>BlobType</td>
+<td>Binary large object</td>
+</tr>
+<tr>
+<td><code>DATE</code></td>
+<td>DateType</td>
+<td></td>
+</tr>
+<tr>
+<td><code>TIMESTAMP[(p)]</code></td>
+<td>TimestampType</td>
+<td>Precision p: 0/3/6/9, default 3</td>
+</tr>
+<tr>
+<td><code>TIMESTAMP WITH TIME ZONE</code></td>
+<td>LocalZonedTimestampType</td>
+<td></td>
+</tr>
+<tr>
+<td><code>DECIMAL(p, s)</code></td>
+<td>DecimalType</td>
+<td></td>
+</tr>
+<tr>
+<td><code>ARRAY&lt;element&gt;</code></td>
+<td>ArrayType</td>
+<td>e.g. <code>ARRAY&lt;INT&gt;</code></td>
+</tr>
+<tr>
+<td><code>MAP(key, value)</code></td>
+<td>MapType</td>
+<td>e.g. <code>MAP(STRING, INT)</code></td>
+</tr>
+<tr>
+<td><code>STRUCT&lt;field TYPE, ...&gt;</code></td>
+<td>RowType</td>
+<td>e.g. <code>STRUCT&lt;city STRING, zip INT&gt;</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="ddl">DDL<a class="headerlink" href="#ddl" title="Permanent link">&para;</a></h2>
+<h3 id="create-schema-drop-schema">CREATE SCHEMA / DROP SCHEMA<a class="headerlink" href="#create-schema-drop-schema" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="k">CREATE</span><span class="w"> </span><span class="k">SCHEMA</span><span class="w"> </span><span class="n">paimon</span><span class="p">.</span><span class="n">my_db</span><span class="p">;</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="k">DROP</span><span class="w"> </span><span class="k">SCHEMA</span><span class="w"> </span><span class="n">paimon</span><span class="p">.</span><span class="n">my_db</span><span class="w"> </span><span class="k">CASCADE</span><span class="p">;</span>
+</code></pre></div>
+<h3 id="create-table">CREATE TABLE<a class="headerlink" href="#create-table" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">paimon</span><span class="p">.</span><span class="n">my_db</span><span class="p">.</span><span class="n">users</span><span class="w"> </span><span class="p">(</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">    </span><span class="n">id</span><span class="w"> </span><span class="nb">INT</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="p">,</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">    </span><span class="n">name</span><span class="w"> </span><span class="n">STRING</span><span class="p">,</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">    </span><span class="n">age</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="w">    </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">id</span><span class="p">)</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="p">)</span><span class="w"> </span><span class="k">WITH</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;bucket&#39;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;4&#39;</span><span class="p">);</span>
+</code></pre></div>
+<p><code>IF NOT EXISTS</code> is supported:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="k">IF</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">EXISTS</span><span class="w"> </span><span class="n">paimon</span><span class="p">.</span><span class="n">my_db</span><span class="p">.</span><span class="n">users</span><span class="w"> </span><span class="p">(</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">    </span><span class="n">id</span><span class="w"> </span><span class="nb">INT</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="p">);</span>
+</code></pre></div>
+<p>Unsupported syntax (will return an error):
+- <code>CREATE EXTERNAL TABLE</code>
+- <code>LOCATION</code>
+- <code>CREATE TABLE AS SELECT</code></p>
+<h3 id="partitioned-tables">Partitioned Tables<a class="headerlink" href="#partitioned-tables" title="Permanent link">&para;</a></h3>
+<p>Use <code>PARTITIONED BY</code> to specify partition columns. Partition columns must already be declared in the column definitions and must not include a type:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">paimon</span><span class="p">.</span><span class="n">my_db</span><span class="p">.</span><span class="n">events</span><span class="w"> </span><span class="p">(</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">    </span><span class="n">id</span><span class="w"> </span><span class="nb">INT</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="p">,</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">    </span><span class="n">name</span><span class="w"> </span><span class="n">STRING</span><span class="p">,</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">    </span><span class="n">dt</span><span class="w"> </span><span class="n">STRING</span><span class="p">,</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="w">    </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">dt</span><span class="p">)</span>
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="p">)</span><span class="w"> </span><span class="n">PARTITIONED</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="p">(</span><span class="n">dt</span><span class="p">)</span>
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="k">WITH</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;bucket&#39;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;2&#39;</span><span class="p">);</span>
+</code></pre></div>
+<p>Invalid usage (will return an error):</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="c1">-- Partition columns must not specify a type</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">paimon</span><span class="p">.</span><span class="n">my_db</span><span class="p">.</span><span class="n">events</span><span class="w"> </span><span class="p">(</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">    </span><span class="n">id</span><span class="w"> </span><span class="nb">INT</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="p">,</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="w">    </span><span class="n">dt</span><span class="w"> </span><span class="n">STRING</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="p">)</span><span class="w"> </span><span class="n">PARTITIONED</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="p">(</span><span class="n">dt</span><span class="w"> </span><span class="n">STRING</span><span class="p">);</span>
+</code></pre></div>
+<h3 id="complex-types">Complex Types<a class="headerlink" href="#complex-types" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">paimon</span><span class="p">.</span><span class="n">my_db</span><span class="p">.</span><span class="n">complex_types</span><span class="w"> </span><span class="p">(</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="w">    </span><span class="n">id</span><span class="w"> </span><span class="nb">INT</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="p">,</span>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="w">    </span><span class="n">tags</span><span class="w"> </span><span class="nb">ARRAY</span><span class="o">&lt;</span><span class="n">STRING</span><span class="o">&gt;</span><span class="p">,</span>
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="w">    </span><span class="n">props</span><span class="w"> </span><span class="k">MAP</span><span class="p">(</span><span class="n">STRING</span><span class="p">,</span><span class="w"> </span><span class="nb">INT</span><span class="p">),</span>
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="w">    </span><span class="n">address</span><span class="w"> </span><span class="n">STRUCT</span><span class="o">&lt;</span><span class="n">city</span><span class="w"> </span><span class="n">STRING</span><span class="p">,</span><span class="w"> </span><span class="n">zip</span><span class="w"> </span><span class="nb">INT</span><span class="o">&gt;</span><span class="p">,</span>
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="w">    </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">id</span><span class="p">)</span>
+<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="p">);</span>
+</code></pre></div>
+<h3 id="drop-table">DROP TABLE<a class="headerlink" href="#drop-table" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="k">DROP</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">paimon</span><span class="p">.</span><span class="n">my_db</span><span class="p">.</span><span class="n">users</span><span class="p">;</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="k">DROP</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="k">IF</span><span class="w"> </span><span class="k">EXISTS</span><span class="w"> </span><span class="n">paimon</span><span class="p">.</span><span class="n">my_db</span><span class="p">.</span><span class="n">users</span><span class="p">;</span>
+</code></pre></div>
+<h3 id="create-temporary-table">CREATE TEMPORARY TABLE<a class="headerlink" href="#create-temporary-table" title="Permanent link">&para;</a></h3>
+<p>Create an in-memory temporary table from a query result. Temporary tables exist only for the lifetime of the <code>SQLContext</code> instance and are automatically cleaned up when the context is dropped.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="c1">-- Without column types (types inferred from the query)</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="k">CREATE</span><span class="w"> </span><span class="k">TEMPORARY</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">paimon</span><span class="p">.</span><span class="n">my_db</span><span class="p">.</span><span class="k">source</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="p">(</span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;alice&#39;</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;bob&#39;</span><span class="p">))</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">t</span><span class="p">(</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">name</span><span class="p">);</span>
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="c1">-- With explicit column types (recommended when integer precision matters)</span>
+<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="k">CREATE</span><span class="w"> </span><span class="k">TEMPORARY</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">paimon</span><span class="p">.</span><span class="n">my_db</span><span class="p">.</span><span class="k">source</span><span class="w"> </span><span class="p">(</span><span class="n">id</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="n">STRING</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="p">(</span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;alice&#39;</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;bob&#39;</span><span class="p">))</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">t</span><span class="p">(</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">name</span><span class="p">);</span>
+</code></pre></div>
+<p><code>IF NOT EXISTS</code> is supported — if the table already exists, the statement is silently ignored:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="k">CREATE</span><span class="w"> </span><span class="k">TEMPORARY</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="k">IF</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">EXISTS</span><span class="w"> </span><span class="n">paimon</span><span class="p">.</span><span class="n">my_db</span><span class="p">.</span><span class="k">source</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="k">SELECT</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+</code></pre></div>
+<blockquote>
+<p><strong>Note:</strong> When using <code>VALUES</code> without explicit column types, DataFusion infers integer literals as <code>Int64</code>. If the temporary table will be used as a source in <code>MERGE INTO</code> against a Paimon table with <code>Int32</code> columns, specify the column types explicitly to avoid type mismatch errors.</p>
+</blockquote>
+<h3 id="create-temporary-view">CREATE TEMPORARY VIEW<a class="headerlink" href="#create-temporary-view" title="Permanent link">&para;</a></h3>
+<p>Create a temporary view from a query:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="k">CREATE</span><span class="w"> </span><span class="k">TEMPORARY</span><span class="w"> </span><span class="k">VIEW</span><span class="w"> </span><span class="n">paimon</span><span class="p">.</span><span class="n">my_db</span><span class="p">.</span><span class="n">active_users</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">paimon</span><span class="p">.</span><span class="n">my_db</span><span class="p">.</span><span class="n">users</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+</code></pre></div>
+<p><code>IF NOT EXISTS</code> is supported:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="k">CREATE</span><span class="w"> </span><span class="k">TEMPORARY</span><span class="w"> </span><span class="k">VIEW</span><span class="w"> </span><span class="k">IF</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">EXISTS</span><span class="w"> </span><span class="n">paimon</span><span class="p">.</span><span class="n">my_db</span><span class="p">.</span><span class="n">active_users</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">paimon</span><span class="p">.</span><span class="n">my_db</span><span class="p">.</span><span class="n">users</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+</code></pre></div>
+<h3 id="drop-temporary-table-drop-temporary-view">DROP TEMPORARY TABLE / DROP TEMPORARY VIEW<a class="headerlink" href="#drop-temporary-table-drop-temporary-view" title="Permanent link">&para;</a></h3>
+<p>Remove a temporary table or view:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="k">DROP</span><span class="w"> </span><span class="k">TEMPORARY</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">paimon</span><span class="p">.</span><span class="n">my_db</span><span class="p">.</span><span class="k">source</span><span class="p">;</span>
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="k">DROP</span><span class="w"> </span><span class="k">TEMPORARY</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="k">IF</span><span class="w"> </span><span class="k">EXISTS</span><span class="w"> </span><span class="n">paimon</span><span class="p">.</span><span class="n">my_db</span><span class="p">.</span><span class="k">source</span><span class="p">;</span>
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="k">DROP</span><span class="w"> </span><span class="k">TEMPORARY</span><span class="w"> </span><span class="k">VIEW</span><span class="w"> </span><span class="n">paimon</span><span class="p">.</span><span class="n">my_db</span><span class="p">.</span><span class="n">active_users</span><span class="p">;</span>
+<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="k">DROP</span><span class="w"> </span><span class="k">TEMPORARY</span><span class="w"> </span><span class="k">VIEW</span><span class="w"> </span><span class="k">IF</span><span class="w"> </span><span class="k">EXISTS</span><span class="w"> </span><span class="n">paimon</span><span class="p">.</span><span class="n">my_db</span><span class="p">.</span><span class="n">active_users</span><span class="p">;</span>
+</code></pre></div>
+<h3 id="alter-table">ALTER TABLE<a class="headerlink" href="#alter-table" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="c1">-- Add a column</span>
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="k">ALTER</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">paimon</span><span class="p">.</span><span class="n">my_db</span><span class="p">.</span><span class="n">users</span><span class="w"> </span><span class="k">ADD</span><span class="w"> </span><span class="k">COLUMN</span><span class="w"> </span><span class="n">email</span><span class="w"> </span><span class="n">STRING</span><span class="p">;</span>
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>
+<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="c1">-- Drop a column</span>
+<a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a><span class="k">ALTER</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">paimon</span><span class="p">.</span><span class="n">my_db</span><span class="p">.</span><span class="n">users</span><span class="w"> </span><span class="k">DROP</span><span class="w"> </span><span class="k">COLUMN</span><span class="w"> </span><span class="n">age</span><span class="p">;</span>
+<a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a>
+<a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a><span class="c1">-- Rename a column</span>
+<a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a><span class="k">ALTER</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">paimon</span><span class="p">.</span><span class="n">my_db</span><span class="p">.</span><span class="n">users</span><span class="w"> </span><span class="k">RENAME</span><span class="w"> </span><span class="k">COLUMN</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="n">username</span><span class="p">;</span>
+<a id="__codelineno-15-9" name="__codelineno-15-9" href="#__codelineno-15-9"></a>
+<a id="__codelineno-15-10" name="__codelineno-15-10" href="#__codelineno-15-10"></a><span class="c1">-- Rename a table</span>
+<a id="__codelineno-15-11" name="__codelineno-15-11" href="#__codelineno-15-11"></a><span class="k">ALTER</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">paimon</span><span class="p">.</span><span class="n">my_db</span><span class="p">.</span><span class="n">users</span><span class="w"> </span><span class="k">RENAME</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="n">members</span><span class="p">;</span>
+<a id="__codelineno-15-12" name="__codelineno-15-12" href="#__codelineno-15-12"></a>
+<a id="__codelineno-15-13" name="__codelineno-15-13" href="#__codelineno-15-13"></a><span class="c1">-- Set table properties</span>
+<a id="__codelineno-15-14" name="__codelineno-15-14" href="#__codelineno-15-14"></a><span class="k">ALTER</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">paimon</span><span class="p">.</span><span class="n">my_db</span><span class="p">.</span><span class="n">users</span><span class="w"> </span><span class="k">SET</span><span class="w"> </span><span class="n">TBLPROPERTIES</span><span class="p">(</span><span class="s1">&#39;data-evolution.enabled&#39;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;true&#39;</span><span class="p">);</span>
+</code></pre></div>
+<p><code>IF EXISTS</code> is supported:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="k">ALTER</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="k">IF</span><span class="w"> </span><span class="k">EXISTS</span><span class="w"> </span><span class="n">paimon</span><span class="p">.</span><span class="n">my_db</span><span class="p">.</span><span class="n">users</span><span class="w"> </span><span class="k">ADD</span><span class="w"> </span><span class="k">COLUMN</span><span class="w"> </span><span class="n">age</span><span class="w"> </span><span class="nb">INT</span><span class="p">;</span>
+</code></pre></div>
+<h2 id="dml">DML<a class="headerlink" href="#dml" title="Permanent link">&para;</a></h2>
+<p>The table type determines which row-level DML operations are supported:</p>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>Append-only table</th>
+<th>Primary-key table</th>
+<th>Data-evolution row-tracking table (no primary key)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>INSERT INTO</code></td>
+<td>Supported</td>
+<td>Supported</td>
+<td>Supported</td>
+</tr>
+<tr>
+<td><code>INSERT OVERWRITE</code></td>
+<td>Supported</td>
+<td>Supported</td>
+<td>Supported</td>
+</tr>
+<tr>
+<td><code>INSERT OVERWRITE ... PARTITION</code></td>
+<td>Supported for partitioned tables</td>
+<td>Supported for partitioned tables</td>
+<td>Supported for partitioned tables</td>
+</tr>
+<tr>
+<td><code>TRUNCATE TABLE</code></td>
+<td>Supported</td>
+<td>Supported</td>
+<td>Supported</td>
+</tr>
+<tr>
+<td><code>ALTER TABLE ... DROP PARTITION</code></td>
+<td>Supported for partitioned tables</td>
+<td>Supported for partitioned tables</td>
+<td>Supported for partitioned tables</td>
+</tr>
+<tr>
+<td><code>UPDATE</code></td>
+<td>Supported via Copy-on-Write</td>
+<td>Not supported</td>
+<td>Supported via row-id update</td>
+</tr>
+<tr>
+<td><code>DELETE</code></td>
+<td>Supported via Copy-on-Write</td>
+<td>Not supported</td>
+<td>Not supported</td>
+</tr>
+<tr>
+<td><code>MERGE INTO</code></td>
+<td>Supported via Copy-on-Write</td>
+<td>Not supported</td>
+<td>Supported for matched <code>UPDATE</code> and not-matched <code>INSERT</code>; matched <code>DELETE</code> is not supported</td>
+</tr>
+</tbody>
+</table>
+<p>A data-evolution row-tracking table must have both <code>'data-evolution.enabled' = 'true'</code> and <code>'row-tracking.enabled' = 'true'</code>, and must not have primary keys. Primary-key row-level <code>UPDATE</code>, <code>DELETE</code>, and <code>MERGE INTO</code> are not supported even when data evolution is enabled.</p>
+<h3 id="insert-into">INSERT INTO<a class="headerlink" href="#insert-into" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">paimon</span><span class="p">.</span><span class="n">my_db</span><span class="p">.</span><span class="n">users</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;alice&#39;</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;bob&#39;</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;carol&#39;</span><span class="p">);</span>
+</code></pre></div>
+<p><code>INSERT INTO ... SELECT ...</code> is also supported:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">paimon</span><span class="p">.</span><span class="n">my_db</span><span class="p">.</span><span class="n">users</span><span class="w"> </span><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">source_table</span><span class="p">;</span>
+</code></pre></div>
+<p>For primary-key tables, records with duplicate keys are deduplicated according to the merge engine (default: Deduplicate engine, where the last written value wins).</p>
+<h3 id="mosaic-read-scope">Mosaic Read Scope<a class="headerlink" href="#mosaic-read-scope" title="Permanent link">&para;</a></h3>
+<p>The Mosaic reader uses row-group statistics for conservative pruning when they are present. This pruning is not row-level filter enforcement; DataFusion still applies SQL filters above the reader to produce exact query results.</p>
+<p>Unsupported or limited Mosaic areas include writing <code>.mosaic</code> files, emitting manifest <code>value_stats</code> for Mosaic writes, Mosaic bloom filters, and Mosaic-specific performance tuning.</p>
+<h3 id="insert-overwrite">INSERT OVERWRITE<a class="headerlink" href="#insert-overwrite" title="Permanent link">&para;</a></h3>
+<p>For partitioned tables, <code>INSERT OVERWRITE</code> replaces only the affected partitions. For unpartitioned tables, it replaces the entire table:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="c1">-- Dynamic partition overwrite: overwrites only the dt=&#39;2024-01-01&#39; partition</span>
+<a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a><span class="k">INSERT</span><span class="w"> </span><span class="n">OVERWRITE</span><span class="w"> </span><span class="n">paimon</span><span class="p">.</span><span class="n">my_db</span><span class="p">.</span><span class="n">events</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;2024-01-01&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;new_alice&#39;</span><span class="p">);</span>
+</code></pre></div>
+<p>Hive-style static partition overwrite is also supported via the <code>PARTITION</code> clause. The source query provides only non-partition columns, and partition values are specified explicitly:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="c1">-- Static partition overwrite: explicitly specify the target partition</span>
+<a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a><span class="k">INSERT</span><span class="w"> </span><span class="n">OVERWRITE</span><span class="w"> </span><span class="n">paimon</span><span class="p">.</span><span class="n">my_db</span><span class="p">.</span><span class="n">events</span><span class="w"> </span><span class="n">PARTITION</span><span class="w"> </span><span class="p">(</span><span class="n">dt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;2024-01-01&#39;</span><span class="p">)</span>
+<a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;new_alice&#39;</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="mi">20</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;new_bob&#39;</span><span class="p">);</span>
+<a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a>
+<a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a><span class="c1">-- With a SELECT source</span>
+<a id="__codelineno-20-6" name="__codelineno-20-6" href="#__codelineno-20-6"></a><span class="k">INSERT</span><span class="w"> </span><span class="n">OVERWRITE</span><span class="w"> </span><span class="n">paimon</span><span class="p">.</span><span class="n">my_db</span><span class="p">.</span><span class="n">events</span><span class="w"> </span><span class="n">PARTITION</span><span class="w"> </span><span class="p">(</span><span class="n">dt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;2024-01-01&#39;</span><span class="p">)</span>
+<a id="__codelineno-20-7" name="__codelineno-20-7" href="#__codelineno-20-7"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">source_table</span><span class="p">;</span>
+</code></pre></div>
+<p>For multi-level partitioned tables, you can specify a subset of partition columns. Unspecified partition columns are read from the source query (dynamic partition). All sub-partitions under the specified partition are replaced:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="c1">-- Only dt is static; all data under dt=&#39;2024-01-01&#39; is replaced.</span>
+<a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a><span class="c1">-- region comes from the source data.</span>
+<a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a><span class="k">INSERT</span><span class="w"> </span><span class="n">OVERWRITE</span><span class="w"> </span><span class="n">paimon</span><span class="p">.</span><span class="n">my_db</span><span class="p">.</span><span class="n">events</span><span class="w"> </span><span class="n">PARTITION</span><span class="w"> </span><span class="p">(</span><span class="n">dt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;2024-01-01&#39;</span><span class="p">)</span>
+<a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;us&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;alice&#39;</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;eu&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">20</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;bob&#39;</span><span class="p">);</span>
+</code></pre></div>
+<h3 id="update">UPDATE<a class="headerlink" href="#update" title="Permanent link">&para;</a></h3>
+<p>For append-only tables (no primary key), updates are executed using Copy-on-Write:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="k">UPDATE</span><span class="w"> </span><span class="n">paimon</span><span class="p">.</span><span class="n">my_db</span><span class="p">.</span><span class="n">t</span><span class="w"> </span><span class="k">SET</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;a_new&#39;</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+</code></pre></div>
+<p>For data-evolution row-tracking tables without primary keys, updates are executed with row-id-based partial-column writes. Primary-key tables are not supported for <code>UPDATE</code>.</p>
+<h3 id="delete">DELETE<a class="headerlink" href="#delete" title="Permanent link">&para;</a></h3>
+<p>For append-only tables, deletes are executed using Copy-on-Write:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="k">DELETE</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">paimon</span><span class="p">.</span><span class="n">my_db</span><span class="p">.</span><span class="n">t</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;b&#39;</span><span class="p">;</span>
+</code></pre></div>
+<p><code>DELETE</code> is not supported on primary-key tables or data-evolution tables.</p>
+<h3 id="merge-into">MERGE INTO<a class="headerlink" href="#merge-into" title="Permanent link">&para;</a></h3>
+<p>Standard SQL MERGE INTO syntax is supported, allowing INSERT, UPDATE, and DELETE in a single statement:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a><span class="n">MERGE</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">paimon</span><span class="p">.</span><span class="n">my_db</span><span class="p">.</span><span class="n">target</span>
+<a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a><span class="k">USING</span><span class="w"> </span><span class="k">source</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">target</span><span class="p">.</span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">source</span><span class="p">.</span><span class="n">a</span>
+<a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a><span class="k">WHEN</span><span class="w"> </span><span class="n">MATCHED</span><span class="w"> </span><span class="k">THEN</span><span class="w"> </span><span class="k">UPDATE</span><span class="w"> </span><span class="k">SET</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">source</span><span class="p">.</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">source</span><span class="p">.</span><span class="n">b</span><span class="p">,</span><span class="w"> </span><span class="k">c</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">source</span><span class="p">.</span><span class="k">c</span>
+<a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a><span class="k">WHEN</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="n">MATCHED</span><span class="w"> </span><span class="k">THEN</span><span class="w"> </span><span class="k">INSERT</span><span class="w"> </span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">,</span><span class="w"> </span><span class="k">c</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="k">source</span><span class="p">.</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="k">source</span><span class="p">.</span><span class="n">b</span><span class="p">,</span><span class="w"> </span><span class="k">source</span><span class="p">.</span><span class="k">c</span><span class="p">);</span>
+</code></pre></div>
+<p>Delete matched rows only:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a><span class="n">MERGE</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">paimon</span><span class="p">.</span><span class="n">my_db</span><span class="p">.</span><span class="n">target</span>
+<a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a><span class="k">USING</span><span class="w"> </span><span class="k">source</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">target</span><span class="p">.</span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">source</span><span class="p">.</span><span class="n">a</span>
+<a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a><span class="k">WHEN</span><span class="w"> </span><span class="n">MATCHED</span><span class="w"> </span><span class="k">THEN</span><span class="w"> </span><span class="k">DELETE</span><span class="p">;</span>
+</code></pre></div>
+<p>UPDATE + INSERT combination:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a><span class="n">MERGE</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">paimon</span><span class="p">.</span><span class="n">my_db</span><span class="p">.</span><span class="n">target</span>
+<a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a><span class="k">USING</span><span class="w"> </span><span class="k">source</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">target</span><span class="p">.</span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">source</span><span class="p">.</span><span class="n">a</span>
+<a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a><span class="k">WHEN</span><span class="w"> </span><span class="n">MATCHED</span><span class="w"> </span><span class="k">THEN</span><span class="w"> </span><span class="k">UPDATE</span><span class="w"> </span><span class="k">SET</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">source</span><span class="p">.</span><span class="n">b</span>
+<a id="__codelineno-26-4" name="__codelineno-26-4" href="#__codelineno-26-4"></a><span class="k">WHEN</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="n">MATCHED</span><span class="w"> </span><span class="k">THEN</span><span class="w"> </span><span class="k">INSERT</span><span class="w"> </span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">,</span><span class="w"> </span><span class="k">c</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="k">source</span><span class="p">.</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="k">source</span><span class="p">.</span><span class="n">b</span><span class="p">,</span><span class="w"> </span><span class="k">source</span><span class="p">.</span><span class="k">c</span><span class="p">);</span>
+</code></pre></div>
+<p>The source can also be a subquery:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a><span class="n">MERGE</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">paimon</span><span class="p">.</span><span class="n">my_db</span><span class="p">.</span><span class="n">target</span>
+<a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a><span class="k">USING</span><span class="w"> </span><span class="p">(</span><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">other_table</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">active</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">true</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="k">source</span>
+<a id="__codelineno-27-3" name="__codelineno-27-3" href="#__codelineno-27-3"></a><span class="k">ON</span><span class="w"> </span><span class="n">target</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">source</span><span class="p">.</span><span class="n">id</span>
+<a id="__codelineno-27-4" name="__codelineno-27-4" href="#__codelineno-27-4"></a><span class="k">WHEN</span><span class="w"> </span><span class="n">MATCHED</span><span class="w"> </span><span class="k">THEN</span><span class="w"> </span><span class="k">UPDATE</span><span class="w"> </span><span class="k">SET</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">source</span><span class="p">.</span><span class="n">name</span><span class="p">;</span>
+</code></pre></div>
+<p>For append-only tables, <code>MERGE INTO</code> uses Copy-on-Write file rewriting and supports matched <code>UPDATE</code>, matched <code>DELETE</code>, and not-matched <code>INSERT</code>. For data-evolution row-tracking tables without primary keys, <code>MERGE INTO</code> uses the <code>_ROW_ID</code> virtual column for row-level tracking and supports matched <code>UPDATE</code> plus not-matched <code>INSERT</code>; matched <code>DELETE</code> is not yet supported. Primary-key tables are not supported for <code>MERGE INTO</code>.</p>
+<h3 id="truncate-table">TRUNCATE TABLE<a class="headerlink" href="#truncate-table" title="Permanent link">&para;</a></h3>
+<p>Truncate an entire table or specific partitions:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a><span class="c1">-- Truncate the entire table</span>
+<a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a><span class="k">TRUNCATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">paimon</span><span class="p">.</span><span class="n">my_db</span><span class="p">.</span><span class="n">users</span><span class="p">;</span>
+<a id="__codelineno-28-3" name="__codelineno-28-3" href="#__codelineno-28-3"></a>
+<a id="__codelineno-28-4" name="__codelineno-28-4" href="#__codelineno-28-4"></a><span class="c1">-- Truncate specific partitions</span>
+<a id="__codelineno-28-5" name="__codelineno-28-5" href="#__codelineno-28-5"></a><span class="k">TRUNCATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">paimon</span><span class="p">.</span><span class="n">my_db</span><span class="p">.</span><span class="n">events</span><span class="w"> </span><span class="n">PARTITION</span><span class="w"> </span><span class="p">(</span><span class="n">dt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;2024-01-01&#39;</span><span class="p">);</span>
+</code></pre></div>
+<h3 id="drop-partition">DROP PARTITION<a class="headerlink" href="#drop-partition" title="Permanent link">&para;</a></h3>
+<p>Drop specific partitions from a table using <code>ALTER TABLE ... DROP PARTITION</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a><span class="k">ALTER</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">paimon</span><span class="p">.</span><span class="n">my_db</span><span class="p">.</span><span class="n">events</span><span class="w"> </span><span class="k">DROP</span><span class="w"> </span><span class="n">PARTITION</span><span class="w"> </span><span class="p">(</span><span class="n">dt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;2024-01-01&#39;</span><span class="p">);</span>
+</code></pre></div>
+<p>Multiple partition key-value pairs can be specified:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a><span class="k">ALTER</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">paimon</span><span class="p">.</span><span class="n">my_db</span><span class="p">.</span><span class="n">events</span><span class="w"> </span><span class="k">DROP</span><span class="w"> </span><span class="n">PARTITION</span><span class="w"> </span><span class="p">(</span><span class="n">dt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;2024-01-01&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">region</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;us&#39;</span><span class="p">);</span>
+</code></pre></div>
+<h2 id="procedures">Procedures<a class="headerlink" href="#procedures" title="Permanent link">&para;</a></h2>
+<p>Use <code>CALL</code> to invoke built-in procedures. All procedures are under the <code>sys</code> namespace.</p>
+<h3 id="create_tag">create_tag<a class="headerlink" href="#create_tag" title="Permanent link">&para;</a></h3>
+<p>Create a named tag from a snapshot:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a><span class="k">CALL</span><span class="w"> </span><span class="n">sys</span><span class="p">.</span><span class="n">create_tag</span><span class="p">(</span><span class="k">table</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="s1">&#39;paimon.my_db.my_table&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">tag</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="s1">&#39;my_tag&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">snapshot_id</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+</code></pre></div>
+<h3 id="create_tag_from_timestamp">create_tag_from_timestamp<a class="headerlink" href="#create_tag_from_timestamp" title="Permanent link">&para;</a></h3>
+<p>Create a named tag from a timestamp (finds the latest snapshot at or before the given time):</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a><span class="k">CALL</span><span class="w"> </span><span class="n">sys</span><span class="p">.</span><span class="n">create_tag_from_timestamp</span><span class="p">(</span><span class="k">table</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="s1">&#39;paimon.my_db.my_table&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">tag</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="s1">&#39;my_tag&#39;</span><span class="p">,</span><span class="w"> </span><span class="k">timestamp</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="mi">1234567890000</span><span class="p">);</span>
+</code></pre></div>
+<h3 id="delete_tag">delete_tag<a class="headerlink" href="#delete_tag" title="Permanent link">&para;</a></h3>
+<p>Delete a named tag:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a><span class="k">CALL</span><span class="w"> </span><span class="n">sys</span><span class="p">.</span><span class="n">delete_tag</span><span class="p">(</span><span class="k">table</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="s1">&#39;paimon.my_db.my_table&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">tag</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="s1">&#39;my_tag&#39;</span><span class="p">);</span>
+</code></pre></div>
+<h3 id="rollback_to">rollback_to<a class="headerlink" href="#rollback_to" title="Permanent link">&para;</a></h3>
+<p>Rollback a table to a specific snapshot or tag:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a><span class="c1">-- Rollback to a snapshot</span>
+<a id="__codelineno-34-2" name="__codelineno-34-2" href="#__codelineno-34-2"></a><span class="k">CALL</span><span class="w"> </span><span class="n">sys</span><span class="p">.</span><span class="n">rollback_to</span><span class="p">(</span><span class="k">table</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="s1">&#39;paimon.my_db.my_table&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">snapshot_id</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+<a id="__codelineno-34-3" name="__codelineno-34-3" href="#__codelineno-34-3"></a>
+<a id="__codelineno-34-4" name="__codelineno-34-4" href="#__codelineno-34-4"></a><span class="c1">-- Rollback to a tag</span>
+<a id="__codelineno-34-5" name="__codelineno-34-5" href="#__codelineno-34-5"></a><span class="k">CALL</span><span class="w"> </span><span class="n">sys</span><span class="p">.</span><span class="n">rollback_to</span><span class="p">(</span><span class="k">table</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="s1">&#39;paimon.my_db.my_table&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">tag</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="s1">&#39;my_tag&#39;</span><span class="p">);</span>
+</code></pre></div>
+<h3 id="rollback_to_timestamp">rollback_to_timestamp<a class="headerlink" href="#rollback_to_timestamp" title="Permanent link">&para;</a></h3>
+<p>Rollback a table to a specific timestamp:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a><span class="k">CALL</span><span class="w"> </span><span class="n">sys</span><span class="p">.</span><span class="n">rollback_to_timestamp</span><span class="p">(</span><span class="k">table</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="s1">&#39;paimon.my_db.my_table&#39;</span><span class="p">,</span><span class="w"> </span><span class="k">timestamp</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="mi">1234567890000</span><span class="p">);</span>
+</code></pre></div>
+<h3 id="create_lumina_index">create_lumina_index<a class="headerlink" href="#create_lumina_index" title="Permanent link">&para;</a></h3>
+<p>Build and commit a Lumina global vector index for a table column:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a><span class="k">CALL</span><span class="w"> </span><span class="n">sys</span><span class="p">.</span><span class="n">create_lumina_index</span><span class="p">(</span><span class="k">table</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="s1">&#39;paimon.my_db.my_table&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">index_column</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="s1">&#39;embedding&#39;</span><span class="p">);</span>
+</code></pre></div>
+<p>The optional <code>index_type</code> argument selects the Lumina index identifier. It defaults to
+<code>lumina</code>. Valid values are <code>lumina</code> and the legacy-compatible <code>lumina-vector-ann</code>.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a><span class="k">CALL</span><span class="w"> </span><span class="n">sys</span><span class="p">.</span><span class="n">create_lumina_index</span><span class="p">(</span>
+<a id="__codelineno-37-2" name="__codelineno-37-2" href="#__codelineno-37-2"></a><span class="w">  </span><span class="k">table</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="s1">&#39;paimon.my_db.my_table&#39;</span><span class="p">,</span>
+<a id="__codelineno-37-3" name="__codelineno-37-3" href="#__codelineno-37-3"></a><span class="w">  </span><span class="n">index_column</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="s1">&#39;embedding&#39;</span><span class="p">,</span>
+<a id="__codelineno-37-4" name="__codelineno-37-4" href="#__codelineno-37-4"></a><span class="w">  </span><span class="n">index_type</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="s1">&#39;lumina&#39;</span>
+<a id="__codelineno-37-5" name="__codelineno-37-5" href="#__codelineno-37-5"></a><span class="p">);</span>
+</code></pre></div>
+<p>Optional Lumina builder settings can be supplied as comma-separated <code>key=value</code> pairs:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a><span class="k">CALL</span><span class="w"> </span><span class="n">sys</span><span class="p">.</span><span class="n">create_lumina_index</span><span class="p">(</span>
+<a id="__codelineno-38-2" name="__codelineno-38-2" href="#__codelineno-38-2"></a><span class="w">  </span><span class="k">table</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="s1">&#39;paimon.my_db.my_table&#39;</span><span class="p">,</span>
+<a id="__codelineno-38-3" name="__codelineno-38-3" href="#__codelineno-38-3"></a><span class="w">  </span><span class="n">index_column</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="s1">&#39;embedding&#39;</span><span class="p">,</span>
+<a id="__codelineno-38-4" name="__codelineno-38-4" href="#__codelineno-38-4"></a><span class="w">  </span><span class="k">options</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="s1">&#39;lumina.index.dimension=128,lumina.encoding.type=pq&#39;</span>
+<a id="__codelineno-38-5" name="__codelineno-38-5" href="#__codelineno-38-5"></a><span class="p">);</span>
+</code></pre></div>
+<h2 id="queries">Queries<a class="headerlink" href="#queries" title="Permanent link">&para;</a></h2>
+<h3 id="basic-queries">Basic Queries<a class="headerlink" href="#basic-queries" title="Permanent link">&para;</a></h3>
+<p>All DataFusion query capabilities are supported (JOINs, aggregations, subqueries, CTEs, etc.):</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">paimon</span><span class="p">.</span><span class="n">my_db</span><span class="p">.</span><span class="n">users</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="k">LIMIT</span><span class="w"> </span><span class="mi">100</span><span class="p">;</span>
+</code></pre></div>
+<h3 id="column-projection">Column Projection<a class="headerlink" href="#column-projection" title="Permanent link">&para;</a></h3>
+<p>Only the required columns are read, reducing I/O:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">paimon</span><span class="p">.</span><span class="n">my_db</span><span class="p">.</span><span class="n">users</span><span class="p">;</span>
+</code></pre></div>
+<h3 id="filter-pushdown">Filter Pushdown<a class="headerlink" href="#filter-pushdown" title="Permanent link">&para;</a></h3>
+<p>The following filter predicates are pushed down to the Paimon storage layer:</p>
+<ul>
+<li>Comparison: <code>=</code>, <code>!=</code>, <code>&lt;</code>, <code>&lt;=</code>, <code>&gt;</code>, <code>&gt;=</code></li>
+<li>Logical: <code>AND</code>, <code>OR</code></li>
+<li>Null checks: <code>IS NULL</code>, <code>IS NOT NULL</code></li>
+<li>Range: <code>IN</code>, <code>NOT IN</code>, <code>BETWEEN</code></li>
+</ul>
+<p>Filters on partition columns enable exact partition pruning, avoiding scans of irrelevant data.</p>
+<h3 id="count-pushdown">COUNT(*) Pushdown<a class="headerlink" href="#count-pushdown" title="Permanent link">&para;</a></h3>
+<p>When the following conditions are met, <code>COUNT(*)</code> retrieves exact row counts directly from split metadata without a full table scan:</p>
+<ul>
+<li>All splits have a known <code>merged_row_count</code></li>
+<li>No LIMIT clause</li>
+<li>Filter predicates only involve partition columns (Exact level)</li>
+</ul>
+<h2 id="vector-search">Vector Search<a class="headerlink" href="#vector-search" title="Permanent link">&para;</a></h2>
+<p>Paimon supports approximate nearest neighbor (ANN) vector search via the Lumina vector index. The <code>vector_search</code> table-valued function is registered as a UDTF on the DataFusion session context.</p>
+<h3 id="registration">Registration<a class="headerlink" href="#registration" title="Permanent link">&para;</a></h3>
+<p>When you use a <code>SQLContext</code>, <code>vector_search</code> is registered automatically for every catalog you register — no extra setup is needed.</p>
+<p>With a raw DataFusion <code>SessionContext</code>, register it explicitly:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a><span class="k">use</span><span class="w"> </span><span class="n">paimon_datafusion</span><span class="p">::</span><span class="n">register_vector_search</span><span class="p">;</span>
+<a id="__codelineno-41-2" name="__codelineno-41-2" href="#__codelineno-41-2"></a>
+<a id="__codelineno-41-3" name="__codelineno-41-3" href="#__codelineno-41-3"></a><span class="n">register_vector_search</span><span class="p">(</span><span class="o">&amp;</span><span class="n">ctx</span><span class="p">,</span><span class="w"> </span><span class="n">catalog</span><span class="p">.</span><span class="n">clone</span><span class="p">(),</span><span class="w"> </span><span class="s">&quot;default&quot;</span><span class="p">);</span>
+</code></pre></div>
+<h3 id="usage">Usage<a class="headerlink" href="#usage" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-42-1" name="__codelineno-42-1" href="#__codelineno-42-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">vector_search</span><span class="p">(</span><span class="s1">&#39;table_name&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;column_name&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;query_vector_json&#39;</span><span class="p">,</span><span class="w"> </span><span class="k">limit</span><span class="p">)</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Argument</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>table_name</code></td>
+<td>STRING</td>
+<td>Table name, fully qualified (<code>catalog.db.table</code>) or short form</td>
+</tr>
+<tr>
+<td><code>column_name</code></td>
+<td>STRING</td>
+<td>The vector column to search</td>
+</tr>
+<tr>
+<td><code>query_vector_json</code></td>
+<td>STRING</td>
+<td>Query vector as a JSON array of floats</td>
+</tr>
+<tr>
+<td><code>limit</code></td>
+<td>INT</td>
+<td>Maximum number of results (top-k)</td>
+</tr>
+</tbody>
+</table>
+<p>Example:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-43-1" name="__codelineno-43-1" href="#__codelineno-43-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">vector_search</span><span class="p">(</span><span class="s1">&#39;paimon.my_db.items&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;embedding&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;[1.0, 0.0, 0.0, 0.0]&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">);</span>
+</code></pre></div>
+<p>The function performs ANN search across all Lumina vector index files for the target column, merges results, and returns the top-k rows ordered by relevance score. If no matching index is found, an empty result is returned.</p>
+<h3 id="supported-metrics">Supported Metrics<a class="headerlink" href="#supported-metrics" title="Permanent link">&para;</a></h3>
+<p>The distance metric is configured at index creation time via table options:</p>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>inner_product</code></td>
+<td>Inner product (default)</td>
+</tr>
+<tr>
+<td><code>cosine</code></td>
+<td>Cosine similarity</td>
+</tr>
+<tr>
+<td><code>l2</code></td>
+<td>Euclidean (L2) distance</td>
+</tr>
+</tbody>
+</table>
+<h3 id="vector-index-options">Vector Index Options<a class="headerlink" href="#vector-index-options" title="Permanent link">&para;</a></h3>
+<p>Vector index behavior is configured via table options prefixed with <code>lumina.</code>:</p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>lumina.dimension</code></td>
+<td>Vector dimension</td>
+</tr>
+<tr>
+<td><code>lumina.metric</code></td>
+<td>Distance metric (<code>inner_product</code>, <code>cosine</code>, <code>l2</code>)</td>
+</tr>
+<tr>
+<td><code>lumina.index-type</code></td>
+<td>Index type (default: <code>diskann</code>)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="environment">Environment<a class="headerlink" href="#environment" title="Permanent link">&para;</a></h3>
+<p>The Lumina native library must be available at runtime. Set the <code>LUMINA_LIB_PATH</code> environment variable to the path of the shared library, or place it in the platform default location.</p>
+<h2 id="full-text-search">Full-Text Search<a class="headerlink" href="#full-text-search" title="Permanent link">&para;</a></h2>
+<p>Paimon supports full-text search via the Tantivy search engine. The <code>full_text_search</code> table-valued function is registered as a UDTF on the DataFusion session context.</p>
+<blockquote>
+<p><strong>Note:</strong> Full-text search requires the <code>fulltext</code> feature flag to be enabled on both <code>paimon</code> and <code>paimon-datafusion</code> crates.</p>
+</blockquote>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-44-1" name="__codelineno-44-1" href="#__codelineno-44-1"></a><span class="k">[dependencies]</span>
+<a id="__codelineno-44-2" name="__codelineno-44-2" href="#__codelineno-44-2"></a><span class="n">paimon</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">version</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s2">&quot;0.1.0&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">features</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;fulltext&quot;</span><span class="p">]</span><span class="w"> </span><span class="p">}</span>
+<a id="__codelineno-44-3" name="__codelineno-44-3" href="#__codelineno-44-3"></a><span class="n">paimon-datafusion</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">version</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s2">&quot;0.1.0&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">features</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;fulltext&quot;</span><span class="p">]</span><span class="w"> </span><span class="p">}</span>
+</code></pre></div>
+<h3 id="registration_1">Registration<a class="headerlink" href="#registration_1" title="Permanent link">&para;</a></h3>
+<p>When you use a <code>SQLContext</code>, <code>full_text_search</code> is registered automatically for every catalog you register (when the <code>fulltext</code> feature is enabled) — no extra setup is needed.</p>
+<p>With a raw DataFusion <code>SessionContext</code>, register it explicitly:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-45-1" name="__codelineno-45-1" href="#__codelineno-45-1"></a><span class="k">use</span><span class="w"> </span><span class="n">paimon_datafusion</span><span class="p">::</span><span class="n">register_full_text_search</span><span class="p">;</span>
+<a id="__codelineno-45-2" name="__codelineno-45-2" href="#__codelineno-45-2"></a>
+<a id="__codelineno-45-3" name="__codelineno-45-3" href="#__codelineno-45-3"></a><span class="n">register_full_text_search</span><span class="p">(</span><span class="o">&amp;</span><span class="n">ctx</span><span class="p">,</span><span class="w"> </span><span class="n">catalog</span><span class="p">.</span><span class="n">clone</span><span class="p">(),</span><span class="w"> </span><span class="s">&quot;default&quot;</span><span class="p">);</span>
+</code></pre></div>
+<h3 id="usage_1">Usage<a class="headerlink" href="#usage_1" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-46-1" name="__codelineno-46-1" href="#__codelineno-46-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">full_text_search</span><span class="p">(</span><span class="s1">&#39;table_name&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;column_name&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;query_text&#39;</span><span class="p">,</span><span class="w"> </span><span class="k">limit</span><span class="p">)</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Argument</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>table_name</code></td>
+<td>STRING</td>
+<td>Table name, fully qualified (<code>catalog.db.table</code>) or short form</td>
+</tr>
+<tr>
+<td><code>column_name</code></td>
+<td>STRING</td>
+<td>The text column to search</td>
+</tr>
+<tr>
+<td><code>query_text</code></td>
+<td>STRING</td>
+<td>Search query (Tantivy query syntax)</td>
+</tr>
+<tr>
+<td><code>limit</code></td>
+<td>INT</td>
+<td>Maximum number of results (top-k)</td>
+</tr>
+</tbody>
+</table>
+<p>Example:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-47-1" name="__codelineno-47-1" href="#__codelineno-47-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">full_text_search</span><span class="p">(</span><span class="s1">&#39;paimon.my_db.docs&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;content&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;paimon search&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">);</span>
+</code></pre></div>
+<p>The function searches across all Tantivy full-text index files for the target column, merges results by relevance score, and returns the top-k matching rows. If no matching index is found, an empty result is returned.</p>
+<h2 id="time-travel">Time Travel<a class="headerlink" href="#time-travel" title="Permanent link">&para;</a></h2>
+<p>Paimon supports time travel queries to read historical data.</p>
+<h3 id="by-snapshot-id">By Snapshot ID<a class="headerlink" href="#by-snapshot-id" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-48-1" name="__codelineno-48-1" href="#__codelineno-48-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">paimon</span><span class="p">.</span><span class="k">default</span><span class="p">.</span><span class="n">my_table</span><span class="w"> </span><span class="k">VERSION</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="k">OF</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+</code></pre></div>
+<h3 id="by-tag-name">By Tag Name<a class="headerlink" href="#by-tag-name" title="Permanent link">&para;</a></h3>
+<p>Use a quoted tag name with <code>VERSION AS OF</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-49-1" name="__codelineno-49-1" href="#__codelineno-49-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">paimon</span><span class="p">.</span><span class="k">default</span><span class="p">.</span><span class="n">my_table</span><span class="w"> </span><span class="k">VERSION</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="k">OF</span><span class="w"> </span><span class="s1">&#39;my_tag&#39;</span><span class="p">;</span>
+</code></pre></div>
+<p>Resolution order: first checks if a tag with that name exists, then tries to parse it as a snapshot ID.</p>
+<h3 id="by-timestamp">By Timestamp<a class="headerlink" href="#by-timestamp" title="Permanent link">&para;</a></h3>
+<p>Read data as of a specific point in time. The format is <code>YYYY-MM-DD HH:MM:SS</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-50-1" name="__codelineno-50-1" href="#__codelineno-50-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">paimon</span><span class="p">.</span><span class="k">default</span><span class="p">.</span><span class="n">my_table</span><span class="w"> </span><span class="k">TIMESTAMP</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="k">OF</span><span class="w"> </span><span class="s1">&#39;2024-01-01 00:00:00&#39;</span><span class="p">;</span>
+</code></pre></div>
+<p>This finds the latest snapshot whose commit time is less than or equal to the given timestamp. The timestamp is interpreted in the local timezone.</p>
+<h2 id="dynamic-options-set-reset">Dynamic Options (SET / RESET)<a class="headerlink" href="#dynamic-options-set-reset" title="Permanent link">&para;</a></h2>
+<p>Use <code>SET</code> to configure session-scoped Paimon dynamic options that apply to subsequent table loads:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-51-1" name="__codelineno-51-1" href="#__codelineno-51-1"></a><span class="c1">-- Set an option</span>
+<a id="__codelineno-51-2" name="__codelineno-51-2" href="#__codelineno-51-2"></a><span class="k">SET</span><span class="w"> </span><span class="s1">&#39;paimon.scan.version&#39;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;1&#39;</span><span class="p">;</span>
+<a id="__codelineno-51-3" name="__codelineno-51-3" href="#__codelineno-51-3"></a>
+<a id="__codelineno-51-4" name="__codelineno-51-4" href="#__codelineno-51-4"></a><span class="c1">-- Reset an option</span>
+<a id="__codelineno-51-5" name="__codelineno-51-5" href="#__codelineno-51-5"></a><span class="k">RESET</span><span class="w"> </span><span class="s1">&#39;paimon.scan.version&#39;</span><span class="p">;</span>
+</code></pre></div>
+<p>Options prefixed with <code>paimon.</code> are handled by Paimon; all others are delegated to DataFusion. Dynamic options are applied at table load time via <code>table.copy_with_options()</code>.</p>
+<p>Example — enable BLOB descriptor mode:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-52-1" name="__codelineno-52-1" href="#__codelineno-52-1"></a><span class="k">SET</span><span class="w"> </span><span class="s1">&#39;paimon.blob-as-descriptor&#39;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;true&#39;</span><span class="p">;</span>
+<a id="__codelineno-52-2" name="__codelineno-52-2" href="#__codelineno-52-2"></a><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">paimon</span><span class="p">.</span><span class="n">my_db</span><span class="p">.</span><span class="n">assets</span><span class="p">;</span>
+<a id="__codelineno-52-3" name="__codelineno-52-3" href="#__codelineno-52-3"></a><span class="k">RESET</span><span class="w"> </span><span class="s1">&#39;paimon.blob-as-descriptor&#39;</span><span class="p">;</span>
+</code></pre></div>
+<h2 id="temporary-tables">Temporary Tables<a class="headerlink" href="#temporary-tables" title="Permanent link">&para;</a></h2>
+<p>You can register in-memory temporary tables under any catalog. Temporary tables exist only for the lifetime of the <code>SQLContext</code> instance and are automatically cleaned up when the context is dropped.</p>
+<p>The table name accepts flexible references, similar to DataFusion:
+- <code>"my_table"</code> — uses the current catalog and current database
+- <code>"database.my_table"</code> — uses the current catalog with the specified database
+- <code>"catalog.database.my_table"</code> — fully qualified</p>
+<h3 id="register_temp_table">register_temp_table<a class="headerlink" href="#register_temp_table" title="Permanent link">&para;</a></h3>
+<p>Register any <code>Arc&lt;dyn TableProvider&gt;</code> as a temporary table (including <code>MemTable</code>, <code>ViewTable</code>, custom providers, etc.):</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-53-1" name="__codelineno-53-1" href="#__codelineno-53-1"></a><span class="k">use</span><span class="w"> </span><span class="n">datafusion</span><span class="p">::</span><span class="n">arrow</span><span class="p">::</span><span class="n">array</span><span class="p">::</span><span class="n">Int32Array</span><span class="p">;</span>
+<a id="__codelineno-53-2" name="__codelineno-53-2" href="#__codelineno-53-2"></a><span class="k">use</span><span class="w"> </span><span class="n">datafusion</span><span class="p">::</span><span class="n">arrow</span><span class="p">::</span><span class="n">datatypes</span><span class="p">::{</span><span class="n">DataType</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">ArrowDataType</span><span class="p">,</span><span class="w"> </span><span class="n">Field</span><span class="p">,</span><span class="w"> </span><span class="n">Schema</span><span class="p">};</span>
+<a id="__codelineno-53-3" name="__codelineno-53-3" href="#__codelineno-53-3"></a><span class="k">use</span><span class="w"> </span><span class="n">datafusion</span><span class="p">::</span><span class="n">arrow</span><span class="p">::</span><span class="n">record_batch</span><span class="p">::</span><span class="n">RecordBatch</span><span class="p">;</span>
+<a id="__codelineno-53-4" name="__codelineno-53-4" href="#__codelineno-53-4"></a><span class="k">use</span><span class="w"> </span><span class="n">datafusion</span><span class="p">::</span><span class="n">datasource</span><span class="p">::</span><span class="n">MemTable</span><span class="p">;</span>
+<a id="__codelineno-53-5" name="__codelineno-53-5" href="#__codelineno-53-5"></a>
+<a id="__codelineno-53-6" name="__codelineno-53-6" href="#__codelineno-53-6"></a><span class="kd">let</span><span class="w"> </span><span class="n">schema</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Arc</span><span class="p">::</span><span class="n">new</span><span class="p">(</span><span class="n">Schema</span><span class="p">::</span><span class="n">new</span><span class="p">(</span><span class="fm">vec!</span><span class="p">[</span>
+<a id="__codelineno-53-7" name="__codelineno-53-7" href="#__codelineno-53-7"></a><span class="w">    </span><span class="n">Field</span><span class="p">::</span><span class="n">new</span><span class="p">(</span><span class="s">&quot;id&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ArrowDataType</span><span class="p">::</span><span class="n">Int32</span><span class="p">,</span><span class="w"> </span><span class="kc">false</span><span class="p">),</span>
+<a id="__codelineno-53-8" name="__codelineno-53-8" href="#__codelineno-53-8"></a><span class="w">    </span><span class="n">Field</span><span class="p">::</span><span class="n">new</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ArrowDataType</span><span class="p">::</span><span class="n">Utf8</span><span class="p">,</span><span class="w"> </span><span class="kc">true</span><span class="p">),</span>
+<a id="__codelineno-53-9" name="__codelineno-53-9" href="#__codelineno-53-9"></a><span class="p">]));</span>
+<a id="__codelineno-53-10" name="__codelineno-53-10" href="#__codelineno-53-10"></a><span class="kd">let</span><span class="w"> </span><span class="n">batch</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">RecordBatch</span><span class="p">::</span><span class="n">try_new</span><span class="p">(</span>
+<a id="__codelineno-53-11" name="__codelineno-53-11" href="#__codelineno-53-11"></a><span class="w">    </span><span class="n">schema</span><span class="p">.</span><span class="n">clone</span><span class="p">(),</span>
+<a id="__codelineno-53-12" name="__codelineno-53-12" href="#__codelineno-53-12"></a><span class="w">    </span><span class="fm">vec!</span><span class="p">[</span>
+<a id="__codelineno-53-13" name="__codelineno-53-13" href="#__codelineno-53-13"></a><span class="w">        </span><span class="n">Arc</span><span class="p">::</span><span class="n">new</span><span class="p">(</span><span class="n">Int32Array</span><span class="p">::</span><span class="n">from</span><span class="p">(</span><span class="fm">vec!</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">])),</span>
+<a id="__codelineno-53-14" name="__codelineno-53-14" href="#__codelineno-53-14"></a><span class="w">        </span><span class="n">Arc</span><span class="p">::</span><span class="n">new</span><span class="p">(</span><span class="n">StringArray</span><span class="p">::</span><span class="n">from</span><span class="p">(</span><span class="fm">vec!</span><span class="p">[</span><span class="s">&quot;alice&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;bob&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;carol&quot;</span><span class="p">])),</span>
+<a id="__codelineno-53-15" name="__codelineno-53-15" href="#__codelineno-53-15"></a><span class="w">    </span><span class="p">],</span>
+<a id="__codelineno-53-16" name="__codelineno-53-16" href="#__codelineno-53-16"></a><span class="p">)</span><span class="o">?</span><span class="p">;</span>
+<a id="__codelineno-53-17" name="__codelineno-53-17" href="#__codelineno-53-17"></a>
+<a id="__codelineno-53-18" name="__codelineno-53-18" href="#__codelineno-53-18"></a><span class="c1">// Register a MemTable as a temp table</span>
+<a id="__codelineno-53-19" name="__codelineno-53-19" href="#__codelineno-53-19"></a><span class="kd">let</span><span class="w"> </span><span class="n">mem_table</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Arc</span><span class="p">::</span><span class="n">new</span><span class="p">(</span><span class="n">MemTable</span><span class="p">::</span><span class="n">try_new</span><span class="p">(</span><span class="n">schema</span><span class="p">.</span><span class="n">clone</span><span class="p">(),</span><span class="w"> </span><span class="fm">vec!</span><span class="p">[</span><span class="fm">vec!</span><span class="p">[</span><span class="n">batch</span><span class="p">.</span><span class="n">clone</span><span class="p">()]])</span><span class="o">?</span><span class="p">);</span>
+<a id="__codelineno-53-20" name="__codelineno-53-20" href="#__codelineno-53-20"></a><span class="n">ctx</span><span class="p">.</span><span class="n">register_temp_table</span><span class="p">(</span><span class="s">&quot;paimon.my_db.users&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">mem_table</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
+<a id="__codelineno-53-21" name="__codelineno-53-21" href="#__codelineno-53-21"></a><span class="kd">let</span><span class="w"> </span><span class="n">df</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ctx</span><span class="p">.</span><span class="n">sql</span><span class="p">(</span><span class="s">&quot;SELECT * FROM paimon.my_db.users WHERE id &gt; 1&quot;</span><span class="p">).</span><span class="k">await</span><span class="o">?</span><span class="p">;</span>
+<a id="__codelineno-53-22" name="__codelineno-53-22" href="#__codelineno-53-22"></a><span class="n">df</span><span class="p">.</span><span class="n">show</span><span class="p">().</span><span class="k">await</span><span class="o">?</span><span class="p">;</span>
+<a id="__codelineno-53-23" name="__codelineno-53-23" href="#__codelineno-53-23"></a>
+<a id="__codelineno-53-24" name="__codelineno-53-24" href="#__codelineno-53-24"></a><span class="c1">// Register a ViewTable as a temp table</span>
+<a id="__codelineno-53-25" name="__codelineno-53-25" href="#__codelineno-53-25"></a><span class="k">use</span><span class="w"> </span><span class="n">datafusion</span><span class="p">::</span><span class="n">datasource</span><span class="p">::</span><span class="n">ViewTable</span><span class="p">;</span>
+<a id="__codelineno-53-26" name="__codelineno-53-26" href="#__codelineno-53-26"></a><span class="kd">let</span><span class="w"> </span><span class="n">view_table</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Arc</span><span class="p">::</span><span class="n">new</span><span class="p">(</span><span class="n">ViewTable</span><span class="p">::</span><span class="n">new</span><span class="p">(</span><span class="n">logical_plan</span><span class="p">,</span><span class="w"> </span><span class="nb">Some</span><span class="p">(</span><span class="n">query_sql</span><span class="p">)));</span>
+<a id="__codelineno-53-27" name="__codelineno-53-27" href="#__codelineno-53-27"></a><span class="n">ctx</span><span class="p">.</span><span class="n">register_temp_table</span><span class="p">(</span><span class="s">&quot;paimon.my_db.my_view&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">view_table</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
+</code></pre></div>
+<h3 id="create-temporary-table_1">CREATE TEMPORARY TABLE<a class="headerlink" href="#create-temporary-table_1" title="Permanent link">&para;</a></h3>
+<p>You can also create temporary tables directly from SQL. See the <a href="#create-temporary-table">DDL section</a> for details.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-54-1" name="__codelineno-54-1" href="#__codelineno-54-1"></a><span class="k">CREATE</span><span class="w"> </span><span class="k">TEMPORARY</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">paimon</span><span class="p">.</span><span class="n">my_db</span><span class="p">.</span><span class="k">source</span><span class="w"> </span><span class="p">(</span><span class="n">id</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="n">STRING</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="p">(</span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;alice&#39;</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;bob&#39;</span><span class="p">))</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">t</span><span class="p">(</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">name</span><span class="p">);</span>
+</code></pre></div>
+<h3 id="create-temporary-view_1">CREATE TEMPORARY VIEW<a class="headerlink" href="#create-temporary-view_1" title="Permanent link">&para;</a></h3>
+<p>Create a temporary view directly from SQL. See the <a href="#create-temporary-view">DDL section</a> for details.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-55-1" name="__codelineno-55-1" href="#__codelineno-55-1"></a><span class="k">CREATE</span><span class="w"> </span><span class="k">TEMPORARY</span><span class="w"> </span><span class="k">VIEW</span><span class="w"> </span><span class="n">paimon</span><span class="p">.</span><span class="n">my_db</span><span class="p">.</span><span class="n">active_users</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">paimon</span><span class="p">.</span><span class="n">my_db</span><span class="p">.</span><span class="n">users</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+</code></pre></div>
+<h3 id="deregister">Deregister<a class="headerlink" href="#deregister" title="Permanent link">&para;</a></h3>
+<p>Use <code>deregister_temp_table</code> to remove a temporary table or view programmatically, or use the <code>DROP TEMPORARY TABLE</code> / <code>DROP TEMPORARY VIEW</code> SQL statements (see the <a href="#drop-temporary-table--drop-temporary-view">DDL section</a>):</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-56-1" name="__codelineno-56-1" href="#__codelineno-56-1"></a><span class="n">ctx</span><span class="p">.</span><span class="n">deregister_temp_table</span><span class="p">(</span><span class="s">&quot;paimon.my_db.users&quot;</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
+</code></pre></div>
+<p>Multiple temporary tables can share the same database — the database is created automatically on first use:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-57-1" name="__codelineno-57-1" href="#__codelineno-57-1"></a><span class="kd">let</span><span class="w"> </span><span class="n">mem_a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Arc</span><span class="p">::</span><span class="n">new</span><span class="p">(</span><span class="n">MemTable</span><span class="p">::</span><span class="n">try_new</span><span class="p">(</span><span class="n">schema_a</span><span class="p">,</span><span class="w"> </span><span class="fm">vec!</span><span class="p">[</span><span class="fm">vec!</span><span class="p">[</span><span class="n">batch_a</span><span class="p">]])</span><span class="o">?</span><span class="p">);</span>
+<a id="__codelineno-57-2" name="__codelineno-57-2" href="#__codelineno-57-2"></a><span class="kd">let</span><span class="w"> </span><span class="n">mem_b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Arc</span><span class="p">::</span><span class="n">new</span><span class="p">(</span><span class="n">MemTable</span><span class="p">::</span><span class="n">try_new</span><span class="p">(</span><span class="n">schema_b</span><span class="p">,</span><span class="w"> </span><span class="fm">vec!</span><span class="p">[</span><span class="fm">vec!</span><span class="p">[</span><span class="n">batch_b</span><span class="p">]])</span><span class="o">?</span><span class="p">);</span>
+<a id="__codelineno-57-3" name="__codelineno-57-3" href="#__codelineno-57-3"></a><span class="n">ctx</span><span class="p">.</span><span class="n">register_temp_table</span><span class="p">(</span><span class="s">&quot;my_db.table_a&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">mem_a</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
+<a id="__codelineno-57-4" name="__codelineno-57-4" href="#__codelineno-57-4"></a><span class="n">ctx</span><span class="p">.</span><span class="n">register_temp_table</span><span class="p">(</span><span class="s">&quot;my_db.table_b&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">mem_b</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
+<a id="__codelineno-57-5" name="__codelineno-57-5" href="#__codelineno-57-5"></a>
+<a id="__codelineno-57-6" name="__codelineno-57-6" href="#__codelineno-57-6"></a><span class="c1">// Join two temp tables</span>
+<a id="__codelineno-57-7" name="__codelineno-57-7" href="#__codelineno-57-7"></a><span class="kd">let</span><span class="w"> </span><span class="n">df</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ctx</span><span class="p">.</span><span class="n">sql</span><span class="p">(</span><span class="s">&quot;SELECT * FROM paimon.my_db.table_a JOIN paimon.my_db.table_b ON a.id = b.id&quot;</span><span class="p">).</span><span class="k">await</span><span class="o">?</span><span class="p">;</span>
+</code></pre></div>
+<h2 id="system-tables">System Tables<a class="headerlink" href="#system-tables" title="Permanent link">&para;</a></h2>
+<p>Access table metadata via the <code>$</code> syntax.</p>
+<h3 id="options">$options<a class="headerlink" href="#options" title="Permanent link">&para;</a></h3>
+<p>View all configuration options for a table:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-58-1" name="__codelineno-58-1" href="#__codelineno-58-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="k">key</span><span class="p">,</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">paimon</span><span class="p">.</span><span class="k">default</span><span class="p">.</span><span class="n">my_table$options</span><span class="p">;</span>
+</code></pre></div>
+<p>Returns two columns: <code>key</code> (STRING) and <code>value</code> (STRING).</p>
+<h3 id="schemas">$schemas<a class="headerlink" href="#schemas" title="Permanent link">&para;</a></h3>
+<p>View the schema history of a table:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-59-1" name="__codelineno-59-1" href="#__codelineno-59-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">paimon</span><span class="p">.</span><span class="k">default</span><span class="p">.</span><span class="n">my_table$schemas</span><span class="p">;</span>
+</code></pre></div>
+<p>Columns:</p>
+<table>
+<thead>
+<tr>
+<th>Column</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>schema_id</code></td>
+<td>BIGINT</td>
+<td>Schema ID</td>
+</tr>
+<tr>
+<td><code>fields</code></td>
+<td>STRING</td>
+<td>Field definitions (JSON)</td>
+</tr>
+<tr>
+<td><code>partition_keys</code></td>
+<td>STRING</td>
+<td>Partition keys (JSON)</td>
+</tr>
+<tr>
+<td><code>primary_keys</code></td>
+<td>STRING</td>
+<td>Primary keys (JSON)</td>
+</tr>
+<tr>
+<td><code>options</code></td>
+<td>STRING</td>
+<td>Table options (JSON)</td>
+</tr>
+<tr>
+<td><code>comment</code></td>
+<td>STRING</td>
+<td>Comment</td>
+</tr>
+<tr>
+<td><code>update_time</code></td>
+<td>TIMESTAMP</td>
+<td>Update time</td>
+</tr>
+</tbody>
+</table>
+<h3 id="snapshots">$snapshots<a class="headerlink" href="#snapshots" title="Permanent link">&para;</a></h3>
+<p>View the snapshot history of a table:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-60-1" name="__codelineno-60-1" href="#__codelineno-60-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">paimon</span><span class="p">.</span><span class="k">default</span><span class="p">.</span><span class="n">my_table$snapshots</span><span class="p">;</span>
+</code></pre></div>
+<p>Columns:</p>
+<table>
+<thead>
+<tr>
+<th>Column</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>snapshot_id</code></td>
+<td>BIGINT</td>
+<td>Snapshot ID</td>
+</tr>
+<tr>
+<td><code>schema_id</code></td>
+<td>BIGINT</td>
+<td>Schema ID</td>
+</tr>
+<tr>
+<td><code>commit_user</code></td>
+<td>STRING</td>
+<td>Commit user</td>
+</tr>
+<tr>
+<td><code>commit_identifier</code></td>
+<td>BIGINT</td>
+<td>Commit identifier</td>
+</tr>
+<tr>
+<td><code>commit_kind</code></td>
+<td>STRING</td>
+<td><code>APPEND</code> / <code>COMPACT</code> / <code>OVERWRITE</code> / <code>ANALYZE</code></td>
+</tr>
+<tr>
+<td><code>commit_time</code></td>
+<td>TIMESTAMP</td>
+<td>Commit time</td>
+</tr>
+<tr>
+<td><code>base_manifest_list</code></td>
+<td>STRING</td>
+<td>Base manifest list file</td>
+</tr>
+<tr>
+<td><code>delta_manifest_list</code></td>
+<td>STRING</td>
+<td>Delta manifest list file</td>
+</tr>
+<tr>
+<td><code>changelog_manifest_list</code></td>
+<td>STRING</td>
+<td>Changelog manifest list file</td>
+</tr>
+<tr>
+<td><code>total_record_count</code></td>
+<td>BIGINT</td>
+<td>Total record count</td>
+</tr>
+<tr>
+<td><code>delta_record_count</code></td>
+<td>BIGINT</td>
+<td>Delta record count</td>
+</tr>
+<tr>
+<td><code>changelog_record_count</code></td>
+<td>BIGINT</td>
+<td>Changelog record count</td>
+</tr>
+<tr>
+<td><code>watermark</code></td>
+<td>BIGINT</td>
+<td>Watermark</td>
+</tr>
+<tr>
+<td><code>next_row_id</code></td>
+<td>BIGINT</td>
+<td>Next row id</td>
+</tr>
+</tbody>
+</table>
+<h3 id="tags">$tags<a class="headerlink" href="#tags" title="Permanent link">&para;</a></h3>
+<p>View all named tags of a table:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-61-1" name="__codelineno-61-1" href="#__codelineno-61-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">paimon</span><span class="p">.</span><span class="k">default</span><span class="p">.</span><span class="n">my_table$tags</span><span class="p">;</span>
+</code></pre></div>
+<p>Columns:</p>
+<table>
+<thead>
+<tr>
+<th>Column</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>tag_name</code></td>
+<td>STRING</td>
+<td>Tag name</td>
+</tr>
+<tr>
+<td><code>snapshot_id</code></td>
+<td>BIGINT</td>
+<td>Snapshot ID</td>
+</tr>
+<tr>
+<td><code>schema_id</code></td>
+<td>BIGINT</td>
+<td>Schema ID</td>
+</tr>
+<tr>
+<td><code>commit_time</code></td>
+<td>TIMESTAMP</td>
+<td>Commit time</td>
+</tr>
+<tr>
+<td><code>record_count</code></td>
+<td>BIGINT</td>
+<td>Record count</td>
+</tr>
+<tr>
+<td><code>create_time</code></td>
+<td>TIMESTAMP</td>
+<td>Tag creation time</td>
+</tr>
+<tr>
+<td><code>time_retained</code></td>
+<td>STRING</td>
+<td>Retention duration</td>
+</tr>
+</tbody>
+</table>
+<h3 id="manifests">$manifests<a class="headerlink" href="#manifests" title="Permanent link">&para;</a></h3>
+<p>View manifest files of the latest snapshot:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-62-1" name="__codelineno-62-1" href="#__codelineno-62-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">paimon</span><span class="p">.</span><span class="k">default</span><span class="p">.</span><span class="n">my_table$manifests</span><span class="p">;</span>
+</code></pre></div>
+<p>Columns:</p>
+<table>
+<thead>
+<tr>
+<th>Column</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>file_name</code></td>
+<td>STRING</td>
+<td>Manifest file name</td>
+</tr>
+<tr>
+<td><code>file_size</code></td>
+<td>BIGINT</td>
+<td>File size in bytes</td>
+</tr>
+<tr>
+<td><code>num_added_files</code></td>
+<td>BIGINT</td>
+<td>Number of added data files</td>
+</tr>
+<tr>
+<td><code>num_deleted_files</code></td>
+<td>BIGINT</td>
+<td>Number of deleted data files</td>
+</tr>
+<tr>
+<td><code>schema_id</code></td>
+<td>BIGINT</td>
+<td>Schema ID</td>
+</tr>
+<tr>
+<td><code>min_partition_stats</code></td>
+<td>STRING</td>
+<td>Minimum partition stats, formatted as a Java row cast string</td>
+</tr>
+<tr>
+<td><code>max_partition_stats</code></td>
+<td>STRING</td>
+<td>Maximum partition stats, formatted as a Java row cast string</td>
+</tr>
+<tr>
+<td><code>min_row_id</code></td>
+<td>BIGINT</td>
+<td>Minimum row id covered (when row tracking is enabled)</td>
+</tr>
+<tr>
+<td><code>max_row_id</code></td>
+<td>BIGINT</td>
+<td>Maximum row id covered (when row tracking is enabled)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="partitions">$partitions<a class="headerlink" href="#partitions" title="Permanent link">&para;</a></h3>
+<p>View all partitions of a table with aggregated record counts and file sizes:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-63-1" name="__codelineno-63-1" href="#__codelineno-63-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">paimon</span><span class="p">.</span><span class="k">default</span><span class="p">.</span><span class="n">my_table$partitions</span><span class="p">;</span>
+</code></pre></div>
+<p>Columns:</p>
+<table>
+<thead>
+<tr>
+<th>Column</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>partition</code></td>
+<td>STRING</td>
+<td>Partition spec, formatted as <code>key1=val1/key2=val2</code></td>
+</tr>
+<tr>
+<td><code>record_count</code></td>
+<td>BIGINT</td>
+<td>Total record count across all data files in the partition</td>
+</tr>
+<tr>
+<td><code>file_size_in_bytes</code></td>
+<td>BIGINT</td>
+<td>Total file size in bytes</td>
+</tr>
+<tr>
+<td><code>file_count</code></td>
+<td>BIGINT</td>
+<td>Number of data files</td>
+</tr>
+<tr>
+<td><code>last_update_time</code></td>
+<td>TIMESTAMP</td>
+<td>Latest data-file creation time</td>
+</tr>
+<tr>
+<td><code>created_at</code></td>
+<td>TIMESTAMP</td>
+<td>Partition creation time (only available with metastore-tracked catalogs)</td>
+</tr>
+<tr>
+<td><code>created_by</code></td>
+<td>STRING</td>
+<td>Snapshot id that created the partition (catalog-tracked only)</td>
+</tr>
+<tr>
+<td><code>updated_by</code></td>
+<td>STRING</td>
+<td>Snapshot id that last updated the partition (catalog-tracked only)</td>
+</tr>
+<tr>
+<td><code>options</code></td>
+<td>STRING</td>
+<td>Per-partition options as flat JSON (catalog-tracked only)</td>
+</tr>
+<tr>
+<td><code>total_buckets</code></td>
+<td>INT</td>
+<td>Total bucket count for the partition (0 unless catalog-tracked)</td>
+</tr>
+<tr>
+<td><code>done</code></td>
+<td>BOOLEAN</td>
+<td>Whether the partition is marked done (false unless catalog-tracked)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="physical_files_size">$physical_files_size<a class="headerlink" href="#physical_files_size" title="Permanent link">&para;</a></h3>
+<p>Scan the table directory recursively and compute the total size of recognized physical files on disk, categorized by file type. This table is a diagnostic size summary; orphan cleanup needs file-level candidates and retention checks, not just aggregate size differences.</p>
+<p>Files are classified by their table-relative path:
+- <code>manifest/manifest-*</code>, <code>manifest/manifest-list-*</code>, and <code>manifest/index-manifest-*</code> → manifest
+- <code>statistics/*</code> → manifest file counters for the current compatible output schema
+- <code>index/*</code> → index
+- <code>&lt;partition&gt;/bucket-*/*</code> and <code>&lt;partition&gt;/bucket-postpone/*</code> → data, using the table's partition depth
+- unknown files are ignored by this summary</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-64-1" name="__codelineno-64-1" href="#__codelineno-64-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">paimon</span><span class="p">.</span><span class="k">default</span><span class="p">.</span><span class="n">my_table$physical_files_size</span><span class="p">;</span>
+</code></pre></div>
+<p>Columns:</p>
+<table>
+<thead>
+<tr>
+<th>Column</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>manifest_file_count</code></td>
+<td>BIGINT</td>
+<td>Number of manifest files on disk</td>
+</tr>
+<tr>
+<td><code>manifest_file_size</code></td>
+<td>BIGINT</td>
+<td>Total size of manifest files (bytes)</td>
+</tr>
+<tr>
+<td><code>data_file_count</code></td>
+<td>BIGINT</td>
+<td>Number of recognized data files on disk</td>
+</tr>
+<tr>
+<td><code>data_file_size</code></td>
+<td>BIGINT</td>
+<td>Total size of recognized data files (bytes)</td>
+</tr>
+<tr>
+<td><code>index_file_count</code></td>
+<td>BIGINT</td>
+<td>Number of index files on disk</td>
+</tr>
+<tr>
+<td><code>index_file_size</code></td>
+<td>BIGINT</td>
+<td>Total size of index files (bytes)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="referenced_files_size">$referenced_files_size<a class="headerlink" href="#referenced_files_size" title="Permanent link">&para;</a></h3>
+<p>Compute aggregated manifest/data/index file size summaries for all snapshots referenced by a table, including snapshots from the main branch, tags, and other branches. This is useful for understanding storage usage and for orphan file analysis.</p>
+<p>Historical snapshots may be in the process of being cleaned up — if a manifest file has already been deleted, it is gracefully skipped (counted as 0 files/bytes).</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-65-1" name="__codelineno-65-1" href="#__codelineno-65-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">paimon</span><span class="p">.</span><span class="k">default</span><span class="p">.</span><span class="n">my_table$referenced_files_size</span><span class="p">;</span>
+</code></pre></div>
+<p>Columns:</p>
+<table>
+<thead>
+<tr>
+<th>Column</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>source</code></td>
+<td>STRING</td>
+<td>Scope: <code>total</code> or <code>branch:&lt;name&gt;</code></td>
+</tr>
+<tr>
+<td><code>manifest_file_count</code></td>
+<td>BIGINT</td>
+<td>Number of manifest files</td>
+</tr>
+<tr>
+<td><code>manifest_file_size</code></td>
+<td>BIGINT</td>
+<td>Total size of manifest files (bytes)</td>
+</tr>
+<tr>
+<td><code>data_file_count</code></td>
+<td>BIGINT</td>
+<td>Number of data files</td>
+</tr>
+<tr>
+<td><code>data_file_size</code></td>
+<td>BIGINT</td>
+<td>Total size of data files (bytes)</td>
+</tr>
+<tr>
+<td><code>index_file_count</code></td>
+<td>BIGINT</td>
+<td>Number of index files</td>
+</tr>
+<tr>
+<td><code>index_file_size</code></td>
+<td>BIGINT</td>
+<td>Total size of index files (bytes)</td>
+</tr>
+</tbody>
+</table>
+<p>The output contains one row per scope:
+- <code>total</code> — sum across all branches and tags
+- <code>branch:main</code> — main branch snapshots + tag snapshots
+- <code>branch:&lt;name&gt;</code> — one row per other branch</p>
+<p>To estimate possible orphan file size for recognized data files:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-66-1" name="__codelineno-66-1" href="#__codelineno-66-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">p</span><span class="p">.</span><span class="n">data_file_size</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">r</span><span class="p">.</span><span class="n">data_file_size</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">orphan_data_size</span>
+<a id="__codelineno-66-2" name="__codelineno-66-2" href="#__codelineno-66-2"></a><span class="k">FROM</span><span class="w"> </span><span class="n">paimon</span><span class="p">.</span><span class="k">default</span><span class="p">.</span><span class="n">my_table$physical_files_size</span><span class="w"> </span><span class="n">p</span><span class="p">,</span>
+<a id="__codelineno-66-3" name="__codelineno-66-3" href="#__codelineno-66-3"></a><span class="w">     </span><span class="n">paimon</span><span class="p">.</span><span class="k">default</span><span class="p">.</span><span class="n">my_table$referenced_files_size</span><span class="w"> </span><span class="n">r</span>
+<a id="__codelineno-66-4" name="__codelineno-66-4" href="#__codelineno-66-4"></a><span class="k">WHERE</span><span class="w"> </span><span class="n">r</span><span class="p">.</span><span class="k">source</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;total&#39;</span><span class="p">;</span>
+</code></pre></div>
+<h3 id="branch-references">Branch References<a class="headerlink" href="#branch-references" title="Permanent link">&para;</a></h3>
+<p>System tables support branch syntax:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-67-1" name="__codelineno-67-1" href="#__codelineno-67-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">paimon</span><span class="p">.</span><span class="k">default</span><span class="p">.</span><span class="n">my_table$branch_main$options</span><span class="p">;</span>
+</code></pre></div>
+<h2 id="table-options">Table Options<a class="headerlink" href="#table-options" title="Permanent link">&para;</a></h2>
+<p>Set via <code>WITH ('key' = 'value')</code> at table creation time, or dynamically via <code>SET</code>.</p>
+<h3 id="bucket-configuration">Bucket Configuration<a class="headerlink" href="#bucket-configuration" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>'bucket' = 'N'</code></td>
+<td>Fixed N buckets (e.g. 1, 2, 4)</td>
+</tr>
+<tr>
+<td><code>'bucket' = '-1'</code></td>
+<td>Dynamic bucket mode (HASH index)</td>
+</tr>
+<tr>
+<td><code>'bucket' = '-2'</code></td>
+<td>Postpone bucket mode (deferred assignment)</td>
+</tr>
+<tr>
+<td><code>'bucket-key' = 'col'</code></td>
+<td>Explicit bucket key column</td>
+</tr>
+<tr>
+<td><code>'bucket-function.type' = 'default' \| 'mod' \| 'hive'</code></td>
+<td>Function used to map fixed bucket keys to bucket ids</td>
+</tr>
+</tbody>
+</table>
+<h3 id="merge-engine">Merge Engine<a class="headerlink" href="#merge-engine" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>'merge-engine' = 'deduplicate'</code></td>
+<td>Deduplicate engine (default for PK tables), last write wins</td>
+</tr>
+<tr>
+<td><code>'merge-engine' = 'first-row'</code></td>
+<td>Keeps the first written row</td>
+</tr>
+<tr>
+<td><code>'merge-engine' = 'partial-update'</code></td>
+<td>Basic partial-update engine for PK tables</td>
+</tr>
+<tr>
+<td><code>'merge-engine' = 'aggregation'</code></td>
+<td>Basic aggregation engine for PK tables</td>
+</tr>
+</tbody>
+</table>
+<p>Rust currently supports <code>merge-engine=aggregation</code> in basic mode only. It works
+with fixed buckets and ordinary dynamic buckets (<code>'bucket' = '-1'</code>) when the
+primary key includes all partition columns. It supports per-field aggregate
+functions such as <code>sum</code>, <code>min</code>, <code>max</code>, value functions, boolean functions, and
+<code>listagg</code>, plus <code>fields.default-aggregate-function</code>.</p>
+<p>Sequence fields are always merged with <code>last_value</code>. Defining
+<code>fields.&lt;sequence-field&gt;.aggregate-function</code> is rejected, matching Java schema
+validation.</p>
+<p>This is not full Java feature parity. Aggregation tables do not support retract
+rows (<code>DELETE</code> / <code>UPDATE_BEFORE</code>), deletion vectors, cross-partition dynamic
+bucket writes, or advanced aggregation options such as <code>ignore-retract</code>,
+<code>distinct</code>, <code>nested-key</code>, <code>count-limit</code>, and sequence groups.</p>
+<h3 id="other-options">Other Options<a class="headerlink" href="#other-options" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>'sequence.field' = 'col'</code></td>
+<td>Sequence field used to determine which record wins during deduplication</td>
+</tr>
+<tr>
+<td><code>'data-evolution.enabled' = 'true'</code></td>
+<td>Enable data evolution (partial-column writes, row-level UPDATE/MERGE)</td>
+</tr>
+<tr>
+<td><code>'deletion-vectors.enabled' = 'true'</code></td>
+<td>Enable deletion vectors</td>
+</tr>
+<tr>
+<td><code>'cross-partition-update.enabled' = 'true'</code></td>
+<td>Allow cross-partition updates</td>
+</tr>
+<tr>
+<td><code>'changelog-producer' = 'input'</code></td>
+<td>Changelog producer (PK tables with input mode reject writes)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="full-example">Full Example<a class="headerlink" href="#full-example" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-68-1" name="__codelineno-68-1" href="#__codelineno-68-1"></a><span class="k">use</span><span class="w"> </span><span class="n">std</span><span class="p">::</span><span class="n">sync</span><span class="p">::</span><span class="n">Arc</span><span class="p">;</span>
+<a id="__codelineno-68-2" name="__codelineno-68-2" href="#__codelineno-68-2"></a><span class="k">use</span><span class="w"> </span><span class="n">paimon</span><span class="p">::{</span><span class="n">CatalogOptions</span><span class="p">,</span><span class="w"> </span><span class="n">FileSystemCatalog</span><span class="p">,</span><span class="w"> </span><span class="n">Options</span><span class="p">};</span>
+<a id="__codelineno-68-3" name="__codelineno-68-3" href="#__codelineno-68-3"></a><span class="k">use</span><span class="w"> </span><span class="n">paimon_datafusion</span><span class="p">::</span><span class="n">SQLContext</span><span class="p">;</span>
+<a id="__codelineno-68-4" name="__codelineno-68-4" href="#__codelineno-68-4"></a>
+<a id="__codelineno-68-5" name="__codelineno-68-5" href="#__codelineno-68-5"></a><span class="cp">#[tokio::main]</span>
+<a id="__codelineno-68-6" name="__codelineno-68-6" href="#__codelineno-68-6"></a><span class="k">async</span><span class="w"> </span><span class="k">fn</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="nb">Result</span><span class="o">&lt;</span><span class="p">(),</span><span class="w"> </span><span class="nb">Box</span><span class="o">&lt;</span><span class="k">dyn</span><span class="w"> </span><span class="n">std</span><span class="p">::</span><span class="n">error</span><span class="p">::</span><span class="n">Error</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-68-7" name="__codelineno-68-7" href="#__codelineno-68-7"></a><span class="w">    </span><span class="c1">// Create catalog</span>
+<a id="__codelineno-68-8" name="__codelineno-68-8" href="#__codelineno-68-8"></a><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">options</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Options</span><span class="p">::</span><span class="n">new</span><span class="p">();</span>
+<a id="__codelineno-68-9" name="__codelineno-68-9" href="#__codelineno-68-9"></a><span class="w">    </span><span class="n">options</span><span class="p">.</span><span class="n">set</span><span class="p">(</span><span class="n">CatalogOptions</span><span class="p">::</span><span class="n">WAREHOUSE</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;file:///tmp/paimon-warehouse&quot;</span><span class="p">);</span>
+<a id="__codelineno-68-10" name="__codelineno-68-10" href="#__codelineno-68-10"></a><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">catalog</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Arc</span><span class="p">::</span><span class="n">new</span><span class="p">(</span><span class="n">FileSystemCatalog</span><span class="p">::</span><span class="n">new</span><span class="p">(</span><span class="n">options</span><span class="p">)</span><span class="o">?</span><span class="p">);</span>
+<a id="__codelineno-68-11" name="__codelineno-68-11" href="#__codelineno-68-11"></a>
+<a id="__codelineno-68-12" name="__codelineno-68-12" href="#__codelineno-68-12"></a><span class="w">    </span><span class="c1">// Create SQL context and register catalog</span>
+<a id="__codelineno-68-13" name="__codelineno-68-13" href="#__codelineno-68-13"></a><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">ctx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SQLContext</span><span class="p">::</span><span class="n">new</span><span class="p">();</span>
+<a id="__codelineno-68-14" name="__codelineno-68-14" href="#__codelineno-68-14"></a><span class="w">    </span><span class="n">ctx</span><span class="p">.</span><span class="n">register_catalog</span><span class="p">(</span><span class="s">&quot;paimon&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">catalog</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
+<a id="__codelineno-68-15" name="__codelineno-68-15" href="#__codelineno-68-15"></a>
+<a id="__codelineno-68-16" name="__codelineno-68-16" href="#__codelineno-68-16"></a><span class="w">    </span><span class="c1">// Create database and table</span>
+<a id="__codelineno-68-17" name="__codelineno-68-17" href="#__codelineno-68-17"></a><span class="w">    </span><span class="n">ctx</span><span class="p">.</span><span class="n">sql</span><span class="p">(</span><span class="s">&quot;CREATE SCHEMA paimon.my_db&quot;</span><span class="p">).</span><span class="k">await</span><span class="o">?</span><span class="p">;</span>
+<a id="__codelineno-68-18" name="__codelineno-68-18" href="#__codelineno-68-18"></a><span class="w">    </span><span class="n">ctx</span><span class="p">.</span><span class="n">sql</span><span class="p">(</span>
+<a id="__codelineno-68-19" name="__codelineno-68-19" href="#__codelineno-68-19"></a><span class="w">        </span><span class="s">&quot;CREATE TABLE paimon.my_db.users (</span>
+<a id="__codelineno-68-20" name="__codelineno-68-20" href="#__codelineno-68-20"></a><span class="s">            id INT NOT NULL,</span>
+<a id="__codelineno-68-21" name="__codelineno-68-21" href="#__codelineno-68-21"></a><span class="s">            name STRING,</span>
+<a id="__codelineno-68-22" name="__codelineno-68-22" href="#__codelineno-68-22"></a><span class="s">            PRIMARY KEY (id)</span>
+<a id="__codelineno-68-23" name="__codelineno-68-23" href="#__codelineno-68-23"></a><span class="s">        ) WITH (&#39;bucket&#39; = &#39;1&#39;)&quot;</span>
+<a id="__codelineno-68-24" name="__codelineno-68-24" href="#__codelineno-68-24"></a><span class="w">    </span><span class="p">).</span><span class="k">await</span><span class="o">?</span><span class="p">;</span>
+<a id="__codelineno-68-25" name="__codelineno-68-25" href="#__codelineno-68-25"></a>
+<a id="__codelineno-68-26" name="__codelineno-68-26" href="#__codelineno-68-26"></a><span class="w">    </span><span class="c1">// Insert data</span>
+<a id="__codelineno-68-27" name="__codelineno-68-27" href="#__codelineno-68-27"></a><span class="w">    </span><span class="n">ctx</span><span class="p">.</span><span class="n">sql</span><span class="p">(</span><span class="s">&quot;INSERT INTO paimon.my_db.users VALUES (1, &#39;alice&#39;), (2, &#39;bob&#39;)&quot;</span><span class="p">)</span>
+<a id="__codelineno-68-28" name="__codelineno-68-28" href="#__codelineno-68-28"></a><span class="w">        </span><span class="p">.</span><span class="k">await</span><span class="o">?</span><span class="p">.</span><span class="n">collect</span><span class="p">().</span><span class="k">await</span><span class="o">?</span><span class="p">;</span>
+<a id="__codelineno-68-29" name="__codelineno-68-29" href="#__codelineno-68-29"></a>
+<a id="__codelineno-68-30" name="__codelineno-68-30" href="#__codelineno-68-30"></a><span class="w">    </span><span class="c1">// Query</span>
+<a id="__codelineno-68-31" name="__codelineno-68-31" href="#__codelineno-68-31"></a><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">df</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ctx</span><span class="p">.</span><span class="n">sql</span><span class="p">(</span><span class="s">&quot;SELECT * FROM paimon.my_db.users ORDER BY id&quot;</span><span class="p">).</span><span class="k">await</span><span class="o">?</span><span class="p">;</span>
+<a id="__codelineno-68-32" name="__codelineno-68-32" href="#__codelineno-68-32"></a><span class="w">    </span><span class="n">df</span><span class="p">.</span><span class="n">show</span><span class="p">().</span><span class="k">await</span><span class="o">?</span><span class="p">;</span>
+<a id="__codelineno-68-33" name="__codelineno-68-33" href="#__codelineno-68-33"></a>
+<a id="__codelineno-68-34" name="__codelineno-68-34" href="#__codelineno-68-34"></a><span class="w">    </span><span class="nb">Ok</span><span class="p">(())</span>
+<a id="__codelineno-68-35" name="__codelineno-68-35" href="#__codelineno-68-35"></a><span class="p">}</span>
+</code></pre></div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.sections", "navigation.expand", "navigation.top", "search.suggest", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
