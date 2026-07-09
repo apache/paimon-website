@@ -144,6 +144,23 @@ jobs:
           mkdir -p docs/rust
           cp -r /tmp/paimon-rust-site/* docs/rust/
 
+      - name: Clone Paimon CPP repo
+        run: git clone --depth 1 https://github.com/apache/paimon-cpp.git /tmp/paimon-cpp
+
+      - name: Build Paimon CPP docs
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y doxygen
+          pip install -r /tmp/paimon-cpp/docs/requirements.txt
+          cd /tmp/paimon-cpp/apidoc
+          doxygen
+          cd /tmp/paimon-cpp/docs
+          make html
+          cd $GITHUB_WORKSPACE
+          rm -rf docs/cpp
+          mkdir -p docs/cpp
+          cp -r /tmp/paimon-cpp/docs/_build/html/* docs/cpp/
+
       - name: Clone Paimon Mosaic repo
         run: git clone --depth 1 https://github.com/apache/paimon-mosaic.git /tmp/paimon-mosaic
 
