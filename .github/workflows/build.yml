@@ -170,6 +170,30 @@ jobs:
           mkdir -p docs/mosaic
           cp -r /tmp/paimon-mosaic/docs/* docs/mosaic/
 
+      - name: Clone Paimon Full Text repo
+        run: git clone --depth 1 https://github.com/apache/paimon-full-text.git /tmp/paimon-full-text
+
+      - name: Build Paimon Full Text docs
+        run: |
+          mkdocs new /tmp/paimon-full-text-docs
+          cp /tmp/paimon-full-text/README.md /tmp/paimon-full-text-docs/docs/index.md
+          cp /tmp/paimon-full-text/docs/*.md /tmp/paimon-full-text-docs/docs/
+          sed -i 's/^site_name:.*/site_name: Apache Paimon Full Text Index/' /tmp/paimon-full-text-docs/mkdocs.yml
+          printf '\ntheme:\n  name: material\n' >> /tmp/paimon-full-text-docs/mkdocs.yml
+          mkdocs build -f /tmp/paimon-full-text-docs/mkdocs.yml -d /tmp/paimon-full-text-site
+          rm -rf docs/full-text
+          mkdir -p docs/full-text
+          cp -r /tmp/paimon-full-text-site/* docs/full-text/
+
+      - name: Clone Paimon Vector Index repo
+        run: git clone --depth 1 https://github.com/apache/paimon-vector-index.git /tmp/paimon-vector-index
+
+      - name: Build Paimon Vector Index docs
+        run: |
+          rm -rf docs/vector-index
+          mkdir -p docs/vector-index
+          cp -r /tmp/paimon-vector-index/docs/* docs/vector-index/
+
       - name: Push to github
         run: |
           git add -A
