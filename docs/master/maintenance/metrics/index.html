@@ -1,0 +1,534 @@
+<!doctype html>
+<html lang="en" dir="ltr" class="docs-wrapper plugin-docs plugin-id-default docs-version-current docs-doc-page docs-doc-id-maintenance/metrics" data-has-hydrated="false">
+<head>
+<meta charset="UTF-8">
+<meta name="generator" content="Docusaurus v3.10.1">
+<title data-rh="true">Metrics | Apache Paimon</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:url" content="https://paimon.apache.org/docs/master/maintenance/metrics"><meta data-rh="true" property="og:locale" content="en"><meta data-rh="true" name="docusaurus_locale" content="en"><meta data-rh="true" name="docsearch:language" content="en"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="Metrics | Apache Paimon"><meta data-rh="true" name="description" content="&lt;!--"><meta data-rh="true" property="og:description" content="&lt;!--"><link data-rh="true" rel="icon" href="/docs/master/favicon.png"><link data-rh="true" rel="canonical" href="https://paimon.apache.org/docs/master/maintenance/metrics"><link data-rh="true" rel="alternate" href="https://paimon.apache.org/docs/master/maintenance/metrics" hreflang="en"><link data-rh="true" rel="alternate" href="https://paimon.apache.org/docs/master/maintenance/metrics" hreflang="x-default"><script data-rh="true" type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Maintenance","item":"https://paimon.apache.org/docs/master/maintenance/"},{"@type":"ListItem","position":2,"name":"Metrics","item":"https://paimon.apache.org/docs/master/maintenance/metrics"}]}</script><link rel="stylesheet" href="/docs/master/assets/css/styles.731e6d19.css">
+<script src="/docs/master/assets/js/runtime~main.86e70b93.js" defer="defer"></script>
+<script src="/docs/master/assets/js/main.035709b0.js" defer="defer"></script>
+</head>
+<body>
+<svg style="display: none;"><defs>
+<symbol id="theme-svg-external-link" viewBox="0 0 24 24"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"/></symbol>
+</defs></svg>
+<script>!function(){var t=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme")}catch(t){}}();document.documentElement.setAttribute("data-theme",t||"light"),document.documentElement.setAttribute("data-theme-choice",t||"light")}(),function(){try{const c=new URLSearchParams(window.location.search).entries();for(var[t,e]of c)if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}()</script><div id="__docusaurus"><div role="region" aria-label="Skip to main content"><a class="skipToContent_fXgn" href="#__docusaurus_skipToContent_fallback">Skip to main content</a></div><nav aria-label="Main" class="theme-layout-navbar navbar navbar--fixed-top"><div class="navbar__inner"><div class="theme-layout-navbar-left navbar__items"><button aria-label="Toggle navigation bar" aria-expanded="false" class="navbar__toggle clean-btn" type="button"><svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M4 7h22M4 15h22M4 23h22"></path></svg></button><a class="navbar__brand" href="/docs/master/"><div class="navbar__logo"><img src="/docs/master/favicon_blue.svg" alt="Apache Paimon Logo" class="themedComponent_mlkZ themedComponent--light_NVdE"><img src="/docs/master/paimon_white.svg" alt="Apache Paimon Logo" class="themedComponent_mlkZ themedComponent--dark_xIcU"></div><b class="navbar__title text--truncate">Apache Paimon</b></a></div><div class="theme-layout-navbar-right navbar__items navbar__items--right"><div class="navbar__item dropdown dropdown--hoverable dropdown--right"><a href="#" aria-haspopup="true" aria-expanded="false" role="button" class="navbar__link">1.5-SNAPSHOT</a><ul class="dropdown__menu"><li><a href="https://paimon.apache.org/docs/master" target="_blank" rel="noopener noreferrer" class="dropdown__link">master (1.5-SNAPSHOT)<svg width="12" height="12" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a></li><li><a href="https://paimon.apache.org/docs/1.4" target="_blank" rel="noopener noreferrer" class="dropdown__link">1.4 (stable)<svg width="12" height="12" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a></li><li><a href="https://paimon.apache.org/docs/1.3" target="_blank" rel="noopener noreferrer" class="dropdown__link">1.3<svg width="12" height="12" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a></li><li><a href="https://paimon.apache.org/docs/1.2" target="_blank" rel="noopener noreferrer" class="dropdown__link">1.2<svg width="12" height="12" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a></li><li><a href="https://paimon.apache.org/docs/1.1" target="_blank" rel="noopener noreferrer" class="dropdown__link">1.1<svg width="12" height="12" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a></li></ul></div><a href="https://github.com/apache/paimon" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">GitHub<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a><a href="https://paimon.apache.org" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">Project Home<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a><div class="toggle_vylO colorModeToggle_DEke"><button class="clean-btn toggleButton_gllP toggleButtonDisabled_aARS" type="button" disabled="" title="system mode" aria-label="Switch between dark and light mode (currently system mode)"><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_g3eP lightToggleIcon_pyhR"><path fill="currentColor" d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_g3eP darkToggleIcon_wfgR"><path fill="currentColor" d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_g3eP systemToggleIcon_QzmC"><path fill="currentColor" d="m12 21c4.971 0 9-4.029 9-9s-4.029-9-9-9-9 4.029-9 9 4.029 9 9 9zm4.95-13.95c1.313 1.313 2.05 3.093 2.05 4.95s-0.738 3.637-2.05 4.95c-1.313 1.313-3.093 2.05-4.95 2.05v-14c1.857 0 3.637 0.737 4.95 2.05z"></path></svg></button></div><div class="navbarSearchContainer_Bca1"><div class="navbar__search searchBarContainer_NW3z" dir="ltr"><input placeholder="Search" aria-label="Search" class="navbar__search-input searchInput_YFbd" value=""><div class="loadingRing_RJI3 searchBarLoadingRing_YnHq"><div></div><div></div><div></div><div></div></div></div></div></div></div><div role="presentation" class="navbar-sidebar__backdrop"></div></nav><div id="__docusaurus_skipToContent_fallback" class="theme-layout-main main-wrapper mainWrapper_z2l0"><div class="docsWrapper_hBAB"><button aria-label="Scroll back to top" class="clean-btn theme-back-to-top-button backToTopButton_sjWU" type="button"></button><div class="docRoot_UBD9"><aside class="theme-doc-sidebar-container docSidebarContainer_YfHR"><div class="sidebarViewport_aRkj"><div class="sidebar_njMd"><nav aria-label="Docs sidebar" class="menu thin-scrollbar menu_SIkG"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist" href="/docs/master/concepts/"><span title="Concepts" class="categoryLinkLabel_W154">Concepts</span></a><button aria-label="Expand sidebar category &#x27;Concepts&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist" href="/docs/master/append-table/"><span title="Append Table" class="categoryLinkLabel_W154">Append Table</span></a><button aria-label="Expand sidebar category &#x27;Append Table&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist" href="/docs/master/primary-key-table/"><span title="PrimaryKey Table" class="categoryLinkLabel_W154">PrimaryKey Table</span></a><button aria-label="Expand sidebar category &#x27;PrimaryKey Table&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist" href="/docs/master/multimodal-table/"><span title="Multimodal Table" class="categoryLinkLabel_W154">Multimodal Table</span></a><button aria-label="Expand sidebar category &#x27;Multimodal Table&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist" href="/docs/master/flink/"><span title="Engine Flink" class="categoryLinkLabel_W154">Engine Flink</span></a><button aria-label="Expand sidebar category &#x27;Engine Flink&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist" href="/docs/master/spark/"><span title="Engine Spark" class="categoryLinkLabel_W154">Engine Spark</span></a><button aria-label="Expand sidebar category &#x27;Engine Spark&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist" href="/docs/master/pypaimon/"><span title="PyPaimon &amp; AI" class="categoryLinkLabel_W154">PyPaimon &amp; AI</span></a><button aria-label="Expand sidebar category &#x27;PyPaimon &amp; AI&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist" href="/docs/master/ecosystem/"><span title="Ecosystem" class="categoryLinkLabel_W154">Ecosystem</span></a><button aria-label="Expand sidebar category &#x27;Ecosystem&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist" href="/docs/master/cdc-ingestion/"><span title="CDC Ingestion" class="categoryLinkLabel_W154">CDC Ingestion</span></a><button aria-label="Expand sidebar category &#x27;CDC Ingestion&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--active" href="/docs/master/maintenance/"><span title="Maintenance" class="categoryLinkLabel_W154">Maintenance</span></a><button aria-label="Collapse sidebar category &#x27;Maintenance&#x27;" aria-expanded="true" type="button" class="clean-btn menu__caret"></button></div><ul class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/docs/master/maintenance/filesystems"><span title="Filesystems" class="linkLabel_WmDU">Filesystems</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/docs/master/maintenance/write-performance"><span title="Write Performance" class="linkLabel_WmDU">Write Performance</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/docs/master/maintenance/dedicated-compaction"><span title="Dedicated Compaction" class="linkLabel_WmDU">Dedicated Compaction</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/docs/master/maintenance/manage-snapshots"><span title="Manage Snapshots" class="linkLabel_WmDU">Manage Snapshots</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/docs/master/maintenance/rescale-bucket"><span title="Rescale Bucket" class="linkLabel_WmDU">Rescale Bucket</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/docs/master/maintenance/manage-tags"><span title="Manage Tags" class="linkLabel_WmDU">Manage Tags</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link menu__link--active" aria-current="page" tabindex="0" href="/docs/master/maintenance/metrics"><span title="Metrics" class="linkLabel_WmDU">Metrics</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/docs/master/maintenance/manage-privileges"><span title="Manage Privileges" class="linkLabel_WmDU">Manage Privileges</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/docs/master/maintenance/manage-branches"><span title="Manage Branches" class="linkLabel_WmDU">Manage Branches</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/docs/master/maintenance/manage-partitions"><span title="Manage Partitions" class="linkLabel_WmDU">Manage Partitions</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/docs/master/maintenance/configurations"><span title="Configurations" class="linkLabel_WmDU">Configurations</span></a></li></ul></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist" href="/docs/master/program-api/"><span title="Program API" class="categoryLinkLabel_W154">Program API</span></a><button aria-label="Expand sidebar category &#x27;Program API&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist" href="/docs/master/migration/"><span title="Migration" class="categoryLinkLabel_W154">Migration</span></a><button aria-label="Expand sidebar category &#x27;Migration&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist" href="/docs/master/iceberg/"><span title="Iceberg Metadata" class="categoryLinkLabel_W154">Iceberg Metadata</span></a><button aria-label="Expand sidebar category &#x27;Iceberg Metadata&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist" href="/docs/master/project/"><span title="Project" class="categoryLinkLabel_W154">Project</span></a><button aria-label="Expand sidebar category &#x27;Project&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist" href="/docs/master/learn-paimon/"><span title="Learn Paimon" class="categoryLinkLabel_W154">Learn Paimon</span></a><button aria-label="Expand sidebar category &#x27;Learn Paimon&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li></ul></nav><button type="button" title="Collapse sidebar" aria-label="Collapse sidebar" class="button button--secondary button--outline collapseSidebarButton_PEFL"><svg width="20" height="20" aria-hidden="true" class="collapseSidebarButtonIcon_kv0_"><g fill="#7a7a7a"><path d="M9.992 10.023c0 .2-.062.399-.172.547l-4.996 7.492a.982.982 0 01-.828.454H1c-.55 0-1-.453-1-1 0-.2.059-.403.168-.551l4.629-6.942L.168 3.078A.939.939 0 010 2.528c0-.548.45-.997 1-.997h2.996c.352 0 .649.18.828.45L9.82 9.472c.11.148.172.347.172.55zm0 0"></path><path d="M19.98 10.023c0 .2-.058.399-.168.547l-4.996 7.492a.987.987 0 01-.828.454h-3c-.547 0-.996-.453-.996-1 0-.2.059-.403.168-.551l4.625-6.942-4.625-6.945a.939.939 0 01-.168-.55 1 1 0 01.996-.997h3c.348 0 .649.18.828.45l4.996 7.492c.11.148.168.347.168.55zm0 0"></path></g></svg></button></div></div></aside><main class="docMainContainer_TBSr"><div class="container padding-top--md padding-bottom--lg"><div class="row"><div class="col docItemCol_VOVn"><div class="docItemContainer_Djhp"><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_Z_bl" aria-label="Breadcrumbs"><ul class="breadcrumbs"><li class="breadcrumbs__item"><a aria-label="Home page" class="breadcrumbs__link" href="/docs/master/"><svg viewBox="0 0 24 24" class="breadcrumbHomeIcon_YNFT"><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill="currentColor"></path></svg></a></li><li class="breadcrumbs__item"><a class="breadcrumbs__link" href="/docs/master/maintenance/"><span>Maintenance</span></a></li><li class="breadcrumbs__item breadcrumbs__item--active"><span class="breadcrumbs__link">Metrics</span></li></ul></nav><div class="tocCollapsible_ETCw theme-doc-toc-mobile tocMobile_ITEo"><button type="button" class="clean-btn tocCollapsibleButton_TO0P">On this page</button></div><div class="theme-doc-markdown markdown"><header><h1>Paimon Metrics</h1></header>
+<p>Paimon has built a metrics system to measure the behaviours of reading and writing, like how many manifest files it scanned in the last planning, how long it took in the last commit operation, how many files it deleted in the last compact operation.</p>
+<p>In Paimon&#x27;s metrics system, metrics are updated and reported at table granularity.</p>
+<p>There are three types of metrics provided in the Paimon metric system, <code>Gauge</code>, <code>Counter</code>, <code>Histogram</code>.</p>
+<ul>
+<li class=""><code>Gauge</code>: Provides a value of any type at a point in time.</li>
+<li class=""><code>Counter</code>: Used to count values by incrementing and decrementing.</li>
+<li class=""><code>Histogram</code>: Measure the statistical distribution of a set of values including the min, max, mean, standard deviation and percentile.</li>
+</ul>
+<p>Paimon has supported built-in metrics to measure operations of <strong>commits</strong>, <strong>scans</strong>, <strong>writes</strong>, <strong>compactions</strong> and <strong>lookups</strong>, which can be bridged to any computing engine that supports, like Flink, Spark etc.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="metrics-list">Metrics List<a href="#metrics-list" class="hash-link" aria-label="Direct link to Metrics List" title="Direct link to Metrics List" translate="no">​</a></h2>
+<p>Below is lists of Paimon built-in metrics. They are summarized into types of scan metrics, commit metrics, write metrics, write buffer metrics, blob fetch metrics, compaction metrics and lookup metrics.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="scan-metrics">Scan Metrics<a href="#scan-metrics" class="hash-link" aria-label="Direct link to Scan Metrics" title="Direct link to Scan Metrics" translate="no">​</a></h3>
+<table class="table table-bordered">
+    <thead>
+    <tr>
+      <th class="text-left" style="width:225pt">Metrics Name</th>
+      <th class="text-left" style="width:70pt">Type</th>
+      <th class="text-left" style="width:300pt">Description</th>
+    </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>lastScanDuration</td>
+            <td>Gauge</td>
+            <td>The time it took to complete the last scan.</td>
+        </tr>
+        <tr>
+            <td>scanDuration</td>
+            <td>Histogram</td>
+            <td>Distributions of the time taken by the last few scans.</td>
+        </tr>
+        <tr>
+            <td>lastScannedSnapshotId</td>
+            <td>Gauge</td>
+            <td>The snapshot ID scanned in the last scan. 0 if no scan has occurred.</td>
+        </tr>
+        <tr>
+            <td>lastScannedManifests</td>
+            <td>Gauge</td>
+            <td>Number of scanned manifest files in the last scan.</td>
+        </tr>
+        <tr>
+            <td>lastScanSkippedTableFiles</td>
+            <td>Gauge</td>
+            <td>Total skipped table files in the last scan.</td>
+        </tr>
+        <tr>
+            <td>lastScanResultedTableFiles</td>
+            <td>Gauge</td>
+            <td>Resulted table files in the last scan.</td>
+        </tr>
+    </tbody></table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="lookup-metrics">Lookup Metrics<a href="#lookup-metrics" class="hash-link" aria-label="Direct link to Lookup Metrics" title="Direct link to Lookup Metrics" translate="no">​</a></h3>
+<p>Lookup metrics are available for local partial lookup. They are reported at lookup invocation granularity. <code>partialLookupRemoteAccessCount</code> counts a lookup invocation once when at least one lookup file must be created from table storage because it is not available in the local cache. It counts lookup invocations, not individual OSS or table-storage I/O operations.</p>
+<table class="table table-bordered">
+    <thead>
+    <tr>
+      <th class="text-left" style="width:225pt">Metrics Name</th>
+      <th class="text-left" style="width:70pt">Type</th>
+      <th class="text-left" style="width:300pt">Description</th>
+    </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>partialLookupCount</td>
+            <td>Counter</td>
+            <td>Total number of partial lookup invocations.</td>
+        </tr>
+        <tr>
+            <td>partialLookupRemoteAccessCount</td>
+            <td>Counter</td>
+            <td>Number of partial lookup invocations that created at least one lookup file from table storage because it was not available in the local cache. This is not an individual I/O count.</td>
+        </tr>
+    </tbody></table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="commit-metrics">Commit Metrics<a href="#commit-metrics" class="hash-link" aria-label="Direct link to Commit Metrics" title="Direct link to Commit Metrics" translate="no">​</a></h3>
+<table class="table table-bordered">
+    <thead>
+    <tr>
+      <th class="text-left" style="width:225pt">Metrics Name</th>
+      <th class="text-left" style="width:70pt">Type</th>
+      <th class="text-left" style="width:300pt">Description</th>
+    </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>lastCommitDuration</td>
+            <td>Gauge</td>
+            <td>The time it took to complete the last commit.</td>
+        </tr>
+        <tr>
+            <td>commitDuration</td>
+            <td>Histogram</td>
+            <td>Distributions of the time taken by the last few commits.</td>
+        </tr>
+        <tr>
+            <td>lastCommitAttempts</td>
+            <td>Gauge</td>
+            <td>The number of attempts the last commit made.</td>
+        </tr>
+        <tr>
+            <td>lastTableFilesAdded</td>
+            <td>Gauge</td>
+            <td>Number of added table files in the last commit, including newly created data files and compacted after.</td>
+        </tr>
+        <tr>
+            <td>lastTableFilesDeleted</td>
+            <td>Gauge</td>
+            <td>Number of deleted table files in the last commit, which comes from compacted before.</td>
+        </tr>
+        <tr>
+            <td>lastTableFilesAppended</td>
+            <td>Gauge</td>
+            <td>Number of appended table files in the last commit, which means the newly created data files.</td>
+        </tr>
+        <tr>
+            <td>lastTableFilesCommitCompacted</td>
+            <td>Gauge</td>
+            <td>Number of compacted table files in the last commit, including compacted before and after.</td>
+        </tr>
+        <tr>
+            <td>lastChangelogFilesAppended</td>
+            <td>Gauge</td>
+            <td>Number of appended changelog files in last commit.</td>
+        </tr>
+        <tr>
+            <td>lastChangelogFileCommitCompacted</td>
+            <td>Gauge</td>
+            <td>Number of compacted changelog files in last commit.</td>
+        </tr>
+        <tr>
+            <td>lastGeneratedSnapshots</td>
+            <td>Gauge</td>
+            <td>Number of snapshot files generated in the last commit, maybe 1 snapshot or 2 snapshots.</td>
+        </tr>
+        <tr>
+            <td>lastDeltaRecordsAppended</td>
+            <td>Gauge</td>
+            <td>Delta records count in last commit with APPEND commit kind.</td>
+        </tr>
+        <tr>
+            <td>lastChangelogRecordsAppended</td>
+            <td>Gauge</td>
+            <td>Changelog records count in last commit with APPEND commit kind.</td>
+        </tr>
+        <tr>
+            <td>lastDeltaRecordsCommitCompacted</td>
+            <td>Gauge</td>
+            <td>Delta records count in last commit with COMPACT commit kind.</td>
+        </tr>
+        <tr>
+            <td>lastChangelogRecordsCommitCompacted</td>
+            <td>Gauge</td>
+            <td>Changelog records count in last commit with COMPACT commit kind.</td>
+        </tr>
+        <tr>
+            <td>lastPartitionsWritten</td>
+            <td>Gauge</td>
+            <td>Number of partitions written in the last commit.</td>
+        </tr>
+        <tr>
+            <td>lastBucketsWritten</td>
+            <td>Gauge</td>
+            <td>Number of buckets written in the last commit.</td>
+        </tr>
+        <tr>
+            <td>lastCompactionInputFileSize</td>
+            <td>Gauge</td>
+            <td>Total size of the input files for the last compaction.</td>
+        </tr>
+        <tr>
+            <td>lastCompactionOutputFileSize</td>
+            <td>Gauge</td>
+            <td>Total size of the output files for the last compaction.</td>
+        </tr>
+        <tr>
+            <td>lastCommittedSnapshotId</td>
+            <td>Gauge</td>
+            <td>The snapshot ID created by the last commit. -1 if no commit has occurred.</td>
+        </tr>
+    </tbody></table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="write-buffer-metrics">Write Buffer Metrics<a href="#write-buffer-metrics" class="hash-link" aria-label="Direct link to Write Buffer Metrics" title="Direct link to Write Buffer Metrics" translate="no">​</a></h3>
+<table class="table table-bordered">
+    <thead>
+    <tr>
+      <th class="text-left" style="width:225pt">Metrics Name</th>
+      <th class="text-left" style="width:70pt">Type</th>
+      <th class="text-left" style="width:300pt">Description</th>
+    </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>numWriters</td>
+            <td>Gauge</td>
+            <td>Number of writers in this parallelism.</td>
+        </tr>
+        <tr>
+            <td>bufferPreemptCount</td>
+            <td>Gauge</td>
+            <td>The total number of memory preempted.</td>
+        </tr>
+        <tr>
+            <td>usedWriteBufferSizeByte</td>
+            <td>Gauge</td>
+            <td>Current used write buffer size in byte.</td>
+        </tr>
+        <tr>
+            <td>totalWriteBufferSizeByte</td>
+            <td>Gauge</td>
+            <td>The total write buffer size configured in byte.</td>
+        </tr>
+    </tbody></table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="blob-fetch-metrics">Blob Fetch Metrics<a href="#blob-fetch-metrics" class="hash-link" aria-label="Direct link to Blob Fetch Metrics" title="Direct link to Blob Fetch Metrics" translate="no">​</a></h3>
+<table class="table table-bordered">
+    <thead>
+    <tr>
+      <th class="text-left" style="width:225pt">Metrics Name</th>
+      <th class="text-left" style="width:70pt">Type</th>
+      <th class="text-left" style="width:300pt">Description</th>
+    </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>blobFetchTotal</td>
+            <td>Counter</td>
+            <td>Total number of blob fetch outcomes handled during write, including successful fetches, failures, and missing resources written as NULL.</td>
+        </tr>
+        <tr>
+            <td>blobFetchSuccess</td>
+            <td>Counter</td>
+            <td>Total number of blob fetches that completed successfully.</td>
+        </tr>
+        <tr>
+            <td>blobFetchSuccessBytes</td>
+            <td>Counter</td>
+            <td>Total bytes written by successful blob fetches.</td>
+        </tr>
+        <tr>
+            <td>blobFetchNullWritten</td>
+            <td>Counter</td>
+            <td>Total number of NULL values written because a blob resource was missing or failed to fetch.</td>
+        </tr>
+        <tr>
+            <td>blobFetchMissingFileNullWritten</td>
+            <td>Counter</td>
+            <td>Total number of NULL values written because <code>blob-write-null-on-missing-file</code> handled a missing blob resource.</td>
+        </tr>
+        <tr>
+            <td>blobFetchFailureNullWritten</td>
+            <td>Counter</td>
+            <td>Total number of NULL values written because <code>blob-write-null-on-fetch-failure</code> handled a non-404 blob fetch failure.</td>
+        </tr>
+        <tr>
+            <td>blobFetchFailure</td>
+            <td>Counter</td>
+            <td>Total number of blob fetch failures that were not written as NULL.</td>
+        </tr>
+        <tr>
+            <td>blobFetchHttpNotFound</td>
+            <td>Counter</td>
+            <td>Total number of HTTP 404 blob fetch failures.</td>
+        </tr>
+        <tr>
+            <td>blobFetchHttpClientError</td>
+            <td>Counter</td>
+            <td>Total number of non-404 HTTP 4xx blob fetch failures.</td>
+        </tr>
+        <tr>
+            <td>blobFetchHttpServerError</td>
+            <td>Counter</td>
+            <td>Total number of HTTP 5xx blob fetch failures.</td>
+        </tr>
+        <tr>
+            <td>blobFetchHttpOtherError</td>
+            <td>Counter</td>
+            <td>Total number of blob fetch failures with HTTP status codes outside 4xx and 5xx.</td>
+        </tr>
+        <tr>
+            <td>blobFetchInvalidUri</td>
+            <td>Counter</td>
+            <td>Total number of blob fetch failures caused by invalid URIs.</td>
+        </tr>
+        <tr>
+            <td>blobFetchOtherError</td>
+            <td>Counter</td>
+            <td>Total number of blob fetch failures that are not classified as HTTP status or invalid URI failures.</td>
+        </tr>
+    </tbody></table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="compaction-metrics">Compaction Metrics<a href="#compaction-metrics" class="hash-link" aria-label="Direct link to Compaction Metrics" title="Direct link to Compaction Metrics" translate="no">​</a></h3>
+<table class="table table-bordered">
+    <thead>
+    <tr>
+      <th class="text-left" style="width:225pt">Metrics Name</th>
+      <th class="text-left" style="width:70pt">Type</th>
+      <th class="text-left" style="width:300pt">Description</th>
+    </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>maxLevel0FileCount</td>
+            <td>Gauge</td>
+            <td>The maximum number of level 0 files currently handled by this task. This value will become larger if asynchronous compaction cannot be done in time.</td>
+        </tr>
+        <tr>
+            <td>avgLevel0FileCount</td>
+            <td>Gauge</td>
+            <td>The average number of level 0 files currently handled by this task. This value will become larger if asynchronous compaction cannot be done in time.</td>
+        </tr>
+        <tr>
+            <td>compactionThreadBusy</td>
+            <td>Gauge</td>
+            <td>The maximum business of compaction threads in this task. Currently, there is only one compaction thread in each parallelism, so value of business ranges from 0 (idle) to 100 (compaction running all the time).</td>
+        </tr>
+        <tr>
+            <td>avgCompactionTime</td>
+            <td>Gauge</td>
+            <td>The average runtime of compaction threads, calculated based on recorded compaction time data in milliseconds. The value represents the average duration of compaction operations. Higher values indicate longer average compaction times, which may suggest the need for performance optimization.</td>
+        </tr>
+       <tr>
+            <td>compactionCompletedCount</td>
+            <td>Counter</td>
+            <td>The total number of compactions that have completed.</td>
+        </tr>
+        <tr>
+            <td>compactionQueuedCount</td>
+            <td>Counter</td>
+            <td>The total number of compactions that are queued/running.</td>
+        </tr>
+        <tr>
+            <td>compactionTotalCount</td>
+            <td>Counter</td>
+            <td>The total number of compactions.</td>
+        </tr>
+        <tr>
+            <td>maxCompactionInputSize</td>
+            <td>Gauge</td>
+            <td>The maximum input file size for this task&#x27;s compaction.</td>
+        </tr>
+        <tr>
+            <td>avgCompactionInputSize</td>
+            <td>Gauge</td>
+            <td>The average input file size for this task&#x27;s compaction.</td>
+        </tr>
+        <tr>
+            <td>maxCompactionOutputSize</td>
+            <td>Gauge</td>
+            <td>The maximum output file size for this task&#x27;s compaction.</td>
+        </tr>
+        <tr>
+            <td>avgCompactionOutputSize</td>
+            <td>Gauge</td>
+            <td>The average output file size for this task&#x27;s compaction.</td>
+        </tr>
+        <tr>
+            <td>maxTotalFileSize</td>
+            <td>Gauge</td>
+            <td>The maximum total file size of an active (currently being written) bucket.</td>
+        </tr>
+        <tr>
+            <td>avgTotalFileSize</td>
+            <td>Gauge</td>
+            <td>The average total file size of all active (currently being written) buckets.</td>
+        </tr>
+        <tr>
+            <td>maxSortBufferUsedBytes</td>
+            <td>Gauge</td>
+            <td>The maximum sort buffer memory currently used across all active compaction buckets, in bytes. High values relative to <code>maxSortBufferTotalBytes</code> indicate memory pressure during compaction; consider lowering <code>sort-spill-threshold</code> or reducing <code>sort-spill-buffer-size</code>.</td>
+        </tr>
+        <tr>
+            <td>avgSortBufferUsedBytes</td>
+            <td>Gauge</td>
+            <td>The average sort buffer memory used across all active compaction buckets, in bytes.</td>
+        </tr>
+        <tr>
+            <td>maxSortBufferUtilisationPercent</td>
+            <td>Gauge</td>
+            <td>The maximum sort buffer utilisation percentage (0–100) across all active compaction buckets. A value consistently near 100 indicates the sort buffer pool is exhausted and spilling to disk is occurring or imminent.</td>
+        </tr>
+        <tr>
+            <td>avgSortBufferUtilisationPercent</td>
+            <td>Gauge</td>
+            <td>The average sort buffer utilisation percentage across all active compaction buckets.</td>
+        </tr>
+    </tbody></table>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="bridging-to-flink">Bridging To Flink<a href="#bridging-to-flink" class="hash-link" aria-label="Direct link to Bridging To Flink" title="Direct link to Bridging To Flink" translate="no">​</a></h2>
+<p>Paimon has implemented bridging metrics to Flink&#x27;s metrics system, which can be reported by Flink, and the lifecycle of metric groups are managed by Flink.</p>
+<p>Please join the <code>&lt;scope&gt;.&lt;infix&gt;.&lt;metric_name&gt;</code> to get the complete metric identifier when using Flink to access Paimon, <code>metric_name</code> can be got from <a class="" href="/docs/master/maintenance/metrics#metrics-list">Metric List</a>.</p>
+<p>For example, the identifier of metric <code>lastPartitionsWritten</code> for table <code>word_count</code> in Flink job named <code>insert_word_count</code> is:</p>
+<p><code>localhost.taskmanager.localhost:60340-775a20.insert_word_count.Global Committer : word_count.0.paimon.table.word_count.commit.lastPartitionsWritten</code>.</p>
+<p>From Flink Web-UI, go to the committer operator&#x27;s metrics, it&#x27;s shown as:</p>
+<p><code>0.Global_Committer___word_count.paimon.table.word_count.commit.lastPartitionsWritten</code>.</p>
+<div class="theme-admonition theme-admonition-info admonition_xJq3 alert alert--info"><div class="admonitionHeading_Gvgb"><span class="admonitionIcon_Rf37"><svg viewBox="0 0 14 16"><path fill-rule="evenodd" d="M7 2.3c3.14 0 5.7 2.56 5.7 5.7s-2.56 5.7-5.7 5.7A5.71 5.71 0 0 1 1.3 8c0-3.14 2.56-5.7 5.7-5.7zM7 1C3.14 1 0 4.14 0 8s3.14 7 7 7 7-3.14 7-7-3.14-7-7-7zm1 3H6v5h2V4zm0 6H6v2h2v-2z"></path></svg></span>info</div><div class="admonitionContent_BuS1"><ol>
+<li class="">Please refer to <a href="https://nightlies.apache.org/flink/flink-docs-master/docs/ops/metrics/#system-scope" target="_blank" rel="noopener noreferrer" class="">System Scope</a> to understand Flink <code>scope</code></li>
+<li class="">Scan metrics are only supported by Flink versions &gt;= 1.18</li>
+</ol></div></div>
+<table class="table table-bordered">
+    <thead>
+    <tr>
+      <th class="text-left" style="width:130pt"></th>
+      <th class="text-left" style="width:280pt">Scope</th>
+      <th class="text-left" style="width:250pt">Infix</th>
+    </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Scan Metrics</td>
+            <td>&lt;host&gt;.jobmanager.&lt;job_name&gt;</td>
+            <td>&lt;source_operator_name&gt;.coordinator. enumerator.paimon.table.&lt;table_name&gt;.scan</td>
+        </tr>
+        <tr>
+            <td>Lookup Metrics</td>
+            <td>&lt;host&gt;.taskmanager.&lt;tm_id&gt;.&lt;job_name&gt;.&lt;lookup_operator_name&gt;.&lt;subtask_index&gt;</td>
+            <td>paimon.table.&lt;table_name&gt;.lookup</td>
+        </tr>
+        <tr>
+            <td>Commit Metrics</td>
+            <td>&lt;host&gt;.taskmanager.&lt;tm_id&gt;.&lt;job_name&gt;.&lt;committer_operator_name&gt;.&lt;subtask_index&gt;</td>
+            <td>paimon.table.&lt;table_name&gt;.commit</td>
+        </tr>
+        <tr>
+            <td>Write Metrics</td>
+            <td>&lt;host&gt;.taskmanager.&lt;tm_id&gt;.&lt;job_name&gt;.&lt;writer_operator_name&gt;.&lt;subtask_index&gt;</td>
+            <td>paimon.table.&lt;table_name&gt;.partition.&lt;partition_string&gt;.bucket.&lt;bucket_index&gt;.writer</td>
+        </tr>
+        <tr>
+            <td>Write Buffer Metrics</td>
+            <td>&lt;host&gt;.taskmanager.&lt;tm_id&gt;.&lt;job_name&gt;.&lt;writer_operator_name&gt;.&lt;subtask_index&gt;</td>
+            <td>paimon.table.&lt;table_name&gt;.writeBuffer</td>
+        </tr>
+        <tr>
+            <td>Blob Fetch Metrics</td>
+            <td>&lt;host&gt;.taskmanager.&lt;tm_id&gt;.&lt;job_name&gt;.&lt;writer_operator_name&gt;.&lt;subtask_index&gt;</td>
+            <td>paimon.table.&lt;table_name&gt;.blobFetch</td>
+        </tr>
+        <tr>
+            <td>Compaction Metrics</td>
+            <td>&lt;host&gt;.taskmanager.&lt;tm_id&gt;.&lt;job_name&gt;.&lt;writer_operator_name&gt;.&lt;subtask_index&gt;</td>
+            <td>paimon.table.&lt;table_name&gt;.partition.&lt;partition_string&gt;.bucket.&lt;bucket_index&gt;.compaction</td>
+        </tr>
+        <tr>
+            <td>Flink Source Metrics</td>
+            <td>&lt;host&gt;.taskmanager.&lt;tm_id&gt;.&lt;job_name&gt;.&lt;source_operator_name&gt;.&lt;subtask_index&gt;</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>Flink Sink Metrics</td>
+            <td>&lt;host&gt;.taskmanager.&lt;tm_id&gt;.&lt;job_name&gt;.&lt;committer_operator_name&gt;.&lt;subtask_index&gt;</td>
+            <td>-</td>
+        </tr>  
+    </tbody></table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="flink-connector-standard-metrics">Flink Connector Standard Metrics<a href="#flink-connector-standard-metrics" class="hash-link" aria-label="Direct link to Flink Connector Standard Metrics" title="Direct link to Flink Connector Standard Metrics" translate="no">​</a></h3>
+<p>When using Flink to read and write, Paimon has implemented some key standard Flink connector metrics to measure the source latency and output of sink, see <a href="https://cwiki.apache.org/confluence/display/FLINK/FLIP-33%3A+Standardize+Connector+Metrics" target="_blank" rel="noopener noreferrer" class="">FLIP-33: Standardize Connector Metrics</a>. Flink source / sink metrics implemented are listed here.</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="source-metrics-flink">Source Metrics (Flink)<a href="#source-metrics-flink" class="hash-link" aria-label="Direct link to Source Metrics (Flink)" title="Direct link to Source Metrics (Flink)" translate="no">​</a></h4>
+<table class="table table-bordered">
+    <thead>
+    <tr>
+      <th class="text-left" style="width:225pt">Metrics Name</th>
+      <th class="text-left" style="width:65pt">Level</th>
+      <th class="text-left" style="width:70pt">Type</th>
+      <th class="text-left" style="width:300pt">Description</th>
+    </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>currentEmitEventTimeLag</td>
+            <td>Flink Source Operator</td>
+            <td>Gauge</td>
+            <td>Time difference between sending the record out of source and file creation.</td>
+        </tr>
+        <tr>
+            <td>currentFetchEventTimeLag</td>
+            <td>Flink Source Operator</td>
+            <td>Gauge</td>
+            <td>Time difference between reading the data file and file creation.</td>
+        </tr>
+        <tr>
+            <td>sourceParallelismUpperBound</td>
+            <td>Flink Source Enumerator</td>
+            <td>Gauge</td>
+            <td>Recommended upper bound of parallelism for auto-scaling systems. Note: This is a recommendation, not a hard limit.</td>
+        </tr>
+    </tbody></table>
+<div class="theme-admonition theme-admonition-info admonition_xJq3 alert alert--info"><div class="admonitionHeading_Gvgb"><span class="admonitionIcon_Rf37"><svg viewBox="0 0 14 16"><path fill-rule="evenodd" d="M7 2.3c3.14 0 5.7 2.56 5.7 5.7s-2.56 5.7-5.7 5.7A5.71 5.71 0 0 1 1.3 8c0-3.14 2.56-5.7 5.7-5.7zM7 1C3.14 1 0 4.14 0 8s3.14 7 7 7 7-3.14 7-7-3.14-7-7-7zm1 3H6v5h2V4zm0 6H6v2h2v-2z"></path></svg></span>info</div><div class="admonitionContent_BuS1"><p>Please note that if you specified <code>consumer-id</code> in your streaming query, the level of source metrics should turn into the reader operator, which is behind the <code>Monitor</code> operator.</p></div></div>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="sink-metrics-flink">Sink Metrics (Flink)<a href="#sink-metrics-flink" class="hash-link" aria-label="Direct link to Sink Metrics (Flink)" title="Direct link to Sink Metrics (Flink)" translate="no">​</a></h4>
+<table class="table table-bordered">
+    <thead>
+    <tr>
+      <th class="text-left" style="width:225pt">Metrics Name</th>
+      <th class="text-left" style="width:65pt">Level</th>
+      <th class="text-left" style="width:70pt">Type</th>
+      <th class="text-left" style="width:300pt">Description</th>
+    </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>numBytesOut</td>
+            <td>Table</td>
+            <td>Counter</td>
+            <td>The total number of output bytes.</td>
+        </tr>
+        <tr>
+            <td>numBytesOutPerSecond</td>
+            <td>Table</td>
+            <td>Meter</td>
+            <td>The output bytes per second.</td>
+        </tr>
+        <tr>
+            <td>numRecordsOut</td>
+            <td>Table</td>
+            <td>Counter</td>
+            <td>The total number of output records.</td>
+        </tr>
+        <tr>
+            <td>numRecordsOutPerSecond</td>
+            <td>Table</td>
+            <td>Meter</td>
+            <td>The output records per second.</td>
+        </tr>  
+    </tbody></table></div><footer class="theme-doc-footer docusaurus-mt-lg"><div class="row margin-top--sm theme-doc-footer-edit-meta-row"><div class="col noPrint_WFHX"><a href="https://github.com/apache/paimon/edit/master/docs/docs/maintenance/metrics.md" target="_blank" rel="noopener noreferrer" class="theme-edit-this-page"><svg fill="currentColor" height="20" width="20" viewBox="0 0 40 40" class="iconEdit_Z9Sw" aria-hidden="true"><g><path d="m34.5 11.7l-3 3.1-6.3-6.3 3.1-3q0.5-0.5 1.2-0.5t1.1 0.5l3.9 3.9q0.5 0.4 0.5 1.1t-0.5 1.2z m-29.5 17.1l18.4-18.5 6.3 6.3-18.4 18.4h-6.3v-6.2z"></path></g></svg>Edit this page</a></div><div class="col lastUpdated_JAkA"></div></div></footer></article><nav class="docusaurus-mt-lg pagination-nav" aria-label="Docs pages"><a class="pagination-nav__link pagination-nav__link--prev" href="/docs/master/maintenance/manage-tags"><div class="pagination-nav__sublabel">Previous</div><div class="pagination-nav__label">Manage Tags</div></a><a class="pagination-nav__link pagination-nav__link--next" href="/docs/master/maintenance/manage-privileges"><div class="pagination-nav__sublabel">Next</div><div class="pagination-nav__label">Manage Privileges</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href="#metrics-list" class="table-of-contents__link toc-highlight">Metrics List</a><ul><li><a href="#scan-metrics" class="table-of-contents__link toc-highlight">Scan Metrics</a></li><li><a href="#lookup-metrics" class="table-of-contents__link toc-highlight">Lookup Metrics</a></li><li><a href="#commit-metrics" class="table-of-contents__link toc-highlight">Commit Metrics</a></li><li><a href="#write-buffer-metrics" class="table-of-contents__link toc-highlight">Write Buffer Metrics</a></li><li><a href="#blob-fetch-metrics" class="table-of-contents__link toc-highlight">Blob Fetch Metrics</a></li><li><a href="#compaction-metrics" class="table-of-contents__link toc-highlight">Compaction Metrics</a></li></ul></li><li><a href="#bridging-to-flink" class="table-of-contents__link toc-highlight">Bridging To Flink</a><ul><li><a href="#flink-connector-standard-metrics" class="table-of-contents__link toc-highlight">Flink Connector Standard Metrics</a></li></ul></li></ul></div></div></div></div></main></div></div></div><footer class="theme-layout-footer footer footer--dark"><div class="container container-fluid"><div class="row footer__links"><div class="theme-layout-footer-column col footer__col"><div class="footer__title">Documentation</div><ul class="footer__items clean-list"><li class="footer__item"><a class="footer__link-item" href="/docs/master/flink/quick-start">Getting Started</a></li><li class="footer__item"><a class="footer__link-item" href="/docs/master/concepts/overview">Concepts</a></li></ul></div><div class="theme-layout-footer-column col footer__col"><div class="footer__title">Community</div><ul class="footer__items clean-list"><li class="footer__item"><a href="https://github.com/apache/paimon" target="_blank" rel="noopener noreferrer" class="footer__link-item">GitHub<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a></li><li class="footer__item"><a href="https://paimon.apache.org/community/mailing-lists" target="_blank" rel="noopener noreferrer" class="footer__link-item">Mailing List<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a></li></ul></div></div><div class="footer__bottom text--center"><div class="footer__copyright">Copyright © 2026 The Apache Software Foundation. Apache Paimon, Paimon, and the Paimon logo are trademarks of the Apache Software Foundation.</div></div></div></footer></div>
+</body>
+</html>

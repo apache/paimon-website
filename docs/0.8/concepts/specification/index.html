@@ -1,0 +1,1711 @@
+
+<!DOCTYPE html>
+<html lang="en" dir=>
+
+<head>
+  <meta name="generator" content="Hugo 0.80.0" />
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Specification #  This is the specification for the Paimon table format, this document standardizes the underlying file structure and design of Paimon.
+Terms #   Schema: fields, primary keys definition, partition keys definition and options. Snapshot: the entrance to all data committed at some specific time point. Manifest list: includes several manifest files. Manifest: includes several data files or changelog files. Data File: contains incremental records. Changelog File: contains records produced by changelog-producer.">
+<meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="Specification" />
+<meta property="og:description" content="Specification #  This is the specification for the Paimon table format, this document standardizes the underlying file structure and design of Paimon.
+Terms #   Schema: fields, primary keys definition, partition keys definition and options. Snapshot: the entrance to all data committed at some specific time point. Manifest list: includes several manifest files. Manifest: includes several data files or changelog files. Data File: contains incremental records. Changelog File: contains records produced by changelog-producer." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="//paimon.apache.org/docs/0.8/concepts/specification/" />
+
+<title>Specification | Apache Paimon</title>
+<link rel="manifest" href="/docs/0.8/manifest.json">
+<link rel="icon" href="/docs/0.8/favicon.png" type="image/x-icon">
+<link rel="stylesheet" href="/docs/0.8/book.min.3bc4108a5b57c9a7e6fcae92ff69940435f8c46c4e1e4a311aedc9b2d8e06792.css" integrity="sha256-O8QQiltXyafm/K6S/2mUBDX4xGxOHkoxGu3JstjgZ5I=">
+<script defer src="/docs/0.8/en.search.min.c946a1c4dec21f801fed2488af43149f608ce6fa81bc9a6bd7b38e3b8742034e.js" integrity="sha256-yUahxN7CH4Af7SSIr0MUn2CM5vqBvJpr17OOO4dCA04="></script>
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+  
+
+<link rel="stylesheet" type="text/css" href="//paimon.apache.org/docs/0.8/font-awesome/css/font-awesome.min.css">
+<script src="//paimon.apache.org/docs/0.8/js/anchor.min.js"></script>
+<script src="//paimon.apache.org/docs/0.8/js/flink.js"></script>
+
+
+  
+  <script>
+    var _paq = window._paq = window._paq || [];
+     
+     
+    _paq.push(['disableCookies']);
+     
+    _paq.push(["setDomains", ["*.flink.apache.org","*.nightlies.apache.org/flink"]]);
+    _paq.push(['trackPageView']);
+    _paq.push(['enableLinkTracking']);
+    (function() {
+      var u="//matomo.privacy.apache.org/";
+      _paq.push(['setTrackerUrl', u+'matomo.php']);
+      _paq.push(['setSiteId', '1']);
+      var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+      g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+    })();
+  </script>
+  
+</head>
+
+<body dir=>
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      
+  
+
+<nav>
+
+
+<a id="logo" href="//paimon.apache.org/docs/0.8">
+    <img width="100%" src="//paimon.apache.org/docs/0.8/paimon_black.svg">
+</a>
+<p style="text-align:right">0.8.2</p>
+
+<div class="book-search">
+  <input type="text" id="book-search-input" placeholder="Search" aria-label="Search" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-dc8a1c63e6da60163016ce21cae1faa0" class="toggle" checked />
+    <label for="section-dc8a1c63e6da60163016ce21cae1faa0" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-book title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Concepts</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.8/concepts/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.8/concepts/basic-concepts/" class="">Basic Concepts</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.8/concepts/concurrency-control/" class="">Concurrency Control</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.8/concepts/specification/" class=" active">Specification</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-3f6a6d4f1692040009c66ffaa328c8d0" class="toggle"  />
+    <label for="section-3f6a6d4f1692040009c66ffaa328c8d0" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-database title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Table with PK</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.8/primary-key-table/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.8/primary-key-table/data-distribution/" class="">Data Distribution</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.8/primary-key-table/merge-engine/" class="">Merge Engine</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.8/primary-key-table/changelog-producer/" class="">Changelog Producer</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.8/primary-key-table/sequence-rowkind/" class="">Sequence & Rowkind</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.8/primary-key-table/deletion-vectors/" class="">Deletion Vectors</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.8/primary-key-table/read-optimized/" class="">Read Optimized</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-f74847e1c917ba2b99e7b718bb318b30" class="toggle"  />
+    <label for="section-f74847e1c917ba2b99e7b718bb318b30" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-database title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Table w/o PK</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.8/append-table/append-table/" class="">Append Table</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.8/append-table/append-queue/" class="">Append Queue</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-998a37410d502937fe8444ed73a9ecf8" class="toggle"  />
+    <label for="section-998a37410d502937fe8444ed73a9ecf8" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-gear title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Engine Flink</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.8/flink/quick-start/" class="">Quick Start</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.8/flink/sql-ddl/" class="">SQL DDL</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.8/flink/sql-write/" class="">SQL Write</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.8/flink/sql-query/" class="">SQL Query</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.8/flink/sql-lookup/" class="">SQL Lookup</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.8/flink/sql-alter/" class="">SQL Alter</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-5c4df272c57150a3ff5abcdb519c51a4" class="toggle"  />
+    <label for="section-5c4df272c57150a3ff5abcdb519c51a4" class="flex justify-between">CDC Ingestion<span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.8/flink/cdc-ingestion/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.8/flink/cdc-ingestion/mysql-cdc/" class="">Mysql CDC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.8/flink/cdc-ingestion/postgres-cdc/" class="">Postgres CDC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.8/flink/cdc-ingestion/kafka-cdc/" class="">Kafka CDC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.8/flink/cdc-ingestion/mongo-cdc/" class="">Mongo CDC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.8/flink/cdc-ingestion/pulsar-cdc/" class="">Pulsar CDC</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.8/flink/procedures/" class="">Procedures</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.8/flink/action-jars/" class="">Action Jars</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.8/flink/savepoint/" class="">Savepoint</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-74c63bf75b4f6bd14a3ea6a1217f03ad" class="toggle"  />
+    <label for="section-74c63bf75b4f6bd14a3ea6a1217f03ad" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-gear title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Engine Spark</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.8/spark/quick-start/" class="">Quick Start</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.8/spark/sql-ddl/" class="">SQL DDL</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.8/spark/sql-write/" class="">SQL Write</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.8/spark/sql-query/" class="">SQL Query</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.8/spark/sql-alter/" class="">SQL Alter</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.8/spark/procedures/" class="">Procedures</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-90f5541dc4fa46a212e954b9193ea0f9" class="toggle"  />
+    <label for="section-90f5541dc4fa46a212e954b9193ea0f9" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-gear title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Engine Others</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.8/engines/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.8/engines/doris/" class="">Doris</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.8/engines/hive/" class="">Hive</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.8/engines/starrocks/" class="">StarRocks</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.8/engines/trino/" class="">Trino</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.8/engines/presto/" class="">Presto</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-e2d76c106dab115385ef7f124cda2ba4" class="toggle"  />
+    <label for="section-e2d76c106dab115385ef7f124cda2ba4" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-folder title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Filesystems</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.8/filesystems/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.8/filesystems/hdfs/" class="">HDFS</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.8/filesystems/oss/" class="">OSS</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.8/filesystems/s3/" class="">S3</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-697a4b6a0388d6cfa4f418aba3b4edfe" class="toggle"  />
+    <label for="section-697a4b6a0388d6cfa4f418aba3b4edfe" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-wrench title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Maintenance</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.8/maintenance/system-tables/" class="">System Tables</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.8/maintenance/write-performance/" class="">Write Performance</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.8/maintenance/dedicated-compaction/" class="">Dedicated Compaction</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.8/maintenance/manage-snapshots/" class="">Manage Snapshots</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.8/maintenance/manage-partition/" class="">Manage Partition</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.8/maintenance/rescale-bucket/" class="">Rescale Bucket</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.8/maintenance/manage-tags/" class="">Manage Tags</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.8/maintenance/metrics/" class="">Metrics</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.8/maintenance/manage-privileges/" class="">Manage Privileges</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.8/maintenance/configurations/" class="">Configurations</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-049030059e0dc01edf74ba3d4d259dae" class="toggle"  />
+    <label for="section-049030059e0dc01edf74ba3d4d259dae" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-briefcase title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Program API</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.8/program-api/java-api/" class="">Java API</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.8/program-api/flink-api/" class="">Flink API</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-07c567e5a9f3ce62aea4ff0a1e2dc065" class="toggle"  />
+    <label for="section-07c567e5a9f3ce62aea4ff0a1e2dc065" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-briefcase title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Migration</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.8/migration/migration-from-hive/" class="">Migration From Hive</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.8/migration/upsert-to-partitioned/" class="">Upsert To Partitioned</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  	<br/>
+  
+  
+    <input type="checkbox" id="section-8c828bcf882f666cdd6821a70cc768ee" class="toggle"  />
+    <label for="section-8c828bcf882f666cdd6821a70cc768ee" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-sitemap title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Project</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.8/project/download/" class="">Download</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.8/project/contributing/" class="">Contributing</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-392fc6f653ae23ff676811656a71ebbf" class="toggle"  />
+    <label for="section-392fc6f653ae23ff676811656a71ebbf" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-sitemap title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Learn Paimon</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.8/learn-paimon/understand-files/" class="">Understand Files</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br/>
+<hr class="menu-break">
+
+<a href="//paimon.apache.org" style="color:black;margin-bottom:0.5em"><i class="link fa fa-external-link title" aria-hidden="true"></i> Project Homepage</a>
+<br/>
+
+<a href="//paimon.apache.org/docs/master/api/java/" style="color:black;margin-bottom:0.5em"><i class="link fa fa-external-link title" aria-hidden="true"></i> JavaDocs</a>
+<br/>
+
+<hr class="menu-break">
+<li style="list-style-type: none">
+  <br>
+  <input type="checkbox" id="section-version-picker" class="toggle">
+  <label for="section-version-picker" class="flex justify-between">
+     <div style="font-weight:450;margin-bottom:0.5em">Pick Docs Version</div>
+     <span>▾</span>
+  </label>
+  <ul>
+    <a href="//paimon.apache.org/docs/0.8">
+      0.8 (✓)
+    </a>
+    <hr class="menu-break">
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/master">
+          master
+        </a>
+      </li>
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/0.8">
+          stable
+        </a>
+      </li>
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/0.8">
+          0.8
+        </a>
+      </li>
+    
+    <hr class="menu-break">
+    <li>
+      <a href="//paimon.apache.org/docs/0.8/versions">
+          All Versions
+      </a>
+    </li>
+  </ul>
+</li>
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var menu=document.querySelector("aside.book-menu nav");addEventListener("beforeunload",function(event){localStorage.setItem("menu.scrollTop",menu.scrollTop);});menu.scrollTop=localStorage.getItem("menu.scrollTop");})();</script>
+
+
+ 
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/docs/0.8/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <strong>Specification</strong>
+
+  <label for="toc-control">
+    
+    <img src="/docs/0.8/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden clearfix">
+    
+  
+
+<nav id="TableOfContents"><h3>On This Page <button class="toc" onclick="collapseToc()"><i class="fa fa-compress" aria-hidden="true"></i></button></h3>
+  <ul>
+    <li><a href="#terms">Terms</a></li>
+    <li><a href="#schema">Schema</a></li>
+    <li><a href="#snapshot">Snapshot</a></li>
+    <li><a href="#manifest-list">Manifest List</a></li>
+    <li><a href="#manifest">Manifest</a></li>
+    <li><a href="#partition">Partition</a></li>
+    <li><a href="#bucket">Bucket</a></li>
+    <li><a href="#data-file">Data File</a></li>
+    <li><a href="#changelog-file">Changelog File</a></li>
+    <li><a href="#global-index">Global Index</a></li>
+    <li><a href="#data-file-index">Data File Index</a></li>
+  </ul>
+</nav>
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+
+
+
+
+
+
+      
+  <article class="markdown"><!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<h1 id="specification">
+  Specification
+  <a class="anchor" href="#specification">#</a>
+</h1>
+<p>This is the specification for the Paimon table format, this document standardizes the underlying file structure and
+design of Paimon.</p>
+
+<img 
+  src="//paimon.apache.org/docs/0.8/img/file-layout.png"
+  alt=""
+  width=""
+  style="display:block;margin-left:auto;margin-right:auto"
+>
+
+<h2 id="terms">
+  Terms
+  <a class="anchor" href="#terms">#</a>
+</h2>
+<ul>
+<li>Schema: fields, primary keys definition, partition keys definition and options.</li>
+<li>Snapshot: the entrance to all data committed at some specific time point.</li>
+<li>Manifest list: includes several manifest files.</li>
+<li>Manifest: includes several data files or changelog files.</li>
+<li>Data File: contains incremental records.</li>
+<li>Changelog File: contains records produced by changelog-producer.</li>
+<li>Global Index: index for a bucket or partition.</li>
+<li>Data File Index: index for a data file.</li>
+</ul>
+<p>Run Flink SQL with Paimon:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">CREATE</span> <span class="k">CATALOG</span> <span class="n">my_catalog</span> <span class="k">WITH</span> <span class="p">(</span>
+    <span class="s1">&#39;type&#39;</span> <span class="o">=</span> <span class="s1">&#39;paimon&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;warehouse&#39;</span> <span class="o">=</span> <span class="s1">&#39;/your/path&#39;</span>
+<span class="p">);</span>       
+<span class="n">USE</span> <span class="k">CATALOG</span> <span class="n">my_catalog</span><span class="p">;</span>
+
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">my_table</span> <span class="p">(</span>
+    <span class="n">k</span> <span class="nb">INT</span> <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="k">NOT</span> <span class="n">ENFORCED</span><span class="p">,</span>
+    <span class="n">f0</span> <span class="nb">INT</span><span class="p">,</span>
+    <span class="n">f1</span> <span class="n">STRING</span>
+<span class="p">);</span>
+
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">my_table</span> <span class="k">VALUES</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="s1">&#39;111&#39;</span><span class="p">);</span>
+</code></pre></div><p>Take a look to the disk:</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">warehouse
+└── default.db
+    └── my_table
+        ├── bucket-0
+        │   └── data-59f60cb9-44af-48cc-b5ad-59e85c663c8f-0.orc
+        ├── index
+        │   └── index-5625e6d9-dd44-403b-a738-2b6ea92e20f1-0
+        ├── manifest
+        │   ├── index-manifest-5d670043-da25-4265-9a26-e31affc98039-0
+        │   ├── manifest-6758823b-2010-4d06-aef0-3b1b597723d6-0
+        │   ├── manifest-list-9f856d52-5b33-4c10-8933-a0eddfaa25bf-0
+        │   └── manifest-list-9f856d52-5b33-4c10-8933-a0eddfaa25bf-1
+        ├── schema
+        │   └── schema-0
+        └── snapshot
+            ├── EARLIEST
+            ├── LATEST
+            └── snapshot-1
+</code></pre></div><h2 id="schema">
+  Schema
+  <a class="anchor" href="#schema">#</a>
+</h2>
+<p>The version of the schema file starts from 0 and currently retains all versions of the schema. There may be old files
+that rely on the old schema version, so its deletion should be done with caution.</p>
+<p>Schema File is JSON, it includes:</p>
+<ol>
+<li>fields: data field list, data field contains <code>id</code>, <code>name</code>, <code>type</code>, field id is used to support schema evolution.</li>
+<li>partitionKeys: partition definition of the table, it cannot be modified.</li>
+<li>primaryKeys: primary key definition of the table, it cannot be modified.</li>
+<li>options: options of the table, including a lot of capabilities and optimizations.</li>
+</ol>
+<h2 id="snapshot">
+  Snapshot
+  <a class="anchor" href="#snapshot">#</a>
+</h2>
+<p>Each commit generates a snapshot file, and the version of the snapshot file starts from 1 and must be continuous.
+<code>EARLIEST</code> and <code>LATEST</code> are hint files at the beginning and end of the snapshot list, and they can be inaccurate.
+When hint files are inaccurate, the read will scan all snapshot files to determine the beginning and end.</p>
+<p>Writing commit will preempt the next snapshot id, and once the snapshot file is successfully written, this commit will
+be visible.</p>
+<p>Snapshot File is JSON, it includes:</p>
+<ol>
+<li>version: Snapshot file version, current is 3.</li>
+<li>id: snapshot id, same to file name.</li>
+<li>schemaId: the corresponding schema version for this commit.</li>
+<li>baseManifestList: a manifest list recording all changes from the previous snapshots.</li>
+<li>deltaManifestList: a manifest list recording all new changes occurred in this snapshot.</li>
+<li>changelogManifestList: a manifest list recording all changelog produced in this snapshot, null if no changelog is produced.</li>
+<li>indexManifest: a manifest recording all index files of this table, null if no index file.</li>
+<li>commitUser: usually generated by UUID, it is used for recovery of streaming writes, one stream write job with one user.</li>
+<li>commitIdentifier: transaction id corresponding to streaming write, each transaction may result in multiple commits for different commitKinds.</li>
+<li>commitKind: type of changes in this snapshot, including append, compact, overwrite and analyze.</li>
+<li>timeMillis: commit time millis.</li>
+<li>totalRecordCount: record count of all changes occurred in this snapshot.</li>
+<li>deltaRecordCount: record count of all new changes occurred in this snapshot.</li>
+<li>changelogRecordCount: record count of all changelog produced in this snapshot.</li>
+<li>watermark: watermark for input records, from Flink watermark mechanism, null if there is no watermark.</li>
+<li>statistics: stats file name for statistics of this table.</li>
+</ol>
+<h2 id="manifest-list">
+  Manifest List
+  <a class="anchor" href="#manifest-list">#</a>
+</h2>
+<p>Manifest List includes meta of several manifest files. Its name contains UUID, it is a avro file, the schema is:</p>
+<ol>
+<li>fileName: manifest file name.</li>
+<li>fileSize: manifest file size.</li>
+<li>numAddedFiles: number added files in manifest.</li>
+<li>numDeletedFiles: number deleted files in manifest.</li>
+<li>partitionStats: partition stats, the minimum and maximum values of partition fields in this manifest are beneficial
+for skipping certain manifest files during queries, it is a SimpleStats.</li>
+<li>schemaId: schema id when writing this manifest file.</li>
+</ol>
+<h2 id="manifest">
+  Manifest
+  <a class="anchor" href="#manifest">#</a>
+</h2>
+<p>Manifest includes meta of several data files or changelog files. Its name contains UUID, it is a avro file.</p>
+<p>The changes of the file are saved in the manifest, and the file can be added or deleted. Manifests should be in
+an orderly manner, and the same file may be added or deleted multiple times. The last version should be read. This
+design can make commit lighter to support file deletion generated by compaction.</p>
+<p>The schema is:</p>
+<ol>
+<li>kind: ADD or DELETE,</li>
+<li>partition: partition spec, a BinaryRow.</li>
+<li>bucket: bucket of this file.</li>
+<li>totalBuckets: total buckets when write this file, it is used for verification after bucket changes.</li>
+<li>file: data file meta.</li>
+</ol>
+<p>The data file meta is:</p>
+<ol>
+<li>fileName: file name.</li>
+<li>fileSize: file size.</li>
+<li>rowCount: total number of rows (including add &amp; delete) in this file.</li>
+<li>minKey: the minimum key of this file.</li>
+<li>maxKey: the maximum key of this file.</li>
+<li>keyStats: the statistics of the key.</li>
+<li>valueStats: the statistics of the value.</li>
+<li>minSequenceNumber: the minimum sequence number.</li>
+<li>maxSequenceNumber: the maximum sequence number.</li>
+<li>schemaId: schema id when write this file.</li>
+<li>level: level of this file, in LSM.</li>
+<li>extraFiles: extra files for this file, for example, data file index file.</li>
+<li>creationTime: creation time of this file.</li>
+<li>deleteRowCount: rowCount = addRowCount + deleteRowCount.</li>
+<li>embeddedIndex: if data file index is too small, store the index in manifest.</li>
+</ol>
+<h2 id="partition">
+  Partition
+  <a class="anchor" href="#partition">#</a>
+</h2>
+<p>Consider a Partition table via Flink SQL:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">part_t</span> <span class="p">(</span>
+    <span class="n">f0</span> <span class="nb">INT</span><span class="p">,</span>
+    <span class="n">f1</span> <span class="n">STRING</span><span class="p">,</span>
+    <span class="n">dt</span> <span class="n">STRING</span>
+<span class="p">)</span> <span class="n">PARTITIONED</span> <span class="k">BY</span> <span class="p">(</span><span class="n">dt</span><span class="p">);</span>
+
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">part_t</span> <span class="k">VALUES</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;11&#39;</span><span class="p">,</span> <span class="s1">&#39;20240514&#39;</span><span class="p">);</span>
+</code></pre></div><p>The file system will be:</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">part_t
+├── <span class="nv">dt</span><span class="o">=</span><span class="m">20240514</span>
+│   └── bucket-0
+│       └── data-ca1c3c38-dc8d-4533-949b-82e195b41bd4-0.orc
+├── manifest
+│   ├── manifest-08995fe5-c2ac-4f54-9a5f-d3af1fcde41d-0
+│   ├── manifest-list-51c16f7b-421c-4bc0-80a0-17677f343358-0
+│   └── manifest-list-51c16f7b-421c-4bc0-80a0-17677f343358-1
+├── schema
+│   └── schema-0
+└── snapshot
+    ├── EARLIEST
+    ├── LATEST
+    └── snapshot-1
+</code></pre></div><p>Paimon adopts the same partitioning concept as Apache Hive to separate data. The files of the partition will be placed
+in a separate partition directory.</p>
+<h2 id="bucket">
+  Bucket
+  <a class="anchor" href="#bucket">#</a>
+</h2>
+<p>The storage of all Paimon tables relies on buckets, and data files are stored in the bucket directory. The
+relationship between various table types and buckets in Paimon:</p>
+<ol>
+<li>Primary Key Table:
+<ol>
+<li>bucket = -1: Default mode, the dynamic bucket mode records which bucket the key corresponds to through the index
+files. The index records the correspondence between the hash value of the primary-key and the bucket.</li>
+<li>bucket = 10: The data is distributed to the corresponding buckets according to the hash value of bucket key (
+default is primary key).</li>
+</ol>
+</li>
+<li>Append Table:
+<ol>
+<li>bucket = -1: Default mode, ignoring bucket concept, although all data is written to bucket-0, the parallelism of
+reads and writes is unrestricted.</li>
+<li>bucket = 10: You need to define bucket-key too, the data is distributed to the corresponding buckets according to
+the hash value of bucket key.</li>
+</ol>
+</li>
+</ol>
+<h2 id="data-file">
+  Data File
+  <a class="anchor" href="#data-file">#</a>
+</h2>
+<p>The name of data file is <code>data-${uuid}-${id}.${format}</code>. For the append table, the file stores the data of the table
+without adding any new columns. But for the primary key table, each row of data stores additional system columns:</p>
+<ol>
+<li><code>_VALUE_KIND</code>: row is deleted or added. Similar to RocksDB, each row of data can be deleted or added, which will be
+used for updating the primary key table.</li>
+<li><code>_SEQUENCE_NUMBER</code>: this number is used for comparison during updates, determining which data came first and which
+data came later.</li>
+<li><code>_KEY_</code> prefix to key columns, this is to avoid conflicts with columns of the table.</li>
+</ol>
+<h2 id="changelog-file">
+  Changelog File
+  <a class="anchor" href="#changelog-file">#</a>
+</h2>
+<p>Changelog file and Data file are exactly the same, it only takes effect on the primary key table. It is similar to the
+Binlog in a database, recording changes to the data in the table.</p>
+<h2 id="global-index">
+  Global Index
+  <a class="anchor" href="#global-index">#</a>
+</h2>
+<p>Global Index is in the index directory, currently, only two places will use global index:</p>
+<ol>
+<li>bucket = -1 + primary key table: in dynamic bucket mode, the index records the correspondence between the hash value
+of the primary-key and the bucket, each bucket has an index file.</li>
+<li>Deletion Vectors: index stores the deletion file, and each bucket has a deletion file.</li>
+</ol>
+<h2 id="data-file-index">
+  Data File Index
+  <a class="anchor" href="#data-file-index">#</a>
+</h2>
+<p>Define <code>file-index.bloom-filter.columns</code>, Paimon will create its corresponding index file for each file. If the index
+file is too small, it will be stored directly in the manifest, or in the directory of the data file. Each data file
+corresponds to an index file, which has a separate file definition and can contain different types of indexes with
+multiple columns.</p>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  
+
+
+
+
+<a href="//github.com/apache/paimon/edit/0.8/docs/content/concepts/specification.md" style="color:black"><i class="fa fa-edit fa-fw"></i>Edit This Page</a>
+
+
+ 
+        
+
+
+<hr style="margin-top: 20px; border: 1px solid #e5e5e5;" />
+
+<table style="border-spacing: 10px;">
+    <tbody>
+    <tr>
+        <td colspan="2">
+            Copyright &copy; 2024 The Apache Software Foundation. Apache Paimon, Paimon, and its feather logo are
+            trademarks of The Apache Software Foundation.
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+      </footer>
+
+      
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      
+  
+
+<nav id="TableOfContents"><h3>On This Page <button class="toc" onclick="collapseToc()"><i class="fa fa-compress" aria-hidden="true"></i></button></h3>
+  <ul>
+    <li><a href="#terms">Terms</a></li>
+    <li><a href="#schema">Schema</a></li>
+    <li><a href="#snapshot">Snapshot</a></li>
+    <li><a href="#manifest-list">Manifest List</a></li>
+    <li><a href="#manifest">Manifest</a></li>
+    <li><a href="#partition">Partition</a></li>
+    <li><a href="#bucket">Bucket</a></li>
+    <li><a href="#data-file">Data File</a></li>
+    <li><a href="#changelog-file">Changelog File</a></li>
+    <li><a href="#global-index">Global Index</a></li>
+    <li><a href="#data-file-index">Data File Index</a></li>
+  </ul>
+</nav>
+
+ 
+    </aside>
+    <aside class="expand-toc">
+      <button class="toc" onclick="expandToc()">
+        <i class="fa fa-expand" aria-hidden="true"></i>
+      </button>
+    </aside>
+    
+  </main>
+
+  
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

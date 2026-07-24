@@ -1,0 +1,578 @@
+<!doctype html>
+<html lang="en" dir="ltr" class="docs-wrapper plugin-docs plugin-id-default docs-version-current docs-doc-page docs-doc-id-spark/procedures" data-has-hydrated="false">
+<head>
+<meta charset="UTF-8">
+<meta name="generator" content="Docusaurus v3.10.1">
+<title data-rh="true">Procedures | Apache Paimon</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:url" content="https://paimon.apache.org/docs/master/spark/procedures"><meta data-rh="true" property="og:locale" content="en"><meta data-rh="true" name="docusaurus_locale" content="en"><meta data-rh="true" name="docsearch:language" content="en"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="Procedures | Apache Paimon"><meta data-rh="true" name="description" content="&lt;!--"><meta data-rh="true" property="og:description" content="&lt;!--"><link data-rh="true" rel="icon" href="/docs/master/favicon.png"><link data-rh="true" rel="canonical" href="https://paimon.apache.org/docs/master/spark/procedures"><link data-rh="true" rel="alternate" href="https://paimon.apache.org/docs/master/spark/procedures" hreflang="en"><link data-rh="true" rel="alternate" href="https://paimon.apache.org/docs/master/spark/procedures" hreflang="x-default"><script data-rh="true" type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Engine Spark","item":"https://paimon.apache.org/docs/master/spark/"},{"@type":"ListItem","position":2,"name":"Procedures","item":"https://paimon.apache.org/docs/master/spark/procedures"}]}</script><link rel="stylesheet" href="/docs/master/assets/css/styles.731e6d19.css">
+<script src="/docs/master/assets/js/runtime~main.86e70b93.js" defer="defer"></script>
+<script src="/docs/master/assets/js/main.035709b0.js" defer="defer"></script>
+</head>
+<body>
+<svg style="display: none;"><defs>
+<symbol id="theme-svg-external-link" viewBox="0 0 24 24"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"/></symbol>
+</defs></svg>
+<script>!function(){var t=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme")}catch(t){}}();document.documentElement.setAttribute("data-theme",t||"light"),document.documentElement.setAttribute("data-theme-choice",t||"light")}(),function(){try{const c=new URLSearchParams(window.location.search).entries();for(var[t,e]of c)if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}()</script><div id="__docusaurus"><div role="region" aria-label="Skip to main content"><a class="skipToContent_fXgn" href="#__docusaurus_skipToContent_fallback">Skip to main content</a></div><nav aria-label="Main" class="theme-layout-navbar navbar navbar--fixed-top"><div class="navbar__inner"><div class="theme-layout-navbar-left navbar__items"><button aria-label="Toggle navigation bar" aria-expanded="false" class="navbar__toggle clean-btn" type="button"><svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M4 7h22M4 15h22M4 23h22"></path></svg></button><a class="navbar__brand" href="/docs/master/"><div class="navbar__logo"><img src="/docs/master/favicon_blue.svg" alt="Apache Paimon Logo" class="themedComponent_mlkZ themedComponent--light_NVdE"><img src="/docs/master/paimon_white.svg" alt="Apache Paimon Logo" class="themedComponent_mlkZ themedComponent--dark_xIcU"></div><b class="navbar__title text--truncate">Apache Paimon</b></a></div><div class="theme-layout-navbar-right navbar__items navbar__items--right"><div class="navbar__item dropdown dropdown--hoverable dropdown--right"><a href="#" aria-haspopup="true" aria-expanded="false" role="button" class="navbar__link">1.5-SNAPSHOT</a><ul class="dropdown__menu"><li><a href="https://paimon.apache.org/docs/master" target="_blank" rel="noopener noreferrer" class="dropdown__link">master (1.5-SNAPSHOT)<svg width="12" height="12" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a></li><li><a href="https://paimon.apache.org/docs/1.4" target="_blank" rel="noopener noreferrer" class="dropdown__link">1.4 (stable)<svg width="12" height="12" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a></li><li><a href="https://paimon.apache.org/docs/1.3" target="_blank" rel="noopener noreferrer" class="dropdown__link">1.3<svg width="12" height="12" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a></li><li><a href="https://paimon.apache.org/docs/1.2" target="_blank" rel="noopener noreferrer" class="dropdown__link">1.2<svg width="12" height="12" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a></li><li><a href="https://paimon.apache.org/docs/1.1" target="_blank" rel="noopener noreferrer" class="dropdown__link">1.1<svg width="12" height="12" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a></li></ul></div><a href="https://github.com/apache/paimon" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">GitHub<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a><a href="https://paimon.apache.org" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">Project Home<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a><div class="toggle_vylO colorModeToggle_DEke"><button class="clean-btn toggleButton_gllP toggleButtonDisabled_aARS" type="button" disabled="" title="system mode" aria-label="Switch between dark and light mode (currently system mode)"><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_g3eP lightToggleIcon_pyhR"><path fill="currentColor" d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_g3eP darkToggleIcon_wfgR"><path fill="currentColor" d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_g3eP systemToggleIcon_QzmC"><path fill="currentColor" d="m12 21c4.971 0 9-4.029 9-9s-4.029-9-9-9-9 4.029-9 9 4.029 9 9 9zm4.95-13.95c1.313 1.313 2.05 3.093 2.05 4.95s-0.738 3.637-2.05 4.95c-1.313 1.313-3.093 2.05-4.95 2.05v-14c1.857 0 3.637 0.737 4.95 2.05z"></path></svg></button></div><div class="navbarSearchContainer_Bca1"><div class="navbar__search searchBarContainer_NW3z" dir="ltr"><input placeholder="Search" aria-label="Search" class="navbar__search-input searchInput_YFbd" value=""><div class="loadingRing_RJI3 searchBarLoadingRing_YnHq"><div></div><div></div><div></div><div></div></div></div></div></div></div><div role="presentation" class="navbar-sidebar__backdrop"></div></nav><div id="__docusaurus_skipToContent_fallback" class="theme-layout-main main-wrapper mainWrapper_z2l0"><div class="docsWrapper_hBAB"><button aria-label="Scroll back to top" class="clean-btn theme-back-to-top-button backToTopButton_sjWU" type="button"></button><div class="docRoot_UBD9"><aside class="theme-doc-sidebar-container docSidebarContainer_YfHR"><div class="sidebarViewport_aRkj"><div class="sidebar_njMd"><nav aria-label="Docs sidebar" class="menu thin-scrollbar menu_SIkG"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist" href="/docs/master/concepts/"><span title="Concepts" class="categoryLinkLabel_W154">Concepts</span></a><button aria-label="Expand sidebar category &#x27;Concepts&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist" href="/docs/master/append-table/"><span title="Append Table" class="categoryLinkLabel_W154">Append Table</span></a><button aria-label="Expand sidebar category &#x27;Append Table&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist" href="/docs/master/primary-key-table/"><span title="PrimaryKey Table" class="categoryLinkLabel_W154">PrimaryKey Table</span></a><button aria-label="Expand sidebar category &#x27;PrimaryKey Table&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist" href="/docs/master/multimodal-table/"><span title="Multimodal Table" class="categoryLinkLabel_W154">Multimodal Table</span></a><button aria-label="Expand sidebar category &#x27;Multimodal Table&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist" href="/docs/master/flink/"><span title="Engine Flink" class="categoryLinkLabel_W154">Engine Flink</span></a><button aria-label="Expand sidebar category &#x27;Engine Flink&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--active" href="/docs/master/spark/"><span title="Engine Spark" class="categoryLinkLabel_W154">Engine Spark</span></a><button aria-label="Collapse sidebar category &#x27;Engine Spark&#x27;" aria-expanded="true" type="button" class="clean-btn menu__caret"></button></div><ul class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/docs/master/spark/quick-start"><span title="Quick Start" class="linkLabel_WmDU">Quick Start</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/docs/master/spark/sql-ddl"><span title="SQL DDL" class="linkLabel_WmDU">SQL DDL</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/docs/master/spark/sql-functions"><span title="SQL Functions" class="linkLabel_WmDU">SQL Functions</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/docs/master/spark/sql-write"><span title="SQL Write" class="linkLabel_WmDU">SQL Write</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/docs/master/spark/sql-query"><span title="SQL Query" class="linkLabel_WmDU">SQL Query</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/docs/master/spark/sql-alter"><span title="SQL Alter" class="linkLabel_WmDU">SQL Alter</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/docs/master/spark/auxiliary"><span title="Auxiliary" class="linkLabel_WmDU">Auxiliary</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/docs/master/spark/default-value"><span title="Default Value" class="linkLabel_WmDU">Default Value</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/docs/master/spark/dataframe"><span title="DataFrame" class="linkLabel_WmDU">DataFrame</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/docs/master/spark/sql-upsert"><span title="SQL Upsert" class="linkLabel_WmDU">SQL Upsert</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/docs/master/spark/structured-streaming"><span title="Structured Streaming" class="linkLabel_WmDU">Structured Streaming</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link menu__link--active" aria-current="page" tabindex="0" href="/docs/master/spark/procedures"><span title="Procedures" class="linkLabel_WmDU">Procedures</span></a></li></ul></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist" href="/docs/master/pypaimon/"><span title="PyPaimon &amp; AI" class="categoryLinkLabel_W154">PyPaimon &amp; AI</span></a><button aria-label="Expand sidebar category &#x27;PyPaimon &amp; AI&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist" href="/docs/master/ecosystem/"><span title="Ecosystem" class="categoryLinkLabel_W154">Ecosystem</span></a><button aria-label="Expand sidebar category &#x27;Ecosystem&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist" href="/docs/master/cdc-ingestion/"><span title="CDC Ingestion" class="categoryLinkLabel_W154">CDC Ingestion</span></a><button aria-label="Expand sidebar category &#x27;CDC Ingestion&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist" href="/docs/master/maintenance/"><span title="Maintenance" class="categoryLinkLabel_W154">Maintenance</span></a><button aria-label="Expand sidebar category &#x27;Maintenance&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist" href="/docs/master/program-api/"><span title="Program API" class="categoryLinkLabel_W154">Program API</span></a><button aria-label="Expand sidebar category &#x27;Program API&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist" href="/docs/master/migration/"><span title="Migration" class="categoryLinkLabel_W154">Migration</span></a><button aria-label="Expand sidebar category &#x27;Migration&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist" href="/docs/master/iceberg/"><span title="Iceberg Metadata" class="categoryLinkLabel_W154">Iceberg Metadata</span></a><button aria-label="Expand sidebar category &#x27;Iceberg Metadata&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist" href="/docs/master/project/"><span title="Project" class="categoryLinkLabel_W154">Project</span></a><button aria-label="Expand sidebar category &#x27;Project&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist" href="/docs/master/learn-paimon/"><span title="Learn Paimon" class="categoryLinkLabel_W154">Learn Paimon</span></a><button aria-label="Expand sidebar category &#x27;Learn Paimon&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li></ul></nav><button type="button" title="Collapse sidebar" aria-label="Collapse sidebar" class="button button--secondary button--outline collapseSidebarButton_PEFL"><svg width="20" height="20" aria-hidden="true" class="collapseSidebarButtonIcon_kv0_"><g fill="#7a7a7a"><path d="M9.992 10.023c0 .2-.062.399-.172.547l-4.996 7.492a.982.982 0 01-.828.454H1c-.55 0-1-.453-1-1 0-.2.059-.403.168-.551l4.629-6.942L.168 3.078A.939.939 0 010 2.528c0-.548.45-.997 1-.997h2.996c.352 0 .649.18.828.45L9.82 9.472c.11.148.172.347.172.55zm0 0"></path><path d="M19.98 10.023c0 .2-.058.399-.168.547l-4.996 7.492a.987.987 0 01-.828.454h-3c-.547 0-.996-.453-.996-1 0-.2.059-.403.168-.551l4.625-6.942-4.625-6.945a.939.939 0 01-.168-.55 1 1 0 01.996-.997h3c.348 0 .649.18.828.45l4.996 7.492c.11.148.168.347.168.55zm0 0"></path></g></svg></button></div></div></aside><main class="docMainContainer_TBSr"><div class="container padding-top--md padding-bottom--lg"><div class="row"><div class="col docItemCol_VOVn"><div class="docItemContainer_Djhp"><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_Z_bl" aria-label="Breadcrumbs"><ul class="breadcrumbs"><li class="breadcrumbs__item"><a aria-label="Home page" class="breadcrumbs__link" href="/docs/master/"><svg viewBox="0 0 24 24" class="breadcrumbHomeIcon_YNFT"><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill="currentColor"></path></svg></a></li><li class="breadcrumbs__item"><a class="breadcrumbs__link" href="/docs/master/spark/"><span>Engine Spark</span></a></li><li class="breadcrumbs__item breadcrumbs__item--active"><span class="breadcrumbs__link">Procedures</span></li></ul></nav><div class="theme-doc-markdown markdown"><header><h1>Procedures</h1></header>
+<p>This section introduce all available spark procedures about paimon.</p>
+<table class="table table-bordered">
+    <thead>
+    <tr>
+      <th class="text-left" style="width:4%">Procedure Name</th>
+      <th class="text-left" style="width:20%">Explanation</th>
+      <th class="text-left" style="width:4%">Example</th>
+    </tr>
+    </thead>
+    <tbody style="font-size:12px">
+    <tr>
+      <td>compact</td>
+      <td>
+         To compact files. Argument:
+            <li class="">table: the target table identifier. Cannot be empty.</li>
+            <li class="">partitions: partition filter. the comma (&quot;,&quot;) represents &quot;AND&quot;, the semicolon (&quot;;&quot;) represents &quot;OR&quot;. If you want to compact one partition with date=01 and day=01, you need to write &#x27;date=01,day=01&#x27;. Left empty for all partitions. (Can&#x27;t be used together with &quot;where&quot;)</li>
+            <li class="">where: partition predicate. Left empty for all partitions. (Can&#x27;t be used together with &quot;partitions&quot;)</li>          
+            <li class="">order_strategy: &#x27;order&#x27; or &#x27;zorder&#x27; or &#x27;hilbert&#x27; or &#x27;none&#x27;. Left empty for &#x27;none&#x27;.</li>
+            <li class="">order_by: the columns need to be sort. Left empty if &#x27;order_strategy&#x27; is &#x27;none&#x27;.</li>
+            <li class="">options: additional dynamic options of the table. It prioritizes higher than original `tableProp` and lower than `procedureArg`.</li>
+            <li class="">partition_idle_time: this is used to do a full compaction for partition which had not received any new data for &#x27;partition_idle_time&#x27;. And only these partitions will be compacted. This argument can not be used with order compact.</li>
+            <li class="">compact_strategy: this determines how to pick files to be merged, the default is determined by the runtime execution mode. &#x27;full&#x27; strategy only supports batch mode. All files will be selected for merging. &#x27;minor&#x27; strategy: Pick the set of files that need to be merged based on specified conditions.</li>
+      </td>
+      <td>
+         SET spark.sql.shuffle.partitions=10; --set the compact parallelism <br><br>
+         CALL sys.compact(table =&gt; &#x27;T&#x27;, partitions =&gt; &#x27;p=0;p=1&#x27;,  order_strategy =&gt; &#x27;zorder&#x27;, order_by =&gt; &#x27;a,b&#x27;) <br><br>
+         CALL sys.compact(table =&gt; &#x27;T&#x27;, where =&gt; &#x27;p&gt;0 and p&lt;3&#x27;, order_strategy =&gt; &#x27;zorder&#x27;, order_by =&gt; &#x27;a,b&#x27;) <br><br>
+         CALL sys.compact(table =&gt; &#x27;T&#x27;, where =&gt; &#x27;dt&gt;10 and h&lt;20&#x27;, order_strategy =&gt; &#x27;zorder&#x27;, order_by =&gt; &#x27;a,b&#x27;, options =&gt; &#x27;target-file-size=128m&#x27;)<br><br> 
+         CALL sys.compact(table =&gt; &#x27;T&#x27;, partition_idle_time =&gt; &#x27;60s&#x27;)<br><br>
+         CALL sys.compact(table =&gt; &#x27;T&#x27;, compact_strategy =&gt; &#x27;minor&#x27;)<br><br>
+      </td>
+    </tr>
+    <tr>
+      <td>compact_database</td>
+      <td>
+         To compact all tables across one or more databases. Arguments:
+            <li class="">including_databases: regular expression to match databases to compact. Left empty to match all databases (i.e. &#x27;.*&#x27;).</li>
+            <li class="">including_tables: regular expression to match table identifiers (in &#x27;db.table&#x27; form) to compact. Left empty to match all tables (i.e. &#x27;.*&#x27;).</li>
+            <li class="">excluding_tables: regular expression to match table identifiers to exclude from compaction.</li>
+            <li class="">options: additional dynamic options of the table. It prioritizes higher than original `tableProp` and lower than `procedureArg`.</li>
+      </td>
+      <td>
+         -- compact all databases<br>
+         CALL sys.compact_database()<br><br>
+         -- compact some databases (accept regular expression)<br>
+         CALL sys.compact_database(including_databases =&gt; &#x27;db1|db2&#x27;)<br><br>
+         -- compact some tables (accept regular expression)<br>
+         CALL sys.compact_database(including_databases =&gt; &#x27;db1&#x27;, including_tables =&gt; &#x27;db1.table1|db1.table2&#x27;)<br><br>
+         -- exclude some tables (accept regular expression)<br>
+         CALL sys.compact_database(including_databases =&gt; &#x27;db1&#x27;, including_tables =&gt; &#x27;.*&#x27;, excluding_tables =&gt; &#x27;.*ignore_table&#x27;)<br><br>
+         -- set table options<br>
+         CALL sys.compact_database(including_databases =&gt; &#x27;db1&#x27;, options =&gt; &#x27;target-file-size=128m&#x27;)
+      </td>
+    </tr>
+    <tr>
+      <td>compact_chain_table</td>
+      <td>
+         To compact chain table by merging snapshot and delta branches into the snapshot branch. Arguments:
+            <li class="">table: The target chain table identifier. Cannot be empty.</li>
+            <li class="">partition: Partition specification format (e.g., &#x27;dt=&quot;20250810&quot;,hour=&quot;22&quot;&#x27;). Cannot be empty.</li>
+            <li class="">overwrite: Whether to overwrite if the partition already exists in the snapshot branch. Default is false. Optional.</li>
+      </td>
+      <td>
+         CALL sys.compact_chain_table(table =&gt; &#x27;default.T&#x27;, partition =&gt; &#x27;dt=&quot;20250810&quot;,hour=&quot;22&quot;&#x27;)<br><br>
+      </td>
+    </tr>
+    <tr>
+      <td>expire_snapshots</td>
+      <td>
+         To expire snapshots. Argument:
+            <li class="">table: the target table identifier. Cannot be empty.</li>
+            <li class="">retain_max: the maximum number of completed snapshots to retain.</li>
+            <li class="">retain_min: the minimum number of completed snapshots to retain.</li>
+            <li class="">older_than: timestamp before which snapshots will be removed.</li>
+            <li class="">max_deletes: the maximum number of snapshots that can be deleted at once.</li>
+            <li class="">options: the additional dynamic options of the table. It prioritizes higher than original `tableProp` and lower than `procedureArg`.</li>
+      </td>
+      <td>CALL sys.expire_snapshots(table =&gt; &#x27;default.T&#x27;, retain_max =&gt; 10, options =&gt; &#x27;snapshot.expire.limit=1&#x27;)</td>
+    </tr>
+    <tr>
+      <td>expire_partitions</td>
+      <td>
+         To expire partitions. Argument:
+            <li class="">table: the target table identifier. Cannot be empty.</li>
+            <li class="">expiration_time: the expiration interval of a partition. A partition will be expired if it&#x27;s lifetime is over this value. Partition time is extracted from the partition value.</li>
+            <li class="">timestamp_formatter: the formatter to format timestamp from string.</li>
+            <li class="">timestamp_pattern: the pattern to get a timestamp from partitions.</li>
+            <li class="">expire_strategy: specifies the expiration strategy for partition expiration, possible values: &#x27;values-time&#x27; or &#x27;update-time&#x27; , &#x27;values-time&#x27; as default.</li>
+            <li class="">max_expires: The maximum of limited expired partitions, it is optional.</li>
+            <li class="">options: the additional dynamic options of the table. It prioritizes higher than original `tableProp` and lower than `procedureArg`.</li>
+      </td>
+      <td>CALL sys.expire_partitions(table =&gt; &#x27;default.T&#x27;, expiration_time =&gt; &#x27;1 d&#x27;, timestamp_formatter =&gt; 
+&#x27;yyyy-MM-dd&#x27;, timestamp_pattern =&gt; &#x27;$dt&#x27;, expire_strategy =&gt; &#x27;values-time&#x27;, options =&gt; &#x27;partition.expiration-max-num=2&#x27;)</td>
+    </tr>
+    <tr>
+      <td>create_tag</td>
+      <td>
+         To create a tag based on given snapshot. Arguments:
+            <li class="">table: the target table identifier. Cannot be empty.</li>
+            <li class="">tag: name of the new tag. Cannot be empty.</li>
+            <li class="">snapshot(Long):  id of the snapshot which the new tag is based on.</li>
+            <li class="">time_retained: The maximum time retained for newly created tags.</li>
+      </td>
+      <td>
+         -- based on snapshot 10 with 1d <br>
+         CALL sys.create_tag(table =&gt; &#x27;default.T&#x27;, tag =&gt; &#x27;my_tag&#x27;, snapshot =&gt; 10, time_retained =&gt; &#x27;1 d&#x27;) <br><br>
+         -- based on the latest snapshot <br>
+         CALL sys.create_tag(table =&gt; &#x27;default.T&#x27;, tag =&gt; &#x27;my_tag&#x27;)
+      </td>
+    </tr>
+    <tr>
+      <td>create_tag_from_timestamp</td>
+      <td>
+         To create a tag based on given timestamp. Arguments:
+            <li class="">table: the target table identifier. Cannot be empty.</li>
+            <li class="">tag: name of the new tag.</li>
+            <li class="">timestamp (Long): Find the first snapshot whose commit-time is greater than this timestamp.</li>
+            <li class="">time_retained : The maximum time retained for newly created tags.</li>
+      </td>
+      <td>
+         CALL sys.create_tag_from_timestamp(`table` =&gt; &#x27;default.T&#x27;, `tag` =&gt; &#x27;my_tag&#x27;, `timestamp` =&gt; 1724404318750, time_retained =&gt; &#x27;1 d&#x27;)
+      </td>
+    </tr>
+    <tr>
+      <td>rename_tag</td>
+      <td>
+         Rename a tag with a new tag name. Arguments:
+            <li class="">table: the target table identifier. Cannot be empty.</li>
+            <li class="">tag: name of the tag. Cannot be empty.</li>
+            <li class="">target_tag: the new tag name to rename. Cannot be empty.</li>
+      </td>
+      <td>
+         CALL sys.rename_tag(table =&gt; &#x27;default.T&#x27;, tag =&gt; &#x27;tag1&#x27;, target_tag =&gt; &#x27;tag2&#x27;)
+      </td>
+    </tr>
+    <tr>
+      <td>replace_tag</td>
+      <td>
+         Replace an existing tag with new tag info. Arguments:
+            <li class="">table: the target table identifier. Cannot be empty.</li>
+            <li class="">tag: name of the existed tag. Cannot be empty.</li>
+            <li class="">snapshot(Long):  id of the snapshot which the tag is based on, it is optional.</li>
+            <li class="">time_retained: The maximum time retained for the existing tag, it is optional.</li>
+      </td>
+      <td>
+         CALL sys.replace_tag(table =&gt; &#x27;default.T&#x27;, tag_name =&gt; &#x27;tag1&#x27;, snapshot =&gt; 10, time_retained =&gt; &#x27;1 d&#x27;)
+      </td>
+    </tr>
+    <tr>
+      <td>delete_tag</td>
+      <td>
+         To delete a tag. Arguments:
+            <li class="">table: the target table identifier. Cannot be empty.</li>
+            <li class="">tag: name of the tag to be deleted. If you specify multiple tags, delimiter is &#x27;,&#x27;.</li>
+      </td>
+      <td>CALL sys.delete_tag(table =&gt; &#x27;default.T&#x27;, tag =&gt; &#x27;my_tag&#x27;)</td>
+    </tr>
+    <tr>
+      <td>expire_tags</td>
+      <td>
+         To expire tags by time. Arguments:
+            <li class="">table: the target table identifier. Cannot be empty.</li>
+            <li class="">older_than: tagCreateTime before which tags will be removed.</li>
+      </td>
+      <td>
+         CALL sys.expire_tags(table =&gt; &#x27;default.T&#x27;, older_than =&gt; &#x27;2024-09-06 11:00:00&#x27;)
+      </td>
+    </tr>
+    <tr>
+      <td>trigger_tag_automatic_creation</td>
+      <td>
+         Trigger the tag automatic creation. Arguments:
+            <li class="">table: the target table identifier. Cannot be empty.</li>
+      </td>
+      <td>
+         CALL sys.trigger_tag_automatic_creation(table =&gt; &#x27;default.T&#x27;)
+      </td>
+    </tr>
+    <tr>
+      <td>rollback</td>
+      <td>
+         To rollback to a specific version of target table, note version/snapshot/tag must set one of them. Argument:
+            <li class="">table: the target table identifier. Cannot be empty.</li>
+            <li class="">version: id of the snapshot or name of tag that will roll back to, version would be Deprecated.</li>
+            <li class="">snapshot: snapshot that will roll back to.</li>
+            <li class="">tag: tag that will roll back to.</li>
+      </td>
+      <td>
+          CALL sys.rollback(table =&gt; &#x27;default.T&#x27;, version =&gt; &#x27;my_tag&#x27;)<br><br>
+          CALL sys.rollback(table =&gt; &#x27;default.T&#x27;, version =&gt; 10)<br><br>
+          CALL sys.rollback(table =&gt; &#x27;default.T&#x27;, tag =&gt; &#x27;tag1&#x27;)
+          CALL sys.rollback(table =&gt; &#x27;default.T&#x27;, snapshot =&gt; 2)
+      </td>
+    </tr>
+    <tr>
+      <td>rollback_to_timestamp</td>
+      <td>
+         To rollback to the snapshot which earlier or equal than timestamp. Argument:
+            <li class="">table: the target table identifier. Cannot be empty.</li>
+            <li class="">timestamp: roll back to the snapshot which earlier or equal than timestamp.</li>
+      </td>
+      <td>
+          CALL sys.rollback_to_timestamp(table =&gt; &#x27;default.T&#x27;, timestamp =&gt; 1730292023000)<br><br>
+      </td>
+    </tr>
+    <tr>
+      <td>rollback_to_watermark</td>
+      <td>
+         To rollback to the snapshot which earlier or equal than watermark. Argument:
+            <li class="">table: the target table identifier. Cannot be empty.</li>
+            <li class="">watermark: roll back to the snapshot which earlier or equal than watermark.</li>
+      </td>
+      <td>
+          CALL sys.rollback_to_watermark(table =&gt; &#x27;default.T&#x27;, watermark =&gt; 1730292023000)<br><br>
+      </td>
+    </tr>
+    <tr>
+      <td>purge_files</td>
+      <td>
+         To clear table with purge files. Argument:
+            <li class="">table: the target table identifier. Cannot be empty.</li>
+      </td>
+      <td>
+          CALL sys.purge_files(table =&gt; &#x27;default.T&#x27;)<br>
+      </td>
+    </tr>
+    <tr>
+      <td>migrate_database</td>
+      <td>
+         Migrate all hive tables in database to paimon tables. Arguments:
+            <li class="">source_type: the origin database&#x27;s type to be migrated, such as hive. Cannot be empty.</li>
+            <li class="">database: name of the origin database to be migrated. Cannot be empty.</li>
+            <li class="">options: the table options of the paimon table to migrate.</li>
+            <li class="">options_map: Options map for adding key-value options which is a map.</li>
+            <li class="">parallelism: the parallelism for migrate process, default is core numbers of machine.</li>
+      </td>
+      <td>CALL sys.migrate_database(source_type =&gt; &#x27;hive&#x27;, database =&gt; &#x27;db01&#x27;, options =&gt; &#x27;file.format=parquet&#x27;, options_map =&gt; map(&#x27;k1&#x27;,&#x27;v1&#x27;), parallelism =&gt; 6)</td>
+    </tr>
+    <tr>
+      <td>migrate_table</td>
+      <td>
+         Migrate hive table to a paimon table. Arguments:
+            <li class="">source_type: the origin table&#x27;s type to be migrated, such as hive. Cannot be empty.</li>
+            <li class="">table: name of the origin table to be migrated. Cannot be empty.</li>
+            <li class="">options: the table options of the paimon table to migrate.</li>
+            <li class="">target_table: name of the target paimon table to migrate. If not set would keep the same name with origin table</li>
+            <li class="">delete_origin: If had set target_table, can set delete_origin to decide whether delete the origin table metadata from hms after migrate. Default is true</li>
+            <li class="">options_map: Options map for adding key-value options which is a map.</li>
+            <li class="">parallelism: the parallelism for migrate process, default is core numbers of machine.</li>
+      </td>
+      <td>CALL sys.migrate_table(source_type =&gt; &#x27;hive&#x27;, table =&gt; &#x27;default.T&#x27;, options =&gt; &#x27;file.format=parquet&#x27;, options_map =&gt; map(&#x27;k1&#x27;,&#x27;v1&#x27;), parallelism =&gt; 6)</td>
+    </tr>
+    <tr>
+      <td>remove_orphan_files</td>
+      <td>
+         To remove the orphan data files and metadata files. Arguments:
+            <li class="">table: the target table identifier. Cannot be empty, you can use database_name.* to clean whole database.</li>
+            <li class="">older_than: to avoid deleting newly written files, this procedure only deletes orphan files older than 1 day by default. This argument can modify the interval.</li>
+            <li class="">dry_run: when true, view only orphan files, don&#x27;t actually remove files. Default is false.</li>
+            <li class="">parallelism: The maximum number of concurrent deleting files. By default is the number of processors available to the Java virtual machine.</li>
+            <li class="">mode: The mode of remove orphan clean procedure (local or distributed) . By default is distributed.</li>
+      </td>
+      <td>
+          CALL sys.remove_orphan_files(table =&gt; &#x27;default.T&#x27;, older_than =&gt; &#x27;2023-10-31 12:00:00&#x27;)<br><br>
+          CALL sys.remove_orphan_files(table =&gt; &#x27;default.*&#x27;, older_than =&gt; &#x27;2023-10-31 12:00:00&#x27;)<br><br>
+          CALL sys.remove_orphan_files(table =&gt; &#x27;default.T&#x27;, older_than =&gt; &#x27;2023-10-31 12:00:00&#x27;, dry_run =&gt; true)<br><br>
+          CALL sys.remove_orphan_files(table =&gt; &#x27;default.T&#x27;, older_than =&gt; &#x27;2023-10-31 12:00:00&#x27;, dry_run =&gt; true, parallelism =&gt; 5)<br><br>
+          CALL sys.remove_orphan_files(table =&gt; &#x27;default.T&#x27;, older_than =&gt; &#x27;2023-10-31 12:00:00&#x27;, dry_run =&gt; true, parallelism =&gt; 5, mode =&gt; &#x27;local&#x27;)
+      </td>
+    </tr>
+    <tr>
+      <td>remove_unexisting_files</td>
+      <td>
+        Procedure to remove unexisting data files from manifest entries. See <a href="https://paimon.apache.org/docs/master/api/java/org/apache/paimon/flink/action/RemoveUnexistingFilesAction.html" target="_blank" rel="noopener noreferrer" class="">Java docs</a> for detailed use cases. Arguments:
+            <li class="">table: the target table identifier. Cannot be empty, you can use database_name.* to clean whole database.</li>
+            <li class="">dry_run (optional): only check what files will be removed, but not really remove them. Default is false.</li>
+            <li class="">parallelism (optional): number of parallelisms to check files in the manifests.</li>
+         <br>
+         Note that user is on his own risk using this procedure, which may cause data loss when used outside from the use cases listed in Java docs.
+      </td>
+      <td>
+        -- remove unexisting data files in the table `mydb.myt`<br>
+        CALL sys.remove_unexisting_files(table =&gt; &#x27;mydb.myt&#x27;)<br><br>
+        -- only check what files will be removed, but not really remove them (dry run)<br>
+        CALL sys.remove_unexisting_files(table =&gt; &#x27;mydb.myt&#x27;, dry_run = true)
+      </td>
+   </tr>
+    <tr>
+      <td>repair</td>
+      <td>
+         Synchronize information from the file system to Metastore. Argument:
+            <li class="">database_or_table: empty or the target database name or the target table identifier, if you specify multiple tags, delimiter is &#x27;,&#x27;</li>
+      </td>
+      <td>
+          CALL sys.repair(&#x27;test_db.T&#x27;)<br><br>
+          CALL sys.repair(&#x27;test_db.T,test_db01,test_db.T2&#x27;)
+      </td>
+    </tr>
+    <tr>
+      <td>create_branch</td>
+      <td>
+         To merge a branch to main branch. Arguments:
+            <li class="">table: the target table identifier or branch identifier. Cannot be empty.</li>
+            <li class="">branch: name of the branch to be merged.</li>
+            <li class="">tag: name of the new tag. Cannot be empty.</li>
+            <li class="">ignoreIfExists: ignore if branch exists, default is false.</li>
+      </td>
+      <td>
+          CALL sys.create_branch(table =&gt; &#x27;test_db.T&#x27;, branch =&gt; &#x27;test_branch&#x27;)<br><br>
+          CALL sys.create_branch(table =&gt; &#x27;test_db.T&#x27;, branch =&gt; &#x27;test_branch&#x27;, tag =&gt; &#x27;my_tag&#x27;)<br><br>
+          CALL sys.create_branch(table =&gt; &#x27;test_db.T$branch_existBranchName&#x27;, branch =&gt; &#x27;test_branch&#x27;, tag =&gt; &#x27;my_tag&#x27;)<br><br>
+      </td>
+    </tr>
+    <tr>
+      <td>delete_branch</td>
+      <td>
+         To merge a branch to main branch. Arguments:
+            <li class="">table: the target table identifier. Cannot be empty.</li>
+            <li class="">branch: name of the branch to be merged. If you specify multiple branches, delimiter is &#x27;,&#x27;.</li>
+      </td>
+      <td>
+          CALL sys.delete_branch(table =&gt; &#x27;test_db.T&#x27;, branch =&gt; &#x27;test_branch&#x27;)
+      </td>
+    </tr>
+    <tr>
+      <td>rename_branch</td>
+      <td>
+         To rename a branch. Arguments:
+            <li class="">table: the target table identifier. Cannot be empty.</li>
+            <li class="">from_branch: name of the branch to be renamed.</li>
+            <li class="">to_branch: new name of the branch.</li>
+      </td>
+      <td>
+          CALL sys.rename_branch(table =&gt; &#x27;test_db.T&#x27;, from_branch =&gt; &#x27;test_branch&#x27;, to_branch =&gt; &#x27;new_branch&#x27;)
+      </td>
+    </tr>
+    <tr>
+      <td>fast_forward</td>
+      <td>
+         To fast_forward a branch to main branch. Arguments:
+            <li class="">table: the target table identifier. Cannot be empty.</li>
+            <li class="">branch: name of the branch to be merged.</li>
+      </td>
+      <td>
+          CALL sys.fast_forward(table =&gt; &#x27;test_db.T&#x27;, branch =&gt; &#x27;test_branch&#x27;)
+      </td>
+    </tr>
+   <tr>
+      <td>merge_branch</td>
+      <td>
+         Merge data files from source branch into target branch for append-only tables.
+         The table must be created with <code>&#x27;branch-merge.enabled&#x27; = &#x27;true&#x27;</code>. This option enforces a pure-append table history by rejecting compaction and INSERT OVERWRITE, and it is incompatible with deletion vectors.
+         Requires compatible schema history and consistent row-tracking settings between source and target. Arguments:
+            <li class="">table: the table identifier. Cannot be empty.</li>
+            <li class="">source_branch: name of the source branch to merge from. Cannot be empty.</li>
+            <li class="">target_branch(optional): name of the target branch to merge into. Default is &#x27;main&#x27;.</li>
+      </td>
+      <td>
+         CALL sys.merge_branch(table =&gt; &#x27;test_db.T&#x27;, source_branch =&gt; &#x27;branch1&#x27;)<br><br>
+         CALL sys.merge_branch(table =&gt; &#x27;test_db.T&#x27;, source_branch =&gt; &#x27;branch1&#x27;, target_branch =&gt; &#x27;branch2&#x27;)
+      </td>
+    </tr>
+   <tr>
+      <td>reset_consumer</td>
+      <td>
+         To reset or delete consumer. Arguments:
+            <li class="">table: the target table identifier. Cannot be empty.</li>
+            <li class="">consumerId: consumer to be reset or deleted.</li>
+            <li class="">nextSnapshotId (Long): the new next snapshot id of the consumer.</li>
+      </td>
+      <td>
+         -- reset the new next snapshot id in the consumer<br>
+         CALL sys.reset_consumer(table =&gt; &#x27;default.T&#x27;, consumerId =&gt; &#x27;myid&#x27;, nextSnapshotId =&gt; 10)<br><br>
+         -- delete consumer<br>
+         CALL sys.reset_consumer(table =&gt; &#x27;default.T&#x27;, consumerId =&gt; &#x27;myid&#x27;)
+      </td>
+   </tr>
+   <tr>
+      <td>clear_consumers</td>
+      <td>
+         To clear consumers. Arguments:
+            <li class="">table: the target table identifier. Cannot be empty.</li>
+            <li class="">includingConsumers: consumers to be cleared.</li>
+            <li class="">excludingConsumers: consumers which not to be cleared.</li>
+      </td>
+      <td>
+         -- clear all consumers in the table<br>
+         CALL sys.clear_consumers(table =&gt; &#x27;default.T&#x27;)<br><br>
+         -- clear some consumers in the table (accept regular expression)<br>
+         CALL sys.clear_consumers(table =&gt; &#x27;default.T&#x27;, includingConsumers =&gt; &#x27;myid.*&#x27;)<br><br>
+         -- clear all consumers except excludingConsumers in the table (accept regular expression)<br>
+         CALL sys.clear_consumers(table =&gt; &#x27;default.T&#x27;, includingConsumers =&gt; &#x27;&#x27;, excludingConsumers =&gt; &#x27;myid1.*&#x27;)<br><br>
+         -- clear all consumers with includingConsumers and excludingConsumers (accept regular expression)<br>
+         CALL sys.clear_consumers(table =&gt; &#x27;default.T&#x27;, includingConsumers =&gt; &#x27;myid.*&#x27;, excludingConsumers =&gt; &#x27;myid1.*&#x27;)
+      </td>
+   </tr>
+    <tr>
+      <td>mark_partition_done</td>
+      <td>
+         To mark partition to be done. Arguments:
+            <li class="">table: the target table identifier. Cannot be empty.</li>
+            <li class="">partitions: partitions need to be mark done, If you specify multiple partitions, delimiter is &#x27;;&#x27;.</li>
+      </td>
+      <td>
+         -- mark single partition done<br>
+         CALL sys.mark_partition_done(table =&gt; &#x27;default.T&#x27;, partitions =&gt; &#x27;day=2024-07-01&#x27;)<br><br>
+         -- mark multiple partitions done<br>
+         CALL sys.mark_partition_done(table =&gt; &#x27;default.T&#x27;, partitions =&gt; &#x27;day=2024-07-01;day=2024-07-02&#x27;)
+      </td>
+   </tr>
+   <tr>
+      <td>compact_manifest</td>
+      <td>
+         To compact_manifest the manifests. Arguments:
+            <li class="">table: the target table identifier. Cannot be empty.</li>
+            <li class="">options: the additional dynamic options of the table. It prioritizes higher than original `tableProp` and lower than `procedureArg`.</li>
+            <li class="">dry_run (Boolean, optional): when true, logs manifest metadata statistics without actually compacting. The result is printed to the application log; the SQL return value is still `true`.</li>
+      </td>
+      <td>
+         CALL sys.compact_manifest(`table` =&gt; &#x27;default.T&#x27;)<br>
+         CALL sys.compact_manifest(`table` =&gt; &#x27;default.T&#x27;, dry_run =&gt; true)
+      </td>
+   </tr>
+   <tr>
+      <td>alter_view_dialect</td>
+      <td>
+         To alter view dialect. Arguments:
+            <li class="">view: the target view identifier. Cannot be empty.</li>
+            <li class="">action: define change action like: add, update, drop. Cannot be empty.</li>
+            <li class="">engine: when engine which is not spark need define it.</li>
+            <li class="">query: query for the dialect when action is add and update it couldn&#x27;t be empty.</li>
+      </td>
+      <td>
+         -- add dialect in the view<br>
+         CALL sys.alter_view_dialect(&#x27;view_identifier&#x27;, &#x27;add&#x27;, &#x27;spark&#x27;, &#x27;query&#x27;)<br>
+         CALL sys.alter_view_dialect(`view` =&gt; &#x27;view_identifier&#x27;, `action` =&gt; &#x27;add&#x27;, `query` =&gt; &#x27;query&#x27;)<br><br>
+         -- update dialect in the view<br>
+         CALL sys.alter_view_dialect(&#x27;view_identifier&#x27;, &#x27;update&#x27;, &#x27;spark&#x27;, &#x27;query&#x27;)<br>
+         CALL sys.alter_view_dialect(`view` =&gt; &#x27;view_identifier&#x27;, `action` =&gt; &#x27;update&#x27;, `query` =&gt; &#x27;query&#x27;)<br><br>
+         -- drop dialect in the view<br>
+         CALL sys.alter_view_dialect(&#x27;view_identifier&#x27;, &#x27;drop&#x27;, &#x27;spark&#x27;)<br>
+         CALL sys.alter_view_dialect(`view` =&gt; &#x27;view_identifier&#x27;, `action` =&gt; &#x27;drop&#x27;)<br><br>
+      </td>
+   </tr>
+      <tr>
+      <td>create_function</td>
+      <td>
+         To create a function. Arguments:
+            <li class="">function: the target function identifier. Cannot be empty.</li>
+            <li class="">inputParams: inputParams of the function.</li>
+            <li class="">returnParams: returnParams of the function.</li>
+            <li class="">deterministic: Whether the function is deterministic.</li>
+            <li class="">comment: The comment for the function.</li>
+            <li class="">options: the additional dynamic options of the function.</li>
+      </td>
+      <td>
+         CALL sys.create_function(`function` =&gt; &#x27;function_identifier&#x27;,<br>
+              `inputParams` =&gt; &#x27;[{&quot;id&quot;: 0, &quot;name&quot;:&quot;length&quot;, &quot;type&quot;:&quot;INT&quot;}, {&quot;id&quot;: 1, &quot;name&quot;:&quot;width&quot;, &quot;type&quot;:&quot;INT&quot;}]&#x27;,<br>
+              `returnParams` =&gt; &#x27;[{&quot;id&quot;: 0, &quot;name&quot;:&quot;area&quot;, &quot;type&quot;:&quot;BIGINT&quot;}]&#x27;,<br>
+              `deterministic` =&gt; true,<br>
+              `comment` =&gt; &#x27;comment&#x27;,<br>
+              `options` =&gt; &#x27;k1=v1,k2=v2&#x27;<br>
+         )<br>
+      </td>
+   </tr>
+   <tr>
+      <td>alter_function</td>
+      <td>
+         To alter a function. Arguments:
+            <li class="">function: the target function identifier. Cannot be empty.</li>
+            <li class="">change: change of the function.</li>
+      </td>
+      <td>
+         CALL sys.alter_function(`function` =&gt; &#x27;function_identifier&#x27;,<br>
+              `change` =&gt; &#x27;{&quot;action&quot; : &quot;addDefinition&quot;, &quot;name&quot; : &quot;spark&quot;, &quot;definition&quot; : {&quot;type&quot; : &quot;lambda&quot;, &quot;definition&quot; : &quot;(Integer length, Integer width) -&gt; { return (long) length * width; }&quot;, &quot;language&quot;: &quot;JAVA&quot; } }&#x27;<br>
+         )<br>
+      </td>
+   </tr>
+   <tr>
+      <td>drop_function</td>
+      <td>
+         To drop a function. Arguments:
+            <li class="">function: the target function identifier. Cannot be empty.</li>
+      </td>
+      <td>
+         CALL sys.drop_function(`function` =&gt; &#x27;function_identifier&#x27;)<br>
+      </td>
+   </tr>
+   <tr>
+      <td>rewrite_file_index</td>
+      <td>
+         To rewrite the file index for the table. Arguments:
+            <li class="">table: the target table identifier. Cannot be empty.</li>
+            <li class="">where: partition predicate. Left empty for all partitions.</li>
+      </td>
+      <td>
+         CALL sys.rewrite_file_index(table =&gt; &quot;t&quot;)<br>
+         CALL sys.rewrite_file_index(table =&gt; &quot;t&quot;, where =&gt; &quot;day = &#x27;2025-08-17&#x27;&quot;)<br>
+      </td>
+   </tr>
+   <tr>
+      <td>create_global_index</td>
+      <td>
+         To create global index files for a given column. The table must have <code>row-tracking.enabled=true</code>. Arguments:
+            <li class="">table: the target table identifier. Cannot be empty.</li>
+            <li class="">index_column: the name of the column to index. Cannot be empty.</li>
+            <li class="">index_type: type of the index to build, e.g. &#x27;btree&#x27; or &#x27;bitmap&#x27;. Cannot be empty.</li>
+            <li class="">partitions: partition filter to limit the partitions on which to build the index. The comma (&quot;,&quot;) represents &quot;AND&quot;, the semicolon (&quot;;&quot;) represents &quot;OR&quot;. Left empty for all partitions.</li>
+            <li class="">options: additional dynamic options of the table. It prioritizes higher than original `tableProp` and lower than `procedureArg`.</li>
+      </td>
+      <td>
+         CALL sys.create_global_index(table =&gt; &#x27;default.T&#x27;, index_column =&gt; &#x27;name&#x27;, index_type =&gt; &#x27;btree&#x27;)<br><br>
+         CALL sys.create_global_index(table =&gt; &#x27;default.T&#x27;, index_column =&gt; &#x27;tag&#x27;, index_type =&gt; &#x27;bitmap&#x27;, options =&gt; &#x27;sorted-index.records-per-range=1000000&#x27;)<br><br>
+         CALL sys.create_global_index(table =&gt; &#x27;default.T&#x27;, index_column =&gt; &#x27;name&#x27;, index_type =&gt; &#x27;btree&#x27;, partitions =&gt; &#x27;pt=p1;pt=p2&#x27;)<br><br>
+         CALL sys.create_global_index(table =&gt; &#x27;default.T&#x27;, index_column =&gt; &#x27;content&#x27;, index_type =&gt; &#x27;full-text&#x27;, options =&gt; &#x27;full-text.tokenizer=ngram,full-text.ngram.min-gram=2,full-text.ngram.max-gram=2&#x27;)<br><br>
+         CALL sys.create_global_index(table =&gt; &#x27;default.T&#x27;, index_column =&gt; &#x27;content&#x27;, index_type =&gt; &#x27;full-text&#x27;, options =&gt; &#x27;full-text.tokenizer=jieba&#x27;)<br><br>
+         CALL sys.create_global_index(table =&gt; &#x27;default.T&#x27;, index_column =&gt; &#x27;content&#x27;, index_type =&gt; &#x27;full-text&#x27;, options =&gt; &#x27;full-text.tokenizer=simple,full-text.stem=true,full-text.remove-stop-words=true&#x27;)
+      </td>
+   </tr>
+   <tr>
+      <td>drop_global_index</td>
+      <td>
+         To drop global index files for a given column. Arguments:
+            <li class="">table: the target table identifier. Cannot be empty.</li>
+            <li class="">index_column: the name of the indexed column. Cannot be empty.</li>
+            <li class="">index_type: type of the index to drop, e.g. &#x27;btree&#x27;. Cannot be empty.</li>
+            <li class="">partitions: partition filter to limit the partitions from which to drop the index. The comma (&quot;,&quot;) represents &quot;AND&quot;, the semicolon (&quot;;&quot;) represents &quot;OR&quot;. Left empty for all partitions.</li>
+            <li class="">dry_run: when true, return the number of index files that would be dropped without committing any change. Default is false.</li>
+      </td>
+      <td>
+         CALL sys.drop_global_index(table =&gt; &#x27;default.T&#x27;, index_column =&gt; &#x27;name&#x27;, index_type =&gt; &#x27;btree&#x27;, partitions =&gt; &#x27;pt=p1&#x27;)<br><br>
+         -- Preview what would be dropped without deleting<br>
+         CALL sys.drop_global_index(table =&gt; &#x27;default.T&#x27;, index_column =&gt; &#x27;name&#x27;, index_type =&gt; &#x27;btree&#x27;, dry_run =&gt; true)
+      </td>
+   </tr>
+   <tr>
+      <td>copy</td>
+      <td>
+         copy table files. Arguments:
+            <li class="">source_table: the source table identifier. Cannot be empty.</li>
+            <li class="">target_table: the target table identifier. Cannot be empty.</li>
+            <li class="">where: partition predicate. Left empty for all partitions.</li>
+      </td>
+      <td>
+         CALL sys.copy(source_table =&gt; &quot;t1&quot;, target_table =&gt; &quot;t1_copy&quot;)<br>
+         CALL sys.copy(source_table =&gt; &quot;t1&quot;, target_table =&gt; &quot;t1_copy&quot;, where =&gt; &quot;day = &#x27;2025-08-17&#x27;&quot;)<br>
+      </td>
+   </tr>
+   <tr>
+      <td>rescale</td>
+      <td>
+         Rescale partitions of a table by changing the bucket number. Arguments:
+            <li class="">table: the target table identifier. Cannot be empty.</li>
+            <li class="">bucket_num: resulting bucket number after rescale. The default value is the current bucket number of the table. Cannot be empty for postpone bucket tables.</li>
+            <li class="">partitions: partition filter. Left empty for all partitions. (Can&#x27;t be used together with &quot;where&quot;)</li>
+            <li class="">where: partition predicate. Left empty for all partitions. (Can&#x27;t be used together with &quot;partitions&quot;)</li>
+      </td>
+      <td>
+         CALL sys.rescale(table =&gt; &#x27;default.T&#x27;, bucket_num =&gt; 16, partitions =&gt; &#x27;dt=20250217,hh=08;dt=20250217,hh=09&#x27;)<br>
+      </td>
+   </tr>
+   </tbody></table></div><footer class="theme-doc-footer docusaurus-mt-lg"><div class="row margin-top--sm theme-doc-footer-edit-meta-row"><div class="col noPrint_WFHX"><a href="https://github.com/apache/paimon/edit/master/docs/docs/spark/procedures.md" target="_blank" rel="noopener noreferrer" class="theme-edit-this-page"><svg fill="currentColor" height="20" width="20" viewBox="0 0 40 40" class="iconEdit_Z9Sw" aria-hidden="true"><g><path d="m34.5 11.7l-3 3.1-6.3-6.3 3.1-3q0.5-0.5 1.2-0.5t1.1 0.5l3.9 3.9q0.5 0.4 0.5 1.1t-0.5 1.2z m-29.5 17.1l18.4-18.5 6.3 6.3-18.4 18.4h-6.3v-6.2z"></path></g></svg>Edit this page</a></div><div class="col lastUpdated_JAkA"></div></div></footer></article><nav class="docusaurus-mt-lg pagination-nav" aria-label="Docs pages"><a class="pagination-nav__link pagination-nav__link--prev" href="/docs/master/spark/structured-streaming"><div class="pagination-nav__sublabel">Previous</div><div class="pagination-nav__label">Structured Streaming</div></a><a class="pagination-nav__link pagination-nav__link--next" href="/docs/master/pypaimon/"><div class="pagination-nav__sublabel">Next</div><div class="pagination-nav__label">PyPaimon</div></a></nav></div></div></div></div></main></div></div></div><footer class="theme-layout-footer footer footer--dark"><div class="container container-fluid"><div class="row footer__links"><div class="theme-layout-footer-column col footer__col"><div class="footer__title">Documentation</div><ul class="footer__items clean-list"><li class="footer__item"><a class="footer__link-item" href="/docs/master/flink/quick-start">Getting Started</a></li><li class="footer__item"><a class="footer__link-item" href="/docs/master/concepts/overview">Concepts</a></li></ul></div><div class="theme-layout-footer-column col footer__col"><div class="footer__title">Community</div><ul class="footer__items clean-list"><li class="footer__item"><a href="https://github.com/apache/paimon" target="_blank" rel="noopener noreferrer" class="footer__link-item">GitHub<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a></li><li class="footer__item"><a href="https://paimon.apache.org/community/mailing-lists" target="_blank" rel="noopener noreferrer" class="footer__link-item">Mailing List<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a></li></ul></div></div><div class="footer__bottom text--center"><div class="footer__copyright">Copyright © 2026 The Apache Software Foundation. Apache Paimon, Paimon, and the Paimon logo are trademarks of the Apache Software Foundation.</div></div></div></footer></div>
+</body>
+</html>

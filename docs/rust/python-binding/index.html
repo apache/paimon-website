@@ -1,0 +1,1682 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="The Rust implementation of Apache Paimon">
+      
+      
+      
+        <link rel="canonical" href="https://apache.github.io/paimon-rust/python-binding/">
+      
+      
+        <link rel="prev" href="../go-binding/">
+      
+      
+        <link rel="next" href="../architecture/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Python Integration - Apache Paimon Rust</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#python-integration" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Apache Paimon Rust" class="md-header__button md-logo" aria-label="Apache Paimon Rust" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Apache Paimon Rust
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Python Integration
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/apache/paimon-rust" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    apache/paimon-rust
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Apache Paimon Rust" class="md-nav__button md-logo" aria-label="Apache Paimon Rust" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Apache Paimon Rust
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/apache/paimon-rust" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    apache/paimon-rust
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../getting-started/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sql/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SQL Integration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../benchmark/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Performance
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../c-binding/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    C Integration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../go-binding/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Go Integration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Python Integration
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Python Integration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prerequisites
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#installation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Installation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#creating-a-catalog" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Creating a Catalog
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Creating a Catalog">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#alibaba-cloud-oss" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Alibaba Cloud OSS
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rest-catalog" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        REST Catalog
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sql-context" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SQL Context
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reading-a-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reading a Table
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#writing-to-a-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Writing to a Table
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#column-projection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Column Projection
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#limit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Limit
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#case-sensitivity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Case Sensitivity
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#filter-push-down" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Filter Push-Down
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Filter Push-Down">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#predicate-format" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Predicate Format
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#applying-filters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Applying Filters
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#compound-predicates" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Compound Predicates
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#supported-literal-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Supported Literal Types
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#time-travel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Time Travel
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#table-inspection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Table Inspection
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#python-udf" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Python UDF
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#complete-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Complete Example
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../contributing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contributing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_10" >
+        
+          
+          <label class="md-nav__link" for="__nav_10" id="__nav_10_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Releases
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_10">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Releases
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../releases/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Releases
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../release/creating-a-release/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Creating a Release
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../release/verifying-a-release-candidate/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Verifying a Release Candidate
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prerequisites
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#installation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Installation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#creating-a-catalog" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Creating a Catalog
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Creating a Catalog">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#alibaba-cloud-oss" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Alibaba Cloud OSS
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rest-catalog" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        REST Catalog
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sql-context" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SQL Context
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reading-a-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reading a Table
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#writing-to-a-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Writing to a Table
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#column-projection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Column Projection
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#limit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Limit
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#case-sensitivity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Case Sensitivity
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#filter-push-down" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Filter Push-Down
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Filter Push-Down">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#predicate-format" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Predicate Format
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#applying-filters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Applying Filters
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#compound-predicates" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Compound Predicates
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#supported-literal-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Supported Literal Types
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#time-travel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Time Travel
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#table-inspection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Table Inspection
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#python-udf" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Python UDF
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#complete-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Complete Example
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+
+<h1 id="python-integration">Python Integration<a class="headerlink" href="#python-integration" title="Permanent link">&para;</a></h1>
+<p>The Python integration is a binding built on top of Apache Paimon Rust, allowing you to access Paimon tables from Python programs. It uses <a href="https://arrow.apache.org/docs/python/">PyArrow</a> for zero-copy data transfer via the <a href="https://arrow.apache.org/docs/format/CDataInterface.html">Arrow C Data Interface</a>.</p>
+<h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Python 3.10 or later</li>
+<li>Supported platforms: Linux (amd64, arm64), macOS (amd64, arm64), Windows (amd64)</li>
+</ul>
+<h2 id="installation">Installation<a class="headerlink" href="#installation" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>pip<span class="w"> </span>install<span class="w"> </span>pypaimon-rust<span class="w"> </span>pyarrow
+</code></pre></div>
+<p>The pre-built native library is embedded in the package and automatically loaded at runtime — no manual build step is needed. <a href="https://arrow.apache.org/docs/python/">PyArrow</a> is a required peer dependency and must be installed separately.</p>
+<h2 id="creating-a-catalog">Creating a Catalog<a class="headerlink" href="#creating-a-catalog" title="Permanent link">&para;</a></h2>
+<p>Use <code>PaimonCatalog</code> with a dictionary of options to create a catalog. The catalog type is determined by the <code>metastore</code> option (default: <code>filesystem</code>).</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">pypaimon_rust.datafusion</span><span class="w"> </span><span class="kn">import</span> <span class="n">PaimonCatalog</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="c1"># Local filesystem</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="n">catalog</span> <span class="o">=</span> <span class="n">PaimonCatalog</span><span class="p">({</span><span class="s2">&quot;warehouse&quot;</span><span class="p">:</span> <span class="s2">&quot;/path/to/warehouse&quot;</span><span class="p">})</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="c1"># List databases and tables</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="nb">print</span><span class="p">(</span><span class="n">catalog</span><span class="o">.</span><span class="n">list_databases</span><span class="p">())</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="nb">print</span><span class="p">(</span><span class="n">catalog</span><span class="o">.</span><span class="n">list_tables</span><span class="p">(</span><span class="s2">&quot;default&quot;</span><span class="p">))</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="c1"># Get a table handle</span>
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="n">table</span> <span class="o">=</span> <span class="n">catalog</span><span class="o">.</span><span class="n">get_table</span><span class="p">(</span><span class="s2">&quot;default.my_table&quot;</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="alibaba-cloud-oss">Alibaba Cloud OSS<a class="headerlink" href="#alibaba-cloud-oss" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="n">catalog</span> <span class="o">=</span> <span class="n">PaimonCatalog</span><span class="p">({</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>    <span class="s2">&quot;warehouse&quot;</span><span class="p">:</span> <span class="s2">&quot;oss://bucket/warehouse&quot;</span><span class="p">,</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>    <span class="s2">&quot;fs.oss.accessKeyId&quot;</span><span class="p">:</span> <span class="s2">&quot;your-access-key-id&quot;</span><span class="p">,</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>    <span class="s2">&quot;fs.oss.accessKeySecret&quot;</span><span class="p">:</span> <span class="s2">&quot;your-access-key-secret&quot;</span><span class="p">,</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>    <span class="s2">&quot;fs.oss.endpoint&quot;</span><span class="p">:</span> <span class="s2">&quot;oss-cn-hangzhou.aliyuncs.com&quot;</span><span class="p">,</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="p">})</span>
+</code></pre></div>
+<h3 id="rest-catalog">REST Catalog<a class="headerlink" href="#rest-catalog" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="n">catalog</span> <span class="o">=</span> <span class="n">PaimonCatalog</span><span class="p">({</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>    <span class="s2">&quot;metastore&quot;</span><span class="p">:</span> <span class="s2">&quot;rest&quot;</span><span class="p">,</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>    <span class="s2">&quot;uri&quot;</span><span class="p">:</span> <span class="s2">&quot;http://localhost:8080&quot;</span><span class="p">,</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>    <span class="s2">&quot;warehouse&quot;</span><span class="p">:</span> <span class="s2">&quot;my_warehouse&quot;</span><span class="p">,</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="p">})</span>
+</code></pre></div>
+<h2 id="sql-context">SQL Context<a class="headerlink" href="#sql-context" title="Permanent link">&para;</a></h2>
+<p><code>SQLContext</code> supports registering multiple Paimon catalogs and executing SQL queries with DataFusion.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">pypaimon_rust.datafusion</span><span class="w"> </span><span class="kn">import</span> <span class="n">SQLContext</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="n">ctx</span> <span class="o">=</span> <span class="n">SQLContext</span><span class="p">()</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="n">ctx</span><span class="o">.</span><span class="n">register_catalog</span><span class="p">(</span><span class="s2">&quot;paimon&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;warehouse&quot;</span><span class="p">:</span> <span class="s2">&quot;/path/to/warehouse&quot;</span><span class="p">})</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="c1"># DDL and DML</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="n">ctx</span><span class="o">.</span><span class="n">sql</span><span class="p">(</span><span class="s2">&quot;CREATE SCHEMA paimon.my_db&quot;</span><span class="p">)</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="n">ctx</span><span class="o">.</span><span class="n">sql</span><span class="p">(</span><span class="s2">&quot;CREATE TABLE paimon.my_db.t (id INT, name STRING)&quot;</span><span class="p">)</span>
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="n">ctx</span><span class="o">.</span><span class="n">sql</span><span class="p">(</span><span class="s2">&quot;INSERT INTO paimon.my_db.t VALUES (1, &#39;alice&#39;), (2, &#39;bob&#39;)&quot;</span><span class="p">)</span>
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>
+<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="c1"># Query returns a list of PyArrow RecordBatches</span>
+<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="n">batches</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">sql</span><span class="p">(</span><span class="s2">&quot;SELECT * FROM paimon.my_db.t&quot;</span><span class="p">)</span>
+<a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a><span class="k">for</span> <span class="n">batch</span> <span class="ow">in</span> <span class="n">batches</span><span class="p">:</span>
+<a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a>    <span class="nb">print</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span>
+</code></pre></div>
+<h2 id="reading-a-table">Reading a Table<a class="headerlink" href="#reading-a-table" title="Permanent link">&para;</a></h2>
+<p>Paimon Python uses a <strong>scan-then-read</strong> pattern: first scan the table to produce splits, then read data from those splits as PyArrow RecordBatches.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">pyarrow</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pa</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">pypaimon_rust.datafusion</span><span class="w"> </span><span class="kn">import</span> <span class="n">PaimonCatalog</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="n">catalog</span> <span class="o">=</span> <span class="n">PaimonCatalog</span><span class="p">({</span><span class="s2">&quot;warehouse&quot;</span><span class="p">:</span> <span class="s2">&quot;/path/to/warehouse&quot;</span><span class="p">})</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="n">table</span> <span class="o">=</span> <span class="n">catalog</span><span class="o">.</span><span class="n">get_table</span><span class="p">(</span><span class="s2">&quot;default.my_table&quot;</span><span class="p">)</span>
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="c1"># Create a read builder</span>
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="n">rb</span> <span class="o">=</span> <span class="n">table</span><span class="o">.</span><span class="n">new_read_builder</span><span class="p">()</span>
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>
+<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="c1"># Step 1: Scan — produces a Plan containing Splits</span>
+<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a><span class="n">scan</span> <span class="o">=</span> <span class="n">rb</span><span class="o">.</span><span class="n">new_scan</span><span class="p">()</span>
+<a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a><span class="n">plan</span> <span class="o">=</span> <span class="n">scan</span><span class="o">.</span><span class="n">plan</span><span class="p">()</span>
+<a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a><span class="n">splits</span> <span class="o">=</span> <span class="n">plan</span><span class="o">.</span><span class="n">splits</span><span class="p">()</span>
+<a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a>
+<a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a><span class="c1"># Step 2: Read — consumes splits and returns PyArrow RecordBatches</span>
+<a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a><span class="n">read</span> <span class="o">=</span> <span class="n">rb</span><span class="o">.</span><span class="n">new_read</span><span class="p">()</span>
+<a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a><span class="n">batches</span> <span class="o">=</span> <span class="n">read</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">splits</span><span class="p">)</span>
+<a id="__codelineno-5-18" name="__codelineno-5-18" href="#__codelineno-5-18"></a>
+<a id="__codelineno-5-19" name="__codelineno-5-19" href="#__codelineno-5-19"></a><span class="k">for</span> <span class="n">batch</span> <span class="ow">in</span> <span class="n">batches</span><span class="p">:</span>
+<a id="__codelineno-5-20" name="__codelineno-5-20" href="#__codelineno-5-20"></a>    <span class="nb">print</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span>
+</code></pre></div>
+<p>Alternatively, read via SQL using <code>SQLContext</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">pypaimon_rust.datafusion</span><span class="w"> </span><span class="kn">import</span> <span class="n">SQLContext</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="n">ctx</span> <span class="o">=</span> <span class="n">SQLContext</span><span class="p">()</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="n">ctx</span><span class="o">.</span><span class="n">register_catalog</span><span class="p">(</span><span class="s2">&quot;paimon&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;warehouse&quot;</span><span class="p">:</span> <span class="s2">&quot;/path/to/warehouse&quot;</span><span class="p">})</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="n">batches</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">sql</span><span class="p">(</span><span class="s2">&quot;SELECT id, name FROM paimon.default.my_table&quot;</span><span class="p">)</span>
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="k">for</span> <span class="n">batch</span> <span class="ow">in</span> <span class="n">batches</span><span class="p">:</span>
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>    <span class="nb">print</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span>
+</code></pre></div>
+<h2 id="writing-to-a-table">Writing to a Table<a class="headerlink" href="#writing-to-a-table" title="Permanent link">&para;</a></h2>
+<p>Paimon Python uses a <strong>write-then-commit</strong> pattern: write PyArrow RecordBatches to a writer, prepare commit messages, then commit.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">pyarrow</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pa</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">pypaimon_rust.datafusion</span><span class="w"> </span><span class="kn">import</span> <span class="n">PaimonCatalog</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="n">catalog</span> <span class="o">=</span> <span class="n">PaimonCatalog</span><span class="p">({</span><span class="s2">&quot;warehouse&quot;</span><span class="p">:</span> <span class="s2">&quot;/path/to/warehouse&quot;</span><span class="p">})</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="n">table</span> <span class="o">=</span> <span class="n">catalog</span><span class="o">.</span><span class="n">get_table</span><span class="p">(</span><span class="s2">&quot;default.my_table&quot;</span><span class="p">)</span>
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="c1"># Build a batch matching the table schema</span>
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="n">batch</span> <span class="o">=</span> <span class="n">pa</span><span class="o">.</span><span class="n">record_batch</span><span class="p">(</span>
+<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>    <span class="p">[</span><span class="n">pa</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="n">pa</span><span class="o">.</span><span class="n">int32</span><span class="p">()),</span> <span class="n">pa</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="s2">&quot;c&quot;</span><span class="p">],</span> <span class="n">pa</span><span class="o">.</span><span class="n">string</span><span class="p">())],</span>
+<a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a>    <span class="n">names</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">],</span>
+<a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a><span class="p">)</span>
+<a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a>
+<a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a><span class="c1"># Create a write builder (shared commit_user for writer and committer)</span>
+<a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a><span class="n">wb</span> <span class="o">=</span> <span class="n">table</span><span class="o">.</span><span class="n">new_write_builder</span><span class="p">()</span>
+<a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a>
+<a id="__codelineno-7-16" name="__codelineno-7-16" href="#__codelineno-7-16"></a><span class="c1"># Write batches</span>
+<a id="__codelineno-7-17" name="__codelineno-7-17" href="#__codelineno-7-17"></a><span class="n">write</span> <span class="o">=</span> <span class="n">wb</span><span class="o">.</span><span class="n">new_write</span><span class="p">()</span>
+<a id="__codelineno-7-18" name="__codelineno-7-18" href="#__codelineno-7-18"></a><span class="n">write</span><span class="o">.</span><span class="n">write_arrow</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span>
+<a id="__codelineno-7-19" name="__codelineno-7-19" href="#__codelineno-7-19"></a>
+<a id="__codelineno-7-20" name="__codelineno-7-20" href="#__codelineno-7-20"></a><span class="c1"># Prepare commit messages</span>
+<a id="__codelineno-7-21" name="__codelineno-7-21" href="#__codelineno-7-21"></a><span class="n">messages</span> <span class="o">=</span> <span class="n">write</span><span class="o">.</span><span class="n">prepare_commit</span><span class="p">()</span>
+<a id="__codelineno-7-22" name="__codelineno-7-22" href="#__codelineno-7-22"></a>
+<a id="__codelineno-7-23" name="__codelineno-7-23" href="#__codelineno-7-23"></a><span class="c1"># Commit</span>
+<a id="__codelineno-7-24" name="__codelineno-7-24" href="#__codelineno-7-24"></a><span class="n">wb</span><span class="o">.</span><span class="n">new_commit</span><span class="p">()</span><span class="o">.</span><span class="n">commit</span><span class="p">(</span><span class="n">messages</span><span class="p">)</span>
+</code></pre></div>
+<p>Alternatively, write via SQL using <code>SQLContext</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">pypaimon_rust.datafusion</span><span class="w"> </span><span class="kn">import</span> <span class="n">SQLContext</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="n">ctx</span> <span class="o">=</span> <span class="n">SQLContext</span><span class="p">()</span>
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="n">ctx</span><span class="o">.</span><span class="n">register_catalog</span><span class="p">(</span><span class="s2">&quot;paimon&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;warehouse&quot;</span><span class="p">:</span> <span class="s2">&quot;/path/to/warehouse&quot;</span><span class="p">})</span>
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="n">ctx</span><span class="o">.</span><span class="n">sql</span><span class="p">(</span><span class="s2">&quot;INSERT INTO paimon.default.my_table VALUES (1, &#39;alice&#39;), (2, &#39;bob&#39;)&quot;</span><span class="p">)</span>
+</code></pre></div>
+<div class="admonition warning">
+<p class="admonition-title">Schema Validation</p>
+<p>The input batch schema is strictly validated against the table schema: field count, order, names, and types must match exactly. A <code>ValueError</code> is raised on mismatch.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Write Builder Consistency</p>
+<p>The writer and committer must come from the same <code>WriteBuilder</code> — they share a <code>commit_user</code> for duplicate-commit detection. Passing messages from one builder's writer to another builder's committer will raise a <code>ValueError</code>.</p>
+</div>
+<h2 id="column-projection">Column Projection<a class="headerlink" href="#column-projection" title="Permanent link">&para;</a></h2>
+<p>Use <code>with_projection</code> to select specific columns. Only the requested columns are read, reducing I/O.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="n">rb</span> <span class="o">=</span> <span class="n">table</span><span class="o">.</span><span class="n">new_read_builder</span><span class="p">()</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="n">rb</span><span class="o">.</span><span class="n">with_projection</span><span class="p">([</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">])</span>
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="c1"># Continue with scan-then-read as above...</span>
+</code></pre></div>
+<h2 id="limit">Limit<a class="headerlink" href="#limit" title="Permanent link">&para;</a></h2>
+<p>Use <code>with_limit</code> to set a hint for the number of rows returned. A limit of <code>0</code> returns zero rows.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="n">rb</span> <span class="o">=</span> <span class="n">table</span><span class="o">.</span><span class="n">new_read_builder</span><span class="p">()</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="n">rb</span><span class="o">.</span><span class="n">with_limit</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+</code></pre></div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p><code>with_limit</code> is a scan-planning hint, not an exact row cap. When all rows fall within a single split, the entire split is returned regardless of the limit value. Callers should apply application-level limiting if an exact upper bound is required.</p>
+</div>
+<h2 id="case-sensitivity">Case Sensitivity<a class="headerlink" href="#case-sensitivity" title="Permanent link">&para;</a></h2>
+<p>Use <code>with_case_sensitive</code> to control whether column-name matching in projections and predicates is case-sensitive. Defaults to <code>True</code> (exact match). Set to <code>False</code> for case-insensitive matching (ASCII case-folding).</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="n">rb</span> <span class="o">=</span> <span class="n">table</span><span class="o">.</span><span class="n">new_read_builder</span><span class="p">()</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="n">rb</span><span class="o">.</span><span class="n">with_case_sensitive</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+</code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code>with_case_sensitive</code> must be called <strong>before</strong> <code>with_filter</code> to affect predicate construction. The predicate is built using the case-sensitivity setting at the time <code>with_filter</code> is invoked; changing it afterward has no effect on an already-constructed predicate.</p>
+</div>
+<h2 id="filter-push-down">Filter Push-Down<a class="headerlink" href="#filter-push-down" title="Permanent link">&para;</a></h2>
+<p>Filter push-down prunes data at two levels:</p>
+<ol>
+<li><strong>Scan planning</strong> — skips partitions, buckets, and data files based on file-level statistics (min/max).</li>
+<li><strong>Read-side</strong> — applies exact residual filtering, ensuring only rows that match the predicate are returned.</li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Filter push-down at the scan-planning level is <strong>best-effort</strong>: it may conservatively include files that do not contain matching rows. The read-side applies exact residual filtering and will not return rows that fail the predicate.</p>
+</div>
+<h3 id="predicate-format">Predicate Format<a class="headerlink" href="#predicate-format" title="Permanent link">&para;</a></h3>
+<p>Predicates use a lightweight dictionary format. Each leaf node specifies a <code>method</code>, <code>field</code>, and <code>literals</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="c1"># Comparison predicates</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="p">{</span><span class="s2">&quot;method&quot;</span><span class="p">:</span> <span class="s2">&quot;equal&quot;</span><span class="p">,</span> <span class="s2">&quot;field&quot;</span><span class="p">:</span> <span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="s2">&quot;literals&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">]}</span>           <span class="c1"># id = 1</span>
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="p">{</span><span class="s2">&quot;method&quot;</span><span class="p">:</span> <span class="s2">&quot;notEqual&quot;</span><span class="p">,</span> <span class="s2">&quot;field&quot;</span><span class="p">:</span> <span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="s2">&quot;literals&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;bob&quot;</span><span class="p">]}</span>   <span class="c1"># name != &quot;bob&quot;</span>
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="p">{</span><span class="s2">&quot;method&quot;</span><span class="p">:</span> <span class="s2">&quot;lessThan&quot;</span><span class="p">,</span> <span class="s2">&quot;field&quot;</span><span class="p">:</span> <span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="s2">&quot;literals&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">3</span><span class="p">]}</span>         <span class="c1"># id &lt; 3</span>
+<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="p">{</span><span class="s2">&quot;method&quot;</span><span class="p">:</span> <span class="s2">&quot;lessOrEqual&quot;</span><span class="p">,</span> <span class="s2">&quot;field&quot;</span><span class="p">:</span> <span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="s2">&quot;literals&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">2</span><span class="p">]}</span>      <span class="c1"># id &lt;= 2</span>
+<a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a><span class="p">{</span><span class="s2">&quot;method&quot;</span><span class="p">:</span> <span class="s2">&quot;greaterThan&quot;</span><span class="p">,</span> <span class="s2">&quot;field&quot;</span><span class="p">:</span> <span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="s2">&quot;literals&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">]}</span>      <span class="c1"># id &gt; 1</span>
+<a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a><span class="p">{</span><span class="s2">&quot;method&quot;</span><span class="p">:</span> <span class="s2">&quot;greaterOrEqual&quot;</span><span class="p">,</span> <span class="s2">&quot;field&quot;</span><span class="p">:</span> <span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="s2">&quot;literals&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">2</span><span class="p">]}</span>   <span class="c1"># id &gt;= 2</span>
+<a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a>
+<a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a><span class="c1"># Null checks</span>
+<a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a><span class="p">{</span><span class="s2">&quot;method&quot;</span><span class="p">:</span> <span class="s2">&quot;isNull&quot;</span><span class="p">,</span> <span class="s2">&quot;field&quot;</span><span class="p">:</span> <span class="s2">&quot;name&quot;</span><span class="p">}</span>                           <span class="c1"># name IS NULL</span>
+<a id="__codelineno-12-11" name="__codelineno-12-11" href="#__codelineno-12-11"></a><span class="p">{</span><span class="s2">&quot;method&quot;</span><span class="p">:</span> <span class="s2">&quot;isNotNull&quot;</span><span class="p">,</span> <span class="s2">&quot;field&quot;</span><span class="p">:</span> <span class="s2">&quot;name&quot;</span><span class="p">}</span>                        <span class="c1"># name IS NOT NULL</span>
+<a id="__codelineno-12-12" name="__codelineno-12-12" href="#__codelineno-12-12"></a>
+<a id="__codelineno-12-13" name="__codelineno-12-13" href="#__codelineno-12-13"></a><span class="c1"># IN / NOT IN</span>
+<a id="__codelineno-12-14" name="__codelineno-12-14" href="#__codelineno-12-14"></a><span class="p">{</span><span class="s2">&quot;method&quot;</span><span class="p">:</span> <span class="s2">&quot;in&quot;</span><span class="p">,</span> <span class="s2">&quot;field&quot;</span><span class="p">:</span> <span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="s2">&quot;literals&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]}</span>          <span class="c1"># id IN (1, 2, 3)</span>
+<a id="__codelineno-12-15" name="__codelineno-12-15" href="#__codelineno-12-15"></a><span class="p">{</span><span class="s2">&quot;method&quot;</span><span class="p">:</span> <span class="s2">&quot;notIn&quot;</span><span class="p">,</span> <span class="s2">&quot;field&quot;</span><span class="p">:</span> <span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="s2">&quot;literals&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">]}</span>    <span class="c1"># name NOT IN (&quot;x&quot;, &quot;y&quot;)</span>
+<a id="__codelineno-12-16" name="__codelineno-12-16" href="#__codelineno-12-16"></a>
+<a id="__codelineno-12-17" name="__codelineno-12-17" href="#__codelineno-12-17"></a><span class="c1"># String predicates</span>
+<a id="__codelineno-12-18" name="__codelineno-12-18" href="#__codelineno-12-18"></a><span class="p">{</span><span class="s2">&quot;method&quot;</span><span class="p">:</span> <span class="s2">&quot;startsWith&quot;</span><span class="p">,</span> <span class="s2">&quot;field&quot;</span><span class="p">:</span> <span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="s2">&quot;literals&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;al&quot;</span><span class="p">]}</span>   <span class="c1"># name LIKE &#39;al%&#39;</span>
+<a id="__codelineno-12-19" name="__codelineno-12-19" href="#__codelineno-12-19"></a><span class="p">{</span><span class="s2">&quot;method&quot;</span><span class="p">:</span> <span class="s2">&quot;endsWith&quot;</span><span class="p">,</span> <span class="s2">&quot;field&quot;</span><span class="p">:</span> <span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="s2">&quot;literals&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;ce&quot;</span><span class="p">]}</span>     <span class="c1"># name LIKE &#39;%ce&#39;</span>
+<a id="__codelineno-12-20" name="__codelineno-12-20" href="#__codelineno-12-20"></a><span class="p">{</span><span class="s2">&quot;method&quot;</span><span class="p">:</span> <span class="s2">&quot;contains&quot;</span><span class="p">,</span> <span class="s2">&quot;field&quot;</span><span class="p">:</span> <span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="s2">&quot;literals&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;ic&quot;</span><span class="p">]}</span>     <span class="c1"># name LIKE &#39;%ic%&#39;</span>
+<a id="__codelineno-12-21" name="__codelineno-12-21" href="#__codelineno-12-21"></a><span class="p">{</span><span class="s2">&quot;method&quot;</span><span class="p">:</span> <span class="s2">&quot;like&quot;</span><span class="p">,</span> <span class="s2">&quot;field&quot;</span><span class="p">:</span> <span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="s2">&quot;literals&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;a%b</span><span class="si">%c</span><span class="s2">&quot;</span><span class="p">]}</span>      <span class="c1"># name LIKE &#39;a%b%c&#39;</span>
+</code></pre></div>
+<h3 id="applying-filters">Applying Filters<a class="headerlink" href="#applying-filters" title="Permanent link">&para;</a></h3>
+<p>Pass a predicate dict to <code>with_filter</code> on the <code>ReadBuilder</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="n">rb</span> <span class="o">=</span> <span class="n">table</span><span class="o">.</span><span class="n">new_read_builder</span><span class="p">()</span>
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="n">rb</span><span class="o">.</span><span class="n">with_filter</span><span class="p">({</span><span class="s2">&quot;method&quot;</span><span class="p">:</span> <span class="s2">&quot;equal&quot;</span><span class="p">,</span> <span class="s2">&quot;field&quot;</span><span class="p">:</span> <span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="s2">&quot;literals&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">]})</span>
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>
+<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="c1"># Continue with scan-then-read...</span>
+</code></pre></div>
+<h3 id="compound-predicates">Compound Predicates<a class="headerlink" href="#compound-predicates" title="Permanent link">&para;</a></h3>
+<p>Combine predicates with <code>"and"</code> / <code>"or"</code> methods using a <code>"children"</code> list:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="c1"># id &gt;= 1 AND id &lt;= 3</span>
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="n">rb</span><span class="o">.</span><span class="n">with_filter</span><span class="p">({</span>
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>    <span class="s2">&quot;method&quot;</span><span class="p">:</span> <span class="s2">&quot;and&quot;</span><span class="p">,</span>
+<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a>    <span class="s2">&quot;children&quot;</span><span class="p">:</span> <span class="p">[</span>
+<a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a>        <span class="p">{</span><span class="s2">&quot;method&quot;</span><span class="p">:</span> <span class="s2">&quot;greaterOrEqual&quot;</span><span class="p">,</span> <span class="s2">&quot;field&quot;</span><span class="p">:</span> <span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="s2">&quot;literals&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">]},</span>
+<a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a>        <span class="p">{</span><span class="s2">&quot;method&quot;</span><span class="p">:</span> <span class="s2">&quot;lessOrEqual&quot;</span><span class="p">,</span> <span class="s2">&quot;field&quot;</span><span class="p">:</span> <span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="s2">&quot;literals&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">3</span><span class="p">]},</span>
+<a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a>    <span class="p">]</span>
+<a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a><span class="p">})</span>
+<a id="__codelineno-14-9" name="__codelineno-14-9" href="#__codelineno-14-9"></a>
+<a id="__codelineno-14-10" name="__codelineno-14-10" href="#__codelineno-14-10"></a><span class="c1"># (id = 1 OR id = 2) AND name = &quot;alice&quot;</span>
+<a id="__codelineno-14-11" name="__codelineno-14-11" href="#__codelineno-14-11"></a><span class="n">rb</span><span class="o">.</span><span class="n">with_filter</span><span class="p">({</span>
+<a id="__codelineno-14-12" name="__codelineno-14-12" href="#__codelineno-14-12"></a>    <span class="s2">&quot;method&quot;</span><span class="p">:</span> <span class="s2">&quot;and&quot;</span><span class="p">,</span>
+<a id="__codelineno-14-13" name="__codelineno-14-13" href="#__codelineno-14-13"></a>    <span class="s2">&quot;children&quot;</span><span class="p">:</span> <span class="p">[</span>
+<a id="__codelineno-14-14" name="__codelineno-14-14" href="#__codelineno-14-14"></a>        <span class="p">{</span>
+<a id="__codelineno-14-15" name="__codelineno-14-15" href="#__codelineno-14-15"></a>            <span class="s2">&quot;method&quot;</span><span class="p">:</span> <span class="s2">&quot;or&quot;</span><span class="p">,</span>
+<a id="__codelineno-14-16" name="__codelineno-14-16" href="#__codelineno-14-16"></a>            <span class="s2">&quot;children&quot;</span><span class="p">:</span> <span class="p">[</span>
+<a id="__codelineno-14-17" name="__codelineno-14-17" href="#__codelineno-14-17"></a>                <span class="p">{</span><span class="s2">&quot;method&quot;</span><span class="p">:</span> <span class="s2">&quot;equal&quot;</span><span class="p">,</span> <span class="s2">&quot;field&quot;</span><span class="p">:</span> <span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="s2">&quot;literals&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">]},</span>
+<a id="__codelineno-14-18" name="__codelineno-14-18" href="#__codelineno-14-18"></a>                <span class="p">{</span><span class="s2">&quot;method&quot;</span><span class="p">:</span> <span class="s2">&quot;equal&quot;</span><span class="p">,</span> <span class="s2">&quot;field&quot;</span><span class="p">:</span> <span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="s2">&quot;literals&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">2</span><span class="p">]},</span>
+<a id="__codelineno-14-19" name="__codelineno-14-19" href="#__codelineno-14-19"></a>            <span class="p">]</span>
+<a id="__codelineno-14-20" name="__codelineno-14-20" href="#__codelineno-14-20"></a>        <span class="p">},</span>
+<a id="__codelineno-14-21" name="__codelineno-14-21" href="#__codelineno-14-21"></a>        <span class="p">{</span><span class="s2">&quot;method&quot;</span><span class="p">:</span> <span class="s2">&quot;equal&quot;</span><span class="p">,</span> <span class="s2">&quot;field&quot;</span><span class="p">:</span> <span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="s2">&quot;literals&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;alice&quot;</span><span class="p">]},</span>
+<a id="__codelineno-14-22" name="__codelineno-14-22" href="#__codelineno-14-22"></a>    <span class="p">]</span>
+<a id="__codelineno-14-23" name="__codelineno-14-23" href="#__codelineno-14-23"></a><span class="p">})</span>
+</code></pre></div>
+<h3 id="supported-literal-types">Supported Literal Types<a class="headerlink" href="#supported-literal-types" title="Permanent link">&para;</a></h3>
+<p>Literal values are automatically converted from Python types based on the column's declared schema type:</p>
+<table>
+<thead>
+<tr>
+<th>Python Type</th>
+<th>Paimon Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>bool</code></td>
+<td>Bool</td>
+</tr>
+<tr>
+<td><code>int</code></td>
+<td>TinyInt / SmallInt / Int / BigInt</td>
+</tr>
+<tr>
+<td><code>int</code> / <code>float</code></td>
+<td>Float / Double</td>
+</tr>
+<tr>
+<td><code>str</code></td>
+<td>String</td>
+</tr>
+<tr>
+<td><code>datetime.date</code></td>
+<td>Date</td>
+</tr>
+<tr>
+<td><code>datetime.time</code> (naive)</td>
+<td>Time</td>
+</tr>
+<tr>
+<td><code>datetime.datetime</code> (naive)</td>
+<td>Timestamp</td>
+</tr>
+<tr>
+<td><code>datetime.datetime</code> (aware)</td>
+<td>LocalZonedTimestamp</td>
+</tr>
+<tr>
+<td><code>decimal.Decimal</code> / <code>int</code></td>
+<td>Decimal</td>
+</tr>
+</tbody>
+</table>
+<p>For temporal types, ensure the Python object matches the column type exactly:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">datetime</span>
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">decimal</span><span class="w"> </span><span class="kn">import</span> <span class="n">Decimal</span>
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>
+<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="c1"># Date</span>
+<a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a><span class="p">{</span><span class="s2">&quot;method&quot;</span><span class="p">:</span> <span class="s2">&quot;equal&quot;</span><span class="p">,</span> <span class="s2">&quot;field&quot;</span><span class="p">:</span> <span class="s2">&quot;dt&quot;</span><span class="p">,</span> <span class="s2">&quot;literals&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="p">(</span><span class="mi">2024</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)]}</span>
+<a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a>
+<a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a><span class="c1"># Decimal at scale 2 — int or Decimal accepted</span>
+<a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a><span class="p">{</span><span class="s2">&quot;method&quot;</span><span class="p">:</span> <span class="s2">&quot;equal&quot;</span><span class="p">,</span> <span class="s2">&quot;field&quot;</span><span class="p">:</span> <span class="s2">&quot;amount&quot;</span><span class="p">,</span> <span class="s2">&quot;literals&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">Decimal</span><span class="p">(</span><span class="s2">&quot;123.45&quot;</span><span class="p">)]}</span>
+<a id="__codelineno-15-9" name="__codelineno-15-9" href="#__codelineno-15-9"></a>
+<a id="__codelineno-15-10" name="__codelineno-15-10" href="#__codelineno-15-10"></a><span class="c1"># Naive datetime for TIMESTAMP (no timezone)</span>
+<a id="__codelineno-15-11" name="__codelineno-15-11" href="#__codelineno-15-11"></a><span class="p">{</span><span class="s2">&quot;method&quot;</span><span class="p">:</span> <span class="s2">&quot;equal&quot;</span><span class="p">,</span> <span class="s2">&quot;field&quot;</span><span class="p">:</span> <span class="s2">&quot;ts&quot;</span><span class="p">,</span> <span class="s2">&quot;literals&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2024</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)]}</span>
+<a id="__codelineno-15-12" name="__codelineno-15-12" href="#__codelineno-15-12"></a>
+<a id="__codelineno-15-13" name="__codelineno-15-13" href="#__codelineno-15-13"></a><span class="c1"># Aware datetime for TIMESTAMP WITH LOCAL TIME ZONE</span>
+<a id="__codelineno-15-14" name="__codelineno-15-14" href="#__codelineno-15-14"></a><span class="kn">from</span><span class="w"> </span><span class="nn">zoneinfo</span><span class="w"> </span><span class="kn">import</span> <span class="n">ZoneInfo</span>
+<a id="__codelineno-15-15" name="__codelineno-15-15" href="#__codelineno-15-15"></a><span class="p">{</span><span class="s2">&quot;method&quot;</span><span class="p">:</span> <span class="s2">&quot;equal&quot;</span><span class="p">,</span> <span class="s2">&quot;field&quot;</span><span class="p">:</span> <span class="s2">&quot;ts_ltz&quot;</span><span class="p">,</span> <span class="s2">&quot;literals&quot;</span><span class="p">:</span> <span class="p">[</span>
+<a id="__codelineno-15-16" name="__codelineno-15-16" href="#__codelineno-15-16"></a>    <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2024</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">tzinfo</span><span class="o">=</span><span class="n">ZoneInfo</span><span class="p">(</span><span class="s2">&quot;Asia/Shanghai&quot;</span><span class="p">))</span>
+<a id="__codelineno-15-17" name="__codelineno-15-17" href="#__codelineno-15-17"></a><span class="p">]}</span>
+</code></pre></div>
+<h2 id="time-travel">Time Travel<a class="headerlink" href="#time-travel" title="Permanent link">&para;</a></h2>
+<p>Use scan options on <code>new_read_builder</code> to read a table at a specific point in time:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="c1"># By snapshot ID</span>
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="n">rb</span> <span class="o">=</span> <span class="n">table</span><span class="o">.</span><span class="n">new_read_builder</span><span class="p">({</span><span class="s2">&quot;scan.snapshot-id&quot;</span><span class="p">:</span> <span class="s2">&quot;1&quot;</span><span class="p">})</span>
+<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>
+<a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="c1"># By timestamp (epoch millis)</span>
+<a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a><span class="n">rb</span> <span class="o">=</span> <span class="n">table</span><span class="o">.</span><span class="n">new_read_builder</span><span class="p">({</span><span class="s2">&quot;scan.timestamp-millis&quot;</span><span class="p">:</span> <span class="s2">&quot;1700000000000&quot;</span><span class="p">})</span>
+<a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a>
+<a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a><span class="c1"># By version</span>
+<a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a><span class="n">rb</span> <span class="o">=</span> <span class="n">table</span><span class="o">.</span><span class="n">new_read_builder</span><span class="p">({</span><span class="s2">&quot;scan.version&quot;</span><span class="p">:</span> <span class="s2">&quot;3&quot;</span><span class="p">})</span>
+<a id="__codelineno-16-9" name="__codelineno-16-9" href="#__codelineno-16-9"></a>
+<a id="__codelineno-16-10" name="__codelineno-16-10" href="#__codelineno-16-10"></a><span class="c1"># By tag name</span>
+<a id="__codelineno-16-11" name="__codelineno-16-11" href="#__codelineno-16-11"></a><span class="n">rb</span> <span class="o">=</span> <span class="n">table</span><span class="o">.</span><span class="n">new_read_builder</span><span class="p">({</span><span class="s2">&quot;scan.tag-name&quot;</span><span class="p">:</span> <span class="s2">&quot;release-1.0&quot;</span><span class="p">})</span>
+</code></pre></div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Only one time-travel selector may be set. Providing multiple selectors will raise a <code>ValueError</code>.</p>
+</div>
+<h2 id="table-inspection">Table Inspection<a class="headerlink" href="#table-inspection" title="Permanent link">&para;</a></h2>
+<p>Inspect snapshots, tags, and partition statistics on a table:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="c1"># Latest snapshot</span>
+<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a><span class="n">snap</span> <span class="o">=</span> <span class="n">table</span><span class="o">.</span><span class="n">latest_snapshot</span><span class="p">()</span>
+<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a><span class="k">if</span> <span class="n">snap</span><span class="p">:</span>
+<a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Snapshot </span><span class="si">{</span><span class="n">snap</span><span class="o">.</span><span class="n">id</span><span class="p">()</span><span class="si">}</span><span class="s2"> at </span><span class="si">{</span><span class="n">snap</span><span class="o">.</span><span class="n">commit_time_ms</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  commit kind: </span><span class="si">{</span><span class="n">snap</span><span class="o">.</span><span class="n">commit_kind</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  total records: </span><span class="si">{</span><span class="n">snap</span><span class="o">.</span><span class="n">total_record_count</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a>
+<a id="__codelineno-17-8" name="__codelineno-17-8" href="#__codelineno-17-8"></a><span class="c1"># All snapshots (newest first)</span>
+<a id="__codelineno-17-9" name="__codelineno-17-9" href="#__codelineno-17-9"></a><span class="k">for</span> <span class="n">snap</span> <span class="ow">in</span> <span class="n">table</span><span class="o">.</span><span class="n">list_snapshots</span><span class="p">():</span>
+<a id="__codelineno-17-10" name="__codelineno-17-10" href="#__codelineno-17-10"></a>    <span class="nb">print</span><span class="p">(</span><span class="n">snap</span><span class="o">.</span><span class="n">id</span><span class="p">(),</span> <span class="n">snap</span><span class="o">.</span><span class="n">commit_kind</span><span class="p">())</span>
+<a id="__codelineno-17-11" name="__codelineno-17-11" href="#__codelineno-17-11"></a>
+<a id="__codelineno-17-12" name="__codelineno-17-12" href="#__codelineno-17-12"></a><span class="c1"># Tags</span>
+<a id="__codelineno-17-13" name="__codelineno-17-13" href="#__codelineno-17-13"></a><span class="k">for</span> <span class="n">tag</span> <span class="ow">in</span> <span class="n">table</span><span class="o">.</span><span class="n">list_tags</span><span class="p">():</span>
+<a id="__codelineno-17-14" name="__codelineno-17-14" href="#__codelineno-17-14"></a>    <span class="nb">print</span><span class="p">(</span><span class="n">tag</span><span class="o">.</span><span class="n">name</span><span class="p">(),</span> <span class="n">tag</span><span class="o">.</span><span class="n">snapshot_id</span><span class="p">())</span>
+<a id="__codelineno-17-15" name="__codelineno-17-15" href="#__codelineno-17-15"></a>
+<a id="__codelineno-17-16" name="__codelineno-17-16" href="#__codelineno-17-16"></a><span class="c1"># Partition stats</span>
+<a id="__codelineno-17-17" name="__codelineno-17-17" href="#__codelineno-17-17"></a><span class="k">for</span> <span class="n">stat</span> <span class="ow">in</span> <span class="n">table</span><span class="o">.</span><span class="n">partition_stats</span><span class="p">():</span>
+<a id="__codelineno-17-18" name="__codelineno-17-18" href="#__codelineno-17-18"></a>    <span class="nb">print</span><span class="p">(</span><span class="n">stat</span><span class="o">.</span><span class="n">partition</span><span class="p">(),</span> <span class="n">stat</span><span class="o">.</span><span class="n">record_count</span><span class="p">(),</span> <span class="n">stat</span><span class="o">.</span><span class="n">total_size_bytes</span><span class="p">())</span>
+</code></pre></div>
+<h2 id="python-udf">Python UDF<a class="headerlink" href="#python-udf" title="Permanent link">&para;</a></h2>
+<p>Register Python scalar UDFs into a <code>SQLContext</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">pypaimon_rust.datafusion</span><span class="w"> </span><span class="kn">import</span> <span class="n">SQLContext</span><span class="p">,</span> <span class="n">udf</span>
+<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">pyarrow</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pa</span>
+<a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>
+<a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a><span class="n">ctx</span> <span class="o">=</span> <span class="n">SQLContext</span><span class="p">()</span>
+<a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a><span class="n">ctx</span><span class="o">.</span><span class="n">register_catalog</span><span class="p">(</span><span class="s2">&quot;paimon&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;warehouse&quot;</span><span class="p">:</span> <span class="s2">&quot;/tmp/paimon-warehouse&quot;</span><span class="p">})</span>
+<a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a>
+<a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a><span class="n">batch</span> <span class="o">=</span> <span class="n">pa</span><span class="o">.</span><span class="n">record_batch</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="mi">3</span><span class="p">]],</span> <span class="n">names</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">])</span>
+<a id="__codelineno-18-8" name="__codelineno-18-8" href="#__codelineno-18-8"></a><span class="n">ctx</span><span class="o">.</span><span class="n">register_batch</span><span class="p">(</span><span class="s2">&quot;my_temp&quot;</span><span class="p">,</span> <span class="n">batch</span><span class="p">)</span>
+<a id="__codelineno-18-9" name="__codelineno-18-9" href="#__codelineno-18-9"></a>
+<a id="__codelineno-18-10" name="__codelineno-18-10" href="#__codelineno-18-10"></a><span class="k">def</span><span class="w"> </span><span class="nf">plus_ten</span><span class="p">(</span><span class="n">values</span><span class="p">):</span>
+<a id="__codelineno-18-11" name="__codelineno-18-11" href="#__codelineno-18-11"></a>    <span class="c1"># values is a PyArrow Array (not a tuple)</span>
+<a id="__codelineno-18-12" name="__codelineno-18-12" href="#__codelineno-18-12"></a>    <span class="k">return</span> <span class="n">pa</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+<a id="__codelineno-18-13" name="__codelineno-18-13" href="#__codelineno-18-13"></a>        <span class="p">[</span><span class="kc">None</span> <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">value</span> <span class="o">+</span> <span class="mi">10</span> <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">values</span><span class="o">.</span><span class="n">to_pylist</span><span class="p">()],</span>
+<a id="__codelineno-18-14" name="__codelineno-18-14" href="#__codelineno-18-14"></a>        <span class="nb">type</span><span class="o">=</span><span class="n">pa</span><span class="o">.</span><span class="n">int64</span><span class="p">(),</span>
+<a id="__codelineno-18-15" name="__codelineno-18-15" href="#__codelineno-18-15"></a>    <span class="p">)</span>
+<a id="__codelineno-18-16" name="__codelineno-18-16" href="#__codelineno-18-16"></a>
+<a id="__codelineno-18-17" name="__codelineno-18-17" href="#__codelineno-18-17"></a><span class="n">ctx</span><span class="o">.</span><span class="n">register_udf</span><span class="p">(</span><span class="n">udf</span><span class="p">(</span><span class="n">plus_ten</span><span class="p">,</span> <span class="p">[</span><span class="n">pa</span><span class="o">.</span><span class="n">int64</span><span class="p">()],</span> <span class="n">pa</span><span class="o">.</span><span class="n">int64</span><span class="p">(),</span> <span class="s2">&quot;volatile&quot;</span><span class="p">,</span> <span class="s2">&quot;plus_ten&quot;</span><span class="p">))</span>
+<a id="__codelineno-18-18" name="__codelineno-18-18" href="#__codelineno-18-18"></a>
+<a id="__codelineno-18-19" name="__codelineno-18-19" href="#__codelineno-18-19"></a><span class="n">batches</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">sql</span><span class="p">(</span>
+<a id="__codelineno-18-20" name="__codelineno-18-20" href="#__codelineno-18-20"></a>    <span class="s2">&quot;SELECT plus_ten(id) AS id FROM paimon.default.my_temp ORDER BY id&quot;</span>
+<a id="__codelineno-18-21" name="__codelineno-18-21" href="#__codelineno-18-21"></a><span class="p">)</span>
+<a id="__codelineno-18-22" name="__codelineno-18-22" href="#__codelineno-18-22"></a><span class="k">for</span> <span class="n">batch</span> <span class="ow">in</span> <span class="n">batches</span><span class="p">:</span>
+<a id="__codelineno-18-23" name="__codelineno-18-23" href="#__codelineno-18-23"></a>    <span class="nb">print</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span>
+</code></pre></div>
+<h2 id="complete-example">Complete Example<a class="headerlink" href="#complete-example" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">pyarrow</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pa</span>
+<a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">pypaimon_rust.datafusion</span><span class="w"> </span><span class="kn">import</span> <span class="n">PaimonCatalog</span><span class="p">,</span> <span class="n">SQLContext</span>
+<a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>
+<a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a><span class="c1"># 1. Write data via SQL</span>
+<a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a><span class="n">ctx</span> <span class="o">=</span> <span class="n">SQLContext</span><span class="p">()</span>
+<a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a><span class="n">ctx</span><span class="o">.</span><span class="n">register_catalog</span><span class="p">(</span><span class="s2">&quot;paimon&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;warehouse&quot;</span><span class="p">:</span> <span class="s2">&quot;/tmp/paimon-warehouse&quot;</span><span class="p">})</span>
+<a id="__codelineno-19-7" name="__codelineno-19-7" href="#__codelineno-19-7"></a><span class="n">ctx</span><span class="o">.</span><span class="n">sql</span><span class="p">(</span><span class="s2">&quot;CREATE SCHEMA paimon.wdb&quot;</span><span class="p">)</span>
+<a id="__codelineno-19-8" name="__codelineno-19-8" href="#__codelineno-19-8"></a><span class="n">ctx</span><span class="o">.</span><span class="n">sql</span><span class="p">(</span><span class="s2">&quot;CREATE TABLE paimon.wdb.t (id INT, name STRING)&quot;</span><span class="p">)</span>
+<a id="__codelineno-19-9" name="__codelineno-19-9" href="#__codelineno-19-9"></a>
+<a id="__codelineno-19-10" name="__codelineno-19-10" href="#__codelineno-19-10"></a><span class="c1"># 2. Write using the programmatic API</span>
+<a id="__codelineno-19-11" name="__codelineno-19-11" href="#__codelineno-19-11"></a><span class="n">catalog</span> <span class="o">=</span> <span class="n">PaimonCatalog</span><span class="p">({</span><span class="s2">&quot;warehouse&quot;</span><span class="p">:</span> <span class="s2">&quot;/tmp/paimon-warehouse&quot;</span><span class="p">})</span>
+<a id="__codelineno-19-12" name="__codelineno-19-12" href="#__codelineno-19-12"></a><span class="n">table</span> <span class="o">=</span> <span class="n">catalog</span><span class="o">.</span><span class="n">get_table</span><span class="p">(</span><span class="s2">&quot;wdb.t&quot;</span><span class="p">)</span>
+<a id="__codelineno-19-13" name="__codelineno-19-13" href="#__codelineno-19-13"></a>
+<a id="__codelineno-19-14" name="__codelineno-19-14" href="#__codelineno-19-14"></a><span class="n">batch</span> <span class="o">=</span> <span class="n">pa</span><span class="o">.</span><span class="n">record_batch</span><span class="p">(</span>
+<a id="__codelineno-19-15" name="__codelineno-19-15" href="#__codelineno-19-15"></a>    <span class="p">[</span><span class="n">pa</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="n">pa</span><span class="o">.</span><span class="n">int32</span><span class="p">()),</span> <span class="n">pa</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="s2">&quot;alice&quot;</span><span class="p">,</span> <span class="s2">&quot;bob&quot;</span><span class="p">,</span> <span class="s2">&quot;carol&quot;</span><span class="p">],</span> <span class="n">pa</span><span class="o">.</span><span class="n">string</span><span class="p">())],</span>
+<a id="__codelineno-19-16" name="__codelineno-19-16" href="#__codelineno-19-16"></a>    <span class="n">names</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">],</span>
+<a id="__codelineno-19-17" name="__codelineno-19-17" href="#__codelineno-19-17"></a><span class="p">)</span>
+<a id="__codelineno-19-18" name="__codelineno-19-18" href="#__codelineno-19-18"></a><span class="n">wb</span> <span class="o">=</span> <span class="n">table</span><span class="o">.</span><span class="n">new_write_builder</span><span class="p">()</span>
+<a id="__codelineno-19-19" name="__codelineno-19-19" href="#__codelineno-19-19"></a><span class="n">write</span> <span class="o">=</span> <span class="n">wb</span><span class="o">.</span><span class="n">new_write</span><span class="p">()</span>
+<a id="__codelineno-19-20" name="__codelineno-19-20" href="#__codelineno-19-20"></a><span class="n">write</span><span class="o">.</span><span class="n">write_arrow</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span>
+<a id="__codelineno-19-21" name="__codelineno-19-21" href="#__codelineno-19-21"></a><span class="n">wb</span><span class="o">.</span><span class="n">new_commit</span><span class="p">()</span><span class="o">.</span><span class="n">commit</span><span class="p">(</span><span class="n">write</span><span class="o">.</span><span class="n">prepare_commit</span><span class="p">())</span>
+<a id="__codelineno-19-22" name="__codelineno-19-22" href="#__codelineno-19-22"></a>
+<a id="__codelineno-19-23" name="__codelineno-19-23" href="#__codelineno-19-23"></a><span class="c1"># 3. Read with projection and filter</span>
+<a id="__codelineno-19-24" name="__codelineno-19-24" href="#__codelineno-19-24"></a><span class="n">rb</span> <span class="o">=</span> <span class="n">table</span><span class="o">.</span><span class="n">new_read_builder</span><span class="p">()</span>
+<a id="__codelineno-19-25" name="__codelineno-19-25" href="#__codelineno-19-25"></a><span class="n">rb</span><span class="o">.</span><span class="n">with_projection</span><span class="p">([</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">])</span>
+<a id="__codelineno-19-26" name="__codelineno-19-26" href="#__codelineno-19-26"></a><span class="n">rb</span><span class="o">.</span><span class="n">with_filter</span><span class="p">({</span><span class="s2">&quot;method&quot;</span><span class="p">:</span> <span class="s2">&quot;greaterThan&quot;</span><span class="p">,</span> <span class="s2">&quot;field&quot;</span><span class="p">:</span> <span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="s2">&quot;literals&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">]})</span>
+<a id="__codelineno-19-27" name="__codelineno-19-27" href="#__codelineno-19-27"></a>
+<a id="__codelineno-19-28" name="__codelineno-19-28" href="#__codelineno-19-28"></a><span class="n">scan</span> <span class="o">=</span> <span class="n">rb</span><span class="o">.</span><span class="n">new_scan</span><span class="p">()</span>
+<a id="__codelineno-19-29" name="__codelineno-19-29" href="#__codelineno-19-29"></a><span class="n">plan</span> <span class="o">=</span> <span class="n">scan</span><span class="o">.</span><span class="n">plan</span><span class="p">()</span>
+<a id="__codelineno-19-30" name="__codelineno-19-30" href="#__codelineno-19-30"></a><span class="n">splits</span> <span class="o">=</span> <span class="n">plan</span><span class="o">.</span><span class="n">splits</span><span class="p">()</span>
+<a id="__codelineno-19-31" name="__codelineno-19-31" href="#__codelineno-19-31"></a>
+<a id="__codelineno-19-32" name="__codelineno-19-32" href="#__codelineno-19-32"></a><span class="n">read</span> <span class="o">=</span> <span class="n">rb</span><span class="o">.</span><span class="n">new_read</span><span class="p">()</span>
+<a id="__codelineno-19-33" name="__codelineno-19-33" href="#__codelineno-19-33"></a><span class="k">for</span> <span class="n">batch</span> <span class="ow">in</span> <span class="n">read</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">splits</span><span class="p">):</span>
+<a id="__codelineno-19-34" name="__codelineno-19-34" href="#__codelineno-19-34"></a>    <span class="n">tbl</span> <span class="o">=</span> <span class="n">pa</span><span class="o">.</span><span class="n">Table</span><span class="o">.</span><span class="n">from_batches</span><span class="p">([</span><span class="n">batch</span><span class="p">])</span><span class="o">.</span><span class="n">sort_by</span><span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">)</span>
+<a id="__codelineno-19-35" name="__codelineno-19-35" href="#__codelineno-19-35"></a>    <span class="nb">print</span><span class="p">(</span><span class="n">tbl</span><span class="p">)</span>
+<a id="__codelineno-19-36" name="__codelineno-19-36" href="#__codelineno-19-36"></a>
+<a id="__codelineno-19-37" name="__codelineno-19-37" href="#__codelineno-19-37"></a><span class="c1"># 4. Read via SQL</span>
+<a id="__codelineno-19-38" name="__codelineno-19-38" href="#__codelineno-19-38"></a><span class="k">for</span> <span class="n">batch</span> <span class="ow">in</span> <span class="n">ctx</span><span class="o">.</span><span class="n">sql</span><span class="p">(</span><span class="s2">&quot;SELECT id, name FROM paimon.wdb.t ORDER BY id&quot;</span><span class="p">):</span>
+<a id="__codelineno-19-39" name="__codelineno-19-39" href="#__codelineno-19-39"></a>    <span class="nb">print</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span>
+</code></pre></div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.sections", "navigation.expand", "navigation.top", "search.suggest", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>
