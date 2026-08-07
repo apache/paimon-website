@@ -2,6 +2,7 @@
 title: "Paimon Rust Release 0.1.0"
 type: release
 version: Rust 0.1.0
+weight: 95.5
 ---
 
 # Paimon Rust 0.1.0 Available
