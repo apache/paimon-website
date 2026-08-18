@@ -79,6 +79,16 @@ export const listOfPMCs: Member[] = [
     avatarId: '10036681',
     name: 'Bi Yan',
     github: 'YannByron'
+  },
+  {
+    avatarId: '41894543',
+    name: 'Junhao Ye',
+    github: 'leaves12138'
+  },
+  {
+    avatarId: '37108074',
+    name: 'Xinyu Zou',
+    github: 'Zouxxyy'
   }
 ];
 
@@ -94,11 +104,6 @@ export const listOfCommitters: Member[] = [
     github: 'liming30'
   },
   {
-    avatarId: '41894543',
-    name: 'Junhao Ye',
-    github: 'leaves12138'
-  },
-  {
     avatarId: '26704332',
     name: 'Guojun Li',
     github: 'schnappi17'
@@ -109,8 +114,58 @@ export const listOfCommitters: Member[] = [
     github: 'Aitozi'
   },
   {
-    avatarId: '37108074',
-    name: 'Xinyu Zou',
-    github: 'Zouxxyy'
+    avatarId: '14267759',
+    name: 'Gang Wang',
+    github: 'wg1026688210'
+  },
+  {
+    avatarId: '10645422',
+    name: 'Yu Xu',
+    github: 'xuzifu666'
+  },
+  {
+    avatarId: '22708867',
+    name: 'Weijun Wang',
+    github: 'wwj6591812'
+  },
+  {
+    avatarId: '54601269',
+    name: 'Yunfeng Zhou',
+    github: 'yunfengzhou-hub'
+  },
+  {
+    avatarId: '3992588',
+    name: 'Jerry Jing',
+    github: 'jerry-024'
+  },
+  {
+    avatarId: '94825748',
+    name: 'Lei Li',
+    github: 'LsomeYeah'
+  },
+  {
+    avatarId: '27951066',
+    name: 'Hongbo Xiao',
+    github: 'XiaoHongbo-Hope'
+  },
+  {
+    avatarId: '55790489',
+    name: 'Wenhai Zhao',
+    github: 'discivigour'
+  },
+  {
+    avatarId: '27797326',
+    name: 'Chenghui Chen',
+    github: 'chenghuichen'
+  },
+  {
+    avatarId: '45645138',
+    name: 'Quake Wang',
+    github: 'QuakeWang'
+  },
+  {
+    avatarId: '20389154',
+    name: 'Yuxia Luo',
+    github: 'luoyuxia'
   }
 ];
