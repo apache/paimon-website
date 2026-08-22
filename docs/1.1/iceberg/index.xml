@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Iceberg Metadata on Apache Paimon</title>
+    <link>//paimon.apache.org/docs/master/iceberg/</link>
+    <description>Recent content in Iceberg Metadata on Apache Paimon</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language><atom:link href="//paimon.apache.org/docs/master/iceberg/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Overview</title>
+      <link>//paimon.apache.org/docs/master/iceberg/overview/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/iceberg/overview/</guid>
+      <description>Overview #  Paimon supports generating Iceberg compatible metadata, so that Paimon tables can be consumed directly by Iceberg readers.
+Set the following table options, so that Paimon tables can generate Iceberg compatible metadata.
+  Option Default Type Description     metadata.iceberg.storage disabled Enum  When set, produce Iceberg metadata after a snapshot is committed, so that Iceberg readers can read Paimon&#39;s raw data files.  disabled: Disable Iceberg compatibility support.</description>
+    </item>
+    
+    <item>
+      <title>Append Table</title>
+      <link>//paimon.apache.org/docs/master/iceberg/append-table/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/iceberg/append-table/</guid>
+      <description>Append Tables #  Let&amp;rsquo;s walk through a simple example, where we query Paimon tables with Iceberg connectors in Flink and Spark. Before trying out this example, make sure that your compute engine already supports Iceberg. Please refer to Iceberg&amp;rsquo;s document if you haven&amp;rsquo;t set up Iceberg.
+ Flink: Preparation when using Flink SQL Client Spark: Using Iceberg in Spark 3  Let&amp;rsquo;s now create a Paimon append only table with Iceberg compatibility enabled and insert some data.</description>
+    </item>
+    
+    <item>
+      <title>Primary Key Table</title>
+      <link>//paimon.apache.org/docs/master/iceberg/primary-key-table/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/iceberg/primary-key-table/</guid>
+      <description>Primary Key Tables #  Let&amp;rsquo;s walk through a simple example, where we query Paimon tables with Iceberg connectors in Flink and Spark. Before trying out this example, make sure that your compute engine already supports Iceberg. Please refer to Iceberg&amp;rsquo;s document if you haven&amp;rsquo;t set up Iceberg.
+ Flink: Preparation when using Flink SQL Client Spark: Using Iceberg in Spark 3  Flink SQL CREATE CATALOG paimon_catalog WITH ( &amp;#39;type&amp;#39; = &amp;#39;paimon&amp;#39;, &amp;#39;warehouse&amp;#39; = &amp;#39;&amp;lt;path-to-warehouse&amp;gt;&amp;#39; ); CREATE TABLE paimon_catalog.</description>
+    </item>
+    
+    <item>
+      <title>Iceberg Tags</title>
+      <link>//paimon.apache.org/docs/master/iceberg/iceberg-tags/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/iceberg/iceberg-tags/</guid>
+      <description>Iceberg Tags #  When enable iceberg compatibility, Paimon Tags will also be synced to Iceberg Tags.
+CREATE CATALOG paimon WITH ( &amp;#39;type&amp;#39; = &amp;#39;paimon&amp;#39;, &amp;#39;warehouse&amp;#39; = &amp;#39;&amp;lt;path-to-warehouse&amp;gt;&amp;#39; ); CREATE CATALOG iceberg WITH ( &amp;#39;type&amp;#39; = &amp;#39;iceberg&amp;#39;, &amp;#39;catalog-type&amp;#39; = &amp;#39;hadoop&amp;#39;, &amp;#39;warehouse&amp;#39; = &amp;#39;&amp;lt;path-to-warehouse&amp;gt;/iceberg&amp;#39;, &amp;#39;cache-enabled&amp;#39; = &amp;#39;false&amp;#39; -- disable iceberg catalog caching to quickly see the result ); -- create tag for paimon table CALL paimon.sys.create_tag(&amp;#39;default.T&amp;#39;, &amp;#39;tag1&amp;#39;, 1); -- query tag in iceberg table SELECT * FROM iceberg.</description>
+    </item>
+    
+    <item>
+      <title>Hive Catalogs</title>
+      <link>//paimon.apache.org/docs/master/iceberg/hive-catalog/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/iceberg/hive-catalog/</guid>
+      <description>Hive Catalog #  When creating Paimon table, set &#39;metadata.iceberg.storage&#39; = &#39;hive-catalog&#39;. This option value not only store Iceberg metadata like hadoop-catalog, but also create Iceberg external table in Hive. This Paimon table can be accessed from Iceberg Hive catalog later.
+To provide information about Hive metastore, you also need to set some (or all) of the following table options when creating Paimon table.
+  Option Default Type Description     metadata.</description>
+    </item>
+    
+    <item>
+      <title>Ecosystem</title>
+      <link>//paimon.apache.org/docs/master/iceberg/ecosystem/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/iceberg/ecosystem/</guid>
+      <description>Iceberg Ecosystems #  AWS Athena #  AWS Athena may use old manifest reader to read Iceberg manifest by names, we should let Paimon producing legacy Iceberg manifest list file, you can enable: &#39;metadata.iceberg.manifest-legacy-version&#39;.
+DuckDB #  Duckdb may rely on files placed in the root/data directory, while Paimon is usually placed directly in the root directory, so you can configure this parameter for the table to achieve compatibility: &#39;data-file.</description>
+    </item>
+    
+    <item>
+      <title>Configurations</title>
+      <link>//paimon.apache.org/docs/master/iceberg/configurations/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/master/iceberg/configurations/</guid>
+      <description>Configurations #  Options for Iceberg Compatibility.
+  Key Default Type Description     metadata.iceberg.compaction.max.file-num 50 Integer If number of small Iceberg manifest metadata files exceeds this limit, always trigger manifest metadata compaction regardless of their total size.   metadata.iceberg.compaction.min.file-num 10 Integer Minimum number of Iceberg manifest metadata files to trigger manifest metadata compaction.   metadata.iceberg.database (none) String Metastore database name for Iceberg Catalog. Set this as an iceberg database alias if using a centralized Catalog.</description>
+    </item>
+    
+  </channel>
+</rss>
