@@ -1,0 +1,2607 @@
+
+<!DOCTYPE html>
+<html lang="en" dir=>
+
+<head>
+  <meta name="generator" content="Hugo 0.80.0" />
+  
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Filesystems #  Apache Paimon utilizes the same pluggable file systems as Apache Flink. Users can follow the standard plugin mechanism to configure the plugin structure if using Flink as compute engine. However, for other engines like Spark or Hive, the provided opt jars (by Flink) may get conflicts and cannot be used directly. It is not convenient for users to fix class conflicts, thus Paimon provides the self-contained and engine-unified FileSystem pluggable jars for user to query tables from Spark/Hive side.">
+<meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="Filesystems" />
+<meta property="og:description" content="Filesystems #  Apache Paimon utilizes the same pluggable file systems as Apache Flink. Users can follow the standard plugin mechanism to configure the plugin structure if using Flink as compute engine. However, for other engines like Spark or Hive, the provided opt jars (by Flink) may get conflicts and cannot be used directly. It is not convenient for users to fix class conflicts, thus Paimon provides the self-contained and engine-unified FileSystem pluggable jars for user to query tables from Spark/Hive side." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="//paimon.apache.org/docs/1.1/maintenance/filesystems/" />
+
+<title>Filesystems | Apache Paimon</title>
+<link rel="manifest" href="/docs/1.1/manifest.json">
+<link rel="icon" href="/docs/1.1/favicon.png" type="image/x-icon">
+<link rel="stylesheet" href="/docs/1.1/book.min.3bc4108a5b57c9a7e6fcae92ff69940435f8c46c4e1e4a311aedc9b2d8e06792.css" integrity="sha256-O8QQiltXyafm/K6S/2mUBDX4xGxOHkoxGu3JstjgZ5I=">
+<script defer src="/docs/1.1/en.search.min.1fe95a11b2f99072508f610e27e21c1ed57f26edb95b683483846b16f457c842.js" integrity="sha256-H&#43;laEbL5kHJQj2EOJ&#43;IcHtV/Ju25W2g0g4RrFvRXyEI="></script>
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+  
+  
+
+<link rel="stylesheet" type="text/css" href="//paimon.apache.org/docs/1.1/font-awesome/css/font-awesome.min.css">
+<script src="//paimon.apache.org/docs/1.1/js/anchor.min.js"></script>
+<script src="//paimon.apache.org/docs/1.1/js/flink.js"></script>
+
+
+
+  
+  <script>
+    var _paq = window._paq = window._paq || [];
+     
+     
+    _paq.push(['disableCookies']);
+     
+    _paq.push(["setDomains", ["*.flink.apache.org","*.nightlies.apache.org/flink"]]);
+    _paq.push(['trackPageView']);
+    _paq.push(['enableLinkTracking']);
+    (function() {
+      var u="//matomo.privacy.apache.org/";
+      _paq.push(['setTrackerUrl', u+'matomo.php']);
+      _paq.push(['setSiteId', '1']);
+      var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+      g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+    })();
+  </script>
+  
+</head>
+
+<body dir=>
+  
+    <input type="checkbox" class="hidden toggle" id="menu-control" />
+    <input type="checkbox" class="hidden toggle" id="toc-control" />
+  
+  <main class="container flex">
+    
+      <aside class="book-menu">
+        
+  
+
+<nav>
+
+
+<a id="logo" href="//paimon.apache.org/docs/1.1">
+    <img width="100%" src="//paimon.apache.org/docs/1.1/paimon_black.svg">
+</a>
+<p style="text-align:right">1.1.1</p>
+
+<div class="book-search">
+  <input type="text" id="book-search-input" placeholder="Search" aria-label="Search" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-dc8a1c63e6da60163016ce21cae1faa0" class="toggle"  />
+    <label for="section-dc8a1c63e6da60163016ce21cae1faa0" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-book title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Concepts</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/concepts/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/concepts/basic-concepts/" class="">Basic Concepts</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/concepts/concurrency-control/" class="">Concurrency Control</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/concepts/catalog/" class="">Catalog</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-e03f934865df9dd3baca303554bcaa71" class="toggle"  />
+    <label for="section-e03f934865df9dd3baca303554bcaa71" class="flex justify-between">RESTCatalog<span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/concepts/rest/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/concepts/rest/bear/" class="">Bear Token</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/concepts/rest/dlf/" class="">DLF Token</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/concepts/rest/rest-api/" class="">REST API</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/concepts/table-types/" class="">Table Types</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/concepts/system-tables/" class="">System Tables</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/concepts/data-types/" class="">Data Types</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-d3e7256ce393050c572ea7bd8cc4f240" class="toggle"  />
+    <label for="section-d3e7256ce393050c572ea7bd8cc4f240" class="flex justify-between">Specification<span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/concepts/spec/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/concepts/spec/schema/" class="">Schema</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/concepts/spec/snapshot/" class="">Snapshot</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/concepts/spec/manifest/" class="">Manifest</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/concepts/spec/datafile/" class="">DataFile</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/concepts/spec/tableindex/" class="">Table Index</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/concepts/spec/fileindex/" class="">File Index</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-3f6a6d4f1692040009c66ffaa328c8d0" class="toggle"  />
+    <label for="section-3f6a6d4f1692040009c66ffaa328c8d0" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-database title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Table with PK</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/primary-key-table/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/primary-key-table/data-distribution/" class="">Data Distribution</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/primary-key-table/table-mode/" class="">Table Mode</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-038bb7d17b5b7cb93fb60acbcf218f11" class="toggle"  />
+    <label for="section-038bb7d17b5b7cb93fb60acbcf218f11" class="flex justify-between">Merge Engine<span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/primary-key-table/merge-engine/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/primary-key-table/merge-engine/partial-update/" class="">Partial Update</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/primary-key-table/merge-engine/aggregation/" class="">Aggregation</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/primary-key-table/merge-engine/first-row/" class="">First Row</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/primary-key-table/changelog-producer/" class="">Changelog Producer</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/primary-key-table/sequence-rowkind/" class="">Sequence & Rowkind</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/primary-key-table/compaction/" class="">Compaction</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/primary-key-table/query-performance/" class="">Query Performance</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-f74847e1c917ba2b99e7b718bb318b30" class="toggle"  />
+    <label for="section-f74847e1c917ba2b99e7b718bb318b30" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-database title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Table w/o PK</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/append-table/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/append-table/streaming/" class="">Streaming</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/append-table/query-performance/" class="">Query Performance</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/append-table/update/" class="">Update</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/append-table/bucketed/" class="">Bucketed</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-998a37410d502937fe8444ed73a9ecf8" class="toggle"  />
+    <label for="section-998a37410d502937fe8444ed73a9ecf8" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-gear title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Engine Flink</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/flink/quick-start/" class="">Quick Start</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/flink/sql-ddl/" class="">SQL DDL</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/flink/sql-write/" class="">SQL Write</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/flink/sql-query/" class="">SQL Query</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/flink/consumer-id/" class="">Consumer ID</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/flink/sql-lookup/" class="">SQL Lookup</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/flink/sql-alter/" class="">SQL Alter</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/flink/clone-tables/" class="">Clone Tables</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/flink/procedures/" class="">Procedures</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/flink/action-jars/" class="">Action Jars</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/flink/savepoint/" class="">Savepoint</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-74c63bf75b4f6bd14a3ea6a1217f03ad" class="toggle"  />
+    <label for="section-74c63bf75b4f6bd14a3ea6a1217f03ad" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-gear title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Engine Spark</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/spark/quick-start/" class="">Quick Start</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/spark/sql-ddl/" class="">SQL DDL</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/spark/sql-functions/" class="">SQL Functions</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/spark/sql-write/" class="">SQL Write</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/spark/sql-query/" class="">SQL Query</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/spark/sql-alter/" class="">SQL Alter</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/spark/auxiliary/" class="">Auxiliary</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/spark/procedures/" class="">Procedures</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-16bf9de4e97c50dda6ce1ac6e934602c" class="toggle"  />
+    <label for="section-16bf9de4e97c50dda6ce1ac6e934602c" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-gear title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Ecosystem</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/ecosystem/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/ecosystem/starrocks/" class="">StarRocks</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/ecosystem/doris/" class="">Doris</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/ecosystem/hive/" class="">Hive</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/ecosystem/trino/" class="">Trino</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/ecosystem/amoro/" class="">Amoro</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-582e435c19ca5fafbf9764337d648e63" class="toggle"  />
+    <label for="section-582e435c19ca5fafbf9764337d648e63" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-gear title maindish" aria-hidden="true"></i>&nbsp;&nbsp;CDC Ingestion</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/cdc-ingestion/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/cdc-ingestion/mysql-cdc/" class="">Mysql CDC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/cdc-ingestion/postgres-cdc/" class="">Postgres CDC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/cdc-ingestion/kafka-cdc/" class="">Kafka CDC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/cdc-ingestion/mongo-cdc/" class="">Mongo CDC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/cdc-ingestion/pulsar-cdc/" class="">Pulsar CDC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/cdc-ingestion/debezium-bson/" class="">Debezium BSON</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-697a4b6a0388d6cfa4f418aba3b4edfe" class="toggle" checked />
+    <label for="section-697a4b6a0388d6cfa4f418aba3b4edfe" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-wrench title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Maintenance</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/maintenance/filesystems/" class=" active">Filesystems</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/maintenance/write-performance/" class="">Write Performance</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/maintenance/dedicated-compaction/" class="">Dedicated Compaction</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/maintenance/manage-snapshots/" class="">Manage Snapshots</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/maintenance/rescale-bucket/" class="">Rescale Bucket</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/maintenance/manage-tags/" class="">Manage Tags</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/maintenance/metrics/" class="">Metrics</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/maintenance/manage-privileges/" class="">Manage Privileges</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/maintenance/manage-branches/" class="">Manage Branches</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/maintenance/manage-partitions/" class="">Manage Partitions</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/maintenance/configurations/" class="">Configurations</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-049030059e0dc01edf74ba3d4d259dae" class="toggle"  />
+    <label for="section-049030059e0dc01edf74ba3d4d259dae" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-briefcase title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Program API</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/program-api/flink-api/" class="">Flink API</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/program-api/java-api/" class="">Java API</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/program-api/catalog-api/" class="">Catalog API</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/program-api/python-api/" class="">Python API</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-07c567e5a9f3ce62aea4ff0a1e2dc065" class="toggle"  />
+    <label for="section-07c567e5a9f3ce62aea4ff0a1e2dc065" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-briefcase title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Migration</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/migration/migration-from-hive/" class="">Migration From Hive</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/migration/migration-from-iceberg/" class="">Migration From Iceberg</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/migration/upsert-to-partitioned/" class="">Upsert To Partitioned</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/migration/iceberg-compatibility/" class="">Iceberg Compatibility</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  	<br/>
+  
+  
+    <input type="checkbox" id="section-8c828bcf882f666cdd6821a70cc768ee" class="toggle"  />
+    <label for="section-8c828bcf882f666cdd6821a70cc768ee" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-sitemap title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Project</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/project/roadmap/" class="">Roadmap</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/project/download/" class="">Download</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/project/contributing/" class="">Contributing</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/project/committer/" class="">Committer</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-392fc6f653ae23ff676811656a71ebbf" class="toggle"  />
+    <label for="section-392fc6f653ae23ff676811656a71ebbf" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-sitemap title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Learn Paimon</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/learn-paimon/understand-files/" class="">Understand Files</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br/>
+<hr class="menu-break">
+
+<a href="//paimon.apache.org" style="color:black;margin-bottom:0.5em"><i class="link fa fa-external-link title" aria-hidden="true"></i> Project Homepage</a>
+<br/>
+
+<a href="//paimon.apache.org/docs/master/api/java/" style="color:black;margin-bottom:0.5em"><i class="link fa fa-external-link title" aria-hidden="true"></i> JavaDocs</a>
+<br/>
+
+<hr class="menu-break">
+<li style="list-style-type: none">
+  <br>
+  <input type="checkbox" id="section-version-picker" class="toggle">
+  <label for="section-version-picker" class="flex justify-between">
+     <div style="font-weight:450;margin-bottom:0.5em">Pick Docs Version</div>
+     <span>▾</span>
+  </label>
+  <ul>
+    <a href="//paimon.apache.org/docs/1.1">
+      1.1 (✓)
+    </a>
+    <hr class="menu-break">
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/master">
+          master
+        </a>
+      </li>
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/1.1">
+          stable
+        </a>
+      </li>
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/1.1">
+          1.1
+        </a>
+      </li>
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/1.0">
+          1.0
+        </a>
+      </li>
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/0.9">
+          0.9
+        </a>
+      </li>
+    
+    <hr class="menu-break">
+    <li>
+      <a href="//paimon.apache.org/docs/1.1/versions">
+          All Versions
+      </a>
+    </li>
+  </ul>
+</li>
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var menu=document.querySelector("aside.book-menu nav");addEventListener("beforeunload",function(event){localStorage.setItem("menu.scrollTop",menu.scrollTop);});menu.scrollTop=localStorage.getItem("menu.scrollTop");})();</script>
+
+
+ 
+      </aside>
+    
+
+    <div class="book-page">
+      
+        <header class="book-header">
+          
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/docs/1.1/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <strong>Filesystems</strong>
+
+  <label for="toc-control">
+    
+    <img src="/docs/1.1/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden clearfix">
+    
+  
+
+<nav id="TableOfContents"><h3>On This Page <button class="toc" onclick="collapseToc()"><i class="fa fa-compress" aria-hidden="true"></i></button></h3>
+  <ul>
+    <li><a href="#supported-filesystems">Supported FileSystems</a></li>
+    <li><a href="#dependency">Dependency</a></li>
+    <li><a href="#hdfs">HDFS</a>
+      <ul>
+        <li><a href="#hdfs-configuration">HDFS Configuration</a></li>
+        <li><a href="#hadoop-compatible-file-systems-hcfs">Hadoop-compatible file systems (HCFS)</a></li>
+        <li><a href="#kerberos">Kerberos</a></li>
+        <li><a href="#hdfs-ha">HDFS HA</a></li>
+        <li><a href="#hdfs-viewfs">HDFS ViewFS</a></li>
+      </ul>
+    </li>
+    <li><a href="#oss">OSS</a></li>
+    <li><a href="#s3">S3</a>
+      <ul>
+        <li><a href="#s3-compliant-object-stores">S3 Compliant Object Stores</a></li>
+        <li><a href="#configure-path-style-access">Configure Path Style Access</a></li>
+        <li><a href="#s3a-performance">S3A Performance</a></li>
+      </ul>
+    </li>
+    <li><a href="#google-cloud-storage">Google Cloud Storage</a></li>
+    <li><a href="#microsoft-azure-storage">Microsoft Azure Storage</a></li>
+    <li><a href="#microsoft-azure-storage-1">Microsoft Azure Storage</a></li>
+    <li><a href="#obs">OBS</a></li>
+  </ul>
+</nav>
+
+
+  </aside>
+  
+ 
+        </header>
+      
+
+      
+
+
+
+
+
+
+      
+  <article class="markdown"><!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<h1 id="filesystems">
+  Filesystems
+  <a class="anchor" href="#filesystems">#</a>
+</h1>
+<p>Apache Paimon utilizes the same pluggable file systems as Apache Flink. Users can follow the
+<a href="https://nightlies.apache.org/flink/flink-docs-stable/docs/deployment/filesystems/plugins/">standard plugin mechanism</a>
+to configure the plugin structure if using Flink as compute engine. However, for other engines like Spark
+or Hive, the provided opt jars (by Flink) may get conflicts and cannot be used directly. It is not convenient
+for users to fix class conflicts, thus Paimon provides the self-contained and engine-unified
+FileSystem pluggable jars for user to query tables from Spark/Hive side.</p>
+<h2 id="supported-filesystems">
+  Supported FileSystems
+  <a class="anchor" href="#supported-filesystems">#</a>
+</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">FileSystem</th>
+<th style="text-align:left">URI Scheme</th>
+<th>Pluggable</th>
+<th style="text-align:left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">Local File System</td>
+<td style="text-align:left">file://</td>
+<td>N</td>
+<td style="text-align:left">Built-in Support</td>
+</tr>
+<tr>
+<td style="text-align:left">HDFS</td>
+<td style="text-align:left">hdfs://</td>
+<td>N</td>
+<td style="text-align:left">Built-in Support, ensure that the cluster is in the hadoop environment</td>
+</tr>
+<tr>
+<td style="text-align:left">Aliyun OSS</td>
+<td style="text-align:left">oss://</td>
+<td>Y</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">S3</td>
+<td style="text-align:left">s3://</td>
+<td>Y</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">Tencent Cloud Object Storage</td>
+<td style="text-align:left">cosn://</td>
+<td>Y</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">Huawei OBS</td>
+<td style="text-align:left">obs://</td>
+<td>Y</td>
+<td style="text-align:left"></td>
+</tr>
+</tbody>
+</table>
+<h2 id="dependency">
+  Dependency
+  <a class="anchor" href="#dependency">#</a>
+</h2>
+<p>We recommend you to download the jar directly: <a href="//paimon.apache.org/docs/1.1/project/download/#filesystem-jars">Download Link</a>.</p>
+<p>You can also manually build bundled jar from the source code.</p>
+<p>To build from source code, <a href="https://github.com/apache/paimon.git">clone the git repository</a>.</p>
+<p>Build shaded jar with the following command.</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">mvn clean install -DskipTests
+</code></pre></div><p>You can find the shaded jars under
+<code>./paimon-filesystems/paimon-${fs}/target/paimon-${fs}-1.1.1.jar</code>.</p>
+<h2 id="hdfs">
+  HDFS
+  <a class="anchor" href="#hdfs">#</a>
+</h2>
+<p>You don&rsquo;t need any additional dependencies to access HDFS because you have already taken care of the Hadoop dependencies.</p>
+<h3 id="hdfs-configuration">
+  HDFS Configuration
+  <a class="anchor" href="#hdfs-configuration">#</a>
+</h3>
+<p>For HDFS, the most important thing is to be able to read your HDFS configuration.</p>
+
+
+
+
+
+<div class="book-tabs"><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Flink"
+    name="tabs-hdfs conf"
+    id="tabs-hdfs conf-0"
+    checked="checked" 
+    onclick="onSwitch('Flink')"
+  />
+  <label for="tabs-hdfs conf-0">Flink</label>
+  <div class="book-tabs-content markdown-inner"><p>You may not have to do anything, if you are in a hadoop environment. Otherwise pick one of the following ways to
+configure your HDFS:</p>
+<ol>
+<li>Set environment variable <code>HADOOP_HOME</code> or <code>HADOOP_CONF_DIR</code>.</li>
+<li>Configure <code>'hadoop-conf-dir'</code> in the paimon catalog.</li>
+<li>Configure Hadoop options through prefix <code>'hadoop.'</code> in the paimon catalog.</li>
+</ol>
+<p>The first approach is recommended.</p>
+<p>If you do not want to include the value of the environment variable, you can configure <code>hadoop-conf-loader</code> to <code>option</code>.</p>
+</div><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Hive/Spark"
+    name="tabs-hdfs conf"
+    id="tabs-hdfs conf-1"
+     
+    onclick="onSwitch('Hive\/Spark')"
+  />
+  <label for="tabs-hdfs conf-1">Hive/Spark</label>
+  <div class="book-tabs-content markdown-inner">HDFS Configuration is available directly through the computation cluster, see cluster configuration of Hive and Spark for details.</div></div>
+
+<h3 id="hadoop-compatible-file-systems-hcfs">
+  Hadoop-compatible file systems (HCFS)
+  <a class="anchor" href="#hadoop-compatible-file-systems-hcfs">#</a>
+</h3>
+<p>All Hadoop file systems are automatically available when the Hadoop libraries are on the classpath.</p>
+<p>This way, Paimon seamlessly supports all of Hadoop file systems implementing the <code>org.apache.hadoop.fs.FileSystem</code>
+interface, and all Hadoop-compatible file systems (HCFS).</p>
+<ul>
+<li>HDFS</li>
+<li>Alluxio (see configuration specifics below)</li>
+<li>XtreemFS</li>
+<li>…</li>
+</ul>
+<p>The Hadoop configuration has to have an entry for the required file system implementation in the <code>core-site.xml</code> file.</p>
+<p>For Alluxio support add the following entry into the core-site.xml file:</p>
+<div class="highlight"><pre class="chroma"><code class="language-xml" data-lang="xml"><span class="nt">&lt;property&gt;</span>
+  <span class="nt">&lt;name&gt;</span>fs.alluxio.impl<span class="nt">&lt;/name&gt;</span>
+  <span class="nt">&lt;value&gt;</span>alluxio.hadoop.FileSystem<span class="nt">&lt;/value&gt;</span>
+<span class="nt">&lt;/property&gt;</span>
+</code></pre></div><h3 id="kerberos">
+  Kerberos
+  <a class="anchor" href="#kerberos">#</a>
+</h3>
+
+
+
+
+
+<div class="book-tabs"><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Flink"
+    name="tabs-Kerberos"
+    id="tabs-Kerberos-0"
+    checked="checked" 
+    onclick="onSwitch('Flink')"
+  />
+  <label for="tabs-Kerberos-0">Flink</label>
+  <div class="book-tabs-content markdown-inner">It is recommended to use <a href="https://nightlies.apache.org/flink/flink-docs-stable/docs/deployment/security/security-kerberos/">Flink Kerberos Keytab</a>.</div><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Spark"
+    name="tabs-Kerberos"
+    id="tabs-Kerberos-1"
+     
+    onclick="onSwitch('Spark')"
+  />
+  <label for="tabs-Kerberos-1">Spark</label>
+  <div class="book-tabs-content markdown-inner">It is recommended to use <a href="https://spark.apache.org/docs/latest/security.html#using-a-keytab">Spark Kerberos Keytab</a>.</div><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Hive"
+    name="tabs-Kerberos"
+    id="tabs-Kerberos-2"
+     
+    onclick="onSwitch('Hive')"
+  />
+  <label for="tabs-Kerberos-2">Hive</label>
+  <div class="book-tabs-content markdown-inner">An intuitive approach is to configure Hive&rsquo;s kerberos authentication.</div><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Trino/JavaAPI"
+    name="tabs-Kerberos"
+    id="tabs-Kerberos-3"
+     
+    onclick="onSwitch('Trino\/JavaAPI')"
+  />
+  <label for="tabs-Kerberos-3">Trino/JavaAPI</label>
+  <div class="book-tabs-content markdown-inner"><p>Configure the following three options in your catalog configuration:</p>
+<ul>
+<li>security.kerberos.login.keytab: Absolute path to a Kerberos keytab file that contains the user credentials.
+Please make sure it is copied to each machine.</li>
+<li>security.kerberos.login.principal: Kerberos principal name associated with the keytab.</li>
+<li>security.kerberos.login.use-ticket-cache: True or false, indicates whether to read from your Kerberos ticket cache.</li>
+</ul>
+<p>For JavaAPI:</p>
+<pre><code>SecurityContext.install(catalogOptions);
+</code></pre></div></div>
+
+<h3 id="hdfs-ha">
+  HDFS HA
+  <a class="anchor" href="#hdfs-ha">#</a>
+</h3>
+<p>Ensure that <code>hdfs-site.xml</code> and <code>core-site.xml</code> contain the necessary <a href="https://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-hdfs/HDFSHighAvailabilityWithNFS.html">HA configuration</a>.</p>
+<h3 id="hdfs-viewfs">
+  HDFS ViewFS
+  <a class="anchor" href="#hdfs-viewfs">#</a>
+</h3>
+<p>Ensure that <code>hdfs-site.xml</code> and <code>core-site.xml</code> contain the necessary <a href="https://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-hdfs/ViewFs.html">ViewFs configuration</a>.</p>
+<h2 id="oss">
+  OSS
+  <a class="anchor" href="#oss">#</a>
+</h2>
+Download <a href="https://repo.maven.apache.org/maven2/org/apache/paimon/paimon-oss/1.1.1/paimon-oss-1.1.1.jar">paimon-oss-1.1.1.jar</a>.
+
+
+
+
+
+
+
+
+<div class="book-tabs"><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Flink"
+    name="tabs-oss"
+    id="tabs-oss-0"
+    checked="checked" 
+    onclick="onSwitch('Flink')"
+  />
+  <label for="tabs-oss-0">Flink</label>
+  <div class="book-tabs-content markdown-inner"><blockquote class="book-hint info">
+  If you have already configured <a href="https://nightlies.apache.org/flink/flink-docs-stable/docs/deployment/filesystems/oss/">oss access through Flink</a> (Via Flink FileSystem),
+here you can skip the following configuration.
+</blockquote>
+<p>Put <code>paimon-oss-1.1.1.jar</code> into <code>lib</code> directory of your Flink home, and create catalog:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">CREATE</span> <span class="k">CATALOG</span> <span class="n">my_catalog</span> <span class="k">WITH</span> <span class="p">(</span>
+    <span class="s1">&#39;type&#39;</span> <span class="o">=</span> <span class="s1">&#39;paimon&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;warehouse&#39;</span> <span class="o">=</span> <span class="s1">&#39;oss://&lt;bucket&gt;/&lt;path&gt;&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;fs.oss.endpoint&#39;</span> <span class="o">=</span> <span class="s1">&#39;oss-cn-hangzhou.aliyuncs.com&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;fs.oss.accessKeyId&#39;</span> <span class="o">=</span> <span class="s1">&#39;xxx&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;fs.oss.accessKeySecret&#39;</span> <span class="o">=</span> <span class="s1">&#39;yyy&#39;</span>
+<span class="p">);</span>
+</code></pre></div></div><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Spark"
+    name="tabs-oss"
+    id="tabs-oss-1"
+     
+    onclick="onSwitch('Spark')"
+  />
+  <label for="tabs-oss-1">Spark</label>
+  <div class="book-tabs-content markdown-inner"><blockquote class="book-hint info">
+  If you have already configured oss access through Spark (Via Hadoop FileSystem), here you can skip the following configuration.
+</blockquote>
+<p>Place <code>paimon-oss-1.1.1.jar</code> together with <code>paimon-spark-1.1.1.jar</code> under Spark&rsquo;s jars directory, and start like</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">spark-sql <span class="se">\ </span>
+  --conf spark.sql.catalog.paimon<span class="o">=</span>org.apache.paimon.spark.SparkCatalog <span class="se">\
+</span><span class="se"></span>  --conf spark.sql.catalog.paimon.warehouse<span class="o">=</span>oss://&lt;bucket&gt;/&lt;path&gt; <span class="se">\
+</span><span class="se"></span>  --conf spark.sql.catalog.paimon.fs.oss.endpoint<span class="o">=</span>oss-cn-hangzhou.aliyuncs.com <span class="se">\
+</span><span class="se"></span>  --conf spark.sql.catalog.paimon.fs.oss.accessKeyId<span class="o">=</span>xxx <span class="se">\
+</span><span class="se"></span>  --conf spark.sql.catalog.paimon.fs.oss.accessKeySecret<span class="o">=</span>yyy
+</code></pre></div></div><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Hive"
+    name="tabs-oss"
+    id="tabs-oss-2"
+     
+    onclick="onSwitch('Hive')"
+  />
+  <label for="tabs-oss-2">Hive</label>
+  <div class="book-tabs-content markdown-inner"><blockquote class="book-hint info">
+  If you have already configured oss access through Hive (Via Hadoop FileSystem), here you can skip the following configuration.
+</blockquote>
+<p>NOTE: You need to ensure that Hive metastore can access <code>oss</code>.</p>
+<p>Place <code>paimon-oss-1.1.1.jar</code> together with <code>paimon-hive-connector-1.1.1.jar</code> under Hive&rsquo;s auxlib directory, and start like</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SET</span> <span class="n">paimon</span><span class="p">.</span><span class="n">fs</span><span class="p">.</span><span class="n">oss</span><span class="p">.</span><span class="n">endpoint</span><span class="o">=</span><span class="n">oss</span><span class="o">-</span><span class="n">cn</span><span class="o">-</span><span class="n">hangzhou</span><span class="p">.</span><span class="n">aliyuncs</span><span class="p">.</span><span class="n">com</span><span class="p">;</span>
+<span class="k">SET</span> <span class="n">paimon</span><span class="p">.</span><span class="n">fs</span><span class="p">.</span><span class="n">oss</span><span class="p">.</span><span class="n">accessKeyId</span><span class="o">=</span><span class="n">xxx</span><span class="p">;</span>
+<span class="k">SET</span> <span class="n">paimon</span><span class="p">.</span><span class="n">fs</span><span class="p">.</span><span class="n">oss</span><span class="p">.</span><span class="n">accessKeySecret</span><span class="o">=</span><span class="n">yyy</span><span class="p">;</span>
+</code></pre></div><p>And read table from hive metastore, table can be created by Flink or Spark, see <a href="//paimon.apache.org/docs/1.1/flink/sql-ddl/">Catalog with Hive Metastore</a></p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">test_table</span><span class="p">;</span>
+<span class="k">SELECT</span> <span class="k">COUNT</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="k">FROM</span> <span class="n">test_table</span><span class="p">;</span>
+</code></pre></div></div><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Trino"
+    name="tabs-oss"
+    id="tabs-oss-3"
+     
+    onclick="onSwitch('Trino')"
+  />
+  <label for="tabs-oss-3">Trino</label>
+  <div class="book-tabs-content markdown-inner"><p>From version 0.8, paimon-trino uses trino filesystem as basic file read and write system. We strongly recommend you to use jindo-sdk in trino.</p>
+<p>You can find <a href="https://github.com/aliyun/alibabacloud-jindodata/blob/master/docs/user/4.x/4.6.x/4.6.12/oss/presto/jindosdk_on_presto.md">How to config jindo sdk on trino</a> here.
+Please note that:</p>
+<ul>
+<li>Use paimon to replace hive-hadoop2 when you decompress the plugin jar and find location to put in.</li>
+<li>You can specify the <code>core-site.xml</code> in <code>paimon.properties</code> on configuration <a href="https://trino.io/docs/current/connector/hive.html#hdfs-configuration">hive.config.resources</a>.</li>
+<li>Presto and Jindo use the same configuration method.</li>
+</ul>
+</div></div>
+
+<p>If you environment has jindo sdk dependencies, you can use Jindo Fs to connect OSS. Jindo has better read and write efficiency.</p>
+<p>Download <a href="https://repo.maven.apache.org/maven2/org/apache/paimon/paimon-jindo/1.1.1/paimon-jindo-1.1.1.jar">paimon-jindo-1.1.1.jar</a>.
+
+
+</p>
+<h2 id="s3">
+  S3
+  <a class="anchor" href="#s3">#</a>
+</h2>
+Download <a href="https://repo.maven.apache.org/maven2/org/apache/paimon/paimon-s3/1.1.1/paimon-s3-1.1.1.jar">paimon-s3-1.1.1.jar</a>.
+
+
+
+
+
+
+
+
+<div class="book-tabs"><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Flink"
+    name="tabs-s3"
+    id="tabs-s3-0"
+    checked="checked" 
+    onclick="onSwitch('Flink')"
+  />
+  <label for="tabs-s3-0">Flink</label>
+  <div class="book-tabs-content markdown-inner"><blockquote class="book-hint info">
+  If you have already configured <a href="https://nightlies.apache.org/flink/flink-docs-stable/docs/deployment/filesystems/s3/">s3 access through Flink</a> (Via Flink FileSystem),
+here you can skip the following configuration.
+</blockquote>
+<p>Put <code>paimon-s3-1.1.1.jar</code> into <code>lib</code> directory of your Flink home, and create catalog:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">CREATE</span> <span class="k">CATALOG</span> <span class="n">my_catalog</span> <span class="k">WITH</span> <span class="p">(</span>
+    <span class="s1">&#39;type&#39;</span> <span class="o">=</span> <span class="s1">&#39;paimon&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;warehouse&#39;</span> <span class="o">=</span> <span class="s1">&#39;s3://&lt;bucket&gt;/&lt;path&gt;&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;s3.endpoint&#39;</span> <span class="o">=</span> <span class="s1">&#39;your-endpoint-hostname&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;s3.access-key&#39;</span> <span class="o">=</span> <span class="s1">&#39;xxx&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;s3.secret-key&#39;</span> <span class="o">=</span> <span class="s1">&#39;yyy&#39;</span>
+<span class="p">);</span>
+</code></pre></div></div><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Spark"
+    name="tabs-s3"
+    id="tabs-s3-1"
+     
+    onclick="onSwitch('Spark')"
+  />
+  <label for="tabs-s3-1">Spark</label>
+  <div class="book-tabs-content markdown-inner"><blockquote class="book-hint info">
+  If you have already configured s3 access through Spark (Via Hadoop FileSystem), here you can skip the following configuration.
+</blockquote>
+<p>Place <code>paimon-s3-1.1.1.jar</code> together with <code>paimon-spark-1.1.1.jar</code> under Spark&rsquo;s jars directory, and start like</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">spark-sql <span class="se">\ </span>
+  --conf spark.sql.catalog.paimon<span class="o">=</span>org.apache.paimon.spark.SparkCatalog <span class="se">\
+</span><span class="se"></span>  --conf spark.sql.catalog.paimon.warehouse<span class="o">=</span>s3://&lt;bucket&gt;/&lt;path&gt; <span class="se">\
+</span><span class="se"></span>  --conf spark.sql.catalog.paimon.s3.endpoint<span class="o">=</span>your-endpoint-hostname <span class="se">\
+</span><span class="se"></span>  --conf spark.sql.catalog.paimon.s3.access-key<span class="o">=</span>xxx <span class="se">\
+</span><span class="se"></span>  --conf spark.sql.catalog.paimon.s3.secret-key<span class="o">=</span>yyy
+</code></pre></div></div><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Hive"
+    name="tabs-s3"
+    id="tabs-s3-2"
+     
+    onclick="onSwitch('Hive')"
+  />
+  <label for="tabs-s3-2">Hive</label>
+  <div class="book-tabs-content markdown-inner"><blockquote class="book-hint info">
+  If you have already configured s3 access through Hive ((Via Hadoop FileSystem)), here you can skip the following configuration.
+</blockquote>
+<p>NOTE: You need to ensure that Hive metastore can access <code>s3</code>.</p>
+<p>Place <code>paimon-s3-1.1.1.jar</code> together with <code>paimon-hive-connector-1.1.1.jar</code> under Hive&rsquo;s auxlib directory, and start like</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SET</span> <span class="n">paimon</span><span class="p">.</span><span class="n">s3</span><span class="p">.</span><span class="n">endpoint</span><span class="o">=</span><span class="n">your</span><span class="o">-</span><span class="n">endpoint</span><span class="o">-</span><span class="n">hostname</span><span class="p">;</span>
+<span class="k">SET</span> <span class="n">paimon</span><span class="p">.</span><span class="n">s3</span><span class="p">.</span><span class="k">access</span><span class="o">-</span><span class="k">key</span><span class="o">=</span><span class="n">xxx</span><span class="p">;</span>
+<span class="k">SET</span> <span class="n">paimon</span><span class="p">.</span><span class="n">s3</span><span class="p">.</span><span class="n">secret</span><span class="o">-</span><span class="k">key</span><span class="o">=</span><span class="n">yyy</span><span class="p">;</span>
+</code></pre></div><p>And read table from hive metastore, table can be created by Flink or Spark, see <a href="//paimon.apache.org/docs/1.1/flink/sql-ddl/">Catalog with Hive Metastore</a></p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">test_table</span><span class="p">;</span>
+<span class="k">SELECT</span> <span class="k">COUNT</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="k">FROM</span> <span class="n">test_table</span><span class="p">;</span>
+</code></pre></div></div><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Trino"
+    name="tabs-s3"
+    id="tabs-s3-3"
+     
+    onclick="onSwitch('Trino')"
+  />
+  <label for="tabs-s3-3">Trino</label>
+  <div class="book-tabs-content markdown-inner"><p>Paimon use shared trino filesystem as basic read and write system.</p>
+<p>Please refer to <a href="https://trino.io/docs/current/object-storage/file-system-s3.html">Trino S3</a> to config s3 filesystem in trino.</p>
+</div></div>
+
+<h3 id="s3-compliant-object-stores">
+  S3 Compliant Object Stores
+  <a class="anchor" href="#s3-compliant-object-stores">#</a>
+</h3>
+<p>The S3 Filesystem also support using S3 compliant object stores such as MinIO, Tencent&rsquo;s COS and IBM’s Cloud Object
+Storage. Just configure your endpoint to the provider of the object store service.</p>
+<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nt">s3.endpoint</span><span class="p">:</span><span class="w"> </span><span class="l">your-endpoint-hostname</span><span class="w">
+</span></code></pre></div><h3 id="configure-path-style-access">
+  Configure Path Style Access
+  <a class="anchor" href="#configure-path-style-access">#</a>
+</h3>
+<p>Some S3 compliant object stores might not have virtual host style addressing enabled by default, for example when using Standalone MinIO for testing purpose.
+In such cases, you will have to provide the property to enable path style access.</p>
+<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nt">s3.path.style.access</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span></code></pre></div><h3 id="s3a-performance">
+  S3A Performance
+  <a class="anchor" href="#s3a-performance">#</a>
+</h3>
+<p><a href="https://hadoop.apache.org/docs/stable/hadoop-aws/tools/hadoop-aws/performance.html">Tune Performance</a> for <code>S3AFileSystem</code>.</p>
+<p>If you encounter the following exception:</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">Caused by: org.apache.http.conn.ConnectionPoolTimeoutException: Timeout waiting <span class="k">for</span> connection from pool.
+</code></pre></div><p>Try to configure this in catalog options: <code>fs.s3a.connection.maximum=1000</code>.</p>
+<h2 id="google-cloud-storage">
+  Google Cloud Storage
+  <a class="anchor" href="#google-cloud-storage">#</a>
+</h2>
+Download <a href="https://repo.maven.apache.org/maven2/org/apache/paimon/paimon-gs/1.1.1/paimon-gs-1.1.1.jar">paimon-gs-1.1.1.jar</a>.
+
+
+
+
+
+
+
+
+<div class="book-tabs"><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Flink"
+    name="tabs-gs"
+    id="tabs-gs-0"
+    checked="checked" 
+    onclick="onSwitch('Flink')"
+  />
+  <label for="tabs-gs-0">Flink</label>
+  <div class="book-tabs-content markdown-inner"><blockquote class="book-hint info">
+  If you have already configured <a href="https://nightlies.apache.org/flink/flink-docs-release-2.0/docs/deployment/filesystems/gcs/">oss access through Flink</a> (Via Flink FileSystem),
+here you can skip the following configuration.
+</blockquote>
+<p>Put <code>paimon-gs-1.1.1.jar</code> into <code>lib</code> directory of your Flink home, and create catalog:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">CREATE</span> <span class="k">CATALOG</span> <span class="n">my_catalog</span> <span class="k">WITH</span> <span class="p">(</span>
+    <span class="s1">&#39;type&#39;</span> <span class="o">=</span> <span class="s1">&#39;paimon&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;warehouse&#39;</span> <span class="o">=</span> <span class="s1">&#39;oss://&lt;bucket&gt;/&lt;path&gt;&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;fs.gs.auth.type&#39;</span> <span class="o">=</span> <span class="s1">&#39;SERVICE_ACCOUNT_JSON_KEYFILE&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;fs.gs.auth.service.account.json.keyfile&#39;</span> <span class="o">=</span> <span class="s1">&#39;/path/to/service-account-.json&#39;</span>
+<span class="p">);</span>
+</code></pre></div></div></div>
+
+<h2 id="microsoft-azure-storage">
+  Microsoft Azure Storage
+  <a class="anchor" href="#microsoft-azure-storage">#</a>
+</h2>
+Download <a href="https://repo.maven.apache.org/maven2/org/apache/paimon/paimon-gs/1.1.1/paimon-gs-1.1.1.jar">paimon-azure-1.1.1.jar</a>.
+
+
+
+
+
+
+
+
+<div class="book-tabs"><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Flink"
+    name="tabs-gs"
+    id="tabs-gs-0"
+    checked="checked" 
+    onclick="onSwitch('Flink')"
+  />
+  <label for="tabs-gs-0">Flink</label>
+  <div class="book-tabs-content markdown-inner"><blockquote class="book-hint info">
+  If you have already configured <a href="https://nightlies.apache.org/flink/flink-docs-release-2.0/docs/deployment/filesystems/gcs/">oss access through Flink</a> (Via Flink FileSystem),
+here you can skip the following configuration.
+</blockquote>
+<p>Put <code>paimon-gs-1.1.1.jar</code> into <code>lib</code> directory of your Flink home, and create catalog:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">CREATE</span> <span class="k">CATALOG</span> <span class="n">my_catalog</span> <span class="k">WITH</span> <span class="p">(</span>
+    <span class="s1">&#39;type&#39;</span> <span class="o">=</span> <span class="s1">&#39;paimon&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;warehouse&#39;</span> <span class="o">=</span> <span class="s1">&#39;oss://&lt;bucket&gt;/&lt;path&gt;&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;fs.gs.auth.type&#39;</span> <span class="o">=</span> <span class="s1">&#39;SERVICE_ACCOUNT_JSON_KEYFILE&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;fs.gs.auth.service.account.json.keyfile&#39;</span> <span class="o">=</span> <span class="s1">&#39;/path/to/service-account-.json&#39;</span>
+<span class="p">);</span>
+</code></pre></div></div></div>
+
+<h2 id="microsoft-azure-storage-1">
+  Microsoft Azure Storage
+  <a class="anchor" href="#microsoft-azure-storage-1">#</a>
+</h2>
+Download <a href="https://repo.maven.apache.org/maven2/org/apache/paimon/paimon-azure/1.1.1/paimon-azure-1.1.1.jar">paimon-azure-1.1.1.jar</a>.
+
+
+
+
+
+
+
+
+<div class="book-tabs"><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Flink"
+    name="tabs-azure"
+    id="tabs-azure-0"
+    checked="checked" 
+    onclick="onSwitch('Flink')"
+  />
+  <label for="tabs-azure-0">Flink</label>
+  <div class="book-tabs-content markdown-inner"><blockquote class="book-hint info">
+  If you have already configured <a href="https://nightlies.apache.org/flink/flink-docs-release-2.0/docs/deployment/filesystems/azure/">azure access through Flink</a> (Via Flink FileSystem),
+here you can skip the following configuration.
+</blockquote>
+<p>Put <code>paimon-azure-1.1.1.jar</code> into <code>lib</code> directory of your Flink home, and create catalog:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">CREATE</span> <span class="k">CATALOG</span> <span class="n">my_catalog</span> <span class="k">WITH</span> <span class="p">(</span>
+   <span class="s1">&#39;type&#39;</span> <span class="o">=</span> <span class="s1">&#39;paimon&#39;</span><span class="p">,</span>
+   <span class="s1">&#39;warehouse&#39;</span> <span class="o">=</span> <span class="s1">&#39;wasb://,&lt;container&gt;@&lt;account&gt;.blob.core.windows.net/&lt;path&gt;&#39;</span><span class="p">,</span>
+   <span class="s1">&#39;fs.azure.account.key.Account.blob.core.windows.net&#39;</span> <span class="o">=</span> <span class="s1">&#39;yyy&#39;</span>
+<span class="p">);</span>
+</code></pre></div></div><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Spark"
+    name="tabs-azure"
+    id="tabs-azure-1"
+     
+    onclick="onSwitch('Spark')"
+  />
+  <label for="tabs-azure-1">Spark</label>
+  <div class="book-tabs-content markdown-inner"><blockquote class="book-hint info">
+  If you have already configured azure access through Spark (Via Hadoop FileSystem), here you can skip the following configuration.
+</blockquote>
+<p>Place <code>paimon-azure-1.1.1.jar</code> together with <code>paimon-spark-1.1.1.jar</code> under Spark&rsquo;s jars directory, and start like</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">spark-sql <span class="se">\
+</span><span class="se"></span>  --conf spark.sql.catalog.paimon<span class="o">=</span>org.apache.paimon.spark.SparkCatalog <span class="se">\
+</span><span class="se"></span>  --conf spark.sql.catalog.paimon.warehouse<span class="o">=</span>wasb://,&lt;container&gt;@&lt;account&gt;.blob.core.windows.net/&lt;path&gt; <span class="se">\
+</span><span class="se"></span>  --conf fs.azure.account.key.Account.blob.core.windows.net<span class="o">=</span>yyy <span class="se">\
+</span></code></pre></div></div></div>
+
+<h2 id="obs">
+  OBS
+  <a class="anchor" href="#obs">#</a>
+</h2>
+Download <a href="https://repo.maven.apache.org/maven2/org/apache/paimon/paimon-obs/1.1.1/paimon-obs-1.1.1.jar">paimon-obs-1.1.1.jar</a>.
+
+
+
+
+
+
+
+
+<div class="book-tabs"><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Flink"
+    name="tabs-obs"
+    id="tabs-obs-0"
+    checked="checked" 
+    onclick="onSwitch('Flink')"
+  />
+  <label for="tabs-obs-0">Flink</label>
+  <div class="book-tabs-content markdown-inner"><blockquote class="book-hint info">
+  If you have already configured <a href="https://nightlies.apache.org/flink/flink-docs-stable/docs/deployment/filesystems/s3/">obs access through Flink</a> (Via Flink FileSystem),
+here you can skip the following configuration.
+</blockquote>
+<p>Put <code>paimon-obs-1.1.1.jar</code> into <code>lib</code> directory of your Flink home, and create catalog:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">CREATE</span> <span class="k">CATALOG</span> <span class="n">my_catalog</span> <span class="k">WITH</span> <span class="p">(</span>
+    <span class="s1">&#39;type&#39;</span> <span class="o">=</span> <span class="s1">&#39;paimon&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;warehouse&#39;</span> <span class="o">=</span> <span class="s1">&#39;obs://&lt;bucket&gt;/&lt;path&gt;&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;fs.obs.endpoint&#39;</span> <span class="o">=</span> <span class="s1">&#39;obs-endpoint-hostname&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;fs.obs.access.key&#39;</span> <span class="o">=</span> <span class="s1">&#39;xxx&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;fs.obs.secret.key&#39;</span> <span class="o">=</span> <span class="s1">&#39;yyy&#39;</span>
+<span class="p">);</span>
+</code></pre></div></div><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Spark"
+    name="tabs-obs"
+    id="tabs-obs-1"
+     
+    onclick="onSwitch('Spark')"
+  />
+  <label for="tabs-obs-1">Spark</label>
+  <div class="book-tabs-content markdown-inner"><blockquote class="book-hint info">
+  If you have already configured obs access through Spark (Via Hadoop FileSystem), here you can skip the following configuration.
+</blockquote>
+<p>Place <code>paimon-obs-1.1.1.jar</code> together with <code>paimon-spark-1.1.1.jar</code> under Spark&rsquo;s jars directory, and start like</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">spark-sql <span class="se">\ </span>
+  --conf spark.sql.catalog.paimon<span class="o">=</span>org.apache.paimon.spark.SparkCatalog <span class="se">\
+</span><span class="se"></span>  --conf spark.sql.catalog.paimon.warehouse<span class="o">=</span>obs://&lt;bucket&gt;/&lt;path&gt; <span class="se">\
+</span><span class="se"></span>  --conf spark.sql.catalog.paimon.fs.obs.endpoint<span class="o">=</span>obs-endpoint-hostname <span class="se">\
+</span><span class="se"></span>  --conf spark.sql.catalog.paimon.fs.obs.access.key<span class="o">=</span>xxx <span class="se">\
+</span><span class="se"></span>  --conf spark.sql.catalog.paimon.fs.obs.secret.key<span class="o">=</span>yyy
+</code></pre></div></div><input 
+    type="radio"
+    class="toggle"
+    data-tab-group="flink-tabs"
+    data-tab-item="Hive"
+    name="tabs-obs"
+    id="tabs-obs-2"
+     
+    onclick="onSwitch('Hive')"
+  />
+  <label for="tabs-obs-2">Hive</label>
+  <div class="book-tabs-content markdown-inner"><blockquote class="book-hint info">
+  If you have already configured obs access through Hive ((Via Hadoop FileSystem)), here you can skip the following configuration.
+</blockquote>
+<p>NOTE: You need to ensure that Hive metastore can access <code>obs</code>.</p>
+<p>Place <code>paimon-obs-1.1.1.jar</code> together with <code>paimon-hive-connector-1.1.1.jar</code> under Hive&rsquo;s auxlib directory, and start like</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SET</span> <span class="n">paimon</span><span class="p">.</span><span class="n">fs</span><span class="p">.</span><span class="n">obs</span><span class="p">.</span><span class="n">endpoint</span><span class="o">=</span><span class="n">obs</span><span class="o">-</span><span class="n">endpoint</span><span class="o">-</span><span class="n">hostname</span><span class="p">;</span>
+<span class="k">SET</span> <span class="n">paimon</span><span class="p">.</span><span class="n">fs</span><span class="p">.</span><span class="n">obs</span><span class="p">.</span><span class="k">access</span><span class="p">.</span><span class="k">key</span><span class="o">=</span><span class="n">xxx</span><span class="p">;</span>
+<span class="k">SET</span> <span class="n">paimon</span><span class="p">.</span><span class="n">fs</span><span class="p">.</span><span class="n">obs</span><span class="p">.</span><span class="n">secret</span><span class="p">.</span><span class="k">key</span><span class="o">=</span><span class="n">yyy</span><span class="p">;</span>
+</code></pre></div><p>And read table from hive metastore, table can be created by Flink or Spark, see <a href="//paimon.apache.org/docs/1.1/flink/sql-ddl/">Catalog with Hive Metastore</a></p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">test_table</span><span class="p">;</span>
+<span class="k">SELECT</span> <span class="k">COUNT</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="k">FROM</span> <span class="n">test_table</span><span class="p">;</span>
+</code></pre></div></div></div>
+
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  
+
+
+
+
+<a href="//github.com/apache/paimon/edit/1.1/docs/content/maintenance/filesystems.md" style="color:black"><i class="fa fa-edit fa-fw"></i>Edit This Page</a>
+
+
+ 
+        
+
+
+<hr style="margin-top: 20px; border: 1px solid #e5e5e5;" />
+
+<table style="border-spacing: 10px;">
+    <tbody>
+    <tr>
+        <td colspan="2">
+            Copyright &copy; 2024 The Apache Software Foundation. Apache Paimon, Paimon, and its feather logo are
+            trademarks of The Apache Software Foundation.
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+      </footer>
+
+      
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      
+  
+
+<nav id="TableOfContents"><h3>On This Page <button class="toc" onclick="collapseToc()"><i class="fa fa-compress" aria-hidden="true"></i></button></h3>
+  <ul>
+    <li><a href="#supported-filesystems">Supported FileSystems</a></li>
+    <li><a href="#dependency">Dependency</a></li>
+    <li><a href="#hdfs">HDFS</a>
+      <ul>
+        <li><a href="#hdfs-configuration">HDFS Configuration</a></li>
+        <li><a href="#hadoop-compatible-file-systems-hcfs">Hadoop-compatible file systems (HCFS)</a></li>
+        <li><a href="#kerberos">Kerberos</a></li>
+        <li><a href="#hdfs-ha">HDFS HA</a></li>
+        <li><a href="#hdfs-viewfs">HDFS ViewFS</a></li>
+      </ul>
+    </li>
+    <li><a href="#oss">OSS</a></li>
+    <li><a href="#s3">S3</a>
+      <ul>
+        <li><a href="#s3-compliant-object-stores">S3 Compliant Object Stores</a></li>
+        <li><a href="#configure-path-style-access">Configure Path Style Access</a></li>
+        <li><a href="#s3a-performance">S3A Performance</a></li>
+      </ul>
+    </li>
+    <li><a href="#google-cloud-storage">Google Cloud Storage</a></li>
+    <li><a href="#microsoft-azure-storage">Microsoft Azure Storage</a></li>
+    <li><a href="#microsoft-azure-storage-1">Microsoft Azure Storage</a></li>
+    <li><a href="#obs">OBS</a></li>
+  </ul>
+</nav>
+
+ 
+    </aside>
+    <aside class="expand-toc">
+      <button class="toc" onclick="expandToc()">
+        <i class="fa fa-expand" aria-hidden="true"></i>
+      </button>
+    </aside>
+    
+  </main>
+
+  
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

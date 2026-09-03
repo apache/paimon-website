@@ -1,0 +1,2010 @@
+
+<!DOCTYPE html>
+<html lang="en" dir=>
+
+<head>
+  <meta name="generator" content="Hugo 0.80.0" />
+  
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Schema #  The version of the schema file starts from 0 and currently retains all versions of the schema. There may be old files that rely on the old schema version, so its deletion should be done with caution.
+Schema File is JSON, it includes:
+ fields: data field list, data field contains id, name, type, field id is used to support schema evolution. partitionKeys: field name list, partition definition of the table, it cannot be modified.">
+<meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="Schema" />
+<meta property="og:description" content="Schema #  The version of the schema file starts from 0 and currently retains all versions of the schema. There may be old files that rely on the old schema version, so its deletion should be done with caution.
+Schema File is JSON, it includes:
+ fields: data field list, data field contains id, name, type, field id is used to support schema evolution. partitionKeys: field name list, partition definition of the table, it cannot be modified." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="//paimon.apache.org/docs/1.1/concepts/spec/schema/" />
+
+<title>Schema | Apache Paimon</title>
+<link rel="manifest" href="/docs/1.1/manifest.json">
+<link rel="icon" href="/docs/1.1/favicon.png" type="image/x-icon">
+<link rel="stylesheet" href="/docs/1.1/book.min.3bc4108a5b57c9a7e6fcae92ff69940435f8c46c4e1e4a311aedc9b2d8e06792.css" integrity="sha256-O8QQiltXyafm/K6S/2mUBDX4xGxOHkoxGu3JstjgZ5I=">
+<script defer src="/docs/1.1/en.search.min.1fe95a11b2f99072508f610e27e21c1ed57f26edb95b683483846b16f457c842.js" integrity="sha256-H&#43;laEbL5kHJQj2EOJ&#43;IcHtV/Ju25W2g0g4RrFvRXyEI="></script>
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+  
+  
+
+<link rel="stylesheet" type="text/css" href="//paimon.apache.org/docs/1.1/font-awesome/css/font-awesome.min.css">
+<script src="//paimon.apache.org/docs/1.1/js/anchor.min.js"></script>
+<script src="//paimon.apache.org/docs/1.1/js/flink.js"></script>
+
+
+
+  
+  <script>
+    var _paq = window._paq = window._paq || [];
+     
+     
+    _paq.push(['disableCookies']);
+     
+    _paq.push(["setDomains", ["*.flink.apache.org","*.nightlies.apache.org/flink"]]);
+    _paq.push(['trackPageView']);
+    _paq.push(['enableLinkTracking']);
+    (function() {
+      var u="//matomo.privacy.apache.org/";
+      _paq.push(['setTrackerUrl', u+'matomo.php']);
+      _paq.push(['setSiteId', '1']);
+      var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+      g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+    })();
+  </script>
+  
+</head>
+
+<body dir=>
+  
+    <input type="checkbox" class="hidden toggle" id="menu-control" />
+    <input type="checkbox" class="hidden toggle" id="toc-control" />
+  
+  <main class="container flex">
+    
+      <aside class="book-menu">
+        
+  
+
+<nav>
+
+
+<a id="logo" href="//paimon.apache.org/docs/1.1">
+    <img width="100%" src="//paimon.apache.org/docs/1.1/paimon_black.svg">
+</a>
+<p style="text-align:right">1.1.1</p>
+
+<div class="book-search">
+  <input type="text" id="book-search-input" placeholder="Search" aria-label="Search" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-dc8a1c63e6da60163016ce21cae1faa0" class="toggle" checked />
+    <label for="section-dc8a1c63e6da60163016ce21cae1faa0" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-book title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Concepts</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/concepts/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/concepts/basic-concepts/" class="">Basic Concepts</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/concepts/concurrency-control/" class="">Concurrency Control</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/concepts/catalog/" class="">Catalog</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-e03f934865df9dd3baca303554bcaa71" class="toggle"  />
+    <label for="section-e03f934865df9dd3baca303554bcaa71" class="flex justify-between">RESTCatalog<span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/concepts/rest/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/concepts/rest/bear/" class="">Bear Token</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/concepts/rest/dlf/" class="">DLF Token</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/concepts/rest/rest-api/" class="">REST API</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/concepts/table-types/" class="">Table Types</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/concepts/system-tables/" class="">System Tables</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/concepts/data-types/" class="">Data Types</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-d3e7256ce393050c572ea7bd8cc4f240" class="toggle" checked />
+    <label for="section-d3e7256ce393050c572ea7bd8cc4f240" class="flex justify-between">Specification<span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/concepts/spec/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/concepts/spec/schema/" class=" active">Schema</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/concepts/spec/snapshot/" class="">Snapshot</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/concepts/spec/manifest/" class="">Manifest</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/concepts/spec/datafile/" class="">DataFile</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/concepts/spec/tableindex/" class="">Table Index</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/concepts/spec/fileindex/" class="">File Index</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-3f6a6d4f1692040009c66ffaa328c8d0" class="toggle"  />
+    <label for="section-3f6a6d4f1692040009c66ffaa328c8d0" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-database title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Table with PK</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/primary-key-table/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/primary-key-table/data-distribution/" class="">Data Distribution</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/primary-key-table/table-mode/" class="">Table Mode</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-038bb7d17b5b7cb93fb60acbcf218f11" class="toggle"  />
+    <label for="section-038bb7d17b5b7cb93fb60acbcf218f11" class="flex justify-between">Merge Engine<span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/primary-key-table/merge-engine/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/primary-key-table/merge-engine/partial-update/" class="">Partial Update</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/primary-key-table/merge-engine/aggregation/" class="">Aggregation</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/primary-key-table/merge-engine/first-row/" class="">First Row</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/primary-key-table/changelog-producer/" class="">Changelog Producer</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/primary-key-table/sequence-rowkind/" class="">Sequence & Rowkind</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/primary-key-table/compaction/" class="">Compaction</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/primary-key-table/query-performance/" class="">Query Performance</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-f74847e1c917ba2b99e7b718bb318b30" class="toggle"  />
+    <label for="section-f74847e1c917ba2b99e7b718bb318b30" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-database title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Table w/o PK</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/append-table/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/append-table/streaming/" class="">Streaming</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/append-table/query-performance/" class="">Query Performance</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/append-table/update/" class="">Update</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/append-table/bucketed/" class="">Bucketed</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-998a37410d502937fe8444ed73a9ecf8" class="toggle"  />
+    <label for="section-998a37410d502937fe8444ed73a9ecf8" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-gear title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Engine Flink</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/flink/quick-start/" class="">Quick Start</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/flink/sql-ddl/" class="">SQL DDL</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/flink/sql-write/" class="">SQL Write</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/flink/sql-query/" class="">SQL Query</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/flink/consumer-id/" class="">Consumer ID</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/flink/sql-lookup/" class="">SQL Lookup</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/flink/sql-alter/" class="">SQL Alter</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/flink/clone-tables/" class="">Clone Tables</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/flink/procedures/" class="">Procedures</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/flink/action-jars/" class="">Action Jars</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/flink/savepoint/" class="">Savepoint</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-74c63bf75b4f6bd14a3ea6a1217f03ad" class="toggle"  />
+    <label for="section-74c63bf75b4f6bd14a3ea6a1217f03ad" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-gear title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Engine Spark</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/spark/quick-start/" class="">Quick Start</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/spark/sql-ddl/" class="">SQL DDL</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/spark/sql-functions/" class="">SQL Functions</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/spark/sql-write/" class="">SQL Write</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/spark/sql-query/" class="">SQL Query</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/spark/sql-alter/" class="">SQL Alter</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/spark/auxiliary/" class="">Auxiliary</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/spark/procedures/" class="">Procedures</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-16bf9de4e97c50dda6ce1ac6e934602c" class="toggle"  />
+    <label for="section-16bf9de4e97c50dda6ce1ac6e934602c" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-gear title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Ecosystem</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/ecosystem/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/ecosystem/starrocks/" class="">StarRocks</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/ecosystem/doris/" class="">Doris</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/ecosystem/hive/" class="">Hive</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/ecosystem/trino/" class="">Trino</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/ecosystem/amoro/" class="">Amoro</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-582e435c19ca5fafbf9764337d648e63" class="toggle"  />
+    <label for="section-582e435c19ca5fafbf9764337d648e63" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-gear title maindish" aria-hidden="true"></i>&nbsp;&nbsp;CDC Ingestion</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/cdc-ingestion/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/cdc-ingestion/mysql-cdc/" class="">Mysql CDC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/cdc-ingestion/postgres-cdc/" class="">Postgres CDC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/cdc-ingestion/kafka-cdc/" class="">Kafka CDC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/cdc-ingestion/mongo-cdc/" class="">Mongo CDC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/cdc-ingestion/pulsar-cdc/" class="">Pulsar CDC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/cdc-ingestion/debezium-bson/" class="">Debezium BSON</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-697a4b6a0388d6cfa4f418aba3b4edfe" class="toggle"  />
+    <label for="section-697a4b6a0388d6cfa4f418aba3b4edfe" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-wrench title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Maintenance</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/maintenance/filesystems/" class="">Filesystems</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/maintenance/write-performance/" class="">Write Performance</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/maintenance/dedicated-compaction/" class="">Dedicated Compaction</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/maintenance/manage-snapshots/" class="">Manage Snapshots</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/maintenance/rescale-bucket/" class="">Rescale Bucket</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/maintenance/manage-tags/" class="">Manage Tags</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/maintenance/metrics/" class="">Metrics</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/maintenance/manage-privileges/" class="">Manage Privileges</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/maintenance/manage-branches/" class="">Manage Branches</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/maintenance/manage-partitions/" class="">Manage Partitions</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/maintenance/configurations/" class="">Configurations</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-049030059e0dc01edf74ba3d4d259dae" class="toggle"  />
+    <label for="section-049030059e0dc01edf74ba3d4d259dae" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-briefcase title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Program API</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/program-api/flink-api/" class="">Flink API</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/program-api/java-api/" class="">Java API</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/program-api/catalog-api/" class="">Catalog API</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/program-api/python-api/" class="">Python API</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-07c567e5a9f3ce62aea4ff0a1e2dc065" class="toggle"  />
+    <label for="section-07c567e5a9f3ce62aea4ff0a1e2dc065" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-briefcase title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Migration</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/migration/migration-from-hive/" class="">Migration From Hive</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/migration/migration-from-iceberg/" class="">Migration From Iceberg</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/migration/upsert-to-partitioned/" class="">Upsert To Partitioned</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/migration/iceberg-compatibility/" class="">Iceberg Compatibility</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  	<br/>
+  
+  
+    <input type="checkbox" id="section-8c828bcf882f666cdd6821a70cc768ee" class="toggle"  />
+    <label for="section-8c828bcf882f666cdd6821a70cc768ee" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-sitemap title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Project</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/project/roadmap/" class="">Roadmap</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/project/download/" class="">Download</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/project/contributing/" class="">Contributing</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/project/committer/" class="">Committer</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-392fc6f653ae23ff676811656a71ebbf" class="toggle"  />
+    <label for="section-392fc6f653ae23ff676811656a71ebbf" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-sitemap title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Learn Paimon</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/learn-paimon/understand-files/" class="">Understand Files</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br/>
+<hr class="menu-break">
+
+<a href="//paimon.apache.org" style="color:black;margin-bottom:0.5em"><i class="link fa fa-external-link title" aria-hidden="true"></i> Project Homepage</a>
+<br/>
+
+<a href="//paimon.apache.org/docs/master/api/java/" style="color:black;margin-bottom:0.5em"><i class="link fa fa-external-link title" aria-hidden="true"></i> JavaDocs</a>
+<br/>
+
+<hr class="menu-break">
+<li style="list-style-type: none">
+  <br>
+  <input type="checkbox" id="section-version-picker" class="toggle">
+  <label for="section-version-picker" class="flex justify-between">
+     <div style="font-weight:450;margin-bottom:0.5em">Pick Docs Version</div>
+     <span>▾</span>
+  </label>
+  <ul>
+    <a href="//paimon.apache.org/docs/1.1">
+      1.1 (✓)
+    </a>
+    <hr class="menu-break">
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/master">
+          master
+        </a>
+      </li>
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/1.1">
+          stable
+        </a>
+      </li>
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/1.1">
+          1.1
+        </a>
+      </li>
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/1.0">
+          1.0
+        </a>
+      </li>
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/0.9">
+          0.9
+        </a>
+      </li>
+    
+    <hr class="menu-break">
+    <li>
+      <a href="//paimon.apache.org/docs/1.1/versions">
+          All Versions
+      </a>
+    </li>
+  </ul>
+</li>
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var menu=document.querySelector("aside.book-menu nav");addEventListener("beforeunload",function(event){localStorage.setItem("menu.scrollTop",menu.scrollTop);});menu.scrollTop=localStorage.getItem("menu.scrollTop");})();</script>
+
+
+ 
+      </aside>
+    
+
+    <div class="book-page">
+      
+        <header class="book-header">
+          
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/docs/1.1/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <strong>Schema</strong>
+
+  <label for="toc-control">
+    
+    <img src="/docs/1.1/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden clearfix">
+    
+  
+
+<nav id="TableOfContents"><h3>On This Page <button class="toc" onclick="collapseToc()"><i class="fa fa-compress" aria-hidden="true"></i></button></h3>
+  <ul>
+    <li><a href="#example">Example</a></li>
+    <li><a href="#compatibility">Compatibility</a></li>
+    <li><a href="#datafield">DataField</a></li>
+    <li><a href="#update-schema">Update Schema</a></li>
+  </ul>
+</nav>
+
+
+  </aside>
+  
+ 
+        </header>
+      
+
+      
+
+
+
+
+
+
+      
+  <article class="markdown"><!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<h1 id="schema">
+  Schema
+  <a class="anchor" href="#schema">#</a>
+</h1>
+<p>The version of the schema file starts from 0 and currently retains all versions of the schema. There may be old files
+that rely on the old schema version, so its deletion should be done with caution.</p>
+<p>Schema File is JSON, it includes:</p>
+<ol>
+<li>fields: data field list, data field contains <code>id</code>, <code>name</code>, <code>type</code>, field id is used to support schema evolution.</li>
+<li>partitionKeys: field name list, partition definition of the table, it cannot be modified.</li>
+<li>primaryKeys: field name list, primary key definition of the table, it cannot be modified.</li>
+<li>options: map&lt;string, string&gt;, no ordered, options of the table, including a lot of capabilities and optimizations.</li>
+</ol>
+<h2 id="example">
+  Example
+  <a class="anchor" href="#example">#</a>
+</h2>
+<div class="highlight"><pre class="chroma"><code class="language-json" data-lang="json"><span class="p">{</span>
+  <span class="nt">&#34;version&#34;</span> <span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+  <span class="nt">&#34;id&#34;</span> <span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+  <span class="nt">&#34;fields&#34;</span> <span class="p">:</span> <span class="p">[</span> <span class="p">{</span>
+    <span class="nt">&#34;id&#34;</span> <span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="nt">&#34;name&#34;</span> <span class="p">:</span> <span class="s2">&#34;order_id&#34;</span><span class="p">,</span>
+    <span class="nt">&#34;type&#34;</span> <span class="p">:</span> <span class="s2">&#34;BIGINT NOT NULL&#34;</span>
+  <span class="p">},</span> <span class="p">{</span>
+    <span class="nt">&#34;id&#34;</span> <span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="nt">&#34;name&#34;</span> <span class="p">:</span> <span class="s2">&#34;order_name&#34;</span><span class="p">,</span>
+    <span class="nt">&#34;type&#34;</span> <span class="p">:</span> <span class="s2">&#34;STRING&#34;</span>
+  <span class="p">},</span> <span class="p">{</span>
+    <span class="nt">&#34;id&#34;</span> <span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="nt">&#34;name&#34;</span> <span class="p">:</span> <span class="s2">&#34;order_user_id&#34;</span><span class="p">,</span>
+    <span class="nt">&#34;type&#34;</span> <span class="p">:</span> <span class="s2">&#34;BIGINT&#34;</span>
+  <span class="p">},</span> <span class="p">{</span>
+    <span class="nt">&#34;id&#34;</span> <span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+    <span class="nt">&#34;name&#34;</span> <span class="p">:</span> <span class="s2">&#34;order_shop_id&#34;</span><span class="p">,</span>
+    <span class="nt">&#34;type&#34;</span> <span class="p">:</span> <span class="s2">&#34;BIGINT&#34;</span>
+  <span class="p">}</span> <span class="p">],</span>
+  <span class="nt">&#34;highestFieldId&#34;</span> <span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+  <span class="nt">&#34;partitionKeys&#34;</span> <span class="p">:</span> <span class="p">[</span> <span class="p">],</span>
+  <span class="nt">&#34;primaryKeys&#34;</span> <span class="p">:</span> <span class="p">[</span> <span class="s2">&#34;order_id&#34;</span> <span class="p">],</span>
+  <span class="nt">&#34;options&#34;</span> <span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&#34;bucket&#34;</span> <span class="p">:</span> <span class="s2">&#34;5&#34;</span>
+  <span class="p">},</span>
+  <span class="nt">&#34;comment&#34;</span> <span class="p">:</span> <span class="s2">&#34;&#34;</span><span class="p">,</span>
+  <span class="nt">&#34;timeMillis&#34;</span> <span class="p">:</span> <span class="mi">1720496663041</span>
+<span class="p">}</span>
+</code></pre></div><h2 id="compatibility">
+  Compatibility
+  <a class="anchor" href="#compatibility">#</a>
+</h2>
+<p>For old versions:</p>
+<ul>
+<li>version 1: should put <code>bucket -&gt; 1</code> to options if there is no <code>bucket</code> key.</li>
+<li>version 1 &amp; 2: should put <code>file.format -&gt; orc</code> to options if there is no <code>file.format</code> key.</li>
+</ul>
+<h2 id="datafield">
+  DataField
+  <a class="anchor" href="#datafield">#</a>
+</h2>
+<p>DataField represents a column of the table.</p>
+<ol>
+<li>id: int, column id, automatic increment, it is used for schema evolution.</li>
+<li>name: string, column name.</li>
+<li>type: data type, it is very similar to SQL type string.</li>
+<li>description: string.</li>
+</ol>
+<h2 id="update-schema">
+  Update Schema
+  <a class="anchor" href="#update-schema">#</a>
+</h2>
+<p>Updating the schema should generate a new schema file.</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">warehouse
+└── default.db
+    └── my_table
+        ├── schema
+            ├── schema-0
+            ├── schema-1
+            └── schema-2
+</code></pre></div><p>There is a reference to schema in the snapshot. The schema file with the highest numerical value is usually the latest
+schema file.</p>
+<p>Old schema files cannot be directly deleted because there may be old data files that reference old schema files. When
+reading table, it is necessary to rely on them for schema evolution reading.</p>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  
+
+
+
+
+<a href="//github.com/apache/paimon/edit/1.1/docs/content/concepts/spec/schema.md" style="color:black"><i class="fa fa-edit fa-fw"></i>Edit This Page</a>
+
+
+ 
+        
+
+
+<hr style="margin-top: 20px; border: 1px solid #e5e5e5;" />
+
+<table style="border-spacing: 10px;">
+    <tbody>
+    <tr>
+        <td colspan="2">
+            Copyright &copy; 2024 The Apache Software Foundation. Apache Paimon, Paimon, and its feather logo are
+            trademarks of The Apache Software Foundation.
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+      </footer>
+
+      
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      
+  
+
+<nav id="TableOfContents"><h3>On This Page <button class="toc" onclick="collapseToc()"><i class="fa fa-compress" aria-hidden="true"></i></button></h3>
+  <ul>
+    <li><a href="#example">Example</a></li>
+    <li><a href="#compatibility">Compatibility</a></li>
+    <li><a href="#datafield">DataField</a></li>
+    <li><a href="#update-schema">Update Schema</a></li>
+  </ul>
+</nav>
+
+ 
+    </aside>
+    <aside class="expand-toc">
+      <button class="toc" onclick="expandToc()">
+        <i class="fa fa-expand" aria-hidden="true"></i>
+      </button>
+    </aside>
+    
+  </main>
+
+  
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
