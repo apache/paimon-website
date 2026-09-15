@@ -1,0 +1,15 @@
+{
+  "name": "Apache Paimon",
+  "short_name": "Apache Paimon",
+  "start_url": "/docs/0.8/",
+  "scope": "/docs/0.8/",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#000000",
+  "icons": [
+    {
+      "src": "/docs/0.8/favicon.svg",
+      "sizes": "512x512"
+    }
+  ]
+}
