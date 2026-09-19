@@ -1,0 +1,93 @@
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements. See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to you under the Apache License, Version 2.0.
+-->
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="IVF-SQ residual scalar quantization, tuning, I/O behavior, and stable v1 storage layout."><title>IVF-SQ · Paimon Vector Index</title><link rel="stylesheet" href="styles.css"><script src="docs.js" defer></script></head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header"><div class="header-inner"><a class="brand" href="index.html" aria-label="Paimon Vector Index documentation home"><span class="brand-mark">VI</span><span>Paimon Vector Index</span></a><nav class="site-nav" data-site-nav aria-label="Documentation"><a href="index.html">Overview</a><a href="api.html">API</a><a href="development.html">Development</a><a href="range-search.html">Range search</a><a href="ivf-flat.html">IVF-FLAT</a><a href="ivf-pq.html">IVF-PQ</a><a href="ivf-rq.html">IVF-RQ</a><a href="ivf-sq.html" aria-current="page">IVF-SQ</a><a href="diskann.html">DiskANN</a><a href="releases.html">Releases</a></nav><div class="header-actions"><button class="icon-button" type="button" data-theme-toggle aria-label="Switch color theme">◐</button><button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-label="Open navigation">☰</button></div></div></header>
+  <main id="main"><div class="page-shell">
+    <section class="hero detail-hero"><p class="eyebrow">Residual scalar quantization</p><h1>IVF-SQ</h1><p class="hero-lead">Store one unsigned byte per residual dimension and scan the selected IVF lists directly. IVF-SQ targets the gap between raw IVF-FLAT and aggressively compressed IVF-PQ/RQ without paying for a graph in every list.</p><div class="badge-row"><span class="badge strong">1 byte / dimension</span><span class="badge">Pooled training bounds</span><span class="badge">SIMD scan</span><span class="badge">Magic: IVSQ</span></div></section>
+    <div class="doc-layout">
+      <aside class="toc"><strong>On this page</strong><a href="#position">Position</a><a href="#algorithm">Algorithm</a><a href="#usage">Usage</a><a href="#parameters">Parameters</a><a href="#storage">Storage</a><a href="#comparison">Open-source comparison</a><a href="#io">I/O and batching</a><a href="#benchmarks">Public benchmarks</a></aside>
+      <article class="article">
+        <section class="article-section" id="position">
+          <h2>Position</h2>
+          <p>IVF-SQ preserves the IVF partitioning model and replaces every residual <code>f32</code> component with an 8-bit scalar code. It usually occupies about one quarter of IVF-FLAT's vector payload. Unlike IVF-PQ, each dimension is quantized independently, so there is no subquantizer-count parameter or codebook lookup table.</p>
+          <div class="callout"><strong>Use it when</strong>IVF-FLAT recall is good, its raw-vector payload or scan bandwidth is too large, and a one-byte-per-dimension representation fits the budget. Prefer IVF-PQ for much smaller codes; prefer DiskANN when high-recall large-scale local-SSD search needs page-granular graph traversal.</div>
+        </section>
+        <section class="article-section" id="algorithm">
+          <h2>Build and search</h2>
+          <ol><li>Train the IVF coarse centroids and assign training vectors to lists.</li><li>Compute per-dimension residual extrema using partition-local reductions, then pool them across the training sample. This avoids clipping unseen vectors to the narrow or constant bounds of sparsely sampled partitions.</li><li>Encode every residual coordinate to an unsigned byte. New indexes use pooled residual bounds for every list; existing v1 files retain their recorded per-list bounds.</li><li>At query time, select <code>nprobe</code> lists, reuse cached partitions, and load missing sorted row IDs and codes in bounded multi-range batches. Scan the codes with the metric-specific kernel and retain the top K. Blocked L2 scans use SIMD and a conservative partial-distance cutoff.</li></ol>
+          <p>Cosine input is normalized through the shared metric preprocessing path. Filters are checked while scanning, so excluded rows do not enter the top-K heap.</p>
+          <p>The Rust reader also supports <a href="range-search.html">L2 distance range search</a>, for single and batch queries with or without a Roaring filter. It reuses this blocked SQ scanner and decides membership on its estimated squared distance, not on the original vector. Results have no top-K cap; quantization can move rows across either band boundary even when every list is probed. Range search retains shared batch reads, the partition cache, and bounded streaming of oversized lists.</p>
+        </section>
+        <section class="article-section" id="usage">
+          <h2>Configuration</h2>
+          <div class="code-block"><span class="code-label">Options API</span><pre><code>index.type = ivf_sq
+dimension = 128
+nlist = 1024
+metric = l2
+ivf.coarse-assignment = auto</code></pre></div>
+          <div class="code-block"><span class="code-label">Rust</span><pre><code>let config = VectorIndexConfig::IvfSq {
+    dimension: 128,
+    nlist: 1024,
+    metric: MetricType::L2,
+    use_approximate_coarse_assignment: true,
+    ivf_train_max_points_per_centroid: 256,
+};
+let params = VectorSearchParams::new(10, 16);</code></pre></div>
+        </section>
+        <section class="article-section" id="parameters">
+          <h2>Parameters</h2>
+          <div class="table-wrap"><table><thead><tr><th>Parameter</th><th>Requirement</th><th>Effect</th></tr></thead><tbody><tr><td><code>dimension</code></td><td>Inferred by Java/Python one-shot training; otherwise &gt; 0</td><td>Each vector uses exactly <code>d</code> SQ-code bytes.</td></tr><tr><td><code>nlist</code></td><td>Auto from <code>expected-vector-count</code>, or explicit &gt; 0 and no larger than training count</td><td>More lists shorten scans but enlarge centroid and per-list-bound metadata.</td></tr><tr><td><code>metric</code></td><td>Required: L2, inner product, or cosine</td><td>Selects preprocessing and the distance kernel.</td></tr><tr><td><code>ivf.train.max-points-per-centroid</code></td><td>Positive integer; default <code>256</code></td><td>Caps coarse K-means input at <code>nlist × value</code> vectors, including hierarchical clustering stages.</td></tr><tr><td><code>ivf.coarse-assignment</code></td><td><code>auto</code> by default; optional <code>exact</code></td><td><code>auto</code> uses Vamana when <code>dimension × nlist ≥ 1,000,000</code>, trading build speed for possible low-<code>nprobe</code> recall loss and graph startup cost; <code>exact</code> disables it.</td></tr><tr><td><code>nprobe</code></td><td>Automatic by default; explicit 1 to <code>nlist</code></td><td>Auto accounts for K, average list size, and filter selectivity; explicit values provide a measured override.</td></tr></tbody></table></div>
+          <p>Larger training samples increase training work and may improve centroid quality. These limits apply within the Trainer reservoir of <code>max(65536, 64 × nlist)</code> vectors; increasing them does not enlarge that reservoir. See the <a href="api.html#lifecycle">shared training options</a> for sampling and Paimon integration details.</p>
+          <p>The scalar code width is fixed at 8 bits in v1. There is deliberately no <code>sq.bits</code>, graph-width, or search-width option.</p>
+        </section>
+        <section class="article-section" id="storage">
+          <h2>Stable v1 storage</h2>
+          <div class="storage-map" aria-label="IVF-SQ file layout"><div class="storage-block primary"><strong>64 B header</strong>IVSQ v1</div><div class="storage-block"><strong>Global bounds</strong><code>2 × d × f32</code></div><div class="storage-block"><strong>Per-list bounds</strong><code>2 × nlist × d × f32</code></div><div class="storage-block"><strong>IVF centers</strong><code>nlist × d × f32</code></div><div class="storage-block"><strong>Offset table</strong><code>nlist × 16 B</code></div><div class="storage-block"><strong>Lists</strong>blocked SQ codes + delta IDs</div></div>
+          <p>Every non-empty list is sorted by signed row ID before writing. Codes come first and are transposed within up-to-32-row blocks, with dimension before row lane, so SIMD evaluates multiple candidates together and the reader scans directly from the list payload allocation. The trailing IDs use the shared delta-varint encoding and remain aligned with code lanes. The normative byte layout and golden fixture are in the <a href="../core/STORAGE_FORMAT.md#ivf-sq-v1">storage-format specification</a>.</p>
+          <div class="callout"><strong>Upgrading existing indexes</strong>The header, flags, code layout, and row-ID encoding remain IVSQ v1. Existing files gain the reader optimizations without rebuilding and keep their recorded quantization bounds. Retrain and rebuild to obtain pooled bounds and their measured recall improvement. New files store the pooled bounds in the existing per-list metadata fields.</div>
+        </section>
+        <section class="article-section" id="comparison">
+          <h2>Open-source comparison</h2>
+          <p><a href="https://github.com/facebookresearch/faiss/blob/main/faiss/IndexScalarQuantizer.cpp">Faiss IVF-SQ</a> provides residual SQ4/SQ6/SQ8/F16 encodings, parallel add, and query-parallel scanning over generic inverted lists. <a href="https://github.com/zilliztech/knowhere/blob/main/thirdparty/faiss/faiss/cppcontrib/knowhere/IndexIVFScalarQuantizerCC.cpp">Milvus Knowhere</a> builds on the same scanner model and adds concurrent inverted-list mutation. This implementation deliberately fixes the first immutable format at SQ8, stores per-dimension residual bounds in each list’s metadata, stores compressed sorted IDs instead of fixed eight-byte IDs, and transposes each 32-row code block for its CPU SIMD kernels.</p>
+          <p>Non-cosine inputs are borrowed, residual extrema are reduced in parallel without a training residual matrix, and assigned rows are encoded directly with precomputed scales and packed NEON/AVX2 conversion. The persisted layout is unchanged. SQ4/SQ6 would overlap IVF-PQ/RQ, quantile clipping would introduce another corpus-sensitive accuracy parameter, and compressing the relatively small resident bounds would save little beside the <code>N × d</code> code payload. The existing codes-first payload already allows one bounded multi-range operation and reuse of the read allocation as the scan buffer.</p>
+        </section>
+        <section class="article-section" id="io">
+          <h2>I/O and batching</h2>
+          <p>Open reads the fixed header and contiguous resident metadata in two positional operations; the unified type dispatcher reuses that header. On a cache miss, a query submits selected list ranges through the abstract positional-read interface in capability- and 64 MiB-bounded multi-range batches. The historical uncached measurements below use one payload round per query for SIFT1M and GloVe-100 at <code>nprobe=64</code>; GIST1M averages 1.9. Batch search first deduplicates the lists selected across queries, loads each missing unique list once across the bounded rounds, and then scans queries in parallel. This is especially useful when a remote adapter executes the supplied ranges concurrently.</p>
+          <p>The add path retains the caller's L2/IP slice without copying it, partitions assigned row positions by list, and encodes those lists in parallel. Each active list task precomputes one <code>d</code>-component scale vector and fuses residual subtraction with quantization directly into the destination codes; the add path never materializes an <code>N × d</code> residual matrix. The writer retains only each list's row-order permutation and encoded IDs. It transposes lists in parallel within 16 MiB batches, writes them in physical order, then releases those buffers. A list larger than the batch budget is processed on its own.</p>
+          <p>During scanning, a candidate whose distance cannot improve a full Top-K heap is rejected before row-ID hashing. Batch scanning keeps one heap per query across loaded lists, avoiding per-list heaps and result merging. L2 scans may reject a complete 32-row block when its nonnegative partial distances cannot improve the current heap; returned candidates retain their complete distances. Single-query batches use the ordinary partition-parallel search path.</p>
+          <p><code>VectorIndexReader::open</code>, <code>open_with_options</code>, and the language bindings use the reader memory budget (4 GiB by default) for a FIFO cache of decoded partitions. Resident metadata, cache slots, queue storage, and retained payload capacities are charged before insertion. Hits share immutable payloads without copying or positional I/O; filters and scores remain query-local. Oversized streamed lists bypass the cache. Zero budget disables caching, while required metadata still loads; transient query allocations are outside this retained-cache limit. Direct <code>IVFSQIndexReader::open</code> retains uncached behavior; use its <code>open_with_options</code> to enable caching. See <a href="api.html#reader-options">reader options</a>.</p>
+          <p>Populate the cache by replaying representative queries through <code>search</code> or <code>search_batch</code>. For IVF-SQ, <code>optimize_for_search</code> and <code>warmup_queries</code> only ensure resident metadata is loaded; they do not prefetch partitions.</p>
+          <p>On cache misses, IVF-SQ still reads complete selected lists. At high <code>nprobe</code>, scan bytes grow linearly; DiskANN is the better fit when the workload requires small page-granular reads from a large local-SSD index.</p>
+        </section>
+        <section class="article-section" id="benchmarks">
+          <h2>Public benchmarks</h2>
+          <h3>September 2026: optimization results</h3>
+          <p>Three-run native <code>ann_bench</code> medians on Apple M4 Pro (12 CPU cores, 48 GiB RAM), with Rust 1.95 release builds, eight workers, <code>nlist=1024</code>, <code>nprobe=64</code>, <code>k=10</code>, 65,536 training rows, and 1,000 held-out public queries. Baseline commit <code>8dcabf2</code> and the current implementation use the same input files and settings; GloVe is L2-normalized.</p>
+          <p>Values show baseline → current. Build time includes training, encoding, and serialization. Sequential queries can reuse earlier partitions with the current 4 GiB reader budget; batch timing uses a separate fresh reader and includes payload reads and cache insertion. The baseline reader does not cache SQ partitions.</p>
+          <div class="table-wrap"><table><thead><tr><th>Corpus</th><th>Index build (ms)</th><th>Query P95 (µs)</th><th>Batch QPS</th><th>Recall@10</th></tr></thead><tbody>
+          <tr><td>SIFT1M</td><td>934 → 886</td><td>840 → 298</td><td>6,417 → 8,987</td><td>0.8626 → 0.9811</td></tr>
+          <tr><td>GIST1M</td><td>6,404 → 5,850</td><td>4,386 → 1,828</td><td>899 → 998</td><td>0.8576 → 0.9400</td></tr>
+          <tr><td>GloVe-100</td><td>849 → 797</td><td>739 → 282</td><td>6,988 → 10,009</td><td>0.8036 → 0.8760</td></tr>
+          </tbody></table></div>
+          <p>File sizes are unchanged. These warm local-filesystem measurements do not establish performance on cold storage, object stores, or other architectures and distributions. Pooled bounds can lose resolution on extreme-outlier data. See the <a href="development.html#ivfsq-bench">reproduction guide</a> and the <a href="index.html#build-results">current build and local-search tables</a>.</p>
+          <h3 id="historical-benchmarks">Historical uncached implementation</h3>
+          <p>The following measurements predate pooled bounds and partition caching. They use <code>nlist=1024</code>, <code>nprobe=64</code>, <code>k=10</code>, and 12 Rayon workers on Apple M4 Pro. Keep them separate from the current eight-worker comparison above, which now includes a GIST rerun.</p>
+          <div class="table-wrap"><table><thead><tr><th>Dataset</th><th>Recall@10</th><th>Build / peak RSS</th><th>Warm P95 / batch QPS</th><th>Read/query</th></tr></thead><tbody><tr><td>SIFT1M</td><td>0.8627</td><td>3.93 s / 0.79 GiB</td><td>0.79 ms / 11,082</td><td>8.38 MiB</td></tr><tr><td>GIST1M</td><td>0.8577</td><td>22.7 s / 5.09 GiB</td><td>3.56 ms / 1,502</td><td>70.95 MiB</td></tr><tr><td>GloVe-100</td><td>0.8036</td><td>3.86 s / 0.71 GiB</td><td>0.71 ms / 12,962</td><td>6.99 MiB</td></tr></tbody></table></div>
+          <p>Compared with the immediately preceding implementation on the same files, peak RSS dropped by 56–61%, local P95 improved by 3–8%, and batch throughput improved by about 8–61%, depending on dimension and cache behavior. File bytes and read bytes are unchanged.</p>
+          <nav class="pager" aria-label="Index navigation"><a href="ivf-rq.html"><small>Previous</small>← IVF-RQ</a><a href="diskann.html"><small>Next</small>DiskANN →</a></nav>
+        </section>
+      </article>
+    </div>
+  </div></main>
+  <footer class="site-footer"><div class="footer-inner"><span>Apache Paimon Vector Index</span><span>IVF-SQ · v1</span></div></footer>
+</body>
+</html>

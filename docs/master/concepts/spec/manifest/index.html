@@ -1,0 +1,635 @@
+<!doctype html>
+<html lang="en" dir="ltr" class="docs-wrapper plugin-docs plugin-id-default docs-version-current docs-doc-page docs-doc-id-concepts/spec/manifest" data-has-hydrated="false">
+<head>
+<meta charset="UTF-8">
+<meta name="generator" content="Docusaurus v3.10.1">
+<title data-rh="true">Manifest | Apache Paimon</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:url" content="https://paimon.apache.org/docs/master/concepts/spec/manifest"><meta data-rh="true" property="og:locale" content="en"><meta data-rh="true" name="docusaurus_locale" content="en"><meta data-rh="true" name="docsearch:language" content="en"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="Manifest | Apache Paimon"><meta data-rh="true" name="description" content="&lt;!--"><meta data-rh="true" property="og:description" content="&lt;!--"><link data-rh="true" rel="icon" href="/docs/master/favicon.png"><link data-rh="true" rel="canonical" href="https://paimon.apache.org/docs/master/concepts/spec/manifest"><link data-rh="true" rel="alternate" href="https://paimon.apache.org/docs/master/concepts/spec/manifest" hreflang="en"><link data-rh="true" rel="alternate" href="https://paimon.apache.org/docs/master/concepts/spec/manifest" hreflang="x-default"><script data-rh="true" type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Concepts","item":"https://paimon.apache.org/docs/master/concepts/"},{"@type":"ListItem","position":2,"name":"Storage Specification","item":"https://paimon.apache.org/docs/master/concepts/spec/"},{"@type":"ListItem","position":3,"name":"Manifest","item":"https://paimon.apache.org/docs/master/concepts/spec/manifest"}]}</script><link rel="stylesheet" href="/docs/master/assets/css/styles.2c7aebe7.css">
+<script src="/docs/master/assets/js/runtime~main.16164d55.js" defer="defer"></script>
+<script src="/docs/master/assets/js/main.4b00cac7.js" defer="defer"></script>
+</head>
+<body>
+<svg style="display: none;"><defs>
+<symbol id="theme-svg-external-link" viewBox="0 0 24 24"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"/></symbol>
+</defs></svg>
+<script>!function(){var t=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme")}catch(t){}}();document.documentElement.setAttribute("data-theme",t||"light"),document.documentElement.setAttribute("data-theme-choice",t||"light")}(),function(){try{const c=new URLSearchParams(window.location.search).entries();for(var[t,e]of c)if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}()</script><div id="__docusaurus"><div role="region" aria-label="Skip to main content"><a class="skipToContent_fXgn" href="#__docusaurus_skipToContent_fallback">Skip to main content</a></div><nav aria-label="Main" class="theme-layout-navbar navbar navbar--fixed-top"><div class="navbar__inner"><div class="theme-layout-navbar-left navbar__items"><button aria-label="Toggle navigation bar" aria-expanded="false" class="navbar__toggle clean-btn" type="button"><svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M4 7h22M4 15h22M4 23h22"></path></svg></button><a class="navbar__brand" href="/docs/master/"><div class="navbar__logo"><img src="/docs/master/favicon_blue.svg" alt="Apache Paimon Logo" class="themedComponent_mlkZ themedComponent--light_NVdE"><img src="/docs/master/paimon_white.svg" alt="Apache Paimon Logo" class="themedComponent_mlkZ themedComponent--dark_xIcU"></div><b class="navbar__title text--truncate">Apache Paimon</b></a></div><div class="theme-layout-navbar-right navbar__items navbar__items--right"><div class="navbar__item dropdown dropdown--hoverable dropdown--right"><a href="#" aria-haspopup="true" aria-expanded="false" role="button" class="navbar__link">2.2-SNAPSHOT</a><ul class="dropdown__menu"><li><a href="https://paimon.apache.org/docs/master" target="_blank" rel="noopener noreferrer" class="dropdown__link">master (2.2-SNAPSHOT)<svg width="12" height="12" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a></li><li><a href="https://paimon.apache.org/docs/2.0" target="_blank" rel="noopener noreferrer" class="dropdown__link">2.0 (stable)<svg width="12" height="12" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a></li><li><a href="https://paimon.apache.org/docs/1.4" target="_blank" rel="noopener noreferrer" class="dropdown__link">1.4<svg width="12" height="12" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a></li><li><a href="https://paimon.apache.org/docs/1.3" target="_blank" rel="noopener noreferrer" class="dropdown__link">1.3<svg width="12" height="12" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a></li><li><a href="https://paimon.apache.org/docs/1.2" target="_blank" rel="noopener noreferrer" class="dropdown__link">1.2<svg width="12" height="12" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a></li><li><a href="https://paimon.apache.org/docs/1.1" target="_blank" rel="noopener noreferrer" class="dropdown__link">1.1<svg width="12" height="12" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a></li></ul></div><a href="https://github.com/apache/paimon" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">GitHub<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a><a href="https://paimon.apache.org" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">Project Home<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a><div class="toggle_vylO colorModeToggle_DEke"><button class="clean-btn toggleButton_gllP toggleButtonDisabled_aARS" type="button" disabled="" title="system mode" aria-label="Switch between dark and light mode (currently system mode)"><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_g3eP lightToggleIcon_pyhR"><path fill="currentColor" d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_g3eP darkToggleIcon_wfgR"><path fill="currentColor" d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_g3eP systemToggleIcon_QzmC"><path fill="currentColor" d="m12 21c4.971 0 9-4.029 9-9s-4.029-9-9-9-9 4.029-9 9 4.029 9 9 9zm4.95-13.95c1.313 1.313 2.05 3.093 2.05 4.95s-0.738 3.637-2.05 4.95c-1.313 1.313-3.093 2.05-4.95 2.05v-14c1.857 0 3.637 0.737 4.95 2.05z"></path></svg></button></div><div class="navbarSearchContainer_Bca1"><div class="navbar__search searchBarContainer_NW3z" dir="ltr"><input placeholder="Search" aria-label="Search" class="navbar__search-input searchInput_YFbd" value=""><div class="loadingRing_RJI3 searchBarLoadingRing_YnHq"><div></div><div></div><div></div><div></div></div></div></div></div></div><div role="presentation" class="navbar-sidebar__backdrop"></div></nav><div id="__docusaurus_skipToContent_fallback" class="theme-layout-main main-wrapper mainWrapper_z2l0"><div class="docsWrapper_hBAB"><button aria-label="Scroll back to top" class="clean-btn theme-back-to-top-button backToTopButton_sjWU" type="button"></button><div class="docRoot_UBD9"><aside class="theme-doc-sidebar-container docSidebarContainer_YfHR"><div class="sidebarViewport_aRkj"><div class="sidebar_njMd"><nav aria-label="Docs sidebar" class="menu thin-scrollbar menu_SIkG"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--active" href="/docs/master/concepts/"><span title="Concepts" class="categoryLinkLabel_W154">Concepts</span></a><button aria-label="Collapse sidebar category &#x27;Concepts&#x27;" aria-expanded="true" type="button" class="clean-btn menu__caret"></button></div><ul class="menu__list"><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-2 menu__list-item"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="true" tabindex="0" href="/docs/master/concepts/basic-concepts"><span title="Core Concepts" class="categoryLinkLabel_W154">Core Concepts</span></a></div><ul class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-3 menu__list-item"><a class="menu__link" tabindex="0" href="/docs/master/concepts/basic-concepts"><span title="Basic Concepts" class="linkLabel_WmDU">Basic Concepts</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-3 menu__list-item"><a class="menu__link" tabindex="0" href="/docs/master/concepts/concurrency-control"><span title="Concurrency Control" class="linkLabel_WmDU">Concurrency Control</span></a></li></ul></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-2 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" tabindex="0" href="/docs/master/concepts/catalog"><span title="Catalog &amp; Metadata" class="categoryLinkLabel_W154">Catalog &amp; Metadata</span></a></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-2 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist" tabindex="0" href="/docs/master/concepts/rest/"><span title="REST Catalog" class="categoryLinkLabel_W154">REST Catalog</span></a><button aria-label="Expand sidebar category &#x27;REST Catalog&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-2 menu__list-item"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--active" tabindex="0" href="/docs/master/concepts/spec/"><span title="Storage Specification" class="categoryLinkLabel_W154">Storage Specification</span></a><button aria-label="Collapse sidebar category &#x27;Storage Specification&#x27;" aria-expanded="true" type="button" class="clean-btn menu__caret"></button></div><ul class="menu__list"><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-3 menu__list-item"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret menu__link--active" role="button" aria-expanded="true" tabindex="0" href="/docs/master/concepts/spec/schema"><span title="Metadata" class="categoryLinkLabel_W154">Metadata</span></a></div><ul class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-4 menu__list-item"><a class="menu__link" tabindex="0" href="/docs/master/concepts/spec/schema"><span title="Schema" class="linkLabel_WmDU">Schema</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-4 menu__list-item"><a class="menu__link" tabindex="0" href="/docs/master/concepts/spec/snapshot"><span title="Snapshot" class="linkLabel_WmDU">Snapshot</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-4 menu__list-item"><a class="menu__link menu__link--active" aria-current="page" tabindex="0" href="/docs/master/concepts/spec/manifest"><span title="Manifest" class="linkLabel_WmDU">Manifest</span></a></li></ul></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-3 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" tabindex="0" href="/docs/master/concepts/spec/datafile"><span title="Data Files &amp; Formats" class="categoryLinkLabel_W154">Data Files &amp; Formats</span></a></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-3 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" tabindex="0" href="/docs/master/concepts/spec/tableindex"><span title="Indexes" class="categoryLinkLabel_W154">Indexes</span></a></div></li></ul></li></ul></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist" href="/docs/master/append-table/"><span title="Append Table" class="categoryLinkLabel_W154">Append Table</span></a><button aria-label="Expand sidebar category &#x27;Append Table&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist" href="/docs/master/primary-key-table/"><span title="Primary-Key Table" class="categoryLinkLabel_W154">Primary-Key Table</span></a><button aria-label="Expand sidebar category &#x27;Primary-Key Table&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist" href="/docs/master/multimodal-table/"><span title="Multimodal Table" class="categoryLinkLabel_W154">Multimodal Table</span></a><button aria-label="Expand sidebar category &#x27;Multimodal Table&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist" href="/docs/master/flink/"><span title="Engine Flink" class="categoryLinkLabel_W154">Engine Flink</span></a><button aria-label="Expand sidebar category &#x27;Engine Flink&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist" href="/docs/master/spark/"><span title="Engine Spark" class="categoryLinkLabel_W154">Engine Spark</span></a><button aria-label="Expand sidebar category &#x27;Engine Spark&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist" href="/docs/master/pypaimon/"><span title="PyPaimon &amp; AI" class="categoryLinkLabel_W154">PyPaimon &amp; AI</span></a><button aria-label="Expand sidebar category &#x27;PyPaimon &amp; AI&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist" href="/docs/master/ecosystem/"><span title="Ecosystem" class="categoryLinkLabel_W154">Ecosystem</span></a><button aria-label="Expand sidebar category &#x27;Ecosystem&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist" href="/docs/master/cdc-ingestion/"><span title="CDC Ingestion" class="categoryLinkLabel_W154">CDC Ingestion</span></a><button aria-label="Expand sidebar category &#x27;CDC Ingestion&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist" href="/docs/master/maintenance/"><span title="Maintenance" class="categoryLinkLabel_W154">Maintenance</span></a><button aria-label="Expand sidebar category &#x27;Maintenance&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist" href="/docs/master/program-api/"><span title="Program API" class="categoryLinkLabel_W154">Program API</span></a><button aria-label="Expand sidebar category &#x27;Program API&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist" href="/docs/master/migration/"><span title="Migration" class="categoryLinkLabel_W154">Migration</span></a><button aria-label="Expand sidebar category &#x27;Migration&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist" href="/docs/master/iceberg/"><span title="Iceberg Compatibility" class="categoryLinkLabel_W154">Iceberg Compatibility</span></a><button aria-label="Expand sidebar category &#x27;Iceberg Compatibility&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist" href="/docs/master/project/"><span title="Project" class="categoryLinkLabel_W154">Project</span></a><button aria-label="Expand sidebar category &#x27;Project&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist" href="/docs/master/learn-paimon/"><span title="Learn Paimon" class="categoryLinkLabel_W154">Learn Paimon</span></a><button aria-label="Expand sidebar category &#x27;Learn Paimon&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li></ul></nav><button type="button" title="Collapse sidebar" aria-label="Collapse sidebar" class="button button--secondary button--outline collapseSidebarButton_PEFL"><svg width="20" height="20" aria-hidden="true" class="collapseSidebarButtonIcon_kv0_"><g fill="#7a7a7a"><path d="M9.992 10.023c0 .2-.062.399-.172.547l-4.996 7.492a.982.982 0 01-.828.454H1c-.55 0-1-.453-1-1 0-.2.059-.403.168-.551l4.629-6.942L.168 3.078A.939.939 0 010 2.528c0-.548.45-.997 1-.997h2.996c.352 0 .649.18.828.45L9.82 9.472c.11.148.172.347.172.55zm0 0"></path><path d="M19.98 10.023c0 .2-.058.399-.168.547l-4.996 7.492a.987.987 0 01-.828.454h-3c-.547 0-.996-.453-.996-1 0-.2.059-.403.168-.551l4.625-6.942-4.625-6.945a.939.939 0 01-.168-.55 1 1 0 01.996-.997h3c.348 0 .649.18.828.45l4.996 7.492c.11.148.168.347.168.55zm0 0"></path></g></svg></button></div></div></aside><main class="docMainContainer_TBSr"><div class="container padding-top--md padding-bottom--lg"><div class="row"><div class="col docItemCol_VOVn"><div class="docItemContainer_Djhp"><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_Z_bl" aria-label="Breadcrumbs"><ul class="breadcrumbs"><li class="breadcrumbs__item"><a aria-label="Home page" class="breadcrumbs__link" href="/docs/master/"><svg viewBox="0 0 24 24" class="breadcrumbHomeIcon_YNFT"><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill="currentColor"></path></svg></a></li><li class="breadcrumbs__item"><a class="breadcrumbs__link" href="/docs/master/concepts/"><span>Concepts</span></a></li><li class="breadcrumbs__item"><a class="breadcrumbs__link" href="/docs/master/concepts/spec/"><span>Storage Specification</span></a></li><li class="breadcrumbs__item"><span class="breadcrumbs__link">Metadata</span></li><li class="breadcrumbs__item breadcrumbs__item--active"><span class="breadcrumbs__link">Manifest</span></li></ul></nav><div class="tocCollapsible_ETCw theme-doc-toc-mobile tocMobile_ITEo"><button type="button" class="clean-btn tocCollapsibleButton_TO0P">On this page</button></div><div class="theme-doc-markdown markdown"><header><h1>Manifest</h1></header>
+<p>Manifests describe the files belonging to a table state. A <a class="" href="/docs/master/concepts/spec/snapshot">snapshot</a> references
+manifest lists for data and changelog files, and an optional index manifest for table indexes.
+This metadata lets readers plan a scan without listing every data directory.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="file-kinds-and-encoding">File Kinds and Encoding<a href="#file-kinds-and-encoding" class="hash-link" aria-label="Direct link to File Kinds and Encoding" title="Direct link to File Kinds and Encoding" translate="no">​</a></h2>
+<p>The default <code>manifest/</code> directory contains three kinds of Avro files:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>File name pattern</th><th>Contents</th><th>On-disk <code>_VERSION</code> identifier</th></tr></thead><tbody><tr><td><code>manifest-list-&lt;uuid&gt;-&lt;id&gt;</code></td><td>Metadata about data or changelog manifests.</td><td><code>2</code></td></tr><tr><td><code>manifest-&lt;uuid&gt;-&lt;id&gt;</code></td><td>Data-file or changelog-file additions and deletions.</td><td><code>2</code></td></tr><tr><td><code>index-manifest-&lt;uuid&gt;-&lt;id&gt;</code></td><td>Table index additions and deletions.</td><td><code>1</code></td></tr></tbody></table>
+<p>Each serialized record begins with an integer field named <code>_VERSION</code>. This is a permanent
+format identifier, not a counter that increases whenever nullable fields are added. The field
+tables below describe the remaining fields. Newer nullable metadata can be absent in older files.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="manifest-list">Manifest List<a href="#manifest-list" class="hash-link" aria-label="Direct link to Manifest List" title="Direct link to Manifest List" translate="no">​</a></h2>
+<p>A manifest list contains one record per referenced manifest. Its statistics allow readers to
+skip manifests before opening them.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Field</th><th>Type</th><th>Meaning</th></tr></thead><tbody><tr><td><code>_FILE_NAME</code></td><td>STRING</td><td>Manifest file name.</td></tr><tr><td><code>_FILE_SIZE</code></td><td>BIGINT</td><td>Manifest size in bytes.</td></tr><tr><td><code>_NUM_ADDED_FILES</code></td><td>BIGINT</td><td>Number of ADD entries.</td></tr><tr><td><code>_NUM_DELETED_FILES</code></td><td>BIGINT</td><td>Number of DELETE entries.</td></tr><tr><td><code>_PARTITION_STATS</code></td><td>SimpleStats</td><td>Minimums, maximums, and null counts for partition fields.</td></tr><tr><td><code>_SCHEMA_ID</code></td><td>BIGINT</td><td>Schema ID used when writing the manifest.</td></tr><tr><td><code>_MIN_BUCKET</code>, <code>_MAX_BUCKET</code></td><td>INT, nullable</td><td>Bucket bounds in the manifest.</td></tr><tr><td><code>_MIN_LEVEL</code>, <code>_MAX_LEVEL</code></td><td>INT, nullable</td><td>Data-file level bounds in the manifest.</td></tr><tr><td><code>_MIN_ROW_ID</code>, <code>_MAX_ROW_ID</code></td><td>BIGINT, nullable</td><td>Row-ID bounds when available.</td></tr><tr><td><code>_EXTRA_FILES</code></td><td>ARRAY of STRING, nullable</td><td>Names of additional files in the manifest directory; defaults to null.</td></tr></tbody></table>
+<p>Each extra file belongs exclusively to one manifest. It is retained and cleaned up together with
+that manifest during snapshot, tag, or changelog deletion.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="manifest-sidecar">Manifest Sidecar<a href="#manifest-sidecar" class="hash-link" aria-label="Direct link to Manifest Sidecar" title="Direct link to Manifest Sidecar" translate="no">​</a></h3>
+<p><code>ManifestSidecar</code> provides a binary sidecar for selecting complete Avro manifest blocks
+using independent partition, row-ID and bucket coverage. A sidecar uses the
+<code>&lt;manifest-file-name&gt;.avro.sidecar</code> naming convention. Readers find it through an explicit
+<code>.avro.sidecar</code> reference in the manifest metadata&#x27;s <code>_EXTRA_FILES</code>, without probing a
+derived file name. The Avro schemas and <code>_VERSION</code> identifiers remain unchanged.</p>
+<p>The utility includes construction, validation, block selection and optional caching. Java table
+writers and scans use sidecars when <code>manifest.sidecar.enabled</code> is true; when unset, it inherits
+<code>manifest-sort.enabled</code>. Both ordinary writes and raw manifest rewrites build the sidecar from
+the completed output manifest and publish its <code>_EXTRA_FILES</code> reference only after both files
+close successfully. Failed writes and aborted writers clean up their own manifest/sidecar pairs.
+Scans with partition, row-ID or bucket filters select blocks before reading manifest entries.
+Unfiltered scans also select all sidecar blocks when a manifest cache is configured, so unfiltered
+prefetches and later filtered reads share the same block cache. Without a manifest cache, unfiltered
+scans keep the normal whole-manifest read path. Normal entry filtering and ADD/DELETE reconciliation
+still apply. Missing or unusable sidecars fall back to normal manifest reads; disabled sidecars do
+not perform sidecar I/O. Sidecar caching is controlled by the catalog option
+<code>cache.manifest-sidecar.max-memory</code> (64 MiB by default). A positive value supplies an
+additional budget independent of the manifest content cache. When set to 0, sidecars reuse
+the manifest content cache, or remain uncached if that cache is disabled. Sidecar caching
+uses the catalog&#x27;s <code>cache.expire-after-access</code> and <code>cache.manifest.soft-values</code> policies.
+Selected block bytes still share the manifest content cache without populating the
+whole-manifest entry cache with partial results. The low-level <code>build</code> method returns
+sidecar bytes without writing or publishing another file.</p>
+<p>PyPaimon can read these sidecars and prune manifest blocks using partition, row-ID and bucket
+filters. Its <code>manifest.sidecar.enabled</code> option inherits <code>manifest-sort.enabled</code> when unset.
+Entry filters and ADD/DELETE reconciliation still apply after block selection. Missing or
+unusable sidecars fall back to full manifest reads; scans without pruning filters and
+explain/statistics scans do not perform sidecar I/O. The standalone codec can build sidecar
+bytes, but automatic Python writer publication and cleanup are not integrated yet.</p>
+<p>Callers decide whether to invoke <code>build</code> and <code>read</code>; these utilities have no read/write switches.
+<code>build</code> and <code>Builder</code> accept <code>rowIdEnabled</code> and <code>bucketEnabled</code> arguments for independent
+payload generation. Partition generation is always enabled,
+including the empty partition tuple for unpartitioned tables. Missing or invalid
+metadata makes only the affected block&#x27;s dimension unavailable. Cache limits do not truncate
+sidecars: construction keeps complete coverage and <code>read</code> consumes the entire file once it is opened.</p>
+<p><code>read</code> returns null for an absent sidecar reference or an <code>IOException</code>, allowing the caller
+to fall back to the manifest. If the thread is interrupted, the I/O failure is propagated as
+<code>UncheckedIOException</code>. Other exceptions and errors propagate unchanged. <code>select</code> validates
+supplied bytes directly and reports invalid containers with <code>IOException</code>.</p>
+<p>Version 1 uses the following layout. Counts, lengths, offsets and the version use canonical
+nonnegative unsigned LEB128 varints. Counts and payload lengths are bounded by <code>Integer.MAX_VALUE</code>;
+block offsets, lengths and record counts are bounded by <code>Long.MAX_VALUE</code>. Row-ID envelope
+endpoints remain fixed-width, eight-byte big-endian longs. Encoding IDs are unsigned bytes
+with separate namespaces. The existing serialized partition tuple bytes are unchanged.</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#393A34"><span class="token plain">magic : 4 bytes                         // ASCII PMSC</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">formatVersion : varint                 // 1</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">avroHeaderLength : varint</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">avroHeader : bytes                      // original schema, codec and sync marker</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">partitionCount : varint</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">partitionDictionary[]</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">  partitionByteLength : varint</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">  partitionBytes : bytes                // existing manifest BinaryRow serialization</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">blockCount : varint</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">blocks[]                               // original physical order</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">  offset : varint</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">  length : varint                       // complete encoded block, including sync marker</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">  recordCount : varint</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">  partitionEncoding : byte</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">  if partitionEncoding != 0:</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">    partitionPayloadLength : varint</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">    partitionPayload : bytes</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">  rowIdEncoding : byte</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">  if rowIdEncoding != 0:</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">    rowIdPayloadLength : varint</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">    rowIdPayload : bytes</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">  bucketEncoding : byte</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">  if bucketEncoding != 0:</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">    bucketPayloadLength : varint</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">    bucketPayload : bytes</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">checksum : 4 bytes                      // big-endian CRC32 of all preceding bytes</span><br></div></code></pre></div></div>
+<p>The block ID is its position. Its first entry ordinal is the sum of preceding record counts
+and is not stored. Each complete partition tuple appears once in the dictionary, including
+all its fields and nulls. The scan&#x27;s partition type interprets the existing serialized tuple.
+Partition predicates are evaluated once per dictionary entry.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Dimension</th><th>Encoding</th><th>Payload</th></tr></thead><tbody><tr><td>Any</td><td><code>0</code></td><td>Unavailable; only the encoding byte is present.</td></tr><tr><td>Partition</td><td><code>1</code></td><td><code>intsDeltaPayload</code> of sorted unique dictionary IDs.</td></tr><tr><td>Row ID</td><td><code>1</code></td><td>Minimum, maximum, and <code>intsDeltaPayload</code> of sorted interior interval endpoints.</td></tr><tr><td>Bucket</td><td><code>1</code></td><td>Two paired <code>intsDeltaPayload</code> sequences: sorted bucket IDs and their recorded total bucket counts.</td></tr><tr><td>Any</td><td>Other nonzero ID</td><td>Skip the declared payload length; treat only this dimension as unavailable.</td></tr></tbody></table>
+<p>Only nonzero encodings are followed by a length and payload. Payload lengths exclude the
+encoding and length fields, but include the count and other fields within the payload.
+Partition IDs and bucket pairs have positive counts no greater than the block&#x27;s record count.
+Row-ID coverage contains one or more intervals; its interior endpoint count can be zero for
+a single interval. Encoding 0 represents unavailable coverage, not an empty known set.</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="integer-delta-payload">Integer Delta Payload<a href="#integer-delta-payload" class="hash-link" aria-label="Direct link to Integer Delta Payload" title="Direct link to Integer Delta Payload" translate="no">​</a></h4>
+<p>Partition, row-ID and both bucket sequences share this structure:</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#393A34"><span class="token plain">intsDeltaPayload</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">  count : varint</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">  deltas[count] : varint</span><br></div></code></pre></div></div>
+<p>The count is in <code>[0, Integer.MAX_VALUE]</code>. Nonnegative deltas use unsigned LEB128 varints,
+occupying one to nine bytes for values from 0 through
+<code>Long.MAX_VALUE</code>. Seven value bits are stored per byte, least significant group first; the
+high bit indicates another byte follows.
+Encodings use the shortest representation without padding.</p>
+<p>A nondecreasing sequence is delta-encoded from a specified base. Each value contributes one
+unsigned varint containing its difference from the preceding value. The first difference
+is relative to the base:</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#393A34"><span class="token plain">deltas[] : varint</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">value[0] = base + deltas[0]</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">value[i] = value[i - 1] + deltas[i]</span><br></div></code></pre></div></div>
+<p>The shared <code>DeltaVarintCodec</code> utility writes the count and then each delta immediately,
+and reads values on demand using <code>VarLengthIntUtils</code>. A reader consumes exactly the declared
+number of values, leaving any following sequence available in the buffer. Callers check
+their enclosing payload boundaries. Counts, overflow and value bounds are checked without
+materializing arrays. Reads may stop early.</p>
+<p>Only the <code>totalBuckets</code> sequence uses signed differences, because totals need not increase
+when pairs are sorted by bucket. Its differences use ZigZag before unsigned varint encoding:
+<code>encoded = (delta &lt;&lt; 1) ^ (delta &gt;&gt; 63)</code> and
+<code>delta = (encoded &gt;&gt;&gt; 1) ^ -(encoded &amp; 1)</code>. Values are nonnegative ints, so encoded deltas
+are at most <code>2 * Integer.MAX_VALUE</code> and require at most five bytes. The field defines this
+signed mode; no additional mode byte is stored. Other sequences use nonnegative differences.</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="partition-payload">Partition Payload<a href="#partition-payload" class="hash-link" aria-label="Direct link to Partition Payload" title="Direct link to Partition Payload" translate="no">​</a></h4>
+<p>When <code>partitionEncoding == 1</code>, the block stores IDs of all distinct partition tuples
+represented by its entries:</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#393A34"><span class="token plain">partitionPayload</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">  intsDeltaPayload                    // dictionary IDs, base = 0</span><br></div></code></pre></div></div>
+<p>An ID is the zero-based position of a complete tuple in the sidecar&#x27;s shared dictionary.
+IDs satisfy <code>0 &lt;= id &lt; partitionCount</code> and are strictly increasing. Tuple bytes appear only
+in the dictionary and are not repeated in each block. For IDs <code>[0, 1, 2, 3, 4]</code>, the deltas
+are <code>[0, 1, 1, 1, 1]</code>. The payload contains a one-byte count of 5 followed by these five
+varint bytes: 6 bytes, or 8 bytes including the encoding and length fields.</p>
+<p>With a partition filter, a block matches if any referenced tuple matches. A tuple containing
+a null partition value still has a dictionary ID. Unpartitioned tables record the empty
+tuple. If any entry&#x27;s entire partition tuple is unavailable, the block uses encoding 0,
+so a dictionary miss cannot exclude that block. Later blocks can still use existing IDs.</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="row-id-payload">Row-ID Payload<a href="#row-id-payload" class="hash-link" aria-label="Direct link to Row-ID Payload" title="Direct link to Row-ID Payload" translate="no">​</a></h4>
+<p>The writer merges overlapping and adjacent inclusive intervals contributed by entries.
+An entry contributes <code>[firstRowId, firstRowId + rowCount - 1]</code>. The resulting intervals are
+sorted and disjoint; they are never expanded into individual row IDs or coarsened to include gaps.</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#393A34"><span class="token plain">rowIdPayload</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">  minRowId : long                      // first interval&#x27;s start</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">  maxRowId : long                      // last interval&#x27;s inclusive end</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">  intsDeltaPayload                    // stores longs: 2 * (N - 1) sorted interior endpoints, base = minRowId</span><br></div></code></pre></div></div>
+<p>The envelope satisfies <code>0 &lt;= minRowId &lt;= maxRowId &lt;= Long.MAX_VALUE</code>. Flatten the intervals
+as <code>[start0, end0, start1, end1, ...]</code>. The first start is supplied by <code>minRowId</code>, and the last
+end by <code>maxRowId</code>; only the remaining <code>2 * (N - 1)</code> interior endpoints are delta/varint encoded.
+Their count must be even, and the derived interval count <code>N = count / 2 + 1</code> must not exceed
+the block&#x27;s record count. There is no separate stored interval count.
+Pairing the reconstructed endpoints recovers the intervals. Each pair satisfies
+<code>0 &lt;= start &lt;= end &lt;= Long.MAX_VALUE</code>; each following start must exceed the preceding end.</p>
+<p>For <code>[(10, 19), (30, 39)]</code>, the minimum is 10 and maximum is 39. The interior
+endpoints <code>[19, 30]</code> have deltas <code>[9, 11]</code> from base 10, each encoded as one varint byte.
+The payload starts with an eight-byte minimum of 10 and an eight-byte maximum of 39,
+followed by <code>intsDeltaPayload</code> bytes <code>[2, 9, 11]</code>: 19 bytes, or 21 bytes with framing.
+For a single interval, the two eight-byte endpoints and a one-byte zero count define the
+interval: 17 payload bytes and no deltas.</p>
+<p>The reader first tests the envelope without decoding any deltas. A query for row ID 25
+passes the example&#x27;s envelope check but matches neither interval. Unknown or invalid row-ID
+metadata makes that block&#x27;s row-ID payload unavailable; partition and bucket coverage remain usable.</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="bucket-payload">Bucket Payload<a href="#bucket-payload" class="hash-link" aria-label="Direct link to Bucket Payload" title="Direct link to Bucket Payload" translate="no">​</a></h4>
+<p>When <code>bucketEncoding == 1</code>, the block stores distinct bucket/count pairs:</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#393A34"><span class="token plain">bucketPayload</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">  buckets : intsDeltaPayload           // N &gt; 0, base = 0, nonnegative deltas</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">  totalBuckets : intsDeltaPayload      // N values, base = 0, ZigZag signed deltas</span><br></div></code></pre></div></div>
+<p>Pairs are sorted first by bucket, then by total bucket count, with duplicates removed.
+Each pair satisfies <code>0 &lt;= bucket &lt; totalBuckets &lt;= Integer.MAX_VALUE</code>. Both sequences have
+the same count, and values at the same position form one pair. The totals must not be sorted
+independently. The same bucket may occur with different totals after rescaling.</p>
+<p>For <code>[(1, 4), (1, 8), (3, 4)]</code>, bucket values <code>[1, 1, 3]</code> have deltas <code>[1, 0, 2]</code>.
+Paired totals <code>[4, 8, 4]</code> have signed deltas <code>[4, 4, -4]</code>, ZigZag-encoded as <code>[8, 8, 7]</code>.
+The two payloads are <code>[3, 1, 0, 2]</code> and <code>[3, 8, 8, 7]</code>: 8 bytes total, or 10 bytes with framing.</p>
+<p>Missing, invalid or negative/synthetic bucket metadata makes the block&#x27;s bucket coverage
+unavailable. A caller can supply a predicate on <code>(bucket, totalBuckets)</code> which conservatively
+retains every potentially matching pair. Filters requiring an entry&#x27;s partition belong at
+the entry-filtering stage; omit the bucket predicate if no safe check is available.</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="validation-and-reading">Validation and Reading<a href="#validation-and-reading" class="hash-link" aria-label="Direct link to Validation and Reading" title="Direct link to Validation and Reading" translate="no">​</a></h4>
+<p>Readers validate the checksum, container fields, payload lengths and leading count headers,
+and the complete physical block directory regardless of the query. Byte spans must cover
+the whole original manifest after its header; record counts must sum to the manifest entry
+count. Manifest length and entry count come from the supplied <code>ManifestFileMeta</code> rather
+than being duplicated in the sidecar. Unknown nonzero encodings skip their declared bytes
+without interpreting a count.</p>
+<p>Compressed contents are decoded only for dimensions needed by the filters. A row-ID envelope
+rejection skips all its deltas; a matching interval or partition ID skips remaining values.
+Bucket filtering first walks the bucket sequence to locate the paired totals without
+allocating arrays, then decodes pairs until a match. Unused totals may be skipped.
+Invalid varints, value counts, overflows,
+out-of-range values or ordering encountered while decoding invalidate the container. Delta
+contents skipped by short-circuiting are not individually validated.</p>
+<p>For conjunctive filters a block is retained only if every dimension is unavailable or matches.
+Matching tests row ID, partition, then bucket coverage. Absent filters are skipped, and a
+rejection skips the remaining dimensions. Matches in different dimensions can come from
+different entries, so entry filtering and ADD/DELETE reconciliation remain necessary.</p>
+<p>The entire sidecar is read in chunks of at most 1 MiB, including payloads unused by a query.
+There is no size-based fallback or payload dropping. Payload lengths save decoding work,
+not sidecar storage I/O. Selected compressed Avro blocks are read by byte range with adjacent
+spans coalesced and individual read requests bounded to 4 MiB. Building a sidecar does not
+modify the original manifest.</p>
+<p><code>read</code> and <code>openManifest</code> accept an optional caller-supplied <code>SegmentsCache&lt;Object&gt;</code>. Complete
+sidecar bytes are keyed by their explicit <code>Path</code>. Only successful reads and selections
+populate the cache; query-specific selections are not cached. Cache entry-size limits affect
+admission only: larger sidecars are still fully read, validated and used.</p>
+<p>Selected Avro blocks also share this cache. Each entry contains one complete compressed block,
+keyed by the manifest&#x27;s full path, original offset and encoded length, separately from whole-file
+keys. Different selections reuse the same blocks. Only complete reads populate the cache;
+oversized blocks stream through the read buffer. Adjacent uncached blocks fitting the buffer
+are read together and cached individually. Fully cached selections do not open the manifest.
+The cache retains its configured memory budget, entry-size limit, expiration and eviction policy.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="manifest-1">Manifest<a href="#manifest-1" class="hash-link" aria-label="Direct link to Manifest" title="Direct link to Manifest" translate="no">​</a></h2>
+<p>Data manifests record <strong>ADD</strong> (<code>0</code>) and <strong>DELETE</strong> (<code>1</code>) entries. Readers reconcile these entries
+in manifest order to determine the live files. A DELETE entry removes a file from the logical
+state; it does not immediately delete the physical file, which older snapshots can still use.</p>
+<p>For example, compaction can add file C and delete files A and B in the new snapshot. The old
+snapshot still references A and B. See <a class="" href="/docs/master/maintenance/manage-snapshots#expire-snapshots">snapshot expiration</a>
+for physical cleanup.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="data-manifest">Data Manifest<a href="#data-manifest" class="hash-link" aria-label="Direct link to Data Manifest" title="Direct link to Data Manifest" translate="no">​</a></h3>
+<p>Data and changelog manifests use the same entry schema. Their snapshot references distinguish
+which role they serve.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Field</th><th>Type</th><th>Meaning</th></tr></thead><tbody><tr><td><code>_KIND</code></td><td>TINYINT</td><td>ADD (<code>0</code>) or DELETE (<code>1</code>).</td></tr><tr><td><code>_PARTITION</code></td><td>BYTES</td><td>Serialized BinaryRow containing the partition values.</td></tr><tr><td><code>_BUCKET</code></td><td>INT</td><td>Bucket containing the file.</td></tr><tr><td><code>_TOTAL_BUCKETS</code></td><td>INT</td><td>Bucket count recorded when the file was written, used for compatibility checks.</td></tr><tr><td><code>_FILE</code></td><td>DataFileMeta</td><td>Nested data file metadata described below.</td></tr></tbody></table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="data-file-metadata">Data File Metadata<a href="#data-file-metadata" class="hash-link" aria-label="Direct link to Data File Metadata" title="Direct link to Data File Metadata" translate="no">​</a></h3>
+<p>The <code>_FILE</code> record includes file identity, statistics, and optional feature metadata.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Field</th><th>Type</th><th>Meaning</th></tr></thead><tbody><tr><td><code>_FILE_NAME</code></td><td>STRING</td><td>Data or changelog file name.</td></tr><tr><td><code>_FILE_SIZE</code></td><td>BIGINT</td><td>File size in bytes.</td></tr><tr><td><code>_ROW_COUNT</code></td><td>BIGINT</td><td>Physical record count, including row kinds that represent deletions.</td></tr><tr><td><code>_MIN_KEY</code>, <code>_MAX_KEY</code></td><td>BYTES</td><td>Serialized BinaryRow key bounds, not SQL strings.</td></tr><tr><td><code>_KEY_STATS</code>, <code>_VALUE_STATS</code></td><td>SimpleStats</td><td>Statistics for key and value fields.</td></tr><tr><td><code>_MIN_SEQUENCE_NUMBER</code>, <code>_MAX_SEQUENCE_NUMBER</code></td><td>BIGINT</td><td>Sequence-number bounds.</td></tr><tr><td><code>_SCHEMA_ID</code></td><td>BIGINT</td><td>Schema ID used to write this file.</td></tr><tr><td><code>_LEVEL</code></td><td>INT</td><td>File level in the LSM layout.</td></tr><tr><td><code>_EXTRA_FILES</code></td><td>ARRAY of STRING</td><td>Associated files, such as external per-file indexes.</td></tr><tr><td><code>_CREATION_TIME</code></td><td>TIMESTAMP(3), nullable</td><td>File creation time.</td></tr><tr><td><code>_DELETE_ROW_COUNT</code></td><td>BIGINT, nullable</td><td>Count of deletion records within <code>_ROW_COUNT</code>, when known.</td></tr><tr><td><code>_EMBEDDED_FILE_INDEX</code></td><td>BYTES, nullable</td><td>Per-file index bytes stored directly in metadata.</td></tr><tr><td><code>_FILE_SOURCE</code></td><td>TINYINT, nullable</td><td>Whether the file was generated by append or compaction.</td></tr><tr><td><code>_VALUE_STATS_COLS</code></td><td>ARRAY of STRING, nullable</td><td>Names of columns represented in value statistics.</td></tr><tr><td><code>_EXTERNAL_PATH</code></td><td>STRING, nullable</td><td>External file path when the file is outside the default location.</td></tr><tr><td><code>_FIRST_ROW_ID</code></td><td>BIGINT, nullable</td><td>First row ID for row-tracked file ranges.</td></tr><tr><td><code>_WRITE_COLS</code></td><td>ARRAY of STRING, nullable</td><td>Columns written in this file for data evolution.</td></tr><tr><td><code>_WRITE_COLS_SEQUENCES</code></td><td>ARRAY of BIGINT, nullable</td><td>Maximum sequence numbers per physical table field after data-evolution compaction, ordered by <code>_WRITE_COLS</code> when present.</td></tr></tbody></table>
+<p>These counts describe physical files; they need not equal the logical table row count. See
+<a class="" href="/docs/master/concepts/spec/snapshot#interpreting-record-counts">Snapshot record counts</a> and
+<a class="" href="/docs/master/multimodal-table/data-evolution">Data Evolution</a> for examples.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="index-manifest">Index Manifest<a href="#index-manifest" class="hash-link" aria-label="Direct link to Index Manifest" title="Direct link to Index Manifest" translate="no">​</a></h3>
+<p>An index manifest describes index files through these fields:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Field</th><th>Type</th><th>Meaning</th></tr></thead><tbody><tr><td><code>_KIND</code></td><td>TINYINT</td><td>ADD (<code>0</code>) or DELETE (<code>1</code>).</td></tr><tr><td><code>_PARTITION</code></td><td>BYTES</td><td>Serialized partition BinaryRow.</td></tr><tr><td><code>_BUCKET</code></td><td>INT</td><td>Bucket associated with the index entry.</td></tr><tr><td><code>_INDEX_TYPE</code></td><td>STRING</td><td>Index type identifier, for example <code>HASH</code> or <code>DELETION_VECTORS</code>.</td></tr><tr><td><code>_FILE_NAME</code></td><td>STRING</td><td>Index file name.</td></tr><tr><td><code>_FILE_SIZE</code></td><td>BIGINT</td><td>Index file size in bytes.</td></tr><tr><td><code>_ROW_COUNT</code></td><td>BIGINT</td><td>Entry count recorded by the index implementation.</td></tr><tr><td><code>_DELETIONS_VECTORS_RANGES</code></td><td>ARRAY of DeletionVectorMeta, nullable</td><td>Mapping from data files to deletion vectors.</td></tr><tr><td><code>_EXTERNAL_PATH</code></td><td>STRING, nullable</td><td>External index file path.</td></tr><tr><td><code>_GLOBAL_INDEX</code></td><td>GlobalIndexMeta, nullable</td><td>Row-range and field metadata for a global index.</td></tr></tbody></table>
+<p><code>_DELETIONS_VECTORS_RANGES</code> is the serialized field name, including its historical spelling.</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="deletionvectormeta">DeletionVectorMeta<a href="#deletionvectormeta" class="hash-link" aria-label="Direct link to DeletionVectorMeta" title="Direct link to DeletionVectorMeta" translate="no">​</a></h4>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Field</th><th>Type</th><th>Meaning</th></tr></thead><tbody><tr><td><code>f0</code></td><td>STRING</td><td>Data file name.</td></tr><tr><td><code>f1</code></td><td>INT</td><td>Starting offset of the deletion vector in the index file.</td></tr><tr><td><code>f2</code></td><td>INT</td><td>Stored vector length. See <a class="" href="/docs/master/concepts/spec/tableindex#deletion-vectors">Deletion Vectors</a> for the 32-bit and 64-bit length conventions.</td></tr><tr><td><code>_CARDINALITY</code></td><td>BIGINT, nullable</td><td>Number of deleted rows.</td></tr></tbody></table>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="globalindexmeta">GlobalIndexMeta<a href="#globalindexmeta" class="hash-link" aria-label="Direct link to GlobalIndexMeta" title="Direct link to GlobalIndexMeta" translate="no">​</a></h4>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Field</th><th>Type</th><th>Meaning</th></tr></thead><tbody><tr><td><code>_ROW_RANGE_START</code>, <code>_ROW_RANGE_END</code></td><td>BIGINT</td><td>Inclusive row-ID range covered by the index.</td></tr><tr><td><code>_INDEX_FIELD_ID</code></td><td>INT</td><td>Field ID indexed by this file.</td></tr><tr><td><code>_EXTRA_FIELD_IDS</code></td><td>ARRAY of INT, nullable</td><td>Additional field IDs recorded by the index.</td></tr><tr><td><code>_INDEX_META</code></td><td>BYTES, nullable</td><td>Metadata specific to the index implementation.</td></tr><tr><td><code>_SOURCE_META</code></td><td>BYTES, nullable</td><td>Source metadata recorded by the index implementation.</td></tr></tbody></table>
+<p>See <a class="" href="/docs/master/concepts/spec/tableindex">Table Index</a> for dynamic bucket indexes and deletion vectors, and the
+<a class="" href="/docs/master/primary-key-table/global-index">global index guide</a> for query-index behavior.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="appendix">Appendix<a href="#appendix" class="hash-link" aria-label="Direct link to Appendix" title="Direct link to Appendix" translate="no">​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="simplestats">SimpleStats<a href="#simplestats" class="hash-link" aria-label="Direct link to SimpleStats" title="Direct link to SimpleStats" translate="no">​</a></h3>
+<p>SimpleStats is a nested record. Decoding its minimum and maximum values requires the corresponding
+field types.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Field</th><th>Type</th><th>Meaning</th></tr></thead><tbody><tr><td><code>_MIN_VALUES</code></td><td>BYTES</td><td>Serialized BinaryRow of minimum values.</td></tr><tr><td><code>_MAX_VALUES</code></td><td>BYTES</td><td>Serialized BinaryRow of maximum values.</td></tr><tr><td><code>_NULL_COUNTS</code></td><td>ARRAY of nullable BIGINT, nullable</td><td>Null counts for the corresponding columns. An individual count can be null when unknown.</td></tr></tbody></table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="binaryrow">BinaryRow<a href="#binaryrow" class="hash-link" aria-label="Direct link to BinaryRow" title="Direct link to BinaryRow" translate="no">​</a></h3>
+<p>BinaryRow stores values in a fixed-length region and a variable-length region. The fixed region
+contains a one-byte header, a null bitmap aligned to 8-byte words, and 8-byte field slots.
+Slots hold fixed-width values or the information needed to locate larger variable-width values.
+Some short variable-width values can be stored inline.</p>
+<p>BinaryRow is used inside manifest metadata. It is distinct from the compact row encoding in the
+<a class="" href="/docs/master/concepts/spec/rowformat#row-serialization-format">Row file format</a>.</p></div><footer class="theme-doc-footer docusaurus-mt-lg"><div class="row margin-top--sm theme-doc-footer-edit-meta-row"><div class="col noPrint_WFHX"><a href="https://github.com/apache/paimon/edit/master/docs/docs/concepts/spec/manifest.md" target="_blank" rel="noopener noreferrer" class="theme-edit-this-page"><svg fill="currentColor" height="20" width="20" viewBox="0 0 40 40" class="iconEdit_Z9Sw" aria-hidden="true"><g><path d="m34.5 11.7l-3 3.1-6.3-6.3 3.1-3q0.5-0.5 1.2-0.5t1.1 0.5l3.9 3.9q0.5 0.4 0.5 1.1t-0.5 1.2z m-29.5 17.1l18.4-18.5 6.3 6.3-18.4 18.4h-6.3v-6.2z"></path></g></svg>Edit this page</a></div><div class="col lastUpdated_JAkA"></div></div></footer></article><nav class="docusaurus-mt-lg pagination-nav" aria-label="Docs pages"><a class="pagination-nav__link pagination-nav__link--prev" href="/docs/master/concepts/spec/snapshot"><div class="pagination-nav__sublabel">Previous</div><div class="pagination-nav__label">Snapshot</div></a><a class="pagination-nav__link pagination-nav__link--next" href="/docs/master/concepts/spec/datafile"><div class="pagination-nav__sublabel">Next</div><div class="pagination-nav__label">Data Files</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href="#file-kinds-and-encoding" class="table-of-contents__link toc-highlight">File Kinds and Encoding</a></li><li><a href="#manifest-list" class="table-of-contents__link toc-highlight">Manifest List</a><ul><li><a href="#manifest-sidecar" class="table-of-contents__link toc-highlight">Manifest Sidecar</a></li></ul></li><li><a href="#manifest-1" class="table-of-contents__link toc-highlight">Manifest</a><ul><li><a href="#data-manifest" class="table-of-contents__link toc-highlight">Data Manifest</a></li><li><a href="#data-file-metadata" class="table-of-contents__link toc-highlight">Data File Metadata</a></li><li><a href="#index-manifest" class="table-of-contents__link toc-highlight">Index Manifest</a></li></ul></li><li><a href="#appendix" class="table-of-contents__link toc-highlight">Appendix</a><ul><li><a href="#simplestats" class="table-of-contents__link toc-highlight">SimpleStats</a></li><li><a href="#binaryrow" class="table-of-contents__link toc-highlight">BinaryRow</a></li></ul></li></ul></div></div></div></div></main></div></div></div><footer class="theme-layout-footer footer footer--dark"><div class="container container-fluid"><div class="row footer__links"><div class="theme-layout-footer-column col footer__col"><div class="footer__title">Documentation</div><ul class="footer__items clean-list"><li class="footer__item"><a class="footer__link-item" href="/docs/master/flink/quick-start">Getting Started</a></li><li class="footer__item"><a class="footer__link-item" href="/docs/master/concepts/">Concepts</a></li></ul></div><div class="theme-layout-footer-column col footer__col"><div class="footer__title">Community</div><ul class="footer__items clean-list"><li class="footer__item"><a href="https://github.com/apache/paimon" target="_blank" rel="noopener noreferrer" class="footer__link-item">GitHub<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a></li><li class="footer__item"><a href="https://paimon.apache.org/community/mailing-lists" target="_blank" rel="noopener noreferrer" class="footer__link-item">Mailing List<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a></li></ul></div></div><div class="footer__bottom text--center"><div class="footer__copyright">Copyright © 2026 The Apache Software Foundation. Apache Paimon, Paimon, and the Paimon logo are trademarks of the Apache Software Foundation.</div></div></div></footer></div>
+</body>
+</html>

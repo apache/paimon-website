@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Engine Others on Apache Paimon</title>
+    <link>//paimon.apache.org/docs/1.0/engines/</link>
+    <description>Recent content in Engine Others on Apache Paimon</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language><atom:link href="//paimon.apache.org/docs/1.0/engines/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Overview</title>
+      <link>//paimon.apache.org/docs/1.0/engines/overview/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/1.0/engines/overview/</guid>
+      <description>Overview #  Compatibility Matrix #     Engine Version Batch Read Batch Write Create Table Alter Table Streaming Write Streaming Read Batch Overwrite DELETE &amp;amp; UPDATE MERGE INTO Time Travel     Flink 1.15 - 1.20 ✅ ✅ ✅ ✅(1.17+) ✅ ✅ ✅ ✅(1.17+) ❌ ✅   Spark 3.2 - 3.5 ✅ ✅ ✅ ✅ ✅(3.3+) ✅(3.3+) ✅ ✅ ✅ ✅(3.3+)   Hive 2.</description>
+    </item>
+    
+    <item>
+      <title>StarRocks</title>
+      <link>//paimon.apache.org/docs/1.0/engines/starrocks/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/1.0/engines/starrocks/</guid>
+      <description>StarRocks #  This documentation is a guide for using Paimon in StarRocks.
+Version #  Paimon currently supports StarRocks 3.1 and above. Recommended version is StarRocks 3.2.6 or above.
+Create Paimon Catalog #  Paimon catalogs are registered by executing a CREATE EXTERNAL CATALOG SQL in StarRocks. For example, you can use the following SQL to create a Paimon catalog named paimon_catalog.
+CREATE EXTERNAL CATALOG paimon_catalog PROPERTIES ( &amp;#34;type&amp;#34; = &amp;#34;paimon&amp;#34;, &amp;#34;paimon.</description>
+    </item>
+    
+    <item>
+      <title>Doris</title>
+      <link>//paimon.apache.org/docs/1.0/engines/doris/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/1.0/engines/doris/</guid>
+      <description>Doris #  This documentation is a guide for using Paimon in Doris.
+ More details can be found in Apache Doris Website
+ Version #  Paimon currently supports Apache Doris 2.0.6 and above.
+Create Paimon Catalog #  Use CREATE CATALOG statement in Apache Doris to create Paimon Catalog.
+Doris support multi types of Paimon Catalogs. Here are some examples:
+-- HDFS based Paimon Catalog CREATE CATALOG `paimon_hdfs` PROPERTIES ( &amp;#34;type&amp;#34; = &amp;#34;paimon&amp;#34;, &amp;#34;warehouse&amp;#34; = &amp;#34;hdfs://172.</description>
+    </item>
+    
+    <item>
+      <title>Hive</title>
+      <link>//paimon.apache.org/docs/1.0/engines/hive/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/1.0/engines/hive/</guid>
+      <description>Hive #  This documentation is a guide for using Paimon in Hive.
+Version #  Paimon currently supports Hive 3.1, 2.3, 2.2, 2.1 and 2.1-cdh-6.3.
+Execution Engine #  Paimon currently supports MR and Tez execution engine for Hive Read, and MR execution engine for Hive Write. Note If you use beeline, please restart the hive cluster.
+Installation #  Download the jar file with corresponding version.
+    Jar     Hive 3.</description>
+    </item>
+    
+    <item>
+      <title>Trino</title>
+      <link>//paimon.apache.org/docs/1.0/engines/trino/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/1.0/engines/trino/</guid>
+      <description>Trino #  This documentation is a guide for using Paimon in Trino.
+Version #  Paimon currently supports Trino 440.
+Filesystem #  From version 0.8, Paimon share Trino filesystem for all actions, which means, you should config Trino filesystem before using trino-paimon. You can find information about how to config filesystems for Trino on Trino official website.
+Preparing Paimon Jar File #  Download
+You can also manually build a bundled jar from the source code.</description>
+    </item>
+    
+  </channel>
+</rss>
