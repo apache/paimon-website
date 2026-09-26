@@ -1,0 +1,1991 @@
+
+<!DOCTYPE html>
+<html lang="en" dir=>
+
+<head>
+  <meta name="generator" content="Hugo 0.80.0" />
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="SQL Query #  Just like all other tables, Paimon tables can be queried with SELECT statement.
+Batch Query #  Paimon&rsquo;s batch read returns all the data in a snapshot of the table. By default, batch reads return the latest snapshot.
+Batch Time Travel #  Paimon batch reads with time travel can specify a snapshot or a tag and read the corresponding data.
+Requires Spark 3.3&#43;.
+you can use VERSION AS OF and TIMESTAMP AS OF in query to do time travel:">
+<meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="SQL Query" />
+<meta property="og:description" content="SQL Query #  Just like all other tables, Paimon tables can be queried with SELECT statement.
+Batch Query #  Paimon&rsquo;s batch read returns all the data in a snapshot of the table. By default, batch reads return the latest snapshot.
+Batch Time Travel #  Paimon batch reads with time travel can specify a snapshot or a tag and read the corresponding data.
+Requires Spark 3.3&#43;.
+you can use VERSION AS OF and TIMESTAMP AS OF in query to do time travel:" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="//paimon.apache.org/docs/0.9/spark/sql-query/" />
+
+<title>SQL Query | Apache Paimon</title>
+<link rel="manifest" href="/docs/0.9/manifest.json">
+<link rel="icon" href="/docs/0.9/favicon.png" type="image/x-icon">
+<link rel="stylesheet" href="/docs/0.9/book.min.3bc4108a5b57c9a7e6fcae92ff69940435f8c46c4e1e4a311aedc9b2d8e06792.css" integrity="sha256-O8QQiltXyafm/K6S/2mUBDX4xGxOHkoxGu3JstjgZ5I=">
+<script defer src="/docs/0.9/en.search.min.d59d87ab70dfbc2a3756e384c31a6c049befd781d606c03c6e8a72fb998f8f65.js" integrity="sha256-1Z2Hq3DfvCo3VuOEwxpsBJvv14HWBsA8bopy&#43;5mPj2U="></script>
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+  
+
+<link rel="stylesheet" type="text/css" href="//paimon.apache.org/docs/0.9/font-awesome/css/font-awesome.min.css">
+<script src="//paimon.apache.org/docs/0.9/js/anchor.min.js"></script>
+<script src="//paimon.apache.org/docs/0.9/js/flink.js"></script>
+
+
+  
+  <script>
+    var _paq = window._paq = window._paq || [];
+     
+     
+    _paq.push(['disableCookies']);
+     
+    _paq.push(["setDomains", ["*.flink.apache.org","*.nightlies.apache.org/flink"]]);
+    _paq.push(['trackPageView']);
+    _paq.push(['enableLinkTracking']);
+    (function() {
+      var u="//matomo.privacy.apache.org/";
+      _paq.push(['setTrackerUrl', u+'matomo.php']);
+      _paq.push(['setSiteId', '1']);
+      var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+      g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+    })();
+  </script>
+  
+</head>
+
+<body dir=>
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      
+  
+
+<nav>
+
+
+<a id="logo" href="//paimon.apache.org/docs/0.9">
+    <img width="100%" src="//paimon.apache.org/docs/0.9/paimon_black.svg">
+</a>
+<p style="text-align:right">0.9.0</p>
+
+<div class="book-search">
+  <input type="text" id="book-search-input" placeholder="Search" aria-label="Search" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-dc8a1c63e6da60163016ce21cae1faa0" class="toggle"  />
+    <label for="section-dc8a1c63e6da60163016ce21cae1faa0" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-book title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Concepts</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/concepts/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/concepts/basic-concepts/" class="">Basic Concepts</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/concepts/concurrency-control/" class="">Concurrency Control</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-d3e7256ce393050c572ea7bd8cc4f240" class="toggle"  />
+    <label for="section-d3e7256ce393050c572ea7bd8cc4f240" class="flex justify-between">Specification<span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/concepts/spec/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/concepts/spec/schema/" class="">Schema</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/concepts/spec/snapshot/" class="">Snapshot</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/concepts/spec/manifest/" class="">Manifest</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/concepts/spec/datafile/" class="">DataFile</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/concepts/spec/tableindex/" class="">Table Index</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/concepts/spec/fileindex/" class="">File Index</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-3f6a6d4f1692040009c66ffaa328c8d0" class="toggle"  />
+    <label for="section-3f6a6d4f1692040009c66ffaa328c8d0" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-database title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Table with PK</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/primary-key-table/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/primary-key-table/data-distribution/" class="">Data Distribution</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/primary-key-table/table-mode/" class="">Table Mode</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-038bb7d17b5b7cb93fb60acbcf218f11" class="toggle"  />
+    <label for="section-038bb7d17b5b7cb93fb60acbcf218f11" class="flex justify-between">Merge Engine<span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/primary-key-table/merge-engine/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/primary-key-table/merge-engine/partial-update/" class="">Partial Update</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/primary-key-table/merge-engine/aggregation/" class="">Aggregation</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/primary-key-table/merge-engine/first-row/" class="">First Row</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/primary-key-table/changelog-producer/" class="">Changelog Producer</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/primary-key-table/sequence-rowkind/" class="">Sequence & Rowkind</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/primary-key-table/compaction/" class="">Compaction</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-f74847e1c917ba2b99e7b718bb318b30" class="toggle"  />
+    <label for="section-f74847e1c917ba2b99e7b718bb318b30" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-database title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Table w/o PK</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/append-table/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/append-table/streaming/" class="">Streaming</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/append-table/query/" class="">Query</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/append-table/update/" class="">Update</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/append-table/bucketed/" class="">Bucketed</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-998a37410d502937fe8444ed73a9ecf8" class="toggle"  />
+    <label for="section-998a37410d502937fe8444ed73a9ecf8" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-gear title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Engine Flink</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/flink/quick-start/" class="">Quick Start</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/flink/sql-ddl/" class="">SQL DDL</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/flink/sql-write/" class="">SQL Write</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/flink/sql-query/" class="">SQL Query</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/flink/sql-lookup/" class="">SQL Lookup</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/flink/sql-alter/" class="">SQL Alter</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-5c4df272c57150a3ff5abcdb519c51a4" class="toggle"  />
+    <label for="section-5c4df272c57150a3ff5abcdb519c51a4" class="flex justify-between">CDC Ingestion<span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/flink/cdc-ingestion/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/flink/cdc-ingestion/mysql-cdc/" class="">Mysql CDC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/flink/cdc-ingestion/postgres-cdc/" class="">Postgres CDC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/flink/cdc-ingestion/kafka-cdc/" class="">Kafka CDC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/flink/cdc-ingestion/mongo-cdc/" class="">Mongo CDC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/flink/cdc-ingestion/pulsar-cdc/" class="">Pulsar CDC</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/flink/expire-partition/" class="">Expire Partition</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/flink/procedures/" class="">Procedures</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/flink/action-jars/" class="">Action Jars</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/flink/savepoint/" class="">Savepoint</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-74c63bf75b4f6bd14a3ea6a1217f03ad" class="toggle" checked />
+    <label for="section-74c63bf75b4f6bd14a3ea6a1217f03ad" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-gear title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Engine Spark</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/spark/quick-start/" class="">Quick Start</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/spark/sql-ddl/" class="">SQL DDL</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/spark/sql-write/" class="">SQL Write</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/spark/sql-query/" class=" active">SQL Query</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/spark/sql-alter/" class="">SQL Alter</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/spark/auxiliary/" class="">Auxiliary</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/spark/procedures/" class="">Procedures</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-90f5541dc4fa46a212e954b9193ea0f9" class="toggle"  />
+    <label for="section-90f5541dc4fa46a212e954b9193ea0f9" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-gear title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Engine Others</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/engines/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/engines/starrocks/" class="">StarRocks</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/engines/doris/" class="">Doris</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/engines/hive/" class="">Hive</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/engines/trino/" class="">Trino</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/engines/presto/" class="">Presto</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-e2d76c106dab115385ef7f124cda2ba4" class="toggle"  />
+    <label for="section-e2d76c106dab115385ef7f124cda2ba4" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-folder title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Filesystems</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/filesystems/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/filesystems/hdfs/" class="">HDFS</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/filesystems/oss/" class="">OSS</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/filesystems/s3/" class="">S3</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-697a4b6a0388d6cfa4f418aba3b4edfe" class="toggle"  />
+    <label for="section-697a4b6a0388d6cfa4f418aba3b4edfe" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-wrench title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Maintenance</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/maintenance/system-tables/" class="">System Tables</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/maintenance/write-performance/" class="">Write Performance</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/maintenance/dedicated-compaction/" class="">Dedicated Compaction</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/maintenance/manage-snapshots/" class="">Manage Snapshots</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/maintenance/rescale-bucket/" class="">Rescale Bucket</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/maintenance/manage-tags/" class="">Manage Tags</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/maintenance/metrics/" class="">Metrics</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/maintenance/manage-privileges/" class="">Manage Privileges</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/maintenance/manage-branches/" class="">Manage Branches</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/maintenance/configurations/" class="">Configurations</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-049030059e0dc01edf74ba3d4d259dae" class="toggle"  />
+    <label for="section-049030059e0dc01edf74ba3d4d259dae" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-briefcase title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Program API</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/program-api/java-api/" class="">Java API</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/program-api/flink-api/" class="">Flink API</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-07c567e5a9f3ce62aea4ff0a1e2dc065" class="toggle"  />
+    <label for="section-07c567e5a9f3ce62aea4ff0a1e2dc065" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-briefcase title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Migration</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/migration/migration-from-hive/" class="">Migration From Hive</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/migration/upsert-to-partitioned/" class="">Upsert To Partitioned</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/migration/clone-tables/" class="">Clone Tables</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  	<br/>
+  
+  
+    <input type="checkbox" id="section-8c828bcf882f666cdd6821a70cc768ee" class="toggle"  />
+    <label for="section-8c828bcf882f666cdd6821a70cc768ee" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-sitemap title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Project</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/project/roadmap/" class="">Roadmap</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/project/download/" class="">Download</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/project/contributing/" class="">Contributing</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-392fc6f653ae23ff676811656a71ebbf" class="toggle"  />
+    <label for="section-392fc6f653ae23ff676811656a71ebbf" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-sitemap title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Learn Paimon</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/0.9/learn-paimon/understand-files/" class="">Understand Files</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br/>
+<hr class="menu-break">
+
+<a href="//paimon.apache.org" style="color:black;margin-bottom:0.5em"><i class="link fa fa-external-link title" aria-hidden="true"></i> Project Homepage</a>
+<br/>
+
+<a href="//paimon.apache.org/docs/master/api/java/" style="color:black;margin-bottom:0.5em"><i class="link fa fa-external-link title" aria-hidden="true"></i> JavaDocs</a>
+<br/>
+
+<hr class="menu-break">
+<li style="list-style-type: none">
+  <br>
+  <input type="checkbox" id="section-version-picker" class="toggle">
+  <label for="section-version-picker" class="flex justify-between">
+     <div style="font-weight:450;margin-bottom:0.5em">Pick Docs Version</div>
+     <span>▾</span>
+  </label>
+  <ul>
+    <a href="//paimon.apache.org/docs/0.9">
+      0.9 (✓)
+    </a>
+    <hr class="menu-break">
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/master">
+          master
+        </a>
+      </li>
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/0.9">
+          stable
+        </a>
+      </li>
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/0.9">
+          0.9
+        </a>
+      </li>
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/0.8">
+          0.8
+        </a>
+      </li>
+    
+    <hr class="menu-break">
+    <li>
+      <a href="//paimon.apache.org/docs/0.9/versions">
+          All Versions
+      </a>
+    </li>
+  </ul>
+</li>
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var menu=document.querySelector("aside.book-menu nav");addEventListener("beforeunload",function(event){localStorage.setItem("menu.scrollTop",menu.scrollTop);});menu.scrollTop=localStorage.getItem("menu.scrollTop");})();</script>
+
+
+ 
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/docs/0.9/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <strong>SQL Query</strong>
+
+  <label for="toc-control">
+    
+    <img src="/docs/0.9/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden clearfix">
+    
+  
+
+<nav id="TableOfContents"><h3>On This Page <button class="toc" onclick="collapseToc()"><i class="fa fa-compress" aria-hidden="true"></i></button></h3>
+  <ul>
+    <li><a href="#batch-query">Batch Query</a>
+      <ul>
+        <li><a href="#batch-time-travel">Batch Time Travel</a></li>
+        <li><a href="#batch-incremental">Batch Incremental</a></li>
+      </ul>
+    </li>
+    <li><a href="#streaming-query">Streaming Query</a></li>
+    <li><a href="#query-optimization">Query Optimization</a></li>
+  </ul>
+</nav>
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+
+
+
+
+
+
+      
+  <article class="markdown"><!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<h1 id="sql-query">
+  SQL Query
+  <a class="anchor" href="#sql-query">#</a>
+</h1>
+<p>Just like all other tables, Paimon tables can be queried with <code>SELECT</code> statement.</p>
+<h2 id="batch-query">
+  Batch Query
+  <a class="anchor" href="#batch-query">#</a>
+</h2>
+<p>Paimon&rsquo;s batch read returns all the data in a snapshot of the table. By default, batch reads return the latest snapshot.</p>
+<h3 id="batch-time-travel">
+  Batch Time Travel
+  <a class="anchor" href="#batch-time-travel">#</a>
+</h3>
+<p>Paimon batch reads with time travel can specify a snapshot or a tag and read the corresponding data.</p>
+<p>Requires Spark 3.3+.</p>
+<p>you can use <code>VERSION AS OF</code> and <code>TIMESTAMP AS OF</code> in query to do time travel:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="c1">-- read the snapshot with id 1L (use snapshot id as version)
+</span><span class="c1"></span><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">t</span> <span class="k">VERSION</span> <span class="k">AS</span> <span class="k">OF</span> <span class="mi">1</span><span class="p">;</span>
+
+<span class="c1">-- read the snapshot from specified timestamp 
+</span><span class="c1"></span><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">t</span> <span class="k">TIMESTAMP</span> <span class="k">AS</span> <span class="k">OF</span> <span class="s1">&#39;2023-06-01 00:00:00.123&#39;</span><span class="p">;</span>
+
+<span class="c1">-- read the snapshot from specified timestamp in unix seconds
+</span><span class="c1"></span><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">t</span> <span class="k">TIMESTAMP</span> <span class="k">AS</span> <span class="k">OF</span> <span class="mi">1678883047</span><span class="p">;</span>
+
+<span class="c1">-- read tag &#39;my-tag&#39;
+</span><span class="c1"></span><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">t</span> <span class="k">VERSION</span> <span class="k">AS</span> <span class="k">OF</span> <span class="s1">&#39;my-tag&#39;</span><span class="p">;</span>
+
+<span class="c1">-- read the snapshot from specified watermark. will match the first snapshot after the watermark
+</span><span class="c1"></span><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">t</span> <span class="k">VERSION</span> <span class="k">AS</span> <span class="k">OF</span> <span class="s1">&#39;watermark-1678883047356&#39;</span><span class="p">;</span>
+
+</code></pre></div><blockquote class="book-hint warning">
+  If tag&rsquo;s name is a number and equals to a snapshot id, the VERSION AS OF syntax will consider tag first. For example, if
+you have a tag named &lsquo;1&rsquo; based on snapshot 2, the statement <code>SELECT * FROM t VERSION AS OF '1'</code> actually queries snapshot 2
+instead of snapshot 1.
+</blockquote>
+
+<h3 id="batch-incremental">
+  Batch Incremental
+  <a class="anchor" href="#batch-incremental">#</a>
+</h3>
+<p>Read incremental changes between start snapshot (exclusive) and end snapshot.</p>
+<p>For example:</p>
+<ul>
+<li>&lsquo;5,10&rsquo; means changes between snapshot 5 and snapshot 10.</li>
+<li>&lsquo;TAG1,TAG3&rsquo; means changes between TAG1 and TAG3.</li>
+</ul>
+<p>By default, will scan changelog files for the table which produces changelog files. Otherwise, scan newly changed files.
+You can also force specifying <code>'incremental-between-scan-mode'</code>.</p>
+<p>Requires Spark 3.2+.</p>
+<p>Paimon supports that use Spark SQL to do the incremental query that implemented by Spark Table Valued Function.</p>
+<p>you can use <code>paimon_incremental_query</code> in query to extract the incremental data:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="c1">-- read the incremental data between snapshot id 12 and snapshot id 20.
+</span><span class="c1"></span><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">paimon_incremental_query</span><span class="p">(</span><span class="s1">&#39;tableName&#39;</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">20</span><span class="p">);</span>
+</code></pre></div><p>In Batch SQL, the <code>DELETE</code> records are not allowed to be returned, so records of <code>-D</code> will be dropped.
+If you want see <code>DELETE</code> records, you can query audit_log table.</p>
+<h2 id="streaming-query">
+  Streaming Query
+  <a class="anchor" href="#streaming-query">#</a>
+</h2>
+<blockquote class="book-hint info">
+  Paimon currently supports Spark 3.3+ for streaming read.
+</blockquote>
+
+<p>Paimon supports rich scan mode for streaming read. There is a list:</p>
+<table class="configuration table table-bordered">
+    <thead>
+        <tr>
+            <th class="text-left" style="width: 20%">Scan Mode</th>
+            <th class="text-left" style="width: 60%">Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><h5>latest</h5></td>
+            <td>For streaming sources, continuously reads latest changes without producing a snapshot at the beginning. </td>
+        </tr>
+        <tr>
+            <td><h5>latest-full</h5></td>
+            <td>For streaming sources, produces the latest snapshot on the table upon first startup, and continue to read the latest changes.</td>
+        </tr>
+        <tr>
+            <td><h5>from-timestamp</h5></td>
+            <td>For streaming sources, continuously reads changes starting from timestamp specified by "scan.timestamp-millis", without producing a snapshot at the beginning. </td>
+        </tr>
+        <tr>
+            <td><h5>from-snapshot</h5></td>
+            <td>For streaming sources, continuously reads changes starting from snapshot specified by "scan.snapshot-id", without producing a snapshot at the beginning. </td>
+        </tr>
+        <tr>
+            <td><h5>from-snapshot-full</h5></td>
+            <td>For streaming sources, produces from snapshot specified by "scan.snapshot-id" on the table upon first startup, and continuously reads changes.</td>
+        </tr>
+        <tr>
+            <td><h5>default</h5></td>
+            <td>It is equivalent to from-snapshot if "scan.snapshot-id" is specified. It is equivalent to from-timestamp if "timestamp-millis" is specified. Or, It is equivalent to latest-full.</td>
+        </tr>
+    </tbody>
+</table>
+<p>A simple example with default scan mode:</p>
+<div class="highlight"><pre class="chroma"><code class="language-scala" data-lang="scala"><span class="c1">// no any scan-related configs are provided, that will use latest-full scan mode.
+</span><span class="c1"></span><span class="k">val</span> <span class="n">query</span> <span class="k">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">readStream</span>
+  <span class="o">.</span><span class="n">format</span><span class="o">(</span><span class="s">&#34;paimon&#34;</span><span class="o">)</span>
+  <span class="o">.</span><span class="n">load</span><span class="o">(</span><span class="s">&#34;/path/to/paimon/source/table&#34;</span><span class="o">)</span>
+  <span class="o">.</span><span class="n">writeStream</span>
+  <span class="o">.</span><span class="n">format</span><span class="o">(</span><span class="s">&#34;console&#34;</span><span class="o">)</span>
+  <span class="o">.</span><span class="n">start</span><span class="o">()</span>
+</code></pre></div><p>Paimon Structured Streaming also supports a variety of streaming read modes, it can support many triggers and many read limits.</p>
+<p>These read limits are supported:</p>
+<table class="configuration table table-bordered">
+    <thead>
+        <tr>
+            <th class="text-left" style="width: 20%">Key</th>
+            <th class="text-left" style="width: 15%">Default</th>
+            <th class="text-left" style="width: 10%">Type</th>
+            <th class="text-left" style="width: 55%">Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><h5>read.stream.maxFilesPerTrigger</h5></td>
+            <td style="word-wrap: break-word;">(none)</td>
+            <td>Integer</td>
+            <td>The maximum number of files returned in a single batch.</td>
+        </tr>
+        <tr>
+            <td><h5>read.stream.maxBytesPerTrigger</h5></td>
+            <td style="word-wrap: break-word;">(none)</td>
+            <td>Long</td>
+            <td>The maximum number of bytes returned in a single batch.</td>
+        </tr>
+        <tr>
+            <td><h5>read.stream.maxRowsPerTrigger</h5></td>
+            <td style="word-wrap: break-word;">(none)</td>
+            <td>Long</td>
+            <td>The maximum number of rows returned in a single batch.</td>
+        </tr>
+        <tr>
+            <td><h5>read.stream.minRowsPerTrigger</h5></td>
+            <td style="word-wrap: break-word;">(none)</td>
+            <td>Long</td>
+            <td>The minimum number of rows returned in a single batch, which used to create MinRowsReadLimit with read.stream.maxTriggerDelayMs together.</td>
+        </tr>
+        <tr>
+            <td><h5>read.stream.maxTriggerDelayMs</h5></td>
+            <td style="word-wrap: break-word;">(none)</td>
+            <td>Long</td>
+            <td>The maximum delay between two adjacent batches, which used to create MinRowsReadLimit with read.stream.minRowsPerTrigger together.</td>
+        </tr>
+    </tbody>
+</table>
+<p><strong>Example: One</strong></p>
+<p>Use <code>org.apache.spark.sql.streaming.Trigger.AvailableNow()</code> and <code>maxBytesPerTrigger</code> defined by paimon.</p>
+<div class="highlight"><pre class="chroma"><code class="language-scala" data-lang="scala"><span class="c1">// Trigger.AvailableNow()) processes all available data at the start
+</span><span class="c1">// of the query in one or multiple batches, then terminates the query.
+</span><span class="c1">// That set read.stream.maxBytesPerTrigger to 128M means that each
+</span><span class="c1">// batch processes a maximum of 128 MB of data.
+</span><span class="c1"></span><span class="k">val</span> <span class="n">query</span> <span class="k">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">readStream</span>
+  <span class="o">.</span><span class="n">format</span><span class="o">(</span><span class="s">&#34;paimon&#34;</span><span class="o">)</span>
+  <span class="o">.</span><span class="n">option</span><span class="o">(</span><span class="s">&#34;read.stream.maxBytesPerTrigger&#34;</span><span class="o">,</span> <span class="s">&#34;134217728&#34;</span><span class="o">)</span>
+  <span class="o">.</span><span class="n">load</span><span class="o">(</span><span class="s">&#34;/path/to/paimon/source/table&#34;</span><span class="o">)</span>
+  <span class="o">.</span><span class="n">writeStream</span>
+  <span class="o">.</span><span class="n">format</span><span class="o">(</span><span class="s">&#34;console&#34;</span><span class="o">)</span>
+  <span class="o">.</span><span class="n">trigger</span><span class="o">(</span><span class="nc">Trigger</span><span class="o">.</span><span class="nc">AvailableNow</span><span class="o">())</span>
+  <span class="o">.</span><span class="n">start</span><span class="o">()</span>
+</code></pre></div><p><strong>Example: Two</strong></p>
+<p>Use <code>org.apache.spark.sql.connector.read.streaming.ReadMinRows</code>.</p>
+<div class="highlight"><pre class="chroma"><code class="language-scala" data-lang="scala"><span class="c1">// It will not trigger a batch until there are more than 5,000 pieces of data,
+</span><span class="c1">// unless the interval between the two batches is more than 300 seconds.
+</span><span class="c1"></span><span class="k">val</span> <span class="n">query</span> <span class="k">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">readStream</span>
+  <span class="o">.</span><span class="n">format</span><span class="o">(</span><span class="s">&#34;paimon&#34;</span><span class="o">)</span>
+  <span class="o">.</span><span class="n">option</span><span class="o">(</span><span class="s">&#34;read.stream.minRowsPerTrigger&#34;</span><span class="o">,</span> <span class="s">&#34;5000&#34;</span><span class="o">)</span>
+  <span class="o">.</span><span class="n">option</span><span class="o">(</span><span class="s">&#34;read.stream.maxTriggerDelayMs&#34;</span><span class="o">,</span> <span class="s">&#34;300000&#34;</span><span class="o">)</span>
+  <span class="o">.</span><span class="n">load</span><span class="o">(</span><span class="s">&#34;/path/to/paimon/source/table&#34;</span><span class="o">)</span>
+  <span class="o">.</span><span class="n">writeStream</span>
+  <span class="o">.</span><span class="n">format</span><span class="o">(</span><span class="s">&#34;console&#34;</span><span class="o">)</span>
+  <span class="o">.</span><span class="n">start</span><span class="o">()</span>
+</code></pre></div><p>Paimon Structured Streaming supports read row in the form of changelog (add rowkind column in row to represent its
+change type) in two ways:</p>
+<ul>
+<li>Direct streaming read with the system audit_log table</li>
+<li>Set <code>read.changelog</code> to true (default is false), then streaming read with table location</li>
+</ul>
+<p><strong>Example:</strong></p>
+<div class="highlight"><pre class="chroma"><code class="language-scala" data-lang="scala"><span class="c1">// Option 1
+</span><span class="c1"></span><span class="k">val</span> <span class="n">query1</span> <span class="k">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">readStream</span>
+  <span class="o">.</span><span class="n">format</span><span class="o">(</span><span class="s">&#34;paimon&#34;</span><span class="o">)</span>
+  <span class="o">.</span><span class="n">table</span><span class="o">(</span><span class="s">&#34;`table_name$audit_log`&#34;</span><span class="o">)</span>
+  <span class="o">.</span><span class="n">writeStream</span>
+  <span class="o">.</span><span class="n">format</span><span class="o">(</span><span class="s">&#34;console&#34;</span><span class="o">)</span>
+  <span class="o">.</span><span class="n">start</span><span class="o">()</span>
+
+<span class="c1">// Option 2
+</span><span class="c1"></span><span class="k">val</span> <span class="n">query2</span> <span class="k">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">readStream</span>
+  <span class="o">.</span><span class="n">format</span><span class="o">(</span><span class="s">&#34;paimon&#34;</span><span class="o">)</span>
+  <span class="o">.</span><span class="n">option</span><span class="o">(</span><span class="s">&#34;read.changelog&#34;</span><span class="o">,</span> <span class="s">&#34;true&#34;</span><span class="o">)</span>
+  <span class="o">.</span><span class="n">load</span><span class="o">(</span><span class="s">&#34;/path/to/paimon/source/table&#34;</span><span class="o">)</span>
+  <span class="o">.</span><span class="n">writeStream</span>
+  <span class="o">.</span><span class="n">format</span><span class="o">(</span><span class="s">&#34;console&#34;</span><span class="o">)</span>
+  <span class="o">.</span><span class="n">start</span><span class="o">()</span>
+
+<span class="cm">/*
+</span><span class="cm">+I   1  Hi
+</span><span class="cm">+I   2  Hello
+</span><span class="cm">*/</span>
+</code></pre></div><h2 id="query-optimization">
+  Query Optimization
+  <a class="anchor" href="#query-optimization">#</a>
+</h2>
+<p>It is highly recommended to specify partition and primary key filters
+along with the query, which will speed up the data skipping of the query.</p>
+<p>The filter functions that can accelerate data skipping are:</p>
+<ul>
+<li><code>=</code></li>
+<li><code>&lt;</code></li>
+<li><code>&lt;=</code></li>
+<li><code>&gt;</code></li>
+<li><code>&gt;=</code></li>
+<li><code>IN (...)</code></li>
+<li><code>LIKE 'abc%'</code></li>
+<li><code>IS NULL</code></li>
+</ul>
+<p>Paimon will sort the data by primary key, which speeds up the point queries
+and range queries. When using a composite primary key, it is best for the query
+filters to form a <a href="https://dev.mysql.com/doc/refman/5.7/en/multiple-column-indexes.html">leftmost prefix</a>
+of the primary key for good acceleration.</p>
+<p>Suppose that a table has the following specification:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">orders</span> <span class="p">(</span>
+    <span class="n">catalog_id</span> <span class="nb">BIGINT</span><span class="p">,</span>
+    <span class="n">order_id</span> <span class="nb">BIGINT</span><span class="p">,</span>
+    <span class="p">.....,</span>
+<span class="p">)</span> <span class="n">TBLPROPERTIES</span> <span class="p">(</span>
+    <span class="s1">&#39;primary-key&#39;</span> <span class="o">=</span> <span class="s1">&#39;catalog_id,order_id&#39;</span>
+<span class="p">);</span>
+</code></pre></div><p>The query obtains a good acceleration by specifying a range filter for
+the leftmost prefix of the primary key.</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">orders</span> <span class="k">WHERE</span> <span class="n">catalog_id</span><span class="o">=</span><span class="mi">1025</span><span class="p">;</span>
+
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">orders</span> <span class="k">WHERE</span> <span class="n">catalog_id</span><span class="o">=</span><span class="mi">1025</span> <span class="k">AND</span> <span class="n">order_id</span><span class="o">=</span><span class="mi">29495</span><span class="p">;</span>
+
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">orders</span>
+  <span class="k">WHERE</span> <span class="n">catalog_id</span><span class="o">=</span><span class="mi">1025</span>
+  <span class="k">AND</span> <span class="n">order_id</span><span class="o">&gt;</span><span class="mi">2035</span> <span class="k">AND</span> <span class="n">order_id</span><span class="o">&lt;</span><span class="mi">6000</span><span class="p">;</span>
+</code></pre></div><p>However, the following filter cannot accelerate the query well.</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">orders</span> <span class="k">WHERE</span> <span class="n">order_id</span><span class="o">=</span><span class="mi">29495</span><span class="p">;</span>
+
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">orders</span> <span class="k">WHERE</span> <span class="n">catalog_id</span><span class="o">=</span><span class="mi">1025</span> <span class="k">OR</span> <span class="n">order_id</span><span class="o">=</span><span class="mi">29495</span><span class="p">;</span>
+</code></pre></div></article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  
+
+
+
+
+<a href="//github.com/apache/paimon/edit/0.9/docs/content/spark/sql-query.md" style="color:black"><i class="fa fa-edit fa-fw"></i>Edit This Page</a>
+
+
+ 
+        
+
+
+<hr style="margin-top: 20px; border: 1px solid #e5e5e5;" />
+
+<table style="border-spacing: 10px;">
+    <tbody>
+    <tr>
+        <td colspan="2">
+            Copyright &copy; 2024 The Apache Software Foundation. Apache Paimon, Paimon, and its feather logo are
+            trademarks of The Apache Software Foundation.
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+      </footer>
+
+      
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      
+  
+
+<nav id="TableOfContents"><h3>On This Page <button class="toc" onclick="collapseToc()"><i class="fa fa-compress" aria-hidden="true"></i></button></h3>
+  <ul>
+    <li><a href="#batch-query">Batch Query</a>
+      <ul>
+        <li><a href="#batch-time-travel">Batch Time Travel</a></li>
+        <li><a href="#batch-incremental">Batch Incremental</a></li>
+      </ul>
+    </li>
+    <li><a href="#streaming-query">Streaming Query</a></li>
+    <li><a href="#query-optimization">Query Optimization</a></li>
+  </ul>
+</nav>
+
+ 
+    </aside>
+    <aside class="expand-toc">
+      <button class="toc" onclick="expandToc()">
+        <i class="fa fa-expand" aria-hidden="true"></i>
+      </button>
+    </aside>
+    
+  </main>
+
+  
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

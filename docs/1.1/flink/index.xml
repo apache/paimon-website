@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Engine Flink on Apache Paimon</title>
+    <link>//paimon.apache.org/docs/1.1/flink/</link>
+    <description>Recent content in Engine Flink on Apache Paimon</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language><atom:link href="//paimon.apache.org/docs/1.1/flink/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Quick Start</title>
+      <link>//paimon.apache.org/docs/1.1/flink/quick-start/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/1.1/flink/quick-start/</guid>
+      <description>Quick Start #  This documentation is a guide for using Paimon in Flink.
+Jars #  Paimon currently supports Flink 1.20, 1.19, 1.18, 1.17, 1.16, 1.15. We recommend the latest Flink version for a better experience.
+Download the jar file with corresponding version.
+ Currently, paimon provides two types jar: one of which(the bundled jar) is used for read/write data, and the other(action jar) for operations such as manually compaction,    Version Type Jar     Flink 2.</description>
+    </item>
+    
+    <item>
+      <title>SQL DDL</title>
+      <link>//paimon.apache.org/docs/1.1/flink/sql-ddl/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/1.1/flink/sql-ddl/</guid>
+      <description>SQL DDL #  Create Catalog #  Paimon catalogs currently support three types of metastores:
+ filesystem metastore (default), which stores both metadata and table files in filesystems. hive metastore, which additionally stores metadata in Hive metastore. Users can directly access the tables from Hive. jdbc metastore, which additionally stores metadata in relational databases such as MySQL, Postgres, etc.  See CatalogOptions for detailed options when creating a catalog.</description>
+    </item>
+    
+    <item>
+      <title>SQL Write</title>
+      <link>//paimon.apache.org/docs/1.1/flink/sql-write/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/1.1/flink/sql-write/</guid>
+      <description>SQL Write #  Syntax #  INSERT { INTO | OVERWRITE } table_identifier [ part_spec ] [ column_list ] { value_expr | query }; For more information, please check the syntax document:
+Flink INSERT Statement
+INSERT INTO #  Use INSERT INTO to apply records and changes to tables.
+INSERT INTO my_table SELECT ... INSERT INTO supports both batch and streaming mode. In Streaming mode, by default, it will also perform compaction, snapshot expiration, and even partition expiration in Flink Sink (if it is configured).</description>
+    </item>
+    
+    <item>
+      <title>SQL Query</title>
+      <link>//paimon.apache.org/docs/1.1/flink/sql-query/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/1.1/flink/sql-query/</guid>
+      <description>SQL Query #  Just like all other tables, Paimon tables can be queried with SELECT statement.
+Batch Query #  Paimon&amp;rsquo;s batch read returns all the data in a snapshot of the table. By default, batch reads return the latest snapshot.
+-- Flink SQL SET &amp;#39;execution.runtime-mode&amp;#39; = &amp;#39;batch&amp;#39;; Batch Time Travel #  Paimon batch reads with time travel can specify a snapshot or a tag and read the corresponding data.</description>
+    </item>
+    
+    <item>
+      <title>Consumer ID</title>
+      <link>//paimon.apache.org/docs/1.1/flink/consumer-id/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/1.1/flink/consumer-id/</guid>
+      <description>Consumer ID #  Consumer id can help you accomplish the following two things:
+ Safe consumption: When deciding whether a snapshot has expired, Paimon looks at all the consumers of the table in the file system, and if there are consumers that still depend on this snapshot, then this snapshot will not be deleted by expiration. Resume from breakpoint: When previous job is stopped, the newly started job can continue to consume from the previous progress without resuming from the state.</description>
+    </item>
+    
+    <item>
+      <title>SQL Lookup</title>
+      <link>//paimon.apache.org/docs/1.1/flink/sql-lookup/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/1.1/flink/sql-lookup/</guid>
+      <description>Lookup Joins #  Lookup Joins are a type of join in streaming queries. It is used to enrich a table with data that is queried from Paimon. The join requires one table to have a processing time attribute and the other table to be backed by a lookup source connector.
+Paimon supports lookup joins on tables with primary keys and append tables in Flink. The following example illustrates this feature.</description>
+    </item>
+    
+    <item>
+      <title>SQL Alter</title>
+      <link>//paimon.apache.org/docs/1.1/flink/sql-alter/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/1.1/flink/sql-alter/</guid>
+      <description>Altering Tables #  Changing/Adding Table Properties #  The following SQL sets write-buffer-size table property to 256 MB.
+ALTER TABLE my_table SET ( &amp;#39;write-buffer-size&amp;#39; = &amp;#39;256 MB&amp;#39; ); Removing Table Properties #  The following SQL removes write-buffer-size table property.
+ALTER TABLE my_table RESET (&amp;#39;write-buffer-size&amp;#39;); Changing/Adding Table Comment #  The following SQL changes comment of table my_table to table comment.
+ALTER TABLE my_table SET ( &amp;#39;comment&amp;#39; = &amp;#39;table comment&amp;#39; ); Removing Table Comment #  The following SQL removes table comment.</description>
+    </item>
+    
+    <item>
+      <title>Clone Tables</title>
+      <link>//paimon.apache.org/docs/1.1/flink/clone-tables/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/1.1/flink/clone-tables/</guid>
+      <description>Clone Tables #  Paimon supports cloning tables for data migration. Currently, only table files used by the latest snapshot will be cloned.
+To clone a table, run the following command to submit a clone job. If the table you clone is not modified at the same time, it is recommended to submit a Flink batch job for better performance. However, if you want to clone the table while writing it at the same time, submit a Flink streaming job for automatic failure recovery.</description>
+    </item>
+    
+    <item>
+      <title>Procedures</title>
+      <link>//paimon.apache.org/docs/1.1/flink/procedures/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/1.1/flink/procedures/</guid>
+      <description>Procedures #  Flink 1.18 and later versions support Call Statements, which make it easier to manipulate data and metadata of Paimon table by writing SQLs instead of submitting Flink jobs.
+In 1.18, the procedure only supports passing arguments by position. You must pass all arguments in order, and if you don&amp;rsquo;t want to pass some arguments, you must use &#39;&#39; as placeholder. For example, if you want to compact table default.</description>
+    </item>
+    
+    <item>
+      <title>Action Jars</title>
+      <link>//paimon.apache.org/docs/1.1/flink/action-jars/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/1.1/flink/action-jars/</guid>
+      <description>Action Jars #  After the Flink Local Cluster has been started, you can execute the action jar by using the following command.
+&amp;lt;FLINK_HOME&amp;gt;/bin/flink run \  /path/to/paimon-flink-action-1.1.1.jar \  &amp;lt;action&amp;gt; &amp;lt;args&amp;gt; The following command is used to compact a table.
+&amp;lt;FLINK_HOME&amp;gt;/bin/flink run \  /path/to/paimon-flink-action-1.1.1.jar \  compact \  --path &amp;lt;TABLE_PATH&amp;gt; Merging into table #  Paimon supports &amp;ldquo;MERGE INTO&amp;rdquo; via submitting the &amp;lsquo;merge_into&amp;rsquo; job through flink run.</description>
+    </item>
+    
+    <item>
+      <title>Savepoint</title>
+      <link>//paimon.apache.org/docs/1.1/flink/savepoint/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/1.1/flink/savepoint/</guid>
+      <description>Savepoint #  Paimon has its own snapshot management, this may conflict with Flink&amp;rsquo;s checkpoint management, causing exceptions when restoring from savepoint (don&amp;rsquo;t worry, it will not cause the storage to be damaged).
+It is recommended that you use the following methods to savepoint:
+ Use Flink Stop with savepoint. Use Paimon Tag with Flink Savepoint, and rollback-to-tag before restoring from savepoint.  Stop with savepoint #  This feature of Flink ensures that the last checkpoint is fully processed, which means there will be no more uncommitted metadata left.</description>
+    </item>
+    
+  </channel>
+</rss>
