@@ -1,0 +1,401 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  
+  <url>
+    <loc>//paimon.apache.org/docs/1.0/concepts/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/1.0/maintenance/filesystems/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/1.0/program-api/flink-api/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/1.0/migration/migration-from-hive/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/1.0/append-table/overview/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/1.0/cdc-ingestion/overview/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/1.0/concepts/overview/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/1.0/concepts/spec/overview/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/1.0/engines/overview/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/1.0/primary-key-table/merge-engine/overview/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/1.0/primary-key-table/overview/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/1.0/flink/quick-start/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/1.0/spark/quick-start/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/1.0/project/roadmap/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/1.0/learn-paimon/understand-files/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/1.0/migration/upsert-to-partitioned/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/1.0/concepts/basic-concepts/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/1.0/primary-key-table/data-distribution/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/1.0/project/download/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/1.0/program-api/java-api/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/1.0/cdc-ingestion/mysql-cdc/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/1.0/primary-key-table/merge-engine/partial-update/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/1.0/cdc-ingestion/postgres-cdc/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/1.0/concepts/spec/schema/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/1.0/flink/sql-ddl/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/1.0/spark/sql-ddl/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/1.0/flink/sql-write/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/1.0/spark/sql-write/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/1.0/engines/starrocks/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/1.0/append-table/streaming/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/1.0/primary-key-table/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/1.0/primary-key-table/merge-engine/aggregation/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/1.0/program-api/catalog-api/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/1.0/concepts/concurrency-control/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/1.0/project/contributing/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/1.0/engines/doris/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/1.0/cdc-ingestion/kafka-cdc/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/1.0/append-table/query-performance/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/1.0/concepts/spec/snapshot/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/1.0/primary-key-table/table-mode/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/1.0/append-table/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/1.0/maintenance/write-performance/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/1.0/concepts/catalog/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/1.0/maintenance/dedicated-compaction/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/1.0/primary-key-table/merge-engine/first-row/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/1.0/engines/hive/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/1.0/migration/iceberg-compatibility/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/1.0/concepts/spec/manifest/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/1.0/primary-key-table/merge-engine/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/1.0/cdc-ingestion/mongo-cdc/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/1.0/program-api/python-api/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/1.0/flink/sql-query/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/1.0/spark/sql-query/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/1.0/append-table/update/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/1.0/append-table/bucketed/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/1.0/primary-key-table/changelog-producer/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/1.0/flink/consumer-id/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/1.0/concepts/spec/datafile/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/1.0/flink/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/1.0/maintenance/manage-snapshots/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/1.0/cdc-ingestion/pulsar-cdc/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/1.0/concepts/table-types/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/1.0/engines/trino/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/1.0/spark/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/1.0/primary-key-table/sequence-rowkind/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/1.0/spark/sql-alter/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/1.0/flink/sql-lookup/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/1.0/concepts/system-tables/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/1.0/concepts/spec/tableindex/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/1.0/spark/auxiliary/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/1.0/primary-key-table/compaction/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/1.0/concepts/data-types/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/1.0/concepts/spec/fileindex/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/1.0/maintenance/rescale-bucket/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/1.0/flink/sql-alter/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/1.0/maintenance/manage-tags/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/1.0/primary-key-table/query-performance/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/1.0/concepts/spec/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/1.0/maintenance/metrics/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/1.0/maintenance/manage-privileges/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/1.0/maintenance/manage-branches/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/1.0/engines/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/1.0/cdc-ingestion/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/1.0/flink/clone-tables/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/1.0/maintenance/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/1.0/flink/expire-partition/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/1.0/program-api/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/1.0/migration/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/1.0/flink/procedures/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/1.0/flink/action-jars/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/1.0/project/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/1.0/learn-paimon/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/1.0/spark/procedures/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/1.0/flink/savepoint/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/1.0/maintenance/configurations/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/1.0/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/1.0/categories/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/1.0/tags/</loc>
+  </url>
+  
+  <url>
+    <loc>//paimon.apache.org/docs/1.0/versions/</loc>
+  </url>
+  
+</urlset>
