@@ -12,6 +12,7 @@ Paimon is released as a source artifact, and also through Maven.
 
 | RELEASE | DATE       | DOWNLOAD                                                                                                                                                                                                                                                                                                           |
 |---------|------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 2.1.0   | 2026-10-12 | [tar](https://www.apache.org/dyn/closer.lua/paimon/paimon-2.1.0/apache-paimon-2.1.0-src.tgz) ([digest](https://downloads.apache.org/paimon/paimon-2.1.0/apache-paimon-2.1.0-src.tgz.sha512), [pgp](https://downloads.apache.org/paimon/paimon-2.1.0/apache-paimon-2.1.0-src.tgz.asc)) |
 | 2.0.0   | 2026-08-07 | [tar](https://www.apache.org/dyn/closer.lua/paimon/paimon-2.0.0/apache-paimon-2.0.0-src.tgz)               ([digest](https://downloads.apache.org/paimon/paimon-2.0.0/apache-paimon-2.0.0-src.tgz.sha512),                [pgp](https://downloads.apache.org/paimon/paimon-2.0.0/apache-paimon-2.0.0-src.tgz.asc)) |
 | 1.4.2   | 2026-06-23 | [tar](https://www.apache.org/dyn/closer.lua/paimon/paimon-1.4.2/apache-paimon-1.4.2-src.tgz)               ([digest](https://downloads.apache.org/paimon/paimon-1.4.2/apache-paimon-1.4.2-src.tgz.sha512),                [pgp](https://downloads.apache.org/paimon/paimon-1.4.2/apache-paimon-1.4.2-src.tgz.asc)) |
 | 1.4.1   | 2026-04-27 | [tar](https://www.apache.org/dyn/closer.lua/paimon/paimon-1.4.1/apache-paimon-1.4.1-src.tgz)               ([digest](https://downloads.apache.org/paimon/paimon-1.4.1/apache-paimon-1.4.1-src.tgz.sha512),                [pgp](https://downloads.apache.org/paimon/paimon-1.4.1/apache-paimon-1.4.1-src.tgz.asc)) |                                                                                                                                                                                                                                                                                                                                                                                                                                            |
@@ -29,19 +30,20 @@ All Paimon releases are available via https://archive.apache.org/dist/paimon/ in
 PyPaimon is released through PyPI:
 
 ```bash
-pip install pypaimon==2.0.0
+pip install pypaimon==2.1.0
 ```
 
 The Apache source distribution is also available:
 
 | RELEASE | DATE       | DOWNLOAD                                                                                                                                                                                                                         |
 |---------|------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 2.1.0   | 2026-10-12 | [tar](https://www.apache.org/dyn/closer.lua/paimon/pypaimon-2.1.0/pypaimon-2.1.0.tar.gz) ([digest](https://downloads.apache.org/paimon/pypaimon-2.1.0/pypaimon-2.1.0.tar.gz.sha512), [pgp](https://downloads.apache.org/paimon/pypaimon-2.1.0/pypaimon-2.1.0.tar.gz.asc)) |
 | 2.0.0   | 2026-08-07 | [tar](https://www.apache.org/dyn/closer.lua/paimon/pypaimon-2.0.0/pypaimon-2.0.0.tar.gz)               ([digest](https://downloads.apache.org/paimon/pypaimon-2.0.0/pypaimon-2.0.0.tar.gz.sha512),                [pgp](https://downloads.apache.org/paimon/pypaimon-2.0.0/pypaimon-2.0.0.tar.gz.asc)) |
 | 1.4.2   | 2026-06-23 | [tar](https://www.apache.org/dyn/closer.lua/paimon/pypaimon-1.4.2/pypaimon-1.4.2.tar.gz)               ([digest](https://downloads.apache.org/paimon/pypaimon-1.4.2/pypaimon-1.4.2.tar.gz.sha512),                [pgp](https://downloads.apache.org/paimon/pypaimon-1.4.2/pypaimon-1.4.2.tar.gz.asc)) |
 
 ## Verify the Integrity of the Files
 
-You must verify the integrity of the downloaded file using the PGP signature (.asc file) or a hash (.sha256; .md5 for older releases). For more information why this must be done, please read [Verifying Apache Software Foundation Releases](https://www.apache.org/info/verification.html).
+Verify the SHA-512 checksum (.sha512) and PGP signature (.asc) of each downloaded source archive. For more information why this must be done, please read [Verifying Apache Software Foundation Releases](https://www.apache.org/info/verification.html).
 
 ### Verify the hash digest
 
@@ -95,7 +97,7 @@ Please replace `${flink.version}` in the following xml file to the version of Fl
     <dependency>
         <groupId>org.apache.paimon</groupId>
         <artifactId>paimon-flink-${flink.version}</artifactId>
-        <version>2.0.0</version>
+        <version>2.1.0</version>
     </dependency>
 </dependencies>
 ```
@@ -104,14 +106,14 @@ Also include `<dependency>` elements for any extension modules you need: `paimon
 
 ### Spark
 
-Please replace `${spark.version}` in the following xml file to the version of Spark you're using. For example, `3.5`.
+Replace `${spark.version}` with the Spark version you use and `${scala.binary.version}` with its Scala binary version. For example, use `3.5` and `2.12` for Spark 3.5, or `4.1` and `2.13` for Spark 4.1.
 
 ```xml
 <dependencies>
     <dependency>
         <groupId>org.apache.paimon</groupId>
-        <artifactId>paimon-spark-${spark.version}</artifactId>
-        <version>2.0.0</version>
+        <artifactId>paimon-spark-${spark.version}_${scala.binary.version}</artifactId>
+        <version>2.1.0</version>
     </dependency>
 </dependencies>
 ```
