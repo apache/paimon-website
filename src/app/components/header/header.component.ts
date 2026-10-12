@@ -77,16 +77,16 @@ export class HeaderComponent implements OnInit {
       value: 'https://paimon.apache.org/docs/master'
     },
     {
+      label: '2.1',
+      value: 'https://paimon.apache.org/docs/2.1'
+    },
+    {
       label: '2.0',
       value: 'https://paimon.apache.org/docs/2.0'
     },
     {
       label: '1.4',
       value: 'https://paimon.apache.org/docs/1.4'
-    },
-    {
-      label: '1.3',
-      value: 'https://paimon.apache.org/docs/1.3'
     }
   ];
 
