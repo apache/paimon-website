@@ -1,0 +1,2018 @@
+
+<!DOCTYPE html>
+<html lang="en" dir=>
+
+<head>
+  <meta name="generator" content="Hugo 0.80.0" />
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="SQL Write #  Insert Table #  The INSERT statement inserts new rows into a table or overwrites the existing data in the table. The inserted rows can be specified by value expressions or result from a query.
+Syntax
+INSERT { INTO | OVERWRITE } table_identifier [ part_spec ] [ column_list ] { value_expr | query }; Parameters
+  table_identifier: Specifies a table name, which may be optionally qualified with a database name.">
+<meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="SQL Write" />
+<meta property="og:description" content="SQL Write #  Insert Table #  The INSERT statement inserts new rows into a table or overwrites the existing data in the table. The inserted rows can be specified by value expressions or result from a query.
+Syntax
+INSERT { INTO | OVERWRITE } table_identifier [ part_spec ] [ column_list ] { value_expr | query }; Parameters
+  table_identifier: Specifies a table name, which may be optionally qualified with a database name." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="//paimon.apache.org/docs/1.0/spark/sql-write/" />
+
+<title>SQL Write | Apache Paimon</title>
+<link rel="manifest" href="/docs/1.0/manifest.json">
+<link rel="icon" href="/docs/1.0/favicon.png" type="image/x-icon">
+<link rel="stylesheet" href="/docs/1.0/book.min.3bc4108a5b57c9a7e6fcae92ff69940435f8c46c4e1e4a311aedc9b2d8e06792.css" integrity="sha256-O8QQiltXyafm/K6S/2mUBDX4xGxOHkoxGu3JstjgZ5I=">
+<script defer src="/docs/1.0/en.search.min.b67c1ae3e934249b05884f728a5a0487547e350330284fc3cedd8dcea24150cd.js" integrity="sha256-tnwa4&#43;k0JJsFiE9yiloEh1R&#43;NQMwKE/Dzt2NzqJBUM0="></script>
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+  
+
+<link rel="stylesheet" type="text/css" href="//paimon.apache.org/docs/1.0/font-awesome/css/font-awesome.min.css">
+<script src="//paimon.apache.org/docs/1.0/js/anchor.min.js"></script>
+<script src="//paimon.apache.org/docs/1.0/js/flink.js"></script>
+
+
+  
+  <script>
+    var _paq = window._paq = window._paq || [];
+     
+     
+    _paq.push(['disableCookies']);
+     
+    _paq.push(["setDomains", ["*.flink.apache.org","*.nightlies.apache.org/flink"]]);
+    _paq.push(['trackPageView']);
+    _paq.push(['enableLinkTracking']);
+    (function() {
+      var u="//matomo.privacy.apache.org/";
+      _paq.push(['setTrackerUrl', u+'matomo.php']);
+      _paq.push(['setSiteId', '1']);
+      var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+      g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+    })();
+  </script>
+  
+</head>
+
+<body dir=>
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      
+  
+
+<nav>
+
+
+<a id="logo" href="//paimon.apache.org/docs/1.0">
+    <img width="100%" src="//paimon.apache.org/docs/1.0/paimon_black.svg">
+</a>
+<p style="text-align:right">1.0.1</p>
+
+<div class="book-search">
+  <input type="text" id="book-search-input" placeholder="Search" aria-label="Search" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-dc8a1c63e6da60163016ce21cae1faa0" class="toggle"  />
+    <label for="section-dc8a1c63e6da60163016ce21cae1faa0" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-book title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Concepts</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/concepts/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/concepts/basic-concepts/" class="">Basic Concepts</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/concepts/concurrency-control/" class="">Concurrency Control</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/concepts/catalog/" class="">Catalog</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/concepts/table-types/" class="">Table Types</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/concepts/system-tables/" class="">System Tables</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/concepts/data-types/" class="">Data Types</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-d3e7256ce393050c572ea7bd8cc4f240" class="toggle"  />
+    <label for="section-d3e7256ce393050c572ea7bd8cc4f240" class="flex justify-between">Specification<span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/concepts/spec/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/concepts/spec/schema/" class="">Schema</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/concepts/spec/snapshot/" class="">Snapshot</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/concepts/spec/manifest/" class="">Manifest</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/concepts/spec/datafile/" class="">DataFile</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/concepts/spec/tableindex/" class="">Table Index</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/concepts/spec/fileindex/" class="">File Index</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-3f6a6d4f1692040009c66ffaa328c8d0" class="toggle"  />
+    <label for="section-3f6a6d4f1692040009c66ffaa328c8d0" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-database title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Table with PK</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/primary-key-table/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/primary-key-table/data-distribution/" class="">Data Distribution</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/primary-key-table/table-mode/" class="">Table Mode</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-038bb7d17b5b7cb93fb60acbcf218f11" class="toggle"  />
+    <label for="section-038bb7d17b5b7cb93fb60acbcf218f11" class="flex justify-between">Merge Engine<span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/primary-key-table/merge-engine/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/primary-key-table/merge-engine/partial-update/" class="">Partial Update</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/primary-key-table/merge-engine/aggregation/" class="">Aggregation</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/primary-key-table/merge-engine/first-row/" class="">First Row</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/primary-key-table/changelog-producer/" class="">Changelog Producer</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/primary-key-table/sequence-rowkind/" class="">Sequence & Rowkind</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/primary-key-table/compaction/" class="">Compaction</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/primary-key-table/query-performance/" class="">Query Performance</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-f74847e1c917ba2b99e7b718bb318b30" class="toggle"  />
+    <label for="section-f74847e1c917ba2b99e7b718bb318b30" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-database title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Table w/o PK</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/append-table/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/append-table/streaming/" class="">Streaming</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/append-table/query-performance/" class="">Query Performance</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/append-table/update/" class="">Update</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/append-table/bucketed/" class="">Bucketed</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-998a37410d502937fe8444ed73a9ecf8" class="toggle"  />
+    <label for="section-998a37410d502937fe8444ed73a9ecf8" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-gear title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Engine Flink</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/flink/quick-start/" class="">Quick Start</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/flink/sql-ddl/" class="">SQL DDL</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/flink/sql-write/" class="">SQL Write</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/flink/sql-query/" class="">SQL Query</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/flink/consumer-id/" class="">Consumer ID</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/flink/sql-lookup/" class="">SQL Lookup</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/flink/sql-alter/" class="">SQL Alter</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/flink/clone-tables/" class="">Clone Tables</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/flink/expire-partition/" class="">Expire Partition</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/flink/procedures/" class="">Procedures</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/flink/action-jars/" class="">Action Jars</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/flink/savepoint/" class="">Savepoint</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-74c63bf75b4f6bd14a3ea6a1217f03ad" class="toggle" checked />
+    <label for="section-74c63bf75b4f6bd14a3ea6a1217f03ad" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-gear title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Engine Spark</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/spark/quick-start/" class="">Quick Start</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/spark/sql-ddl/" class="">SQL DDL</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/spark/sql-write/" class=" active">SQL Write</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/spark/sql-query/" class="">SQL Query</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/spark/sql-alter/" class="">SQL Alter</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/spark/auxiliary/" class="">Auxiliary</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/spark/procedures/" class="">Procedures</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-90f5541dc4fa46a212e954b9193ea0f9" class="toggle"  />
+    <label for="section-90f5541dc4fa46a212e954b9193ea0f9" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-gear title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Engine Others</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/engines/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/engines/starrocks/" class="">StarRocks</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/engines/doris/" class="">Doris</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/engines/hive/" class="">Hive</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/engines/trino/" class="">Trino</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-582e435c19ca5fafbf9764337d648e63" class="toggle"  />
+    <label for="section-582e435c19ca5fafbf9764337d648e63" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-gear title maindish" aria-hidden="true"></i>&nbsp;&nbsp;CDC Ingestion</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/cdc-ingestion/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/cdc-ingestion/mysql-cdc/" class="">Mysql CDC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/cdc-ingestion/postgres-cdc/" class="">Postgres CDC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/cdc-ingestion/kafka-cdc/" class="">Kafka CDC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/cdc-ingestion/mongo-cdc/" class="">Mongo CDC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/cdc-ingestion/pulsar-cdc/" class="">Pulsar CDC</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-697a4b6a0388d6cfa4f418aba3b4edfe" class="toggle"  />
+    <label for="section-697a4b6a0388d6cfa4f418aba3b4edfe" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-wrench title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Maintenance</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/maintenance/filesystems/" class="">Filesystems</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/maintenance/write-performance/" class="">Write Performance</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/maintenance/dedicated-compaction/" class="">Dedicated Compaction</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/maintenance/manage-snapshots/" class="">Manage Snapshots</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/maintenance/rescale-bucket/" class="">Rescale Bucket</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/maintenance/manage-tags/" class="">Manage Tags</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/maintenance/metrics/" class="">Metrics</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/maintenance/manage-privileges/" class="">Manage Privileges</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/maintenance/manage-branches/" class="">Manage Branches</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/maintenance/configurations/" class="">Configurations</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-049030059e0dc01edf74ba3d4d259dae" class="toggle"  />
+    <label for="section-049030059e0dc01edf74ba3d4d259dae" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-briefcase title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Program API</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/program-api/flink-api/" class="">Flink API</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/program-api/java-api/" class="">Java API</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/program-api/catalog-api/" class="">Catalog API</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/program-api/python-api/" class="">Python API</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-07c567e5a9f3ce62aea4ff0a1e2dc065" class="toggle"  />
+    <label for="section-07c567e5a9f3ce62aea4ff0a1e2dc065" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-briefcase title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Migration</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/migration/migration-from-hive/" class="">Migration From Hive</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/migration/upsert-to-partitioned/" class="">Upsert To Partitioned</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/migration/iceberg-compatibility/" class="">Iceberg Compatibility</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  	<br/>
+  
+  
+    <input type="checkbox" id="section-8c828bcf882f666cdd6821a70cc768ee" class="toggle"  />
+    <label for="section-8c828bcf882f666cdd6821a70cc768ee" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-sitemap title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Project</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/project/roadmap/" class="">Roadmap</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/project/download/" class="">Download</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/project/contributing/" class="">Contributing</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-392fc6f653ae23ff676811656a71ebbf" class="toggle"  />
+    <label for="section-392fc6f653ae23ff676811656a71ebbf" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-sitemap title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Learn Paimon</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.0/learn-paimon/understand-files/" class="">Understand Files</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br/>
+<hr class="menu-break">
+
+<a href="//paimon.apache.org" style="color:black;margin-bottom:0.5em"><i class="link fa fa-external-link title" aria-hidden="true"></i> Project Homepage</a>
+<br/>
+
+<a href="//paimon.apache.org/docs/master/api/java/" style="color:black;margin-bottom:0.5em"><i class="link fa fa-external-link title" aria-hidden="true"></i> JavaDocs</a>
+<br/>
+
+<hr class="menu-break">
+<li style="list-style-type: none">
+  <br>
+  <input type="checkbox" id="section-version-picker" class="toggle">
+  <label for="section-version-picker" class="flex justify-between">
+     <div style="font-weight:450;margin-bottom:0.5em">Pick Docs Version</div>
+     <span>▾</span>
+  </label>
+  <ul>
+    <a href="//paimon.apache.org/docs/1.0">
+      1.0 (✓)
+    </a>
+    <hr class="menu-break">
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/master">
+          master
+        </a>
+      </li>
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/1.0">
+          stable
+        </a>
+      </li>
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/1.0">
+          1.0
+        </a>
+      </li>
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/0.9">
+          0.9
+        </a>
+      </li>
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/0.8">
+          0.8
+        </a>
+      </li>
+    
+    <hr class="menu-break">
+    <li>
+      <a href="//paimon.apache.org/docs/1.0/versions">
+          All Versions
+      </a>
+    </li>
+  </ul>
+</li>
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var menu=document.querySelector("aside.book-menu nav");addEventListener("beforeunload",function(event){localStorage.setItem("menu.scrollTop",menu.scrollTop);});menu.scrollTop=localStorage.getItem("menu.scrollTop");})();</script>
+
+
+ 
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/docs/1.0/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <strong>SQL Write</strong>
+
+  <label for="toc-control">
+    
+    <img src="/docs/1.0/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden clearfix">
+    
+  
+
+<nav id="TableOfContents"><h3>On This Page <button class="toc" onclick="collapseToc()"><i class="fa fa-compress" aria-hidden="true"></i></button></h3>
+  <ul>
+    <li><a href="#insert-table">Insert Table</a>
+      <ul>
+        <li><a href="#insert-into">Insert Into</a></li>
+        <li><a href="#insert-overwrite">Insert Overwrite</a></li>
+      </ul>
+    </li>
+    <li><a href="#truncate-table">Truncate Table</a></li>
+    <li><a href="#update-table">Update Table</a></li>
+    <li><a href="#delete-from-table">Delete From Table</a></li>
+    <li><a href="#merge-into-table">Merge Into Table</a></li>
+    <li><a href="#streaming-write">Streaming Write</a></li>
+    <li><a href="#schema-evolution">Schema Evolution</a></li>
+  </ul>
+</nav>
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+
+
+
+
+
+
+      
+  <article class="markdown"><!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<h1 id="sql-write">
+  SQL Write
+  <a class="anchor" href="#sql-write">#</a>
+</h1>
+<h2 id="insert-table">
+  Insert Table
+  <a class="anchor" href="#insert-table">#</a>
+</h2>
+<p>The <code>INSERT</code> statement inserts new rows into a table or overwrites the existing data in the table. The inserted rows can be specified by value expressions or result from a query.</p>
+<p><strong>Syntax</strong></p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">INSERT</span> <span class="err">{</span> <span class="k">INTO</span> <span class="o">|</span> <span class="n">OVERWRITE</span> <span class="err">}</span> <span class="n">table_identifier</span> <span class="p">[</span> <span class="n">part_spec</span> <span class="p">]</span> <span class="p">[</span> <span class="n">column_list</span> <span class="p">]</span> <span class="err">{</span> <span class="n">value_expr</span> <span class="o">|</span> <span class="n">query</span> <span class="err">}</span><span class="p">;</span>
+</code></pre></div><p><strong>Parameters</strong></p>
+<ul>
+<li>
+<p><strong>table_identifier</strong>: Specifies a table name, which may be optionally qualified with a database name.</p>
+</li>
+<li>
+<p><strong>part_spec</strong>: An optional parameter that specifies a comma-separated list of key and value pairs for partitions.</p>
+</li>
+<li>
+<p><strong>column_list</strong>: An optional parameter that specifies a comma-separated list of columns belonging to the table_identifier table. Spark will reorder the columns of the input query to match the table schema according to the specified column list.</p>
+<p>Note: Since Spark 3.4, INSERT INTO commands with explicit column lists comprising fewer columns than the target table will automatically add the corresponding default values for the remaining columns (or NULL for any column lacking an explicitly-assigned default value). In Spark 3.3 or earlier, column_list&rsquo;s size must be equal to the target table&rsquo;s column size, otherwise these commands would have failed.</p>
+</li>
+<li>
+<p><strong>value_expr</strong> ( { value | NULL } [ , … ] ) [ , ( … ) ]: Specifies the values to be inserted. Either an explicitly specified value or a NULL can be inserted. A comma must be used to separate each value in the clause. More than one set of values can be specified to insert multiple rows.</p>
+</li>
+</ul>
+<p>For more information, please check the syntax document: <a href="https://spark.apache.org/docs/latest/sql-ref-syntax-dml-insert-table.html">Spark INSERT Statement</a></p>
+<h3 id="insert-into">
+  Insert Into
+  <a class="anchor" href="#insert-into">#</a>
+</h3>
+<p>Use <code>INSERT INTO</code> to apply records and changes to tables.</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">my_table</span> <span class="k">SELECT</span> <span class="p">...</span>
+</code></pre></div><h3 id="insert-overwrite">
+  Insert Overwrite
+  <a class="anchor" href="#insert-overwrite">#</a>
+</h3>
+<p>Use <code>INSERT OVERWRITE</code> to overwrite the whole table.</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">INSERT</span> <span class="n">OVERWRITE</span> <span class="n">my_table</span> <span class="k">SELECT</span> <span class="p">...</span>
+</code></pre></div><h4 id="insert-overwrite-partition">
+  Insert Overwrite Partition
+  <a class="anchor" href="#insert-overwrite-partition">#</a>
+</h4>
+<p>Use <code>INSERT OVERWRITE</code> to overwrite a partition.</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">INSERT</span> <span class="n">OVERWRITE</span> <span class="n">my_table</span> <span class="n">PARTITION</span> <span class="p">(</span><span class="n">key1</span> <span class="o">=</span> <span class="n">value1</span><span class="p">,</span> <span class="n">key2</span> <span class="o">=</span> <span class="n">value2</span><span class="p">,</span> <span class="p">...)</span> <span class="k">SELECT</span> <span class="p">...</span>
+</code></pre></div><h4 id="dynamic-overwrite-partition">
+  Dynamic Overwrite Partition
+  <a class="anchor" href="#dynamic-overwrite-partition">#</a>
+</h4>
+<p>Spark&rsquo;s default overwrite mode is <code>static</code> partition overwrite. To enable dynamic overwritten you need to set the Spark session configuration <code>spark.sql.sources.partitionOverwriteMode</code> to <code>dynamic</code></p>
+<p>For example:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">my_table</span> <span class="p">(</span><span class="n">id</span> <span class="nb">INT</span><span class="p">,</span> <span class="n">pt</span> <span class="n">STRING</span><span class="p">)</span> <span class="n">PARTITIONED</span> <span class="k">BY</span> <span class="p">(</span><span class="n">pt</span><span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">my_table</span> <span class="k">VALUES</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;p1&#39;</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;p2&#39;</span><span class="p">);</span>
+
+<span class="c1">-- Static overwrite (Overwrite the whole table)
+</span><span class="c1"></span><span class="k">INSERT</span> <span class="n">OVERWRITE</span> <span class="n">my_table</span> <span class="k">VALUES</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;p1&#39;</span><span class="p">);</span>
+
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">my_table</span><span class="p">;</span>
+<span class="cm">/*
+</span><span class="cm">+---+---+
+</span><span class="cm">| id| pt|
+</span><span class="cm">+---+---+
+</span><span class="cm">|  3| p1|
+</span><span class="cm">+---+---+
+</span><span class="cm">*/</span>
+
+<span class="c1">-- Dynamic overwrite (Only overwrite pt=&#39;p1&#39;)
+</span><span class="c1"></span><span class="k">SET</span> <span class="n">spark</span><span class="p">.</span><span class="k">sql</span><span class="p">.</span><span class="n">sources</span><span class="p">.</span><span class="n">partitionOverwriteMode</span><span class="o">=</span><span class="k">dynamic</span><span class="p">;</span>
+<span class="k">INSERT</span> <span class="n">OVERWRITE</span> <span class="n">my_table</span> <span class="k">VALUES</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;p1&#39;</span><span class="p">);</span>
+
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">my_table</span><span class="p">;</span>
+<span class="cm">/*
+</span><span class="cm">+---+---+
+</span><span class="cm">| id| pt|
+</span><span class="cm">+---+---+
+</span><span class="cm">|  2| p2|
+</span><span class="cm">|  3| p1|
+</span><span class="cm">+---+---+
+</span><span class="cm">*/</span>
+</code></pre></div><h2 id="truncate-table">
+  Truncate Table
+  <a class="anchor" href="#truncate-table">#</a>
+</h2>
+<p>The <code>TRUNCATE TABLE</code> statement removes all the rows from a table or partition(s).</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">TRUNCATE</span> <span class="k">TABLE</span> <span class="n">my_table</span><span class="p">;</span>
+</code></pre></div><h2 id="update-table">
+  Update Table
+  <a class="anchor" href="#update-table">#</a>
+</h2>
+<p>Updates the column values for the rows that match a predicate. When no predicate is provided, update the column values for all rows.</p>
+<p>Note:</p>
+<blockquote class="book-hint info">
+  Update primary key columns is not supported when the target table is a primary key table.
+</blockquote>
+
+<p>Spark supports update PrimitiveType and StructType, for example:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="c1">-- Syntax
+</span><span class="c1"></span><span class="k">UPDATE</span> <span class="n">table_identifier</span> <span class="k">SET</span> <span class="n">column1</span> <span class="o">=</span> <span class="n">value1</span><span class="p">,</span> <span class="n">column2</span> <span class="o">=</span> <span class="n">value2</span><span class="p">,</span> <span class="p">...</span> <span class="k">WHERE</span> <span class="n">condition</span><span class="p">;</span>
+
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">t</span> <span class="p">(</span>
+  <span class="n">id</span> <span class="nb">INT</span><span class="p">,</span> 
+  <span class="n">s</span> <span class="n">STRUCT</span><span class="o">&lt;</span><span class="n">c1</span><span class="p">:</span> <span class="nb">INT</span><span class="p">,</span> <span class="n">c2</span><span class="p">:</span> <span class="n">STRING</span><span class="o">&gt;</span><span class="p">,</span> 
+  <span class="n">name</span> <span class="n">STRING</span><span class="p">)</span>
+<span class="n">TBLPROPERTIES</span> <span class="p">(</span>
+  <span class="s1">&#39;primary-key&#39;</span> <span class="o">=</span> <span class="s1">&#39;id&#39;</span><span class="p">,</span> 
+  <span class="s1">&#39;merge-engine&#39;</span> <span class="o">=</span> <span class="s1">&#39;deduplicate&#39;</span>
+<span class="p">);</span>
+
+<span class="c1">-- you can use
+</span><span class="c1"></span><span class="k">UPDATE</span> <span class="n">t</span> <span class="k">SET</span> <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;a_new&#39;</span> <span class="k">WHERE</span> <span class="n">id</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="k">UPDATE</span> <span class="n">t</span> <span class="k">SET</span> <span class="n">s</span><span class="p">.</span><span class="n">c2</span> <span class="o">=</span> <span class="s1">&#39;a_new&#39;</span> <span class="k">WHERE</span> <span class="n">s</span><span class="p">.</span><span class="n">c1</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+</code></pre></div><h2 id="delete-from-table">
+  Delete From Table
+  <a class="anchor" href="#delete-from-table">#</a>
+</h2>
+<p>Deletes the rows that match a predicate. When no predicate is provided, deletes all rows.</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">DELETE</span> <span class="k">FROM</span> <span class="n">my_table</span> <span class="k">WHERE</span> <span class="n">currency</span> <span class="o">=</span> <span class="s1">&#39;UNKNOWN&#39;</span><span class="p">;</span>
+</code></pre></div><h2 id="merge-into-table">
+  Merge Into Table
+  <a class="anchor" href="#merge-into-table">#</a>
+</h2>
+<p>Merges a set of updates, insertions and deletions based on a source table into a target table.</p>
+<p>Note:</p>
+<blockquote class="book-hint info">
+  In update clause, to update primary key columns is not supported when the target table is a primary key table.
+</blockquote>
+
+<p><strong>Example: One</strong></p>
+<p>This is a simple demo that, if a row exists in the target table update it, else insert it.</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="c1">-- Here both source and target tables have the same schema: (a INT, b INT, c STRING), and a is a primary key.
+</span><span class="c1"></span>
+<span class="n">MERGE</span> <span class="k">INTO</span> <span class="n">target</span>
+<span class="k">USING</span> <span class="k">source</span>
+<span class="k">ON</span> <span class="n">target</span><span class="p">.</span><span class="n">a</span> <span class="o">=</span> <span class="k">source</span><span class="p">.</span><span class="n">a</span>
+<span class="k">WHEN</span> <span class="n">MATCHED</span> <span class="k">THEN</span>
+<span class="k">UPDATE</span> <span class="k">SET</span> <span class="o">*</span>
+<span class="k">WHEN</span> <span class="k">NOT</span> <span class="n">MATCHED</span>
+<span class="k">THEN</span> <span class="k">INSERT</span> <span class="o">*</span>
+</code></pre></div><p><strong>Example: Two</strong></p>
+<p>This is a demo with multiple, conditional clauses.</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="c1">-- Here both source and target tables have the same schema: (a INT, b INT, c STRING), and a is a primary key.
+</span><span class="c1"></span>
+<span class="n">MERGE</span> <span class="k">INTO</span> <span class="n">target</span>
+<span class="k">USING</span> <span class="k">source</span>
+<span class="k">ON</span> <span class="n">target</span><span class="p">.</span><span class="n">a</span> <span class="o">=</span> <span class="k">source</span><span class="p">.</span><span class="n">a</span>
+<span class="k">WHEN</span> <span class="n">MATCHED</span> <span class="k">AND</span> <span class="n">target</span><span class="p">.</span><span class="n">a</span> <span class="o">=</span> <span class="mi">5</span> <span class="k">THEN</span>
+   <span class="k">UPDATE</span> <span class="k">SET</span> <span class="n">b</span> <span class="o">=</span> <span class="k">source</span><span class="p">.</span><span class="n">b</span> <span class="o">+</span> <span class="n">target</span><span class="p">.</span><span class="n">b</span>      <span class="c1">-- when matched and meet the condition 1, then update b;
+</span><span class="c1"></span><span class="k">WHEN</span> <span class="n">MATCHED</span> <span class="k">AND</span> <span class="k">source</span><span class="p">.</span><span class="k">c</span> <span class="o">&gt;</span> <span class="s1">&#39;c2&#39;</span> <span class="k">THEN</span>
+   <span class="k">UPDATE</span> <span class="k">SET</span> <span class="o">*</span>    <span class="c1">-- when matched and meet the condition 2, then update all the columns;
+</span><span class="c1"></span><span class="k">WHEN</span> <span class="n">MATCHED</span> <span class="k">THEN</span>
+   <span class="k">DELETE</span>      <span class="c1">-- when matched, delete this row in target table;
+</span><span class="c1"></span><span class="k">WHEN</span> <span class="k">NOT</span> <span class="n">MATCHED</span> <span class="k">AND</span> <span class="k">c</span> <span class="o">&gt;</span> <span class="s1">&#39;c9&#39;</span> <span class="k">THEN</span>
+   <span class="k">INSERT</span> <span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="k">c</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">*</span> <span class="mi">1</span><span class="p">.</span><span class="mi">1</span><span class="p">,</span> <span class="k">c</span><span class="p">)</span>      <span class="c1">-- when not matched but meet the condition 3, then transform and insert this row;
+</span><span class="c1"></span><span class="k">WHEN</span> <span class="k">NOT</span> <span class="n">MATCHED</span> <span class="k">THEN</span>
+<span class="k">INSERT</span> <span class="o">*</span>      <span class="c1">-- when not matched, insert this row without any transformation;
+</span></code></pre></div><h2 id="streaming-write">
+  Streaming Write
+  <a class="anchor" href="#streaming-write">#</a>
+</h2>
+<blockquote class="book-hint info">
+  Paimon Structured Streaming only supports the two <code>append</code> and <code>complete</code> modes.
+</blockquote>
+
+<div class="highlight"><pre class="chroma"><code class="language-scala" data-lang="scala"><span class="c1">// Create a paimon table if not exists.
+</span><span class="c1"></span><span class="n">spark</span><span class="o">.</span><span class="n">sql</span><span class="o">(</span><span class="s">s&#34;&#34;&#34;
+</span><span class="s">           |CREATE TABLE T (k INT, v STRING)
+</span><span class="s">           |TBLPROPERTIES (&#39;primary-key&#39;=&#39;k&#39;, &#39;bucket&#39;=&#39;3&#39;)
+</span><span class="s">           |&#34;&#34;&#34;</span><span class="o">.</span><span class="n">stripMargin</span><span class="o">)</span>
+
+<span class="c1">// Here we use MemoryStream to fake a streaming source.
+</span><span class="c1"></span><span class="k">val</span> <span class="n">inputData</span> <span class="k">=</span> <span class="nc">MemoryStream</span><span class="o">[(</span><span class="kt">Int</span>, <span class="kt">String</span><span class="o">)]</span>
+<span class="k">val</span> <span class="n">df</span> <span class="k">=</span> <span class="n">inputData</span><span class="o">.</span><span class="n">toDS</span><span class="o">().</span><span class="n">toDF</span><span class="o">(</span><span class="s">&#34;k&#34;</span><span class="o">,</span> <span class="s">&#34;v&#34;</span><span class="o">)</span>
+
+<span class="c1">// Streaming Write to paimon table.
+</span><span class="c1"></span><span class="k">val</span> <span class="n">stream</span> <span class="k">=</span> <span class="n">df</span>
+  <span class="o">.</span><span class="n">writeStream</span>
+  <span class="o">.</span><span class="n">outputMode</span><span class="o">(</span><span class="s">&#34;append&#34;</span><span class="o">)</span>
+  <span class="o">.</span><span class="n">option</span><span class="o">(</span><span class="s">&#34;checkpointLocation&#34;</span><span class="o">,</span> <span class="s">&#34;/path/to/checkpoint&#34;</span><span class="o">)</span>
+  <span class="o">.</span><span class="n">format</span><span class="o">(</span><span class="s">&#34;paimon&#34;</span><span class="o">)</span>
+  <span class="o">.</span><span class="n">start</span><span class="o">(</span><span class="s">&#34;/path/to/paimon/sink/table&#34;</span><span class="o">)</span>
+</code></pre></div><h2 id="schema-evolution">
+  Schema Evolution
+  <a class="anchor" href="#schema-evolution">#</a>
+</h2>
+<p>Schema evolution is a feature that allows users to easily modify the current schema of a table to adapt to existing data, or new data that changes over time, while maintaining data integrity and consistency.</p>
+<p>Paimon supports automatic schema merging of source data and current table data while data is being written, and uses the merged schema as the latest schema of the table, and it only requires configuring <code>write.merge-schema</code>.</p>
+<div class="highlight"><pre class="chroma"><code class="language-scala" data-lang="scala"><span class="n">data</span><span class="o">.</span><span class="n">write</span>
+  <span class="o">.</span><span class="n">format</span><span class="o">(</span><span class="s">&#34;paimon&#34;</span><span class="o">)</span>
+  <span class="o">.</span><span class="n">mode</span><span class="o">(</span><span class="s">&#34;append&#34;</span><span class="o">)</span>
+  <span class="o">.</span><span class="n">option</span><span class="o">(</span><span class="s">&#34;write.merge-schema&#34;</span><span class="o">,</span> <span class="s">&#34;true&#34;</span><span class="o">)</span>
+  <span class="o">.</span><span class="n">save</span><span class="o">(</span><span class="n">location</span><span class="o">)</span>
+</code></pre></div><p>When enable <code>write.merge-schema</code>, Paimon can allow users to perform the following actions on table schema by default:</p>
+<ul>
+<li>Adding columns</li>
+<li>Up-casting the type of column(e.g. Int -&gt; Long)</li>
+</ul>
+<p>Paimon also supports explicit type conversions between certain types (e.g. String -&gt; Date, Long -&gt; Int), it requires an explicit configuration <code>write.merge-schema.explicit-cast</code>.</p>
+<p>Schema evolution can be used in streaming mode at the same time.</p>
+<div class="highlight"><pre class="chroma"><code class="language-scala" data-lang="scala"><span class="k">val</span> <span class="n">inputData</span> <span class="k">=</span> <span class="nc">MemoryStream</span><span class="o">[(</span><span class="kt">Int</span>, <span class="kt">String</span><span class="o">)]</span>
+<span class="n">inputData</span>
+  <span class="o">.</span><span class="n">toDS</span><span class="o">()</span>
+  <span class="o">.</span><span class="n">toDF</span><span class="o">(</span><span class="s">&#34;col1&#34;</span><span class="o">,</span> <span class="s">&#34;col2&#34;</span><span class="o">)</span>
+  <span class="o">.</span><span class="n">writeStream</span>
+  <span class="o">.</span><span class="n">format</span><span class="o">(</span><span class="s">&#34;paimon&#34;</span><span class="o">)</span>
+  <span class="o">.</span><span class="n">option</span><span class="o">(</span><span class="s">&#34;checkpointLocation&#34;</span><span class="o">,</span> <span class="s">&#34;/path/to/checkpoint&#34;</span><span class="o">)</span>
+  <span class="o">.</span><span class="n">option</span><span class="o">(</span><span class="s">&#34;write.merge-schema&#34;</span><span class="o">,</span> <span class="s">&#34;true&#34;</span><span class="o">)</span>
+  <span class="o">.</span><span class="n">option</span><span class="o">(</span><span class="s">&#34;write.merge-schema.explicit-cast&#34;</span><span class="o">,</span> <span class="s">&#34;true&#34;</span><span class="o">)</span>
+  <span class="o">.</span><span class="n">start</span><span class="o">(</span><span class="n">location</span><span class="o">)</span>
+</code></pre></div><p>Here list the configurations.</p>
+<table class="configuration table table-bordered">
+    <thead>
+        <tr>
+            <th class="text-left" style="width: 20%">Scan Mode</th>
+            <th class="text-left" style="width: 60%">Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><h5>write.merge-schema</h5></td>
+            <td>If true, merge the data schema and the table schema automatically before write data.</td>
+        </tr>
+        <tr>
+            <td><h5>write.merge-schema.explicit-cast</h5></td>
+            <td>If true, allow to merge data types if the two types meet the rules for explicit casting.</td>
+        </tr>
+    </tbody>
+</table>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  
+
+
+
+
+<a href="//github.com/apache/paimon/edit/1.0/docs/content/spark/sql-write.md" style="color:black"><i class="fa fa-edit fa-fw"></i>Edit This Page</a>
+
+
+ 
+        
+
+
+<hr style="margin-top: 20px; border: 1px solid #e5e5e5;" />
+
+<table style="border-spacing: 10px;">
+    <tbody>
+    <tr>
+        <td colspan="2">
+            Copyright &copy; 2024 The Apache Software Foundation. Apache Paimon, Paimon, and its feather logo are
+            trademarks of The Apache Software Foundation.
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+      </footer>
+
+      
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      
+  
+
+<nav id="TableOfContents"><h3>On This Page <button class="toc" onclick="collapseToc()"><i class="fa fa-compress" aria-hidden="true"></i></button></h3>
+  <ul>
+    <li><a href="#insert-table">Insert Table</a>
+      <ul>
+        <li><a href="#insert-into">Insert Into</a></li>
+        <li><a href="#insert-overwrite">Insert Overwrite</a></li>
+      </ul>
+    </li>
+    <li><a href="#truncate-table">Truncate Table</a></li>
+    <li><a href="#update-table">Update Table</a></li>
+    <li><a href="#delete-from-table">Delete From Table</a></li>
+    <li><a href="#merge-into-table">Merge Into Table</a></li>
+    <li><a href="#streaming-write">Streaming Write</a></li>
+    <li><a href="#schema-evolution">Schema Evolution</a></li>
+  </ul>
+</nav>
+
+ 
+    </aside>
+    <aside class="expand-toc">
+      <button class="toc" onclick="expandToc()">
+        <i class="fa fa-expand" aria-hidden="true"></i>
+      </button>
+    </aside>
+    
+  </main>
+
+  
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
