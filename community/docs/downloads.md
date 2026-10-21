@@ -41,6 +41,29 @@ The Apache source distribution is also available:
 | 2.0.0   | 2026-08-07 | [tar](https://www.apache.org/dyn/closer.lua/paimon/pypaimon-2.0.0/pypaimon-2.0.0.tar.gz)               ([digest](https://downloads.apache.org/paimon/pypaimon-2.0.0/pypaimon-2.0.0.tar.gz.sha512),                [pgp](https://downloads.apache.org/paimon/pypaimon-2.0.0/pypaimon-2.0.0.tar.gz.asc)) |
 | 1.4.2   | 2026-06-23 | [tar](https://www.apache.org/dyn/closer.lua/paimon/pypaimon-1.4.2/pypaimon-1.4.2.tar.gz)               ([digest](https://downloads.apache.org/paimon/pypaimon-1.4.2/pypaimon-1.4.2.tar.gz.sha512),                [pgp](https://downloads.apache.org/paimon/pypaimon-1.4.2/pypaimon-1.4.2.tar.gz.asc)) |
 
+## Paimon Terraform
+
+The Paimon Terraform provider manages Paimon REST Catalog databases, tables, and access policies with Terraform and OpenTofu. It is published as `apache/paimon` to the [OpenTofu Registry](https://search.opentofu.org/provider/apache/paimon/latest), and each [GitHub release](https://github.com/apache/terraform-provider-paimon/releases) carries signed provider binaries:
+
+```hcl
+terraform {
+  required_providers {
+    paimon = {
+      source  = "apache/paimon"
+      version = "0.1.0"
+    }
+  }
+}
+```
+
+Until the provider is listed in the Terraform Registry, Terraform users can set `source = "registry.opentofu.org/apache/paimon"`.
+
+The Apache source distribution is also available:
+
+| RELEASE | DATE       | DOWNLOAD                                                                                                                                                                                                                                                                                                                                          |
+|---------|------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 0.1.0   | 2026-10-21 | [tar](https://www.apache.org/dyn/closer.lua/paimon/paimon-terraform-0.1.0/apache-paimon-terraform-0.1.0-src.tgz) ([digest](https://downloads.apache.org/paimon/paimon-terraform-0.1.0/apache-paimon-terraform-0.1.0-src.tgz.sha512), [pgp](https://downloads.apache.org/paimon/paimon-terraform-0.1.0/apache-paimon-terraform-0.1.0-src.tgz.asc)) |
+
 ## Verify the Integrity of the Files
 
 Verify the SHA-512 checksum (.sha512) and PGP signature (.asc) of each downloaded source archive. For more information why this must be done, please read [Verifying Apache Software Foundation Releases](https://www.apache.org/info/verification.html).
