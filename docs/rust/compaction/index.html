@@ -1,0 +1,1392 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="The Rust implementation of Apache Paimon">
+      
+      
+      
+        <link rel="canonical" href="https://apache.github.io/paimon-rust/compaction/">
+      
+      
+        <link rel="prev" href="../incremental-reading/">
+      
+      
+        <link rel="next" href="../sql/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.0">
+    
+    
+      
+        <title>Table Compaction - Apache Paimon Rust</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#table-compaction" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Apache Paimon Rust" class="md-header__button md-logo" aria-label="Apache Paimon Rust" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Apache Paimon Rust
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Table Compaction
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/apache/paimon-rust" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    apache/paimon-rust
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Apache Paimon Rust" class="md-nav__button md-logo" aria-label="Apache Paimon Rust" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Apache Paimon Rust
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/apache/paimon-rust" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    apache/paimon-rust
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../getting-started/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../incremental-reading/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Batch Incremental Reading
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Table Compaction
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Table Compaction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#primary-key-compaction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Primary-key compaction
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lookup-changelog-producer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lookup changelog producer
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dynamic-buckets" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dynamic buckets
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#data-evolution-compaction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Data Evolution compaction
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#current-scope" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Current scope
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sql/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SQL Integration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../benchmark/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Performance
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../c-binding/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    C Integration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../go-binding/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Go Integration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../python-binding/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Python Integration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../contributing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contributing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_12" >
+        
+          
+          <label class="md-nav__link" for="__nav_12" id="__nav_12_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Releases
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_12_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_12">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Releases
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../releases/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Releases
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../release/creating-a-release/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Creating a Release
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../release/verifying-a-release-candidate/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Verifying a Release Candidate
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#primary-key-compaction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Primary-key compaction
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lookup-changelog-producer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lookup changelog producer
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dynamic-buckets" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dynamic buckets
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#data-evolution-compaction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Data Evolution compaction
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#current-scope" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Current scope
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+
+<h1 id="table-compaction">Table Compaction<a class="headerlink" href="#table-compaction" title="Permanent link">&para;</a></h1>
+<p>Rust supports small-file compaction for ordinary append tables, normal-file
+compaction for Data Evolution tables, and sorted-run compaction for primary-key
+tables with fixed or dynamic buckets. <code>CompactBuilder</code> creates
+a <code>CompactPlanner</code>, a <code>CompactExecutor</code>, and a <code>TableCommit</code>. Planning and
+execution do not publish snapshots; <code>commit_compact</code> atomically publishes the
+selected results in a <code>COMPACT</code> snapshot.</p>
+<p>The builder selects a dedicated append, primary-key or Data Evolution planner
+for the table mode. They share snapshot capture and the public plan/task types;
+each planner owns its file eligibility, grouping and task-selection rules.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kd">let</span><span class="w"> </span><span class="n">builder</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">table</span><span class="p">.</span><span class="n">new_compact_builder</span><span class="p">();</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="kd">let</span><span class="w"> </span><span class="n">planner</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">builder</span><span class="p">.</span><span class="n">new_planner</span><span class="p">()</span><span class="o">?</span><span class="p">;</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="kd">let</span><span class="w"> </span><span class="n">executor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">builder</span><span class="p">.</span><span class="n">new_executor</span><span class="p">()</span><span class="o">?</span><span class="p">;</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="kd">let</span><span class="w"> </span><span class="n">committer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">builder</span><span class="p">.</span><span class="n">new_commit</span><span class="p">()</span><span class="o">?</span><span class="p">;</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="kd">let</span><span class="w"> </span><span class="n">plan</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">planner</span><span class="p">.</span><span class="n">plan</span><span class="p">().</span><span class="k">await</span><span class="o">?</span><span class="p">;</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">results</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">Vec</span><span class="p">::</span><span class="n">new</span><span class="p">();</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="k">for</span><span class="w"> </span><span class="n">task</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">plan</span><span class="p">.</span><span class="n">tasks</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="w">    </span><span class="n">results</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="n">executor</span><span class="p">.</span><span class="n">execute</span><span class="p">(</span><span class="n">task</span><span class="p">).</span><span class="k">await</span><span class="o">?</span><span class="p">);</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="p">}</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="kd">let</span><span class="w"> </span><span class="n">metrics</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">committer</span><span class="p">.</span><span class="n">commit_compact</span><span class="p">(</span><span class="n">results</span><span class="p">).</span><span class="k">await</span><span class="o">?</span><span class="p">;</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="fm">println!</span><span class="p">(</span><span class="s">"Compacted {} files into {}"</span><span class="p">,</span><span class="w"> </span><span class="n">metrics</span><span class="p">.</span><span class="n">files_removed</span><span class="p">,</span><span class="w"> </span><span class="n">metrics</span><span class="p">.</span><span class="n">files_added</span><span class="p">);</span>
+</code></pre></div>
+<p>Writers also run one synchronous compaction round after a successful data commit.
+<code>write-only</code> defaults to <code>false</code>; set it to <code>true</code> to leave compaction to a
+dedicated job. The legacy <code>write.compaction-skip</code> alias is accepted, with
+<code>write-only</code> taking precedence. Automatic compaction uses the existing planner's
+thresholds and selects eligible files from the latest snapshot on the same branch,
+restricted to the partitions and buckets changed by this write. It uses the current
+schema even when the writer retains a historical schema, including schemas resolved
+through a REST catalog. Primary-key writes honor normal sorted-run count and size
+triggers. Lookup, first-row and deletion-vector compaction, or an explicit
+<code>compaction.force-up-level-0=true</code>, can advance L0 files below those triggers.
+Overwrite compaction is pinned to its own committed data snapshot, so suppressing
+overwrite changelogs cannot consume a later append's pending lookup events.
+As in Java, overwriting partitions being consumed by streaming readers is unsupported;
+lookup changelogs do not describe the overwrite operation itself.
+Automatic lookup compaction supports the default <code>lookup-compact=radical</code> policy.
+<code>gentle</code> requires writer-lifetime trigger intervals and is explicitly unsupported
+here; use <code>write-only=true</code> and schedule dedicated compaction separately.
+An empty plan publishes no extra snapshot. Append, overwrite and state-dependent
+data commits use this behavior; empty commits and truncation do not trigger it.
+<code>write.compaction.parallelism</code> bounds concurrent buckets within one automatic
+round (default <code>4</code>, positive integer; <code>1</code> runs serially). Tasks in the same
+partition and bucket run in order. The commit waits for the complete round and
+publishes all successful results together. On execution failure, queued buckets
+are skipped, started buckets finish, and their unpublished outputs are cleaned up.
+Normal commits pass their actual data snapshot and touched bucket set directly
+to compaction; only recovery reconstructs them from stored snapshots and manifests.
+Table modes unsupported by the compaction API retain their write behavior without
+automatic compaction. Automatic lookup, first-row and deletion-vector compaction
+use the configured catalog cache when available, otherwise a temporary disk cache
+owned by the writer's compaction work. <code>lookup.cache-max-disk-size</code> bounds that
+temporary cache when configured. Temporary files remain alive until the last cache
+reader is released. Explicit manual compaction still requires
+<code>local-cache.enabled=true</code> on the catalog/FileIO for these modes.
+For plain partial-update and aggregation tables, an unsupported lossless retract
+rewrite also leaves the raw source files in place. I/O, resource and data errors,
+and lookup changelog failures, are still returned to the caller.</p>
+<p>Data publication and compaction are separate transactions. A compaction failure
+leaves the data committed and returns an error retaining the underlying cause.
+For recoverable writes, use a stable commit user and caller-provided identifier,
+then retry with <code>filter_and_commit_with_identifier</code> (or <code>filter_and_commit</code>) for
+append, or <code>overwrite_with_identifier</code> for overwrite.
+Recovery finishes an interrupted compaction round without repeating the data
+commit or a completed automatic <code>COMPACT</code> snapshot. A single round can leave
+additional work for a later write or a dedicated compaction job. This option does
+not schedule background work or expire snapshots.</p>
+<p>Ordinary append and PK compaction use <code>target-file-size</code> as the output size target.
+For unaware append tables (<code>bucket=-1</code>), task selection follows the batch packing rules in Java's
+<a href="https://github.com/apache/paimon/blob/master/paimon-core/src/main/java/org/apache/paimon/append/AppendCompactCoordinator.java"><code>AppendCompactCoordinator</code></a>:</p>
+<ul>
+<li>Candidate files are strictly smaller than <code>target-file-size</code> multiplied by
+  <code>compaction.small-file-ratio</code> (default 0.7). This avoids repeatedly rewriting
+  output files that are slightly below the target after compression.</li>
+<li>Within each partition and bucket, candidates are sorted by file size.
+  Each file contributes <code>file_size + source.split.open-file-cost</code> to the task
+  weight. The open cost defaults to 4 MiB.</li>
+<li>A task is emitted once it contains at least two files and its weight reaches
+  twice <code>target-file-size</code>. A remaining group is emitted only when it has at
+  least <code>compaction.min.file-num</code> files (default 5, minimum 2).</li>
+</ul>
+<p>There is no per-task file-count cap. An underfilled tail remains available for
+planning against a later snapshot. Each plan independently captures a snapshot;
+the API does not maintain a streaming coordinator's aging state.</p>
+<p>Unordered bucketed append tables (<code>bucket&gt;0</code>, <code>bucket-append-ordered=false</code>)
+use Java's <code>BucketedAppendCompactManager</code> best-effort selection instead:
+files are visited in minimum-sequence order, and a window is selected once it
+reaches <code>compaction.min.file-num</code>. Before that count is reached, a window whose
+physical bytes reach twice <code>target-file-size</code> drops its first file and keeps
+sliding. The unaware-table small-file filter and open cost do not apply.
+Ordered bucketed append compaction is unsupported: it requires sequence counters
+that the ordinary Rust append writer does not yet maintain.</p>
+<p>Ordinary read splits use a separate strategy, matching Java's
+<a href="https://github.com/apache/paimon/blob/master/paimon-core/src/main/java/org/apache/paimon/table/source/AppendOnlySplitGenerator.java"><code>AppendOnlySplitGenerator</code></a>:
+sort by minimum sequence number, then pack up to <code>source.split.target-size</code>
+using <code>max(file_size, source.split.open-file-cost)</code> per file. Read split boundaries
+do not determine compaction tasks, and changing <code>source.split.target-size</code> does
+not change compaction grouping.</p>
+<p>File sizes are approximate targets; normal writer rolling and
+<code>target-file-row-num</code> still apply. An empty plan or result list publishes no
+snapshot. Use <code>with_partition_filter(predicate)</code> to restrict planning to
+partitions and <code>with_resources(context)</code> to share read/write memory budgets.</p>
+<p><code>CompactPlan</code>, <code>CompactTask</code> and <code>CompactResult</code> support Serde serialization.
+Workers create their own executor with a table handle and local resources;
+the task fixes the input snapshot, schema and output settings. Applications
+can schedule independent tasks concurrently and submit completed subsets.
+Results from different plans, duplicate tasks and overlapping inputs are
+rejected. Executors stream input batches instead of collecting the whole task.</p>
+<p>Concurrent appends can commit alongside compaction. A rewrite or overwrite of
+an input file, a metadata change to that file, or a table schema change causes
+the compaction commit to fail. Create a new plan after such a conflict.
+PK commits also reject overlapping key ranges within a positive level, including
+ranges introduced by a concurrent compaction. Overlapping L0 appends are allowed.
+If the latest snapshot is below the plan's captured snapshot after a rollback,
+commit rejects the uncommitted plan; create a new plan.
+Retrying the same plan and task subset with the same <code>commit_user</code> is
+idempotent, including when result order changes. Recovery searches only snapshots
+created after the plan's captured snapshot. To retry after restarting
+the coordinator, configure <code>with_commit_user(...)</code> with the original value
+and retain the serialized results. A commit error can mean publication is
+uncertain: retain submitted files rather than deleting them on error.</p>
+<p>Append compaction preserves duplicate and null rows. Original files remain readable
+through old snapshots, and append incremental scans skip <code>COMPACT</code> snapshots.
+The removed-file metric counts manifest removals, not physical deletion;
+snapshot expiration and storage reclamation are separate maintenance work.</p>
+<h2 id="primary-key-compaction">Primary-key compaction<a class="headerlink" href="#primary-key-compaction" title="Permanent link">&para;</a></h2>
+<p>The same API compacts primary-key tables with <code>deduplicate</code>,
+<code>first-row</code>, <code>partial-update</code> or <code>aggregation</code> merge engines. Changelog producers
+<code>none</code>, <code>input</code> and <code>lookup</code> are supported; <code>first-row</code> supports <code>none</code> or <code>lookup</code>.
+For <code>deduplicate</code> with <code>none</code>, <code>input</code> or <code>lookup</code>, and non-DV <code>first-row</code> with
+<code>none</code> or <code>lookup</code>, the planner chooses incremental sorted runs using Java's
+universal-compaction size and count policy. Each L0 file is a
+run; all files at one positive level form a single run. Normal size and run-count
+triggers take precedence. If they select no work, explicit compaction forces
+progress on every L0 run and absorbs adjacent runs according to their sizes. A
+large higher-level run can remain in place while smaller runs are rewritten.
+Without L0, positive-level maintenance requires the configured run-count and
+size triggers. A single positive run needs no rewrite, even when it spans
+several files.</p>
+<p>The policy uses <code>num-sorted-run.compaction-trigger</code> (default <code>5</code>), <code>num-levels</code>
+(default trigger plus one), <code>compaction.size-ratio</code> (default <code>1</code> percent), and
+<code>compaction.max-size-amplification-percent</code> (default <code>200</code>). When selected runs
+reach the oldest run, output goes to the highest configured or existing level;
+otherwise it goes immediately below the next unselected run. Explicit full
+compaction is not exposed. Without deletion vectors, <code>deduplicate</code> outputs retain winning retracts, so older values
+in untouched files do not reappear after a delete or out-of-order update.</p>
+<p>For <code>first-row</code>, both producers require actual catalog/FileIO local-cache.
+The executor looks up keys in retained higher-level files. Existing accepted keys
+stay in those files and produce neither a new data row nor a changelog event.
+Selected positive-level rows still participate in the output. The <code>lookup</code>
+producer emits only newly accepted keys, preserving their first add's row kind
+and sequence. If every input key already exists, compaction can retire its
+L0 inputs without creating a data or changelog file.</p>
+<p>With deletion vectors, <code>deduplicate</code> supports the same incremental selection for
+<code>none</code>, <code>input</code> and <code>lookup</code>. All three require actual catalog/FileIO local-cache.
+Lookup Files preserve unfiltered physical row positions; captured deletion vectors
+filter selected inputs and history before merging. A history hit moves its winning
+state into the output and marks the original position deleted, even when an
+out-of-order input loses. Winning retracts are omitted from data after changelog
+generation, so a DELETE may publish a changelog without a new data file.</p>
+<p>Commit atomically unions historical row deletions with the latest DV indexes and
+retires rewritten inputs' ranges, preserving unrelated ranges and HASH indexes.
+It rejects changed input masks, removed lookup targets and concurrently deleted
+hit positions; unrelated new DV bits can be merged. Uncommitted serialized DV results must
+retain their physical deletion metadata, including an empty list when appropriate.
+Each output file is limited to 4,294,967,296 physical rows. Migrating files written
+without DV is unsupported, including enabling DV through temporary table options.</p>
+<p>Non-DV <code>partial-update</code> and <code>aggregation</code> with <code>lookup</code> use the same incremental
+policy and require actual catalog/FileIO local-cache. The executor inserts the
+nearest retained positive-level state into each changed key's merge, in sequence
+order. The output contains the materialized state; lookup scans use only the
+nearest positive-level state, so retained older levels are not aggregated again.</p>
+<p>With <code>none</code> or <code>input</code>, these engines use incremental selection only when every
+value field can be merged again independently of row order: <code>min</code>, <code>max</code>,
+<code>bool_and</code>, <code>bool_or</code>, or integer <code>sum</code> without checked overflow. Aggregation must
+have <code>aggregation.remove-record-on-delete=false</code> and no global sequence fields.
+Partial update must use <code>ignore-delete=true</code>, no global sequence fields, and
+protect every value field with a sequence group and one of these aggregate
+functions. Each group's ordering fields retain its winning sequence and must
+not also be protected fields. These modes merge only selected inputs, leaving
+retained history to ordinary query merging, and do not require local-cache.</p>
+<p>Other <code>none</code>/<code>input</code> configurations retain their previous selection: every active
+file in the selected bucket participates, and output uses the highest input level
+or level 1 for all-L0 inputs. This preserves sparse overwrite and order-sensitive
+state such as <code>first_value</code>, finite floating-point summation, checked-overflow
+behavior and reset-on-delete semantics. Existing retract/state restrictions still
+apply. Append size and count options do not control PK selection.</p>
+<p>Tasks capture their selected runs and output level. Executors validate the task
+against the captured snapshot. Committers independently recompute the selection
+from that snapshot and validate the files being removed and the output levels.
+Older serialized incremental tasks without an output level must be replanned
+before execution. Prepared results can still be published if their file changes
+match the captured selection; already committed results remain recoverable
+through the existing idempotent retry path.</p>
+<p>Compaction uses each engine's existing merge function and persists its merge
+state, including original sequence metadata and synthesized DELETE records:</p>
+<ul>
+<li><code>deduplicate</code> retains the winning record, including retracts that must still
+  suppress later out-of-order values.</li>
+<li><code>first-row</code> retains the earliest record. Retracts are rejected unless
+  <code>ignore-delete=true</code>. Its normal batch reader still skips uncompacted L0
+  files; compaction makes the selected records visible above L0.</li>
+<li><code>partial-update</code> combines sparse columns using the configured sequence
+  groups and field aggregators. Delete payloads and group sequence values are
+  preserved so subsequent sparse updates can continue from that state.</li>
+<li><code>aggregation</code> writes the engine's field accumulators. With <code>none</code> or <code>input</code>,
+  singleton records remain unreduced, including retracts; compound DELETE states
+  are preserved rather than being discarded as they are by the query reader.</li>
+</ul>
+<p>The existing engine rules for ignored deletes, unsupported retracts and
+whole-record deletion also apply during compaction. If all records are
+legitimately ignored, compaction can remove the selected files without
+creating an output file. Key bounds, sequence bounds, delete counts and file
+indexes are regenerated, using metadata statistics options for the output level.
+Compound <code>partial-update</code> DELETE states with field aggregators are rejected.
+For both reducer engines, compound groups containing retracts are also rejected
+when they use <code>first_value</code>, <code>first_non_null_value</code>, <code>collect</code>, <code>listagg</code>,
+<code>nested_update</code> or <code>nested_partial_update</code>. These states may carry initialization
+flags or raw DELETE payloads that cannot be reconstructed from one output row,
+even when that row is an INSERT. Execution fails without publishing or deleting
+the source files.
+Partial-update retracts ignored by <code>ignore-delete=true</code> do not trigger this
+restriction.</p>
+<p>The engine's logical merged state remains unchanged. Physical record counts and
+<code>rows_written</code> can decrease as older versions are removed; the latter includes
+retained retract records. Append and input-changelog incremental reads do not
+emit new logical events for a compaction snapshot.</p>
+<p>PK rewrites stream ordered physical KV batches into the same low-level file
+writer used by ordinary PK writes. Sequence allocation and merge buffering stay
+in the ordinary write path. Key bounds, sequence bounds, statistics and indexes
+are collected incrementally without retaining all rows of an output file.
+<code>write-buffer-size</code> flushes format buffers. Parquet, ORC, Avro and ROW keep the
+same output file open across these flushes. Formats that retain their pending
+rows after flushing (Mosaic/Vortex) close the file at the buffer threshold to
+preserve bounded memory. Files also roll when the format's approximate byte
+count reaches <code>target-file-size</code> or the row count reaches <code>target-file-row-num</code>.
+Output chunks are materialized at row limits to avoid retaining and repeatedly
+charging the entire source batch for small slices.
+The merge currently supports
+up to 256 overlapping sorted-run inputs, matching the query reader's limit.
+There is no multipass merge yet; too many overlapping runs fail without
+publishing a snapshot. The captured snapshot must remain available until each
+task subset is successfully committed; retries of an already committed subset remain
+idempotent after its read snapshot expires.</p>
+<h2 id="lookup-changelog-producer">Lookup changelog producer<a class="headerlink" href="#lookup-changelog-producer" title="Permanent link">&para;</a></h2>
+<p>Set <code>changelog-producer=lookup</code> and run the same compaction API to publish data
+and changelog files atomically in a <code>COMPACT</code> snapshot. Ordinary writes produce
+L0 data files; changelogs become available when those files are compacted.
+Batch incremental <code>Changelog</code> / <code>Auto</code> scans and streaming follow-up scans read
+the resulting changelog manifest. <code>Delta</code> scans continue to skip compaction.</p>
+<p>For each key, the lowest positive level is its latest materialized history.
+Older positive levels already contributed to that state and are not reduced
+again. Compaction merges this history with the captured L0 records and emits
+changes only for keys with L0 input:</p>
+<ul>
+<li>No live history and a live result: <code>INSERT</code>.</li>
+<li>Live history and a deleted result: <code>DELETE</code> carrying the history's values.</li>
+<li>Live history and a live result: <code>UPDATE_BEFORE</code> followed by <code>UPDATE_AFTER</code>.</li>
+<li>No live history and no live result: no changelog.</li>
+</ul>
+<p>Before images retain the historical sequence metadata; after images carry the
+merged result's metadata. <code>first-row</code> emits the first accepted add for previously
+unseen keys, preserving its <code>INSERT</code> or <code>UPDATE_AFTER</code> kind. It considers all
+input levels when choosing the earliest record. <code>partial-update</code> and <code>aggregation</code>
+always run the reducer in lookup mode, including singleton retracts, as Java does.
+For example, lookup compaction turns a lone <code>DELETE(value=5)</code> with <code>sum</code> into
+live state <code>-5</code> when <code>aggregation.remove-record-on-delete=false</code>; an ordinary
+query still omits that singleton retract before compaction. Existing state
+preservation restrictions still apply. History selection precedes merging.</p>
+<p>Java-compatible options have these defaults:</p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Default</th>
+<th>Behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>changelog-producer.row-deduplicate</code></td>
+<td><code>false</code></td>
+<td>When true, skip update pairs whose user values are equal.</td>
+</tr>
+<tr>
+<td><code>changelog-producer.row-deduplicate-ignore-fields</code></td>
+<td>unset</td>
+<td>Comma-separated fields excluded from that comparison.</td>
+</tr>
+<tr>
+<td><code>changelog-producer.ignore-update-before</code></td>
+<td><code>false</code></td>
+<td>Omit <code>UPDATE_BEFORE</code> events.</td>
+</tr>
+<tr>
+<td><code>changelog-producer.ignore-delete</code></td>
+<td><code>false</code></td>
+<td>Omit <code>DELETE</code> events.</td>
+</tr>
+</tbody>
+</table>
+<p>With default options, even an unchanged value produces an update pair when its
+key has L0 input. Ignoring changelog events does not change compacted table data.
+<code>changelog-file.format</code>, <code>changelog-file.compression</code>, <code>changelog-file.prefix</code>
+and changelog statistics options apply independently of data-file settings.
+Changelog files roll at the ordinary size and row limits. <code>CompactResult</code> exposes
+<code>changelog_files()</code>; <code>CompactMetrics</code> reports their file, row and byte counts in
+<code>changelog_files_added</code>, <code>changelog_rows_written</code> and <code>changelog_bytes_written</code>.
+The existing data metrics continue to count data files and rows only.</p>
+<p>For <code>deduplicate</code>, unselected higher-level history is read through point lookups
+in disposable local Lookup Files. Each file stores ordered keys and complete KV
+rows, including row kinds and sequence metadata. The first access builds it by
+streaming the source through the normal schema-evolution decoder. Later keys and
+executors reuse it; a missing or corrupt cache block causes a bounded rebuild
+instead of being treated as a missing key. Only selected runs are rewritten.
+Lookup selects candidate files by key range, retaining range pruning across
+schema changes that preserve the primary-key field IDs, order and types. The
+reader retains one bounded parsed SST index and one decoded IPC batch.
+Failed or cancelled builds clean up their unpublished cache blocks.</p>
+<p>The executor streams both outputs and aborts both writers on execution failure.
+Prepared results include both file lists for serialization, subset commits and
+idempotent retries. Commit validation checks that selected inputs remain valid
+and that files in each positive level have disjoint key ranges, matching Java's
+LSM conflict checks. Concurrent L0 appends and changes to unselected files are
+allowed when these checks pass. New L0 files remain eligible for a later
+compaction and produce no premature events.</p>
+<p>The executor requires an actual catalog/FileIO cache (<code>local-cache.enabled=true</code>);
+setting the flag in table properties alone does not attach a cache.
+Deduplicate Lookup Files use that cache's memory, disk or shared-disk backend,
+namespace, eviction policy and <code>local-cache.max-size</code> budget. Set <code>local-cache.dir</code> to keep
+them on disk. They do not require <code>data</code> in <code>local-cache.whitelist</code>.
+<code>lookup.cache-max-disk-size</code> is rejected; use <code>local-cache.max-size</code> instead.</p>
+<p>For deduplicate lookup caching, <code>lookup.cache-max-memory-size</code> defaults to
+<code>256 MiB</code> per executor and bounds working components such as input batches,
+IPC payloads and SST indexes. Oversized inputs or indexes,
+or a cache unable to retain the generated file, fail execution without publishing
+a snapshot. Reduce <code>read.batch-size</code> for oversized input batches or increase the
+appropriate budget. Cache storage is charged separately to <code>local-cache.max-size</code>.
+<code>lookup.cache-spill-compression</code> accepts <code>none</code>, <code>zstd</code> (default), <code>lz4</code> or <code>lzo</code>.</p>
+<h2 id="dynamic-buckets">Dynamic buckets<a class="headerlink" href="#dynamic-buckets" title="Permanent link">&para;</a></h2>
+<p>Dynamic bucket compaction (<code>bucket=-1</code>) rewrites each existing partition/bucket
+without changing key assignments. HASH index files and their complete assignment
+history, including deleted keys, are retained. A concurrent append may replace
+the HASH index; compaction carries forward the latest manifest at commit time.
+Cross-partition dynamic buckets are also supported: subsequent writers rebuild
+their key-location index from the compacted data as usual. Compaction does not
+rebalance buckets or reclaim HASH index capacity.</p>
+<h2 id="data-evolution-compaction">Data Evolution compaction<a class="headerlink" href="#data-evolution-compaction" title="Permanent link">&para;</a></h2>
+<p>The same API compacts normal structured files in unaware append tables with
+<code>data-evolution.enabled=true</code> and <code>row-tracking.enabled=true</code>, following Java's
+<code>DataEvolutionCompactCoordinator</code> and <code>DataEvolutionNormalCompactTask</code>.</p>
+<p>Within each partition, planning keeps every version of an aligned row-ID group
+together, including shadowed column files. Adjacent groups are packed using
+<code>sum(max(file_size, source.split.open-file-cost))</code> as the weight. A bin is drained
+when its weight strictly exceeds <code>target-file-size</code>; a group that alone exceeds
+the target is isolated. A row-ID gap also drains the bin. A drained bin produces
+a task only when it contains at least <code>compaction.min.file-num</code> physical files.
+The ordinary append small-file ratio does not apply.
+Data Evolution permits <code>compaction.min.file-num=1</code> to force a single-file
+rewrite, for example to materialize the current schema.</p>
+<p>Each task streams the latest normal-column values into one file covering the
+same contiguous row-ID range. Like Java's default normal compaction, write-time
+size and row limits do not roll this output; <code>target-file-size</code> guides planning.
+The minimum and maximum input sequence numbers and per-column maximum sequence
+numbers are retained. Blob and Vector files remain attached to their stable row
+IDs and are not rewritten by these tasks.</p>
+<p>Deleted physical slots are retained. When deletion vectors are enabled, commit
+preparation moves their positions from the previous normal anchor files to the
+new files. This uses the latest snapshot on every commit attempt, preserving
+concurrent deletions and vectors belonging to untouched groups. Global indexes
+remain valid because row IDs and values are preserved. Historical snapshots
+continue to reference their original data and deletion vectors.</p>
+<p>If compaction publishes before a prepared DELETE, that DELETE fails when it
+references replaced anchor files or DV indexes. Prepare the DELETE again from
+the latest snapshot; replaying the same stale messages does not rebase it.</p>
+<p>Concurrent normal-column writes in a selected row-ID range cause commit to fail;
+plan again from the latest snapshot. Disjoint appends can commit alongside the
+rewrite. Subsets, serialization and idempotent retries use the same compaction
+API as append and PK tables. <code>rows_written</code> counts physical slots, including
+deleted rows; it counts overlapping column versions only once.</p>
+<p>Changing storage options does not migrate values in existing files. If selected
+normal files still provide a field that the current schema stores in dedicated
+files, compaction is rejected before writing or publishing output. Migrate those
+historical inline values first; otherwise omitting the field would lose data.
+With deletion vectors enabled, one output file is limited to 4,294,967,296
+physical row slots so every local position remains deletable by the current
+Rust writer. Wider rewrites are rejected before execution; 64-bit deletion-vector
+writing is not yet supported.</p>
+<p>Dedicated Blob/Vector compaction, splitting large normal files, and materializing
+deletions into reassigned row IDs are not provided. Setting
+<code>data-evolution.compaction.split-large-files=true</code> or
+<code>data-evolution.compaction.rewrite-row-ids=true</code> is rejected.</p>
+<h2 id="current-scope">Current scope<a class="headerlink" href="#current-scope" title="Permanent link">&para;</a></h2>
+<p>The <code>full-compaction</code> changelog producer is unsupported. Primary-key deletion-vector
+compaction supports <code>deduplicate</code> with <code>none</code>, <code>input</code> or <code>lookup</code>.
+Outside Data Evolution mode, row tracking and dedicated
+blob/vector storage are unsupported. Query authorization, rowkind fields and
+postpone buckets are unsupported in all modes.
+Ordered bucketed append, append incremental clustering, primary-key clustering
+override (<code>pk-clustering-override</code>) and record-level expiration
+(<code>record-level.expire-time</code>) are also unsupported.
+Snapshot index manifests may contain dynamic-bucket HASH indexes and primary-key
+deletion vectors, or deletion vectors and global indexes in Data Evolution mode.
+Embedded and sidecar file indexes are regenerated according to the captured
+table options. The automatic behavior also applies to language bindings using the
+table committer. The manual compaction API and background compaction scheduling
+are not yet exposed through language bindings.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.sections", "navigation.expand", "navigation.top", "search.suggest", "content.code.copy"], "search": "../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.c21346df.min.js"></script>
+      
+    
+  </body>
+</html>
