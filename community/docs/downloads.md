@@ -43,7 +43,7 @@ The Apache source distribution is also available:
 
 ## Paimon Terraform
 
-The Paimon Terraform provider manages Paimon REST Catalog databases, tables, and access policies with Terraform and OpenTofu. It is published as `apache/paimon` to the [OpenTofu Registry](https://search.opentofu.org/provider/apache/paimon/latest), and each [GitHub release](https://github.com/apache/terraform-provider-paimon/releases) carries signed provider binaries:
+The Paimon Terraform provider manages Paimon REST Catalog databases, tables, and access policies with Terraform and OpenTofu. It is published as `apache/paimon` to both the [Terraform Registry](https://registry.terraform.io/providers/apache/paimon/latest) and the [OpenTofu Registry](https://search.opentofu.org/provider/apache/paimon/latest). Each CLI installs the provider from its default registry, and each [GitHub release](https://github.com/apache/terraform-provider-paimon/releases) carries signed provider binaries:
 
 ```hcl
 terraform {
@@ -55,8 +55,6 @@ terraform {
   }
 }
 ```
-
-Until the provider is listed in the Terraform Registry, Terraform users can set `source = "registry.opentofu.org/apache/paimon"`.
 
 The Apache source distribution is also available:
 
