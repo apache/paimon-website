@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Merge Engine on Apache Paimon</title>
+    <link>//paimon.apache.org/docs/1.0/primary-key-table/merge-engine/</link>
+    <description>Recent content in Merge Engine on Apache Paimon</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language><atom:link href="//paimon.apache.org/docs/1.0/primary-key-table/merge-engine/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Overview</title>
+      <link>//paimon.apache.org/docs/1.0/primary-key-table/merge-engine/overview/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/1.0/primary-key-table/merge-engine/overview/</guid>
+      <description>Overview #  When Paimon sink receives two or more records with the same primary keys, it will merge them into one record to keep primary keys unique. By specifying the merge-engine table property, users can choose how records are merged together.
+Always set table.exec.sink.upsert-materialize to NONE in Flink SQL TableConfig, sink upsert-materialize may result in strange behavior. When the input is out of order, we recommend that you use Sequence Field to correct disorder.</description>
+    </item>
+    
+    <item>
+      <title>Partial Update</title>
+      <link>//paimon.apache.org/docs/1.0/primary-key-table/merge-engine/partial-update/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/1.0/primary-key-table/merge-engine/partial-update/</guid>
+      <description>Partial Update #  By specifying &#39;merge-engine&#39; = &#39;partial-update&#39;, users have the ability to update columns of a record through multiple updates until the record is complete. This is achieved by updating the value fields one by one, using the latest data under the same primary key. However, null values are not overwritten in the process.
+For example, suppose Paimon receives three records:
+ &amp;lt;1, 23.0, 10, NULL&amp;gt;- &amp;lt;1, NULL, NULL, &#39;This is a book&#39;&amp;gt; &amp;lt;1, 25.</description>
+    </item>
+    
+    <item>
+      <title>Aggregation</title>
+      <link>//paimon.apache.org/docs/1.0/primary-key-table/merge-engine/aggregation/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/1.0/primary-key-table/merge-engine/aggregation/</guid>
+      <description>Aggregation #  NOTE: Always set table.exec.sink.upsert-materialize to NONE in Flink SQL TableConfig.  Sometimes users only care about aggregated results. The aggregation merge engine aggregates each value field with the latest data one by one under the same primary key according to the aggregate function.
+Each field not part of the primary keys can be given an aggregate function, specified by the fields.&amp;lt;field-name&amp;gt;.aggregate-function table property, otherwise it will use last_non_null_value aggregation as default.</description>
+    </item>
+    
+    <item>
+      <title>First Row</title>
+      <link>//paimon.apache.org/docs/1.0/primary-key-table/merge-engine/first-row/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/1.0/primary-key-table/merge-engine/first-row/</guid>
+      <description>First Row #  By specifying &#39;merge-engine&#39; = &#39;first-row&#39;, users can keep the first row of the same primary key. It differs from the deduplicate merge engine that in the first-row merge engine, it will generate insert only changelog.
+first-row merge engine only supports none and lookup changelog producer. For streaming queries must be used with the lookup changelog producer.   You can not specify sequence.field. Not accept DELETE and UPDATE_BEFORE message.</description>
+    </item>
+    
+  </channel>
+</rss>

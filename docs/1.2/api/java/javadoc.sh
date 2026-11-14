@@ -1,0 +1,1 @@
+/opt/hostedtoolcache/jdk/8.0.472/x64/jre/../bin/javadoc "-Xdoclint:none --allow-script-in-comments" -Xdoclint:none --ignore-source-errors -Xdoclint:none @options @packages @argfile

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Concepts on Apache Paimon</title>
+    <link>//paimon.apache.org/docs/0.8/concepts/</link>
+    <description>Recent content in Concepts on Apache Paimon</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language><atom:link href="//paimon.apache.org/docs/0.8/concepts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Overview</title>
+      <link>//paimon.apache.org/docs/0.8/concepts/overview/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/0.8/concepts/overview/</guid>
+      <description>Overview #  Apache Paimon&amp;rsquo;s Architecture:
+As shown in the architecture above:
+Read/Write: Paimon supports a versatile way to read/write data and perform OLAP queries.
+ For reads, it supports consuming data  from historical snapshots (in batch mode), from the latest offset (in streaming mode), or reading incremental snapshots in a hybrid way.   For writes, it supports  streaming synchronization from the changelog of databases (CDC) batch insert/overwrite from offline data.</description>
+    </item>
+    
+    <item>
+      <title>Basic Concepts</title>
+      <link>//paimon.apache.org/docs/0.8/concepts/basic-concepts/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/0.8/concepts/basic-concepts/</guid>
+      <description>Basic Concepts #  File Layouts #  All files of a table are stored under one base directory. Paimon files are organized in a layered style. The following image illustrates the file layout. Starting from a snapshot file, Paimon readers can recursively access all records from the table.
+Snapshot #  All snapshot files are stored in the snapshot directory.
+A snapshot file is a JSON file containing information about this snapshot, including</description>
+    </item>
+    
+    <item>
+      <title>Concurrency Control</title>
+      <link>//paimon.apache.org/docs/0.8/concepts/concurrency-control/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/0.8/concepts/concurrency-control/</guid>
+      <description>Concurrency Control #  Paimon supports optimistic concurrency for multiple concurrent write jobs.
+Each job writes data at its own pace and generates a new snapshot based on the current snapshot by applying incremental files (deleting or adding files) at the time of committing.
+There may be two types of commit failures here:
+ Snapshot conflict: the snapshot id has been preempted, the table has generated a new snapshot from another job.</description>
+    </item>
+    
+    <item>
+      <title>Specification</title>
+      <link>//paimon.apache.org/docs/0.8/concepts/specification/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/0.8/concepts/specification/</guid>
+      <description>Specification #  This is the specification for the Paimon table format, this document standardizes the underlying file structure and design of Paimon.
+Terms #   Schema: fields, primary keys definition, partition keys definition and options. Snapshot: the entrance to all data committed at some specific time point. Manifest list: includes several manifest files. Manifest: includes several data files or changelog files. Data File: contains incremental records. Changelog File: contains records produced by changelog-producer.</description>
+    </item>
+    
+  </channel>
+</rss>
