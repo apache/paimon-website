@@ -1,0 +1,2420 @@
+
+<!DOCTYPE html>
+<html lang="en" dir=>
+
+<head>
+  <meta name="generator" content="Hugo 0.80.0" />
+  
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Java API #  If possible, recommend using computing engines such as Flink SQL or Spark SQL.  Dependency #  Maven dependency:
+&lt;dependency&gt; &lt;groupId&gt;org.apache.paimon&lt;/groupId&gt; &lt;artifactId&gt;paimon-bundle&lt;/artifactId&gt; &lt;version&gt;1.1.1&lt;/version&gt; &lt;/dependency&gt; Or download the jar file: Paimon Bundle. Paimon relies on Hadoop environment, you should add hadoop classpath or bundled jar.
+Create Catalog #  Before coming into contact with the Table, you need to create a Catalog.
+import org.apache.paimon.catalog.Catalog; import org.apache.paimon.catalog.CatalogContext; import org.">
+<meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="Java API" />
+<meta property="og:description" content="Java API #  If possible, recommend using computing engines such as Flink SQL or Spark SQL.  Dependency #  Maven dependency:
+&lt;dependency&gt; &lt;groupId&gt;org.apache.paimon&lt;/groupId&gt; &lt;artifactId&gt;paimon-bundle&lt;/artifactId&gt; &lt;version&gt;1.1.1&lt;/version&gt; &lt;/dependency&gt; Or download the jar file: Paimon Bundle. Paimon relies on Hadoop environment, you should add hadoop classpath or bundled jar.
+Create Catalog #  Before coming into contact with the Table, you need to create a Catalog.
+import org.apache.paimon.catalog.Catalog; import org.apache.paimon.catalog.CatalogContext; import org." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="//paimon.apache.org/docs/1.1/program-api/java-api/" />
+
+<title>Java API | Apache Paimon</title>
+<link rel="manifest" href="/docs/1.1/manifest.json">
+<link rel="icon" href="/docs/1.1/favicon.png" type="image/x-icon">
+<link rel="stylesheet" href="/docs/1.1/book.min.3bc4108a5b57c9a7e6fcae92ff69940435f8c46c4e1e4a311aedc9b2d8e06792.css" integrity="sha256-O8QQiltXyafm/K6S/2mUBDX4xGxOHkoxGu3JstjgZ5I=">
+<script defer src="/docs/1.1/en.search.min.1fe95a11b2f99072508f610e27e21c1ed57f26edb95b683483846b16f457c842.js" integrity="sha256-H&#43;laEbL5kHJQj2EOJ&#43;IcHtV/Ju25W2g0g4RrFvRXyEI="></script>
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+  
+  
+
+<link rel="stylesheet" type="text/css" href="//paimon.apache.org/docs/1.1/font-awesome/css/font-awesome.min.css">
+<script src="//paimon.apache.org/docs/1.1/js/anchor.min.js"></script>
+<script src="//paimon.apache.org/docs/1.1/js/flink.js"></script>
+
+
+
+  
+  <script>
+    var _paq = window._paq = window._paq || [];
+     
+     
+    _paq.push(['disableCookies']);
+     
+    _paq.push(["setDomains", ["*.flink.apache.org","*.nightlies.apache.org/flink"]]);
+    _paq.push(['trackPageView']);
+    _paq.push(['enableLinkTracking']);
+    (function() {
+      var u="//matomo.privacy.apache.org/";
+      _paq.push(['setTrackerUrl', u+'matomo.php']);
+      _paq.push(['setSiteId', '1']);
+      var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+      g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+    })();
+  </script>
+  
+</head>
+
+<body dir=>
+  
+    <input type="checkbox" class="hidden toggle" id="menu-control" />
+    <input type="checkbox" class="hidden toggle" id="toc-control" />
+  
+  <main class="container flex">
+    
+      <aside class="book-menu">
+        
+  
+
+<nav>
+
+
+<a id="logo" href="//paimon.apache.org/docs/1.1">
+    <img width="100%" src="//paimon.apache.org/docs/1.1/paimon_black.svg">
+</a>
+<p style="text-align:right">1.1.1</p>
+
+<div class="book-search">
+  <input type="text" id="book-search-input" placeholder="Search" aria-label="Search" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-dc8a1c63e6da60163016ce21cae1faa0" class="toggle"  />
+    <label for="section-dc8a1c63e6da60163016ce21cae1faa0" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-book title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Concepts</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/concepts/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/concepts/basic-concepts/" class="">Basic Concepts</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/concepts/concurrency-control/" class="">Concurrency Control</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/concepts/catalog/" class="">Catalog</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-e03f934865df9dd3baca303554bcaa71" class="toggle"  />
+    <label for="section-e03f934865df9dd3baca303554bcaa71" class="flex justify-between">RESTCatalog<span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/concepts/rest/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/concepts/rest/bear/" class="">Bear Token</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/concepts/rest/dlf/" class="">DLF Token</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/concepts/rest/rest-api/" class="">REST API</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/concepts/table-types/" class="">Table Types</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/concepts/system-tables/" class="">System Tables</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/concepts/data-types/" class="">Data Types</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-d3e7256ce393050c572ea7bd8cc4f240" class="toggle"  />
+    <label for="section-d3e7256ce393050c572ea7bd8cc4f240" class="flex justify-between">Specification<span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/concepts/spec/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/concepts/spec/schema/" class="">Schema</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/concepts/spec/snapshot/" class="">Snapshot</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/concepts/spec/manifest/" class="">Manifest</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/concepts/spec/datafile/" class="">DataFile</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/concepts/spec/tableindex/" class="">Table Index</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/concepts/spec/fileindex/" class="">File Index</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-3f6a6d4f1692040009c66ffaa328c8d0" class="toggle"  />
+    <label for="section-3f6a6d4f1692040009c66ffaa328c8d0" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-database title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Table with PK</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/primary-key-table/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/primary-key-table/data-distribution/" class="">Data Distribution</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/primary-key-table/table-mode/" class="">Table Mode</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-038bb7d17b5b7cb93fb60acbcf218f11" class="toggle"  />
+    <label for="section-038bb7d17b5b7cb93fb60acbcf218f11" class="flex justify-between">Merge Engine<span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/primary-key-table/merge-engine/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/primary-key-table/merge-engine/partial-update/" class="">Partial Update</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/primary-key-table/merge-engine/aggregation/" class="">Aggregation</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/primary-key-table/merge-engine/first-row/" class="">First Row</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/primary-key-table/changelog-producer/" class="">Changelog Producer</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/primary-key-table/sequence-rowkind/" class="">Sequence & Rowkind</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/primary-key-table/compaction/" class="">Compaction</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/primary-key-table/query-performance/" class="">Query Performance</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-f74847e1c917ba2b99e7b718bb318b30" class="toggle"  />
+    <label for="section-f74847e1c917ba2b99e7b718bb318b30" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-database title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Table w/o PK</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/append-table/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/append-table/streaming/" class="">Streaming</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/append-table/query-performance/" class="">Query Performance</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/append-table/update/" class="">Update</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/append-table/bucketed/" class="">Bucketed</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-998a37410d502937fe8444ed73a9ecf8" class="toggle"  />
+    <label for="section-998a37410d502937fe8444ed73a9ecf8" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-gear title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Engine Flink</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/flink/quick-start/" class="">Quick Start</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/flink/sql-ddl/" class="">SQL DDL</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/flink/sql-write/" class="">SQL Write</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/flink/sql-query/" class="">SQL Query</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/flink/consumer-id/" class="">Consumer ID</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/flink/sql-lookup/" class="">SQL Lookup</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/flink/sql-alter/" class="">SQL Alter</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/flink/clone-tables/" class="">Clone Tables</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/flink/procedures/" class="">Procedures</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/flink/action-jars/" class="">Action Jars</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/flink/savepoint/" class="">Savepoint</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-74c63bf75b4f6bd14a3ea6a1217f03ad" class="toggle"  />
+    <label for="section-74c63bf75b4f6bd14a3ea6a1217f03ad" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-gear title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Engine Spark</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/spark/quick-start/" class="">Quick Start</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/spark/sql-ddl/" class="">SQL DDL</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/spark/sql-functions/" class="">SQL Functions</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/spark/sql-write/" class="">SQL Write</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/spark/sql-query/" class="">SQL Query</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/spark/sql-alter/" class="">SQL Alter</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/spark/auxiliary/" class="">Auxiliary</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/spark/procedures/" class="">Procedures</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-16bf9de4e97c50dda6ce1ac6e934602c" class="toggle"  />
+    <label for="section-16bf9de4e97c50dda6ce1ac6e934602c" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-gear title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Ecosystem</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/ecosystem/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/ecosystem/starrocks/" class="">StarRocks</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/ecosystem/doris/" class="">Doris</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/ecosystem/hive/" class="">Hive</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/ecosystem/trino/" class="">Trino</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/ecosystem/amoro/" class="">Amoro</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-582e435c19ca5fafbf9764337d648e63" class="toggle"  />
+    <label for="section-582e435c19ca5fafbf9764337d648e63" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-gear title maindish" aria-hidden="true"></i>&nbsp;&nbsp;CDC Ingestion</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/cdc-ingestion/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/cdc-ingestion/mysql-cdc/" class="">Mysql CDC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/cdc-ingestion/postgres-cdc/" class="">Postgres CDC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/cdc-ingestion/kafka-cdc/" class="">Kafka CDC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/cdc-ingestion/mongo-cdc/" class="">Mongo CDC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/cdc-ingestion/pulsar-cdc/" class="">Pulsar CDC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/cdc-ingestion/debezium-bson/" class="">Debezium BSON</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-697a4b6a0388d6cfa4f418aba3b4edfe" class="toggle"  />
+    <label for="section-697a4b6a0388d6cfa4f418aba3b4edfe" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-wrench title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Maintenance</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/maintenance/filesystems/" class="">Filesystems</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/maintenance/write-performance/" class="">Write Performance</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/maintenance/dedicated-compaction/" class="">Dedicated Compaction</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/maintenance/manage-snapshots/" class="">Manage Snapshots</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/maintenance/rescale-bucket/" class="">Rescale Bucket</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/maintenance/manage-tags/" class="">Manage Tags</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/maintenance/metrics/" class="">Metrics</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/maintenance/manage-privileges/" class="">Manage Privileges</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/maintenance/manage-branches/" class="">Manage Branches</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/maintenance/manage-partitions/" class="">Manage Partitions</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/maintenance/configurations/" class="">Configurations</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-049030059e0dc01edf74ba3d4d259dae" class="toggle" checked />
+    <label for="section-049030059e0dc01edf74ba3d4d259dae" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-briefcase title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Program API</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/program-api/flink-api/" class="">Flink API</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/program-api/java-api/" class=" active">Java API</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/program-api/catalog-api/" class="">Catalog API</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/program-api/python-api/" class="">Python API</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-07c567e5a9f3ce62aea4ff0a1e2dc065" class="toggle"  />
+    <label for="section-07c567e5a9f3ce62aea4ff0a1e2dc065" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-briefcase title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Migration</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/migration/migration-from-hive/" class="">Migration From Hive</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/migration/migration-from-iceberg/" class="">Migration From Iceberg</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/migration/upsert-to-partitioned/" class="">Upsert To Partitioned</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/migration/iceberg-compatibility/" class="">Iceberg Compatibility</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  	<br/>
+  
+  
+    <input type="checkbox" id="section-8c828bcf882f666cdd6821a70cc768ee" class="toggle"  />
+    <label for="section-8c828bcf882f666cdd6821a70cc768ee" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-sitemap title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Project</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/project/roadmap/" class="">Roadmap</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/project/download/" class="">Download</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/project/contributing/" class="">Contributing</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/project/committer/" class="">Committer</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-392fc6f653ae23ff676811656a71ebbf" class="toggle"  />
+    <label for="section-392fc6f653ae23ff676811656a71ebbf" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-sitemap title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Learn Paimon</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/learn-paimon/understand-files/" class="">Understand Files</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br/>
+<hr class="menu-break">
+
+<a href="//paimon.apache.org" style="color:black;margin-bottom:0.5em"><i class="link fa fa-external-link title" aria-hidden="true"></i> Project Homepage</a>
+<br/>
+
+<a href="//paimon.apache.org/docs/master/api/java/" style="color:black;margin-bottom:0.5em"><i class="link fa fa-external-link title" aria-hidden="true"></i> JavaDocs</a>
+<br/>
+
+<hr class="menu-break">
+<li style="list-style-type: none">
+  <br>
+  <input type="checkbox" id="section-version-picker" class="toggle">
+  <label for="section-version-picker" class="flex justify-between">
+     <div style="font-weight:450;margin-bottom:0.5em">Pick Docs Version</div>
+     <span>▾</span>
+  </label>
+  <ul>
+    <a href="//paimon.apache.org/docs/1.1">
+      1.1 (✓)
+    </a>
+    <hr class="menu-break">
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/master">
+          master
+        </a>
+      </li>
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/1.1">
+          stable
+        </a>
+      </li>
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/1.1">
+          1.1
+        </a>
+      </li>
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/1.0">
+          1.0
+        </a>
+      </li>
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/0.9">
+          0.9
+        </a>
+      </li>
+    
+    <hr class="menu-break">
+    <li>
+      <a href="//paimon.apache.org/docs/1.1/versions">
+          All Versions
+      </a>
+    </li>
+  </ul>
+</li>
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var menu=document.querySelector("aside.book-menu nav");addEventListener("beforeunload",function(event){localStorage.setItem("menu.scrollTop",menu.scrollTop);});menu.scrollTop=localStorage.getItem("menu.scrollTop");})();</script>
+
+
+ 
+      </aside>
+    
+
+    <div class="book-page">
+      
+        <header class="book-header">
+          
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/docs/1.1/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <strong>Java API</strong>
+
+  <label for="toc-control">
+    
+    <img src="/docs/1.1/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden clearfix">
+    
+  
+
+<nav id="TableOfContents"><h3>On This Page <button class="toc" onclick="collapseToc()"><i class="fa fa-compress" aria-hidden="true"></i></button></h3>
+  <ul>
+    <li><a href="#dependency">Dependency</a></li>
+    <li><a href="#create-catalog">Create Catalog</a></li>
+    <li><a href="#create-table">Create Table</a></li>
+    <li><a href="#get-table">Get Table</a></li>
+    <li><a href="#batch-read">Batch Read</a></li>
+    <li><a href="#batch-write">Batch Write</a></li>
+    <li><a href="#stream-read">Stream Read</a></li>
+    <li><a href="#stream-write">Stream Write</a></li>
+    <li><a href="#data-types">Data Types</a></li>
+    <li><a href="#predicate-types">Predicate Types</a></li>
+  </ul>
+</nav>
+
+
+  </aside>
+  
+ 
+        </header>
+      
+
+      
+
+
+
+
+
+
+      
+  <article class="markdown"><!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<h1 id="java-api">
+  Java API
+  <a class="anchor" href="#java-api">#</a>
+</h1>
+<blockquote class="book-hint info">
+  If possible, recommend using computing engines such as Flink SQL or Spark SQL.
+</blockquote>
+
+<h2 id="dependency">
+  Dependency
+  <a class="anchor" href="#dependency">#</a>
+</h2>
+<p>Maven dependency:</p>
+<div class="highlight"><pre class="chroma"><code class="language-xml" data-lang="xml"><span class="nt">&lt;dependency&gt;</span>
+  <span class="nt">&lt;groupId&gt;</span>org.apache.paimon<span class="nt">&lt;/groupId&gt;</span>
+  <span class="nt">&lt;artifactId&gt;</span>paimon-bundle<span class="nt">&lt;/artifactId&gt;</span>
+  <span class="nt">&lt;version&gt;</span>1.1.1<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+</code></pre></div><p>Or download the jar file:
+<a href="https://repo.maven.apache.org/maven2/org/apache/paimon/paimon-bundle/1.1.1/paimon-bundle-1.1.1.jar">Paimon Bundle</a>.
+
+
+</p>
+<p>Paimon relies on Hadoop environment, you should add hadoop classpath or bundled jar.</p>
+<h2 id="create-catalog">
+  Create Catalog
+  <a class="anchor" href="#create-catalog">#</a>
+</h2>
+<p>Before coming into contact with the Table, you need to create a Catalog.</p>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="kn">import</span> <span class="nn">org.apache.paimon.catalog.Catalog</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.paimon.catalog.CatalogContext</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.paimon.catalog.CatalogFactory</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.paimon.fs.Path</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.paimon.options.Options</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">CreateCatalog</span> <span class="o">{</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="n">Catalog</span> <span class="nf">createFilesystemCatalog</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">CatalogContext</span> <span class="n">context</span> <span class="o">=</span> <span class="n">CatalogContext</span><span class="o">.</span><span class="na">create</span><span class="o">(</span><span class="k">new</span> <span class="n">Path</span><span class="o">(</span><span class="s">&#34;...&#34;</span><span class="o">));</span>
+        <span class="k">return</span> <span class="n">CatalogFactory</span><span class="o">.</span><span class="na">createCatalog</span><span class="o">(</span><span class="n">context</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="n">Catalog</span> <span class="nf">createHiveCatalog</span><span class="o">()</span> <span class="o">{</span>
+        <span class="c1">// Paimon Hive catalog relies on Hive jars
+</span><span class="c1"></span>        <span class="c1">// You should add hive classpath or hive bundled jar.
+</span><span class="c1"></span>        <span class="n">Options</span> <span class="n">options</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Options</span><span class="o">();</span>
+        <span class="n">options</span><span class="o">.</span><span class="na">set</span><span class="o">(</span><span class="s">&#34;warehouse&#34;</span><span class="o">,</span> <span class="s">&#34;...&#34;</span><span class="o">);</span>
+        <span class="n">options</span><span class="o">.</span><span class="na">set</span><span class="o">(</span><span class="s">&#34;metastore&#34;</span><span class="o">,</span> <span class="s">&#34;hive&#34;</span><span class="o">);</span>
+        <span class="n">options</span><span class="o">.</span><span class="na">set</span><span class="o">(</span><span class="s">&#34;uri&#34;</span><span class="o">,</span> <span class="s">&#34;...&#34;</span><span class="o">);</span>
+        <span class="n">options</span><span class="o">.</span><span class="na">set</span><span class="o">(</span><span class="s">&#34;hive-conf-dir&#34;</span><span class="o">,</span> <span class="s">&#34;...&#34;</span><span class="o">);</span>
+        <span class="n">options</span><span class="o">.</span><span class="na">set</span><span class="o">(</span><span class="s">&#34;hadoop-conf-dir&#34;</span><span class="o">,</span> <span class="s">&#34;...&#34;</span><span class="o">);</span>
+        <span class="n">CatalogContext</span> <span class="n">context</span> <span class="o">=</span> <span class="n">CatalogContext</span><span class="o">.</span><span class="na">create</span><span class="o">(</span><span class="n">options</span><span class="o">);</span>
+        <span class="k">return</span> <span class="n">CatalogFactory</span><span class="o">.</span><span class="na">createCatalog</span><span class="o">(</span><span class="n">context</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div><h2 id="create-table">
+  Create Table
+  <a class="anchor" href="#create-table">#</a>
+</h2>
+<p>You can use the catalog to create tables. The created tables are persistence in the file system.
+Next time you can directly obtain these tables.</p>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="kn">import</span> <span class="nn">org.apache.paimon.catalog.Catalog</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.paimon.catalog.Identifier</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.paimon.schema.Schema</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.paimon.types.DataTypes</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">CreateTable</span> <span class="o">{</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">Schema</span><span class="o">.</span><span class="na">Builder</span> <span class="n">schemaBuilder</span> <span class="o">=</span> <span class="n">Schema</span><span class="o">.</span><span class="na">newBuilder</span><span class="o">();</span>
+        <span class="n">schemaBuilder</span><span class="o">.</span><span class="na">primaryKey</span><span class="o">(</span><span class="s">&#34;f0&#34;</span><span class="o">,</span> <span class="s">&#34;f1&#34;</span><span class="o">);</span>
+        <span class="n">schemaBuilder</span><span class="o">.</span><span class="na">partitionKeys</span><span class="o">(</span><span class="s">&#34;f1&#34;</span><span class="o">);</span>
+        <span class="n">schemaBuilder</span><span class="o">.</span><span class="na">column</span><span class="o">(</span><span class="s">&#34;f0&#34;</span><span class="o">,</span> <span class="n">DataTypes</span><span class="o">.</span><span class="na">STRING</span><span class="o">());</span>
+        <span class="n">schemaBuilder</span><span class="o">.</span><span class="na">column</span><span class="o">(</span><span class="s">&#34;f1&#34;</span><span class="o">,</span> <span class="n">DataTypes</span><span class="o">.</span><span class="na">INT</span><span class="o">());</span>
+        <span class="n">Schema</span> <span class="n">schema</span> <span class="o">=</span> <span class="n">schemaBuilder</span><span class="o">.</span><span class="na">build</span><span class="o">();</span>
+
+        <span class="n">Identifier</span> <span class="n">identifier</span> <span class="o">=</span> <span class="n">Identifier</span><span class="o">.</span><span class="na">create</span><span class="o">(</span><span class="s">&#34;my_db&#34;</span><span class="o">,</span> <span class="s">&#34;my_table&#34;</span><span class="o">);</span>
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="n">Catalog</span> <span class="n">catalog</span> <span class="o">=</span> <span class="n">CreateCatalog</span><span class="o">.</span><span class="na">createFilesystemCatalog</span><span class="o">();</span>
+            <span class="n">catalog</span><span class="o">.</span><span class="na">createTable</span><span class="o">(</span><span class="n">identifier</span><span class="o">,</span> <span class="n">schema</span><span class="o">,</span> <span class="kc">false</span><span class="o">);</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">Catalog</span><span class="o">.</span><span class="na">TableAlreadyExistException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="c1">// do something
+</span><span class="c1"></span>        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">Catalog</span><span class="o">.</span><span class="na">DatabaseNotExistException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="c1">// do something
+</span><span class="c1"></span>        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div><h2 id="get-table">
+  Get Table
+  <a class="anchor" href="#get-table">#</a>
+</h2>
+<p>The <code>Table</code> interface provides access to the table metadata and tools to read and write table.</p>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="kn">import</span> <span class="nn">org.apache.paimon.catalog.Catalog</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.paimon.catalog.Identifier</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.paimon.table.Table</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">GetTable</span> <span class="o">{</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="n">Table</span> <span class="nf">getTable</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">Identifier</span> <span class="n">identifier</span> <span class="o">=</span> <span class="n">Identifier</span><span class="o">.</span><span class="na">create</span><span class="o">(</span><span class="s">&#34;my_db&#34;</span><span class="o">,</span> <span class="s">&#34;my_table&#34;</span><span class="o">);</span>
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="n">Catalog</span> <span class="n">catalog</span> <span class="o">=</span> <span class="n">CreateCatalog</span><span class="o">.</span><span class="na">createFilesystemCatalog</span><span class="o">();</span>
+            <span class="k">return</span> <span class="n">catalog</span><span class="o">.</span><span class="na">getTable</span><span class="o">(</span><span class="n">identifier</span><span class="o">);</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">Catalog</span><span class="o">.</span><span class="na">TableNotExistException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="c1">// do something
+</span><span class="c1"></span>            <span class="k">throw</span> <span class="k">new</span> <span class="n">RuntimeException</span><span class="o">(</span><span class="s">&#34;table not exist&#34;</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div><h2 id="batch-read">
+  Batch Read
+  <a class="anchor" href="#batch-read">#</a>
+</h2>
+<p>For relatively small amounts of data, or for data that has undergone projection and filtering,
+you can directly use a standalone program to read the table data.</p>
+<p>But if the data volume of the table is relatively large, you can distribute splits to different tasks for reading.</p>
+<p>The reading is divided into two stages:</p>
+<ol>
+<li>Scan Plan: Generate plan splits in a global node (&lsquo;Coordinator&rsquo;, or named &lsquo;Driver&rsquo;).</li>
+<li>Read Split: Read split in distributed tasks.</li>
+</ol>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="kn">import</span> <span class="nn">org.apache.paimon.data.InternalRow</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.paimon.predicate.Predicate</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.paimon.predicate.PredicateBuilder</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.paimon.reader.RecordReader</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.paimon.table.Table</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.paimon.table.source.ReadBuilder</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.paimon.table.source.Split</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.paimon.table.source.TableRead</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.paimon.types.DataTypes</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.paimon.types.RowType</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">com.google.common.collect.Lists</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">java.util.List</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">ReadTable</span> <span class="o">{</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+        <span class="c1">// 1. Create a ReadBuilder and push filter (`withFilter`)
+</span><span class="c1"></span>        <span class="c1">// and projection (`withProjection`) if necessary
+</span><span class="c1"></span>        <span class="n">Table</span> <span class="n">table</span> <span class="o">=</span> <span class="n">GetTable</span><span class="o">.</span><span class="na">getTable</span><span class="o">();</span>
+
+        <span class="n">PredicateBuilder</span> <span class="n">builder</span> <span class="o">=</span>
+            <span class="k">new</span> <span class="n">PredicateBuilder</span><span class="o">(</span><span class="n">RowType</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="n">DataTypes</span><span class="o">.</span><span class="na">STRING</span><span class="o">(),</span> <span class="n">DataTypes</span><span class="o">.</span><span class="na">INT</span><span class="o">()));</span>
+        <span class="n">Predicate</span> <span class="n">notNull</span> <span class="o">=</span> <span class="n">builder</span><span class="o">.</span><span class="na">isNotNull</span><span class="o">(</span><span class="n">0</span><span class="o">);</span>
+        <span class="n">Predicate</span> <span class="n">greaterOrEqual</span> <span class="o">=</span> <span class="n">builder</span><span class="o">.</span><span class="na">greaterOrEqual</span><span class="o">(</span><span class="n">1</span><span class="o">,</span> <span class="n">12</span><span class="o">);</span>
+
+        <span class="kt">int</span><span class="o">[]</span> <span class="n">projection</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[]</span> <span class="o">{</span><span class="n">0</span><span class="o">,</span> <span class="n">1</span><span class="o">};</span>
+
+        <span class="n">ReadBuilder</span> <span class="n">readBuilder</span> <span class="o">=</span>
+            <span class="n">table</span><span class="o">.</span><span class="na">newReadBuilder</span><span class="o">()</span>
+                <span class="o">.</span><span class="na">withProjection</span><span class="o">(</span><span class="n">projection</span><span class="o">)</span>
+                <span class="o">.</span><span class="na">withFilter</span><span class="o">(</span><span class="n">Lists</span><span class="o">.</span><span class="na">newArrayList</span><span class="o">(</span><span class="n">notNull</span><span class="o">,</span> <span class="n">greaterOrEqual</span><span class="o">));</span>
+
+        <span class="c1">// 2. Plan splits in &#39;Coordinator&#39; (or named &#39;Driver&#39;)
+</span><span class="c1"></span>        <span class="n">List</span><span class="o">&lt;</span><span class="n">Split</span><span class="o">&gt;</span> <span class="n">splits</span> <span class="o">=</span> <span class="n">readBuilder</span><span class="o">.</span><span class="na">newScan</span><span class="o">().</span><span class="na">plan</span><span class="o">().</span><span class="na">splits</span><span class="o">();</span>
+
+        <span class="c1">// 3. Distribute these splits to different tasks
+</span><span class="c1"></span>
+        <span class="c1">// 4. Read a split in task
+</span><span class="c1"></span>        <span class="n">TableRead</span> <span class="n">read</span> <span class="o">=</span> <span class="n">readBuilder</span><span class="o">.</span><span class="na">newRead</span><span class="o">();</span>
+        <span class="n">RecordReader</span><span class="o">&lt;</span><span class="n">InternalRow</span><span class="o">&gt;</span> <span class="n">reader</span> <span class="o">=</span> <span class="n">read</span><span class="o">.</span><span class="na">createReader</span><span class="o">(</span><span class="n">splits</span><span class="o">);</span>
+        <span class="n">reader</span><span class="o">.</span><span class="na">forEachRemaining</span><span class="o">(</span><span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">::</span><span class="n">println</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div><h2 id="batch-write">
+  Batch Write
+  <a class="anchor" href="#batch-write">#</a>
+</h2>
+<p>The writing is divided into two stages:</p>
+<ol>
+<li>Write records: Write records in distributed tasks, generate commit messages.</li>
+<li>Commit/Abort: Collect all CommitMessages, commit them in a global node (&lsquo;Coordinator&rsquo;, or named &lsquo;Driver&rsquo;, or named &lsquo;Committer&rsquo;).
+When the commit fails for certain reason, abort unsuccessful commit via CommitMessages.</li>
+</ol>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="kn">import</span> <span class="nn">org.apache.paimon.data.BinaryString</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.paimon.data.GenericRow</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.paimon.table.Table</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.paimon.table.sink.BatchTableCommit</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.paimon.table.sink.BatchTableWrite</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.paimon.table.sink.BatchWriteBuilder</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.paimon.table.sink.CommitMessage</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">java.util.List</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">BatchWrite</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+        <span class="c1">// 1. Create a WriteBuilder (Serializable)
+</span><span class="c1"></span>        <span class="n">Table</span> <span class="n">table</span> <span class="o">=</span> <span class="n">GetTable</span><span class="o">.</span><span class="na">getTable</span><span class="o">();</span>
+        <span class="n">BatchWriteBuilder</span> <span class="n">writeBuilder</span> <span class="o">=</span> <span class="n">table</span><span class="o">.</span><span class="na">newBatchWriteBuilder</span><span class="o">().</span><span class="na">withOverwrite</span><span class="o">();</span>
+
+        <span class="c1">// 2. Write records in distributed tasks
+</span><span class="c1"></span>        <span class="n">BatchTableWrite</span> <span class="n">write</span> <span class="o">=</span> <span class="n">writeBuilder</span><span class="o">.</span><span class="na">newWrite</span><span class="o">();</span>
+
+        <span class="n">GenericRow</span> <span class="n">record1</span> <span class="o">=</span> <span class="n">GenericRow</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="n">BinaryString</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">&#34;Alice&#34;</span><span class="o">),</span> <span class="n">12</span><span class="o">);</span>
+        <span class="n">GenericRow</span> <span class="n">record2</span> <span class="o">=</span> <span class="n">GenericRow</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="n">BinaryString</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">&#34;Bob&#34;</span><span class="o">),</span> <span class="n">5</span><span class="o">);</span>
+        <span class="n">GenericRow</span> <span class="n">record3</span> <span class="o">=</span> <span class="n">GenericRow</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="n">BinaryString</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">&#34;Emily&#34;</span><span class="o">),</span> <span class="n">18</span><span class="o">);</span>
+
+        <span class="c1">// If this is a distributed write, you can use writeBuilder.newWriteSelector.
+</span><span class="c1"></span>        <span class="c1">// WriteSelector determines to which logical downstream writers a record should be written to.
+</span><span class="c1"></span>        <span class="c1">// If it returns empty, no data distribution is required.
+</span><span class="c1"></span>
+        <span class="n">write</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="n">record1</span><span class="o">);</span>
+        <span class="n">write</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="n">record2</span><span class="o">);</span>
+        <span class="n">write</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="n">record3</span><span class="o">);</span>
+
+        <span class="n">List</span><span class="o">&lt;</span><span class="n">CommitMessage</span><span class="o">&gt;</span> <span class="n">messages</span> <span class="o">=</span> <span class="n">write</span><span class="o">.</span><span class="na">prepareCommit</span><span class="o">();</span>
+
+        <span class="c1">// 3. Collect all CommitMessages to a global node and commit
+</span><span class="c1"></span>        <span class="n">BatchTableCommit</span> <span class="n">commit</span> <span class="o">=</span> <span class="n">writeBuilder</span><span class="o">.</span><span class="na">newCommit</span><span class="o">();</span>
+        <span class="n">commit</span><span class="o">.</span><span class="na">commit</span><span class="o">(</span><span class="n">messages</span><span class="o">);</span>
+
+        <span class="c1">// Abort unsuccessful commit to delete data files
+</span><span class="c1"></span>        <span class="c1">// commit.abort(messages);
+</span><span class="c1"></span>    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div><h2 id="stream-read">
+  Stream Read
+  <a class="anchor" href="#stream-read">#</a>
+</h2>
+<p>The difference of Stream Read is that StreamTableScan can continuously scan and generate splits.</p>
+<p>StreamTableScan provides the ability to checkpoint and restore, which can let you save the correct state
+during stream reading.</p>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="kn">import</span> <span class="nn">org.apache.paimon.data.InternalRow</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.paimon.predicate.Predicate</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.paimon.predicate.PredicateBuilder</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.paimon.reader.RecordReader</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.paimon.table.Table</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.paimon.table.source.ReadBuilder</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.paimon.table.source.Split</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.paimon.table.source.StreamTableScan</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.paimon.table.source.TableRead</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.paimon.types.DataTypes</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.paimon.types.RowType</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">com.google.common.collect.Lists</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">java.util.List</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">StreamReadTable</span> <span class="o">{</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+        <span class="c1">// 1. Create a ReadBuilder and push filter (`withFilter`)
+</span><span class="c1"></span>        <span class="c1">// and projection (`withProjection`) if necessary
+</span><span class="c1"></span>        <span class="n">Table</span> <span class="n">table</span> <span class="o">=</span> <span class="n">GetTable</span><span class="o">.</span><span class="na">getTable</span><span class="o">();</span>
+
+        <span class="n">PredicateBuilder</span> <span class="n">builder</span> <span class="o">=</span>
+            <span class="k">new</span> <span class="n">PredicateBuilder</span><span class="o">(</span><span class="n">RowType</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="n">DataTypes</span><span class="o">.</span><span class="na">STRING</span><span class="o">(),</span> <span class="n">DataTypes</span><span class="o">.</span><span class="na">INT</span><span class="o">()));</span>
+        <span class="n">Predicate</span> <span class="n">notNull</span> <span class="o">=</span> <span class="n">builder</span><span class="o">.</span><span class="na">isNotNull</span><span class="o">(</span><span class="n">0</span><span class="o">);</span>
+        <span class="n">Predicate</span> <span class="n">greaterOrEqual</span> <span class="o">=</span> <span class="n">builder</span><span class="o">.</span><span class="na">greaterOrEqual</span><span class="o">(</span><span class="n">1</span><span class="o">,</span> <span class="n">12</span><span class="o">);</span>
+
+        <span class="kt">int</span><span class="o">[]</span> <span class="n">projection</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[]</span> <span class="o">{</span><span class="n">0</span><span class="o">,</span> <span class="n">1</span><span class="o">};</span>
+
+        <span class="n">ReadBuilder</span> <span class="n">readBuilder</span> <span class="o">=</span>
+            <span class="n">table</span><span class="o">.</span><span class="na">newReadBuilder</span><span class="o">()</span>
+                <span class="o">.</span><span class="na">withProjection</span><span class="o">(</span><span class="n">projection</span><span class="o">)</span>
+                <span class="o">.</span><span class="na">withFilter</span><span class="o">(</span><span class="n">Lists</span><span class="o">.</span><span class="na">newArrayList</span><span class="o">(</span><span class="n">notNull</span><span class="o">,</span> <span class="n">greaterOrEqual</span><span class="o">));</span>
+
+        <span class="c1">// 2. Plan splits in &#39;Coordinator&#39; (or named &#39;Driver&#39;)
+</span><span class="c1"></span>        <span class="n">StreamTableScan</span> <span class="n">scan</span> <span class="o">=</span> <span class="n">readBuilder</span><span class="o">.</span><span class="na">newStreamScan</span><span class="o">();</span>
+        <span class="k">while</span> <span class="o">(</span><span class="kc">true</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">List</span><span class="o">&lt;</span><span class="n">Split</span><span class="o">&gt;</span> <span class="n">splits</span> <span class="o">=</span> <span class="n">scan</span><span class="o">.</span><span class="na">plan</span><span class="o">().</span><span class="na">splits</span><span class="o">();</span>
+            <span class="c1">// Distribute these splits to different tasks
+</span><span class="c1"></span>
+            <span class="n">Long</span> <span class="n">state</span> <span class="o">=</span> <span class="n">scan</span><span class="o">.</span><span class="na">checkpoint</span><span class="o">();</span>
+            <span class="c1">// can be restored in scan.restore(state) after fail over
+</span><span class="c1"></span>
+            <span class="c1">// 3. Read a split in task
+</span><span class="c1"></span>            <span class="n">TableRead</span> <span class="n">read</span> <span class="o">=</span> <span class="n">readBuilder</span><span class="o">.</span><span class="na">newRead</span><span class="o">();</span>
+            <span class="n">RecordReader</span><span class="o">&lt;</span><span class="n">InternalRow</span><span class="o">&gt;</span> <span class="n">reader</span> <span class="o">=</span> <span class="n">read</span><span class="o">.</span><span class="na">createReader</span><span class="o">(</span><span class="n">splits</span><span class="o">);</span>
+            <span class="n">reader</span><span class="o">.</span><span class="na">forEachRemaining</span><span class="o">(</span><span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">::</span><span class="n">println</span><span class="o">);</span>
+
+            <span class="n">Thread</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="n">1000</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div><h2 id="stream-write">
+  Stream Write
+  <a class="anchor" href="#stream-write">#</a>
+</h2>
+<p>The difference of Stream Write is that StreamTableCommit can continuously commit.</p>
+<p>Key points to achieve exactly-once consistency:</p>
+<ul>
+<li>CommitUser represents a user. A user can commit multiple times. In distributed processing, you are
+expected to use the same commitUser.</li>
+<li>Different applications need to use different commitUsers.</li>
+<li>The commitIdentifier of <code>StreamTableWrite</code> and <code>StreamTableCommit</code> needs to be consistent, and the
+id needs to be incremented for the next committing.</li>
+<li>When a failure occurs, if you still have uncommitted <code>CommitMessage</code>s, please use <code>StreamTableCommit#filterAndCommit</code>
+to exclude the committed messages by commitIdentifier.</li>
+</ul>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="kn">import</span> <span class="nn">org.apache.paimon.data.BinaryString</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.paimon.data.GenericRow</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.paimon.table.Table</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.paimon.table.sink.CommitMessage</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.paimon.table.sink.StreamTableCommit</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.paimon.table.sink.StreamTableWrite</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.paimon.table.sink.StreamWriteBuilder</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">java.util.List</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">StreamWriteTable</span> <span class="o">{</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+        <span class="c1">// 1. Create a WriteBuilder (Serializable)
+</span><span class="c1"></span>        <span class="n">Table</span> <span class="n">table</span> <span class="o">=</span> <span class="n">GetTable</span><span class="o">.</span><span class="na">getTable</span><span class="o">();</span>
+        <span class="n">StreamWriteBuilder</span> <span class="n">writeBuilder</span> <span class="o">=</span> <span class="n">table</span><span class="o">.</span><span class="na">newStreamWriteBuilder</span><span class="o">();</span>
+
+        <span class="c1">// 2. Write records in distributed tasks
+</span><span class="c1"></span>        <span class="n">StreamTableWrite</span> <span class="n">write</span> <span class="o">=</span> <span class="n">writeBuilder</span><span class="o">.</span><span class="na">newWrite</span><span class="o">();</span>
+        <span class="c1">// commitIdentifier like Flink checkpointId
+</span><span class="c1"></span>        <span class="kt">long</span> <span class="n">commitIdentifier</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span>
+
+        <span class="k">while</span> <span class="o">(</span><span class="kc">true</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">GenericRow</span> <span class="n">record1</span> <span class="o">=</span> <span class="n">GenericRow</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="n">BinaryString</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">&#34;Alice&#34;</span><span class="o">),</span> <span class="n">12</span><span class="o">);</span>
+            <span class="n">GenericRow</span> <span class="n">record2</span> <span class="o">=</span> <span class="n">GenericRow</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="n">BinaryString</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">&#34;Bob&#34;</span><span class="o">),</span> <span class="n">5</span><span class="o">);</span>
+            <span class="n">GenericRow</span> <span class="n">record3</span> <span class="o">=</span> <span class="n">GenericRow</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="n">BinaryString</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">&#34;Emily&#34;</span><span class="o">),</span> <span class="n">18</span><span class="o">);</span>
+
+            <span class="c1">// If this is a distributed write, you can use writeBuilder.newWriteSelector.
+</span><span class="c1"></span>            <span class="c1">// WriteSelector determines to which logical downstream writers a record should be written to.
+</span><span class="c1"></span>            <span class="c1">// If it returns empty, no data distribution is required.
+</span><span class="c1"></span>
+            <span class="n">write</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="n">record1</span><span class="o">);</span>
+            <span class="n">write</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="n">record2</span><span class="o">);</span>
+            <span class="n">write</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="n">record3</span><span class="o">);</span>
+            <span class="n">List</span><span class="o">&lt;</span><span class="n">CommitMessage</span><span class="o">&gt;</span> <span class="n">messages</span> <span class="o">=</span> <span class="n">write</span><span class="o">.</span><span class="na">prepareCommit</span><span class="o">(</span><span class="kc">false</span><span class="o">,</span> <span class="n">commitIdentifier</span><span class="o">);</span>
+            <span class="n">commitIdentifier</span><span class="o">++;</span>
+
+            <span class="c1">// 3. Collect all CommitMessages to a global node and commit
+</span><span class="c1"></span>            <span class="n">StreamTableCommit</span> <span class="n">commit</span> <span class="o">=</span> <span class="n">writeBuilder</span><span class="o">.</span><span class="na">newCommit</span><span class="o">();</span>
+            <span class="n">commit</span><span class="o">.</span><span class="na">commit</span><span class="o">(</span><span class="n">commitIdentifier</span><span class="o">,</span> <span class="n">messages</span><span class="o">);</span>
+
+            <span class="c1">// 4. When failure occurs and you&#39;re not sure if the commit process is successful,
+</span><span class="c1"></span>            <span class="c1">//    you can use `filterAndCommit` to retry the commit process.
+</span><span class="c1"></span>            <span class="c1">//    Succeeded commits will be automatically skipped.
+</span><span class="c1"></span>            <span class="cm">/*
+</span><span class="cm">            Map&lt;Long, List&lt;CommitMessage&gt;&gt; commitIdentifiersAndMessages = new HashMap&lt;&gt;();
+</span><span class="cm">            commitIdentifiersAndMessages.put(commitIdentifier, messages);
+</span><span class="cm">            commit.filterAndCommit(commitIdentifiersAndMessages);
+</span><span class="cm">            */</span>
+
+            <span class="n">Thread</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="n">1000</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div><h2 id="data-types">
+  Data Types
+  <a class="anchor" href="#data-types">#</a>
+</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Java</th>
+<th style="text-align:left">Paimon</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">boolean</td>
+<td style="text-align:left">boolean</td>
+</tr>
+<tr>
+<td style="text-align:left">byte</td>
+<td style="text-align:left">byte</td>
+</tr>
+<tr>
+<td style="text-align:left">short</td>
+<td style="text-align:left">short</td>
+</tr>
+<tr>
+<td style="text-align:left">int</td>
+<td style="text-align:left">int</td>
+</tr>
+<tr>
+<td style="text-align:left">long</td>
+<td style="text-align:left">long</td>
+</tr>
+<tr>
+<td style="text-align:left">float</td>
+<td style="text-align:left">float</td>
+</tr>
+<tr>
+<td style="text-align:left">double</td>
+<td style="text-align:left">double</td>
+</tr>
+<tr>
+<td style="text-align:left">string</td>
+<td style="text-align:left">org.apache.paimon.data.BinaryString</td>
+</tr>
+<tr>
+<td style="text-align:left">decimal</td>
+<td style="text-align:left">org.apache.paimon.data.Decimal</td>
+</tr>
+<tr>
+<td style="text-align:left">timestamp</td>
+<td style="text-align:left">org.apache.paimon.data.Timestamp</td>
+</tr>
+<tr>
+<td style="text-align:left">byte[]</td>
+<td style="text-align:left">byte[]</td>
+</tr>
+<tr>
+<td style="text-align:left">array</td>
+<td style="text-align:left">org.apache.paimon.data.InternalArray</td>
+</tr>
+<tr>
+<td style="text-align:left">map</td>
+<td style="text-align:left">org.apache.paimon.data.InternalMap</td>
+</tr>
+<tr>
+<td style="text-align:left">InternalRow</td>
+<td style="text-align:left">org.apache.paimon.data.InternalRow</td>
+</tr>
+</tbody>
+</table>
+<h2 id="predicate-types">
+  Predicate Types
+  <a class="anchor" href="#predicate-types">#</a>
+</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">SQL Predicate</th>
+<th style="text-align:left">Paimon Predicate</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">and</td>
+<td style="text-align:left">org.apache.paimon.predicate.PredicateBuilder.And</td>
+</tr>
+<tr>
+<td style="text-align:left">or</td>
+<td style="text-align:left">org.apache.paimon.predicate.PredicateBuilder.Or</td>
+</tr>
+<tr>
+<td style="text-align:left">is null</td>
+<td style="text-align:left">org.apache.paimon.predicate.PredicateBuilder.IsNull</td>
+</tr>
+<tr>
+<td style="text-align:left">is not null</td>
+<td style="text-align:left">org.apache.paimon.predicate.PredicateBuilder.IsNotNull</td>
+</tr>
+<tr>
+<td style="text-align:left">in</td>
+<td style="text-align:left">org.apache.paimon.predicate.PredicateBuilder.In</td>
+</tr>
+<tr>
+<td style="text-align:left">not in</td>
+<td style="text-align:left">org.apache.paimon.predicate.PredicateBuilder.NotIn</td>
+</tr>
+<tr>
+<td style="text-align:left">=</td>
+<td style="text-align:left">org.apache.paimon.predicate.PredicateBuilder.Equal</td>
+</tr>
+<tr>
+<td style="text-align:left">&lt;&gt;</td>
+<td style="text-align:left">org.apache.paimon.predicate.PredicateBuilder.NotEqual</td>
+</tr>
+<tr>
+<td style="text-align:left">&lt;</td>
+<td style="text-align:left">org.apache.paimon.predicate.PredicateBuilder.LessThan</td>
+</tr>
+<tr>
+<td style="text-align:left">&lt;=</td>
+<td style="text-align:left">org.apache.paimon.predicate.PredicateBuilder.LessOrEqual</td>
+</tr>
+<tr>
+<td style="text-align:left">&gt;</td>
+<td style="text-align:left">org.apache.paimon.predicate.PredicateBuilder.GreaterThan</td>
+</tr>
+<tr>
+<td style="text-align:left">&gt;=</td>
+<td style="text-align:left">org.apache.paimon.predicate.PredicateBuilder.GreaterOrEqual</td>
+</tr>
+</tbody>
+</table>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  
+
+
+
+
+<a href="//github.com/apache/paimon/edit/1.1/docs/content/program-api/java-api.md" style="color:black"><i class="fa fa-edit fa-fw"></i>Edit This Page</a>
+
+
+ 
+        
+
+
+<hr style="margin-top: 20px; border: 1px solid #e5e5e5;" />
+
+<table style="border-spacing: 10px;">
+    <tbody>
+    <tr>
+        <td colspan="2">
+            Copyright &copy; 2024 The Apache Software Foundation. Apache Paimon, Paimon, and its feather logo are
+            trademarks of The Apache Software Foundation.
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+      </footer>
+
+      
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      
+  
+
+<nav id="TableOfContents"><h3>On This Page <button class="toc" onclick="collapseToc()"><i class="fa fa-compress" aria-hidden="true"></i></button></h3>
+  <ul>
+    <li><a href="#dependency">Dependency</a></li>
+    <li><a href="#create-catalog">Create Catalog</a></li>
+    <li><a href="#create-table">Create Table</a></li>
+    <li><a href="#get-table">Get Table</a></li>
+    <li><a href="#batch-read">Batch Read</a></li>
+    <li><a href="#batch-write">Batch Write</a></li>
+    <li><a href="#stream-read">Stream Read</a></li>
+    <li><a href="#stream-write">Stream Write</a></li>
+    <li><a href="#data-types">Data Types</a></li>
+    <li><a href="#predicate-types">Predicate Types</a></li>
+  </ul>
+</nav>
+
+ 
+    </aside>
+    <aside class="expand-toc">
+      <button class="toc" onclick="expandToc()">
+        <i class="fa fa-expand" aria-hidden="true"></i>
+      </button>
+    </aside>
+    
+  </main>
+
+  
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
