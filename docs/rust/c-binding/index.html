@@ -1,0 +1,2460 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="The Rust implementation of Apache Paimon">
+      
+      
+      
+        <link rel="canonical" href="https://apache.github.io/paimon-rust/c-binding/">
+      
+      
+        <link rel="prev" href="../benchmark/">
+      
+      
+        <link rel="next" href="../go-binding/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.2">
+    
+    
+      
+        <title>C Integration - Apache Paimon Rust</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#c-integration" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Apache Paimon Rust" class="md-header__button md-logo" aria-label="Apache Paimon Rust" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Apache Paimon Rust
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              C Integration
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/apache/paimon-rust" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    apache/paimon-rust
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Apache Paimon Rust" class="md-nav__button md-logo" aria-label="Apache Paimon Rust" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Apache Paimon Rust
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/apache/paimon-rust" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    apache/paimon-rust
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../getting-started/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../incremental-reading/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Batch Incremental Reading
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../streaming-reading/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Streaming Reading
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../compaction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Table Compaction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sql/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SQL Integration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../benchmark/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Performance
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    C Integration
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    C Integration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prerequisites
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#building-the-library-and-header" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Building the Library and Header
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#structured-projections" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Structured Projections
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#opening-and-scanning-a-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Opening and Scanning a Table
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Opening and Scanning a Table">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#time-travel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Time Travel
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tag-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tag Management
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#caller-managed-file-cache" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Caller-managed File Cache
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reading-arrow-record-batches" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reading Arrow Record Batches
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Reading Arrow Record Batches">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#shared-reader-memory-budget" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Shared Reader Memory Budget
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#current-state-audit-reads" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Current-state Audit Reads
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#projection-and-predicates" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Projection and Predicates
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#vector-scan-plan-and-read" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Vector Scan, Plan, and Read
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Vector Scan, Plan, and Read">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#java-planned-pk-bucket-splits" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Java-planned PK Bucket Splits
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Java-planned PK Bucket Splits">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#serialize-on-the-java-side" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Serialize on the Java Side
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#read-the-assigned-splits-through-c" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Read the Assigned Splits through C
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#writing-and-committing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Writing and Committing
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Writing and Committing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#exporting-the-tables-write-schema" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exporting the Table's Write Schema
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cross-process-commit-messages" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cross-process Commit Messages
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shared-writer-memory-reservations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Shared Writer Memory Reservations
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#error-handling-and-resource-ownership" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Error Handling and Resource Ownership
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#schema-only-partition-and-bucket-routing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Schema-only Partition and Bucket Routing
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../go-binding/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Go Integration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../python-binding/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Python Integration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../contributing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contributing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_13" >
+        
+          
+          <label class="md-nav__link" for="__nav_13" id="__nav_13_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Releases
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_13_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_13">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Releases
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../releases/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Releases
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../release/creating-a-release/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Creating a Release
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../release/verifying-a-release-candidate/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Verifying a Release Candidate
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prerequisites
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#building-the-library-and-header" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Building the Library and Header
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#structured-projections" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Structured Projections
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#opening-and-scanning-a-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Opening and Scanning a Table
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Opening and Scanning a Table">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#time-travel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Time Travel
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tag-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tag Management
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#caller-managed-file-cache" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Caller-managed File Cache
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reading-arrow-record-batches" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reading Arrow Record Batches
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Reading Arrow Record Batches">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#shared-reader-memory-budget" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Shared Reader Memory Budget
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#current-state-audit-reads" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Current-state Audit Reads
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#projection-and-predicates" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Projection and Predicates
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#vector-scan-plan-and-read" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Vector Scan, Plan, and Read
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Vector Scan, Plan, and Read">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#java-planned-pk-bucket-splits" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Java-planned PK Bucket Splits
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Java-planned PK Bucket Splits">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#serialize-on-the-java-side" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Serialize on the Java Side
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#read-the-assigned-splits-through-c" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Read the Assigned Splits through C
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#writing-and-committing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Writing and Committing
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Writing and Committing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#exporting-the-tables-write-schema" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exporting the Table's Write Schema
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cross-process-commit-messages" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cross-process Commit Messages
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shared-writer-memory-reservations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Shared Writer Memory Reservations
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#error-handling-and-resource-ownership" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Error Handling and Resource Ownership
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#schema-only-partition-and-bucket-routing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Schema-only Partition and Bucket Routing
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+
+<h1 id="c-integration">C Integration<a class="headerlink" href="#c-integration" title="Permanent link">&para;</a></h1>
+<p>The C integration exposes Apache Paimon Rust through a C ABI. It provides
+catalog and table access, scan planning, predicate push-down, streaming reads,
+writes and commits, and vector search. Record batches cross the ABI through the
+<a href="https://arrow.apache.org/docs/format/CDataInterface.html">Arrow C Data Interface</a>.</p>
+<p>The C binding is currently built from source. The repository does not check in
+a generated header or publish pre-built C packages.</p>
+<h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h2>
+<ul>
+<li>A Rust toolchain supported by this repository</li>
+<li>A C11-compatible compiler</li>
+<li><a href="https://github.com/mozilla/cbindgen"><code>cbindgen</code></a> for generating the C header</li>
+<li>An Arrow implementation if the application reads or writes record batches</li>
+</ul>
+<p>Install <code>cbindgen</code> when it is not already available:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>cargo<span class="w"> </span>install<span class="w"> </span>cbindgen<span class="w"> </span>--locked
+</code></pre></div>
+<h2 id="building-the-library-and-header">Building the Library and Header<a class="headerlink" href="#building-the-library-and-header" title="Permanent link">&para;</a></h2>
+<p>Run the following commands from the repository root:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>cargo<span class="w"> </span>build<span class="w"> </span>--release<span class="w"> </span>-p<span class="w"> </span>paimon-c
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>cbindgen<span class="w"> </span>bindings/c<span class="w"> </span>--lang<span class="w"> </span>c<span class="w"> </span>--output<span class="w"> </span>target/release/paimon.h
+</code></pre></div>
+<p>The build produces a dynamic library and a static library under
+<code>target/release/</code>. Dynamic library names are platform-specific:</p>
+<table>
+<thead>
+<tr>
+<th>Platform</th>
+<th>Dynamic library</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Linux</td>
+<td><code>libpaimon_c.so</code></td>
+</tr>
+<tr>
+<td>macOS</td>
+<td><code>libpaimon_c.dylib</code></td>
+</tr>
+<tr>
+<td>Windows</td>
+<td><code>paimon_c.dll</code></td>
+</tr>
+</tbody>
+</table>
+<p>Link the generated header and library into an application:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>cc<span class="w"> </span>-std<span class="o">=</span>c11<span class="w"> </span>example.c<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">  </span>-Itarget/release<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">  </span>-Ltarget/release<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">  </span>-lpaimon_c<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">  </span>-o<span class="w"> </span>example
+</code></pre></div>
+<p>Make the dynamic library visible when running the executable. For example:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># Linux</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="nv">LD_LIBRARY_PATH</span><span class="o">=</span>target/release<span class="w"> </span>./example<span class="w"> </span>/path/to/warehouse
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="c1"># macOS</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="nv">DYLD_LIBRARY_PATH</span><span class="o">=</span>target/release<span class="w"> </span>./example<span class="w"> </span>/path/to/warehouse
+</code></pre></div>
+<h2 id="structured-projections">Structured Projections<a class="headerlink" href="#structured-projections" title="Permanent link">&para;</a></h2>
+<p><code>paimon_read_builder_with_read_type_json</code> accepts a JSON array of Paimon
+DataFields for nested projections. Each field retains its schema ID and selected
+recursive type, for example:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="p">[{</span><span class="nt">"id"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="nt">"name"</span><span class="p">:</span><span class="s2">"payload"</span><span class="p">,</span><span class="nt">"type"</span><span class="p">:{</span><span class="nt">"type"</span><span class="p">:</span><span class="s2">"ROW"</span><span class="p">,</span><span class="nt">"fields"</span><span class="p">:[{</span><span class="nt">"id"</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span><span class="nt">"name"</span><span class="p">:</span><span class="s2">"selected"</span><span class="p">,</span><span class="nt">"type"</span><span class="p">:</span><span class="s2">"INT"</span><span class="p">}]}}]</span>
+</code></pre></div>
+<p>Use the IDs from the resolved table schema. This selects <code>payload.selected</code>
+without requesting the other fields of <code>payload</code>; ARRAY elements and MAP values
+can likewise carry projected ROW types. It uses the core <code>with_read_type</code>
+contract, including schema-evolution and format-specific validation. It changes
+the read type, not the table's stored schema.</p>
+<p>The JSON is copied during the call. The last successful call to this API or
+<code>paimon_read_builder_with_projection</code> selects the projection; JSON decoding errors
+leave the previous selection intact. <code>[]</code> selects zero columns while retaining
+row counts, and a null pointer clears the projection. Case sensitivity applies
+to name projections; an explicit read type keeps its supplied field identities.</p>
+<p>Use <code>paimon_plan_from_split_bytes</code> with a Java DataSplit body, an IndexedSplit
+body, or a SplitSerializer v1 frame. To read a split's scores, call
+<code>paimon_read_builder_with_index_score(builder, "similarity")</code> and select one
+indexed split in <code>paimon_table_read_to_arrow</code>. The reader appends a nullable
+Float32 column with that name to the projected table fields. An unscored split
+produces nulls. Passing a null name clears the score request. A projected table
+column and the score must have distinct output names. Tracked reads preserve the
+scores of surviving rows after filtering. File-position reads apply deletion
+vectors and require a predicate-free builder.</p>
+<h2 id="opening-and-scanning-a-table">Opening and Scanning a Table<a class="headerlink" href="#opening-and-scanning-a-table" title="Permanent link">&para;</a></h2>
+<p>The following program opens <code>default.my_table</code> from a filesystem catalog and
+plans its data splits. Result structs contain either the requested handle or a
+non-null error.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdint.h&gt;</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdlib.h&gt;</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">"paimon.h"</span>
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="cp">#define CHECK_RESULT(result)                                                \</span>
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="cp">    do {                                                                    \</span>
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="cp">        if ((result).error != NULL) {                                       \</span>
+<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="cp">            fprintf(stderr, "Paimon error %d: %.*s\n",                     \</span>
+<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a><span class="cp">                    (result).error-&gt;code,                                   \</span>
+<a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a><span class="cp">                    (int)(result).error-&gt;message.len,                       \</span>
+<a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a><span class="cp">                    (const char *)(result).error-&gt;message.data);            \</span>
+<a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a><span class="cp">            paimon_error_free((result).error);                              \</span>
+<a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a><span class="cp">            goto cleanup;                                                   \</span>
+<a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a><span class="cp">        }                                                                   \</span>
+<a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a><span class="cp">    } while (0)</span>
+<a id="__codelineno-5-18" name="__codelineno-5-18" href="#__codelineno-5-18"></a>
+<a id="__codelineno-5-19" name="__codelineno-5-19" href="#__codelineno-5-19"></a><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">**</span><span class="n">argv</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-5-20" name="__codelineno-5-20" href="#__codelineno-5-20"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">EXIT_FAILURE</span><span class="p">;</span>
+<a id="__codelineno-5-21" name="__codelineno-5-21" href="#__codelineno-5-21"></a><span class="w">    </span><span class="n">paimon_catalog</span><span class="w"> </span><span class="o">*</span><span class="n">catalog</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span>
+<a id="__codelineno-5-22" name="__codelineno-5-22" href="#__codelineno-5-22"></a><span class="w">    </span><span class="n">paimon_identifier</span><span class="w"> </span><span class="o">*</span><span class="n">identifier</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span>
+<a id="__codelineno-5-23" name="__codelineno-5-23" href="#__codelineno-5-23"></a><span class="w">    </span><span class="n">paimon_table</span><span class="w"> </span><span class="o">*</span><span class="n">table</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span>
+<a id="__codelineno-5-24" name="__codelineno-5-24" href="#__codelineno-5-24"></a><span class="w">    </span><span class="n">paimon_read_builder</span><span class="w"> </span><span class="o">*</span><span class="n">read_builder</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span>
+<a id="__codelineno-5-25" name="__codelineno-5-25" href="#__codelineno-5-25"></a><span class="w">    </span><span class="n">paimon_table_scan</span><span class="w"> </span><span class="o">*</span><span class="n">scan</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span>
+<a id="__codelineno-5-26" name="__codelineno-5-26" href="#__codelineno-5-26"></a><span class="w">    </span><span class="n">paimon_plan</span><span class="w"> </span><span class="o">*</span><span class="n">plan</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span>
+<a id="__codelineno-5-27" name="__codelineno-5-27" href="#__codelineno-5-27"></a>
+<a id="__codelineno-5-28" name="__codelineno-5-28" href="#__codelineno-5-28"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">argc</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-5-29" name="__codelineno-5-29" href="#__codelineno-5-29"></a><span class="w">        </span><span class="n">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span><span class="w"> </span><span class="s">"usage: %s WAREHOUSE</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span><span class="w"> </span><span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+<a id="__codelineno-5-30" name="__codelineno-5-30" href="#__codelineno-5-30"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">EXIT_FAILURE</span><span class="p">;</span>
+<a id="__codelineno-5-31" name="__codelineno-5-31" href="#__codelineno-5-31"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-5-32" name="__codelineno-5-32" href="#__codelineno-5-32"></a>
+<a id="__codelineno-5-33" name="__codelineno-5-33" href="#__codelineno-5-33"></a><span class="w">    </span><span class="n">paimon_option</span><span class="w"> </span><span class="n">options</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-5-34" name="__codelineno-5-34" href="#__codelineno-5-34"></a><span class="w">        </span><span class="p">{.</span><span class="n">key</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"warehouse"</span><span class="p">,</span><span class="w"> </span><span class="p">.</span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]},</span>
+<a id="__codelineno-5-35" name="__codelineno-5-35" href="#__codelineno-5-35"></a><span class="w">    </span><span class="p">};</span>
+<a id="__codelineno-5-36" name="__codelineno-5-36" href="#__codelineno-5-36"></a><span class="w">    </span><span class="n">paimon_result_catalog_new</span><span class="w"> </span><span class="n">catalog_result</span><span class="w"> </span><span class="o">=</span>
+<a id="__codelineno-5-37" name="__codelineno-5-37" href="#__codelineno-5-37"></a><span class="w">        </span><span class="n">paimon_catalog_create</span><span class="p">(</span><span class="n">options</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+<a id="__codelineno-5-38" name="__codelineno-5-38" href="#__codelineno-5-38"></a><span class="w">    </span><span class="n">CHECK_RESULT</span><span class="p">(</span><span class="n">catalog_result</span><span class="p">);</span>
+<a id="__codelineno-5-39" name="__codelineno-5-39" href="#__codelineno-5-39"></a><span class="w">    </span><span class="n">catalog</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">catalog_result</span><span class="p">.</span><span class="n">catalog</span><span class="p">;</span>
+<a id="__codelineno-5-40" name="__codelineno-5-40" href="#__codelineno-5-40"></a>
+<a id="__codelineno-5-41" name="__codelineno-5-41" href="#__codelineno-5-41"></a><span class="w">    </span><span class="n">paimon_result_identifier_new</span><span class="w"> </span><span class="n">identifier_result</span><span class="w"> </span><span class="o">=</span>
+<a id="__codelineno-5-42" name="__codelineno-5-42" href="#__codelineno-5-42"></a><span class="w">        </span><span class="n">paimon_identifier_new</span><span class="p">(</span><span class="s">"default"</span><span class="p">,</span><span class="w"> </span><span class="s">"my_table"</span><span class="p">);</span>
+<a id="__codelineno-5-43" name="__codelineno-5-43" href="#__codelineno-5-43"></a><span class="w">    </span><span class="n">CHECK_RESULT</span><span class="p">(</span><span class="n">identifier_result</span><span class="p">);</span>
+<a id="__codelineno-5-44" name="__codelineno-5-44" href="#__codelineno-5-44"></a><span class="w">    </span><span class="n">identifier</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">identifier_result</span><span class="p">.</span><span class="n">identifier</span><span class="p">;</span>
+<a id="__codelineno-5-45" name="__codelineno-5-45" href="#__codelineno-5-45"></a>
+<a id="__codelineno-5-46" name="__codelineno-5-46" href="#__codelineno-5-46"></a><span class="w">    </span><span class="n">paimon_result_get_table</span><span class="w"> </span><span class="n">table_result</span><span class="w"> </span><span class="o">=</span>
+<a id="__codelineno-5-47" name="__codelineno-5-47" href="#__codelineno-5-47"></a><span class="w">        </span><span class="n">paimon_catalog_get_table</span><span class="p">(</span><span class="n">catalog</span><span class="p">,</span><span class="w"> </span><span class="n">identifier</span><span class="p">);</span>
+<a id="__codelineno-5-48" name="__codelineno-5-48" href="#__codelineno-5-48"></a><span class="w">    </span><span class="n">CHECK_RESULT</span><span class="p">(</span><span class="n">table_result</span><span class="p">);</span>
+<a id="__codelineno-5-49" name="__codelineno-5-49" href="#__codelineno-5-49"></a><span class="w">    </span><span class="n">table</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">table_result</span><span class="p">.</span><span class="n">table</span><span class="p">;</span>
+<a id="__codelineno-5-50" name="__codelineno-5-50" href="#__codelineno-5-50"></a>
+<a id="__codelineno-5-51" name="__codelineno-5-51" href="#__codelineno-5-51"></a><span class="w">    </span><span class="n">paimon_result_read_builder</span><span class="w"> </span><span class="n">builder_result</span><span class="w"> </span><span class="o">=</span>
+<a id="__codelineno-5-52" name="__codelineno-5-52" href="#__codelineno-5-52"></a><span class="w">        </span><span class="n">paimon_table_new_read_builder</span><span class="p">(</span><span class="n">table</span><span class="p">);</span>
+<a id="__codelineno-5-53" name="__codelineno-5-53" href="#__codelineno-5-53"></a><span class="w">    </span><span class="n">CHECK_RESULT</span><span class="p">(</span><span class="n">builder_result</span><span class="p">);</span>
+<a id="__codelineno-5-54" name="__codelineno-5-54" href="#__codelineno-5-54"></a><span class="w">    </span><span class="n">read_builder</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">builder_result</span><span class="p">.</span><span class="n">read_builder</span><span class="p">;</span>
+<a id="__codelineno-5-55" name="__codelineno-5-55" href="#__codelineno-5-55"></a>
+<a id="__codelineno-5-56" name="__codelineno-5-56" href="#__codelineno-5-56"></a><span class="w">    </span><span class="n">paimon_result_table_scan</span><span class="w"> </span><span class="n">scan_result</span><span class="w"> </span><span class="o">=</span>
+<a id="__codelineno-5-57" name="__codelineno-5-57" href="#__codelineno-5-57"></a><span class="w">        </span><span class="n">paimon_read_builder_new_scan</span><span class="p">(</span><span class="n">read_builder</span><span class="p">);</span>
+<a id="__codelineno-5-58" name="__codelineno-5-58" href="#__codelineno-5-58"></a><span class="w">    </span><span class="n">CHECK_RESULT</span><span class="p">(</span><span class="n">scan_result</span><span class="p">);</span>
+<a id="__codelineno-5-59" name="__codelineno-5-59" href="#__codelineno-5-59"></a><span class="w">    </span><span class="n">scan</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">scan_result</span><span class="p">.</span><span class="n">scan</span><span class="p">;</span>
+<a id="__codelineno-5-60" name="__codelineno-5-60" href="#__codelineno-5-60"></a>
+<a id="__codelineno-5-61" name="__codelineno-5-61" href="#__codelineno-5-61"></a><span class="w">    </span><span class="n">paimon_result_plan</span><span class="w"> </span><span class="n">plan_result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">paimon_table_scan_plan</span><span class="p">(</span><span class="n">scan</span><span class="p">);</span>
+<a id="__codelineno-5-62" name="__codelineno-5-62" href="#__codelineno-5-62"></a><span class="w">    </span><span class="n">CHECK_RESULT</span><span class="p">(</span><span class="n">plan_result</span><span class="p">);</span>
+<a id="__codelineno-5-63" name="__codelineno-5-63" href="#__codelineno-5-63"></a><span class="w">    </span><span class="n">plan</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">plan_result</span><span class="p">.</span><span class="n">plan</span><span class="p">;</span>
+<a id="__codelineno-5-64" name="__codelineno-5-64" href="#__codelineno-5-64"></a>
+<a id="__codelineno-5-65" name="__codelineno-5-65" href="#__codelineno-5-65"></a><span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">"planned splits: %zu</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span><span class="w"> </span><span class="n">paimon_plan_num_splits</span><span class="p">(</span><span class="n">plan</span><span class="p">));</span>
+<a id="__codelineno-5-66" name="__codelineno-5-66" href="#__codelineno-5-66"></a><span class="w">    </span><span class="n">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">EXIT_SUCCESS</span><span class="p">;</span>
+<a id="__codelineno-5-67" name="__codelineno-5-67" href="#__codelineno-5-67"></a>
+<a id="__codelineno-5-68" name="__codelineno-5-68" href="#__codelineno-5-68"></a><span class="nl">cleanup</span><span class="p">:</span>
+<a id="__codelineno-5-69" name="__codelineno-5-69" href="#__codelineno-5-69"></a><span class="w">    </span><span class="n">paimon_plan_free</span><span class="p">(</span><span class="n">plan</span><span class="p">);</span>
+<a id="__codelineno-5-70" name="__codelineno-5-70" href="#__codelineno-5-70"></a><span class="w">    </span><span class="n">paimon_table_scan_free</span><span class="p">(</span><span class="n">scan</span><span class="p">);</span>
+<a id="__codelineno-5-71" name="__codelineno-5-71" href="#__codelineno-5-71"></a><span class="w">    </span><span class="n">paimon_read_builder_free</span><span class="p">(</span><span class="n">read_builder</span><span class="p">);</span>
+<a id="__codelineno-5-72" name="__codelineno-5-72" href="#__codelineno-5-72"></a><span class="w">    </span><span class="n">paimon_table_free</span><span class="p">(</span><span class="n">table</span><span class="p">);</span>
+<a id="__codelineno-5-73" name="__codelineno-5-73" href="#__codelineno-5-73"></a><span class="w">    </span><span class="n">paimon_identifier_free</span><span class="p">(</span><span class="n">identifier</span><span class="p">);</span>
+<a id="__codelineno-5-74" name="__codelineno-5-74" href="#__codelineno-5-74"></a><span class="w">    </span><span class="n">paimon_catalog_free</span><span class="p">(</span><span class="n">catalog</span><span class="p">);</span>
+<a id="__codelineno-5-75" name="__codelineno-5-75" href="#__codelineno-5-75"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">status</span><span class="p">;</span>
+<a id="__codelineno-5-76" name="__codelineno-5-76" href="#__codelineno-5-76"></a><span class="p">}</span>
+</code></pre></div>
+<p>Catalog options are the same options accepted by the Rust catalog factory. For
+example, a REST catalog can be created with:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="n">paimon_option</span><span class="w"> </span><span class="n">options</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">    </span><span class="p">{.</span><span class="n">key</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"metastore"</span><span class="p">,</span><span class="w"> </span><span class="p">.</span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"rest"</span><span class="p">},</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">    </span><span class="p">{.</span><span class="n">key</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"uri"</span><span class="p">,</span><span class="w"> </span><span class="p">.</span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"http://localhost:8080"</span><span class="p">},</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">    </span><span class="p">{.</span><span class="n">key</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"warehouse"</span><span class="p">,</span><span class="w"> </span><span class="p">.</span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"my_warehouse"</span><span class="p">},</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="p">};</span>
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="n">paimon_result_catalog_new</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">paimon_catalog_create</span><span class="p">(</span><span class="n">options</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">);</span>
+</code></pre></div>
+<h3 id="time-travel">Time Travel<a class="headerlink" href="#time-travel" title="Permanent link">&para;</a></h3>
+<p>Create a read builder with scan options through
+<code>paimon_table_new_read_builder_with_options</code>. At most one time-travel selector
+may be set. A selector that does not resolve to a snapshot is an error; it never
+silently falls back to the latest snapshot.</p>
+<p>Supported selectors:</p>
+<ul>
+<li><code>scan.snapshot-id</code></li>
+<li><code>scan.tag-name</code></li>
+<li><code>scan.timestamp-millis</code></li>
+<li><code>scan.timestamp</code></li>
+<li><code>scan.watermark</code></li>
+<li><code>scan.version</code></li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="n">paimon_option</span><span class="w"> </span><span class="n">travel</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">    </span><span class="p">{.</span><span class="n">key</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"scan.snapshot-id"</span><span class="p">,</span><span class="w"> </span><span class="p">.</span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"1"</span><span class="p">},</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="p">};</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="n">paimon_result_read_builder</span><span class="w"> </span><span class="n">builder_result</span><span class="w"> </span><span class="o">=</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="w">    </span><span class="n">paimon_table_new_read_builder_with_options</span><span class="p">(</span><span class="n">table</span><span class="p">,</span><span class="w"> </span><span class="n">travel</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="n">CHECK_RESULT</span><span class="p">(</span><span class="n">builder_result</span><span class="p">);</span>
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="n">read_builder</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">builder_result</span><span class="p">.</span><span class="n">read_builder</span><span class="p">;</span>
+</code></pre></div>
+<p><code>paimon_table_new_read_builder(table)</code> is equivalent to calling the options
+variant with an empty option list.</p>
+<h3 id="tag-management">Tag Management<a class="headerlink" href="#tag-management" title="Permanent link">&para;</a></h3>
+<p>Catalog tags pin table snapshots:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="cm">/* Tag the latest snapshot. Pass a non-null i64* to pin an explicit snapshot. */</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="n">paimon_error</span><span class="w"> </span><span class="o">*</span><span class="n">error</span><span class="w"> </span><span class="o">=</span>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="w">    </span><span class="n">paimon_catalog_create_tag</span><span class="p">(</span><span class="n">catalog</span><span class="p">,</span><span class="w"> </span><span class="n">identifier</span><span class="p">,</span><span class="w"> </span><span class="s">"release-1.0"</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="nb">false</span><span class="p">);</span>
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">error</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="w">    </span><span class="cm">/* handle error */</span>
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="w">    </span><span class="n">paimon_error_free</span><span class="p">(</span><span class="n">error</span><span class="p">);</span>
+<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="p">}</span>
+<a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a>
+<a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="n">paimon_result_get_tag</span><span class="w"> </span><span class="n">tag_result</span><span class="w"> </span><span class="o">=</span>
+<a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a><span class="w">    </span><span class="n">paimon_catalog_get_tag</span><span class="p">(</span><span class="n">catalog</span><span class="p">,</span><span class="w"> </span><span class="n">identifier</span><span class="p">,</span><span class="w"> </span><span class="s">"release-1.0"</span><span class="p">);</span>
+<a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">tag_result</span><span class="p">.</span><span class="n">error</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a><span class="w">    </span><span class="cm">/* handle error */</span>
+<a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a><span class="w">    </span><span class="n">paimon_error_free</span><span class="p">(</span><span class="n">tag_result</span><span class="p">.</span><span class="n">error</span><span class="p">);</span>
+<a id="__codelineno-8-14" name="__codelineno-8-14" href="#__codelineno-8-14"></a><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-8-15" name="__codelineno-8-15" href="#__codelineno-8-15"></a><span class="w">    </span><span class="cm">/* tag_result.tag holds JSON bytes owned by the caller */</span>
+<a id="__codelineno-8-16" name="__codelineno-8-16" href="#__codelineno-8-16"></a><span class="w">    </span><span class="n">paimon_bytes_free</span><span class="p">(</span><span class="n">tag_result</span><span class="p">.</span><span class="n">tag</span><span class="p">);</span>
+<a id="__codelineno-8-17" name="__codelineno-8-17" href="#__codelineno-8-17"></a><span class="p">}</span>
+<a id="__codelineno-8-18" name="__codelineno-8-18" href="#__codelineno-8-18"></a>
+<a id="__codelineno-8-19" name="__codelineno-8-19" href="#__codelineno-8-19"></a><span class="n">error</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">paimon_catalog_delete_tag</span><span class="p">(</span><span class="n">catalog</span><span class="p">,</span><span class="w"> </span><span class="n">identifier</span><span class="p">,</span><span class="w"> </span><span class="s">"release-1.0"</span><span class="p">);</span>
+<a id="__codelineno-8-20" name="__codelineno-8-20" href="#__codelineno-8-20"></a><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">error</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-8-21" name="__codelineno-8-21" href="#__codelineno-8-21"></a><span class="w">    </span><span class="n">paimon_error_free</span><span class="p">(</span><span class="n">error</span><span class="p">);</span>
+<a id="__codelineno-8-22" name="__codelineno-8-22" href="#__codelineno-8-22"></a><span class="p">}</span>
+</code></pre></div>
+<p><code>ignore_if_exists</code> on create ignores a duplicate tag name. Delete does not
+ignore a missing tag. The C binding does not expose tag listing; read a known
+tag with <code>paimon_catalog_get_tag</code>, or use time travel with <code>scan.tag-name</code>.</p>
+<p><code>paimon_catalog_create_tag</code> keeps the no-retention path by calling
+<code>paimon_catalog_create_tag_with_retention</code> with a null <code>time_retained</code>. Pass a
+duration such as <code>"1d"</code> or <code>"12h"</code> to persist retention on the tag file; this
+does not expire or delete tags automatically:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="cm">/* Optional retention. NULL time_retained omits retention metadata. */</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="n">error</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">paimon_catalog_create_tag_with_retention</span><span class="p">(</span>
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="w">    </span><span class="n">catalog</span><span class="p">,</span><span class="w"> </span><span class="n">identifier</span><span class="p">,</span><span class="w"> </span><span class="s">"release-retained"</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="s">"1d"</span><span class="p">,</span><span class="w"> </span><span class="nb">false</span><span class="p">);</span>
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">error</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="w">    </span><span class="n">paimon_error_free</span><span class="p">(</span><span class="n">error</span><span class="p">);</span>
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="p">}</span>
+</code></pre></div>
+<p><code>paimon_catalog_get_tag</code> JSON may include <code>tagTimeRetained</code> as an ISO-8601
+duration (for example <code>"1d"</code> becomes <code>"PT24H"</code>).</p>
+<h2 id="caller-managed-file-cache">Caller-managed File Cache<a class="headerlink" href="#caller-managed-file-cache" title="Permanent link">&para;</a></h2>
+<p>Native engines can create a reusable <code>paimon_file_io</code> and connect Paimon reads
+to their own block-cache framework. The callback table is versioned so future
+extensions do not change an existing C ABI:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="n">paimon_file_cache_callbacks_v1</span><span class="w"> </span><span class="n">cache</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="w">    </span><span class="p">.</span><span class="n">context</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">engine_cache</span><span class="p">,</span>
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="w">    </span><span class="p">.</span><span class="n">get</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">engine_cache_get</span><span class="p">,</span>
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="w">    </span><span class="p">.</span><span class="n">put</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">engine_cache_put</span><span class="p">,</span>
+<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="w">    </span><span class="p">.</span><span class="n">invalidate_path</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">engine_cache_invalidate_path</span><span class="p">,</span>
+<a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="w">    </span><span class="p">.</span><span class="n">invalidate_prefix</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">engine_cache_invalidate_prefix</span><span class="p">,</span>
+<a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="w">    </span><span class="p">.</span><span class="n">destroy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">engine_cache_release</span><span class="p">,</span>
+<a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a><span class="p">};</span>
+<a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a>
+<a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a><span class="n">paimon_result_file_io_new</span><span class="w"> </span><span class="n">io_result</span><span class="w"> </span><span class="o">=</span>
+<a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a><span class="w">    </span><span class="n">paimon_file_io_create_with_cache_v1</span><span class="p">(</span>
+<a id="__codelineno-10-12" name="__codelineno-10-12" href="#__codelineno-10-12"></a><span class="w">        </span><span class="s">"s3://bucket/table"</span><span class="p">,</span>
+<a id="__codelineno-10-13" name="__codelineno-10-13" href="#__codelineno-10-13"></a><span class="w">        </span><span class="n">storage_options</span><span class="p">,</span>
+<a id="__codelineno-10-14" name="__codelineno-10-14" href="#__codelineno-10-14"></a><span class="w">        </span><span class="n">storage_options_len</span><span class="p">,</span>
+<a id="__codelineno-10-15" name="__codelineno-10-15" href="#__codelineno-10-15"></a><span class="w">        </span><span class="o">&amp;</span><span class="n">cache</span><span class="p">,</span>
+<a id="__codelineno-10-16" name="__codelineno-10-16" href="#__codelineno-10-16"></a><span class="w">        </span><span class="mi">1024</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">1024</span><span class="p">,</span>
+<a id="__codelineno-10-17" name="__codelineno-10-17" href="#__codelineno-10-17"></a><span class="w">        </span><span class="s">"meta,global-index"</span><span class="p">);</span>
+<a id="__codelineno-10-18" name="__codelineno-10-18" href="#__codelineno-10-18"></a><span class="n">CHECK_RESULT</span><span class="p">(</span><span class="n">io_result</span><span class="p">);</span>
+<a id="__codelineno-10-19" name="__codelineno-10-19" href="#__codelineno-10-19"></a>
+<a id="__codelineno-10-20" name="__codelineno-10-20" href="#__codelineno-10-20"></a><span class="n">paimon_result_get_table</span><span class="w"> </span><span class="n">table_result</span><span class="w"> </span><span class="o">=</span>
+<a id="__codelineno-10-21" name="__codelineno-10-21" href="#__codelineno-10-21"></a><span class="w">    </span><span class="n">paimon_table_from_schema_json_with_file_io</span><span class="p">(</span>
+<a id="__codelineno-10-22" name="__codelineno-10-22" href="#__codelineno-10-22"></a><span class="w">        </span><span class="n">io_result</span><span class="p">.</span><span class="n">file_io</span><span class="p">,</span>
+<a id="__codelineno-10-23" name="__codelineno-10-23" href="#__codelineno-10-23"></a><span class="w">        </span><span class="s">"s3://bucket/table"</span><span class="p">,</span>
+<a id="__codelineno-10-24" name="__codelineno-10-24" href="#__codelineno-10-24"></a><span class="w">        </span><span class="n">table_schema_json</span><span class="p">,</span>
+<a id="__codelineno-10-25" name="__codelineno-10-25" href="#__codelineno-10-25"></a><span class="w">        </span><span class="s">"default"</span><span class="p">,</span>
+<a id="__codelineno-10-26" name="__codelineno-10-26" href="#__codelineno-10-26"></a><span class="w">        </span><span class="s">"orders"</span><span class="p">,</span>
+<a id="__codelineno-10-27" name="__codelineno-10-27" href="#__codelineno-10-27"></a><span class="w">        </span><span class="nb">NULL</span><span class="p">);</span>
+<a id="__codelineno-10-28" name="__codelineno-10-28" href="#__codelineno-10-28"></a><span class="n">CHECK_RESULT</span><span class="p">(</span><span class="n">table_result</span><span class="p">);</span>
+<a id="__codelineno-10-29" name="__codelineno-10-29" href="#__codelineno-10-29"></a>
+<a id="__codelineno-10-30" name="__codelineno-10-30" href="#__codelineno-10-30"></a><span class="c1">// The table retained a FileIO clone.</span>
+<a id="__codelineno-10-31" name="__codelineno-10-31" href="#__codelineno-10-31"></a><span class="n">paimon_file_io_free</span><span class="p">(</span><span class="n">io_result</span><span class="p">.</span><span class="n">file_io</span><span class="p">);</span>
+</code></pre></div>
+<p><code>get</code> receives an output buffer with exactly <code>length</code> writable bytes. It returns
+the number of bytes copied, <code>-1</code> for a miss, or any other negative value for a
+fail-open error. A nonnegative value different from <code>length</code> is also treated as
+a miss. <code>put</code> and invalidation failures are ignored so object storage remains
+the source of truth.</p>
+<p>Callbacks may execute concurrently on arbitrary blocking-worker threads and
+must not throw or unwind across the C ABI. Callback cache keys use
+<code>path_data + path_length</code> rather than null-terminated strings because canonical
+storage keys may contain embedded NUL separators. Paths and buffers are borrowed
+only for the duration of each call. After successful FileIO creation, Paimon
+owns <code>context</code>; <code>destroy</code> runs exactly once after the FileIO handle and all
+tables cloned from it have been freed.</p>
+<h2 id="reading-arrow-record-batches">Reading Arrow Record Batches<a class="headerlink" href="#reading-arrow-record-batches" title="Permanent link">&para;</a></h2>
+<p>Paimon uses a <strong>scan-then-read</strong> flow. A scan creates a plan, and a table read
+consumes a range of that plan's splits through a streaming Arrow reader:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="n">paimon_result_new_read</span><span class="w"> </span><span class="n">read_result</span><span class="w"> </span><span class="o">=</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="w">    </span><span class="n">paimon_read_builder_new_read</span><span class="p">(</span><span class="n">read_builder</span><span class="p">);</span>
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="n">CHECK_RESULT</span><span class="p">(</span><span class="n">read_result</span><span class="p">);</span>
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="n">paimon_table_read</span><span class="w"> </span><span class="o">*</span><span class="n">read</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">read_result</span><span class="p">.</span><span class="n">read</span><span class="p">;</span>
+<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>
+<a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a><span class="kt">size_t</span><span class="w"> </span><span class="n">split_count</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">paimon_plan_num_splits</span><span class="p">(</span><span class="n">plan</span><span class="p">);</span>
+<a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a><span class="n">paimon_result_record_batch_reader</span><span class="w"> </span><span class="n">reader_result</span><span class="w"> </span><span class="o">=</span>
+<a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a><span class="w">    </span><span class="n">paimon_table_read_to_arrow</span><span class="p">(</span><span class="n">read</span><span class="p">,</span><span class="w"> </span><span class="n">plan</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">split_count</span><span class="p">);</span>
+<a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a><span class="n">CHECK_RESULT</span><span class="p">(</span><span class="n">reader_result</span><span class="p">);</span>
+<a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a><span class="n">paimon_record_batch_reader</span><span class="w"> </span><span class="o">*</span><span class="n">reader</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">reader_result</span><span class="p">.</span><span class="n">reader</span><span class="p">;</span>
+<a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a>
+<a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a><span class="k">for</span><span class="w"> </span><span class="p">(;;)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-11-13" name="__codelineno-11-13" href="#__codelineno-11-13"></a><span class="w">    </span><span class="n">paimon_result_next_batch</span><span class="w"> </span><span class="n">next</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">paimon_record_batch_reader_next</span><span class="p">(</span><span class="n">reader</span><span class="p">);</span>
+<a id="__codelineno-11-14" name="__codelineno-11-14" href="#__codelineno-11-14"></a><span class="w">    </span><span class="n">CHECK_RESULT</span><span class="p">(</span><span class="n">next</span><span class="p">);</span>
+<a id="__codelineno-11-15" name="__codelineno-11-15" href="#__codelineno-11-15"></a>
+<a id="__codelineno-11-16" name="__codelineno-11-16" href="#__codelineno-11-16"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">next</span><span class="p">.</span><span class="n">batch</span><span class="p">.</span><span class="n">array</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nb">NULL</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">next</span><span class="p">.</span><span class="n">batch</span><span class="p">.</span><span class="n">schema</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nb">NULL</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-11-17" name="__codelineno-11-17" href="#__codelineno-11-17"></a><span class="w">        </span><span class="k">break</span><span class="p">;</span><span class="w"> </span><span class="cm">/* End of stream. */</span>
+<a id="__codelineno-11-18" name="__codelineno-11-18" href="#__codelineno-11-18"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-11-19" name="__codelineno-11-19" href="#__codelineno-11-19"></a>
+<a id="__codelineno-11-20" name="__codelineno-11-20" href="#__codelineno-11-20"></a><span class="w">    </span><span class="cm">/* Import next.batch.array and next.batch.schema with an Arrow C Data</span>
+<a id="__codelineno-11-21" name="__codelineno-11-21" href="#__codelineno-11-21"></a><span class="cm">       Interface consumer before freeing their container structs. */</span>
+<a id="__codelineno-11-22" name="__codelineno-11-22" href="#__codelineno-11-22"></a><span class="w">    </span><span class="n">paimon_arrow_batch_free</span><span class="p">(</span><span class="n">next</span><span class="p">.</span><span class="n">batch</span><span class="p">);</span>
+<a id="__codelineno-11-23" name="__codelineno-11-23" href="#__codelineno-11-23"></a><span class="p">}</span>
+<a id="__codelineno-11-24" name="__codelineno-11-24" href="#__codelineno-11-24"></a>
+<a id="__codelineno-11-25" name="__codelineno-11-25" href="#__codelineno-11-25"></a><span class="n">paimon_record_batch_reader_free</span><span class="p">(</span><span class="n">reader</span><span class="p">);</span>
+<a id="__codelineno-11-26" name="__codelineno-11-26" href="#__codelineno-11-26"></a><span class="n">paimon_table_read_free</span><span class="p">(</span><span class="n">read</span><span class="p">);</span>
+</code></pre></div>
+<h3 id="shared-reader-memory-budget">Shared Reader Memory Budget<a class="headerlink" href="#shared-reader-memory-budget" title="Permanent link">&para;</a></h3>
+<p>Create one resource context for reads that should share a reservation limit, then
+attach it to each read builder before calling <code>paimon_read_builder_new_read</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="n">paimon_result_resource_context</span><span class="w"> </span><span class="n">budget_result</span><span class="w"> </span><span class="o">=</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="w">    </span><span class="n">paimon_resource_context_create</span><span class="p">(</span><span class="mi">64</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">1024</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">1024</span><span class="p">);</span>
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="n">CHECK_RESULT</span><span class="p">(</span><span class="n">budget_result</span><span class="p">);</span>
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="n">paimon_resource_context</span><span class="w"> </span><span class="o">*</span><span class="n">budget</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">budget_result</span><span class="p">.</span><span class="n">context</span><span class="p">;</span>
+<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>
+<a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a><span class="n">paimon_error</span><span class="w"> </span><span class="o">*</span><span class="n">error</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">paimon_read_builder_with_resources</span><span class="p">(</span><span class="n">read_builder</span><span class="p">,</span><span class="w"> </span><span class="n">budget</span><span class="p">);</span>
+<a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">error</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a><span class="w">    </span><span class="n">paimon_error_free</span><span class="p">(</span><span class="n">error</span><span class="p">);</span>
+<a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a><span class="w">    </span><span class="n">paimon_resource_context_free</span><span class="p">(</span><span class="n">budget</span><span class="p">);</span>
+<a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a><span class="w">    </span><span class="k">goto</span><span class="w"> </span><span class="n">cleanup</span><span class="p">;</span>
+<a id="__codelineno-12-11" name="__codelineno-12-11" href="#__codelineno-12-11"></a><span class="p">}</span>
+<a id="__codelineno-12-12" name="__codelineno-12-12" href="#__codelineno-12-12"></a>
+<a id="__codelineno-12-13" name="__codelineno-12-13" href="#__codelineno-12-13"></a><span class="cm">/* Create and consume readers from read_builder here. */</span>
+<a id="__codelineno-12-14" name="__codelineno-12-14" href="#__codelineno-12-14"></a>
+<a id="__codelineno-12-15" name="__codelineno-12-15" href="#__codelineno-12-15"></a><span class="n">paimon_resource_metrics</span><span class="w"> </span><span class="n">metrics</span><span class="p">;</span>
+<a id="__codelineno-12-16" name="__codelineno-12-16" href="#__codelineno-12-16"></a><span class="n">error</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">paimon_resource_context_metrics</span><span class="p">(</span><span class="n">budget</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">metrics</span><span class="p">);</span>
+<a id="__codelineno-12-17" name="__codelineno-12-17" href="#__codelineno-12-17"></a><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">error</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-12-18" name="__codelineno-12-18" href="#__codelineno-12-18"></a><span class="w">    </span><span class="n">paimon_error_free</span><span class="p">(</span><span class="n">error</span><span class="p">);</span>
+<a id="__codelineno-12-19" name="__codelineno-12-19" href="#__codelineno-12-19"></a><span class="w">    </span><span class="n">paimon_resource_context_free</span><span class="p">(</span><span class="n">budget</span><span class="p">);</span>
+<a id="__codelineno-12-20" name="__codelineno-12-20" href="#__codelineno-12-20"></a><span class="w">    </span><span class="k">goto</span><span class="w"> </span><span class="n">cleanup</span><span class="p">;</span>
+<a id="__codelineno-12-21" name="__codelineno-12-21" href="#__codelineno-12-21"></a><span class="p">}</span>
+<a id="__codelineno-12-22" name="__codelineno-12-22" href="#__codelineno-12-22"></a><span class="n">printf</span><span class="p">(</span><span class="s">"current=%zu peak=%zu</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span>
+<a id="__codelineno-12-23" name="__codelineno-12-23" href="#__codelineno-12-23"></a><span class="w">       </span><span class="n">metrics</span><span class="p">.</span><span class="n">reserved_memory_bytes</span><span class="p">,</span>
+<a id="__codelineno-12-24" name="__codelineno-12-24" href="#__codelineno-12-24"></a><span class="w">       </span><span class="n">metrics</span><span class="p">.</span><span class="n">peak_reserved_memory_bytes</span><span class="p">);</span>
+<a id="__codelineno-12-25" name="__codelineno-12-25" href="#__codelineno-12-25"></a>
+<a id="__codelineno-12-26" name="__codelineno-12-26" href="#__codelineno-12-26"></a><span class="n">paimon_resource_context_free</span><span class="p">(</span><span class="n">budget</span><span class="p">);</span>
+</code></pre></div>
+<p>The builder clones the context, and each read stream retains its own clone.
+The caller may free the context handle after attaching it to the builder; keep
+the handle until after reading if metrics are needed. Reusing one context across
+builders makes their reservations compete for the same limit. A zero-byte limit
+rejects nonempty reservations. Admission failure is reported with
+<code>ResourceExhausted</code> (error code <code>6</code>), often from
+<code>paimon_record_batch_reader_next</code> when the stream actually reads data.</p>
+<p><code>reserved_memory_bytes</code> is the current outstanding reservation total;
+<code>peak_reserved_memory_bytes</code> is the highest total reached by this context and
+does not reset when streams end. After all streams using a context are freed,
+the current total returns to zero. These counters track estimated reader
+working memory, including projected Parquet row groups. They are not process
+allocation or RSS measurements. Returned Arrow batches retained by the caller
+are not charged to the reader context.</p>
+<p><code>paimon_table_read_to_arrow</code> accepts an <code>offset</code> and <code>length</code>, so separate
+workers can process disjoint contiguous ranges of the same plan. The requested
+range is clamped to the number of available splits.</p>
+<div class="admonition note">
+<p class="admonition-title">Arrow ownership</p>
+<p>After importing a returned batch with the Arrow C Data Interface, call
+<code>paimon_arrow_batch_free</code> to release the heap-allocated <code>ArrowArray</code> and
+<code>ArrowSchema</code> container structs. When writing, the ownership direction is
+reversed: <code>paimon_table_write_write_arrow_batch</code> consumes the exported
+Arrow structures, so the caller must not release them again.</p>
+</div>
+<h2 id="current-state-audit-reads">Current-state Audit Reads<a class="headerlink" href="#current-state-audit-reads" title="Permanent link">&para;</a></h2>
+<p>Use <code>paimon_read_builder_plan_audit</code> to plan a current-state audit scan from an
+ordinary read builder. It preserves retracts and complete merge groups using
+the core audit planner. The builder's table view, user-column projection,
+case-sensitivity setting and filters are applied. Planning does not use the
+builder's limit to prune input; apply the final limit in the caller.</p>
+<p>Create a read with <code>paimon_read_builder_new_read</code>, then execute its assigned
+splits with <code>paimon_table_read_to_audit_log_arrow(read, plan, offset, length)</code>.
+The offset and length select complete logical splits, as in ordinary reads.
+The plan may also come from <code>paimon_plan_from_split_bytes</code>. Externally planned
+splits must preserve audit merge groups, including first-row merge and
+deletion-vector overlap boundaries; an ordinary scan plan that already pruned
+retract-only groups is not sufficient.</p>
+<p>Output prepends <code>rowkind</code> and, when configured by
+<code>table-read.sequence-number.enabled</code>, <code>_SEQUENCE_NUMBER</code> to the selected user
+fields. An empty user-column projection reads only these system columns.
+<code>paimon_table_export_audit_arrow_schema</code> exports the full audit schema to an
+initialized, empty <code>ArrowSchema</code>; the batch reader exports the actual projected
+schema with each batch. Release the standalone schema through its Arrow release
+callback, and release each batch with <code>paimon_arrow_batch_free</code>.</p>
+<p>The reader owns the inputs needed by its stream and may outlive the read,
+builder, table and plan handles. Use the existing record-batch reader functions
+to consume and free it. Attached resource contexts are retained by the stream.
+Apply system-column predicates in the caller; builder predicates address the
+base table's fields.</p>
+<p>These APIs read the merged current state, retaining winning delete rows. They
+do not return every historical event and do not execute incremental Delta,
+Changelog or Diff plans. Incremental planning and transport require separate
+interfaces.</p>
+<h2 id="projection-and-predicates">Projection and Predicates<a class="headerlink" href="#projection-and-predicates" title="Permanent link">&para;</a></h2>
+<p>Projection uses a null-terminated array of column names:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">columns</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="s">"id"</span><span class="p">,</span><span class="w"> </span><span class="s">"name"</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">};</span>
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="n">paimon_error</span><span class="w"> </span><span class="o">*</span><span class="n">error</span><span class="w"> </span><span class="o">=</span>
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="w">    </span><span class="n">paimon_read_builder_with_projection</span><span class="p">(</span><span class="n">read_builder</span><span class="p">,</span><span class="w"> </span><span class="n">columns</span><span class="p">);</span>
+<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">error</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a><span class="w">    </span><span class="cm">/* Inspect error-&gt;code and error-&gt;message, then free the error. */</span>
+<a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a><span class="w">    </span><span class="n">paimon_error_free</span><span class="p">(</span><span class="n">error</span><span class="p">);</span>
+<a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a><span class="p">}</span>
+</code></pre></div>
+<p>Predicate literals are passed as a tagged <code>paimon_datum</code>. This example builds
+<code>id = 42</code> for an <code>INT</code> column and transfers the predicate to the read builder:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="n">paimon_datum</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">0</span><span class="p">};</span>
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="n">value</span><span class="p">.</span><span class="n">tag</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span><span class="w">       </span><span class="cm">/* INT */</span>
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="n">value</span><span class="p">.</span><span class="n">int_val</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">42</span><span class="p">;</span>
+<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a>
+<a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a><span class="n">paimon_result_predicate</span><span class="w"> </span><span class="n">predicate_result</span><span class="w"> </span><span class="o">=</span>
+<a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a><span class="w">    </span><span class="n">paimon_predicate_equal</span><span class="p">(</span><span class="n">table</span><span class="p">,</span><span class="w"> </span><span class="s">"id"</span><span class="p">,</span><span class="w"> </span><span class="n">value</span><span class="p">);</span>
+<a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a><span class="n">CHECK_RESULT</span><span class="p">(</span><span class="n">predicate_result</span><span class="p">);</span>
+<a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a>
+<a id="__codelineno-14-9" name="__codelineno-14-9" href="#__codelineno-14-9"></a><span class="n">paimon_error</span><span class="w"> </span><span class="o">*</span><span class="n">error</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">paimon_read_builder_with_filter</span><span class="p">(</span>
+<a id="__codelineno-14-10" name="__codelineno-14-10" href="#__codelineno-14-10"></a><span class="w">    </span><span class="n">read_builder</span><span class="p">,</span><span class="w"> </span><span class="n">predicate_result</span><span class="p">.</span><span class="n">predicate</span><span class="p">);</span>
+<a id="__codelineno-14-11" name="__codelineno-14-11" href="#__codelineno-14-11"></a><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">error</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-14-12" name="__codelineno-14-12" href="#__codelineno-14-12"></a><span class="w">    </span><span class="n">paimon_error_free</span><span class="p">(</span><span class="n">error</span><span class="p">);</span>
+<a id="__codelineno-14-13" name="__codelineno-14-13" href="#__codelineno-14-13"></a><span class="p">}</span>
+</code></pre></div>
+<p>The supported datum tags are:</p>
+<table>
+<thead>
+<tr>
+<th>Tag</th>
+<th>Paimon type</th>
+<th>Value fields</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td><code>BOOL</code></td>
+<td><code>int_val</code> (<code>0</code> or non-zero)</td>
+</tr>
+<tr>
+<td>1–4</td>
+<td><code>TINYINT</code>, <code>SMALLINT</code>, <code>INT</code>, <code>BIGINT</code></td>
+<td><code>int_val</code></td>
+</tr>
+<tr>
+<td>5–6</td>
+<td><code>FLOAT</code>, <code>DOUBLE</code></td>
+<td><code>double_val</code></td>
+</tr>
+<tr>
+<td>7</td>
+<td><code>STRING</code></td>
+<td><code>str_data</code>, <code>str_len</code></td>
+</tr>
+<tr>
+<td>8–9</td>
+<td><code>DATE</code>, <code>TIME</code></td>
+<td><code>int_val</code></td>
+</tr>
+<tr>
+<td>10–11</td>
+<td><code>TIMESTAMP</code>, <code>TIMESTAMP WITH LOCAL TIME ZONE</code></td>
+<td><code>int_val</code>, <code>int_val2</code></td>
+</tr>
+<tr>
+<td>12</td>
+<td><code>DECIMAL</code></td>
+<td><code>int_val</code>, <code>int_val2</code>, <code>uint_val</code>, <code>uint_val2</code></td>
+</tr>
+<tr>
+<td>13</td>
+<td><code>BYTES</code></td>
+<td><code>str_data</code>, <code>str_len</code></td>
+</tr>
+</tbody>
+</table>
+<p>Leaf constructors support comparisons, null checks, <code>IN</code>, string operations,
+and ranges. Combine predicates with <code>paimon_predicate_and</code>,
+<code>paimon_predicate_or</code>, and <code>paimon_predicate_not</code>.</p>
+<div class="admonition warning">
+<p class="admonition-title">Predicate ownership</p>
+<p><code>paimon_read_builder_with_filter</code>, the compound predicate functions, and
+<code>paimon_vector_search_builder_with_filter</code> consume their predicate inputs.
+Do not reuse or free a predicate after passing it to one of these functions.
+A predicate that has not been consumed must be released with
+<code>paimon_predicate_free</code>.</p>
+</div>
+<h2 id="vector-scan-plan-and-read">Vector Scan, Plan, and Read<a class="headerlink" href="#vector-scan-plan-and-read" title="Permanent link">&para;</a></h2>
+<p><code>paimon_vector_search_builder_execute_scored</code> returns global row IDs and scores
+as Arrow Int64 and Float32 columns named <code>row_id</code> and <code>score</code>. An inclusive
+interval supplied to <code>paimon_vector_search_builder_with_row_range</code> restricts
+the ANN candidates before Top-K. A usable scalar index can further restrict the
+candidates before ranking. Otherwise the scalar predicate filters the candidate
+shortlist, so fewer than K hits may be returned even if additional matching rows
+exist in the interval. Use
+<code>paimon_vector_search_builder_with_distance_metric</code> when the query requires a
+specific metric. Scored execution requires global row IDs and returns an error
+for primary-key vector results, which use file-local positions.</p>
+<p>DE and primary-key vector searches use the same execution API:</p>
+<ol>
+<li>Configure a <code>paimon_vector_search_builder</code> with the column, query, limit,
+   options, predicate, and output projection.</li>
+<li>Call <code>paimon_vector_search_builder_new_scan</code> and
+   <code>paimon_vector_search_builder_new_read</code> to create independent owned handles.
+   Creating a scan only requires the column; query validation happens when
+   creating the reader.</li>
+<li>Call <code>paimon_vector_scan_plan</code> to resolve the source snapshot and search work.</li>
+<li>Pass the reader and plan to <code>paimon_vector_read_read</code>. It returns the usual
+   Arrow record-batch reader with projected columns and <code>__paimon_search_score</code>.</li>
+</ol>
+<p><code>paimon_vector_search_builder_execute_read</code> remains the convenience operation
+for local planning and reading. A plan can also be reused with different query
+vectors or limits. Its table, column, and pre-filter must match the reader.</p>
+<p>For Java-planned PK bucket work, decode each standalone
+<code>BucketVectorSearchSplit.serialize</code> buffer using
+<code>paimon_bucket_vector_search_split_deserialize</code>, then pass the decoded handles
+to <code>paimon_vector_scan_plan_from_bucket_splits</code>. The returned common vector
+plan is consumed by the same <code>paimon_vector_read_read</code> API. No table snapshot
+or index manifest is read during this plan construction; supplied files, row
+ranges, and snapshot IDs remain authoritative. Top-K is local to the supplied
+buckets, so a distributed caller merges its per-worker results.</p>
+<p>The decoder accepts the versioned <code>PKVSPLIT</code> format. It does not accept Java
+<code>ObjectOutputStream</code> envelopes or DE <code>IndexVectorSearchSplit</code> /
+<code>RawVectorSearchSplit</code> object serialization. DE plans are currently obtained
+through <code>paimon_vector_scan_plan</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Owned handle</th>
+<th>Release function</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>paimon_vector_scan</code></td>
+<td><code>paimon_vector_scan_free</code></td>
+</tr>
+<tr>
+<td><code>paimon_vector_read</code></td>
+<td><code>paimon_vector_read_free</code></td>
+</tr>
+<tr>
+<td><code>paimon_vector_plan</code></td>
+<td><code>paimon_vector_plan_free</code></td>
+</tr>
+<tr>
+<td><code>paimon_bucket_vector_search_split</code></td>
+<td><code>paimon_bucket_vector_search_split_free</code></td>
+</tr>
+</tbody>
+</table>
+<p>Decoded splits own their data, so input bytes can be released after decoding.
+Plan construction copies the split metadata and leaves input handles intact,
+including on failure. Free split handles after constructing the plan. Scans and
+readers can outlive their builder; plans can outlive their scan. A read borrows
+its plan, and the returned Arrow stream can outlive both the reader and plan.</p>
+<h3 id="java-planned-pk-bucket-splits">Java-planned PK Bucket Splits<a class="headerlink" href="#java-planned-pk-bucket-splits" title="Permanent link">&para;</a></h3>
+<p>Java plans the search once, and the caller sends each worker its assigned
+<code>BucketVectorSearchSplit</code> buffers. The native worker follows this flow:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>Java VectorScan.Plan
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>  -&gt; BucketVectorSearchSplit.serialize(DataOutputView), one buffer per split
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>  -&gt; Application transport
+<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a>  -&gt; paimon_bucket_vector_search_split_deserialize, one handle per buffer
+<a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a>  -&gt; paimon_vector_scan_plan_from_bucket_splits
+<a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a>  -&gt; paimon_vector_read_read
+<a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a>  -&gt; paimon_record_batch_reader_next
+<a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a>  -&gt; Arrow consumer and global Top-K merge
+</code></pre></div>
+<p><code>paimon_vector_search_builder_new_scan</code> creates the scan configuration; it does
+not scan storage. For this path, construct the plan with
+<code>paimon_vector_scan_plan_from_bucket_splits</code>. Calling <code>paimon_vector_scan_plan</code>
+or <code>paimon_vector_search_builder_execute_read</code> would plan from the table again
+and would not use the worker's assigned Java splits.</p>
+<h4 id="serialize-on-the-java-side">Serialize on the Java Side<a class="headerlink" href="#serialize-on-the-java-side" title="Permanent link">&para;</a></h4>
+<p>Use the standalone serializer directly with <code>DataOutputViewStreamWrapper</code> over
+a byte buffer. A Java object stream adds an envelope that the C decoder does
+not accept. The following helper accepts a builder already configured with the
+vector column and any planning predicates, for example one obtained from
+<code>table.newVectorSearchBuilder().withVectorColumn("embedding")</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.paimon.io.DataOutputViewStreamWrapper</span><span class="p">;</span>
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.paimon.table.source.BucketVectorSearchSplit</span><span class="p">;</span>
+<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.paimon.table.source.VectorScan</span><span class="p">;</span>
+<a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.paimon.table.source.VectorSearchBuilder</span><span class="p">;</span>
+<a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.paimon.table.source.VectorSearchSplit</span><span class="p">;</span>
+<a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a>
+<a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a><span class="kn">import</span><span class="w"> </span><span class="nn">java.io.ByteArrayOutputStream</span><span class="p">;</span>
+<a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a><span class="kn">import</span><span class="w"> </span><span class="nn">java.io.IOException</span><span class="p">;</span>
+<a id="__codelineno-16-9" name="__codelineno-16-9" href="#__codelineno-16-9"></a><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.ArrayList</span><span class="p">;</span>
+<a id="__codelineno-16-10" name="__codelineno-16-10" href="#__codelineno-16-10"></a><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.List</span><span class="p">;</span>
+<a id="__codelineno-16-11" name="__codelineno-16-11" href="#__codelineno-16-11"></a>
+<a id="__codelineno-16-12" name="__codelineno-16-12" href="#__codelineno-16-12"></a><span class="kd">public</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="kd">class</span> <span class="nc">VectorSplitSerializer</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-16-13" name="__codelineno-16-13" href="#__codelineno-16-13"></a><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="kt">byte</span><span class="o">[]&gt;</span><span class="w"> </span><span class="nf">planAndSerialize</span><span class="p">(</span><span class="n">VectorSearchBuilder</span><span class="w"> </span><span class="n">builder</span><span class="p">)</span>
+<a id="__codelineno-16-14" name="__codelineno-16-14" href="#__codelineno-16-14"></a><span class="w">            </span><span class="kd">throws</span><span class="w"> </span><span class="n">IOException</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-16-15" name="__codelineno-16-15" href="#__codelineno-16-15"></a><span class="w">        </span><span class="n">VectorScan</span><span class="p">.</span><span class="na">Plan</span><span class="w"> </span><span class="n">plan</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">builder</span><span class="p">.</span><span class="na">newVectorScan</span><span class="p">().</span><span class="na">scan</span><span class="p">();</span>
+<a id="__codelineno-16-16" name="__codelineno-16-16" href="#__codelineno-16-16"></a><span class="w">        </span><span class="n">List</span><span class="o">&lt;</span><span class="kt">byte</span><span class="o">[]&gt;</span><span class="w"> </span><span class="n">buffers</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ArrayList</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+<a id="__codelineno-16-17" name="__codelineno-16-17" href="#__codelineno-16-17"></a><span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">VectorSearchSplit</span><span class="w"> </span><span class="n">split</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">plan</span><span class="p">.</span><span class="na">splits</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-16-18" name="__codelineno-16-18" href="#__codelineno-16-18"></a><span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="p">(</span><span class="n">split</span><span class="w"> </span><span class="k">instanceof</span><span class="w"> </span><span class="n">BucketVectorSearchSplit</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-16-19" name="__codelineno-16-19" href="#__codelineno-16-19"></a><span class="w">                </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">IllegalArgumentException</span><span class="p">(</span><span class="s">"Expected a PK bucket vector split"</span><span class="p">);</span>
+<a id="__codelineno-16-20" name="__codelineno-16-20" href="#__codelineno-16-20"></a><span class="w">            </span><span class="p">}</span>
+<a id="__codelineno-16-21" name="__codelineno-16-21" href="#__codelineno-16-21"></a><span class="w">            </span><span class="n">ByteArrayOutputStream</span><span class="w"> </span><span class="n">bytes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ByteArrayOutputStream</span><span class="p">();</span>
+<a id="__codelineno-16-22" name="__codelineno-16-22" href="#__codelineno-16-22"></a><span class="w">            </span><span class="n">DataOutputViewStreamWrapper</span><span class="w"> </span><span class="n">out</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">DataOutputViewStreamWrapper</span><span class="p">(</span><span class="n">bytes</span><span class="p">);</span>
+<a id="__codelineno-16-23" name="__codelineno-16-23" href="#__codelineno-16-23"></a><span class="w">            </span><span class="p">((</span><span class="n">BucketVectorSearchSplit</span><span class="p">)</span><span class="w"> </span><span class="n">split</span><span class="p">).</span><span class="na">serialize</span><span class="p">(</span><span class="n">out</span><span class="p">);</span>
+<a id="__codelineno-16-24" name="__codelineno-16-24" href="#__codelineno-16-24"></a><span class="w">            </span><span class="n">out</span><span class="p">.</span><span class="na">flush</span><span class="p">();</span>
+<a id="__codelineno-16-25" name="__codelineno-16-25" href="#__codelineno-16-25"></a><span class="w">            </span><span class="n">buffers</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">bytes</span><span class="p">.</span><span class="na">toByteArray</span><span class="p">());</span>
+<a id="__codelineno-16-26" name="__codelineno-16-26" href="#__codelineno-16-26"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-16-27" name="__codelineno-16-27" href="#__codelineno-16-27"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">buffers</span><span class="p">;</span><span class="w"> </span><span class="c1">// Assign whole buffers to workers.</span>
+<a id="__codelineno-16-28" name="__codelineno-16-28" href="#__codelineno-16-28"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-16-29" name="__codelineno-16-29" href="#__codelineno-16-29"></a><span class="p">}</span>
+</code></pre></div>
+<p>Preserve each buffer's length through transport. Decode one complete buffer at
+a time; do not concatenate splits into a single decoder input. The buffer starts
+with the eight bytes <code>PKVSPLIT</code>, followed by the big-endian format version
+(currently <code>1</code>). Use matching Java and Rust format versions.</p>
+<p>Send the table location, branch and resolved Paimon <code>TableSchema</code> JSON alongside
+the assigned buffers. The schema must retain its field IDs, primary keys and
+table options, including vector index type, dimension, metric and deletion-vector
+settings. This is Paimon schema JSON (<code>TableSchema.toString()</code>), not Arrow schema
+JSON. Supply storage credentials/options separately when constructing the native
+table; they are not merged into the table schema. A worker can use
+<code>paimon_table_from_schema_json</code> without opening a catalog, or
+<code>paimon_table_from_schema_json_with_file_io</code> with its own cache-enabled FileIO.
+It must be able to access the data, deletion and index files named by the splits.</p>
+<p>For example, use the received metadata and worker-local storage options to
+create the table (check <code>opened.error</code> before using <code>opened.table</code>):</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="n">paimon_result_get_table</span><span class="w"> </span><span class="n">opened</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">paimon_table_from_schema_json</span><span class="p">(</span>
+<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a><span class="w">    </span><span class="n">table_path</span><span class="p">,</span><span class="w"> </span><span class="n">table_schema_json</span><span class="p">,</span><span class="w"> </span><span class="n">database</span><span class="p">,</span><span class="w"> </span><span class="n">table_name</span><span class="p">,</span><span class="w"> </span><span class="n">branch</span><span class="p">,</span>
+<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a><span class="w">    </span><span class="n">storage_options</span><span class="p">,</span><span class="w"> </span><span class="n">storage_options_len</span><span class="p">);</span>
+</code></pre></div>
+<p>Pass <code>opened.table</code> to the helper below and release it with <code>paimon_table_free</code>
+after use. Pass <code>NULL, 0</code> for storage options when none are needed, and <code>NULL</code>
+for <code>branch</code> only when the Java planner used the default <code>main</code> branch.</p>
+<p>The split buffers carry planned work, not the query vector, Top-K limit,
+projection, query options or an executable scalar predicate. Send these query
+parameters separately. If a scalar pre-filter is required, reconstruct it with
+the <code>paimon_predicate_*</code> APIs and attach it to the native builder before creating
+both scan and reader. Java file pruning and row ranges do not necessarily encode
+the entire residual predicate. Applying that residual only after native Top-K
+can discard winners without retrieving the next matching rows. PK data predicates
+require deletion vectors enabled and merge-on-read disabled.</p>
+<h4 id="read-the-assigned-splits-through-c">Read the Assigned Splits through C<a class="headerlink" href="#read-the-assigned-splits-through-c" title="Permanent link">&para;</a></h4>
+<p>This C11 helper searches <code>embedding</code>, projects <code>id</code>, and passes each batch to a
+caller-provided callback. Adjust the column names to the table schema. The caller
+provides a live table handle, a non-empty query of the configured dimension, a
+positive <code>top_k</code>, and its assigned buffers as <code>paimon_byte_slice</code> values.</p>
+<p>The helper borrows the table and buffers and consumes the optional <code>filter</code>,
+including on failure. The callback returns zero on success. It must either use
+the batch synchronously or import/move its Arrow contents, marking the source
+structures released according to the Arrow C Data Interface. It must not free
+the Paimon batch container itself; the helper does that after the callback,
+including when the callback fails.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdint.h&gt;</span>
+<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
+<a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdlib.h&gt;</span>
+<a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a>
+<a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">"paimon.h"</span>
+<a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a>
+<a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a><span class="k">typedef</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="n">vector_batch_consumer</span><span class="p">)(</span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">context</span><span class="p">,</span><span class="w"> </span><span class="n">paimon_arrow_batch</span><span class="w"> </span><span class="n">batch</span><span class="p">);</span>
+<a id="__codelineno-18-8" name="__codelineno-18-8" href="#__codelineno-18-8"></a>
+<a id="__codelineno-18-9" name="__codelineno-18-9" href="#__codelineno-18-9"></a><span class="cp">#define VECTOR_TRY(expression)                     \</span>
+<a id="__codelineno-18-10" name="__codelineno-18-10" href="#__codelineno-18-10"></a><span class="cp">    do {                                          \</span>
+<a id="__codelineno-18-11" name="__codelineno-18-11" href="#__codelineno-18-11"></a><span class="cp">        error = (expression);                     \</span>
+<a id="__codelineno-18-12" name="__codelineno-18-12" href="#__codelineno-18-12"></a><span class="cp">        if (error != NULL) goto cleanup;           \</span>
+<a id="__codelineno-18-13" name="__codelineno-18-13" href="#__codelineno-18-13"></a><span class="cp">    } while (0)</span>
+<a id="__codelineno-18-14" name="__codelineno-18-14" href="#__codelineno-18-14"></a>
+<a id="__codelineno-18-15" name="__codelineno-18-15" href="#__codelineno-18-15"></a><span class="kt">int</span><span class="w"> </span><span class="nf">read_vector_splits</span><span class="p">(</span>
+<a id="__codelineno-18-16" name="__codelineno-18-16" href="#__codelineno-18-16"></a><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="n">paimon_table</span><span class="w"> </span><span class="o">*</span><span class="n">table</span><span class="p">,</span>
+<a id="__codelineno-18-17" name="__codelineno-18-17" href="#__codelineno-18-17"></a><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="n">paimon_byte_slice</span><span class="w"> </span><span class="o">*</span><span class="n">wire_splits</span><span class="p">,</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="n">split_count</span><span class="p">,</span>
+<a id="__codelineno-18-18" name="__codelineno-18-18" href="#__codelineno-18-18"></a><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="o">*</span><span class="n">query</span><span class="p">,</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="n">dimension</span><span class="p">,</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="n">top_k</span><span class="p">,</span>
+<a id="__codelineno-18-19" name="__codelineno-18-19" href="#__codelineno-18-19"></a><span class="w">    </span><span class="n">paimon_predicate</span><span class="w"> </span><span class="o">*</span><span class="n">filter</span><span class="p">,</span>
+<a id="__codelineno-18-20" name="__codelineno-18-20" href="#__codelineno-18-20"></a><span class="w">    </span><span class="n">vector_batch_consumer</span><span class="w"> </span><span class="n">consume_batch</span><span class="p">,</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">context</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-18-21" name="__codelineno-18-21" href="#__codelineno-18-21"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">-1</span><span class="p">;</span>
+<a id="__codelineno-18-22" name="__codelineno-18-22" href="#__codelineno-18-22"></a><span class="w">    </span><span class="n">paimon_error</span><span class="w"> </span><span class="o">*</span><span class="n">error</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span>
+<a id="__codelineno-18-23" name="__codelineno-18-23" href="#__codelineno-18-23"></a><span class="w">    </span><span class="n">paimon_bucket_vector_search_split</span><span class="w"> </span><span class="o">**</span><span class="n">splits</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span>
+<a id="__codelineno-18-24" name="__codelineno-18-24" href="#__codelineno-18-24"></a><span class="w">    </span><span class="n">paimon_vector_search_builder</span><span class="w"> </span><span class="o">*</span><span class="n">builder</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span>
+<a id="__codelineno-18-25" name="__codelineno-18-25" href="#__codelineno-18-25"></a><span class="w">    </span><span class="n">paimon_vector_scan</span><span class="w"> </span><span class="o">*</span><span class="n">scan</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span>
+<a id="__codelineno-18-26" name="__codelineno-18-26" href="#__codelineno-18-26"></a><span class="w">    </span><span class="n">paimon_vector_plan</span><span class="w"> </span><span class="o">*</span><span class="n">plan</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span>
+<a id="__codelineno-18-27" name="__codelineno-18-27" href="#__codelineno-18-27"></a><span class="w">    </span><span class="n">paimon_vector_read</span><span class="w"> </span><span class="o">*</span><span class="n">read</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span>
+<a id="__codelineno-18-28" name="__codelineno-18-28" href="#__codelineno-18-28"></a><span class="w">    </span><span class="n">paimon_record_batch_reader</span><span class="w"> </span><span class="o">*</span><span class="n">reader</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span>
+<a id="__codelineno-18-29" name="__codelineno-18-29" href="#__codelineno-18-29"></a><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">projection</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="s">"id"</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">};</span>
+<a id="__codelineno-18-30" name="__codelineno-18-30" href="#__codelineno-18-30"></a>
+<a id="__codelineno-18-31" name="__codelineno-18-31" href="#__codelineno-18-31"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">table</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nb">NULL</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">consume_batch</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nb">NULL</span><span class="p">)</span><span class="w"> </span><span class="k">goto</span><span class="w"> </span><span class="n">cleanup</span><span class="p">;</span>
+<a id="__codelineno-18-32" name="__codelineno-18-32" href="#__codelineno-18-32"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">split_count</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-18-33" name="__codelineno-18-33" href="#__codelineno-18-33"></a><span class="w">        </span><span class="n">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="c1">// No assigned work; the plan API requires non-empty input.</span>
+<a id="__codelineno-18-34" name="__codelineno-18-34" href="#__codelineno-18-34"></a><span class="w">        </span><span class="k">goto</span><span class="w"> </span><span class="n">cleanup</span><span class="p">;</span>
+<a id="__codelineno-18-35" name="__codelineno-18-35" href="#__codelineno-18-35"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-18-36" name="__codelineno-18-36" href="#__codelineno-18-36"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">wire_splits</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nb">NULL</span><span class="p">)</span><span class="w"> </span><span class="k">goto</span><span class="w"> </span><span class="n">cleanup</span><span class="p">;</span>
+<a id="__codelineno-18-37" name="__codelineno-18-37" href="#__codelineno-18-37"></a><span class="w">    </span><span class="n">splits</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">calloc</span><span class="p">(</span><span class="n">split_count</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="o">*</span><span class="n">splits</span><span class="p">));</span>
+<a id="__codelineno-18-38" name="__codelineno-18-38" href="#__codelineno-18-38"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">splits</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nb">NULL</span><span class="p">)</span><span class="w"> </span><span class="k">goto</span><span class="w"> </span><span class="n">cleanup</span><span class="p">;</span>
+<a id="__codelineno-18-39" name="__codelineno-18-39" href="#__codelineno-18-39"></a>
+<a id="__codelineno-18-40" name="__codelineno-18-40" href="#__codelineno-18-40"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">size_t</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">split_count</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-18-41" name="__codelineno-18-41" href="#__codelineno-18-41"></a><span class="w">        </span><span class="n">paimon_result_bucket_vector_search_split</span><span class="w"> </span><span class="n">decoded</span><span class="w"> </span><span class="o">=</span>
+<a id="__codelineno-18-42" name="__codelineno-18-42" href="#__codelineno-18-42"></a><span class="w">            </span><span class="n">paimon_bucket_vector_search_split_deserialize</span><span class="p">(</span>
+<a id="__codelineno-18-43" name="__codelineno-18-43" href="#__codelineno-18-43"></a><span class="w">                </span><span class="n">wire_splits</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">data</span><span class="p">,</span><span class="w"> </span><span class="n">wire_splits</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">len</span><span class="p">);</span>
+<a id="__codelineno-18-44" name="__codelineno-18-44" href="#__codelineno-18-44"></a><span class="w">        </span><span class="n">splits</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">decoded</span><span class="p">.</span><span class="n">split</span><span class="p">;</span>
+<a id="__codelineno-18-45" name="__codelineno-18-45" href="#__codelineno-18-45"></a><span class="w">        </span><span class="n">VECTOR_TRY</span><span class="p">(</span><span class="n">decoded</span><span class="p">.</span><span class="n">error</span><span class="p">);</span>
+<a id="__codelineno-18-46" name="__codelineno-18-46" href="#__codelineno-18-46"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-18-47" name="__codelineno-18-47" href="#__codelineno-18-47"></a><span class="w">    </span><span class="c1">// All metadata is now owned by split handles; wire buffers can be released.</span>
+<a id="__codelineno-18-48" name="__codelineno-18-48" href="#__codelineno-18-48"></a>
+<a id="__codelineno-18-49" name="__codelineno-18-49" href="#__codelineno-18-49"></a><span class="w">    </span><span class="n">paimon_result_vector_search_builder</span><span class="w"> </span><span class="n">built</span><span class="w"> </span><span class="o">=</span>
+<a id="__codelineno-18-50" name="__codelineno-18-50" href="#__codelineno-18-50"></a><span class="w">        </span><span class="n">paimon_table_new_vector_search_builder</span><span class="p">(</span><span class="n">table</span><span class="p">);</span>
+<a id="__codelineno-18-51" name="__codelineno-18-51" href="#__codelineno-18-51"></a><span class="w">    </span><span class="n">builder</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">built</span><span class="p">.</span><span class="n">builder</span><span class="p">;</span>
+<a id="__codelineno-18-52" name="__codelineno-18-52" href="#__codelineno-18-52"></a><span class="w">    </span><span class="n">VECTOR_TRY</span><span class="p">(</span><span class="n">built</span><span class="p">.</span><span class="n">error</span><span class="p">);</span>
+<a id="__codelineno-18-53" name="__codelineno-18-53" href="#__codelineno-18-53"></a><span class="w">    </span><span class="n">VECTOR_TRY</span><span class="p">(</span><span class="n">paimon_vector_search_builder_with_vector_column</span><span class="p">(</span><span class="n">builder</span><span class="p">,</span><span class="w"> </span><span class="s">"embedding"</span><span class="p">));</span>
+<a id="__codelineno-18-54" name="__codelineno-18-54" href="#__codelineno-18-54"></a><span class="w">    </span><span class="n">VECTOR_TRY</span><span class="p">(</span><span class="n">paimon_vector_search_builder_with_query_vector</span><span class="p">(</span><span class="n">builder</span><span class="p">,</span><span class="w"> </span><span class="n">query</span><span class="p">,</span><span class="w"> </span><span class="n">dimension</span><span class="p">));</span>
+<a id="__codelineno-18-55" name="__codelineno-18-55" href="#__codelineno-18-55"></a><span class="w">    </span><span class="n">VECTOR_TRY</span><span class="p">(</span><span class="n">paimon_vector_search_builder_with_limit</span><span class="p">(</span><span class="n">builder</span><span class="p">,</span><span class="w"> </span><span class="n">top_k</span><span class="p">));</span>
+<a id="__codelineno-18-56" name="__codelineno-18-56" href="#__codelineno-18-56"></a><span class="w">    </span><span class="n">VECTOR_TRY</span><span class="p">(</span><span class="n">paimon_vector_search_builder_with_projection</span><span class="p">(</span><span class="n">builder</span><span class="p">,</span><span class="w"> </span><span class="n">projection</span><span class="p">));</span>
+<a id="__codelineno-18-57" name="__codelineno-18-57" href="#__codelineno-18-57"></a><span class="w">    </span><span class="n">VECTOR_TRY</span><span class="p">(</span><span class="n">paimon_vector_search_builder_with_filter</span><span class="p">(</span><span class="n">builder</span><span class="p">,</span><span class="w"> </span><span class="n">filter</span><span class="p">));</span>
+<a id="__codelineno-18-58" name="__codelineno-18-58" href="#__codelineno-18-58"></a><span class="w">    </span><span class="n">filter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span><span class="w"> </span><span class="c1">// Ownership transferred to the builder.</span>
+<a id="__codelineno-18-59" name="__codelineno-18-59" href="#__codelineno-18-59"></a><span class="w">    </span><span class="c1">// Set paimon_vector_search_builder_with_options here if the query needs it.</span>
+<a id="__codelineno-18-60" name="__codelineno-18-60" href="#__codelineno-18-60"></a>
+<a id="__codelineno-18-61" name="__codelineno-18-61" href="#__codelineno-18-61"></a><span class="w">    </span><span class="n">paimon_result_vector_scan</span><span class="w"> </span><span class="n">scanned</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">paimon_vector_search_builder_new_scan</span><span class="p">(</span><span class="n">builder</span><span class="p">);</span>
+<a id="__codelineno-18-62" name="__codelineno-18-62" href="#__codelineno-18-62"></a><span class="w">    </span><span class="n">scan</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">scanned</span><span class="p">.</span><span class="n">scan</span><span class="p">;</span>
+<a id="__codelineno-18-63" name="__codelineno-18-63" href="#__codelineno-18-63"></a><span class="w">    </span><span class="n">VECTOR_TRY</span><span class="p">(</span><span class="n">scanned</span><span class="p">.</span><span class="n">error</span><span class="p">);</span>
+<a id="__codelineno-18-64" name="__codelineno-18-64" href="#__codelineno-18-64"></a><span class="w">    </span><span class="n">paimon_result_vector_read</span><span class="w"> </span><span class="n">reading</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">paimon_vector_search_builder_new_read</span><span class="p">(</span><span class="n">builder</span><span class="p">);</span>
+<a id="__codelineno-18-65" name="__codelineno-18-65" href="#__codelineno-18-65"></a><span class="w">    </span><span class="n">read</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">reading</span><span class="p">.</span><span class="n">read</span><span class="p">;</span>
+<a id="__codelineno-18-66" name="__codelineno-18-66" href="#__codelineno-18-66"></a><span class="w">    </span><span class="n">VECTOR_TRY</span><span class="p">(</span><span class="n">reading</span><span class="p">.</span><span class="n">error</span><span class="p">);</span>
+<a id="__codelineno-18-67" name="__codelineno-18-67" href="#__codelineno-18-67"></a>
+<a id="__codelineno-18-68" name="__codelineno-18-68" href="#__codelineno-18-68"></a><span class="w">    </span><span class="n">paimon_result_vector_plan</span><span class="w"> </span><span class="n">planned</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">paimon_vector_scan_plan_from_bucket_splits</span><span class="p">(</span>
+<a id="__codelineno-18-69" name="__codelineno-18-69" href="#__codelineno-18-69"></a><span class="w">        </span><span class="n">scan</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">paimon_bucket_vector_search_split</span><span class="w"> </span><span class="o">*</span><span class="k">const</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="n">splits</span><span class="p">,</span><span class="w"> </span><span class="n">split_count</span><span class="p">);</span>
+<a id="__codelineno-18-70" name="__codelineno-18-70" href="#__codelineno-18-70"></a><span class="w">    </span><span class="n">plan</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">planned</span><span class="p">.</span><span class="n">plan</span><span class="p">;</span>
+<a id="__codelineno-18-71" name="__codelineno-18-71" href="#__codelineno-18-71"></a><span class="w">    </span><span class="n">VECTOR_TRY</span><span class="p">(</span><span class="n">planned</span><span class="p">.</span><span class="n">error</span><span class="p">);</span>
+<a id="__codelineno-18-72" name="__codelineno-18-72" href="#__codelineno-18-72"></a>
+<a id="__codelineno-18-73" name="__codelineno-18-73" href="#__codelineno-18-73"></a><span class="w">    </span><span class="c1">// Plan construction copied the metadata and did not consume the handles.</span>
+<a id="__codelineno-18-74" name="__codelineno-18-74" href="#__codelineno-18-74"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">size_t</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">split_count</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-18-75" name="__codelineno-18-75" href="#__codelineno-18-75"></a><span class="w">        </span><span class="n">paimon_bucket_vector_search_split_free</span><span class="p">(</span><span class="n">splits</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+<a id="__codelineno-18-76" name="__codelineno-18-76" href="#__codelineno-18-76"></a><span class="w">        </span><span class="n">splits</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span>
+<a id="__codelineno-18-77" name="__codelineno-18-77" href="#__codelineno-18-77"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-18-78" name="__codelineno-18-78" href="#__codelineno-18-78"></a><span class="w">    </span><span class="n">paimon_vector_scan_free</span><span class="p">(</span><span class="n">scan</span><span class="p">);</span>
+<a id="__codelineno-18-79" name="__codelineno-18-79" href="#__codelineno-18-79"></a><span class="w">    </span><span class="n">scan</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span>
+<a id="__codelineno-18-80" name="__codelineno-18-80" href="#__codelineno-18-80"></a><span class="w">    </span><span class="n">paimon_vector_search_builder_free</span><span class="p">(</span><span class="n">builder</span><span class="p">);</span>
+<a id="__codelineno-18-81" name="__codelineno-18-81" href="#__codelineno-18-81"></a><span class="w">    </span><span class="n">builder</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span>
+<a id="__codelineno-18-82" name="__codelineno-18-82" href="#__codelineno-18-82"></a>
+<a id="__codelineno-18-83" name="__codelineno-18-83" href="#__codelineno-18-83"></a><span class="w">    </span><span class="n">paimon_result_record_batch_reader</span><span class="w"> </span><span class="n">searched</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">paimon_vector_read_read</span><span class="p">(</span><span class="n">read</span><span class="p">,</span><span class="w"> </span><span class="n">plan</span><span class="p">);</span>
+<a id="__codelineno-18-84" name="__codelineno-18-84" href="#__codelineno-18-84"></a><span class="w">    </span><span class="n">reader</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">searched</span><span class="p">.</span><span class="n">reader</span><span class="p">;</span>
+<a id="__codelineno-18-85" name="__codelineno-18-85" href="#__codelineno-18-85"></a><span class="w">    </span><span class="n">VECTOR_TRY</span><span class="p">(</span><span class="n">searched</span><span class="p">.</span><span class="n">error</span><span class="p">);</span>
+<a id="__codelineno-18-86" name="__codelineno-18-86" href="#__codelineno-18-86"></a><span class="w">    </span><span class="c1">// The returned stream owns what it needs, independently of these handles.</span>
+<a id="__codelineno-18-87" name="__codelineno-18-87" href="#__codelineno-18-87"></a><span class="w">    </span><span class="n">paimon_vector_read_free</span><span class="p">(</span><span class="n">read</span><span class="p">);</span>
+<a id="__codelineno-18-88" name="__codelineno-18-88" href="#__codelineno-18-88"></a><span class="w">    </span><span class="n">read</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span>
+<a id="__codelineno-18-89" name="__codelineno-18-89" href="#__codelineno-18-89"></a><span class="w">    </span><span class="n">paimon_vector_plan_free</span><span class="p">(</span><span class="n">plan</span><span class="p">);</span>
+<a id="__codelineno-18-90" name="__codelineno-18-90" href="#__codelineno-18-90"></a><span class="w">    </span><span class="n">plan</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span>
+<a id="__codelineno-18-91" name="__codelineno-18-91" href="#__codelineno-18-91"></a>
+<a id="__codelineno-18-92" name="__codelineno-18-92" href="#__codelineno-18-92"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(;;)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-18-93" name="__codelineno-18-93" href="#__codelineno-18-93"></a><span class="w">        </span><span class="n">paimon_result_next_batch</span><span class="w"> </span><span class="n">next</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">paimon_record_batch_reader_next</span><span class="p">(</span><span class="n">reader</span><span class="p">);</span>
+<a id="__codelineno-18-94" name="__codelineno-18-94" href="#__codelineno-18-94"></a><span class="w">        </span><span class="n">VECTOR_TRY</span><span class="p">(</span><span class="n">next</span><span class="p">.</span><span class="n">error</span><span class="p">);</span>
+<a id="__codelineno-18-95" name="__codelineno-18-95" href="#__codelineno-18-95"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">next</span><span class="p">.</span><span class="n">batch</span><span class="p">.</span><span class="n">array</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nb">NULL</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">next</span><span class="p">.</span><span class="n">batch</span><span class="p">.</span><span class="n">schema</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nb">NULL</span><span class="p">)</span><span class="w"> </span><span class="k">break</span><span class="p">;</span>
+<a id="__codelineno-18-96" name="__codelineno-18-96" href="#__codelineno-18-96"></a><span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">consumed</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">consume_batch</span><span class="p">(</span><span class="n">context</span><span class="p">,</span><span class="w"> </span><span class="n">next</span><span class="p">.</span><span class="n">batch</span><span class="p">);</span>
+<a id="__codelineno-18-97" name="__codelineno-18-97" href="#__codelineno-18-97"></a><span class="w">        </span><span class="n">paimon_arrow_batch_free</span><span class="p">(</span><span class="n">next</span><span class="p">.</span><span class="n">batch</span><span class="p">);</span>
+<a id="__codelineno-18-98" name="__codelineno-18-98" href="#__codelineno-18-98"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">consumed</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">goto</span><span class="w"> </span><span class="n">cleanup</span><span class="p">;</span>
+<a id="__codelineno-18-99" name="__codelineno-18-99" href="#__codelineno-18-99"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-18-100" name="__codelineno-18-100" href="#__codelineno-18-100"></a><span class="w">    </span><span class="n">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<a id="__codelineno-18-101" name="__codelineno-18-101" href="#__codelineno-18-101"></a>
+<a id="__codelineno-18-102" name="__codelineno-18-102" href="#__codelineno-18-102"></a><span class="nl">cleanup</span><span class="p">:</span>
+<a id="__codelineno-18-103" name="__codelineno-18-103" href="#__codelineno-18-103"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">error</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-18-104" name="__codelineno-18-104" href="#__codelineno-18-104"></a><span class="w">        </span><span class="n">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span><span class="w"> </span><span class="s">"Paimon error %d: "</span><span class="p">,</span><span class="w"> </span><span class="n">error</span><span class="o">-&gt;</span><span class="n">code</span><span class="p">);</span>
+<a id="__codelineno-18-105" name="__codelineno-18-105" href="#__codelineno-18-105"></a><span class="w">        </span><span class="n">fwrite</span><span class="p">(</span><span class="n">error</span><span class="o">-&gt;</span><span class="n">message</span><span class="p">.</span><span class="n">data</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">error</span><span class="o">-&gt;</span><span class="n">message</span><span class="p">.</span><span class="n">len</span><span class="p">,</span><span class="w"> </span><span class="n">stderr</span><span class="p">);</span>
+<a id="__codelineno-18-106" name="__codelineno-18-106" href="#__codelineno-18-106"></a><span class="w">        </span><span class="n">fputc</span><span class="p">(</span><span class="sc">'\n'</span><span class="p">,</span><span class="w"> </span><span class="n">stderr</span><span class="p">);</span>
+<a id="__codelineno-18-107" name="__codelineno-18-107" href="#__codelineno-18-107"></a><span class="w">        </span><span class="n">paimon_error_free</span><span class="p">(</span><span class="n">error</span><span class="p">);</span>
+<a id="__codelineno-18-108" name="__codelineno-18-108" href="#__codelineno-18-108"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-18-109" name="__codelineno-18-109" href="#__codelineno-18-109"></a><span class="w">    </span><span class="n">paimon_record_batch_reader_free</span><span class="p">(</span><span class="n">reader</span><span class="p">);</span>
+<a id="__codelineno-18-110" name="__codelineno-18-110" href="#__codelineno-18-110"></a><span class="w">    </span><span class="n">paimon_vector_read_free</span><span class="p">(</span><span class="n">read</span><span class="p">);</span>
+<a id="__codelineno-18-111" name="__codelineno-18-111" href="#__codelineno-18-111"></a><span class="w">    </span><span class="n">paimon_vector_plan_free</span><span class="p">(</span><span class="n">plan</span><span class="p">);</span>
+<a id="__codelineno-18-112" name="__codelineno-18-112" href="#__codelineno-18-112"></a><span class="w">    </span><span class="n">paimon_vector_scan_free</span><span class="p">(</span><span class="n">scan</span><span class="p">);</span>
+<a id="__codelineno-18-113" name="__codelineno-18-113" href="#__codelineno-18-113"></a><span class="w">    </span><span class="n">paimon_vector_search_builder_free</span><span class="p">(</span><span class="n">builder</span><span class="p">);</span>
+<a id="__codelineno-18-114" name="__codelineno-18-114" href="#__codelineno-18-114"></a><span class="w">    </span><span class="n">paimon_predicate_free</span><span class="p">(</span><span class="n">filter</span><span class="p">);</span>
+<a id="__codelineno-18-115" name="__codelineno-18-115" href="#__codelineno-18-115"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">splits</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-18-116" name="__codelineno-18-116" href="#__codelineno-18-116"></a><span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">size_t</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">split_count</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-18-117" name="__codelineno-18-117" href="#__codelineno-18-117"></a><span class="w">            </span><span class="n">paimon_bucket_vector_search_split_free</span><span class="p">(</span><span class="n">splits</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+<a id="__codelineno-18-118" name="__codelineno-18-118" href="#__codelineno-18-118"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-18-119" name="__codelineno-18-119" href="#__codelineno-18-119"></a><span class="w">        </span><span class="n">free</span><span class="p">(</span><span class="n">splits</span><span class="p">);</span>
+<a id="__codelineno-18-120" name="__codelineno-18-120" href="#__codelineno-18-120"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-18-121" name="__codelineno-18-121" href="#__codelineno-18-121"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">status</span><span class="p">;</span>
+<a id="__codelineno-18-122" name="__codelineno-18-122" href="#__codelineno-18-122"></a><span class="p">}</span>
+<a id="__codelineno-18-123" name="__codelineno-18-123" href="#__codelineno-18-123"></a>
+<a id="__codelineno-18-124" name="__codelineno-18-124" href="#__codelineno-18-124"></a><span class="cp">#undef VECTOR_TRY</span>
+</code></pre></div>
+<p>Compile the helper as C and declare it with C linkage in the native worker.
+When including the generated C header directly from C++, wrap the include
+in <code>extern "C" { ... }</code> or generate a C++-compatible C header with
+<code>cbindgen bindings/c --lang c --cpp-compat --output target/release/paimon.h</code>.
+Replace the sample stderr reporting with the application's error handling as needed.</p>
+<p>Each call returns up to <code>top_k</code> rows across all splits supplied to that call,
+in relevance order, with the requested user columns and a <code>FLOAT32</code>
+<code>__paimon_search_score</code> column. Higher scores rank first, including for L2 (the
+score is <code>1 / (1 + squared_distance)</code>, not the raw distance). The caller must merge
+the results from its disjoint assignments and apply the final global Top-K.
+Include the primary-key columns in the projection if the coordinator needs
+them for row identity. This merge retains the configured search mode's ANN/exact
+semantics; it does not make ANN search exact.</p>
+<p>All splits in a plan must come from one table, branch and snapshot, with at most
+one split per <code>(partition, bucket)</code>. Mixed snapshot IDs and repeated buckets are
+rejected. The caller is responsible for keeping the table/branch metadata paired
+with the buffers and for avoiding duplicate assignments across workers. An empty
+Java plan means no work; skip native plan construction. Supplied file-local row
+ranges remain authoritative and are intersected with any native residual filter.</p>
+<p>For repeated queries over the same assignment, retain <code>paimon_vector_plan</code> and
+create another reader with the new query/limit instead of decoding again. Readers
+must use the same table, branch, vector column and pre-filter as the plan.
+Changing a builder after <code>new_read</code> does not change an already-created reader.</p>
+<h2 id="writing-and-committing">Writing and Committing<a class="headerlink" href="#writing-and-committing" title="Permanent link">&para;</a></h2>
+<p>Writing uses a <strong>write-then-commit</strong> flow:</p>
+<ol>
+<li>Create one <code>paimon_write_builder</code> from the table.</li>
+<li>Create a <code>paimon_table_write</code> and <code>paimon_table_commit</code> from that same
+   builder.</li>
+<li>Export each record batch through the Arrow C Data Interface and pass it to
+   <code>paimon_table_write_write_arrow_batch</code>.</li>
+<li>Call <code>paimon_table_write_prepare_commit</code> to obtain commit messages.</li>
+<li>Pass the messages to <code>paimon_table_commit_commit</code>.</li>
+<li>Free the messages, writer, committer, and builder.</li>
+</ol>
+<h3 id="exporting-the-tables-write-schema">Exporting the Table's Write Schema<a class="headerlink" href="#exporting-the-tables-write-schema" title="Permanent link">&para;</a></h3>
+<p>Use <code>paimon_table_export_arrow_schema</code> to construct batches with the pinned
+table's field order, names, nullability and core Arrow types. The function does
+not query the catalog or refresh the table schema. Include your Arrow
+implementation's C Data Interface declarations for <code>struct ArrowSchema</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="k">struct</span><span class="w"> </span><span class="nc">ArrowSchema</span><span class="w"> </span><span class="n">schema</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">0</span><span class="p">};</span>
+<a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a><span class="n">paimon_error</span><span class="w"> </span><span class="o">*</span><span class="n">error</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">paimon_table_export_arrow_schema</span><span class="p">(</span><span class="n">table</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">schema</span><span class="p">);</span>
+<a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">error</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a><span class="w">    </span><span class="n">paimon_error_free</span><span class="p">(</span><span class="n">error</span><span class="p">);</span>
+<a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">-1</span><span class="p">;</span>
+<a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a><span class="p">}</span>
+<a id="__codelineno-19-7" name="__codelineno-19-7" href="#__codelineno-19-7"></a><span class="cm">/* Import schema into the Arrow implementation and construct matching batches.</span>
+<a id="__codelineno-19-8" name="__codelineno-19-8" href="#__codelineno-19-8"></a><span class="cm">   An importing consumer may move ownership and set schema.release to NULL. */</span>
+<a id="__codelineno-19-9" name="__codelineno-19-9" href="#__codelineno-19-9"></a><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">schema</span><span class="p">.</span><span class="n">release</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">)</span><span class="w"> </span><span class="n">schema</span><span class="p">.</span><span class="n">release</span><span class="p">(</span><span class="o">&amp;</span><span class="n">schema</span><span class="p">);</span>
+</code></pre></div>
+<p>The table handle is borrowed; the exported schema remains valid after it is
+freed. Release the schema through its callback, rather than
+<code>paimon_arrow_batch_free</code> (which frees a library-owned batch allocation).
+The output must be initialized with a null release callback. Reusing a live
+schema returns an error without replacing it; release it before reuse.
+The core type mapping remains authoritative, including for unsupported types.</p>
+<h3 id="cross-process-commit-messages">Cross-process Commit Messages<a class="headerlink" href="#cross-process-commit-messages" title="Permanent link">&para;</a></h3>
+<p>Workers can prepare files and export their ordinary commit messages for an
+independent coordinator. The coordinator must have access to the same files.
+Use <code>paimon_table_new_write_builder_with_commit_user</code> to configure a stable
+logical job identity on workers and the coordinator.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="cm">/* Worker: messages came from paimon_table_write_prepare_commit. */</span>
+<a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a><span class="kt">int32_t</span><span class="w"> </span><span class="n">version</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">paimon_commit_messages_serializer_version</span><span class="p">();</span>
+<a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a><span class="n">paimon_result_bytes_array</span><span class="w"> </span><span class="n">exported</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">paimon_commit_messages_serialize</span><span class="p">(</span><span class="n">messages</span><span class="p">);</span>
+<a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a><span class="n">CHECK_RESULT</span><span class="p">(</span><span class="n">exported</span><span class="p">);</span>
+<a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a>
+<a id="__codelineno-20-6" name="__codelineno-20-6" href="#__codelineno-20-6"></a><span class="cm">/* Send version and each exported.bytes.data[i].data / .len through the</span>
+<a id="__codelineno-20-7" name="__codelineno-20-7" href="#__codelineno-20-7"></a><span class="cm">   application's transport. Preserve the order and boundaries of the bodies.</span>
+<a id="__codelineno-20-8" name="__codelineno-20-8" href="#__codelineno-20-8"></a><span class="cm">   Complete or copy the transport's reads before freeing the buffers. */</span>
+<a id="__codelineno-20-9" name="__codelineno-20-9" href="#__codelineno-20-9"></a><span class="n">paimon_bytes_array_free</span><span class="p">(</span><span class="n">exported</span><span class="p">.</span><span class="n">bytes</span><span class="p">);</span>
+<a id="__codelineno-20-10" name="__codelineno-20-10" href="#__codelineno-20-10"></a><span class="n">paimon_commit_messages_free</span><span class="p">(</span><span class="n">messages</span><span class="p">);</span>
+</code></pre></div>
+<p>Each array element is one unframed Java <code>CommitMessageSerializer</code> v14 body.
+The version, message count and body lengths are transport metadata, not part
+of those bodies. Do not concatenate bodies or add a header inside a body.
+An empty message list exports an empty array. The buffers are independent of
+the source handle and remain valid after that handle is freed.</p>
+<p>For a size-limited transport, query the message count and export ranges. The
+limit applies to the sum of body lengths, excluding array overhead and the
+application's framing. Reserve space for that framing in the transport budget.
+This example reduces a range after <code>ResourceExhausted</code> (code <code>6</code>):</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="kt">size_t</span><span class="w"> </span><span class="n">total</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a><span class="n">paimon_error</span><span class="w"> </span><span class="o">*</span><span class="n">count_error</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">paimon_commit_messages_count</span><span class="p">(</span><span class="n">messages</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">total</span><span class="p">);</span>
+<a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">count_error</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a><span class="w">    </span><span class="cm">/* Report the error before releasing it. */</span>
+<a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a><span class="w">    </span><span class="n">paimon_error_free</span><span class="p">(</span><span class="n">count_error</span><span class="p">);</span>
+<a id="__codelineno-21-6" name="__codelineno-21-6" href="#__codelineno-21-6"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">-1</span><span class="p">;</span>
+<a id="__codelineno-21-7" name="__codelineno-21-7" href="#__codelineno-21-7"></a><span class="p">}</span>
+<a id="__codelineno-21-8" name="__codelineno-21-8" href="#__codelineno-21-8"></a><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">size_t</span><span class="w"> </span><span class="n">offset</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">offset</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">total</span><span class="p">;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-21-9" name="__codelineno-21-9" href="#__codelineno-21-9"></a><span class="w">    </span><span class="kt">size_t</span><span class="w"> </span><span class="n">count</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">total</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">offset</span><span class="p">;</span>
+<a id="__codelineno-21-10" name="__codelineno-21-10" href="#__codelineno-21-10"></a><span class="w">    </span><span class="n">paimon_result_bytes_array</span><span class="w"> </span><span class="n">chunk</span><span class="p">;</span>
+<a id="__codelineno-21-11" name="__codelineno-21-11" href="#__codelineno-21-11"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(;;)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-21-12" name="__codelineno-21-12" href="#__codelineno-21-12"></a><span class="w">        </span><span class="n">chunk</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">paimon_commit_messages_serialize_range</span><span class="p">(</span>
+<a id="__codelineno-21-13" name="__codelineno-21-13" href="#__codelineno-21-13"></a><span class="w">            </span><span class="n">messages</span><span class="p">,</span><span class="w"> </span><span class="n">offset</span><span class="p">,</span><span class="w"> </span><span class="n">count</span><span class="p">,</span><span class="w"> </span><span class="n">body_limit</span><span class="p">);</span>
+<a id="__codelineno-21-14" name="__codelineno-21-14" href="#__codelineno-21-14"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">chunk</span><span class="p">.</span><span class="n">error</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nb">NULL</span><span class="p">)</span><span class="w"> </span><span class="k">break</span><span class="p">;</span>
+<a id="__codelineno-21-15" name="__codelineno-21-15" href="#__codelineno-21-15"></a><span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">retry</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">chunk</span><span class="p">.</span><span class="n">error</span><span class="o">-&gt;</span><span class="n">code</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">6</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">count</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<a id="__codelineno-21-16" name="__codelineno-21-16" href="#__codelineno-21-16"></a><span class="w">        </span><span class="n">paimon_error_free</span><span class="p">(</span><span class="n">chunk</span><span class="p">.</span><span class="n">error</span><span class="p">);</span>
+<a id="__codelineno-21-17" name="__codelineno-21-17" href="#__codelineno-21-17"></a><span class="w">        </span><span class="n">paimon_bytes_array_free</span><span class="p">(</span><span class="n">chunk</span><span class="p">.</span><span class="n">bytes</span><span class="p">);</span><span class="w"> </span><span class="cm">/* Empty on error. */</span>
+<a id="__codelineno-21-18" name="__codelineno-21-18" href="#__codelineno-21-18"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">retry</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="mi">-1</span><span class="p">;</span><span class="w"> </span><span class="cm">/* A single body may exceed the limit. */</span>
+<a id="__codelineno-21-19" name="__codelineno-21-19" href="#__codelineno-21-19"></a><span class="w">        </span><span class="n">count</span><span class="w"> </span><span class="o">/=</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span>
+<a id="__codelineno-21-20" name="__codelineno-21-20" href="#__codelineno-21-20"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-21-21" name="__codelineno-21-21" href="#__codelineno-21-21"></a><span class="w">    </span><span class="cm">/* Send or copy chunk.bytes, preserving the bodies' order and boundaries. */</span>
+<a id="__codelineno-21-22" name="__codelineno-21-22" href="#__codelineno-21-22"></a><span class="w">    </span><span class="n">paimon_bytes_array_free</span><span class="p">(</span><span class="n">chunk</span><span class="p">.</span><span class="n">bytes</span><span class="p">);</span>
+<a id="__codelineno-21-23" name="__codelineno-21-23" href="#__codelineno-21-23"></a><span class="w">    </span><span class="n">offset</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">count</span><span class="p">;</span>
+<a id="__codelineno-21-24" name="__codelineno-21-24" href="#__codelineno-21-24"></a><span class="p">}</span>
+</code></pre></div>
+<p>Errors do not consume messages or expose a partial array, so a smaller range
+can be retried against the same handle. <code>offset + count</code> must not overflow or
+exceed the message count. Empty ranges at or before the end succeed even with
+a zero-byte limit. The existing full-list export remains available.</p>
+<p>The byte limit is not a peak-memory or RSS bound: individual metadata rows
+still use temporary encoding buffers, and vector capacity and result ownership
+conversion can allocate additional memory.</p>
+<p>On the coordinator, create a standard committer for the intended table and
+operation. Enable overwrite on its builder before creating it if the workers
+prepared an overwrite. Pass the received bodies as borrowed
+<code>paimon_byte_slice</code> values:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="n">paimon_result_prepare_commit</span><span class="w"> </span><span class="n">restored</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">paimon_commit_messages_deserialize</span><span class="p">(</span>
+<a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a><span class="w">    </span><span class="n">committer</span><span class="p">,</span><span class="w"> </span><span class="n">received_version</span><span class="p">,</span><span class="w"> </span><span class="n">received_bodies</span><span class="p">,</span><span class="w"> </span><span class="n">received_count</span><span class="p">);</span>
+<a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a><span class="n">CHECK_RESULT</span><span class="p">(</span><span class="n">restored</span><span class="p">);</span>
+<a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a>
+<a id="__codelineno-22-5" name="__codelineno-22-5" href="#__codelineno-22-5"></a><span class="cm">/* Input buffers may now be released. Merge the restored handle with other</span>
+<a id="__codelineno-22-6" name="__codelineno-22-6" href="#__codelineno-22-6"></a><span class="cm">   workers' handles using paimon_commit_messages_merge, then commit once. */</span>
+<a id="__codelineno-22-7" name="__codelineno-22-7" href="#__codelineno-22-7"></a><span class="n">paimon_error</span><span class="w"> </span><span class="o">*</span><span class="n">error</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">paimon_table_commit_commit_with_identifier</span><span class="p">(</span>
+<a id="__codelineno-22-8" name="__codelineno-22-8" href="#__codelineno-22-8"></a><span class="w">    </span><span class="n">committer</span><span class="p">,</span><span class="w"> </span><span class="n">restored</span><span class="p">.</span><span class="n">messages</span><span class="p">,</span><span class="w"> </span><span class="n">checkpoint_id</span><span class="p">);</span>
+<a id="__codelineno-22-9" name="__codelineno-22-9" href="#__codelineno-22-9"></a><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">error</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-22-10" name="__codelineno-22-10" href="#__codelineno-22-10"></a><span class="w">    </span><span class="n">paimon_error_free</span><span class="p">(</span><span class="n">error</span><span class="p">);</span>
+<a id="__codelineno-22-11" name="__codelineno-22-11" href="#__codelineno-22-11"></a><span class="p">}</span>
+<a id="__codelineno-22-12" name="__codelineno-22-12" href="#__codelineno-22-12"></a><span class="n">paimon_commit_messages_free</span><span class="p">(</span><span class="n">restored</span><span class="p">.</span><span class="n">messages</span><span class="p">);</span>
+</code></pre></div>
+<p>Deserialization copies the target committer's table location, <code>commit_user</code>
+and overwrite mode. These fields are absent from the Java body: the application
+must ensure that the received files belong to the selected table, branch and
+operation. Import does not verify the messages' original identity. Subsequent
+merge, commit and abort calls enforce the copied context. The imported handle
+can outlive both its input buffers and the original committer.</p>
+<p>Use <code>paimon_table_commit_overwrite_with_identifier</code> for overwrite messages.
+The commit identifier is supplied separately; retain a stable <code>commit_user</code>
+and identifier when retrying an uncertain commit. For append retries,
+<code>paimon_table_commit_filter_and_commit_with_identifier</code> filters already
+committed identifiers. Merging copies messages and leaves both handles owned
+by the caller; free each handle exactly once. Freeing a handle releases metadata,
+not prepared files; use <code>paimon_table_commit_abort</code> for known uncommitted files.</p>
+<p>Unsupported versions, malformed bodies and invalid pointer/length combinations
+return errors without a partial output handle. <code>NULL, 0</code> is a valid empty list;
+an individual empty body is invalid. Format Table message export and import into
+a Format Table committer are unsupported. These APIs do not accept postpone
+fixed-bucket handles or <code>CompactTask</code> / <code>CompactResult</code> payloads. Java compact
+increment fields retain the core codec behavior; ordinary commits still reject
+nonempty compact increments.</p>
+<h3 id="shared-writer-memory-reservations">Shared Writer Memory Reservations<a class="headerlink" href="#shared-writer-memory-reservations" title="Permanent link">&para;</a></h3>
+<p>Attach an optional resource context to each write builder before creating its
+writer. Use <code>paimon_write_builder_with_resources</code> for a standard builder or
+<code>paimon_postpone_fixed_bucket_write_builder_with_resources</code> for a postpone
+fixed-bucket builder. The same context can be attached to multiple builders,
+including read builders, so their reservations share one limit. Both write
+builder functions clone the context; the caller may free the original C handle
+after attaching it. Each created writer retains the context it needs even if
+its builder is freed.</p>
+<p>These functions return an error for a null builder or context and leave the
+builder unchanged. A zero-byte limit rejects nonempty reservations when writing
+or preparing a commit. The existing <code>ResourceExhausted</code> error code is <code>6</code>.
+Use <code>paimon_resource_context_metrics</code> while the C handle is available to read
+the current and peak reserved bytes. The current count returns to zero after
+all writers and readers holding reservations have released them; the peak count
+remains.</p>
+<p>This is a write memory reservation interface, not a limit on total process
+memory. The current write path charges retained key-value input batches and
+unflushed format-writer input batches. Sorting, encoding, transient routing
+batches, file indexes, caller-owned Arrow input, and allocation overhead are
+not fully charged. A reservation failure does not automatically flush or retry
+a writer; handle the error as a failed write operation.</p>
+<p>For append and postpone-bucket writes, formats that support flushing also flush
+when the current file's retained-input reservation reaches
+<code>write.parquet-buffer-size</code> (default 256 MiB). This accounts for inputs such as
+repeated strings whose Arrow buffers can be much larger than the encoded row
+group. The flush decision uses only that file's reservation. Each batch must
+still fit within the available budget before it can be flushed.</p>
+<p>The input Arrow schema must match the table schema exactly, including field
+count, order, names, and types. A non-nullable table field must not contain null
+values.</p>
+<div class="admonition warning">
+<p class="admonition-title">Write builder consistency</p>
+<p>Local writers and committers must share the table, commit identity and
+overwrite mode. Use the same builder or set the same explicit identity on
+separate builders. Imported messages use the target committer's context as
+described above. Commit messages must be freed with
+<code>paimon_commit_messages_free</code> even after a successful commit. The caller
+retains message ownership and may retry a failed commit.</p>
+</div>
+<h2 id="error-handling-and-resource-ownership">Error Handling and Resource Ownership<a class="headerlink" href="#error-handling-and-resource-ownership" title="Permanent link">&para;</a></h2>
+<p>Functions that can fail use one of two conventions:</p>
+<ul>
+<li>Constructors and terminal operations return a result struct with an <code>error</code>
+  field. On success, <code>error</code> is null.</li>
+<li>Mutating builder functions return <code>paimon_error *</code> directly. A null pointer
+  means success.</li>
+</ul>
+<p>Error messages are byte buffers and are not null-terminated. Read exactly
+<code>error-&gt;message.len</code> bytes, and release the entire error with
+<code>paimon_error_free</code>. Do not separately call <code>paimon_bytes_free</code> on an error
+message.</p>
+<p>Every opaque handle returned by the C API has a matching free function. Free
+resources in reverse construction order. Pointer-based free functions accept
+null, which makes cleanup paths straightforward.</p>
+<h2 id="schema-only-partition-and-bucket-routing">Schema-only Partition and Bucket Routing<a class="headerlink" href="#schema-only-partition-and-bucket-routing" title="Permanent link">&para;</a></h2>
+<p>Create a reusable router with <code>paimon_bucket_router_new_from_schema_json</code> from a
+frozen complete <code>TableSchema</code> JSON. Construction and routing use schema metadata
+and Arrow inputs without accessing a catalog or storage. Existing
+<code>paimon_bucket_router_route_arrow</code> returns bucket IDs into caller storage.</p>
+<p>For fixed-bucket tables, <code>paimon_bucket_router_route_with_partitions_arrow</code>
+returns an owned Arrow batch with non-null <code>partition_key</code> (LargeBinary) and
+<code>bucket_id</code> (Int32) columns, in the original input row order. Use the pair to
+group rows during an execution, then assign writer channels in the embedding
+engine. The key uses the core writer's binary-row partition encoding. All rows
+of an unpartitioned table share one key. Key bytes are scoped to the frozen
+schema and SDK implementation used by that execution.</p>
+<p><code>paimon_bucket_router_export_arrow_schema</code> exports the required partition and
+bucket fields into initialized empty caller-owned ArrowSchema storage. It uses
+the core write type mapping and field IDs. Release the schema with its callback.
+Inputs may project out payload columns and reorder required columns. Missing
+or duplicate names, incompatible types and NULL values in required NOT NULL
+fields return errors. The router uses core Arrow layout normalization.
+Consumers must supply the same logical values to routing and writing, including
+CHAR padding, defaults, timezone conversion and decimal/timestamp precision.
+The router requires all routing keys to be present.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="n">paimon_result_bucket_router</span><span class="w"> </span><span class="n">router</span><span class="w"> </span><span class="o">=</span>
+<a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a><span class="w">    </span><span class="n">paimon_bucket_router_new_from_schema_json</span><span class="p">(</span><span class="n">frozen_schema_json</span><span class="p">);</span>
+<a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a><span class="n">CHECK_RESULT</span><span class="p">(</span><span class="n">router</span><span class="p">);</span>
+<a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a><span class="cm">/* Use the exported input schema to prepare an Arrow Struct batch. */</span>
+<a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a><span class="n">paimon_result_next_batch</span><span class="w"> </span><span class="n">routes</span><span class="w"> </span><span class="o">=</span>
+<a id="__codelineno-23-6" name="__codelineno-23-6" href="#__codelineno-23-6"></a><span class="w">    </span><span class="n">paimon_bucket_router_route_with_partitions_arrow</span><span class="p">(</span><span class="n">router</span><span class="p">.</span><span class="n">router</span><span class="p">,</span><span class="w"> </span><span class="n">array</span><span class="p">,</span><span class="w"> </span><span class="n">schema</span><span class="p">);</span>
+<a id="__codelineno-23-7" name="__codelineno-23-7" href="#__codelineno-23-7"></a><span class="n">CHECK_RESULT</span><span class="p">(</span><span class="n">routes</span><span class="p">);</span>
+<a id="__codelineno-23-8" name="__codelineno-23-8" href="#__codelineno-23-8"></a><span class="cm">/* Import routes.batch through the Arrow C Data Interface. Group by both</span>
+<a id="__codelineno-23-9" name="__codelineno-23-9" href="#__codelineno-23-9"></a><span class="cm">   columns and complete the consumer's reads before releasing its buffers. */</span>
+<a id="__codelineno-23-10" name="__codelineno-23-10" href="#__codelineno-23-10"></a><span class="n">paimon_arrow_batch_free</span><span class="p">(</span><span class="n">routes</span><span class="p">.</span><span class="n">batch</span><span class="p">);</span>
+<a id="__codelineno-23-11" name="__codelineno-23-11" href="#__codelineno-23-11"></a><span class="n">paimon_bucket_router_free</span><span class="p">(</span><span class="n">router</span><span class="p">.</span><span class="n">router</span><span class="p">);</span>
+</code></pre></div>
+<p>Before Arrow import, null-pointer/handle validation errors leave input ownership
+with the caller. Once import begins, both input structs are moved to released
+values, including on import or routing errors. The router retains no batch
+references after the synchronous call. Errors return null output containers.
+An empty input returns a valid owned zero-row output, and zero-field inputs
+preserve their row count when the schema has no routing keys. Output data and
+exported schemas can outlive the router. After moving output into a consumer,
+call <code>paimon_arrow_batch_free</code> to release the library-owned container structs.</p>
+<p>Read-only routing and schema exports may share a router concurrently with
+independent input/output storage. Plan replacement and free require exclusive
+access and completion of all in-flight calls. Reconstruct independent routers
+from the same JSON when separate ownership is preferable. Temporary projections,
+normalization, partition encoding, bucket IDs and output buffers use ordinary
+Rust allocation. Their memory cost grows with batch row count and routing-key
+bytes, so callers should bound batch sizes.</p>
+<p>The joint result currently supports fixed buckets. Existing bucket-only
+postpone APIs use their shared bucket-count plan. A plan-aware joint C contract
+and its corresponding write/commit integration are follow-up work. Stateful
+dynamic-bucket coordination requires a separate API.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.sections", "navigation.expand", "navigation.top", "search.suggest", "content.code.copy"], "search": "../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.a5f9d56c.min.js"></script>
+      
+    
+  </body>
+</html>

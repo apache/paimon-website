@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Table with PK on Apache Paimon</title>
+    <link>//paimon.apache.org/docs/1.1/primary-key-table/</link>
+    <description>Recent content in Table with PK on Apache Paimon</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language><atom:link href="//paimon.apache.org/docs/1.1/primary-key-table/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Overview</title>
+      <link>//paimon.apache.org/docs/1.1/primary-key-table/overview/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/1.1/primary-key-table/overview/</guid>
+      <description>Overview #  If you define a table with primary key, you can insert, update or delete records in the table.
+Primary keys consist of a set of columns that contain unique values for each record. Paimon enforces data ordering by sorting the primary key within each bucket, allowing users to achieve high performance by applying filtering conditions on the primary key. See CREATE TABLE.
+Bucket #  Unpartitioned tables, or partitions in partitioned tables, are sub-divided into buckets, to provide extra structure to the data that may be used for more efficient querying.</description>
+    </item>
+    
+    <item>
+      <title>Data Distribution</title>
+      <link>//paimon.apache.org/docs/1.1/primary-key-table/data-distribution/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/1.1/primary-key-table/data-distribution/</guid>
+      <description>Data Distribution #  A bucket is the smallest storage unit for reads and writes, each bucket directory contains an LSM tree.
+Fixed Bucket #  Configure a bucket greater than 0, using Fixed Bucket mode, according to Math.abs(key_hashcode % numBuckets) to compute the bucket of record.
+Rescaling buckets can only be done through offline processes, see Rescale Bucket. A too large number of buckets leads to too many small files, and a too small number of buckets leads to poor write performance.</description>
+    </item>
+    
+    <item>
+      <title>Table Mode</title>
+      <link>//paimon.apache.org/docs/1.1/primary-key-table/table-mode/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/1.1/primary-key-table/table-mode/</guid>
+      <description>Table Mode #  The file structure of the primary key table is roughly shown in the above figure. The table or partition contains multiple buckets, and each bucket is a separate LSM tree structure that contains multiple files.
+The writing process of LSM is roughly as follows: Flink checkpoint flush L0 files, and trigger a compaction as needed to merge the data. According to the different processing ways during writing, there are three modes:</description>
+    </item>
+    
+    <item>
+      <title>Changelog Producer</title>
+      <link>//paimon.apache.org/docs/1.1/primary-key-table/changelog-producer/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/1.1/primary-key-table/changelog-producer/</guid>
+      <description>Changelog Producer #  Streaming write can continuously produce the latest changes for streaming read.
+By specifying the changelog-producer table property when creating the table, users can choose the pattern of changes produced from table files.
+changelog-producer may significantly reduce compaction performance, please do not enable it unless necessary.  None #  By default, no extra changelog producer will be applied to the writer of table. Paimon source can only see the merged changes across snapshots, like what keys are removed and what are the new values of some keys.</description>
+    </item>
+    
+    <item>
+      <title>Sequence &amp; Rowkind</title>
+      <link>//paimon.apache.org/docs/1.1/primary-key-table/sequence-rowkind/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/1.1/primary-key-table/sequence-rowkind/</guid>
+      <description>Sequence and Rowkind #  When creating a table, you can specify the &#39;sequence.field&#39; by specifying fields to determine the order of updates, or you can specify the &#39;rowkind.field&#39; to determine the changelog kind of record.
+Sequence Field #  By default, the primary key table determines the merge order according to the input order (the last input record will be the last to merge). However, in distributed computing, there will be some cases that lead to data disorder.</description>
+    </item>
+    
+    <item>
+      <title>Compaction</title>
+      <link>//paimon.apache.org/docs/1.1/primary-key-table/compaction/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/1.1/primary-key-table/compaction/</guid>
+      <description>Compaction #  When more and more records are written into the LSM tree, the number of sorted runs will increase. Because querying an LSM tree requires all sorted runs to be combined, too many sorted runs will result in a poor query performance, or even out of memory.
+To limit the number of sorted runs, we have to merge several sorted runs into one big sorted run once in a while.</description>
+    </item>
+    
+    <item>
+      <title>Query Performance</title>
+      <link>//paimon.apache.org/docs/1.1/primary-key-table/query-performance/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//paimon.apache.org/docs/1.1/primary-key-table/query-performance/</guid>
+      <description>Query Performance #  Table Mode #  The table schema has the greatest impact on query performance. See Table Mode.
+For Merge On Read table, the most important thing you should pay attention to is the number of buckets, which will limit the concurrency of reading data.
+For MOW (Deletion Vectors) or COW table or Read Optimized table, there is no limit to the concurrency of reading data, and they can also utilize some filtering conditions for non-primary-key columns.</description>
+    </item>
+    
+  </channel>
+</rss>

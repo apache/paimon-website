@@ -1,0 +1,2714 @@
+
+<!DOCTYPE html>
+<html lang="en" dir=>
+
+<head>
+  <meta name="generator" content="Hugo 0.80.0" />
+  
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Procedures #  Flink 1.18 and later versions support Call Statements, which make it easier to manipulate data and metadata of Paimon table by writing SQLs instead of submitting Flink jobs.
+In 1.18, the procedure only supports passing arguments by position. You must pass all arguments in order, and if you don&rsquo;t want to pass some arguments, you must use &#39;&#39; as placeholder. For example, if you want to compact table default.">
+<meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="Procedures" />
+<meta property="og:description" content="Procedures #  Flink 1.18 and later versions support Call Statements, which make it easier to manipulate data and metadata of Paimon table by writing SQLs instead of submitting Flink jobs.
+In 1.18, the procedure only supports passing arguments by position. You must pass all arguments in order, and if you don&rsquo;t want to pass some arguments, you must use &#39;&#39; as placeholder. For example, if you want to compact table default." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="//paimon.apache.org/docs/1.1/flink/procedures/" />
+
+<title>Procedures | Apache Paimon</title>
+<link rel="manifest" href="/docs/1.1/manifest.json">
+<link rel="icon" href="/docs/1.1/favicon.png" type="image/x-icon">
+<link rel="stylesheet" href="/docs/1.1/book.min.3bc4108a5b57c9a7e6fcae92ff69940435f8c46c4e1e4a311aedc9b2d8e06792.css" integrity="sha256-O8QQiltXyafm/K6S/2mUBDX4xGxOHkoxGu3JstjgZ5I=">
+<script defer src="/docs/1.1/en.search.min.1fe95a11b2f99072508f610e27e21c1ed57f26edb95b683483846b16f457c842.js" integrity="sha256-H&#43;laEbL5kHJQj2EOJ&#43;IcHtV/Ju25W2g0g4RrFvRXyEI="></script>
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+  
+  
+
+<link rel="stylesheet" type="text/css" href="//paimon.apache.org/docs/1.1/font-awesome/css/font-awesome.min.css">
+<script src="//paimon.apache.org/docs/1.1/js/anchor.min.js"></script>
+<script src="//paimon.apache.org/docs/1.1/js/flink.js"></script>
+
+
+
+  
+  <script>
+    var _paq = window._paq = window._paq || [];
+     
+     
+    _paq.push(['disableCookies']);
+     
+    _paq.push(["setDomains", ["*.flink.apache.org","*.nightlies.apache.org/flink"]]);
+    _paq.push(['trackPageView']);
+    _paq.push(['enableLinkTracking']);
+    (function() {
+      var u="//matomo.privacy.apache.org/";
+      _paq.push(['setTrackerUrl', u+'matomo.php']);
+      _paq.push(['setSiteId', '1']);
+      var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+      g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+    })();
+  </script>
+  
+</head>
+
+<body dir=>
+  
+    <input type="checkbox" class="hidden toggle" id="menu-control" />
+    <input type="checkbox" class="hidden toggle" id="toc-control" />
+  
+  <main class="container flex">
+    
+      <aside class="book-menu">
+        
+  
+
+<nav>
+
+
+<a id="logo" href="//paimon.apache.org/docs/1.1">
+    <img width="100%" src="//paimon.apache.org/docs/1.1/paimon_black.svg">
+</a>
+<p style="text-align:right">1.1.1</p>
+
+<div class="book-search">
+  <input type="text" id="book-search-input" placeholder="Search" aria-label="Search" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-dc8a1c63e6da60163016ce21cae1faa0" class="toggle"  />
+    <label for="section-dc8a1c63e6da60163016ce21cae1faa0" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-book title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Concepts</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/concepts/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/concepts/basic-concepts/" class="">Basic Concepts</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/concepts/concurrency-control/" class="">Concurrency Control</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/concepts/catalog/" class="">Catalog</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-e03f934865df9dd3baca303554bcaa71" class="toggle"  />
+    <label for="section-e03f934865df9dd3baca303554bcaa71" class="flex justify-between">RESTCatalog<span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/concepts/rest/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/concepts/rest/bear/" class="">Bear Token</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/concepts/rest/dlf/" class="">DLF Token</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/concepts/rest/rest-api/" class="">REST API</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/concepts/table-types/" class="">Table Types</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/concepts/system-tables/" class="">System Tables</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/concepts/data-types/" class="">Data Types</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-d3e7256ce393050c572ea7bd8cc4f240" class="toggle"  />
+    <label for="section-d3e7256ce393050c572ea7bd8cc4f240" class="flex justify-between">Specification<span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/concepts/spec/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/concepts/spec/schema/" class="">Schema</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/concepts/spec/snapshot/" class="">Snapshot</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/concepts/spec/manifest/" class="">Manifest</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/concepts/spec/datafile/" class="">DataFile</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/concepts/spec/tableindex/" class="">Table Index</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/concepts/spec/fileindex/" class="">File Index</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-3f6a6d4f1692040009c66ffaa328c8d0" class="toggle"  />
+    <label for="section-3f6a6d4f1692040009c66ffaa328c8d0" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-database title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Table with PK</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/primary-key-table/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/primary-key-table/data-distribution/" class="">Data Distribution</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/primary-key-table/table-mode/" class="">Table Mode</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-038bb7d17b5b7cb93fb60acbcf218f11" class="toggle"  />
+    <label for="section-038bb7d17b5b7cb93fb60acbcf218f11" class="flex justify-between">Merge Engine<span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/primary-key-table/merge-engine/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/primary-key-table/merge-engine/partial-update/" class="">Partial Update</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/primary-key-table/merge-engine/aggregation/" class="">Aggregation</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/primary-key-table/merge-engine/first-row/" class="">First Row</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/primary-key-table/changelog-producer/" class="">Changelog Producer</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/primary-key-table/sequence-rowkind/" class="">Sequence & Rowkind</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/primary-key-table/compaction/" class="">Compaction</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/primary-key-table/query-performance/" class="">Query Performance</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-f74847e1c917ba2b99e7b718bb318b30" class="toggle"  />
+    <label for="section-f74847e1c917ba2b99e7b718bb318b30" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-database title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Table w/o PK</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/append-table/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/append-table/streaming/" class="">Streaming</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/append-table/query-performance/" class="">Query Performance</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/append-table/update/" class="">Update</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/append-table/bucketed/" class="">Bucketed</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-998a37410d502937fe8444ed73a9ecf8" class="toggle" checked />
+    <label for="section-998a37410d502937fe8444ed73a9ecf8" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-gear title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Engine Flink</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/flink/quick-start/" class="">Quick Start</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/flink/sql-ddl/" class="">SQL DDL</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/flink/sql-write/" class="">SQL Write</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/flink/sql-query/" class="">SQL Query</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/flink/consumer-id/" class="">Consumer ID</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/flink/sql-lookup/" class="">SQL Lookup</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/flink/sql-alter/" class="">SQL Alter</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/flink/clone-tables/" class="">Clone Tables</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/flink/procedures/" class=" active">Procedures</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/flink/action-jars/" class="">Action Jars</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/flink/savepoint/" class="">Savepoint</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-74c63bf75b4f6bd14a3ea6a1217f03ad" class="toggle"  />
+    <label for="section-74c63bf75b4f6bd14a3ea6a1217f03ad" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-gear title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Engine Spark</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/spark/quick-start/" class="">Quick Start</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/spark/sql-ddl/" class="">SQL DDL</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/spark/sql-functions/" class="">SQL Functions</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/spark/sql-write/" class="">SQL Write</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/spark/sql-query/" class="">SQL Query</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/spark/sql-alter/" class="">SQL Alter</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/spark/auxiliary/" class="">Auxiliary</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/spark/procedures/" class="">Procedures</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-16bf9de4e97c50dda6ce1ac6e934602c" class="toggle"  />
+    <label for="section-16bf9de4e97c50dda6ce1ac6e934602c" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-gear title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Ecosystem</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/ecosystem/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/ecosystem/starrocks/" class="">StarRocks</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/ecosystem/doris/" class="">Doris</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/ecosystem/hive/" class="">Hive</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/ecosystem/trino/" class="">Trino</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/ecosystem/amoro/" class="">Amoro</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-582e435c19ca5fafbf9764337d648e63" class="toggle"  />
+    <label for="section-582e435c19ca5fafbf9764337d648e63" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-gear title maindish" aria-hidden="true"></i>&nbsp;&nbsp;CDC Ingestion</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/cdc-ingestion/overview/" class="">Overview</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/cdc-ingestion/mysql-cdc/" class="">Mysql CDC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/cdc-ingestion/postgres-cdc/" class="">Postgres CDC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/cdc-ingestion/kafka-cdc/" class="">Kafka CDC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/cdc-ingestion/mongo-cdc/" class="">Mongo CDC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/cdc-ingestion/pulsar-cdc/" class="">Pulsar CDC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/cdc-ingestion/debezium-bson/" class="">Debezium BSON</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-697a4b6a0388d6cfa4f418aba3b4edfe" class="toggle"  />
+    <label for="section-697a4b6a0388d6cfa4f418aba3b4edfe" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-wrench title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Maintenance</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/maintenance/filesystems/" class="">Filesystems</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/maintenance/write-performance/" class="">Write Performance</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/maintenance/dedicated-compaction/" class="">Dedicated Compaction</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/maintenance/manage-snapshots/" class="">Manage Snapshots</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/maintenance/rescale-bucket/" class="">Rescale Bucket</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/maintenance/manage-tags/" class="">Manage Tags</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/maintenance/metrics/" class="">Metrics</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/maintenance/manage-privileges/" class="">Manage Privileges</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/maintenance/manage-branches/" class="">Manage Branches</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/maintenance/manage-partitions/" class="">Manage Partitions</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/maintenance/configurations/" class="">Configurations</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-049030059e0dc01edf74ba3d4d259dae" class="toggle"  />
+    <label for="section-049030059e0dc01edf74ba3d4d259dae" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-briefcase title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Program API</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/program-api/flink-api/" class="">Flink API</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/program-api/java-api/" class="">Java API</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/program-api/catalog-api/" class="">Catalog API</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/program-api/python-api/" class="">Python API</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-07c567e5a9f3ce62aea4ff0a1e2dc065" class="toggle"  />
+    <label for="section-07c567e5a9f3ce62aea4ff0a1e2dc065" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-briefcase title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Migration</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/migration/migration-from-hive/" class="">Migration From Hive</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/migration/migration-from-iceberg/" class="">Migration From Iceberg</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/migration/upsert-to-partitioned/" class="">Upsert To Partitioned</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/migration/iceberg-compatibility/" class="">Iceberg Compatibility</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  	<br/>
+  
+  
+    <input type="checkbox" id="section-8c828bcf882f666cdd6821a70cc768ee" class="toggle"  />
+    <label for="section-8c828bcf882f666cdd6821a70cc768ee" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-sitemap title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Project</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/project/roadmap/" class="">Roadmap</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/project/download/" class="">Download</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/project/contributing/" class="">Contributing</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/project/committer/" class="">Committer</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <input type="checkbox" id="section-392fc6f653ae23ff676811656a71ebbf" class="toggle"  />
+    <label for="section-392fc6f653ae23ff676811656a71ebbf" class="flex justify-between"><div style="font-weight:450;margin-bottom:0.5em"><i class="fa fa-sitemap title maindish" aria-hidden="true"></i>&nbsp;&nbsp;Learn Paimon</div><span>▾</span>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+  
+    <a href="//paimon.apache.org/docs/1.1/learn-paimon/understand-files/" class="">Understand Files</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br/>
+<hr class="menu-break">
+
+<a href="//paimon.apache.org" style="color:black;margin-bottom:0.5em"><i class="link fa fa-external-link title" aria-hidden="true"></i> Project Homepage</a>
+<br/>
+
+<a href="//paimon.apache.org/docs/master/api/java/" style="color:black;margin-bottom:0.5em"><i class="link fa fa-external-link title" aria-hidden="true"></i> JavaDocs</a>
+<br/>
+
+<hr class="menu-break">
+<li style="list-style-type: none">
+  <br>
+  <input type="checkbox" id="section-version-picker" class="toggle">
+  <label for="section-version-picker" class="flex justify-between">
+     <div style="font-weight:450;margin-bottom:0.5em">Pick Docs Version</div>
+     <span>▾</span>
+  </label>
+  <ul>
+    <a href="//paimon.apache.org/docs/1.1">
+      1.1 (✓)
+    </a>
+    <hr class="menu-break">
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/master">
+          master
+        </a>
+      </li>
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/1.1">
+          stable
+        </a>
+      </li>
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/1.1">
+          1.1
+        </a>
+      </li>
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/1.0">
+          1.0
+        </a>
+      </li>
+    
+      <li>
+        <a href="https://paimon.apache.org/docs/0.9">
+          0.9
+        </a>
+      </li>
+    
+    <hr class="menu-break">
+    <li>
+      <a href="//paimon.apache.org/docs/1.1/versions">
+          All Versions
+      </a>
+    </li>
+  </ul>
+</li>
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var menu=document.querySelector("aside.book-menu nav");addEventListener("beforeunload",function(event){localStorage.setItem("menu.scrollTop",menu.scrollTop);});menu.scrollTop=localStorage.getItem("menu.scrollTop");})();</script>
+
+
+ 
+      </aside>
+    
+
+    <div class="book-page">
+      
+        <header class="book-header">
+          
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/docs/1.1/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <strong>Procedures</strong>
+
+  <label for="toc-control">
+    
+    <img src="/docs/1.1/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden clearfix">
+    
+  
+
+<nav id="TableOfContents"><h3>On This Page <button class="toc" onclick="collapseToc()"><i class="fa fa-compress" aria-hidden="true"></i></button></h3></nav>
+
+
+  </aside>
+  
+ 
+        </header>
+      
+
+      
+
+
+
+
+
+
+      
+  <article class="markdown"><!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<h1 id="procedures">
+  Procedures
+  <a class="anchor" href="#procedures">#</a>
+</h1>
+<p>Flink 1.18 and later versions support <a href="https://nightlies.apache.org/flink/flink-docs-master/docs/dev/table/sql/call/">Call Statements</a>,
+which make it easier to manipulate data and metadata of Paimon table by writing SQLs instead of submitting Flink jobs.</p>
+<p>In 1.18, the procedure only supports passing arguments by position. You must pass all arguments in order, and if you
+don&rsquo;t want to pass some arguments, you must use <code>''</code> as placeholder. For example, if you want to compact table <code>default.t</code>
+with parallelism 4, but you don&rsquo;t want to specify partitions and sort strategy, the call statement should be<br>
+<code>CALL sys.compact('default.t', '', '', '', 'sink.parallelism=4')</code>.</p>
+<p>In higher versions, the procedure supports passing arguments by name. You can pass arguments in any order and any optional
+argument can be omitted. For the above example, the call statement is<br>
+<code>CALL sys.compact(`table` =&gt; 'default.t', options =&gt; 'sink.parallelism=4')</code>.</p>
+<p>Specify partitions: we use string to represent partition filter. &ldquo;,&rdquo; means &ldquo;AND&rdquo; and &ldquo;;&rdquo; means &ldquo;OR&rdquo;. For example, if you want
+to specify two partitions date=01 and date=02, you need to write &lsquo;date=01;date=02&rsquo;; If you want to specify one partition
+with date=01 and day=01, you need to write &lsquo;date=01,day=01&rsquo;.</p>
+<p>Table options syntax: we use string to represent table options. The format is &lsquo;key1=value1,key2=value2&hellip;&rsquo;.</p>
+<p>All available procedures are listed below.</p>
+<table class="table table-bordered">
+   <thead>
+   <tr>
+      <th class="text-left" style="width: 4%">Procedure Name</th>
+      <th class="text-left" style="width: 4%">Usage</th>
+      <th class="text-left" style="width: 20%">Explanation</th>
+      <th class="text-left" style="width: 4%">Example</th>
+   </tr>
+   </thead>
+   <tbody style="font-size: 11px; ">
+   <tr>
+      <td>compact</td>
+      <td>
+         -- Use named argument<br/>
+         CALL [catalog.]sys.compact(
+            `table` => 'table', 
+            partitions => 'partitions', 
+            order_strategy => 'order_strategy', 
+            order_by => 'order_by', 
+            options => 'options', 
+            `where` => 'where', 
+            partition_idle_time => 'partition_idle_time',
+            compact_strategy => 'compact_strategy') <br/><br/>
+         -- Use indexed argument<br/>
+         CALL [catalog.]sys.compact('table') <br/>
+         CALL [catalog.]sys.compact('table', 'partitions') <br/>
+         CALL [catalog.]sys.compact('table', 'order_strategy', 'order_by') <br/>
+         CALL [catalog.]sys.compact('table', 'partitions', 'order_strategy', 'order_by') <br/>
+         CALL [catalog.]sys.compact('table', 'partitions', 'order_strategy', 'order_by', 'options') <br/>
+         CALL [catalog.]sys.compact('table', 'partitions', 'order_strategy', 'order_by', 'options', 'where') <br/>
+         CALL [catalog.]sys.compact('table', 'partitions', 'order_strategy', 'order_by', 'options', 'where', 'partition_idle_time') <br/>
+         CALL [catalog.]sys.compact('table', 'partitions', 'order_strategy', 'order_by', 'options', 'where', 'partition_idle_time', 'compact_strategy') <br/><br/>
+      </td>
+      <td>
+         To compact a table. Arguments:
+            <li>table(required): the target table identifier.</li>
+            <li>partitions(optional): partition filter.</li>
+            <li>order_strategy(optional): 'order' or 'zorder' or 'hilbert' or 'none'.</li>
+            <li>order_by(optional): the columns need to be sort. Left empty if 'order_strategy' is 'none'.</li>
+            <li>options(optional): additional dynamic options of the table.</li>
+            <li>where(optional): partition predicate(Can't be used together with "partitions"). Note: as where is a keyword,a pair of backticks need to add around like `where`.</li>
+            <li>partition_idle_time(optional): this is used to do a full compaction for partition which had not received any new data for 'partition_idle_time'. And only these partitions will be compacted. This argument can not be used with order compact.</li>
+            <li>compact_strategy(optional): this determines how to pick files to be merged, the default is determined by the runtime execution mode. 'full' strategy only supports batch mode. All files will be selected for merging. 'minor' strategy: Pick the set of files that need to be merged based on specified conditions.</li>
+      </td>
+      <td>
+         -- use partition filter <br/>
+         CALL sys.compact(`table` => 'default.T', partitions => 'p=0', order_strategy => 'zorder', order_by => 'a,b', options => 'sink.parallelism=4') <br/><br/>
+         -- use partition predicate <br/>
+         CALL sys.compact(`table` => 'default.T', `where` => 'dt>10 and h<20', order_strategy => 'zorder', order_by => 'a,b', options => 'sink.parallelism=4')
+      </td>
+   </tr>
+   <tr>
+      <td>compact_database</td>
+      <td>
+         -- Use named argument<br/>
+         CALL [catalog.]sys.compact_database(
+            including_databases => 'includingDatabases', 
+            mode => 'mode', 
+            including_tables => 'includingTables', 
+            excluding_tables => 'excludingTables', 
+            table_options => 'tableOptions', 
+            partition_idle_time => 'partitionIdleTime',
+            compact_strategy => 'compact_strategy') <br/><br/>
+         -- Use indexed argument<br/>
+         CALL [catalog.]sys.compact_database() <br/>
+         CALL [catalog.]sys.compact_database('includingDatabases') <br/>
+         CALL [catalog.]sys.compact_database('includingDatabases', 'mode') <br/>
+         CALL [catalog.]sys.compact_database('includingDatabases', 'mode', 'includingTables') <br/>
+         CALL [catalog.]sys.compact_database('includingDatabases', 'mode', 'includingTables', 'excludingTables') <br/>
+         CALL [catalog.]sys.compact_database('includingDatabases', 'mode', 'includingTables', 'excludingTables', 'tableOptions') <br/>
+         CALL [catalog.]sys.compact_database('includingDatabases', 'mode', 'includingTables', 'excludingTables', 'tableOptions', 'partitionIdleTime')<br/>
+         CALL [catalog.]sys.compact_database('includingDatabases', 'mode', 'includingTables', 'excludingTables', 'tableOptions', 'partitionIdleTime', 'compact_strategy')
+      </td>
+      <td>
+         To compact databases. Arguments:
+            <li>includingDatabases: to specify databases. You can use regular expression.</li>
+            <li>mode: compact mode. "divided": start a sink for each table, detecting the new table requires restarting the job;
+               "combined" (default): start a single combined sink for all tables, the new table will be automatically detected.
+            </li>
+            <li>includingTables: to specify tables. You can use regular expression.</li>
+            <li>excludingTables: to specify tables that are not compacted. You can use regular expression.</li>
+            <li>tableOptions: additional dynamic options of the table.</li>
+            <li>partition_idle_time: this is used to do a full compaction for partition which had not received any new data for 'partition_idle_time'. And only these partitions will be compacted.</li>
+            <li>compact_strategy(optional): this determines how to pick files to be merged, the default is determined by the runtime execution mode. 'full' strategy only supports batch mode. All files will be selected for merging. 'minor' strategy: Pick the set of files that need to be merged based on specified conditions.</li>
+      </td>
+      <td>
+         CALL sys.compact_database(
+            including_databases => 'db1|db2', 
+            mode => 'combined', 
+            including_tables => 'table_.*', 
+            excluding_tables => 'ignore', 
+            table_options => 'sink.parallelism=4',
+            compat_strategy => 'full')
+      </td>
+   </tr>
+   <tr>
+      <td>create_tag</td>
+      <td>
+         -- Use named argument<br/>
+         -- based on the specified snapshot <br/>
+         CALL [catalog.]sys.create_tag(`table` => 'identifier', tag => 'tagName', snapshot_id => snapshotId) <br/>
+         -- based on the latest snapshot <br/>
+         CALL [catalog.]sys.create_tag(`table` => 'identifier', tag => 'tagName') <br/><br/>
+         -- Use indexed argument<br/>
+         -- based on the specified snapshot <br/>
+         CALL [catalog.]sys.create_tag('identifier', 'tagName', snapshotId) <br/>
+         -- based on the latest snapshot <br/>
+         CALL [catalog.]sys.create_tag('identifier', 'tagName')
+      </td>
+      <td>
+         To create a tag based on given snapshot. Arguments:
+            <li>table: the target table identifier. Cannot be empty.</li>
+            <li>tagName: name of the new tag.</li>
+            <li>snapshotId (Long): id of the snapshot which the new tag is based on.</li>
+            <li>time_retained: The maximum time retained for newly created tags.</li>
+      </td>
+      <td>
+         CALL sys.create_tag(`table` => 'default.T', tag => 'my_tag', snapshot_id => cast(10 as bigint), time_retained => '1 d')
+      </td>
+   </tr>
+    <tr>
+      <td>create_tag_from_timestamp</td>
+      <td>
+         -- Create a tag from the first snapshot whose commit-time greater than the specified timestamp. <br/>
+         -- Use named argument<br/>
+         CALL [catalog.]sys.create_tag_from_timestamp(`table` => 'identifier', tag => 'tagName', timestamp => timestamp, time_retained => time_retained) <br/><br/>
+         -- Use indexed argument<br/>
+         CALL [catalog.]sys.create_tag_from_timestamp('identifier', 'tagName', timestamp, time_retained)
+      </td>
+      <td>
+         To create a tag based on given timestamp. Arguments:
+            <li>table: the target table identifier. Cannot be empty.</li>
+            <li>tag: name of the new tag.</li>
+            <li>timestamp (Long): Find the first snapshot whose commit-time greater than this timestamp.</li>
+            <li>time_retained : The maximum time retained for newly created tags.</li>
+      </td>
+      <td>
+         -- for Flink 1.18<br/>
+         CALL sys.create_tag_from_timestamp('default.T', 'my_tag', 1724404318750, '1 d')<br/><br/>
+         -- for Flink 1.19 and later<br/>
+         CALL sys.create_tag_from_timestamp(`table` => 'default.T', `tag` => 'my_tag', `timestamp` => 1724404318750, time_retained => '1 d')
+      </td>
+   </tr>
+    <tr>
+      <td>create_tag_from_watermark</td>
+      <td>
+         -- Create a tag from the first snapshot whose watermark greater than the specified timestamp.<br/>
+         -- Use named argument<br/>
+         CALL [catalog.]sys.create_tag_from_watermark(`table` => 'identifier', tag => 'tagName', watermark => watermark, time_retained => time_retained) <br/><br/>
+         -- Use indexed argument<br/>
+         CALL [catalog.]sys.create_tag_from_watermark('identifier', 'tagName', watermark, time_retained)
+      </td>
+      <td>
+         To create a tag based on given watermark timestamp. Arguments:
+            <li>table: the target table identifier. Cannot be empty.</li>
+            <li>tag: name of the new tag.</li>
+            <li>watermark (Long): Find the first snapshot whose watermark greater than the specified watermark.</li>
+            <li>time_retained : The maximum time retained for newly created tags.</li>
+      </td>
+      <td>
+         -- for Flink 1.18<br/>
+         CALL sys.create_tag_from_watermark('default.T', 'my_tag', 1724404318750, '1 d')<br/><br/>
+         -- for Flink 1.19 and later<br/>
+         CALL sys.create_tag_from_watermark(`table` => 'default.T', `tag` => 'my_tag', `watermark` => 1724404318750, time_retained => '1 d')
+      </td>
+   </tr>
+   <tr>
+      <td>delete_tag</td>
+      <td>
+         -- Use named argument<br/>
+         CALL [catalog.]sys.delete_tag(`table` => 'identifier', tag => 'tagName') <br/><br/>
+         -- Use indexed argument<br/>
+         CALL [catalog.]sys.delete_tag('identifier', 'tagName')
+      </td>
+      <td>
+         To delete a tag. Arguments:
+            <li>table: the target table identifier. Cannot be empty.</li>
+            <li>tagName: name of the tag to be deleted. If you specify multiple tags, delimiter is ','.</li>
+      </td>
+      <td>
+         CALL sys.delete_tag(`table` => 'default.T', tag => 'my_tag')
+      </td>
+   </tr>
+   <tr>
+      <td>replace_tag</td>
+      <td>
+         -- Use named argument<br/>
+         -- replace tag with new time retained <br/>
+         CALL [catalog.]sys.replace_tag(`table` => 'identifier', tag => 'tagName', time_retained => 'timeRetained') <br/>
+         -- replace tag with new snapshot id and time retained <br/>
+         CALL [catalog.]sys.replace_tag(`table` => 'identifier', snapshot_id => 'snapshotId') <br/><br/>
+         -- Use indexed argument<br/>
+         -- replace tag with new snapshot id and time retained <br/>
+         CALL [catalog.]sys.replace_tag('identifier', 'tagName', 'snapshotId', 'timeRetained') <br/>
+      </td>
+      <td>
+         To replace an existing tag with new tag info. Arguments:
+            <li>table: the target table identifier. Cannot be empty.</li>
+            <li>tag: name of the existed tag. Cannot be empty.</li>
+            <li>snapshot(Long):  id of the snapshot which the tag is based on, it is optional.</li>
+            <li>time_retained: The maximum time retained for the existing tag, it is optional.</li>
+      </td>
+      <td>
+         -- for Flink 1.18<br/>
+         CALL sys.replace_tag('default.T', 'my_tag', 5, '1 d')<br/><br/>
+         -- for Flink 1.19 and later<br/>
+         CALL sys.replace_tag(`table` => 'default.T', tag => 'my_tag', snapshot_id => 5, time_retained => '1 d')<br/>
+      </td>
+   </tr>
+   <tr>
+      <td>expire_tags</td>
+      <td>
+         CALL [catalog.]sys.expire_tags('identifier', 'older_than')
+      </td>
+      <td>
+         To expire tags by time. Arguments:
+            <li>table: the target table identifier. Cannot be empty.</li>
+            <li>older_than: tagCreateTime before which tags will be removed.</li>
+      </td>
+      <td>
+         CALL sys.expire_tags(table => 'default.T', older_than => '2024-09-06 11:00:00')
+      </td>
+   </tr>
+   <tr>
+      <td>merge_into</td>
+      <td>
+         -- for Flink 1.18<br/>
+         CALL [catalog.]sys.merge_into('identifier','targetAlias',<br/>
+            'sourceSqls','sourceTable','mergeCondition',<br/>
+            'matchedUpsertCondition','matchedUpsertSetting',<br/>
+            'notMatchedInsertCondition','notMatchedInsertValues',<br/>
+            'matchedDeleteCondition')<br/><br/>
+         -- for Flink 1.19 and later <br/>
+         CALL [catalog.]sys.merge_into(<br/>
+            target_table => 'identifier',<br/>
+            target_alias => 'targetAlias',<br/>
+            source_sqls => 'sourceSqls',<br/>
+            source_table => 'sourceTable',<br/>
+            merge_condition => 'mergeCondition',<br/>
+            matched_upsert_condition => 'matchedUpsertCondition',<br/>
+            matched_upsert_setting => 'matchedUpsertSetting',<br/>
+            not_matched_insert_condition => 'notMatchedInsertCondition',<br/>
+            not_matched_insert_values => 'notMatchedInsertValues',<br/>
+            matched_delete_condition => 'matchedDeleteCondition',<br/>
+            not_matched_by_source_upsert_condition => 'notMatchedBySourceUpsertCondition',<br/>
+            not_matched_by_source_upsert_setting => 'notMatchedBySourceUpsertSetting',<br/>
+            not_matched_by_source_delete_condition => 'notMatchedBySourceDeleteCondition') <br/><br/>
+      </td>
+      <td>
+         To perform "MERGE INTO" syntax. See <a href="/flink/action-jars#merging-into-table">merge_into action</a> for
+         details of arguments.
+      </td>
+      <td>
+         -- for matched order rows,<br/>
+         -- increase the price,<br/>
+         -- and if there is no match,<br/> 
+         -- insert the order from<br/>
+         -- the source table<br/>
+         -- for Flink 1.18<br/>
+         CALL sys.merge_into('default.T','','','default.S','T.id=S.order_id','','price=T.price+20','','*','')<br/><br/>
+         -- for Flink 1.19 and later <br/>
+         CALL sys.merge_into(<br/>
+            target_table => 'default.T',<br/>
+            source_table => 'default.S',<br/>
+            merge_condition => 'T.id=S.order_id',<br/>
+            matched_upsert_setting => 'price=T.price+20',<br/>
+            not_matched_insert_values => '*')<br/><br/>
+      </td>
+   </tr>
+   <tr>
+      <td>remove_orphan_files</td>
+      <td>
+         -- Use named argument<br/>
+         CALL [catalog.]sys.remove_orphan_files(`table` => 'identifier', older_than => 'olderThan', dry_run => 'dryRun', mode => 'mode') <br/><br/>
+         -- Use indexed argument<br/>
+         CALL [catalog.]sys.remove_orphan_files('identifier')<br/>
+         CALL [catalog.]sys.remove_orphan_files('identifier', 'olderThan')<br/>
+         CALL [catalog.]sys.remove_orphan_files('identifier', 'olderThan', 'dryRun')<br/>
+         CALL [catalog.]sys.remove_orphan_files('identifier', 'olderThan', 'dryRun','parallelism')<br/>
+         CALL [catalog.]sys.remove_orphan_files('identifier', 'olderThan', 'dryRun','parallelism','mode')
+      </td>
+      <td>
+         To remove the orphan data files and metadata files. Arguments:
+            <li>table: the target table identifier. Cannot be empty, you can use database_name.* to clean whole database.</li>
+            <li>olderThan: to avoid deleting newly written files, this procedure only 
+               deletes orphan files older than 1 day by default. This argument can modify the interval.
+            </li>
+            <li>dryRun: when true, view only orphan files, don't actually remove files. Default is false.</li>
+            <li>parallelism: The maximum number of concurrent deleting files. By default is the number of processors available to the Java virtual machine.</li>
+            <li>mode: The mode of remove orphan clean procedure (local or distributed) . By default is distributed.</li>
+      </td>
+      <td>CALL sys.remove_orphan_files(`table` => 'default.T', older_than => '2023-10-31 12:00:00')<br/><br/>
+          CALL sys.remove_orphan_files(`table` => 'default.*', older_than => '2023-10-31 12:00:00')<br/><br/>
+          CALL sys.remove_orphan_files(`table` => 'default.T', older_than => '2023-10-31 12:00:00', dry_run => true)<br/><br/>
+          CALL sys.remove_orphan_files(`table` => 'default.T', older_than => '2023-10-31 12:00:00', dry_run => false, parallelism => '5')<br/><br/>
+          CALL sys.remove_orphan_files(`table` => 'default.T', older_than => '2023-10-31 12:00:00', dry_run => false, parallelism => '5', mode => 'local')
+      </td>
+   </tr>
+   <tr>
+      <td>remove_unexisting_files</td>
+      <td>
+         -- Use named argument<br/>
+         CALL [catalog.]sys.remove_unexisting_files(`table` => 'identifier', dry_run => 'dryRun', parallelism => 'parallelism') <br/><br/>
+         -- Use indexed argument<br/>
+         CALL [catalog.]sys.remove_unexisting_files('identifier')<br/>
+         CALL [catalog.]sys.remove_unexisting_files('identifier', 'dryRun', 'parallelism')
+      </td>
+      <td>
+         Procedure to remove unexisting data files from manifest entries. See <a href="https://paimon.apache.org/docs/master/api/java/org/apache/paimon/flink/action/RemoveUnexistingFilesAction.html">Java docs</a> for detailed use cases. Arguments:
+            <li>table: the target table identifier. Cannot be empty, you can use database_name.* to clean whole database.</li>
+            <li>dry_run (optional): only check what files will be removed, but not really remove them. Default is false.</li>
+            <li>parallelism (optional): number of parallelisms to check files in the manifests.</li>
+         <br>
+         Note that user is on his own risk using this procedure, which may cause data loss when used outside from the use cases listed in Java docs.
+      </td>
+      <td>
+        -- remove unexisting data files in the table `mydb.myt`<br/>
+        CALL sys.remove_unexisting_files(`table` => 'mydb.myt')<br/><br/>
+        -- only check what files will be removed, but not really remove them (dry run)
+        CALL sys.remove_unexisting_files(`table` => 'mydb.myt', `dry_run` = true)
+      </td>
+   </tr>
+   <tr>
+      <td>reset_consumer</td>
+      <td>
+         -- Use named argument<br/>
+         CALL [catalog.]sys.reset_consumer(`table` => 'identifier', consumer_id => 'consumerId', next_snapshot_id => 'nextSnapshotId') <br/><br/>
+         -- Use indexed argument<br/>
+         -- reset the new next snapshot id in the consumer<br/>
+         CALL [catalog.]sys.reset_consumer('identifier', 'consumerId', nextSnapshotId)<br/><br/>
+         -- delete consumer<br/>
+         CALL [catalog.]sys.reset_consumer('identifier', 'consumerId')
+      </td>
+      <td>
+         To reset or delete consumer. Arguments:
+            <li>table: the target table identifier. Cannot be empty.</li>
+            <li>consumerId: consumer to be reset or deleted.</li>
+            <li>nextSnapshotId (Long): the new next snapshot id of the consumer.</li>
+      </td>
+      <td>CALL sys.reset_consumer(`table` => 'default.T', consumer_id => 'myid', next_snapshot_id => cast(10 as bigint))</td>
+   </tr>
+   <tr>
+      <td>clear_consumers</td>
+      <td>
+         -- Use named argument<br/>
+         CALL [catalog.]sys.clear_consumers(`table` => 'identifier', including_consumers => 'includingConsumers', excluding_consumers => 'excludingConsumers') <br/><br/>
+         -- Use indexed argument<br/>
+         -- clear all consumers in the table<br/>
+         CALL [catalog.]sys.clear_consumers('identifier')<br/><br/>
+         -- clear some consumers in the table (accept regular expression)<br/>
+         CALL [catalog.]sys.clear_consumers('identifier', 'includingConsumers')<br/><br/>
+         -- exclude some consumers (accept regular expression)<br/>
+         CALL [catalog.]sys.clear_consumers('identifier', 'includingConsumers', 'excludingConsumers')
+      </td>
+      <td>
+         To reset or delete consumer. Arguments:
+            <li>table: the target table identifier. Cannot be empty.</li>
+            <li>includingConsumers: consumers to be cleared.</li>
+            <li>excludingConsumers: consumers which not to be cleared.</li>
+      </td>
+      <td>CALL sys.clear_consumers(`table` => 'default.T')<br/><br/>
+          CALL sys.clear_consumers(`table` => 'default.T', including_consumers => 'myid.*')<br/><br/>
+          CALL sys.clear_consumers(table => 'default.T', including_consumers => '', excluding_consumers => 'myid1.*')<br/><br/>
+          CALL sys.clear_consumers(table => 'default.T', including_consumers => 'myid.*', excluding_consumers => 'myid1.*')
+     </td>
+   </tr>
+   <tr>
+      <td>rollback_to</td>
+      <td>
+         -- for Flink 1.18<br/>
+         -- rollback to a snapshot<br/>
+         CALL [catalog.]sys.rollback_to('identifier', snapshotId)<br/><br/>
+         -- rollback to a tag<br/>
+         CALL [catalog.]sys.rollback_to('identifier', 'tagName')<br/><br/>
+         -- for Flink 1.19 and later<br/>
+         -- rollback to a snapshot<br/>
+         CALL [catalog.]sys.rollback_to(`table` => 'identifier', snapshot_id => snapshotId)<br/><br/>
+         -- rollback to a tag<br/>
+         CALL [catalog.]sys.rollback_to(`table` => 'identifier', tag => 'tagName')
+      </td>
+      <td>
+         To rollback to a specific version of target table. Argument:
+            <li>table: the target table identifier. Cannot be empty.</li>
+            <li>snapshotId (Long): id of the snapshot that will roll back to.</li>
+            <li>tagName: name of the tag that will roll back to.</li>
+      </td>
+      <td>
+         -- for Flink 1.18<br/>
+         CALL sys.rollback_to('default.T', 10)<br/><br/>
+         -- for Flink 1.19 and later<br/>
+         CALL sys.rollback_to(`table` => 'default.T', snapshot_id => 10)
+      </td>
+   </tr>
+   <tr>
+      <td>rollback_to_timestamp</td>
+      <td>
+         -- for Flink 1.18<br/>
+         -- rollback to the snapshot which earlier or equal than timestamp.<br/>
+         CALL [catalog.]sys.rollback_to_timestamp('identifier', timestamp)<br/><br/>
+         -- for Flink 1.19 and later<br/>
+         -- rollback to the snapshot which earlier or equal than timestamp.<br/>
+         CALL [catalog.]sys.rollback_to_timestamp(`table` => 'default.T', `timestamp` => timestamp)<br/><br/>
+      </td>
+      <td>
+         To rollback to the snapshot which earlier or equal than timestamp. Argument:
+            <li>table: the target table identifier. Cannot be empty.</li>
+            <li>timestamp (Long): Roll back to the snapshot which earlier or equal than timestamp.</li>
+      </td>
+      <td>
+         -- for Flink 1.18<br/>
+         CALL sys.rollback_to_timestamp('default.T', 10)<br/><br/>
+         -- for Flink 1.19 and later<br/>
+         CALL sys.rollback_to_timestamp(`table` => 'default.T', timestamp => 1730292023000)
+      </td>
+   </tr>
+   <tr>
+          <td>rollback_to_watermark</td>
+      <td>
+         -- for Flink 1.18<br/>
+         -- rollback to the snapshot which earlier or equal than watermark.<br/>
+         CALL [catalog.]sys.rollback_to_watermark('identifier', watermark)<br/><br/>
+         -- for Flink 1.19 and later<br/>
+         -- rollback to the snapshot which earlier or equal than watermark.<br/>
+         CALL [catalog.]sys.rollback_to_watermark(`table` => 'default.T', `watermark` => watermark)<br/><br/>
+      </td>
+      <td>
+         To rollback to the snapshot which earlier or equal than watermark. Argument:
+            <li>table: the target table identifier. Cannot be empty.</li>
+            <li>watermark (Long): Roll back to the snapshot which earlier or equal than watermark.</li>
+      </td>
+      <td>
+         -- for Flink 1.18<br/>
+         CALL sys.rollback_to_watermark('default.T', 1730292023000)<br/><br/>
+         -- for Flink 1.19 and later<br/>
+         CALL sys.rollback_to_watermark(`table` => 'default.T', watermark => 1730292023000)
+      </td>
+   </tr>
+   <tr>
+          <td>purge_files</td>
+      <td>
+         -- clear table with purge files.<br/>
+         CALL [catalog.]sys.purge_files('identifier')<br/>
+      </td>
+      <td>
+         To clear table with purge files. Argument:
+            <li>table: the target table identifier. Cannot be empty.</li>
+      </td>
+      <td>
+         CALL sys.purge_files('default.T')<br/>
+      </td>
+   </tr>
+   <tr>
+      <td>migrate_database</td>
+      <td>
+         -- for Flink 1.18<br/>
+         -- migrate all hive tables in database to paimon tables.<br/>
+         CALL [catalog.]sys.migrate_database('connector', 'dbIdentifier', 'options'[, &ltparallelism&gt])<br/><br/>
+         -- for Flink 1.19 and later<br/>
+         -- migrate all hive tables in database to paimon tables.<br/>
+         CALL [catalog.]sys.migrate_database(connector => 'connector', source_database => 'dbIdentifier', options => 'options'[, &ltparallelism => parallelism&gt])<br/><br/>
+      </td>
+      <td>
+         To migrate all hive tables in database to paimon table. Argument:
+            <li>connector: the origin database's type to be migrated, such as hive. Cannot be empty.</li>
+            <li>source_database: name of the origin database to be migrated. Cannot be empty.</li>
+            <li>options: the table options of the paimon table to migrate.</li>
+            <li>parallelism: the parallelism for migrate process, default is core numbers of machine.</li>
+      </td>
+      <td>
+         -- for Flink 1.18<br/>
+         CALL sys.migrate_database('hive', 'db01', 'file.format=parquet', 6)<br/><br/>
+         -- for Flink 1.19 and later<br/>
+         CALL sys.migrate_database(connector => 'hive', source_database => 'db01', options => 'file.format=parquet', parallelism => 6)
+      </td>
+   </tr>
+   <tr>
+      <td>migrate_table</td>
+      <td>
+         -- migrate hive table to a paimon table.<br/>
+         CALL [catalog.]sys.migrate_table(connector => 'connector', source_table => 'tableIdentifier', options => 'options'[, &ltparallelism => parallelism&gt])<br/><br/>
+      </td>
+      <td>
+         To migrate hive table to a paimon table. Argument:
+            <li>connector: the origin table's type to be migrated, such as hive. Cannot be empty.</li>
+            <li>source_table: name of the origin table to be migrated. Cannot be empty.</li>
+            <li>target_table: name of the target paimon table to migrate. If not set would keep the same name with origin table</li>
+            <li>options: the table options of the paimon table to migrate.</li>
+            <li>parallelism: the parallelism for migrate process, default is core numbers of machine.</li>
+            <li>delete_origin: If had set target_table, can set delete_origin to decide whether delete the origin table metadata from hms after migrate. Default is true</li>
+      </td>
+      <td>
+         CALL sys.migrate_table(connector => 'hive', source_table => 'db01.t1', options => 'file.format=parquet', parallelism => 6)
+      </td>
+   </tr>
+   <tr>
+      <td>migrate_iceberg_table</td>
+      <td>
+         -- Use named argument<br/>
+        CALL sys.migrate_iceberg_table(source_table => 'database_name.table_name', iceberg_options => 'iceberg_options', options => 'paimon_options', parallelism => parallelism);<br/><br/>
+        -- Use indexed argument<br/>
+        CALL sys.migrate_iceberg_table('source_table','iceberg_options', 'options', 'parallelism');
+      </td>
+      <td>
+         To migrate iceberg table to paimon. Arguments:
+            <li>source_table: string type, is used to specify the source iceberg table to migrate, it's required.</li>
+            <li>iceberg_options: string type, is used to specify the configuration of migration, multiple configuration items are separated by commas. it's required.</li>
+            <li>options: string type, is used to specify the additional options for the target paimon table, it's optional.</li>
+            <li>parallelism: integer type, is used to specify the parallelism of the migration job, it's optional.</li>
+      </td>
+      <td>
+         CALL sys.migrate_iceberg_table(source_table => 'iceberg_db.iceberg_tbl',iceberg_options => 'metadata.iceberg.storage=hadoop-catalog,iceberg_warehouse=/path/to/iceberg/warehouse');
+      </td>
+   </tr>
+   <tr>
+      <td>expire_snapshots</td>
+      <td>
+         -- Use named argument<br/>
+         CALL [catalog.]sys.expire_snapshots(<br/>
+            `table` => 'identifier', <br/>
+            retain_max => 'retain_max', <br/>
+            retain_min => 'retain_min', <br/>
+            older_than => 'older_than', <br/>
+            max_deletes => 'max_deletes') <br/><br/>
+         -- Use indexed argument<br/>
+         -- for Flink 1.18<br/>
+         CALL [catalog.]sys.expire_snapshots(table, retain_max)<br/><br/>
+         -- for Flink 1.19 and later<br/>
+         CALL [catalog.]sys.expire_snapshots(table, retain_max, retain_min, older_than, max_deletes)<br/><br/>
+      </td>
+      <td>
+         To expire snapshots. Argument:
+            <li>table: the target table identifier. Cannot be empty.</li>
+            <li>retain_max: the maximum number of completed snapshots to retain.</li>
+            <li>retain_min: the minimum number of completed snapshots to retain.</li>
+            <li>order_than: timestamp before which snapshots will be removed.</li>
+            <li>max_deletes: the maximum number of snapshots that can be deleted at once.</li>
+      </td>
+      <td>
+         -- for Flink 1.18<br/>
+         CALL sys.expire_snapshots('default.T', 2)<br/><br/>
+         -- for Flink 1.19 and later<br/>
+         CALL sys.expire_snapshots(`table` => 'default.T', retain_max => 2)<br/>
+         CALL sys.expire_snapshots(`table` => 'default.T', older_than => '2024-01-01 12:00:00')<br/>
+         CALL sys.expire_snapshots(`table` => 'default.T', older_than => '2024-01-01 12:00:00', retain_min => 10)<br/>
+         CALL sys.expire_snapshots(`table` => 'default.T', older_than => '2024-01-01 12:00:00', max_deletes => 10)<br/>
+      </td>
+   </tr>
+   <tr>
+      <td>expire_changelogs</td>
+      <td>
+         -- Use named argument<br/>
+         CALL [catalog.]sys.expire_changelogs(<br/>
+            `table` => 'identifier', <br/>
+            retain_max => 'retain_max', <br/>
+            retain_min => 'retain_min', <br/>
+            older_than => 'older_than', <br/>
+            max_deletes => 'max_deletes') <br/>
+            delete_all => 'delete_all') <br/><br/>
+         -- Use indexed argument<br/>
+         -- for Flink 1.18<br/>
+         CALL [catalog.]sys.expire_changelogs(table, retain_max, retain_min, older_than, max_deletes)<br/>
+         CALL [catalog.]sys.expire_changelogs(table, delete_all)<br/><br/>
+         -- for Flink 1.19 and later<br/>
+         CALL [catalog.]sys.expire_changelogs(table, retain_max, retain_min, older_than, max_deletes, delete_all)<br/><br/>
+      </td>
+      <td>
+         To expire changelogs. Argument:
+            <li>table: the target table identifier. Cannot be empty.</li>
+            <li>retain_max: the maximum number of completed changelogs to retain.</li>
+            <li>retain_min: the minimum number of completed changelogs to retain.</li>
+            <li>order_than: timestamp before which changelogs will be removed.</li>
+            <li>max_deletes: the maximum number of changelogs that can be deleted at once.</li>
+            <li>delete_all: whether to delete all separated changelogs.</li>
+      </td>
+      <td>
+         -- for Flink 1.18<br/>
+         CALL sys.expire_changelogs('default.T', 4, 2, '2024-01-01 12:00:00', 2)<br/>
+         CALL sys.expire_changelogs('default.T', true)<br/><br/>
+         -- for Flink 1.19 and later<br/>
+         CALL sys.expire_changelogs(`table` => 'default.T', retain_max => 2)<br/>
+         CALL sys.expire_changelogs(`table` => 'default.T', older_than => '2024-01-01 12:00:00')<br/>
+         CALL sys.expire_changelogs(`table` => 'default.T', older_than => '2024-01-01 12:00:00', retain_min => 10)<br/>
+         CALL sys.expire_changelogs(`table` => 'default.T', older_than => '2024-01-01 12:00:00', max_deletes => 10)<br/>
+         CALL sys.expire_changelogs(`table` => 'default.T', delete_all => true)<br/>
+      </td>
+   </tr>
+<tr>
+      <td>expire_partitions</td>
+      <td>
+         CALL [catalog.]sys.expire_partitions(table, expiration_time, timestamp_formatter, expire_strategy)<br/><br/>
+      </td>
+      <td>
+         To expire partitions. Argument:
+            <li>table: the target table identifier. Cannot be empty.</li>
+            <li>expiration_time: the expiration interval of a partition. A partition will be expired if it‘s lifetime is over this value. Partition time is extracted from the partition value.</li>
+            <li>timestamp_formatter: the formatter to format timestamp from string.</li>
+            <li>timestamp_pattern: the pattern to get a timestamp from partitions.</li>
+            <li>expire_strategy: specifies the expiration strategy for partition expiration, possible values: 'values-time' or 'update-time' , 'values-time' as default.</li>
+            <li>max_expires: The maximum of limited expired partitions, it is optional.</li>
+      </td>
+      <td>
+         -- for Flink 1.18<br/>
+         CALL sys.expire_partitions('default.T', '1 d', 'yyyy-MM-dd', '$dt', 'values-time')<br/><br/>
+         -- for Flink 1.19 and later<br/>
+         CALL sys.expire_partitions(`table` => 'default.T', expiration_time => '1 d', timestamp_formatter => 'yyyy-MM-dd', expire_strategy => 'values-time')<br/>
+         CALL sys.expire_partitions(`table` => 'default.T', expiration_time => '1 d', timestamp_formatter => 'yyyy-MM-dd HH:mm', timestamp_pattern => '$dt $hm', expire_strategy => 'values-time')<br/><br/>
+      </td>
+   </tr>
+    <tr>
+      <td>repair</td>
+      <td>
+         -- repair all databases and tables in catalog<br/>
+         CALL [catalog.]sys.repair()<br/><br/>
+         -- repair all tables in a specific database<br/>
+         CALL [catalog.]sys.repair('databaseName')<br/><br/>
+         -- repair a table<br/>
+         CALL [catalog.]sys.repair('databaseName.tableName')<br/><br/>
+         -- repair database and table in a string if you specify multiple tags, delimiter is ','<br/>
+         CALL [catalog.]sys.repair('databaseName01,database02.tableName01,database03')
+      </td>
+      <td>
+         Synchronize information from the file system to Metastore. Argument:
+            <li>empty: all databases and tables in catalog.</li>
+            <li>databaseName : the target database name.</li>
+            <li>tableName: the target table identifier.</li>
+      </td>
+      <td>CALL sys.repair(`table` => 'test_db.T')</td>
+   </tr>
+    <tr>
+      <td>rewrite_file_index</td>
+      <td>
+         -- Use named argument<br/>
+         CALL [catalog.]sys.rewrite_file_index(&lt`table` => identifier&gt [, &ltpartitions => partitions&gt])<br/><br/>
+         -- Use indexed argument<br/>
+         CALL [catalog.]sys.rewrite_file_index(&ltidentifier&gt [, &ltpartitions&gt])<br/><br/>
+      </td>
+      <td>
+         Rewrite the file index for the table. Argument:
+            <li>table: &ltdatabaseName&gt.&lttableName&gt.</li>
+            <li>partitions : specific partitions.</li>
+      </td>
+      <td>
+         -- rewrite the file index for the whole table<br/>
+         CALL sys.rewrite_file_index(`table` => 'test_db.T')<br/><br/>
+         -- repair all tables in a specific partition<br/>
+         CALL sys.rewrite_file_index(`table` => 'test_db.T', partitions => 'pt=a')<br/><br/>
+     </td>
+   <tr>
+      <td>create_branch</td>
+      <td>
+         -- Use named argument<br/>
+         CALL [catalog.]sys.create_branch(`table` => 'identifier', branch => 'branchName', tag => 'tagName')<br/><br/>
+         -- Use indexed argument<br/>
+         -- based on the specified tag <br/>
+         CALL [catalog.]sys.create_branch('identifier', 'branchName', 'tagName')<br/>
+         -- based on the specified branch's tag <br/>
+         CALL [catalog.]sys.create_branch('branch_table', 'branchName', 'tagName')<br/>
+         -- create empty branch <br/>
+         CALL [catalog.]sys.create_branch('identifier', 'branchName')
+      </td>
+      <td>
+         To create a branch based on given tag, or just create empty branch. Arguments:
+            <li>table: the target table identifier or branch identifier. Cannot be empty.</li>
+            <li>branchName: name of the new branch.</li>
+            <li>tagName: name of the tag which the new branch is based on.</li>
+      </td>
+      <td>
+         CALL sys.create_branch(`table` => 'default.T', branch => 'branch1', tag => 'tag1')<br/>
+         -- based on the specified branch's tag <br/>
+         CALL sys.create_branch(`table` => 'default.T$branch_existBranchName', branch => 'branch1', tag => 'tag1')<br/><br/>
+         CALL sys.create_branch(`table` => 'default.T', branch => 'branch1')<br/><br/>
+      </td>
+   </tr>
+   <tr>
+      <td>delete_branch</td>
+      <td>
+         -- Use named argument<br/>
+         CALL [catalog.]sys.delete_branch(`table` => 'identifier', branch => 'branchName')<br/><br/>
+         -- Use indexed argument<br/>
+         CALL [catalog.]sys.delete_branch('identifier', 'branchName')
+      </td>
+      <td>
+         To delete a branch. Arguments:
+            <li>table: the target table identifier. Cannot be empty.</li>
+            <li>branchName: name of the branch to be deleted. If you specify multiple branches, delimiter is ','.</li>
+      </td>
+      <td>
+         CALL sys.delete_branch(`table` => 'default.T', branch => 'branch1')
+      </td>
+   </tr>
+   <tr>
+      <td>fast_forward</td>
+      <td>
+         -- Use named argument<br/>
+         CALL [catalog.]sys.fast_forward(`table` => 'identifier', branch => 'branchName')<br/><br/>
+         -- Use indexed argument<br/>
+         CALL [catalog.]sys.fast_forward('identifier', 'branchName')
+      </td>
+      <td>
+         To fast_forward a branch to main branch. Arguments:
+            <li>table: the target table identifier. Cannot be empty.</li>
+            <li>branchName: name of the branch to be merged.</li>
+      </td>
+      <td>
+         CALL sys.fast_forward(`table` => 'default.T', branch => 'branch1')
+      </td>
+   </tr>
+   <tr>
+      <td>refresh_object_table</td>
+      <td>
+         CALL [catalog.]sys.refresh_object_table('identifier')
+      </td>
+      <td>
+         To refresh_object_table a object table. Arguments:
+            <li>table: the target table identifier. Cannot be empty.</li>
+      </td>
+      <td>
+         CALL sys.refresh_object_table('default.T')
+      </td>
+   </tr>
+   <tr>
+      <td>compact_manifest</td>
+      <td>
+         CALL [catalog.]sys.compact_manifest(`table` => 'identifier')
+      </td>
+      <td>
+         To compact_manifest the manifests. Arguments:
+            <li>table: the target table identifier. Cannot be empty.</li>
+      </td>
+      <td>
+         CALL sys.compact_manifest(`table` => 'default.T')
+      </td>
+   </tr>
+   <tr>
+      <td>rescale</td>
+      <td>
+         CALL [catalog.]sys.rescale(`table` => 'identifier', `bucket_num` => bucket_num, `partition` => 'partition', `scan_parallelism` => 'scan_parallelism', `sink_parallelism` => 'sink_parallelism')
+      </td>
+      <td>
+         Rescale one partition of a table. Arguments:
+         <li>table: The target table identifier. Cannot be empty.</li>
+         <li>bucket_num: Resulting bucket number after rescale. The default value of argument bucket_num is the current bucket number of the table. Cannot be empty for postpone bucket tables.</li>
+         <li>partition: What partition to rescale. For partitioned table this argument cannot be empty.</li>
+         <li>scan_parallelism: Parallelism of source operator. The default value is the current bucket number of the partition.</li>
+         <li>sink_parallelism: Parallelism of sink operator. The default value is equal to bucket_num.</li>
+      </td>
+      <td>
+         CALL sys.rescale(`table` => 'default.T', `bucket_num` => 16, `partition` => 'dt=20250217,hh=08')
+      </td>
+   </tr>
+   <tr>
+      <td>alter_view_dialect</td>
+      <td>
+         -- add dialect in the view<br/>
+         CALL [catalog.]sys.alter_view_dialect('view_identifier', 'add', 'flink', 'query')<br/>
+         CALL [catalog.]sys.alter_view_dialect(`view` => 'view_identifier', `action` => 'add', `query` => 'query')<br/><br/>
+         -- update dialect in the view<br/>
+         CALL [catalog.]sys.alter_view_dialect('view_identifier', 'update', 'flink', 'query')<br/>
+         CALL [catalog.]sys.alter_view_dialect(`view` => 'view_identifier', `action` => 'update', `query` => 'query')<br/><br/>
+         -- drop dialect in the view<br/>
+         CALL [catalog.]sys.alter_view_dialect('view_identifier', 'drop', 'flink')<br/>
+         CALL [catalog.]sys.alter_view_dialect(`view` => 'view_identifier', `action` => 'drop')<br/><br/>
+      </td>
+      <td>
+         To alter view dialect. Arguments:
+            <li>view: the target view identifier. Cannot be empty.</li>
+            <li>action: define change action like: add, update, drop. Cannot be empty.</li>
+            <li>engine: when engine which is not flink need define it.</li>
+            <li>query: query for the dialect when action is add and update it couldn't be empty.</li>
+      </td>
+      <td>
+         -- add dialect in the view<br/>
+         CALL sys.alter_view_dialect('view_identifier', 'add', 'flink', 'query')<br/>
+         CALL sys.alter_view_dialect(`view` => 'view_identifier', `action` => 'add', `query` => 'query')<br/><br/>
+         -- update dialect in the view<br/>
+         CALL sys.alter_view_dialect('view_identifier', 'update', 'flink', 'query')<br/>
+         CALL sys.alter_view_dialect(`view` => 'view_identifier', `action` => 'update', `query` => 'query')<br/><br/>
+         -- drop dialect in the view<br/>
+         CALL sys.alter_view_dialect('view_identifier', 'drop', 'flink')<br/>
+         CALL sys.alter_view_dialect(`view` => 'view_identifier', `action` => 'drop')<br/><br/>
+      </td>
+   </tr>
+   </tbody>
+</table>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  
+
+
+
+
+<a href="//github.com/apache/paimon/edit/1.1/docs/content/flink/procedures.md" style="color:black"><i class="fa fa-edit fa-fw"></i>Edit This Page</a>
+
+
+ 
+        
+
+
+<hr style="margin-top: 20px; border: 1px solid #e5e5e5;" />
+
+<table style="border-spacing: 10px;">
+    <tbody>
+    <tr>
+        <td colspan="2">
+            Copyright &copy; 2024 The Apache Software Foundation. Apache Paimon, Paimon, and its feather logo are
+            trademarks of The Apache Software Foundation.
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+      </footer>
+
+      
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      
+  
+
+<nav id="TableOfContents"><h3>On This Page <button class="toc" onclick="collapseToc()"><i class="fa fa-compress" aria-hidden="true"></i></button></h3></nav>
+
+ 
+    </aside>
+    <aside class="expand-toc">
+      <button class="toc" onclick="expandToc()">
+        <i class="fa fa-expand" aria-hidden="true"></i>
+      </button>
+    </aside>
+    
+  </main>
+
+  
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
